@@ -12,6 +12,7 @@
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PublishRelease>true</PublishRelease>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
     </PropertyGroup>
 
     <ItemGroup>
