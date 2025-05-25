@@ -11,6 +11,7 @@
         <RepositoryUrl>https://github.com/nwesterhausen/UntitledRpgLogic</RepositoryUrl>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageReadmeFile>README.md</PackageReadmeFile>
+        <PublishRelease>true</PublishRelease>
     </PropertyGroup>
 
     <ItemGroup>
