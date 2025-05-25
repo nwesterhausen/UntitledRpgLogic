@@ -13,6 +13,7 @@
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PublishRelease>true</PublishRelease>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <AssemblyName>UntitledRpg.Logic</AssemblyName>
     </PropertyGroup>
 
     <ItemGroup>
