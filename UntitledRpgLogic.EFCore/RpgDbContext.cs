@@ -8,6 +8,13 @@ public class RpgDbContext(DbContextOptions<RpgDbContext> options) : DbContext(op
 {
     public DbSet<StatModel>? Stats { get; set; }
     public DbSet<InstancedStatModel>? InstancedStats { get; set; }
+    public DbSet<EntityModel>? Entities { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<InstancedStatModel>()
+            .HasKey(x => new { x.EntityId, x.StatId });
+    }
 }
 
 public class RpgDbContextFactory : IDesignTimeDbContextFactory<RpgDbContext>

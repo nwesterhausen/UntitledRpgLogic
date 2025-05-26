@@ -28,7 +28,13 @@ public abstract partial class StatBase : IComparable<int>, IComparable<StatBase>
         Name = name;
         _value = value;
         MaxValue = maxValue;
-        MinValue = minValue;
+        MinValue = minValue > MaxValue ? MaxValue : minValue;
+        if (value > MaxValue)
+            _value = MaxValue;
+        else if (value < MinValue)
+            _value = MinValue;
+        else
+            _value = value;
         LogStatCreated(this);
     }
 
