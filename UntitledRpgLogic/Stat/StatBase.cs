@@ -1,8 +1,7 @@
-namespace UntitledRpgLogic.Stat;
-
-using System;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
+
+namespace UntitledRpgLogic.Stat;
 
 /// <summary>
 ///   Abstract base class for RPG stats.
@@ -11,8 +10,8 @@ public abstract partial class StatBase : IComparable<int>, IComparable<StatBase>
 {
     public delegate void StatChanged(object sender, int newValue);
 
-    private const int STAT_DEFAULT_MAX_VALUE = 1024;
-    private const int STAT_DEFAULT_MIN_VALUE = 0;
+    public const int STAT_DEFAULT_MAX_VALUE = 1024;
+    public const int STAT_DEFAULT_MIN_VALUE = 0;
 
     private int _value;
 
@@ -82,6 +81,8 @@ public abstract partial class StatBase : IComparable<int>, IComparable<StatBase>
     public float EffectivePercent => (float)EffectiveValue / EffectiveMaxValue;
     public float Percent => EffectivePercent;
 
+    public StatVariation Variation { get; }
+
     /// <summary>
     ///   Event that is triggered when the value of the stat changes.
     /// </summary>
@@ -119,18 +120,16 @@ public abstract partial class StatBase : IComparable<int>, IComparable<StatBase>
         Value -= points;
     }
 
+    public void ForceValue(int value)
+    {
+        Value = value;
+    }
+
     public class ValueChangedEventArgs(int oldValue, int newValue) : EventArgs
     {
         public int NewValue { get; } = newValue;
         public int OldValue { get; } = oldValue;
         public int Delta => NewValue - OldValue;
-    }
-
-    public StatVariation Variation { get; }
-
-    public void ForceValue(int value)
-    {
-        Value = value;
     }
 }
 
