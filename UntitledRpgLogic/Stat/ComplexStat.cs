@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 namespace UntitledRpgLogic.Stat;
 
 /// <summary>
-///     Represents a complex stat in the system.
+///     Represents a complex stat in the system, either with a complex calculation or multiple linked stats.
 /// </summary>
 public class ComplexStat(
     string name,

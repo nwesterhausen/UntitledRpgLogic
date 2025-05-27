@@ -1,5 +1,8 @@
 namespace UntitledRpgLogic.Entity;
 
+/// <summary>
+///     Represents the base class for all entities in the RPG system.
+/// </summary>
 public abstract class EntityBase
 {
     /// <summary>
@@ -11,7 +14,13 @@ public abstract class EntityBase
         Id = id ?? Guid.NewGuid();
     }
 
+    /// <summary>
+    ///     The unique identifier for this entity.
+    /// </summary>
     public Guid Id { get; }
 
+    /// <summary>
+    ///     The name of the entity.
+    /// </summary>
     public string Name { get; internal set; } = string.Empty;
 }
