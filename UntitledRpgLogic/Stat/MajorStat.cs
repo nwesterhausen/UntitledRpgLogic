@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 namespace UntitledRpgLogic.Stat;
 
 /// <summary>
-///   A major stat is one that can be directly modified by the player.
+///     A major stat is one that can be directly modified by the player.
 /// </summary>
 public class MajorStat(
     string name,

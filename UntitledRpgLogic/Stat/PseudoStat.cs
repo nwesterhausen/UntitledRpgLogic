@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 namespace UntitledRpgLogic.Stat;
 
 /// <summary>
-/// A stat meant to represent something abstract that doesn't behave like a normal stat.
+///     A stat meant to represent something abstract that doesn't behave like a normal stat.
 /// </summary>
 public class PseudoStat(
     string name,

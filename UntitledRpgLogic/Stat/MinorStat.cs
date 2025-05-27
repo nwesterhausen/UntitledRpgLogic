@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 namespace UntitledRpgLogic.Stat;
 
 /// <summary>
-///   Represents a minor stat that is dependent on one or more major stats.
+///     Represents a minor stat that is dependent on one or more major stats.
 /// </summary>
 public class MinorStat(
     string name,

@@ -1,11 +1,15 @@
 namespace UntitledRpgLogic;
 
 /// <summary>
-/// Package class.
+///     Package class.
 /// </summary>
-public class Package {
-  /// <summary>
-  /// Method.
-  /// </summary>
-  public string Method() => "Hello, world!";
+public class Package
+{
+    /// <summary>
+    ///     Method.
+    /// </summary>
+    public string Method()
+    {
+        return "Hello, world!";
+    }
 }
