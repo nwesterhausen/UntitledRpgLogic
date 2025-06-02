@@ -1,53 +1,111 @@
-namespace UntitledRpgLogic;
+using System.Numerics;
+
+namespace UntitledRpgLogic.Interfaces;
 
 /// <summary>
 ///     Interface for classes that notify when their value changes.
 /// </summary>
-public interface INotifyValueChanged
+public interface INotifyValueChanged<T> where T : ISubtractionOperators<T, T, T>
 {
     /// <summary>
-    ///     Event that is triggered when the value of the stat changes.
+    ///     Event that is triggered when the value changes.
     /// </summary>
-    public event EventHandler<ValueChangedEventArgs>? ValueChanged;
+    event EventHandler<ValueChangedEventArgs<T>>? ValueChanged;
 
     /// <summary>
-    ///     Method to call when the value changes
+    ///     Method to call when the value changes.
     /// </summary>
     /// <param name="oldValue">previous value</param>
     /// <param name="newValue">current (new) value</param>
-    public void OnValueChanged(int oldValue, int newValue);
+    void OnValueChanged(T oldValue, T newValue);
 }
 
 /// <summary>
 ///     Class to hold the arguments for the ValueChanged event.
 /// </summary>
-/// <param name="oldValue">previous value</param>
-/// <param name="newValue">current value</param>
-public class ValueChangedEventArgs(int oldValue, int newValue) : EventArgs
+public abstract class ValueChangedEventArgs<T>(T oldValue, T newValue)
+    : EventArgs where T : ISubtractionOperators<T, T, T>
 {
     /// <summary>
-    ///     The new value
+    ///     The new value after the change.
     /// </summary>
-    public int NewValue { get; } = newValue;
+    public T NewValue { get; } = newValue;
 
     /// <summary>
-    ///     The previous value
+    ///     The previous value before the change.
     /// </summary>
-    public int OldValue { get; } = oldValue;
+    public T OldValue { get; } = oldValue;
 
     /// <summary>
-    ///     The change in value
+    ///     The difference between the new value and the old value.
     /// </summary>
-    public int Delta => NewValue - OldValue;
+    public T Delta => NewValue - OldValue;
 
     /// <summary>
-    ///     The sign of the change in value. ("+" for positive, "" for zero, "-" for negative)
+    ///     Which sign the delta has (+ or -). For zero, it returns an empty string.
     /// </summary>
-    public string Sign => Delta > 0 ? "+" : Delta < 0 ? "-" : "";
+    public string Sign
+        => Comparer<T>.Default.Compare(Delta, default!) > 0 ? "+" :
+            Comparer<T>.Default.Compare(Delta, default!) < 0 ? "-" : "";
+
 
     /// <inheritdoc />
     public override string ToString()
     {
-        return $"{Sign}{Math.Abs(Delta)}";
+        return $"{Sign}{Delta}";
+    }
+}
+
+/// <summary>
+///     Interface for classes that notify when their value changes.
+/// </summary>
+public interface INotifyValueChangedWithName<T> where T : IHasName, ISubtractionOperators<T, T, T>
+{
+    /// <summary>
+    ///     Event that is triggered when the value changes.
+    /// </summary>
+    event EventHandler<ValueChangedEventArgsWithName<T>>? ValueChanged;
+
+    /// <summary>
+    ///     Method to call when the value changes.
+    /// </summary>
+    /// <param name="oldValue">previous value</param>
+    /// <param name="newValue">current (new) value</param>
+    void OnValueChanged(T oldValue, T newValue);
+}
+
+/// <summary>
+///     Class to hold the arguments for the ValueChanged event.
+/// </summary>
+public abstract class ValueChangedEventArgsWithName<T>(T oldValue, T newValue) : EventArgs where T :
+    ISubtractionOperators<T, T, T>, IHasName
+{
+    /// <summary>
+    ///     The new value after the change.
+    /// </summary>
+    public T NewValue { get; } = newValue;
+
+    /// <summary>
+    ///     The previous value before the change.
+    /// </summary>
+    public T OldValue { get; } = oldValue;
+
+    /// <summary>
+    ///     The difference between the new value and the old value.
+    /// </summary>
+    public T Delta => NewValue - OldValue;
+
+    /// <summary>
+    ///     Which sign the delta has (+ or -). For zero, it returns an empty string.
+    /// </summary>
+    public string Sign
+        => Comparer<T>.Default.Compare(Delta, default!) > 0 ? "+" :
+            Comparer<T>.Default.Compare(Delta, default!) < 0 ? "-" : "";
+
+
+    /// <inheritdoc />
+    public override string ToString()
+    {
+        return $"{Sign}{Delta} {NewValue.Name}";
     }
 }

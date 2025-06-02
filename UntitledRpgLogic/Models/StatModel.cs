@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
-using UntitledRpgLogic.Stat;
+using UntitledRpgLogic.BaseImplementations;
+using UntitledRpgLogic.Options;
 
 namespace UntitledRpgLogic.Models;
 
