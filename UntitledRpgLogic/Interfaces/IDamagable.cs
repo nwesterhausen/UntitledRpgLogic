@@ -1,13 +1,9 @@
-using UntitledRpgLogic.BaseImplementations;
-using UntitledRpgLogic.Options;
-
 namespace UntitledRpgLogic.Interfaces;
 
 /// <summary>
 ///     Used to mark a Stat as being able to take damage.
 /// </summary>
-public interface IDamageable<T>
-    where T : StatBase
+public interface IDamageable
 {
     /// <summary>
     ///     The current damage applied to the stat in points.
@@ -22,8 +18,8 @@ public interface IDamageable<T>
     /// <summary>
     ///     Apply damage to the stat, reducing its value by the specified amount.
     /// </summary>
-    /// <param name="damageOptions">amount of damage to apply to the stat</param>
-    public void TakeDamage(DamageOptions damageOptions);
+    /// <param name="amount"></param>
+    public void TakeDamage(int amount);
 
     /// <summary>
     ///     Event that is raised when damage is applied to the stat. The event should notify of the total amount of damage

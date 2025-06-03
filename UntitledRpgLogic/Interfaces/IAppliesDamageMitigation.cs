@@ -1,12 +1,9 @@
-using UntitledRpgLogic.BaseImplementations;
-
 namespace UntitledRpgLogic.Interfaces;
 
 /// <summary>
 ///     Interface for classes that apply damage mitigation to stats.
 /// </summary>
-public interface IAppliesDamageMitigation<T>
-    where T : StatBase
+public interface IAppliesDamageMitigation
 {
     /// <summary>
     ///     Whether the mitigation is positive or negative. Positive will reduce damage, negative will increase it.

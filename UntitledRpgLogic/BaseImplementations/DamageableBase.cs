@@ -1,10 +1,9 @@
 using UntitledRpgLogic.Interfaces;
-using UntitledRpgLogic.Options;
 
 namespace UntitledRpgLogic.BaseImplementations;
 
 /// <inheritdoc />
-public abstract class DamageableBase<T> : IDamageable<T>
+public abstract class DamageableBase<T> : IDamageable
     where T : StatBase
 {
     /// <summary>
@@ -43,6 +42,12 @@ public abstract class DamageableBase<T> : IDamageable<T>
             }
 
             _currentDamage = value;
+
+            // Clamp the current damage within the stats minimum and maximum values
+            if (_currentDamage > _stat.MaxValue)
+                _currentDamage = _stat.MaxValue;
+            else if (_currentDamage < _stat.MinValue) _currentDamage = _stat.MinValue;
+
             // update the percentage damage whenever the current damage changes
             CurrentPercentageDamage = _stat.MaxValue > 0 ? CurrentDamage / (float)_stat.MaxValue * 100 : 0;
             // raise the DamageTaken event with the amount of damage taken
@@ -55,9 +60,12 @@ public abstract class DamageableBase<T> : IDamageable<T>
 
 
     /// <inheritdoc />
-    public void TakeDamage(DamageOptions damageOptions)
+    public void TakeDamage(int amount)
     {
-        throw new NotImplementedException();
+        if (amount <= 0) return;
+
+        // Apply the damage to the current damage
+        CurrentDamage += amount;
     }
 
     /// <inheritdoc />

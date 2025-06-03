@@ -75,10 +75,7 @@ public abstract class HasLevelingBase : IHasLeveling
             ValueChanged?.Invoke(oldValue, newValue);
 
             Level = CalculateLevel();
-            if (oldLevel != Level)
-            {
-                LevelChanged?.Invoke(oldLevel, Level);
-            }
+            if (oldLevel != Level) LevelChanged?.Invoke(oldLevel, Level);
         }
     }
 

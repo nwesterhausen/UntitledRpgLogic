@@ -8,7 +8,7 @@ namespace UntitledRpgLogic;
 public class DamageCalculator : IDamageCalculator
 {
     /// <inheritdoc />
-    public int CalculateFinalDamage(int damageAmount, IEnumerable<IAppliesDamageMitigation<StatBase>> mitigations)
+    public int CalculateFinalDamage(int damageAmount, IEnumerable<IAppliesDamageMitigation> mitigations)
     {
         var modifiedDamage = damageAmount;
 

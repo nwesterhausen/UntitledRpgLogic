@@ -25,7 +25,5 @@ public interface IHasLogging
     /// </summary>
     /// <param name="exception"></param>
     /// <param name="eventId"></param>
-    /// <param name="message"></param>
-    /// <param name="args"></param>
     public void LogError(Exception exception, EventId eventId);
 }

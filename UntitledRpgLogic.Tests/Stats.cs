@@ -45,7 +45,7 @@ public class StatBaseTests
             x => x.Log(
                 LogLevel.Debug,
                 It.IsAny<EventId>(),
-                It.Is<It.IsAnyType>((v, t) => v.ToString().Contains("+5 Test")),
+                It.Is<It.IsAnyType>((v, t) => v.ToString()!.Contains("+5 Test")),
                 null,
                 It.IsAny<Func<It.IsAnyType, Exception?, string>>()),
             Times.AtLeastOnce);

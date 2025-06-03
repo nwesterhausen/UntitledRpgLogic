@@ -6,25 +6,53 @@ namespace UntitledRpgLogic;
 /// <summary>
 ///     Event IDs for logging various events in the RPG logic.
 /// </summary>
+[SuppressMessage("ReSharper", "InconsistentNaming")]
 public static class LoggingEventIds
 {
+    /// <summary>
+    ///     Integer value for stat creation event.
+    /// </summary>
     public const int STAT_CREATED_INT_VALUE = 1000;
 
+    /// <summary>
+    ///     Integer value for stat linked event.
+    /// </summary>
     public const int STAT_LINKED_INT_VALUE = 1001;
 
+    /// <summary>
+    ///     Integer value for stat unlinked event.
+    /// </summary>
     public const int STAT_UNLINKED_INT_VALUE = 1002;
 
+    /// <summary>
+    ///     Integer value for stat value changed event.
+    /// </summary>
     public const int STAT_VALUE_CHANGED_INT_VALUE = 1005;
 
+    /// <summary>
+    ///     Integer value for illegal stat change event.
+    /// </summary>
     public const int STAT_ILLEGAL_CHANGE_INT_VALUE = 1099;
 
+    /// <summary>
+    ///     Integer value for skill creation event.
+    /// </summary>
     public const int SKILL_CREATED_INT_VALUE = 2000;
 
+    /// <summary>
+    ///     Integer value for skill level changed event.
+    /// </summary>
     public const int SKILL_LEVEL_CHANGED_INT_VALUE = 2001;
 
+    /// <summary>
+    ///     Integer value for skill points changed event.
+    /// </summary>
     public const int SKILL_POINTS_CHANGED_INT_VALUE = 2002;
 
-    public const int EntityCreated_INT_VALUE = 3000;
+    /// <summary>
+    ///     Integer value for entity created event.
+    /// </summary>
+    public const int ENTITY_CREATED_INT_VALUE = 3000;
 
     /// <summary>
     ///     Event ID for stat creation.
@@ -41,7 +69,6 @@ public static class LoggingEventIds
     ///         </list>
     ///     </para>
     /// </summary>
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
     public static readonly EventId STAT_CREATED = new(STAT_CREATED_INT_VALUE, nameof(STAT_CREATED));
 
     /// <summary>
@@ -67,7 +94,6 @@ public static class LoggingEventIds
     ///         </list>
     ///     </para>
     /// </summary>
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
     public static readonly EventId STAT_LINKED = new(STAT_LINKED_INT_VALUE, nameof(STAT_LINKED));
 
     /// <summary>
@@ -89,7 +115,6 @@ public static class LoggingEventIds
     ///         </list>
     ///     </para>
     /// </summary>
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
     public static readonly EventId STAT_UNLINKED = new(STAT_UNLINKED_INT_VALUE, nameof(STAT_UNLINKED));
 
     /// <summary>
@@ -115,7 +140,6 @@ public static class LoggingEventIds
     ///         </list>
     ///     </para>
     /// </summary>
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
     public static readonly EventId STAT_VALUE_CHANGED = new(STAT_VALUE_CHANGED_INT_VALUE, nameof(STAT_VALUE_CHANGED));
 
     /// <summary>
@@ -137,7 +161,6 @@ public static class LoggingEventIds
     ///         </list>
     ///     </para>
     /// </summary>
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
     public static readonly EventId
         STAT_ILLEGAL_CHANGE = new(STAT_ILLEGAL_CHANGE_INT_VALUE, nameof(STAT_ILLEGAL_CHANGE));
 
@@ -156,7 +179,6 @@ public static class LoggingEventIds
     ///         </list>
     ///     </para>
     /// </summary>
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
     public static readonly EventId SKILL_CREATED = new(SKILL_CREATED_INT_VALUE, nameof(SKILL_CREATED));
 
     /// <summary>
@@ -182,7 +204,6 @@ public static class LoggingEventIds
     ///         </list>
     ///     </para>
     /// </summary>
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
     public static readonly EventId
         SKILL_LEVEL_CHANGED = new(SKILL_LEVEL_CHANGED_INT_VALUE, nameof(SKILL_LEVEL_CHANGED));
 
@@ -209,7 +230,6 @@ public static class LoggingEventIds
     ///         </list>
     ///     </para>
     /// </summary>
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
     public static readonly EventId SKILL_POINTS_CHANGED =
         new(SKILL_POINTS_CHANGED_INT_VALUE, nameof(SKILL_POINTS_CHANGED));
 
@@ -228,5 +248,5 @@ public static class LoggingEventIds
     ///         </list>
     ///     </para>
     /// </summary>
-    public static readonly EventId EntityCreated = new(EntityCreated_INT_VALUE, nameof(EntityCreated));
+    public static readonly EventId ENTITY_CREATED = new(ENTITY_CREATED_INT_VALUE, nameof(ENTITY_CREATED));
 }
