@@ -2,7 +2,7 @@ using UntitledRpgLogic.BaseImplementations;
 using UntitledRpgLogic.Interfaces;
 using UntitledRpgLogic.Options;
 
-namespace UntitledRpgLogic;
+namespace UntitledRpgLogic.Classes;
 
 /// <inheritdoc />
 public class DamageCalculator : IDamageCalculator
