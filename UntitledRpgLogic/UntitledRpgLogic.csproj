@@ -14,6 +14,8 @@
         <PublishRelease>true</PublishRelease>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <AssemblyName>UntitledRpg.Logic</AssemblyName>
+        <IncludeSymbols>true</IncludeSymbols>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     </PropertyGroup>
 
     <ItemGroup>
