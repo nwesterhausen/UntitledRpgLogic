@@ -1,4 +1,5 @@
 using UntitledRpgLogic.CompositionBehaviors;
+using UntitledRpgLogic.Interfaces;
 
 namespace UntitledRpgLogic.BaseImplementations;
 
@@ -15,7 +16,7 @@ public abstract class EntityBase
     /// <summary>
     ///     Supports the name behavior for the entity, allowing it to have a name.
     /// </summary>
-    private readonly HasMonoNameBase _monoNameBehavior = new MonoNameBehavior();
+    private IHasName _nameBehavior = new NameBehavior();
 
     /// <summary>
     ///     Creates a new instance of <see cref="EntityBase" /> with a new unique identifier.
@@ -31,8 +32,8 @@ public abstract class EntityBase
     /// </summary>
     public string Name
     {
-        get => _monoNameBehavior.Name;
-        internal set => _monoNameBehavior.Name = value;
+        get => _nameBehavior.Name;
+        internal set => _nameBehavior = new NameBehavior(value);
     }
 
     /// <summary>

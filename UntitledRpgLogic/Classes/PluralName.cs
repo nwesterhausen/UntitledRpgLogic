@@ -3,16 +3,16 @@ namespace UntitledRpgLogic.Classes;
 /// <summary>
 ///     Contains the name of an object. Has a singular, a plural and a form when used as an adjective.
 /// </summary>
-public class Name
+public class PluralName
 {
     /// <summary>
-    ///     Constructs a new Name object with the given singular, plural and adjective names. If not supplied, the singular
+    ///     Constructs a new PluralName object with the given singular, plural and adjective names. If not supplied, the singular
     ///     will be used as the adjective and a best guess will be made for the plural.
     /// </summary>
     /// <param name="singular"></param>
     /// <param name="plural"></param>
     /// <param name="adjective"></param>
-    public Name(string singular, string? plural = null, string? adjective = null)
+    public PluralName(string singular, string? plural = null, string? adjective = null)
     {
         Singular = singular;
         Plural = plural ?? BestGuessPlural(singular);
@@ -91,20 +91,20 @@ public class Name
     }
 
     /// <summary>
-    ///     Deserializes a string into the Name object. Expects the string to be in the format: `Singular;Plural;Adjective`
+    ///     Deserializes a string into the PluralName object. Expects the string to be in the format: `Singular;Plural;Adjective`
     /// </summary>
     /// <param name="serialized">serialized string</param>
-    /// <returns>Name object reconstructed from serialized version</returns>
+    /// <returns>PluralName object reconstructed from serialized version</returns>
     /// <exception cref="ArgumentException">failed to deserialize the string</exception>
-    public static Name Deserialize(string serialized)
+    public static PluralName Deserialize(string serialized)
     {
         var parts = serialized.Split(';');
         return parts.Length switch
         {
             0 => throw new ArgumentException("Invalid serialized name format."),
-            1 => new Name(parts[0]),
-            2 => new Name(parts[0], parts[1]),
-            _ => new Name(parts[0], parts[1], parts[2])
+            1 => new PluralName(parts[0]),
+            2 => new PluralName(parts[0], parts[1]),
+            _ => new PluralName(parts[0], parts[1], parts[2])
         };
     }
 }

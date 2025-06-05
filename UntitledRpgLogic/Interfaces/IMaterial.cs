@@ -11,7 +11,7 @@ public interface IMaterial
     /// <summary>
     ///     The name of the material.
     /// </summary>
-    Name Name { get; }
+    PluralName PluralName { get; }
 
     /// <summary>
     ///     The current state of matter of the material.

@@ -59,7 +59,7 @@ public abstract class ValueChangedEventArgs<T>(T oldValue, T newValue)
 /// <summary>
 ///     Interface for classes that notify when their value changes.
 /// </summary>
-public interface INotifyValueChangedWithName<T> where T : IHasMonoName, ISubtractionOperators<T, T, T>
+public interface INotifyValueChangedWithName<T> where T : IHasName, ISubtractionOperators<T, T, T>
 {
     /// <summary>
     ///     Event that is triggered when the value changes.
@@ -78,7 +78,7 @@ public interface INotifyValueChangedWithName<T> where T : IHasMonoName, ISubtrac
 ///     Class to hold the arguments for the ValueChanged event.
 /// </summary>
 public abstract class ValueChangedEventArgsWithName<T>(T oldValue, T newValue) : EventArgs where T :
-    ISubtractionOperators<T, T, T>, IHasMonoName
+    ISubtractionOperators<T, T, T>, IHasName
 {
     /// <summary>
     ///     The new value after the change.

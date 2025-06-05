@@ -30,7 +30,7 @@ public abstract class StatBase : IHasValue
     /// <summary>
     ///     Adds a name to the skill.
     /// </summary>
-    private readonly HasMonoNameBase _monoNameBehavior = new MonoNameBehavior();
+    private readonly IHasName _nameBehavior;
 
     /// <summary>
     ///     Internally stores the value of the stat. This is the actual number that represents the stat's current state.
@@ -43,8 +43,7 @@ public abstract class StatBase : IHasValue
     /// <param name="options"></param>
     protected StatBase(StatOptions options)
     {
-        if (options.Name != null)
-            Name = options.Name;
+        _nameBehavior = new NameBehavior(options.Name);
 
         // Set the variation, defaulting to Pseudo if not specified
         Variation = options.Variation ?? StatVariation.Pseudo;
@@ -73,11 +72,7 @@ public abstract class StatBase : IHasValue
     /// <summary>
     ///     The name of the stat.
     /// </summary>
-    public string Name
-    {
-        get => _monoNameBehavior.Name;
-        private init => _monoNameBehavior.Name = value;
-    }
+    public string Name => _nameBehavior.Name;
 
     /// <summary>
     ///     The minimum value for this stat. This is the lowest value the stat can have.

@@ -10,7 +10,7 @@ public class MaterialOptions
     /// <summary>
     ///     The name of the material.
     /// </summary>
-    public required Name Name { get; init; }
+    public required PluralName PluralName { get; init; }
 
     /// <summary>
     ///     The properties of the material in the solid state.

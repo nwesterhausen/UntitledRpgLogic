@@ -1,5 +1,6 @@
 using Microsoft.Extensions.Logging.Abstractions;
 using UntitledRpgLogic.CompositionBehaviors;
+using UntitledRpgLogic.Interfaces;
 using UntitledRpgLogic.Options;
 
 namespace UntitledRpgLogic.BaseImplementations;
@@ -23,15 +24,14 @@ public abstract class SkillBase
     /// <summary>
     ///     Adds a name to the skill.
     /// </summary>
-    private readonly HasMonoNameBase _monoNameBehavior = new MonoNameBehavior();
+    private readonly IHasName _nameBehavior;
 
     /// <summary>
     ///     Creates a new instance of <see cref="SkillBase" />.
     /// </summary>
     protected SkillBase(SkillOptions options)
     {
-        if (options.Name != null)
-            Name = options.Name;
+        _nameBehavior = new NameBehavior(options.Name);
 
         // Create a LevelingOptions with what is provided in the SkillOptions
         var levelingOptions = new LevelingOptions
@@ -63,11 +63,7 @@ public abstract class SkillBase
     /// <summary>
     ///     The name of the skill
     /// </summary>
-    public string Name
-    {
-        get => _monoNameBehavior.Name;
-        internal set => _monoNameBehavior.Name = value;
-    }
+    public string Name => _nameBehavior.Name;
 
     /// <summary>
     ///     How many total points are required for the current level of the skill.

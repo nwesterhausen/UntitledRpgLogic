@@ -24,7 +24,7 @@ public abstract class MaterialBase : IMaterial
     /// <param name="options">The options for configuring the material.</param>
     protected MaterialBase(MaterialOptions options)
     {
-        Name = options.Name;
+        PluralName = options.PluralName;
         StateProperties = new Dictionary<StateOfMatter, MaterialStateProperties>
         {
             { StateOfMatter.Solid, options.SolidStateProperties },
@@ -55,7 +55,7 @@ public abstract class MaterialBase : IMaterial
     public double Density { get; private set; }
 
     /// <inheritdoc />
-    public Name Name { get; }
+    public PluralName PluralName { get; }
 
     /// <inheritdoc />
     public StateOfMatter State { get; private set; }

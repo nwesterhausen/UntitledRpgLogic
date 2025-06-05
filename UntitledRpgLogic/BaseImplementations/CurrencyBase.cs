@@ -18,7 +18,9 @@ public abstract class CurrencyBase : ICurrency
     /// <param name="options"></param>
     protected CurrencyBase(CurrencyOptions options)
     {
-        Name = options.PluralName == null ? new Name(options.Name) : new Name(options.Name, options.PluralName);
+        PluralName = options.PluralName == null
+            ? new PluralName(options.Name)
+            : new PluralName(options.Name, options.PluralName);
 
         Value = options.Value;
 
@@ -26,7 +28,7 @@ public abstract class CurrencyBase : ICurrency
     }
 
     /// <inheritdoc />
-    public Name Name { get; }
+    public PluralName PluralName { get; }
 
     /// <inheritdoc />
     public long Value { get; }
@@ -38,7 +40,7 @@ public abstract class CurrencyBase : ICurrency
     }
 
     /// <inheritdoc />
-    public string TooltipString => $"{Amount} {Name.GetName(Amount)}";
+    public string TooltipString => $"{Amount} {PluralName.GetName(Amount)}";
 
     /// <inheritdoc />
     public string TooltipDescription => TooltipString;
@@ -162,4 +164,7 @@ public abstract class CurrencyBase : ICurrency
 
         return true;
     }
+
+    /// <inheritdoc />
+    string IHasName.Name => PluralName.Singular;
 }
