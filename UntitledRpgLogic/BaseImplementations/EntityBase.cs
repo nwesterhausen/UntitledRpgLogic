@@ -38,5 +38,5 @@ public abstract class EntityBase
     /// <summary>
     ///     Gets the unique identifier of the entity.
     /// </summary>
-    public Guid Id => _guidBehavior.Id;
+    public Guid Id => _guidBehavior.Guid;
 }
