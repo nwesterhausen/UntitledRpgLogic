@@ -37,11 +37,11 @@ public interface ICurrency : IHasName, ITradable, IHasTooltipString
     ///     currency.
     /// </summary>
     /// <param name="currency">target currency to convert into</param>
-    /// <param name="limit">(optional) a limit to how many of target currency to convert to</param>
-    /// <returns>The <see cref="ITradable.Value" /> which is converted, and should be applied to the target currency</returns>
+    /// <param name="limit">(optional) a limit to how many of target currency to convert into</param>
+    /// <returns>if any amount was successfully converted</returns>
     /// <remarks>
     ///     this will act similar to <see cref="Subtract" /> in that it removes <see cref="ITradable.Value" /> from this
-    ///     currency
+    ///     currency. it should <see cref="Add" /> to the target currency.
     /// </remarks>
-    int ConvertToCurrency(ICurrency currency, int? limit = null);
+    bool ConvertToCurrency(ICurrency currency, int? limit = null);
 }

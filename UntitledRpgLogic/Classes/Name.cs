@@ -39,7 +39,7 @@ public class Name
     /// </summary>
     /// <param name="singular"></param>
     /// <returns></returns>
-    private static string BestGuessPlural(string singular)
+    public static string BestGuessPlural(string singular)
     {
         if (string.IsNullOrEmpty(singular)) return string.Empty;
 
