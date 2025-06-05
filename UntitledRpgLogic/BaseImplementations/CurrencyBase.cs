@@ -29,10 +29,10 @@ public abstract class CurrencyBase : ICurrency
     public Name Name { get; }
 
     /// <inheritdoc />
-    public int Value { get; }
+    public long Value { get; }
 
     /// <inheritdoc />
-    public int GetTotalValue()
+    public long GetTotalValue()
     {
         throw new NotImplementedException();
     }
@@ -66,7 +66,7 @@ public abstract class CurrencyBase : ICurrency
     public IMaterial Material { get; }
 
     /// <inheritdoc />
-    public int Add(int value)
+    public long Add(long value)
     {
         switch (value)
         {
@@ -96,7 +96,7 @@ public abstract class CurrencyBase : ICurrency
     }
 
     /// <inheritdoc />
-    public int Subtract(int value)
+    public long Subtract(long value)
     {
         switch (value)
         {
@@ -144,7 +144,7 @@ public abstract class CurrencyBase : ICurrency
     public bool ConvertToCurrency(ICurrency currency, int? limit = null)
     {
         // Calculate how much can be converted
-        var canConvert = GetTotalValue() / currency.Value;
+        var canConvert = (int)(GetTotalValue() / currency.Value);
 
         if (limit == null || canConvert < limit) limit = canConvert;
 

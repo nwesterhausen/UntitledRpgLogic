@@ -22,7 +22,7 @@ public interface ICurrency : IHasName, ITradable, IHasTooltipString
     /// </summary>
     /// <param name="value">total amount of <see cref="ITradable.Value" /> to add</param>
     /// <returns>any remaining <see cref="ITradable.Value" /></returns>
-    int Add(int value);
+    long Add(long value);
 
     /// <summary>
     ///     Subtract an amount of <see cref="ITradable.Value" /> from this currency. Any value which cannot be wholly
@@ -30,7 +30,7 @@ public interface ICurrency : IHasName, ITradable, IHasTooltipString
     /// </summary>
     /// <param name="value">total amount of <see cref="ITradable.Value" /> to subtract</param>
     /// <returns>any <see cref="ITradable.Value" /> not able to be subtracted</returns>
-    int Subtract(int value);
+    long Subtract(long value);
 
     /// <summary>
     ///     Convert this currency into another currency. Any limit which cannot be wholly converted is retained in this
