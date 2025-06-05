@@ -1,4 +1,4 @@
-namespace UntitledRpgLogic.Stat;
+namespace UntitledRpgLogic.Events;
 
 /// <summary>
 ///     Provides data for events related to damage calculation and mitigation for a stat.

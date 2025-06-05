@@ -1,5 +1,6 @@
 using UntitledRpgLogic.BaseImplementations;
 using UntitledRpgLogic.CompositionBehaviors;
+using UntitledRpgLogic.Events;
 using UntitledRpgLogic.Interfaces;
 using UntitledRpgLogic.Options;
 
