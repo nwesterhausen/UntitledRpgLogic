@@ -30,7 +30,7 @@ public abstract class StatBase : IHasValue
     /// <summary>
     ///     Adds a name to the skill.
     /// </summary>
-    private readonly HasNameBase _nameBehavior = new NameBehavior();
+    private readonly HasMonoNameBase _monoNameBehavior = new MonoNameBehavior();
 
     /// <summary>
     ///     Internally stores the value of the stat. This is the actual number that represents the stat's current state.
@@ -75,8 +75,8 @@ public abstract class StatBase : IHasValue
     /// </summary>
     public string Name
     {
-        get => _nameBehavior.Name;
-        private init => _nameBehavior.Name = value;
+        get => _monoNameBehavior.Name;
+        private init => _monoNameBehavior.Name = value;
     }
 
     /// <summary>

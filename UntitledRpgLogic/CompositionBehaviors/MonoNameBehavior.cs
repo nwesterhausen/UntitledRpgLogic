@@ -3,10 +3,10 @@ using UntitledRpgLogic.BaseImplementations;
 namespace UntitledRpgLogic.CompositionBehaviors;
 
 /// <inheritdoc />
-public class NameBehavior : HasNameBase
+public class MonoNameBehavior : HasMonoNameBase
 {
     /// <inheritdoc />
-    public NameBehavior(string? name = null)
+    public MonoNameBehavior(string? name = null)
     {
         if (name != null)
             Name = name;

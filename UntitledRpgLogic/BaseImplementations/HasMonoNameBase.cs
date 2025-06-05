@@ -4,9 +4,9 @@ namespace UntitledRpgLogic.BaseImplementations;
 
 /// <summary>
 ///     Provides a base implementation for classes that have a name.
-///     Prefer to use this instead of implementing <see cref="IHasName" /> directly.
+///     Prefer to use this instead of implementing <see cref="IHasMonoName" /> directly.
 /// </summary>
-public abstract class HasNameBase : IHasName
+public abstract class HasMonoNameBase : IHasMonoName
 {
     /// <summary>
     ///     Maximum length of supported name

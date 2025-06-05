@@ -15,7 +15,7 @@ public abstract class EntityBase
     /// <summary>
     ///     Supports the name behavior for the entity, allowing it to have a name.
     /// </summary>
-    private readonly HasNameBase _nameBehavior = new NameBehavior();
+    private readonly HasMonoNameBase _monoNameBehavior = new MonoNameBehavior();
 
     /// <summary>
     ///     Creates a new instance of <see cref="EntityBase" /> with a new unique identifier.
@@ -31,8 +31,8 @@ public abstract class EntityBase
     /// </summary>
     public string Name
     {
-        get => _nameBehavior.Name;
-        internal set => _nameBehavior.Name = value;
+        get => _monoNameBehavior.Name;
+        internal set => _monoNameBehavior.Name = value;
     }
 
     /// <summary>
