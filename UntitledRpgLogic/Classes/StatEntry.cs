@@ -4,7 +4,7 @@ using UntitledRpgLogic.Events;
 using UntitledRpgLogic.Interfaces;
 using UntitledRpgLogic.Options;
 
-namespace UntitledRpgLogic.Stat;
+namespace UntitledRpgLogic.Classes;
 
 /// <summary>
 ///     A wrapper for a stat that contains additional information such as damageable behavior, mitigations, and modifiers.
