@@ -74,4 +74,125 @@ public static class DimensionExtensions
                 return 0f; // Default case, should not happen if all shape types are handled
         }
     }
+
+    public static void ChangeScale(this IHasDimensions dimensions, DimensionScale scale)
+    {
+        if (dimensions.DimensionScale == scale) return;
+
+        switch (scale)
+        {
+            case DimensionScale.cm:
+                dimensions.ConvertToCm();
+                return;
+            case DimensionScale.m:
+                dimensions.ConvertToM();
+                return;
+            case DimensionScale.km:
+                dimensions.ConvertToKm();
+                return;
+            case DimensionScale.mm:
+                dimensions.ConvertToMm();
+                return;
+        }
+    }
+
+    public static void ConvertToMm(this IHasDimensions dimensions)
+    {
+        switch (dimensions.DimensionScale)
+        {
+            case DimensionScale.cm:
+                dimensions.Width *= 10;
+                dimensions.Height *= 10;
+                dimensions.Depth *= 10;
+                break;
+            case DimensionScale.m:
+                dimensions.Width *= 1000;
+                dimensions.Height *= 1000;
+                dimensions.Depth *= 1000;
+                break;
+            case DimensionScale.km:
+                dimensions.Width *= 1_000_000;
+                dimensions.Height *= 1_000_000;
+                dimensions.Depth *= 1_000_000;
+                break;
+            case DimensionScale.mm:
+                // Already in mm, do nothing
+                break;
+        }
+    }
+
+    public static void ConvertToCm(this IHasDimensions dimensions)
+    {
+        switch (dimensions.DimensionScale)
+        {
+            case DimensionScale.mm:
+                dimensions.Width /= 10;
+                dimensions.Height /= 10;
+                dimensions.Depth /= 10;
+                break;
+            case DimensionScale.m:
+                dimensions.Width *= 100;
+                dimensions.Height *= 100;
+                dimensions.Depth *= 100;
+                break;
+            case DimensionScale.km:
+                dimensions.Width *= 100_000;
+                dimensions.Height *= 100_000;
+                dimensions.Depth *= 100_000;
+                break;
+            case DimensionScale.cm:
+                // Already in cm, do nothing
+                break;
+        }
+    }
+
+    public static void ConvertToM(this IHasDimensions dimensions)
+    {
+        switch (dimensions.DimensionScale)
+        {
+            case DimensionScale.mm:
+                dimensions.Width /= 1000;
+                dimensions.Height /= 1000;
+                dimensions.Depth /= 1000;
+                break;
+            case DimensionScale.cm:
+                dimensions.Width /= 100;
+                dimensions.Height /= 100;
+                dimensions.Depth /= 100;
+                break;
+            case DimensionScale.km:
+                dimensions.Width *= 1000;
+                dimensions.Height *= 1000;
+                dimensions.Depth *= 1000;
+                break;
+            case DimensionScale.m:
+                // Already in m, do nothing
+                break;
+        }
+    }
+
+    public static void ConvertToKm(this IHasDimensions dimensions)
+    {
+        switch (dimensions.DimensionScale)
+        {
+            case DimensionScale.mm:
+                dimensions.Width /= 1_000_000;
+                dimensions.Height /= 1_000_000;
+                dimensions.Depth /= 1_000_000;
+                break;
+            case DimensionScale.cm:
+                dimensions.Width /= 100_000;
+                dimensions.Height /= 100_000;
+                dimensions.Depth /= 100_000;
+                break;
+            case DimensionScale.m:
+                dimensions.Width /= 1000;
+                dimensions.Height /= 1000;
+                dimensions.Depth /= 1000;
+                break;
+            case DimensionScale.km:
+                // Already in km, do nothing
+                break;
+        }
+    }
 }

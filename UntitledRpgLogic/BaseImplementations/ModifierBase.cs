@@ -1,10 +1,11 @@
+using UntitledRpgLogic.Extensions;
 using UntitledRpgLogic.Interfaces;
 using UntitledRpgLogic.Options;
 
 namespace UntitledRpgLogic.BaseImplementations;
 
 /// <inheritdoc />
-public abstract class ModifiableBase : IModifiable
+public abstract class ModifierBase : IModifier
 {
     /// <summary>
     ///     Internal reference value for the duration, used to reset the duration when refreshing.
@@ -22,10 +23,10 @@ public abstract class ModifiableBase : IModifiable
     private float _duration;
 
     /// <summary>
-    ///     Initializes a new instance of the <see cref="ModifiableBase" /> class with the specified options.
+    ///     Initializes a new instance of the <see cref="ModifierBase" /> class with the specified options.
     /// </summary>
     /// <param name="options">The options to configure this modification.</param>
-    protected ModifiableBase(ModifiableOptions options)
+    protected ModifierBase(ModifiableOptions options)
     {
         IsPermanent = options.IsPermanent ?? true;
         IsPositive = options.IsPositive ?? true;
@@ -41,7 +42,6 @@ public abstract class ModifiableBase : IModifiable
         ModificationPriority = options.ModificationPriority ?? 0;
 
         RecalculateEffectiveAmount();
-        Display = BuildDisplay();
         _durationReferenceValue = Duration;
 
 #if DEBUG
@@ -86,7 +86,7 @@ public abstract class ModifiableBase : IModifiable
     public float EffectiveAmount { get; private set; }
 
     /// <inheritdoc />
-    public string Display { private set; get; }
+    public string Display => this.ToDisplay();
 
     /// <inheritdoc />
     public int MaxStacks { get; }
@@ -118,7 +118,6 @@ public abstract class ModifiableBase : IModifiable
             _currentStacks = value;
 
             RecalculateEffectiveAmount();
-            Display = BuildDisplay();
 
             if (_currentStacks <= 0)
                 // If stacks reach zero, trigger the expiration event
@@ -208,19 +207,5 @@ public abstract class ModifiableBase : IModifiable
     {
         // placeholder calculation. Really is affected by stacks, the stack effect, and all that.
         EffectiveAmount = CurrentStacks * Amount;
-    }
-
-    /// <summary>
-    ///     Builds the display string for this modification based on its properties.
-    /// </summary>
-    /// <returns>tooltip display for the modification</returns>
-    private string BuildDisplay()
-    {
-        var sign = IsPositive ? "+" : "-";
-        var value = IsPercentage ? $"{EffectiveAmount * 100:F1}" : $"{EffectiveAmount:F1}";
-        var percentage = IsPercentage ? "%" : string.Empty;
-        var baseValue = ScalesOnBaseValue ? " (of base)" : string.Empty;
-
-        return $"{sign}{value}{percentage}{baseValue}";
     }
 }

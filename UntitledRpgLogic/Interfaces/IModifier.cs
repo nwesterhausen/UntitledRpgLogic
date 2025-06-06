@@ -6,7 +6,7 @@ namespace UntitledRpgLogic.Interfaces;
 ///     Represents a modification that can be applied to a stat, such as a buff or debuff.
 ///     Supports stacking, duration, and different application rules.
 /// </summary>
-public interface IModifiable
+public interface IModifier
 {
     /// <summary>
     ///     Gets a value indicating whether the modification is permanent (true) or temporary (false).

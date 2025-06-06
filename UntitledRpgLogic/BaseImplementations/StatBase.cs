@@ -1,5 +1,7 @@
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using UntitledRpgLogic.CompositionBehaviors;
+using UntitledRpgLogic.Extensions;
 using UntitledRpgLogic.Interfaces;
 using UntitledRpgLogic.Options;
 
@@ -8,7 +10,7 @@ namespace UntitledRpgLogic.BaseImplementations;
 /// <summary>
 ///     Abstract base class for RPG stats.
 /// </summary>
-public abstract class StatBase : IHasValue
+public abstract class StatBase : IStat
 {
     /// <summary>
     ///     Default maximum value for a stat.
@@ -23,12 +25,17 @@ public abstract class StatBase : IHasValue
     public const int STAT_DEFAULT_MIN_VALUE = 0;
 
     /// <summary>
+    ///     Adds a GUID to the stat, which is used for unique identification.
+    /// </summary>
+    private readonly GuidBehavior _guidBehavior;
+
+    /// <summary>
     ///     Adds logging for the skill.
     /// </summary>
     private readonly LoggingBehavior _logging;
 
     /// <summary>
-    ///     Adds a name to the skill.
+    ///     Adds a name to the stat.
     /// </summary>
     private readonly IHasName _nameBehavior;
 
@@ -44,6 +51,7 @@ public abstract class StatBase : IHasValue
     protected StatBase(StatOptions options)
     {
         _nameBehavior = new NameBehavior(options.Name);
+        _guidBehavior = new GuidBehavior();
 
         // Set the variation, defaulting to Pseudo if not specified
         Variation = options.Variation ?? StatVariation.Pseudo;
@@ -65,14 +73,19 @@ public abstract class StatBase : IHasValue
     }
 
     /// <summary>
+    ///     Default maximum value for a stat.
+    /// </summary>
+    public int DefaultMaxValue => STAT_DEFAULT_MAX_VALUE;
+
+    /// <summary>
+    ///     Default minimum value for a stat.
+    /// </summary>
+    public int DefaultMinValue => STAT_DEFAULT_MIN_VALUE;
+
+    /// <summary>
     ///     Whether this stat is a major, minor, pseudo, or complex stat.
     /// </summary>
     public StatVariation Variation { get; init; }
-
-    /// <summary>
-    ///     The name of the stat.
-    /// </summary>
-    public string Name => _nameBehavior.Name;
 
     /// <summary>
     ///     The minimum value for this stat. This is the lowest value the stat can have.
@@ -104,6 +117,11 @@ public abstract class StatBase : IHasValue
     ///     The percentage of the stat, which is the Value divided by MaxValue.
     /// </summary>
     public float Percent => EffectivePercent;
+
+    /// <summary>
+    ///     The name of the stat.
+    /// </summary>
+    public string Name => _nameBehavior.Name;
 
     /// <inheritdoc />
     public int Value
@@ -157,47 +175,34 @@ public abstract class StatBase : IHasValue
     /// <inheritdoc />
     public event Action<int, int>? ValueChanged;
 
-    /// <summary>
-    ///     Link this stat to another stat with a specific ratio. This is used to create dependencies between stats,
-    ///     but only for minor, pseudo, or complex stats. Major stats are designed to be independent and cannot be linked
-    ///     to other stats.
-    /// </summary>
-    /// <param name="other"></param>
-    /// <param name="ratio"></param>
-    internal void LinkTo(StatBase other, double ratio = 1.0)
-    {
-        if (Variation == StatVariation.Major)
-        {
-            // Major stats cannot be linked to other stats.
-            var ex = new InvalidOperationException("Major stats cannot be linked to other stats.");
-#if DEBUG
-            throw ex;
-#endif
-            _logging.LogError(ex, LoggingEventIds.STAT_LINKED);
-            return;
-        }
+    /// <inheritdoc />
+    public Guid Guid => _guidBehavior.Guid;
 
-        _logging.LogEvent(LoggingEventIds.STAT_LINKED, Name, other.Name, ratio);
-        // Logic to link this stat to another stat with a specific ratio
+    /// <inheritdoc />
+    public string Id => _guidBehavior.Id;
+
+    /// <inheritdoc />
+    public string ShortGuid => _guidBehavior.ShortGuid;
+
+    /// <inheritdoc />
+    public ILogger Logger => _logging.Logger;
+
+    /// <inheritdoc />
+    public void LogEvent(EventId eventId, params object?[] args)
+    {
+        _logging.LogEvent(eventId, args);
     }
 
-    /// <summary>
-    ///     Explicitly converts a stat to its string representation.
-    /// </summary>
-    /// <param name="stat">The stat to convert.</param>
-    public static explicit operator string(StatBase stat)
+    /// <inheritdoc />
+    public void LogError(Exception exception, EventId eventId)
     {
-        if (stat.MinValue == STAT_DEFAULT_MIN_VALUE)
-            return
-                $"{stat.Variation} {stat.Name}: {stat.Value} / {stat.MaxValue} ({stat.Value / (float)stat.MaxValue:F2 * 100}";
-
-        return
-            $"{stat.Variation} {stat.Name}: {stat.Value} / {stat.MaxValue} with {stat.MinValue} minimum ({stat.EffectiveValue:F2})%";
+        _logging.LogError(exception, eventId);
     }
+
 
     /// <inheritdoc />
     public override string ToString()
     {
-        return (string)this;
+        return this.IntoString();
     }
 }

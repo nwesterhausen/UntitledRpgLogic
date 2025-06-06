@@ -47,7 +47,7 @@ public class StatEntry<T> where T : StatBase
     ///     The list of modifiers that apply to this stat entry, such as buffs, debuffs, or other effects that modify the
     ///     stat's value.
     /// </summary>
-    private List<IModifiable> Modifiers { get; } = []; // For buffs, debuffs, etc.
+    private List<IModifier> Modifiers { get; } = []; // For buffs, debuffs, etc.
 
     /// <summary>
     ///     Apply damage to the stat entry using the provided damage options and damage calculator.
@@ -108,7 +108,7 @@ public class StatEntry<T> where T : StatBase
     ///     Add a modifier to this stat entry, such as buffs, debuffs, or other effects that modify the stat's value.
     /// </summary>
     /// <param name="modifier"></param>
-    public void AddModifier(IModifiable modifier)
+    public void AddModifier(IModifier modifier)
     {
         Modifiers.Add(modifier);
     }
@@ -117,7 +117,7 @@ public class StatEntry<T> where T : StatBase
     ///     Remove a modifier from this stat entry.
     /// </summary>
     /// <param name="modifier"></param>
-    public void RemoveModifier(IModifiable modifier)
+    public void RemoveModifier(IModifier modifier)
     {
         Modifiers.Remove(modifier);
     }

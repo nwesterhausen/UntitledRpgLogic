@@ -31,17 +31,4 @@ public interface ICurrency : IHasPluralName, ITradable, IHasTooltipString
     /// <param name="value">total amount of <see cref="ITradable.Value" /> to subtract</param>
     /// <returns>any <see cref="ITradable.Value" /> not able to be subtracted</returns>
     long Subtract(long value);
-
-    /// <summary>
-    ///     Convert this currency into another currency. Any limit which cannot be wholly converted is retained in this
-    ///     currency.
-    /// </summary>
-    /// <param name="currency">target currency to convert into</param>
-    /// <param name="limit">(optional) a limit to how many of target currency to convert into</param>
-    /// <returns>if any amount was successfully converted</returns>
-    /// <remarks>
-    ///     this will act similar to <see cref="Subtract" /> in that it removes <see cref="ITradable.Value" /> from this
-    ///     currency. it should <see cref="Add" /> to the target currency.
-    /// </remarks>
-    bool ConvertToCurrency(ICurrency currency, int? limit = null);
 }

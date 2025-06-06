@@ -1,4 +1,5 @@
 using UntitledRpgLogic.Classes;
+using UntitledRpgLogic.Extensions;
 using UntitledRpgLogic.Interfaces;
 using UntitledRpgLogic.Options;
 
@@ -7,11 +8,6 @@ namespace UntitledRpgLogic.BaseImplementations;
 /// <inheritdoc />
 public abstract class MaterialBase : IMaterial
 {
-    /// <summary>
-    ///     The universal gas constant in J/(mol·K), used in the ideal gas law for calculating density in the gas state.
-    /// </summary>
-    private const double UniversalGasConstant = 8.314;
-
     /// <summary>
     ///     Hint for the state of matter based on temperature.
     ///     The key is the temperature at which the state changes, and the value is the corresponding state of matter.
@@ -86,41 +82,7 @@ public abstract class MaterialBase : IMaterial
     /// <param name="temperature">Optional temperature override for the calculation.</param>
     private void UpdateDensity(int? pressure = null, int? temperature = null)
     {
-        switch (State)
-        {
-            case StateOfMatter.Solid:
-            {
-                var p0 = StateProperties[StateOfMatter.Solid].DensityAtStateChange;
-                var t0 = StateProperties[StateOfMatter.Solid].TemperatureAtStateChange;
-                var t = temperature ?? Temperature;
-
-                Density = p0 * (1 + SolidCoefficientOfExpansion * (t - t0));
-                break;
-            }
-            case StateOfMatter.Liquid:
-            {
-                var p0 = StateProperties[StateOfMatter.Liquid].DensityAtStateChange;
-                var t0 = StateProperties[StateOfMatter.Liquid].TemperatureAtStateChange;
-                var t = temperature ?? Temperature;
-
-                Density = p0 * (1 + LiquidCoefficientOfExpansion * (t - t0));
-                break;
-            }
-            case StateOfMatter.Gas:
-            {
-                var t = (temperature ?? Temperature) + 273.15; // Convert Celsius to Kelvin
-                var p = pressure ?? Pressure;
-
-                // Ideal gas law: PV = nRT => Density (ρ) = m / V = (p * M) / (R * T)
-                Density = p * MolarMass / (UniversalGasConstant * t);
-                break;
-            }
-            default:
-#if DEBUG
-                throw new InvalidOperationException($"Cannot calculate density for unknown state: {State}");
-#endif
-                break;
-        }
+        Density = this.CalculateDensity(pressure, temperature);
     }
 
     /// <summary>

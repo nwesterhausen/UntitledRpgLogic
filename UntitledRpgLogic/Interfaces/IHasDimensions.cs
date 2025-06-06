@@ -20,17 +20,17 @@ public interface IHasDimensions
     /// <summary>
     ///     The width of the object in the specified dimension scale.
     /// </summary>
-    public float Width { get; }
+    public float Width { get; set; }
 
     /// <summary>
     ///     The height of the object in the specified dimension scale.
     /// </summary>
-    public float Height { get; }
+    public float Height { get; set; }
 
     /// <summary>
     ///     The depth of the object in the specified dimension scale.
     /// </summary>
-    public float Depth { get; }
+    public float Depth { get; set; }
 
     /// <summary>
     ///     The volume of the object in the specified dimension scale.

@@ -142,28 +142,6 @@ public abstract class CurrencyBase : ICurrency
         return remainingValue;
     }
 
-    /// <inheritdoc />
-    public bool ConvertToCurrency(ICurrency currency, int? limit = null)
-    {
-        // Calculate how much can be converted
-        var canConvert = (int)(GetTotalValue() / currency.Value);
-
-        if (limit == null || canConvert < limit) limit = canConvert;
-
-        if (limit <= 0) return false;
-
-        // Calculate how much to subtract from this currency
-        var toSubtract = limit.Value * currency.Value;
-        // Subtract the value from this currency
-        var remaining = Subtract(toSubtract);
-
-        // Find the actual amount to add to the target currency
-        var toAdd = toSubtract - remaining;
-        // Add the value to the target currency
-        currency.Add(toAdd);
-
-        return true;
-    }
 
     /// <inheritdoc />
     string IHasName.Name => PluralName.Singular;

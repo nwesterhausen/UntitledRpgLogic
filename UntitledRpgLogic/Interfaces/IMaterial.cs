@@ -47,4 +47,9 @@ public interface IMaterial
     ///     The pressure exerted on the material in Kilopascals (kPa).
     /// </summary>
     int Pressure { get; }
+
+    /// <summary>
+    ///     The density of the material in grams per cubic centimeter (g/cm³).
+    /// </summary>
+    double Density { get; }
 }

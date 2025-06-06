@@ -6,7 +6,7 @@ namespace UntitledRpgLogic.BaseImplementations;
 /// <summary>
 ///     Represents the base class for all entities in the RPG system using composition.
 /// </summary>
-public abstract class EntityBase
+public abstract class EntityBase : IEntity
 {
     /// <summary>
     ///     Supports the GUID behavior for the entity, allowing it to have a unique identifier.
@@ -21,10 +21,10 @@ public abstract class EntityBase
     /// <summary>
     ///     Creates a new instance of <see cref="EntityBase" /> with a new unique identifier.
     /// </summary>
-    /// <param name="id">Optionally provide a unique identifier to use.</param>
-    protected EntityBase(Guid? id = null)
+    /// <param name="guid">Optionally provide a unique identifier to use.</param>
+    protected EntityBase(Guid? guid = null)
     {
-        if (id != null) _guidBehavior.SetId(id.Value);
+        if (guid != null) _guidBehavior.SetId(guid.Value);
     }
 
     /// <summary>
@@ -36,8 +36,12 @@ public abstract class EntityBase
         internal set => _nameBehavior = new NameBehavior(value);
     }
 
-    /// <summary>
-    ///     Gets the unique identifier of the entity.
-    /// </summary>
-    public Guid Id => _guidBehavior.Guid;
+    /// <inheritdoc />
+    public Guid Guid => _guidBehavior.Guid;
+
+    /// <inheritdoc />
+    public string Id => _guidBehavior.Id;
+
+    /// <inheritdoc />
+    public string ShortGuid => _guidBehavior.ShortGuid;
 }

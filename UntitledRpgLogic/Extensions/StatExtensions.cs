@@ -1,0 +1,23 @@
+using UntitledRpgLogic.BaseImplementations;
+
+namespace UntitledRpgLogic.Extensions;
+
+/// <summary>
+///     Extensions to provide tooltip-related functionality for various objects in the RPG logic.
+/// </summary>
+public static class StatExtensions
+{
+    /// <summary>
+    ///     Explicitly converts a stat to its string representation.
+    /// </summary>
+    /// <param name="stat">The stat to convert.</param>
+    public static string IntoString(this StatBase stat)
+    {
+        if (stat.MinValue == stat.DefaultMinValue)
+            return
+                $"{stat.Variation} {stat.Name}: {stat.Value} / {stat.MaxValue} ({stat.Value / (float)stat.MaxValue:F2 * 100}";
+
+        return
+            $"{stat.Variation} {stat.Name}: {stat.Value} / {stat.MaxValue} with {stat.MinValue} minimum ({stat.EffectiveValue:F2})%";
+    }
+}
