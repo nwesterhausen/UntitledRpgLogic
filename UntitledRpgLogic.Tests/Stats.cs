@@ -52,12 +52,10 @@ public class StatBaseTests
     }
 
     [TestMethod]
-    public void ToString_And_ExplicitStringOperator_Work()
+    public void ToString_Works()
     {
         var stat = new TestStat("Wisdom", 100, 50);
         var str1 = stat.ToString();
-        var str2 = (string)stat;
         Assert.IsTrue(str1.Contains("Wisdom"));
-        Assert.AreEqual(str1, str2);
     }
 }
