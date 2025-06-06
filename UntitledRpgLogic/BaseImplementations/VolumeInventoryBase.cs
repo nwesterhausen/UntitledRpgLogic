@@ -1,3 +1,6 @@
+using Microsoft.Extensions.Logging;
+using UntitledRpgLogic.Classes;
+using UntitledRpgLogic.CompositionBehaviors;
 using UntitledRpgLogic.Events;
 using UntitledRpgLogic.Interfaces;
 
@@ -6,12 +9,17 @@ namespace UntitledRpgLogic.BaseImplementations;
 /// <summary>
 ///     A base class for an inventory that has a volume capacity.
 /// </summary>
-public class VolumeInventoryBase : IInventory
+public class VolumeInventoryBase : IInventory, IHasLogging
 {
     /// <summary>
-    ///     The stored items in the inventory, indexed by their unique identifier.
+    ///     The behavior that handles item storage logic
     /// </summary>
-    private Dictionary<Guid, IStorable> _items = new();
+    private readonly ItemStorageBehavior _itemStorageBehavior;
+
+    /// <summary>
+    ///     Behavior that handles logging for the inventory.
+    /// </summary>
+    private readonly LoggingBehavior _loggingBehavior;
 
     /// <summary>
     ///     The total volume of items currently stored in the inventory in cm³.
@@ -22,9 +30,25 @@ public class VolumeInventoryBase : IInventory
     ///     Create a new inventory with a specified capacity.
     /// </summary>
     /// <param name="capacity"></param>
-    protected VolumeInventoryBase(float capacity)
+    /// <param name="logger"></param>
+    protected VolumeInventoryBase(float capacity, ILogger? logger = null)
     {
         Capacity = capacity;
+
+        _loggingBehavior = new LoggingBehavior(logger);
+
+        _itemStorageBehavior = new ItemStorageBehavior(new ItemStorageOptions
+        {
+            HasLimitedStorage = true,
+            AbleToStoreItem = CanStoreItem,
+            CalculateItemStorageUsage = CalculateItemStorageUsage
+        });
+
+        // register event passthrus
+        _itemStorageBehavior.ItemStored += (sender, args) => ItemStored?.Invoke(this, args);
+        _itemStorageBehavior.BeforeItemStored += (sender, args) => BeforeItemStored?.Invoke(this, args);
+        _itemStorageBehavior.ItemRetrieved += (sender, args) => ItemRetrieved?.Invoke(this, args);
+        _itemStorageBehavior.BeforeItemRetrieved += (sender, args) => BeforeItemRetrieved?.Invoke(this, args);
     }
 
     /// <summary>
@@ -33,49 +57,76 @@ public class VolumeInventoryBase : IInventory
     public float Capacity { get; init; }
 
     /// <inheritdoc />
-    public float SpaceRemaining => Capacity - SpaceUsed;
+    public ILogger Logger => _loggingBehavior.Logger;
 
     /// <inheritdoc />
-    public float SpaceUsed { get; private set; }
+    public void LogEvent(EventId eventId, params object?[] args)
+    {
+        _loggingBehavior.LogEvent(eventId, args);
+    }
 
     /// <inheritdoc />
-    public int ItemCount { get; }
-
-    /// <inheritdoc />
-    public bool IsFull => SpaceRemaining == 0;
-
-    /// <inheritdoc />
-    public bool AllowsStacking => true;
-
-    /// <inheritdoc />
-    public bool HasUnlimitedCurrencyStorage => false;
-
-    /// <inheritdoc />
-    public bool AllowsStoringInventories => false;
+    public void LogError(Exception exception, EventId eventId)
+    {
+        _loggingBehavior.LogError(exception, eventId);
+    }
 
     /// <inheritdoc />
     public bool StoreItem(IStorable item)
     {
-        throw new NotImplementedException();
+        return _itemStorageBehavior.StoreItem(item);
     }
+
+    /// <inheritdoc />
+    public float SpaceRemaining => 1.0f - SpaceUsed;
+
+    /// <inheritdoc />
+    public float SpaceUsed => _totalItemVolume / Capacity;
+
+    /// <inheritdoc />
+    public int ItemCount => _itemStorageBehavior.ItemCount;
+
+    /// <inheritdoc />
+    public bool HasLimitedStorage => _itemStorageBehavior.HasLimitedStorage;
+
+    /// <inheritdoc />
+    public float Usage => _itemStorageBehavior.Usage;
+
+    /// <inheritdoc />
+    public bool AllowsStacking => _itemStorageBehavior.AllowsStacking;
+
+    /// <inheritdoc />
+    public bool HasUnlimitedCurrencyStorage => false; // Volume inventory does not support unlimited currency storage
+
+    /// <inheritdoc />
+    public bool AllowsStoringInventories => true;
+
+    /// <inheritdoc />
+    public bool IsFull => _itemStorageBehavior.IsFull;
 
     /// <inheritdoc />
     public bool TryRetrieveItem(Guid itemId, out IStorable? item)
     {
-        throw new NotImplementedException();
+        return _itemStorageBehavior.TryRetrieveItem(itemId, out item);
     }
 
     /// <inheritdoc />
     public bool TryRetrieveItem(string itemName, out IStorable? item)
     {
-        throw new NotImplementedException();
+        return _itemStorageBehavior.TryRetrieveItem(itemName, out item);
     }
 
     /// <inheritdoc />
-    public event EventHandler<ItemStoredEventArgs>? ItemStored;
+    public event EventHandler<SuccessfulItemStorageEventArgs>? ItemStored;
 
     /// <inheritdoc />
-    public event EventHandler<ItemRetrievedEventArgs>? ItemRetrieved;
+    public event EventHandler<CancelableItemActionEventArgs>? BeforeItemStored;
+
+    /// <inheritdoc />
+    public event EventHandler<SuccessfulItemStorageEventArgs>? ItemRetrieved;
+
+    /// <inheritdoc />
+    public event EventHandler<CancelableItemActionEventArgs>? BeforeItemRetrieved;
 
     /// <inheritdoc />
     public ICurrency? DepositCurrency(ICurrency currency, int? amount = null)
@@ -94,4 +145,27 @@ public class VolumeInventoryBase : IInventory
 
     /// <inheritdoc />
     public event EventHandler<CurrencyWithdrawnEventArgs>? CurrencyWithdrawn;
+
+    /// <summary>
+    ///     Our delegate to determine if an item can be stored in the inventory. Utilizes volume calculations.
+    /// </summary>
+    /// <param name="item"></param>
+    /// <returns></returns>
+    private bool CanStoreItem(IStorable item)
+    {
+        if (_totalItemVolume + item.Volume > Capacity) return false; // Not enough space in the inventory
+
+        return true;
+    }
+
+    /// <summary>
+    ///     Our delegate to calculate the storage usage of the inventory based on the items stored.
+    /// </summary>
+    /// <param name="items"></param>
+    /// <returns></returns>
+    private float CalculateItemStorageUsage(IEnumerable<IStorable> items)
+    {
+        _totalItemVolume = items.Sum(item => item.Volume);
+        return _totalItemVolume / Capacity;
+    }
 }

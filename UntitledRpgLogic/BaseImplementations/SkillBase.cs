@@ -20,7 +20,7 @@ public abstract class SkillBase : ISkill
     ///     Provides the leveling behavior for the skill, which includes functionality for tracking experience points and
     ///     levels.
     /// </summary>
-    private readonly HasLevelingBase _levelingBehavior;
+    private readonly LevelingBehavior _levelingBehavior;
 
     /// <summary>
     ///     Adds logging for the skill.

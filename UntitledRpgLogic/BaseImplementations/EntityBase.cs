@@ -11,12 +11,12 @@ public abstract class EntityBase : IEntity
     /// <summary>
     ///     Supports the GUID behavior for the entity, allowing it to have a unique identifier.
     /// </summary>
-    private readonly HasGuidBase _guidBehavior = new GuidBehavior();
+    private readonly GuidBehavior _guidBehavior;
 
     /// <summary>
     ///     Supports the name behavior for the entity, allowing it to have a name.
     /// </summary>
-    private IHasName _nameBehavior = new NameBehavior();
+    private NameBehavior _nameBehavior = new();
 
     /// <summary>
     ///     Creates a new instance of <see cref="EntityBase" /> with a new unique identifier.
@@ -24,7 +24,7 @@ public abstract class EntityBase : IEntity
     /// <param name="guid">Optionally provide a unique identifier to use.</param>
     protected EntityBase(Guid? guid = null)
     {
-        if (guid != null) _guidBehavior.SetId(guid.Value);
+        _guidBehavior = new GuidBehavior(guid);
     }
 
     /// <summary>

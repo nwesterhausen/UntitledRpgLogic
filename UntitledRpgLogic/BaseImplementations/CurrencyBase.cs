@@ -1,4 +1,5 @@
 using UntitledRpgLogic.Classes;
+using UntitledRpgLogic.CompositionBehaviors;
 using UntitledRpgLogic.Interfaces;
 using UntitledRpgLogic.Options;
 
@@ -7,6 +8,11 @@ namespace UntitledRpgLogic.BaseImplementations;
 /// <inheritdoc />
 public abstract class CurrencyBase : ICurrency
 {
+    /// <summary>
+    ///     Internal handle for the GUID behavior, allowing this currency to have a unique identifier.
+    /// </summary>
+    private readonly GuidBehavior _guidBehavior;
+
     /// <summary>
     ///     Internal field to store the amount of this currency.
     /// </summary>
@@ -18,6 +24,8 @@ public abstract class CurrencyBase : ICurrency
     /// <param name="options"></param>
     protected CurrencyBase(CurrencyOptions options)
     {
+        _guidBehavior = new GuidBehavior(options.Guid);
+
         PluralName = options.PluralName == null
             ? new PluralName(options.Name)
             : new PluralName(options.Name, options.PluralName);
@@ -141,6 +149,9 @@ public abstract class CurrencyBase : ICurrency
         Amount = workingAmount;
         return remainingValue;
     }
+
+    /// <inheritdoc />
+    public Guid CurrencyId => _guidBehavior.Guid;
 
 
     /// <inheritdoc />

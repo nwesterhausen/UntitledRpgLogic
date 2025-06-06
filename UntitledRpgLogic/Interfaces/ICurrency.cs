@@ -17,6 +17,11 @@ public interface ICurrency : IHasPluralName, ITradable, IHasTooltipString
     IMaterial Material { get; }
 
     /// <summary>
+    ///     A unique identifier for the currency type, used for serialization and identification purposes.
+    /// </summary>
+    Guid CurrencyId { get; }
+
+    /// <summary>
     ///     Add an amount of <see cref="ITradable.Value" /> to this currency. Any value which cannot be wholly added is
     ///     returned.
     /// </summary>

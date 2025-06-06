@@ -27,4 +27,9 @@ public class CurrencyOptions
     ///     What material this currency is made of.
     /// </summary>
     public required IMaterial Material { get; set; }
+
+    /// <summary>
+    ///     Specify a unique identifier for the currency type, used for serialization and identification purposes.
+    /// </summary>
+    public Guid? Guid { get; set; }
 }

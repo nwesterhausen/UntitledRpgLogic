@@ -1,9 +1,13 @@
+using UntitledRpgLogic.BaseImplementations;
 using UntitledRpgLogic.Interfaces;
 
-namespace UntitledRpgLogic.BaseImplementations;
+namespace UntitledRpgLogic.CompositionBehaviors;
 
-/// <inheritdoc />
-public abstract class DamageableBase<T> : IDamageable
+/// <summary>
+///     Behavior that allows a stat to be both damaged and healed.
+/// </summary>
+/// <typeparam name="T"></typeparam>
+public class HealableBehavior<T> : IDamageable, IHealable
     where T : StatBase
 {
     /// <summary>
@@ -17,10 +21,10 @@ public abstract class DamageableBase<T> : IDamageable
     private int _currentDamage;
 
     /// <summary>
-    ///     Initializes a new instance of the <see cref="DamageableBase{T}" /> class with the specified stat.
+    ///     Initializes a new instance of the <see cref="DamageableBehavior{T}" /> class with the specified stat.
     /// </summary>
     /// <param name="stat"></param>
-    protected DamageableBase(T stat)
+    public HealableBehavior(T stat)
     {
         _stat = stat;
     }
@@ -66,8 +70,26 @@ public abstract class DamageableBase<T> : IDamageable
 
         // Apply the damage to the current damage
         CurrentDamage += amount;
+
+        // Raise the DamageTaken event with the amount of damage taken
+        DamageTaken?.Invoke(this, amount);
     }
 
     /// <inheritdoc />
     public event EventHandler<int>? DamageTaken;
+
+    /// <inheritdoc />
+    public void Heal(int amount)
+    {
+        if (amount <= 0) return;
+
+        // Apply the healing by reducing the current damage
+        CurrentDamage -= amount;
+
+        // Raise the Healed event with the amount of healing applied
+        Healed?.Invoke(this, amount);
+    }
+
+    /// <inheritdoc />
+    public event EventHandler<int>? Healed;
 }
