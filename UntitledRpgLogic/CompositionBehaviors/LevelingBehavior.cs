@@ -38,7 +38,7 @@ public class LevelingBehavior : IHasLeveling
     private int _expPoints;
 
     /// <summary>
-    ///     Initializes a new instance of the <see cref="HasLevelingBase" /> class with the specified leveling options.
+    ///     Initializes a new behavior that implements <see cref="IHasLeveling" /> interface with the specified leveling options.
     /// </summary>
     /// <param name="options"></param>
     public LevelingBehavior(LevelingOptions options)

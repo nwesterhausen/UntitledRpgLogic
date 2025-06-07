@@ -1,7 +1,7 @@
 namespace UntitledRpgLogic.Options;
 
 /// <summary>
-///     Options for configuring <see cref="BaseImplementations.HasLevelingBase" />-derived objects.
+///     Options for configuring <see cref="Interfaces.IHasLeveling" />-derived objects.
 /// </summary>
 public class LevelingOptions
 {

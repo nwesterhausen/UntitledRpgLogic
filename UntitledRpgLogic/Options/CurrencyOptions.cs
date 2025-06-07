@@ -14,7 +14,7 @@ public class CurrencyOptions
 
     /// <summary>
     ///     The plural name of the currency. Specify this if you prefer the plural to match the singalar or
-    ///     if the plural is not simply derived by <see crefClassesms.PluralName.BestGuessPlural" />
+    ///     if the plural is not simply derived by <see cref="Classes.PluralName.BestGuessPlural" />
     /// </summary>
     public string? PluralName { get; set; }
 

@@ -26,8 +26,8 @@ public class CurrencyStorageBehavior : ICurrencyStorage
     }
 
     /// <inheritdoc />
-    public event EventHandler<CurrencyDepositedEventArgs>? CurrencyDeposited;
+    public event EventHandler<CurrencyMovedEventArgs>? CurrencyDeposited;
 
     /// <inheritdoc />
-    public event EventHandler<CurrencyWithdrawnEventArgs>? CurrencyWithdrawn;
+    public event EventHandler<CurrencyMovedEventArgs>? CurrencyWithdrawn;
 }

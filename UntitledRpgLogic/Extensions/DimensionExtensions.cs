@@ -75,6 +75,11 @@ public static class DimensionExtensions
         }
     }
 
+    /// <summary>
+    ///     Convert the dimensions to a different scale.
+    /// </summary>
+    /// <param name="dimensions"></param>
+    /// <param name="scale"></param>
     public static void ChangeScale(this IHasDimensions dimensions, DimensionScale scale)
     {
         if (dimensions.DimensionScale == scale) return;
@@ -96,6 +101,10 @@ public static class DimensionExtensions
         }
     }
 
+    /// <summary>
+    ///     Convert the dimensions to millimeters (mm).
+    /// </summary>
+    /// <param name="dimensions"></param>
     public static void ConvertToMm(this IHasDimensions dimensions)
     {
         switch (dimensions.DimensionScale)
@@ -121,6 +130,10 @@ public static class DimensionExtensions
         }
     }
 
+    /// <summary>
+    ///     Convert the dimensions to centimeters (cm).
+    /// </summary>
+    /// <param name="dimensions"></param>
     public static void ConvertToCm(this IHasDimensions dimensions)
     {
         switch (dimensions.DimensionScale)
@@ -146,6 +159,10 @@ public static class DimensionExtensions
         }
     }
 
+    /// <summary>
+    ///     Convert the dimensions to meters (m).
+    /// </summary>
+    /// <param name="dimensions"></param>
     public static void ConvertToM(this IHasDimensions dimensions)
     {
         switch (dimensions.DimensionScale)
@@ -171,6 +188,10 @@ public static class DimensionExtensions
         }
     }
 
+    /// <summary>
+    ///     Convert the dimensions to kilometers (km).
+    /// </summary>
+    /// <param name="dimensions"></param>
     public static void ConvertToKm(this IHasDimensions dimensions)
     {
         switch (dimensions.DimensionScale)

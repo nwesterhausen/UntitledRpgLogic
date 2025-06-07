@@ -141,10 +141,10 @@ public class VolumeInventoryBase : IInventory, IHasLogging
     }
 
     /// <inheritdoc />
-    public event EventHandler<CurrencyDepositedEventArgs>? CurrencyDeposited;
+    public event EventHandler<CurrencyMovedEventArgs>? CurrencyDeposited;
 
     /// <inheritdoc />
-    public event EventHandler<CurrencyWithdrawnEventArgs>? CurrencyWithdrawn;
+    public event EventHandler<CurrencyMovedEventArgs>? CurrencyWithdrawn;
 
     /// <summary>
     ///     Our delegate to determine if an item can be stored in the inventory. Utilizes volume calculations.

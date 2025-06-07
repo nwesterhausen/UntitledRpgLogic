@@ -58,6 +58,14 @@ public static class MaterialExtensions
         return 0; // Default return value if no state matches
     }
 
+    /// <summary>
+    ///     Calculate the weight of a material based on its volume, pressure, and temperature.
+    /// </summary>
+    /// <param name="material"></param>
+    /// <param name="volume"></param>
+    /// <param name="pressure"></param>
+    /// <param name="temperature"></param>
+    /// <returns></returns>
     public static double CalculateWeight(this IMaterial material, double volume, int? pressure = null,
         int? temperature = null)
     {

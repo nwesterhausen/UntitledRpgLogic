@@ -4,7 +4,9 @@ using UntitledRpgLogic.Options;
 
 namespace UntitledRpgLogic.Classes;
 
-/// <inheritdoc />
+/// <summary>
+///     Implements the IDamageCalculator interface to calculate final damage after applying mitigations.
+/// </summary>
 public class DamageCalculator : IDamageCalculator
 {
     /// <inheritdoc />

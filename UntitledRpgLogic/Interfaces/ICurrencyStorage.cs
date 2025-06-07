@@ -26,10 +26,10 @@ public interface ICurrencyStorage
     /// <summary>
     ///     Occurs when currency is deposited into the inventory.
     /// </summary>
-    event EventHandler<CurrencyDepositedEventArgs> CurrencyDeposited;
+    event EventHandler<CurrencyMovedEventArgs>? CurrencyDeposited;
 
     /// <summary>
     ///     Occurs when currency is withdrawn from the inventory.
     /// </summary>
-    event EventHandler<CurrencyWithdrawnEventArgs> CurrencyWithdrawn;
+    event EventHandler<CurrencyMovedEventArgs>? CurrencyWithdrawn;
 }
