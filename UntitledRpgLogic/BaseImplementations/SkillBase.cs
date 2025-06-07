@@ -54,18 +54,18 @@ public abstract class SkillBase : ISkill
 
         _loggingBehavior = new LoggingBehavior(options.Logger ?? NullLogger<SkillBase>.Instance);
 
-        LogEvent(LoggingEventIds.SKILL_CREATED, this);
+        LogEvent(EventIds.SKILL_CREATED, this);
 
         // Register the ValueChanged event to log changes in skill points
         _levelingBehavior.ValueChanged += (_, valueChanges) =>
         {
-            LogEvent(LoggingEventIds.SKILL_LEVEL_CHANGED, Name, valueChanges.PreviousValue, valueChanges.NewValue);
+            LogEvent(EventIds.SKILL_LEVEL_CHANGED, Name, valueChanges.PreviousValue, valueChanges.NewValue);
             ValueChanged?.Invoke(this, valueChanges);
         };
         // Register the LevelChanged event to log changes in skill level
         _levelingBehavior.LevelChanged += (_, levelChanges) =>
         {
-            LogEvent(LoggingEventIds.SKILL_LEVEL_CHANGED, Name, levelChanges.PreviousValue, levelChanges.NewValue);
+            LogEvent(EventIds.SKILL_LEVEL_CHANGED, Name, levelChanges.PreviousValue, levelChanges.NewValue);
             LevelChanged?.Invoke(this, levelChanges);
         };
     }

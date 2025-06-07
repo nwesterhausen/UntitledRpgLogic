@@ -7,7 +7,7 @@ namespace UntitledRpgLogic;
 ///     Event IDs for logging various events in the RPG logic.
 /// </summary>
 [SuppressMessage("ReSharper", "InconsistentNaming")]
-public static class LoggingEventIds
+public static class EventIds
 {
     /// <summary>
     ///     Integer value for stat creation event.

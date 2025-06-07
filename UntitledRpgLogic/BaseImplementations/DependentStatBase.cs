@@ -31,11 +31,11 @@ public abstract class DependentStatBase : StatBase
 #if DEBUG
             throw ex;
 #endif
-            LogError(ex, LoggingEventIds.STAT_LINKED);
+            LogError(ex, EventIds.STAT_LINKED);
             return;
         }
 
-        LogEvent(LoggingEventIds.STAT_LINKED, Name, other.Name, ratio);
+        LogEvent(EventIds.STAT_LINKED, Name, other.Name, ratio);
         // Logic to link this stat to another stat with a specific ratio
     }
 }

@@ -16,7 +16,7 @@ public interface IHasLogging
     ///     Add a log entry with the specified event ID.
     /// </summary>
     /// <remarks>This should not log invalid event ids for your class</remarks>
-    /// <param name="eventId">see <see cref="LoggingEventIds" /> for options</param>
+    /// <param name="eventId">see <see cref="EventIds" /> for options</param>
     /// <param name="args">additional details to include with the log entry, based on the EventID</param>
     public void LogEvent(EventId eventId, params object?[] args);
 

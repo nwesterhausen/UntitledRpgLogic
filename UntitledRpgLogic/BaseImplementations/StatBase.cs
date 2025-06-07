@@ -69,13 +69,10 @@ public abstract class StatBase : IStat
         // Initialize the logging behavior with the provided logger or a null logger
         _logging = new LoggingBehavior(options.Logger ?? NullLogger<StatBase>.Instance);
 
-        LogEvent(LoggingEventIds.STAT_CREATED, this);
+        LogEvent(EventIds.STAT_CREATED, this);
 
         // Register the ValueChanged event to log changes in stat value
-        ValueChanged += (oldValue, newValue) =>
-        {
-            LogEvent(LoggingEventIds.STAT_VALUE_CHANGED, Name, oldValue, newValue);
-        };
+        ValueChanged += (oldValue, newValue) => { LogEvent(EventIds.STAT_VALUE_CHANGED, Name, oldValue, newValue); };
     }
 
     /// <summary>
