@@ -1,3 +1,5 @@
+using UntitledRpgLogic.Events;
+
 namespace UntitledRpgLogic.Interfaces;
 
 /// <summary>
@@ -41,5 +43,5 @@ public interface IHasValue
     /// <summary>
     ///     Event that is triggered when the value changes.
     /// </summary>
-    event Action<int, int> ValueChanged;
+    event EventHandler<ValueChangedEventArgs> ValueChanged;
 }

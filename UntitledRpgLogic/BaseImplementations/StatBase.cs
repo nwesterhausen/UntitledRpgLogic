@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using UntitledRpgLogic.CompositionBehaviors;
+using UntitledRpgLogic.Events;
 using UntitledRpgLogic.Extensions;
 using UntitledRpgLogic.Interfaces;
 using UntitledRpgLogic.Options;
@@ -40,9 +41,14 @@ public abstract class StatBase : IStat
     private readonly IHasName _nameBehavior;
 
     /// <summary>
-    ///     Internally stores the value of the stat. This is the actual number that represents the stat's current state.
+    ///     The apparent value of the stat, which is the value after all modifiers have been applied.
     /// </summary>
-    private int _value;
+    private int _apparentValue;
+
+    /// <summary>
+    ///     A protected base value for the stat, which is the raw value before any modifiers are applied.
+    /// </summary>
+    private int _baseValue;
 
     /// <summary>
     ///     Creates a new instance of <see cref="StatBase" />.
@@ -63,12 +69,12 @@ public abstract class StatBase : IStat
         // Initialize the logging behavior with the provided logger or a null logger
         _logging = new LoggingBehavior(options.Logger ?? NullLogger<StatBase>.Instance);
 
-        _logging.LogEvent(LoggingEventIds.STAT_CREATED, this);
+        LogEvent(LoggingEventIds.STAT_CREATED, this);
 
         // Register the ValueChanged event to log changes in stat value
         ValueChanged += (oldValue, newValue) =>
         {
-            _logging.LogEvent(LoggingEventIds.STAT_VALUE_CHANGED, Name, oldValue, newValue);
+            LogEvent(LoggingEventIds.STAT_VALUE_CHANGED, Name, oldValue, newValue);
         };
     }
 
@@ -126,17 +132,39 @@ public abstract class StatBase : IStat
     /// <inheritdoc />
     public int Value
     {
-        get => _value;
+        get => _apparentValue;
         private set
         {
-            if (_value == value) return;
-            var oldValue = _value;
-            _value = value < STAT_DEFAULT_MIN_VALUE ? STAT_DEFAULT_MIN_VALUE : value;
-            _value = value > STAT_DEFAULT_MAX_VALUE ? STAT_DEFAULT_MAX_VALUE : _value;
+            if (_apparentValue == value) return;
+            var valueChange = value - _apparentValue;
+            var oldValue = _apparentValue;
 
-            ValueChanged?.Invoke(oldValue, _value);
+            // Adjust the base value by the change in apparent value
+            _baseValue += valueChange;
+            _apparentValue = 0;
+            BaseValueChanged?.Invoke();
+#if DEBUG
+            if (_apparentValue == 0) {
+                throw new InvalidOperationException("Apparent value is not expected to be zero after base value change.");
+            }
+#endif
+            // Ensure the apparent value is within the defined min and max range
+            _apparentValue = value < STAT_DEFAULT_MIN_VALUE ? STAT_DEFAULT_MIN_VALUE : value;
+            _apparentValue = value > STAT_DEFAULT_MAX_VALUE ? STAT_DEFAULT_MAX_VALUE : _apparentValue;
+
+            // Invoke the ValueChanged event with the old and new values
+            ValueChanged?.Invoke(this, new ValueChangedEventArgs(oldValue, _apparentValue));
         }
     }
+
+    /// <inheritdoc />
+    public void ApplyModifier(IModifier modifier)
+    {
+        _apparentValue = modifier.ApplyModification(_baseValue, _apparentValue);
+    }
+
+    /// <inheritdoc />
+    public event Action? BaseValueChanged;
 
     /// <inheritdoc />
     public void AddPoint()
@@ -173,7 +201,7 @@ public abstract class StatBase : IStat
     }
 
     /// <inheritdoc />
-    public event Action<int, int>? ValueChanged;
+    public event EventHandler<ValueChangedEventArgs>? ValueChanged;
 
     /// <inheritdoc />
     public Guid Guid => _guidBehavior.Guid;

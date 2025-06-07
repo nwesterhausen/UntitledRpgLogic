@@ -1,3 +1,4 @@
+using UntitledRpgLogic.Events;
 using UntitledRpgLogic.Interfaces;
 using UntitledRpgLogic.Options;
 
@@ -70,10 +71,10 @@ public class LevelingBehavior : IHasLeveling
             if (oldValue == newValue) return;
 
             _expPoints = newValue;
-            ValueChanged?.Invoke(oldValue, newValue);
+            ValueChanged?.Invoke(this, new ValueChangedEventArgs(oldValue, newValue));
 
             Level = CalculateLevel();
-            if (oldLevel != Level) LevelChanged?.Invoke(oldLevel, Level);
+            if (oldLevel != Level) LevelChanged?.Invoke(this, new ValueChangedEventArgs(oldLevel, Level));
         }
     }
 
@@ -115,7 +116,7 @@ public class LevelingBehavior : IHasLeveling
     }
 
     /// <inheritdoc />
-    public event Action<int, int>? ValueChanged;
+    public event EventHandler<ValueChangedEventArgs>? ValueChanged;
 
     /// <inheritdoc />
     public int Level { get; private set; }
@@ -144,7 +145,7 @@ public class LevelingBehavior : IHasLeveling
     }
 
     /// <inheritdoc />
-    public event Action<int, int>? LevelChanged;
+    public event EventHandler<ValueChangedEventArgs>? LevelChanged;
 
     /// <inheritdoc />
     public float ScalingFactorB { get; set; }

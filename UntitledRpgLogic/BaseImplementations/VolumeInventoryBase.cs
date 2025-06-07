@@ -24,7 +24,7 @@ public class VolumeInventoryBase : IInventory, IHasLogging
     /// <summary>
     ///     The total volume of items currently stored in the inventory in cm³.
     /// </summary>
-    private float _totalItemVolume = 0f;
+    private float _totalItemVolume;
 
     /// <summary>
     ///     Create a new inventory with a specified capacity.
@@ -45,10 +45,10 @@ public class VolumeInventoryBase : IInventory, IHasLogging
         });
 
         // register event passthrus
-        _itemStorageBehavior.ItemStored += (sender, args) => ItemStored?.Invoke(this, args);
-        _itemStorageBehavior.BeforeItemStored += (sender, args) => BeforeItemStored?.Invoke(this, args);
-        _itemStorageBehavior.ItemRetrieved += (sender, args) => ItemRetrieved?.Invoke(this, args);
-        _itemStorageBehavior.BeforeItemRetrieved += (sender, args) => BeforeItemRetrieved?.Invoke(this, args);
+        _itemStorageBehavior.ItemStored += (_, args) => ItemStored?.Invoke(this, args);
+        _itemStorageBehavior.BeforeItemStored += (_, args) => BeforeItemStored?.Invoke(this, args);
+        _itemStorageBehavior.ItemRetrieved += (_, args) => ItemRetrieved?.Invoke(this, args);
+        _itemStorageBehavior.BeforeItemRetrieved += (_, args) => BeforeItemRetrieved?.Invoke(this, args);
     }
 
     /// <summary>

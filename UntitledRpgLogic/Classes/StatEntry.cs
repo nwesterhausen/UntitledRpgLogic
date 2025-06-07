@@ -21,6 +21,12 @@ public class StatEntry<T> where T : StatBase
     {
         Stat = stat;
         if (isDamageable.HasValue && isDamageable.Value) Damageable = new DamageableBehavior<T>(stat);
+        stat.BaseValueChanged += () =>
+        {
+            // When the base value changes, we want the stat to recalculate its current value
+            // for each modifier, in order of priority, run Stat.ApplyModifier(modifier)
+            foreach (var modifier in Modifiers.OrderBy(m => m.ModificationPriority)) stat.ApplyModifier(modifier);
+        };
     }
 
     /// <summary>

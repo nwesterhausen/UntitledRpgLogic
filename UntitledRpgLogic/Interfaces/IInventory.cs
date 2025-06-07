@@ -16,21 +16,6 @@ public interface IInventory : IItemStorage, ICurrencyStorage
     float SpaceUsed { get; }
 
     /// <summary>
-    ///     Gets the total number of items stored in the inventory.
-    /// </summary>
-    int ItemCount { get; }
-
-    /// <summary>
-    ///     Gets a value indicating whether the inventory is full.
-    /// </summary>
-    bool IsFull { get; }
-
-    /// <summary>
-    ///     Gets a value indicating whether the inventory allows stacking of items.
-    /// </summary>
-    bool AllowsStacking { get; }
-
-    /// <summary>
     ///     Gets a value indicating whether the inventory has unlimited storage for currency.
     /// </summary>
     bool HasUnlimitedCurrencyStorage { get; }

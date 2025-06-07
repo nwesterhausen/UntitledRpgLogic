@@ -1,3 +1,4 @@
+using UntitledRpgLogic.Events;
 using UntitledRpgLogic.Options;
 
 namespace UntitledRpgLogic.Interfaces;
@@ -61,5 +62,5 @@ public interface IHasLeveling : IHasValue
     /// <summary>
     ///     Event that is triggered when the level changes.
     /// </summary>
-    event Action<int, int> LevelChanged;
+    event EventHandler<ValueChangedEventArgs>? LevelChanged;
 }

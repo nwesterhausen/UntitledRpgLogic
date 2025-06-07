@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using UntitledRpgLogic.CompositionBehaviors;
+using UntitledRpgLogic.Events;
 using UntitledRpgLogic.Interfaces;
 using UntitledRpgLogic.Options;
 
@@ -56,16 +57,16 @@ public abstract class SkillBase : ISkill
         LogEvent(LoggingEventIds.SKILL_CREATED, this);
 
         // Register the ValueChanged event to log changes in skill points
-        _levelingBehavior.ValueChanged += (oldValue, newValue) =>
+        _levelingBehavior.ValueChanged += (_, valueChanges) =>
         {
-            LogEvent(LoggingEventIds.SKILL_LEVEL_CHANGED, Name, oldValue, newValue);
-            ValueChanged?.Invoke(oldValue, newValue);
+            LogEvent(LoggingEventIds.SKILL_LEVEL_CHANGED, Name, valueChanges.PreviousValue, valueChanges.NewValue);
+            ValueChanged?.Invoke(this, valueChanges);
         };
         // Register the LevelChanged event to log changes in skill level
-        _levelingBehavior.LevelChanged += (oldLevel, newLevel) =>
+        _levelingBehavior.LevelChanged += (_, levelChanges) =>
         {
-            LogEvent(LoggingEventIds.SKILL_LEVEL_CHANGED, Name, oldLevel, newLevel);
-            LevelChanged?.Invoke(oldLevel, newLevel);
+            LogEvent(LoggingEventIds.SKILL_LEVEL_CHANGED, Name, levelChanges.PreviousValue, levelChanges.NewValue);
+            LevelChanged?.Invoke(this, levelChanges);
         };
     }
 
@@ -120,7 +121,7 @@ public abstract class SkillBase : ISkill
     }
 
     /// <inheritdoc />
-    public event Action<int, int>? ValueChanged;
+    public event EventHandler<ValueChangedEventArgs>? ValueChanged;
 
     /// <inheritdoc />
     public Guid Guid => _guidBehavior.Guid;
@@ -198,5 +199,5 @@ public abstract class SkillBase : ISkill
     public float ProgressToNextLevel => _levelingBehavior.ProgressToNextLevel;
 
     /// <inheritdoc />
-    public event Action<int, int>? LevelChanged;
+    public event EventHandler<ValueChangedEventArgs>? LevelChanged;
 }
