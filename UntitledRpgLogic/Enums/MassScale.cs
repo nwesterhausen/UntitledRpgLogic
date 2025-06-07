@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 
-namespace UntitledRpgLogic.Classes;
+namespace UntitledRpgLogic.Enums;
 
 /// <summary>
 ///     Scale for mass measurements in the RPG logic.

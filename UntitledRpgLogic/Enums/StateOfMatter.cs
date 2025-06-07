@@ -1,4 +1,4 @@
-namespace UntitledRpgLogic.Classes;
+namespace UntitledRpgLogic.Enums;
 
 /// <summary>
 ///     Represents the physical state of a material.

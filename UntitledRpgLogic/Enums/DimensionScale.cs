@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 
-namespace UntitledRpgLogic.Classes;
+namespace UntitledRpgLogic.Enums;
 
 /// <summary>
 ///     Available Dimensions to use for shapes

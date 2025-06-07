@@ -1,4 +1,4 @@
-namespace UntitledRpgLogic.Classes;
+namespace UntitledRpgLogic.Enums;
 
 /// <summary>
 ///     Shape types to be used and aid in dimension calculations for volume/area/etc.

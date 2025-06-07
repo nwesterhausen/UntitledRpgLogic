@@ -1,4 +1,5 @@
 using UntitledRpgLogic.Classes;
+using UntitledRpgLogic.Enums;
 using UntitledRpgLogic.Extensions;
 using UntitledRpgLogic.Interfaces;
 using UntitledRpgLogic.Options;

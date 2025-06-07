@@ -1,4 +1,4 @@
-namespace UntitledRpgLogic.Classes;
+namespace UntitledRpgLogic.Enums;
 
 /// <summary>
 ///     The quality of an object. Helps to describe how good or valuable an object is.
