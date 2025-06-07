@@ -14,18 +14,6 @@ namespace UntitledRpgLogic.BaseImplementations;
 public abstract class StatBase : IStat
 {
     /// <summary>
-    ///     Default maximum value for a stat.
-    /// </summary>
-    // ReSharper disable once InconsistentNaming
-    public const int STAT_DEFAULT_MAX_VALUE = 1024;
-
-    /// <summary>
-    ///     Default minimum value for a stat.
-    /// </summary>
-    // ReSharper disable once InconsistentNaming
-    public const int STAT_DEFAULT_MIN_VALUE = 0;
-
-    /// <summary>
     ///     Adds a GUID to the stat, which is used for unique identification.
     /// </summary>
     private readonly GuidBehavior _guidBehavior;
@@ -63,8 +51,8 @@ public abstract class StatBase : IStat
         Variation = options.Variation ?? StatVariation.Pseudo;
 
         // Set the maximum and minimum values, defaulting to predefined constants if not specified
-        MaxValue = options.MaxValue ?? STAT_DEFAULT_MAX_VALUE;
-        MinValue = options.MinValue ?? STAT_DEFAULT_MIN_VALUE;
+        MaxValue = options.MaxValue ?? DefaultValues.STAT_DEFAULT_MAX_VALUE;
+        MinValue = options.MinValue ?? DefaultValues.STAT_DEFAULT_MIN_VALUE;
 
         // Initialize the logging behavior with the provided logger or a null logger
         _logging = new LoggingBehavior(options.Logger ?? NullLogger<StatBase>.Instance);
@@ -74,16 +62,6 @@ public abstract class StatBase : IStat
         // Register the ValueChanged event to log changes in stat value
         ValueChanged += (oldValue, newValue) => { LogEvent(EventIds.STAT_VALUE_CHANGED, Name, oldValue, newValue); };
     }
-
-    /// <summary>
-    ///     Default maximum value for a stat.
-    /// </summary>
-    public int DefaultMaxValue => STAT_DEFAULT_MAX_VALUE;
-
-    /// <summary>
-    ///     Default minimum value for a stat.
-    /// </summary>
-    public int DefaultMinValue => STAT_DEFAULT_MIN_VALUE;
 
     /// <summary>
     ///     Whether this stat is a major, minor, pseudo, or complex stat.
@@ -146,8 +124,12 @@ public abstract class StatBase : IStat
             }
 #endif
             // Ensure the apparent value is within the defined min and max range
-            _apparentValue = value < STAT_DEFAULT_MIN_VALUE ? STAT_DEFAULT_MIN_VALUE : value;
-            _apparentValue = value > STAT_DEFAULT_MAX_VALUE ? STAT_DEFAULT_MAX_VALUE : _apparentValue;
+            _apparentValue = value < DefaultValues.STAT_DEFAULT_MIN_VALUE
+                ? DefaultValues.STAT_DEFAULT_MIN_VALUE
+                : value;
+            _apparentValue = value > DefaultValues.STAT_DEFAULT_MAX_VALUE
+                ? DefaultValues.STAT_DEFAULT_MAX_VALUE
+                : _apparentValue;
 
             // Invoke the ValueChanged event with the old and new values
             ValueChanged?.Invoke(this, new ValueChangedEventArgs(oldValue, _apparentValue));

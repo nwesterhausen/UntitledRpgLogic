@@ -13,7 +13,7 @@ public static class StatExtensions
     /// <param name="stat">The stat to convert.</param>
     public static string IntoString(this StatBase stat)
     {
-        if (stat.MinValue == stat.DefaultMinValue)
+        if (stat.MinValue == DefaultValues.STAT_DEFAULT_MIN_VALUE)
             return
                 $"{stat.Variation} {stat.Name}: {stat.Value} / {stat.MaxValue} ({stat.Value / (float)stat.MaxValue:F2 * 100}";
 
