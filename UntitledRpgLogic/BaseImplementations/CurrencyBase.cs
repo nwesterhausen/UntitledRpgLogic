@@ -139,7 +139,7 @@ public abstract class CurrencyBase : ICurrency
         if (remainingValue < 0)
         {
 #if DEBUG
-                throw new InvalidOperationException("Remaining value cannot be negative after subtraction. Tried to subtract {0} from {1}", value, GetTotalValue());
+                throw new InvalidOperationException("Remaining value cannot be negative after subtraction. Tried to subtract {value} from {GetTotalValue()}");
 #endif
             // If we somehow ended up with a negative remaining value, just return the original value and make not changes
             return value;

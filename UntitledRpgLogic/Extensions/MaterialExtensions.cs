@@ -50,7 +50,7 @@ public static class MaterialExtensions
             }
             default:
 #if DEBUG
-                throw new InvalidOperationException($"Cannot calculate density for unknown state: {State}");
+                throw new InvalidOperationException($"Cannot calculate density for unknown state: {material.State}");
 #endif
                 break;
         }
