@@ -14,16 +14,16 @@
         <PublishRelease>true</PublishRelease>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <AssemblyName>UntitledRpg.Logic</AssemblyName>
+        <DebugType>embedded</DebugType>
         <IncludeSymbols>true</IncludeSymbols>
-        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="9.0.5"/>
         <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.5"/>
-        <PackageReference Include="GitVersion.MsBuild" Version="6.0.0">
-            <PrivateAssets>All</PrivateAssets>
-        </PackageReference>
+        <PackageReference Include="GitVersion.MsBuild" Version="6.0.0" PrivateAssets="All"/>
+        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All"/>
     </ItemGroup>
 
     <ItemGroup>
