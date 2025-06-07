@@ -4,10 +4,10 @@
     {
       "src": [
         {
-          "src": "../UntitledRpgDocs",
           "files": [
             "**/*.csproj"
-          ]
+          ],
+          "src": "./UntitledRpgLogic"
         }
       ],
       "dest": "api"
