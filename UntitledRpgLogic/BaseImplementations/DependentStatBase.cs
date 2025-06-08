@@ -8,7 +8,7 @@ using UntitledRpgLogic.Options;
 namespace UntitledRpgLogic.BaseImplementations;
 
 /// <summary>
-///     A stat that depends on other stats or conditions to determine its value.
+///     A stat that depends on other stats or conditions to determine its value. Its value cannot be set directly, but is calculated based on the values of linked stats.
 /// </summary>
 public abstract class DependentStatBase : IDependentStat
 {
