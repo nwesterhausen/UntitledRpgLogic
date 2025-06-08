@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Logging;
 using UntitledRpgLogic.Classes;
 using UntitledRpgLogic.CompositionBehaviors;
+using UntitledRpgLogic.Enums;
 using UntitledRpgLogic.Events;
 using UntitledRpgLogic.Interfaces;
 using UntitledRpgLogic.Options;

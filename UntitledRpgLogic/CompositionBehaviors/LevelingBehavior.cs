@@ -1,3 +1,4 @@
+using UntitledRpgLogic.Enums;
 using UntitledRpgLogic.Events;
 using UntitledRpgLogic.Interfaces;
 using UntitledRpgLogic.Options;

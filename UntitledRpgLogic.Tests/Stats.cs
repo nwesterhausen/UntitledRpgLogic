@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Logging;
 using Moq;
 using UntitledRpgLogic.BaseImplementations;
+using UntitledRpgLogic.Enums;
 using UntitledRpgLogic.Options;
 
 namespace UntitledRpgLogic.Tests;

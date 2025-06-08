@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Logging;
+using UntitledRpgLogic.Enums;
 
 namespace UntitledRpgLogic.Options;
 

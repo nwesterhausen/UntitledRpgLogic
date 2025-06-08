@@ -1,5 +1,5 @@
+using UntitledRpgLogic.Enums;
 using UntitledRpgLogic.Events;
-using UntitledRpgLogic.Options;
 
 namespace UntitledRpgLogic.Interfaces;
 

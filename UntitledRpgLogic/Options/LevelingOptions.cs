@@ -1,3 +1,5 @@
+using UntitledRpgLogic.Enums;
+
 namespace UntitledRpgLogic.Options;
 
 /// <summary>
