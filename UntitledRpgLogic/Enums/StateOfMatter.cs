@@ -8,15 +8,15 @@ public enum StateOfMatter
     /// <summary>
     ///     The solid state of matter.
     /// </summary>
-    Solid,
+    Solid = 1,
 
     /// <summary>
     ///     The liquid state of matter.
     /// </summary>
-    Liquid,
+    Liquid = 2,
 
     /// <summary>
     ///     The gaseous state of matter.
     /// </summary>
-    Gas
+    Gas = 3
 }

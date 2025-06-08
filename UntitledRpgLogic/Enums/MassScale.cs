@@ -11,15 +11,15 @@ public enum MassScale
     /// <summary>
     ///     milligram
     /// </summary>
-    mg,
+    mg = 10,
 
     /// <summary>
     ///     gram
     /// </summary>
-    g,
+    g = 11,
 
     /// <summary>
     ///     kilogram
     /// </summary>
-    kg
+    kg = 12
 }

@@ -11,20 +11,20 @@ public enum DimensionScale
     /// <summary>
     ///     millimeter
     /// </summary>
-    mm,
+    mm = 5,
 
     /// <summary>
     ///     centimeter
     /// </summary>
-    cm,
+    cm = 6,
 
     /// <summary>
     ///     meter
     /// </summary>
-    m,
+    m = 7,
 
     /// <summary>
     ///     kilometer
     /// </summary>
-    km
+    km = 8
 }
