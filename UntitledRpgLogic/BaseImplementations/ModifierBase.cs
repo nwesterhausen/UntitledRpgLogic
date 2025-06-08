@@ -43,9 +43,9 @@ public abstract class ModifierBase : IModifier
             throw new ArgumentOutOfRangeException(nameof(MaxStacks), "MaxStacks must be at least 1.");
         }
 
-        if (MaxStacks > 1 && StackEffect == null)
+        if (MaxStacks > 1 && StackEffects == null)
         {
-            throw new ArgumentNullException(nameof(StackEffect), "StackEffect must be defined if MaxStacks is greater than 1.");
+            throw new ArgumentNullException(nameof(StackEffects), "StackEffect must be defined if MaxStacks is greater than 1.");
         }
         
         if (!IsPermanent && Duration < 0)
