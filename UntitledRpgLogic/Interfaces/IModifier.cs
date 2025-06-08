@@ -1,5 +1,3 @@
-using UntitledRpgLogic.Options;
-
 namespace UntitledRpgLogic.Interfaces;
 
 /// <summary>
@@ -12,31 +10,6 @@ public interface IModifier
     ///     Gets a value indicating whether the modification is permanent (true) or temporary (false).
     /// </summary>
     bool IsPermanent { get; }
-
-    /// <summary>
-    ///     Gets a value indicating whether the modification is positive (buff) or negative (debuff).
-    /// </summary>
-    bool IsPositive { get; }
-
-    /// <summary>
-    ///     Gets a value indicating whether the modification is additive (true) or multiplicative (false).
-    /// </summary>
-    bool IsAdditive { get; }
-
-    /// <summary>
-    ///     Gets a value indicating whether the modification is a percentage (true) or a flat value (false).
-    /// </summary>
-    bool IsPercentage { get; }
-
-    /// <summary>
-    ///     Gets a value indicating whether the modification scales with the base value (true) or the current value (false).
-    /// </summary>
-    bool ScalesOnBaseValue { get; }
-
-    /// <summary>
-    ///     Gets the amount of the modification, either as a flat value or percentage.
-    /// </summary>
-    float Amount { get; }
 
     /// <summary>
     ///     Gets the current effective amount of the modification after considering stacks and duration.
@@ -59,9 +32,14 @@ public interface IModifier
     int CurrentStacks { get; }
 
     /// <summary>
+    ///     The effects this modification applies to the stat when it is active, for 0 or no stacks.
+    /// </summary>
+    IModifierEffect? ModificationEffect { get; }
+
+    /// <summary>
     ///     The effect(s) that each stack of this modification has on the stat.
     /// </summary>
-    ModificationStackEffect? StackEffect { get; }
+    IEnumerable<IModifierEffect>? StackEffects { get; }
 
     /// <summary>
     ///     Gets the duration of the modification in seconds as a float. If the modification is permanent, this should be -1.
@@ -102,8 +80,9 @@ public interface IModifier
     /// </summary>
     /// <param name="baseValue">The base value of the stat before modifications.</param>
     /// <param name="currentValue">The current value of the stat before this modification is applied.</param>
+    /// <param name="maxValue"></param>
     /// <returns>The modified stat value after applying this modification.</returns>
-    int ApplyModification(int baseValue, int currentValue);
+    int ApplyModification(int baseValue, int currentValue, int maxValue);
 
     /// <summary>
     ///     Reset the duration of this modification to its initial value.

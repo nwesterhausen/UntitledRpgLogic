@@ -170,7 +170,7 @@ public abstract class StatBase : IStat, IHasChangeableValue
     /// <inheritdoc />
     public void ApplyModifier(IModifier modifier)
     {
-        _apparentValue = modifier.ApplyModification(_baseValue, _apparentValue);
+        _apparentValue = modifier.ApplyModification(_baseValue, _apparentValue, MaxValue);
     }
 
     /// <inheritdoc />

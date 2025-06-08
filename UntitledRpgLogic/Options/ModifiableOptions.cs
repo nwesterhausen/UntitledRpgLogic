@@ -48,7 +48,7 @@ public class ModifiableOptions
     /// <summary>
     ///     The effect(s) that each stack of this modification has on the stat.
     /// </summary>
-    public ModificationStackEffect? StackEffect { get; init; }
+    public ModifierEffectOptions? StackEffect { get; init; }
 
     /// <summary>
     ///     The duration of the modification in seconds as a float. If the modification is permanent, this should be -1.

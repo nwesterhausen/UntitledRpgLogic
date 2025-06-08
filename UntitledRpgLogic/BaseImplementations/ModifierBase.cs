@@ -29,19 +29,12 @@ public abstract class ModifierBase : IModifier
     protected ModifierBase(ModifiableOptions options)
     {
         IsPermanent = options.IsPermanent ?? true;
-        IsPositive = options.IsPositive ?? true;
-        IsAdditive = options.IsAdditive ?? false;
-        IsPercentage = options.IsPercentage ?? false;
-        ScalesOnBaseValue = options.ScalesOnBaseValue ?? false;
-        Amount = options.Amount ?? 0f;
         MaxStacks = options.MaxStacks ?? 1;
         CurrentStacks = options.CurrentStacks ?? 0;
-        StackEffect = options.StackEffect;
         Duration = options.Duration ?? 0f;
         LoseAllStacksOnExpiration = options.LoseAllStacksOnExpiration ?? false;
         Priority = options.ModificationPriority ?? 0;
 
-        RecalculateEffectiveAmount();
         _durationReferenceValue = Duration;
 
 #if DEBUG
@@ -65,21 +58,6 @@ public abstract class ModifierBase : IModifier
     /// <inheritdoc />
     public bool IsPermanent { get; }
 
-    /// <inheritdoc />
-    public bool IsPositive { get; }
-
-    /// <inheritdoc />
-    public bool IsAdditive { get; }
-
-    /// <inheritdoc />
-    public bool IsPercentage { get; }
-
-    /// <inheritdoc />
-    public bool ScalesOnBaseValue { get; }
-
-    /// <inheritdoc />
-    public float Amount { get; }
-
     /// <summary>
     ///     The effective amount of the modification after considering stacks and duration.
     /// </summary>
@@ -97,7 +75,13 @@ public abstract class ModifierBase : IModifier
         get => _currentStacks;
         private set
         {
+            if (IsPermanent && _currentStacks == 1 && value <= 1)
+                // Permanent modifiers can't go below 1 stack.
+                return;
+
+            // Short-circuit if the value hasn't changed
             if (_currentStacks == value) return;
+
             var oldStacks = _currentStacks;
             if (value < 0)
             {
@@ -117,15 +101,19 @@ public abstract class ModifierBase : IModifier
 
             _currentStacks = value;
 
-            RecalculateEffectiveAmount();
-
-            if (_currentStacks <= 0)
+            if (_currentStacks <= 0 && !IsPermanent)
                 // If stacks reach zero, trigger the expiration event
                 ModificationExpired?.Invoke(this, EventArgs.Empty);
 
             StacksChanged?.Invoke(this, _currentStacks - oldStacks);
         }
     }
+
+    /// <inheritdoc />
+    public IModifierEffect? ModificationEffect { get; } = null;
+
+    /// <inheritdoc />
+    public IEnumerable<IModifierEffect>? StackEffects { get; } = null;
 
     /// <inheritdoc />
     public void AddStack(int amount = 1)
@@ -138,9 +126,6 @@ public abstract class ModifierBase : IModifier
     {
         CurrentStacks -= amount;
     }
-
-    /// <inheritdoc />
-    public ModificationStackEffect? StackEffect { get; }
 
     /// <inheritdoc />
     public float Duration
@@ -160,26 +145,28 @@ public abstract class ModifierBase : IModifier
     /// <inheritdoc />
     public void ProcessDeltaTime(float deltaTime)
     {
-        if (Duration <= 0 || IsPermanent) return; // No processing needed for permanent or non-temporary modifications
+        // No processing needed for permanent modifiers at 1 stack. Or if duration is zero or less.
+        if (Duration <= 0 || (IsPermanent && MaxStacks == 1)) return;
 
         Duration -= deltaTime;
-        if (Duration < 0) Duration = 0;
     }
 
     /// <inheritdoc />
     public int Priority { get; }
 
     /// <inheritdoc />
-    public int ApplyModification(int baseValue, int currentValue)
+    public int ApplyModification(int baseValue, int currentValue, int maxValue)
     {
-        if (ScalesOnBaseValue)
-            return currentValue + (IsPercentage
-                ? (int)(baseValue * EffectiveAmount)
-                : (int)EffectiveAmount);
+        var updatedValue = currentValue;
+        if (ModificationEffect != null)
+            updatedValue = ModificationEffect.ApplyEffect(baseValue, currentValue, maxValue);
 
-        return currentValue + (IsPercentage
-            ? (int)(currentValue * EffectiveAmount)
-            : (int)EffectiveAmount);
+        if (CurrentStacks > 0 && StackEffects != null)
+            foreach (var effect in StackEffects.OrderBy(e => e.Priority))
+                updatedValue = effect.ApplyEffect(baseValue, updatedValue, maxValue);
+
+        EffectiveAmount = updatedValue - baseValue;
+        return updatedValue;
     }
 
     /// <inheritdoc />
@@ -199,13 +186,4 @@ public abstract class ModifierBase : IModifier
 
     /// <inheritdoc />
     public event EventHandler<int>? ModificationApplied;
-
-    /// <summary>
-    ///     Recalculates the effective amount of this modification based on the current stacks, amount and duration.
-    /// </summary>
-    private void RecalculateEffectiveAmount()
-    {
-        // placeholder calculation. Really is affected by stacks, the stack effect, and all that.
-        EffectiveAmount = CurrentStacks * Amount;
-    }
 }
