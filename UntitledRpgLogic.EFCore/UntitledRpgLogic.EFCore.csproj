@@ -17,6 +17,20 @@
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <Deterministic>true</Deterministic>
+        <Authors>Nicholas Westerhausen</Authors>
+        <OutputType>library</OutputType>
+        <AssemblyName>UntitledRpg.Logic.EFCore</AssemblyName>
+        <PackageId>$(AssemblyName)</PackageId>
+        <Version>1.0.0</Version>
+        <DebugType>embedded</DebugType>
+        <IncludeSymbols>true</IncludeSymbols>
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <RepositoryUrl>https://github.com/nwesterhausen/UntitledRpgLogic</RepositoryUrl>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <PublishRelease>true</PublishRelease>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
     </PropertyGroup>
 
 </Project>
