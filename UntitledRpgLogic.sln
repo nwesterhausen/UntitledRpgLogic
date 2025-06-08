@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UntitledRpgLogic", "Untitle
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UntitledRpgLogic.Tests", "UntitledRpgLogic.Tests\UntitledRpgLogic.Tests.csproj", "{0356C0E3-486A-43AE-931C-10B6693F8AE1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UntitledRpgLogic.EFCore", "UntitledRpgLogic.EFCore\UntitledRpgLogic.EFCore.csproj", "{93B4C8AA-883B-4E6B-BE0F-FF5621357B69}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{0356C0E3-486A-43AE-931C-10B6693F8AE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0356C0E3-486A-43AE-931C-10B6693F8AE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0356C0E3-486A-43AE-931C-10B6693F8AE1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93B4C8AA-883B-4E6B-BE0F-FF5621357B69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93B4C8AA-883B-4E6B-BE0F-FF5621357B69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93B4C8AA-883B-4E6B-BE0F-FF5621357B69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93B4C8AA-883B-4E6B-BE0F-FF5621357B69}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
