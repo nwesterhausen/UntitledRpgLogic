@@ -39,7 +39,7 @@ public abstract class ModifierBase : IModifier
         StackEffect = options.StackEffect;
         Duration = options.Duration ?? 0f;
         LoseAllStacksOnExpiration = options.LoseAllStacksOnExpiration ?? false;
-        ModificationPriority = options.ModificationPriority ?? 0;
+        Priority = options.ModificationPriority ?? 0;
 
         RecalculateEffectiveAmount();
         _durationReferenceValue = Duration;
@@ -167,7 +167,7 @@ public abstract class ModifierBase : IModifier
     }
 
     /// <inheritdoc />
-    public int ModificationPriority { get; }
+    public int Priority { get; }
 
     /// <inheritdoc />
     public int ApplyModification(int baseValue, int currentValue)

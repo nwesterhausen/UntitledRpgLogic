@@ -77,7 +77,7 @@ public interface IModifier
     /// <summary>
     ///     Gets the priority of the modification, used to determine the order in which modifications are applied.
     /// </summary>
-    int ModificationPriority { get; }
+    int Priority { get; }
 
     /// <summary>
     ///     Adds stacks to this modification.
