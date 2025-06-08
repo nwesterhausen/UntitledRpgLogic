@@ -11,7 +11,7 @@ namespace UntitledRpgLogic.BaseImplementations;
 /// <summary>
 ///     Abstract base class for RPG stats.
 /// </summary>
-public abstract class StatBase : IStat
+public abstract class StatBase : IStat, IHasChangeableValue
 {
     /// <summary>
     ///     Adds a GUID to the stat, which is used for unique identification.
@@ -63,21 +63,6 @@ public abstract class StatBase : IStat
         ValueChanged += (oldValue, newValue) => { LogEvent(EventIds.STAT_VALUE_CHANGED, Name, oldValue, newValue); };
     }
 
-    /// <summary>
-    ///     Whether this stat is a major, minor, pseudo, or complex stat.
-    /// </summary>
-    public StatVariation Variation { get; init; }
-
-    /// <summary>
-    ///     The minimum value for this stat. This is the lowest value the stat can have.
-    /// </summary>
-    public int MinValue { get; init; }
-
-    /// <summary>
-    ///     The maximum value for this stat. This is the highest value the stat can have.
-    /// </summary>
-    public int MaxValue { get; init; }
-
 
     /// <summary>
     ///     The effective maximum value of the stat, which is the difference between MaxValue and MinValue.
@@ -98,52 +83,6 @@ public abstract class StatBase : IStat
     ///     The percentage of the stat, which is the Value divided by MaxValue.
     /// </summary>
     public float Percent => EffectivePercent;
-
-    /// <summary>
-    ///     The name of the stat.
-    /// </summary>
-    public string Name => _nameBehavior.Name;
-
-    /// <inheritdoc />
-    public int Value
-    {
-        get => _apparentValue;
-        private set
-        {
-            if (_apparentValue == value) return;
-            var valueChange = value - _apparentValue;
-            var oldValue = _apparentValue;
-
-            // Adjust the base value by the change in apparent value
-            _baseValue += valueChange;
-            _apparentValue = 0;
-            BaseValueChanged?.Invoke();
-#if DEBUG
-            if (_apparentValue == 0) {
-                throw new InvalidOperationException("Apparent value is not expected to be zero after base value change.");
-            }
-#endif
-            // Ensure the apparent value is within the defined min and max range
-            _apparentValue = value < DefaultValues.STAT_DEFAULT_MIN_VALUE
-                ? DefaultValues.STAT_DEFAULT_MIN_VALUE
-                : value;
-            _apparentValue = value > DefaultValues.STAT_DEFAULT_MAX_VALUE
-                ? DefaultValues.STAT_DEFAULT_MAX_VALUE
-                : _apparentValue;
-
-            // Invoke the ValueChanged event with the old and new values
-            ValueChanged?.Invoke(this, new ValueChangedEventArgs(oldValue, _apparentValue));
-        }
-    }
-
-    /// <inheritdoc />
-    public void ApplyModifier(IModifier modifier)
-    {
-        _apparentValue = modifier.ApplyModification(_baseValue, _apparentValue);
-    }
-
-    /// <inheritdoc />
-    public event Action? BaseValueChanged;
 
     /// <inheritdoc />
     public void AddPoint()
@@ -178,6 +117,63 @@ public abstract class StatBase : IStat
 #endif
         Value = points;
     }
+
+    /// <summary>
+    ///     Whether this stat is a major, minor, pseudo, or complex stat.
+    /// </summary>
+    public StatVariation Variation { get; init; }
+
+    /// <summary>
+    ///     The minimum value for this stat. This is the lowest value the stat can have.
+    /// </summary>
+    public int MinValue { get; init; }
+
+    /// <summary>
+    ///     The maximum value for this stat. This is the highest value the stat can have.
+    /// </summary>
+    public int MaxValue { get; init; }
+
+    /// <summary>
+    ///     The name of the stat.
+    /// </summary>
+    public string Name => _nameBehavior.Name;
+
+    /// <inheritdoc />
+    public int Value
+    {
+        get => _apparentValue;
+        private set
+        {
+            if (_apparentValue == value) return;
+            var valueChange = value - _apparentValue;
+            var oldValue = _apparentValue;
+
+
+            // Ensure the apparent value is within the defined min and max range
+            _apparentValue = value < DefaultValues.STAT_DEFAULT_MIN_VALUE
+                ? DefaultValues.STAT_DEFAULT_MIN_VALUE
+                : value;
+            _apparentValue = value > DefaultValues.STAT_DEFAULT_MAX_VALUE
+                ? DefaultValues.STAT_DEFAULT_MAX_VALUE
+                : _apparentValue;
+            // Adjust the base value by the change in apparent value
+            _baseValue += valueChange;
+
+            BaseValueChanged?.Invoke();
+
+            // Invoke the ValueChanged event with the old and new values
+            ValueChanged?.Invoke(this, new ValueChangedEventArgs(oldValue, _apparentValue));
+        }
+    }
+
+    /// <inheritdoc />
+    public void ApplyModifier(IModifier modifier)
+    {
+        _apparentValue = modifier.ApplyModification(_baseValue, _apparentValue);
+    }
+
+    /// <inheritdoc />
+    public event Action? BaseValueChanged;
 
     /// <inheritdoc />
     public event EventHandler<ValueChangedEventArgs>? ValueChanged;

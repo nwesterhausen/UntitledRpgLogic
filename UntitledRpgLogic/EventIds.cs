@@ -25,6 +25,16 @@ public static class EventIds
     public const int STAT_UNLINKED_INT_VALUE = 1002;
 
     /// <summary>
+    ///     Integer value for stat link exists event.
+    /// </summary>
+    public const int STAT_LINK_EXISTS_INT_VALUE = 1003;
+
+    /// <summary>
+    ///     Integer value for stat link not found event.
+    /// </summary>
+    public const int STAT_LINK_NOT_FOUND_INT_VALUE = 1004;
+
+    /// <summary>
     ///     Integer value for stat value changed event.
     /// </summary>
     public const int STAT_VALUE_CHANGED_INT_VALUE = 1005;
@@ -249,4 +259,16 @@ public static class EventIds
     ///     </para>
     /// </summary>
     public static readonly EventId ENTITY_CREATED = new(ENTITY_CREATED_INT_VALUE, nameof(ENTITY_CREATED));
+
+    /// <summary>
+    ///     Event ID for when a stat link already exists.
+    /// </summary>
+    public static readonly EventId STAT_LINK_EXISTS =
+        new(STAT_LINK_EXISTS_INT_VALUE, nameof(STAT_LINK_EXISTS));
+
+    /// <summary>
+    ///     Event ID for when a stat link is not found (and we expect it to be found).
+    /// </summary>
+    public static readonly EventId STAT_LINK_NOT_FOUND =
+        new(STAT_LINK_NOT_FOUND_INT_VALUE, nameof(STAT_LINK_NOT_FOUND));
 }

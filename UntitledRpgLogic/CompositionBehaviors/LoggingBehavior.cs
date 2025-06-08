@@ -18,7 +18,11 @@ public partial class LoggingBehavior : IHasLogging
         { EventIds.STAT_CREATED_INT_VALUE, [typeof(StatBase)] },
         { EventIds.STAT_VALUE_CHANGED_INT_VALUE, [typeof(int), typeof(string), typeof(string)] },
         { EventIds.STAT_ILLEGAL_CHANGE_INT_VALUE, [typeof(string), typeof(string)] },
-        { EventIds.SKILL_POINTS_CHANGED_INT_VALUE, [typeof(string), typeof(string)] }
+        { EventIds.SKILL_POINTS_CHANGED_INT_VALUE, [typeof(string), typeof(string)] },
+        { EventIds.STAT_LINKED_INT_VALUE, [typeof(string), typeof(string), typeof(double)] },
+        { EventIds.STAT_UNLINKED_INT_VALUE, [typeof(string), typeof(string)] },
+        { EventIds.SKILL_CREATED_INT_VALUE, [typeof(string)] },
+        { EventIds.SKILL_LEVEL_CHANGED_INT_VALUE, [typeof(string), typeof(int)] }
     };
 
     /// <summary>
@@ -65,6 +69,12 @@ public partial class LoggingBehavior : IHasLogging
                 case EventIds.SKILL_POINTS_CHANGED_INT_VALUE:
                     LogSkillPointsChanged((string)args[0]!, (string)args[1]!, (string)args[2]!);
                     return;
+                case EventIds.STAT_CREATED_INT_VALUE:
+                    LogStatCreated((StatBase)args[0]!);
+                    return;
+                case EventIds.SKILL_CREATED_INT_VALUE:
+                    _logger.LogInformation(eventId, "Created skill: {skillName}", args[0]);
+                    return;
                 // Add other Info-level events here
             }
 #if RELEASE
@@ -83,11 +93,17 @@ public partial class LoggingBehavior : IHasLogging
 
         switch (eventId.Id)
         {
-            case EventIds.STAT_CREATED_INT_VALUE:
-                LogStatCreated((StatBase)args[0]!);
-                return;
             case EventIds.STAT_VALUE_CHANGED_INT_VALUE:
                 LogStatChanged((int)args[0]!, (string)args[1]!, (string)args[2]!);
+                return;
+            case EventIds.STAT_LINKED_INT_VALUE:
+                LogStatLinked((string)args[0]!, (string)args[1]!, (double)args[2]);
+                return;
+            case EventIds.STAT_UNLINKED_INT_VALUE:
+                LogStatUnlinked((string)args[0]!, (string)args[1]!);
+                return;
+            case EventIds.SKILL_LEVEL_CHANGED_INT_VALUE:
+                _logger.LogDebug(eventId, "Skill {skillName} level changed to {level}", args[0], args[1]);
                 return;
             // Add other Debug-level events here
         }
@@ -162,7 +178,7 @@ public partial class LoggingBehavior : IHasLogging
         EventId = EventIds.STAT_VALUE_CHANGED_INT_VALUE,
         Level = LogLevel.Debug,
         Message = "{modifier}{delta} {statName}")]
-    private partial void LogStatChanged(int delta, string statName, string modifier = "");
+    protected partial void LogStatChanged(int delta, string statName, string modifier = "");
 
     /// <summary>
     ///     Logs when a stat is created.
@@ -172,7 +188,7 @@ public partial class LoggingBehavior : IHasLogging
         EventId = EventIds.STAT_CREATED_INT_VALUE,
         Level = LogLevel.Debug,
         Message = "Created {stat}")]
-    private partial void LogStatCreated(StatBase stat);
+    protected partial void LogStatCreated(StatBase stat);
 
     /// <summary>
     ///     Logs an illegal stat change attempt.
@@ -218,5 +234,5 @@ public partial class LoggingBehavior : IHasLogging
         EventId = EventIds.SKILL_POINTS_CHANGED_INT_VALUE,
         Level = LogLevel.Debug,
         Message = "{skillName} {pointsChange}: {progress} to next level")]
-    private partial void LogSkillPointsChanged(string skillName, string pointsChange, string progress);
+    protected partial void LogSkillPointsChanged(string skillName, string pointsChange, string progress);
 }

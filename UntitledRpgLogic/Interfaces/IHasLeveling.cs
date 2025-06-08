@@ -7,7 +7,7 @@ namespace UntitledRpgLogic.Interfaces;
 ///     Interface for classes which have leveling capabilities. Depends on the value reflecting its internal
 ///     experience number, and the level being derived from that value.
 /// </summary>
-public interface IHasLeveling : IHasValue
+public interface IHasLeveling : IHasChangeableValue
 {
     /// <summary>
     ///     The level of the object, derived from the value.

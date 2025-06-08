@@ -36,4 +36,9 @@ public class StatOptions
     ///     Gets or sets the logger used for stat-related logging.
     /// </summary>
     public ILogger? Logger { get; set; }
+
+    /// <summary>
+    ///     If reconstructing a stat, this GUID is used to identify the stat.
+    /// </summary>
+    public Guid? KnownGuid { get; set; }
 }
