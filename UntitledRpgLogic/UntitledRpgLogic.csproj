@@ -1,22 +1,23 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <Deterministic>true</Deterministic>
-        <Authors>Nicholas Westerhausen</Authors>
-        <PackageId>UntitledRpg.Logic</PackageId>
-        <RepositoryType>git</RepositoryType>
-        <RepositoryUrl>https://github.com/nwesterhausen/UntitledRpgLogic</RepositoryUrl>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <PackageReadmeFile>README.md</PackageReadmeFile>
         <PublishRelease>true</PublishRelease>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
-        <AssemblyName>UntitledRpg.Logic</AssemblyName>
         <DebugType>embedded</DebugType>
         <IncludeSymbols>true</IncludeSymbols>
         <PublishRepositoryUrl>true</PublishRepositoryUrl>
+        <!-- Package metadata -->
+        <AssemblyName>UntitledRpg.Logic</AssemblyName>
+        <PackageId>UntitledRpg.Logic</PackageId>
+        <!-- Version is set by GitVersion -->
+        <Authors>Nicholas Westerhausen</Authors>
+        <RepositoryType>git</RepositoryType>
+        <RepositoryUrl>https://github.com/nwesterhausen/UntitledRpgLogic</RepositoryUrl>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
     </PropertyGroup>
 
     <ItemGroup>
@@ -29,5 +30,4 @@
     <ItemGroup>
         <None Include="..\README.md" Pack="true" PackagePath="\"/>
     </ItemGroup>
-
 </Project>
