@@ -25,6 +25,7 @@
         <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.5"/>
         <PackageReference Include="GitVersion.MsBuild" Version="6.3.0" PrivateAssets="All"/>
         <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All"/>
+        <PackageReference Include="Samboy063.Tomlet" Version="6.1.0"/>
     </ItemGroup>
 
     <ItemGroup>

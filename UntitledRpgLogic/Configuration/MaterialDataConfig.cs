@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Drawing;
+using UntitledRpgLogic.Interfaces;
 
 namespace UntitledRpgLogic.Configuration;
 
@@ -7,7 +8,7 @@ namespace UntitledRpgLogic.Configuration;
 ///     The configuration for a material in the game. This class defines the properties of a material, including its name,
 ///     color, temperature and density at different states of matter.
 /// </summary>
-public class MaterialDataConfig
+public class MaterialDataConfig : ITomlConfig
 {
     /// <summary>
     ///     Optional. If provided in TOML, this specific Guid will be used for the material.

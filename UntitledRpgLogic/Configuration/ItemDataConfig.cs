@@ -1,4 +1,5 @@
 using UntitledRpgLogic.Enums;
+using UntitledRpgLogic.Interfaces;
 
 namespace UntitledRpgLogic.Configuration;
 
@@ -6,7 +7,7 @@ namespace UntitledRpgLogic.Configuration;
 ///     The definition for the configuration of an Item. This is what is parsed from a TOML file to then create an actual
 ///     item in the game.
 /// </summary>
-public class ItemDataConfig
+public class ItemDataConfig : ITomlConfig
 {
     /// <summary>
     ///     Optional. If provided in TOML, this specific Guid will be used for the item.
