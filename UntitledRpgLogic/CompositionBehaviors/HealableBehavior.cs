@@ -1,4 +1,3 @@
-using UntitledRpgLogic.BaseImplementations;
 using UntitledRpgLogic.Interfaces;
 
 namespace UntitledRpgLogic.CompositionBehaviors;
@@ -8,7 +7,7 @@ namespace UntitledRpgLogic.CompositionBehaviors;
 /// </summary>
 /// <typeparam name="T"></typeparam>
 public class HealableBehavior<T> : IDamageable, IHealable
-    where T : StatBase
+    where T : IStat
 {
     /// <summary>
     ///     The stat that is being damaged.

@@ -1,4 +1,3 @@
-using UntitledRpgLogic.BaseImplementations;
 using UntitledRpgLogic.Options;
 
 namespace UntitledRpgLogic.Interfaces;
@@ -21,5 +20,5 @@ public interface IDamageCalculator
     /// <param name="damageOptions">the damage options</param>
     /// <param name="stat">the stat damage will be applied to</param>
     /// <returns>the damage amount in points</returns>
-    public int GetPointDamageFromOptions(DamageOptions damageOptions, StatBase stat);
+    public int GetPointDamageFromOptions(DamageOptions damageOptions, IStat stat);
 }

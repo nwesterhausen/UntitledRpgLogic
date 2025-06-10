@@ -26,6 +26,26 @@ public interface IStat : IHasName, IHasValue, IHasGuid, IHasLogging
     int MinValue { get; }
 
     /// <summary>
+    ///     The effective maximum value of the stat, which is the difference between MaxValue and MinValue.
+    /// </summary>
+    public int EffectiveMaxValue => MaxValue - MinValue;
+
+    /// <summary>
+    ///     The effective value of the stat, which is the difference between Value and MinValue.
+    /// </summary>
+    public int EffectiveValue => Value - MinValue;
+
+    /// <summary>
+    ///     The effective percentage of the stat, which is the EffectiveValue divided by EffectiveMaxValue.
+    /// </summary>
+    public float EffectivePercent => (float)EffectiveValue / EffectiveMaxValue;
+
+    /// <summary>
+    ///     The percentage of the stat, which is the Value divided by MaxValue.
+    /// </summary>
+    public float Percent => EffectivePercent;
+
+    /// <summary>
     ///     Apply a modifier to the stat, which can be a buff, debuff, or any other effect that modifies the stat's value.
     /// </summary>
     /// <param name="modifier"></param>

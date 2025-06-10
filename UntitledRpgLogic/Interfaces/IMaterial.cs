@@ -1,5 +1,6 @@
 using UntitledRpgLogic.Classes;
 using UntitledRpgLogic.Enums;
+using UntitledRpgLogic.Extensions;
 
 namespace UntitledRpgLogic.Interfaces;
 
@@ -7,13 +8,8 @@ namespace UntitledRpgLogic.Interfaces;
 ///     Represents a material with its properties and states of matter. Can be used to determine a weight or roughly how
 ///     a material might behave in different conditions.
 /// </summary>
-public interface IMaterial
+public interface IMaterial : IHasName, IHasGuid
 {
-    /// <summary>
-    ///     The name of the material.
-    /// </summary>
-    PluralName PluralName { get; }
-
     /// <summary>
     ///     The current state of matter of the material.
     /// </summary>
@@ -42,15 +38,15 @@ public interface IMaterial
     /// <summary>
     ///     The materials current temperature in degrees Celsius (°C).
     /// </summary>
-    int Temperature { get; }
+    float Temperature { get; }
 
     /// <summary>
     ///     The pressure exerted on the material in Kilopascals (kPa).
     /// </summary>
-    int Pressure { get; }
+    float Pressure { get; }
 
     /// <summary>
     ///     The density of the material in grams per cubic centimeter (g/cm³).
     /// </summary>
-    double Density { get; }
+    double Density => this.CalculateDensity();
 }

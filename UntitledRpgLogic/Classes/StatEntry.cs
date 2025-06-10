@@ -1,4 +1,3 @@
-using UntitledRpgLogic.BaseImplementations;
 using UntitledRpgLogic.CompositionBehaviors;
 using UntitledRpgLogic.Events;
 using UntitledRpgLogic.Interfaces;
@@ -10,7 +9,7 @@ namespace UntitledRpgLogic.Classes;
 ///     A wrapper for a stat that contains additional information such as damageable behavior, mitigations, and modifiers.
 /// </summary>
 /// <typeparam name="T">The stat contained within this entry</typeparam>
-public class StatEntry<T> where T : StatBase
+public class StatEntry<T> where T : IStat
 {
     /// <summary>
     ///     Creates a new instance of the <see cref="StatEntry{T}" /> class with the specified stat.

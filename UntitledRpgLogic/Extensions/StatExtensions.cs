@@ -1,4 +1,4 @@
-using UntitledRpgLogic.BaseImplementations;
+using UntitledRpgLogic.Interfaces;
 
 namespace UntitledRpgLogic.Extensions;
 
@@ -11,7 +11,7 @@ public static class StatExtensions
     ///     Explicitly converts a stat to its string representation.
     /// </summary>
     /// <param name="stat">The stat to convert.</param>
-    public static string IntoString(this StatBase stat)
+    public static string IntoString(this IStat stat)
     {
         if (stat.MinValue == DefaultValues.STAT_DEFAULT_MIN_VALUE)
             return
