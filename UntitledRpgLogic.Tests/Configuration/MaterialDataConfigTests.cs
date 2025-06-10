@@ -48,6 +48,7 @@ LiquidCoefficientOfExpansion = {0.000210.ToString(culture)}
         File.WriteAllText(tempFilePath, tomlContent);
 
         MaterialDataConfig? config = null;
+        BaseMaterial? material = null;
         try
         {
             config = Utility.LoadConfig<MaterialDataConfig>(tempFilePath);
@@ -75,6 +76,10 @@ LiquidCoefficientOfExpansion = {0.000210.ToString(culture)}
             Assert.AreEqual(58.44, config.MolarMass);
             Assert.AreEqual(0.000012, config.SolidCoefficientOfExpansion);
             Assert.AreEqual(0.000210, config.LiquidCoefficientOfExpansion);
+
+            // Try to create a material from the config
+            material = new BaseMaterial(config);
+            Assert.IsNotNull(material);
         }
         finally
         {
