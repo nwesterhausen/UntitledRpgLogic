@@ -17,7 +17,7 @@ public class MaterialStateProperties
     /// <summary>
     ///     The temperature at which the material changes state, in degrees Celsius (°C).
     /// </summary>
-    public int TemperatureAtStateChange { get; set; }
+    public float TemperatureAtStateChange { get; set; }
 
     /// <summary>
     ///     The density of the material at the state change, in grams per cubic centimeter (g/cm³).

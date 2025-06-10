@@ -1,4 +1,3 @@
-using UntitledRpgLogic.BaseImplementations;
 using UntitledRpgLogic.Interfaces;
 using UntitledRpgLogic.Options;
 
@@ -22,7 +21,7 @@ public class DamageCalculator : IDamageCalculator
     }
 
     /// <inheritdoc />
-    public int GetPointDamageFromOptions(DamageOptions damageOptions, StatBase stat)
+    public int GetPointDamageFromOptions(DamageOptions damageOptions, IStat stat)
     {
         if (damageOptions.FlatDamage.HasValue) return damageOptions.FlatDamage.Value;
 

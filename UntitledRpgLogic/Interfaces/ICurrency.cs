@@ -3,7 +3,7 @@ namespace UntitledRpgLogic.Interfaces;
 /// <summary>
 ///     Interface for classes that represent a currency in the game.
 /// </summary>
-public interface ICurrency : IHasPluralName, ITradable, IHasTooltipString
+public interface ICurrency : IHasName, ITradable, IHasTooltipString
 {
     /// <summary>
     ///     How much of this currency is available.

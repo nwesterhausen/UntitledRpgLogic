@@ -1,4 +1,5 @@
 using UntitledRpgLogic.Enums;
+using UntitledRpgLogic.Extensions;
 
 namespace UntitledRpgLogic.Interfaces;
 
@@ -35,5 +36,5 @@ public interface IHasDimensions
     /// <summary>
     ///     The volume of the object in the specified dimension scale.
     /// </summary>
-    public float Volume { get; }
+    public float Volume => this.CalculateVolume();
 }

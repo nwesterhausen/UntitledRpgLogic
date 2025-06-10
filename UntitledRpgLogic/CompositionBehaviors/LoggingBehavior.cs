@@ -1,6 +1,5 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
-using UntitledRpgLogic.BaseImplementations;
 using UntitledRpgLogic.Interfaces;
 
 namespace UntitledRpgLogic.CompositionBehaviors;
@@ -15,7 +14,7 @@ public partial class LoggingBehavior : IHasLogging
     /// </summary>
     private static readonly Dictionary<int, Type[]> EventArgumentMap = new()
     {
-        { EventIds.STAT_CREATED_INT_VALUE, [typeof(StatBase)] },
+        { EventIds.STAT_CREATED_INT_VALUE, [typeof(IStat)] },
         { EventIds.STAT_VALUE_CHANGED_INT_VALUE, [typeof(int), typeof(string), typeof(string)] },
         { EventIds.STAT_ILLEGAL_CHANGE_INT_VALUE, [typeof(string), typeof(string)] },
         { EventIds.SKILL_POINTS_CHANGED_INT_VALUE, [typeof(string), typeof(string)] },
@@ -70,7 +69,7 @@ public partial class LoggingBehavior : IHasLogging
                     LogSkillPointsChanged((string)args[0]!, (string)args[1]!, (string)args[2]!);
                     return;
                 case EventIds.STAT_CREATED_INT_VALUE:
-                    LogStatCreated((StatBase)args[0]!);
+                    LogStatCreated((IStat)args[0]!);
                     return;
                 case EventIds.SKILL_CREATED_INT_VALUE:
                     _logger.LogInformation(eventId, "Created skill: {skillName}", args[0]);
@@ -97,7 +96,7 @@ public partial class LoggingBehavior : IHasLogging
                 LogStatChanged((int)args[0]!, (string)args[1]!, (string)args[2]!);
                 return;
             case EventIds.STAT_LINKED_INT_VALUE:
-                LogStatLinked((string)args[0]!, (string)args[1]!, (double)args[2]);
+                LogStatLinked((string)args[0]!, (string)args[1]!, (double)(args[2] ?? 0));
                 return;
             case EventIds.STAT_UNLINKED_INT_VALUE:
                 LogStatUnlinked((string)args[0]!, (string)args[1]!);
@@ -188,7 +187,7 @@ public partial class LoggingBehavior : IHasLogging
         EventId = EventIds.STAT_CREATED_INT_VALUE,
         Level = LogLevel.Debug,
         Message = "Created {stat}")]
-    protected partial void LogStatCreated(StatBase stat);
+    protected partial void LogStatCreated(IStat stat);
 
     /// <summary>
     ///     Logs an illegal stat change attempt.
