@@ -5,7 +5,7 @@ namespace UntitledRpgLogic.Interfaces;
 /// <summary>
 ///     Interface for a Stat in the RPG logic.
 /// </summary>
-public interface IStat : IHasName, IHasValue, IHasGuid, IHasLogging
+public interface IStat : IHasName, IHasChangeableValue, IHasGuid, IHasLogging
 {
     /// <summary>
     ///     The variation of the stat, which helps qualify how to display the stat in the UI or how it behaves in the game

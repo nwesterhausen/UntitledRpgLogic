@@ -116,46 +116,39 @@ public class LevelingBehavior : IHasLeveling
         ExpPoints = points;
     }
 
-    /// <inheritdoc />
+    /// <summary>
+    ///     Event that is triggered when the value of experience points changes.
+    /// </summary>
     public event EventHandler<ValueChangedEventArgs>? ValueChanged;
 
     /// <inheritdoc />
     public int Level { get; private set; }
 
     /// <inheritdoc />
-    public int MaxLevel { get; set; }
+    public int MaxLevel { get; init; }
 
     /// <inheritdoc />
     public int ExperienceToNextLevel => CalculateExperienceToNextLevel();
 
     /// <inheritdoc />
-    public float LevelScalingA { get; set; }
+    public float LevelScalingA { get; init; }
 
     /// <inheritdoc />
-    public int PointsForFirstLevel { get; set; }
+    public int PointsForFirstLevel { get; init; }
 
-    /// <inheritdoc />
-    public float ProgressToNextLevel
-    {
-        get
-        {
-            if (ExperienceToNextLevel == 0)
-                return 1.0f; // If no experience is needed for the next level, progress is complete.
-            return Math.Clamp((float)ExpPoints / ExperienceToNextLevel, 0.0f, 1.0f);
-        }
-    }
-
-    /// <inheritdoc />
+    /// <summary>
+    ///     Event that is triggered when the level changes.
+    /// </summary>
     public event EventHandler<ValueChangedEventArgs>? LevelChanged;
 
     /// <inheritdoc />
-    public float ScalingFactorB { get; set; }
+    public float ScalingFactorB { get; init; }
 
     /// <inheritdoc />
-    public int ScalingFactorC { get; set; }
+    public int ScalingFactorC { get; init; }
 
     /// <inheritdoc />
-    public ScalingCurveType ScalingCurve { get; set; }
+    public ScalingCurveType ScalingCurve { get; init; }
 
     /// <summary>
     ///     Calculates the level based on the current experience points and scaling factor.

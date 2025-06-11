@@ -8,12 +8,18 @@ public interface IHasChangeableValue : IHasValue
     /// <summary>
     ///     Increases the value by one point.
     /// </summary>
-    public void AddPoint();
+    public void AddPoint()
+    {
+        AddPoints(1);
+    }
 
     /// <summary>
     ///     Decreases the value by one point.
     /// </summary>
-    public void RemovePoint();
+    public void RemovePoint()
+    {
+        RemovePoints(1);
+    }
 
     /// <summary>
     ///     Increases the value by the specified number of points.

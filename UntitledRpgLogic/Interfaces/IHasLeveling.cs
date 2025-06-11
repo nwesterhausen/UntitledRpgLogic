@@ -17,7 +17,7 @@ public interface IHasLeveling : IHasChangeableValue
     /// <summary>
     ///     The maximum level of the object.
     /// </summary>
-    public int MaxLevel { get; set; }
+    public int MaxLevel { get; }
 
     /// <summary>
     ///     The experience required to reach the next level.
@@ -28,36 +28,45 @@ public interface IHasLeveling : IHasChangeableValue
     ///     The primary scaling factor (A) for level progression.
     ///     Controls the base rate at which experience requirements increase per level.
     /// </summary>
-    public float LevelScalingA { get; set; }
+    public float LevelScalingA { get; }
 
     /// <summary>
     ///     The secondary scaling factor (B) for level progression.
     ///     Used as an additional multiplier or offset in the experience formula to fine-tune curve steepness.
     /// </summary>
-    public float ScalingFactorB { get; set; }
+    public float ScalingFactorB { get; }
 
     /// <summary>
     ///     The tertiary scaling factor (C) for level progression.
     ///     Used as an exponent or offset in polynomial or logarithmic scaling to adjust curve shape.
     /// </summary>
-    public int ScalingFactorC { get; set; }
+    public int ScalingFactorC { get; }
 
     /// <summary>
     ///     The type of scaling curve used to determine experience requirements for each level.
     ///     Determines whether experience increases linearly, polynomially, logarithmically, or not at all.
     /// </summary>
-    public ScalingCurveType ScalingCurve { get; set; }
+    public ScalingCurveType ScalingCurve { get; }
 
     /// <summary>
     ///     The number of points required to reach the first level. (i.e. from level 0 to level 1)
     /// </summary>
     /// <remarks>Typically this is 1. Affects the overall scaling even though this value is not really used "in game."</remarks>
-    public int PointsForFirstLevel { get; set; }
+    public int PointsForFirstLevel { get; }
 
     /// <summary>
     ///     How far the object is from reaching the next level, expressed as a percentage (0.0 to 1.0).
     /// </summary>
-    public float ProgressToNextLevel { get; }
+    public float ProgressToNextLevel
+    {
+        get
+        {
+            if (ExperienceToNextLevel == 0)
+                return 1.0f; // If no experience is needed for the next level, progress is complete.
+            return Math.Clamp((float)Value / ExperienceToNextLevel, 0.0f, 1.0f);
+        }
+    }
+
 
     /// <summary>
     ///     Event that is triggered when the level changes.
