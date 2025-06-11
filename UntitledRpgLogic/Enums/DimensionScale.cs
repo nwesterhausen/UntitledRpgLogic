@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 
 namespace UntitledRpgLogic.Enums;
@@ -11,20 +12,20 @@ public enum DimensionScale
     /// <summary>
     ///     millimeter
     /// </summary>
-    mm = 5,
+    [Description("Millimeter")] mm = 5,
 
     /// <summary>
     ///     centimeter
     /// </summary>
-    cm = 6,
+    [Description("Centimeter")] cm = 6,
 
     /// <summary>
     ///     meter
     /// </summary>
-    m = 7,
+    [Description("Meter")] m = 7,
 
     /// <summary>
     ///     kilometer
     /// </summary>
-    km = 8
+    [Description("Kilometer")] km = 8
 }

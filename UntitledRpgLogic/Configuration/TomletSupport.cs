@@ -3,6 +3,7 @@ using System.Globalization;
 using Tomlet;
 using Tomlet.Exceptions;
 using Tomlet.Models;
+using UntitledRpgLogic.Enums;
 
 namespace UntitledRpgLogic.Configuration;
 
@@ -20,6 +21,8 @@ public static class TomletSupport
         // Register custom mappers for types that Tomlet does not support by default.
         TomletMain.RegisterMapper(SerializeGuid, DeserializeGuid);
         TomletMain.RegisterMapper(SerializeColor, DeserializeColor);
+        TomletMain.RegisterMapper(SerializeDimensionScale, DeserializeDimensionScale);
+        TomletMain.RegisterMapper(SerializeMassScale, DeserializeMassScale);
     }
 
     /// <summary>
@@ -74,5 +77,74 @@ public static class TomletSupport
         }
 
         throw new TomlTypeMismatchException(typeof(TomlString), value.GetType(), typeof(Color));
+    }
+
+    /// <summary>
+    ///     Serializes a <see cref="DimensionScale" /> to a TOML string value.
+    /// </summary>
+    /// <param name="scale"></param>
+    /// <returns></returns>
+    private static TomlValue? SerializeDimensionScale(DimensionScale scale)
+    {
+        return new TomlString(scale.ToString());
+    }
+
+    /// <summary>
+    ///     Deserializes a <see cref="DimensionScale" /> from a TOML string value.
+    /// </summary>
+    /// <param name="value"></param>
+    /// <returns></returns>
+    /// <exception cref="TomlTypeMismatchException"></exception>
+    private static DimensionScale DeserializeDimensionScale(TomlValue value)
+    {
+        if (value is TomlString str)
+        {
+            if (Enum.TryParse<DimensionScale>(str.Value, true, out var scale)) return scale;
+
+            return str.Value.ToLower() switch
+            {
+                "millimeter" or "millimeters" or "mm" => DimensionScale.mm,
+                "centimeter" or "centimeters" or "cm" => DimensionScale.cm,
+                "meter" or "meters" or "m" => DimensionScale.m,
+                "kilometer" or "kilometers" or "km" => DimensionScale.km,
+                _ => throw new TomlTypeMismatchException(typeof(TomlString), value.GetType(), typeof(DimensionScale))
+            };
+        }
+
+        throw new TomlTypeMismatchException(typeof(TomlString), value.GetType(), typeof(DimensionScale));
+    }
+
+    /// <summary>
+    ///     Serializes a <see cref="MassScale" /> to a TOML string value.
+    /// </summary>
+    /// <param name="scale"></param>
+    /// <returns></returns>
+    private static TomlValue? SerializeMassScale(MassScale scale)
+    {
+        return new TomlString(scale.ToString());
+    }
+
+    /// <summary>
+    ///     Deserializes a <see cref="MassScale" /> from a TOML string value.
+    /// </summary>
+    /// <param name="value"></param>
+    /// <returns></returns>
+    /// <exception cref="TomlTypeMismatchException"></exception>
+    private static MassScale DeserializeMassScale(TomlValue value)
+    {
+        if (value is TomlString str)
+        {
+            if (Enum.TryParse<MassScale>(str.Value, true, out var scale)) return scale;
+
+            return str.Value.ToLower() switch
+            {
+                "milligram" or "milligrams" or "mg" => MassScale.mg,
+                "gram" or "grams" or "g" => MassScale.g,
+                "kilogram" or "kilograms" or "kg" => MassScale.kg,
+                _ => throw new TomlTypeMismatchException(typeof(TomlString), value.GetType(), typeof(MassScale))
+            };
+        }
+
+        throw new TomlTypeMismatchException(typeof(TomlString), value.GetType(), typeof(MassScale));
     }
 }

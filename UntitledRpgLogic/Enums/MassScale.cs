@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 
 namespace UntitledRpgLogic.Enums;
@@ -11,15 +12,15 @@ public enum MassScale
     /// <summary>
     ///     milligram
     /// </summary>
-    mg = 10,
+    [Description("Milligram")] mg = 10,
 
     /// <summary>
     ///     gram
     /// </summary>
-    g = 11,
+    [Description("Gram")] g = 11,
 
     /// <summary>
     ///     kilogram
     /// </summary>
-    kg = 12
+    [Description("Kilogram")] kg = 12
 }
