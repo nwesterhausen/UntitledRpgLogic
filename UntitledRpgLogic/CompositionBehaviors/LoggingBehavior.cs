@@ -43,9 +43,18 @@ public partial class LoggingBehavior : IHasLogging
     /// <inheritdoc />
     public void LogEvent(EventId eventId, params object?[] args)
     {
+        LogErrorEvent(null, eventId, args);
+    }
+
+    /// <inheritdoc />
+    public void LogErrorEvent(Exception? exception, EventId eventId, params object?[] args)
+    {
         // Validate the event ID and arguments
         if (!AreValidArguments(eventId.Id, args))
             return;
+
+        // If an exception is provided, log an error and then let the event details be logged.
+        if (exception != null) LogError(exception, eventId);
 
         // Warning-level events
         if (_logger.IsEnabled(LogLevel.Warning))

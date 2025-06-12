@@ -27,17 +27,17 @@ public class SkillDefinition
     /// <summary>
     ///     The primary facing factor. One of three scaling factors used to determine the skill's level scaling.
     /// </summary>
-    public float LevelScalingA { get; set; }
+    public float ScalingFactorA { get; set; }
 
     /// <summary>
     ///     The secondary facing factor. One of three scaling factors used to determine the skill's level scaling.
     /// </summary>
-    public float LevelScalingB { get; set; }
+    public float ScalingFactorB { get; set; }
 
     /// <summary>
     ///     The tertiary facing factor. One of three scaling factors used to determine the skill's level scaling.
     /// </summary>
-    public float LevelScalingC { get; set; }
+    public float ScalingFactorC { get; set; }
 
     /// <summary>
     ///     How many points required to go from level 0 to level 1. This is used in level scaling calculations.

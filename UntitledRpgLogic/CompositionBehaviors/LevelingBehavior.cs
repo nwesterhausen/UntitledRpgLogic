@@ -47,9 +47,9 @@ public class LevelingBehavior : IHasLeveling
         MaxLevel = options.MaxLevel ?? DefaultMaxLevel;
         PointsForFirstLevel = options.PointsForFirstLevel ?? DefaultPointsForFirstLevel;
         // Set the scaling factors to their default values.
-        LevelScalingA = options.LevelScalingA ?? DefaultLevelScalingA;
-        ScalingFactorB = options.LevelScalingB ?? DefaultLevelScalingB;
-        ScalingFactorC = options.LevelScalingC ?? DefaultLevelScalingC;
+        ScalingFactorA = options.ScalingFactorA ?? DefaultLevelScalingA;
+        ScalingFactorB = options.ScalingFactorB ?? DefaultLevelScalingB;
+        ScalingFactorC = options.ScalingFactorC ?? DefaultLevelScalingC;
         ScalingCurve = options.ScalingCurve ?? ScalingCurveType.None;
 
         // Ensure that the initial experience points are set to a valid value.
@@ -131,7 +131,7 @@ public class LevelingBehavior : IHasLeveling
     public int ExperienceToNextLevel => CalculateExperienceToNextLevel();
 
     /// <inheritdoc />
-    public float LevelScalingA { get; init; }
+    public float ScalingFactorA { get; init; }
 
     /// <inheritdoc />
     public int PointsForFirstLevel { get; init; }
@@ -145,7 +145,7 @@ public class LevelingBehavior : IHasLeveling
     public float ScalingFactorB { get; init; }
 
     /// <inheritdoc />
-    public int ScalingFactorC { get; init; }
+    public float ScalingFactorC { get; init; }
 
     /// <inheritdoc />
     public ScalingCurveType ScalingCurve { get; init; }
@@ -159,7 +159,7 @@ public class LevelingBehavior : IHasLeveling
         // This method should calculate the level based on ExpPoints and LevelScaling.
         // The actual implementation will depend on the specific leveling logic you want to use.
         // For now, we return a placeholder value.
-        return (int)(ExpPoints / LevelScalingA);
+        return (int)(ExpPoints / ScalingFactorA);
     }
 
     /// <summary>
@@ -174,13 +174,14 @@ public class LevelingBehavior : IHasLeveling
         return ScalingCurve switch
         {
             ScalingCurveType.Linear =>
-                (int)(PointsForFirstLevel * Math.Pow(LevelScalingA, Level) * (1 + ScalingFactorB)),
+                (int)(PointsForFirstLevel * Math.Pow(ScalingFactorA, Level) * (1 + ScalingFactorB)),
             ScalingCurveType.Parabolic =>
-                (int)(PointsForFirstLevel * Math.Pow(Level + 1, ScalingFactorC) * (1 + ScalingFactorB) * LevelScalingA),
+                (int)(PointsForFirstLevel * Math.Pow(Level + 1, ScalingFactorC) * (1 + ScalingFactorB) *
+                      ScalingFactorA),
             ScalingCurveType.Logarithmic =>
-                (int)(PointsForFirstLevel * Math.Log(Level + ScalingFactorC) * (1 + ScalingFactorB) * LevelScalingA),
+                (int)(PointsForFirstLevel * Math.Log(Level + ScalingFactorC) * (1 + ScalingFactorB) * ScalingFactorA),
             _ => // None
-                (int)(PointsForFirstLevel * Math.Pow(LevelScalingA, Level))
+                (int)(PointsForFirstLevel * Math.Pow(ScalingFactorA, Level))
         };
     }
 }

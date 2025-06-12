@@ -11,15 +11,15 @@ public class Entity
     ///     The unique identifier for the entity. This is used to reference the entity in the game and in the database.
     /// </summary>
     [Key]
-    public Guid Id { get; set; }
+    public Guid Id { get; init; }
 
     /// <summary>
     ///     The skills that this entity has.
     /// </summary>
-    private ICollection<EntitySkills> Skills { get; set; } = [];
+    public ICollection<EntitySkills> Skills { get; init; } = [];
 
     /// <summary>
     ///     The stats that this entity has.
     /// </summary>
-    private ICollection<EntityStats> Stats { get; set; } = [];
+    public ICollection<EntityStats> Stats { get; init; } = [];
 }

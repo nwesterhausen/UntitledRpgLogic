@@ -5,7 +5,7 @@ namespace UntitledRpgLogic.Interfaces;
 /// <summary>
 ///     Interface for a Stat in the RPG logic.
 /// </summary>
-public interface IStat : IHasName, IHasChangeableValue, IHasGuid, IHasLogging
+public interface IStat : IHasName, IHasChangeableValue, IHasGuid, IHasLogging, IInstantiable
 {
     /// <summary>
     ///     The variation of the stat, which helps qualify how to display the stat in the UI or how it behaves in the game
@@ -46,6 +46,16 @@ public interface IStat : IHasName, IHasChangeableValue, IHasGuid, IHasLogging
     public float Percent => EffectivePercent;
 
     /// <summary>
+    ///     The current base value of the stat, which is the underlying value before any modifications.
+    /// </summary>
+    public int BaseValue { get; }
+
+    /// <summary>
+    ///     Get the stats that are linked to this stat. This is used to retrieve all the stats that this stat depends on.
+    /// </summary>
+    Dictionary<Guid, float> LinkedStats { get; }
+
+    /// <summary>
     ///     Apply a modifier to the stat, which can be a buff, debuff, or any other effect that modifies the stat's value.
     /// </summary>
     /// <param name="modifier"></param>
@@ -55,4 +65,16 @@ public interface IStat : IHasName, IHasChangeableValue, IHasGuid, IHasLogging
     ///     Event raised when the base value of the stat changes. Should trigger recalculation of the apparent value.
     /// </summary>
     event Action? BaseValueChanged;
+
+    /// <summary>
+    ///     Link a stat to this stat. This is used to create dependencies between stats, where one stat's value is based
+    ///     on or affected by another stat's value. This is useful for creating complex relationships between stats, such as
+    ///     Health being dependent on Strength or Defense being affected by Agility.
+    /// </summary>
+    /// <param name="stat"></param>
+    /// <param name="ratio">
+    ///     A simple ratio that defines what percentage of the linked stat's value is added to the dependent
+    ///     stat's value.
+    /// </param>
+    void LinkStat(IStat stat, float ratio = 1.0f);
 }

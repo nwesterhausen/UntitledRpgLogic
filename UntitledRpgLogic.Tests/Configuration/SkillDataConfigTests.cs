@@ -24,9 +24,9 @@ Description = ""The art of wielding swords.""
 [LevelingOptions]
 MaxLevel = 50
 PointsForFirstLevel = 100
-LevelScalingA = {1.5f.ToString(culture)}
-LevelScalingB = {1.2f.ToString(culture)}
-LevelScalingC = 50
+ScalingFactorA = {1.5f.ToString(culture)}
+ScalingFactorB = {1.2f.ToString(culture)}
+ScalingFactorC = 50
 ScalingCurve = ""Parabolic""
 ";
 
@@ -47,9 +47,9 @@ ScalingCurve = ""Parabolic""
             var levelingOptions = config.LevelingOptions;
             Assert.AreEqual(50, levelingOptions.MaxLevel);
             Assert.AreEqual(100, levelingOptions.PointsForFirstLevel);
-            Assert.AreEqual(1.5f, levelingOptions.LevelScalingA);
-            Assert.AreEqual(1.2f, levelingOptions.LevelScalingB);
-            Assert.AreEqual(50, levelingOptions.LevelScalingC);
+            Assert.AreEqual(1.5f, levelingOptions.ScalingFactorA);
+            Assert.AreEqual(1.2f, levelingOptions.ScalingFactorB);
+            Assert.AreEqual(50, levelingOptions.ScalingFactorC);
             Assert.AreEqual(ScalingCurveType.Parabolic, levelingOptions.ScalingCurve);
 
             // Try to create a skill from the config

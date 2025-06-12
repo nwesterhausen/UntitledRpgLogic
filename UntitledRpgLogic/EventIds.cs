@@ -40,6 +40,11 @@ public static class EventIds
     public const int STAT_VALUE_CHANGED_INT_VALUE = 1005;
 
     /// <summary>
+    ///     Integer value for invalid sender in stat change event.
+    /// </summary>
+    public const int STAT_INVALID_SENDER_INT_VALUE = 1006;
+
+    /// <summary>
     ///     Integer value for illegal stat change event.
     /// </summary>
     public const int STAT_ILLEGAL_CHANGE_INT_VALUE = 1099;
@@ -271,4 +276,10 @@ public static class EventIds
     /// </summary>
     public static readonly EventId STAT_LINK_NOT_FOUND =
         new(STAT_LINK_NOT_FOUND_INT_VALUE, nameof(STAT_LINK_NOT_FOUND));
+
+    /// <summary>
+    ///     Event ID for when a stat change is attempted with an invalid sender.
+    /// </summary>
+    public static readonly EventId STAT_INVALID_SENDER =
+        new(STAT_INVALID_SENDER_INT_VALUE, nameof(STAT_INVALID_SENDER));
 }

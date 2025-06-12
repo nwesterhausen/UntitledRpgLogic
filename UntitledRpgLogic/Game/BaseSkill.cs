@@ -4,6 +4,7 @@ using UntitledRpgLogic.Configuration;
 using UntitledRpgLogic.Enums;
 using UntitledRpgLogic.Events;
 using UntitledRpgLogic.Interfaces;
+using UntitledRpgLogic.Models;
 using UntitledRpgLogic.Options;
 
 namespace UntitledRpgLogic.Game;
@@ -11,19 +12,21 @@ namespace UntitledRpgLogic.Game;
 /// <summary>
 ///     Represents a base skill in the RPG logic, implementing the ISkill interface.
 /// </summary>
-public class BaseSkill : ISkill
+public class BaseSkill : ISkill, ICanCreateFromDb<BaseSkill, SkillDefinition>
 {
     /// <summary>
     ///     Creates a new instance of the BaseSkill class with the specified configuration and optional logger.
     /// </summary>
     /// <param name="config"></param>
     /// <param name="logger"></param>
-    public BaseSkill(SkillDataConfig config, ILogger? logger = null)
+    /// <param name="instanceId"></param>
+    public BaseSkill(SkillDataConfig config, ILogger? logger = null, Guid? instanceId = null)
     {
         GuidBehavior = new GuidBehavior(config.ExplicitId);
         NameBehavior = new NameBehavior(config.Name);
         LoggingBehavior = new LoggingBehavior(logger);
         LevelingBehavior = new LevelingBehavior(config.LevelingOptions ?? new LevelingOptions());
+        InstanceId = instanceId ?? Guid.Empty;
 
         LogEvent(EventIds.SKILL_CREATED, this);
 
@@ -61,6 +64,25 @@ public class BaseSkill : ISkill
     /// </summary>
     private LevelingBehavior LevelingBehavior { get; }
 
+    /// <inheritdoc />
+    public static BaseSkill FromDbModel(SkillDefinition dbModel, ILogger? logger = null, Guid? instanceId = null)
+    {
+        return new BaseSkill(new SkillDataConfig
+        {
+            ExplicitId = dbModel.Id,
+            Name = dbModel.Name,
+            LevelingOptions = new LevelingOptions
+            {
+                MaxLevel = dbModel.MaxLevel,
+                ScalingFactorA = dbModel.ScalingFactorA,
+                ScalingFactorB = dbModel.ScalingFactorB,
+                ScalingFactorC = dbModel.ScalingFactorC,
+                PointsForFirstLevel = dbModel.PointsForFirstLevel,
+                ScalingCurve = dbModel.ScalingCurve
+            }
+        }, logger, instanceId);
+    }
+
 
     /// <inheritdoc />
     public string Name => NameBehavior.Name;
@@ -84,9 +106,15 @@ public class BaseSkill : ISkill
     public ILogger Logger => LoggingBehavior.Logger;
 
     /// <inheritdoc />
+    public void LogErrorEvent(Exception? exception, EventId eventId, params object?[] args)
+    {
+        LoggingBehavior.LogErrorEvent(exception, eventId, args);
+    }
+
+    /// <inheritdoc />
     public void LogEvent(EventId eventId, params object?[] args)
     {
-        LoggingBehavior.LogEvent(eventId, args);
+        LogErrorEvent(null, eventId, args);
     }
 
     /// <inheritdoc />
@@ -129,13 +157,13 @@ public class BaseSkill : ISkill
     public int ExperienceToNextLevel => LevelingBehavior.ExperienceToNextLevel;
 
     /// <inheritdoc />
-    public float LevelScalingA => LevelingBehavior.LevelScalingA;
+    public float ScalingFactorA => LevelingBehavior.ScalingFactorA;
 
     /// <inheritdoc />
     public float ScalingFactorB => LevelingBehavior.ScalingFactorB;
 
     /// <inheritdoc />
-    public int ScalingFactorC => LevelingBehavior.ScalingFactorC;
+    public float ScalingFactorC => LevelingBehavior.ScalingFactorC;
 
     /// <inheritdoc />
     public ScalingCurveType ScalingCurve => LevelingBehavior.ScalingCurve;
@@ -145,4 +173,7 @@ public class BaseSkill : ISkill
 
     /// <inheritdoc />
     public event EventHandler<ValueChangedEventArgs>? LevelChanged;
+
+    /// <inheritdoc />
+    public Guid InstanceId { get; init; }
 }

@@ -28,7 +28,7 @@ public interface IHasLeveling : IHasChangeableValue
     ///     The primary scaling factor (A) for level progression.
     ///     Controls the base rate at which experience requirements increase per level.
     /// </summary>
-    public float LevelScalingA { get; }
+    public float ScalingFactorA { get; }
 
     /// <summary>
     ///     The secondary scaling factor (B) for level progression.
@@ -40,7 +40,7 @@ public interface IHasLeveling : IHasChangeableValue
     ///     The tertiary scaling factor (C) for level progression.
     ///     Used as an exponent or offset in polynomial or logarithmic scaling to adjust curve shape.
     /// </summary>
-    public int ScalingFactorC { get; }
+    public float ScalingFactorC { get; }
 
     /// <summary>
     ///     The type of scaling curve used to determine experience requirements for each level.
