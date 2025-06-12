@@ -199,13 +199,13 @@ namespace UntitledRpgLogic.EFCore.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<float>("LevelScalingA")
+                    b.Property<float>("ScalingFactorA")
                         .HasColumnType("REAL");
 
-                    b.Property<float>("LevelScalingB")
+                    b.Property<float>("ScalingFactorB")
                         .HasColumnType("REAL");
 
-                    b.Property<float>("LevelScalingC")
+                    b.Property<float>("ScalingFactorC")
                         .HasColumnType("REAL");
 
                     b.Property<int>("MaxLevel")
