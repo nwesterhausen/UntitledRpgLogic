@@ -2,7 +2,79 @@ namespace UntitledRpgLogic.Interfaces;
 
 /// <summary>
 ///     Database connection provider which allows for changing database based on which world is loaded.
+///
+/// This interface and its implementation manage which database file is currently active.
+///
+/// <list type="bullet">
+/// <item>It knows the location of your main-ref.db (assumed to be res://main-ref.db, adjust if needed) and the directory for player worlds (user://worlds/).</item>
+/// <item>CreateNewWorldDb(string worldName): Copies main-ref.db to a new file like user://worlds/worldName.db.</item>
+/// <item>SetActiveWorldDb(string worldName): Sets the connection string to point to the specified player's world database.</item>
+/// <item>SetActiveMainReferenceDb(): Sets the connection string to point to the main-ref.db.</item>
+/// <item>GetCurrentConnectionString(): Provides the connection string for the currently active database.</item>
+/// </list>
 /// </summary>
+/// 
+/// <remarks>
+///     <para>
+///         Services.ConfigureServices:
+///         <list>
+///             <item>IWorldDbConnectionProvider is registered as a singleton.</item>
+///             <item>
+///                 AddDbContext{RpgDbContext} is now configured with a factory function (serviceProvider, options) =>
+///                 .... This function retrieves the IWorldDbConnectionProvider and uses its GetCurrentConnectionString()
+///                 to configure the DbContextOptions for RpgDbContext each time an RpgDbContext instance is created by the
+///                 DI container.
+///             </item>
+///         </list>
+///     </para>
+///     Workflow:
+///     <para>
+///         Game Start: Services initializes, WorldDbConnectionProvider is created, and by default, it might point to
+///         main-ref.db.
+///         Create New World (e.g., "MyAdventure"):
+///         <code>
+/// var dbProvider = Services.ServiceProvider.GetRequiredService{IWorldDbConnectionProvider}();
+/// if (dbProvider.CreateNewWorldDb("MyAdventure"))
+/// {
+///     dbProvider.SetActiveWorldDb("MyAdventure");
+///     // Now, any RpgDbContext resolved will use "user://worlds/MyAdventure.db"
+/// }
+/// </code>
+///     </para>
+///     <para>
+///         Load Existing World (e.g., "MySavedGame"):
+///         <code>
+/// var dbProvider = Services.ServiceProvider.GetRequiredService{IWorldDbConnectionProvider}();
+/// dbProvider.SetActiveWorldDb("MySavedGame");
+/// // Now, any RpgDbContext resolved will use "user://worlds/MySavedGame.db"
+/// Accessing Data:
+/// // After setting the active world (or main reference)
+/// using (var context = Services.ServiceProvider.GetRequiredService{RpgDbContext}())
+/// {
+///     // context is now connected to the database specified by IWorldDbConnectionProvider
+///     // Perform database operations...
+///     // context.Players.Add(newPlayer);
+///     // context.SaveChanges();
+/// }
+/// </code>
+///     </para>
+///     <para>
+///         Accessing Main Reference Data:
+///         <code>
+/// var dbProvider = Services.ServiceProvider.GetRequiredService{IWorldDbConnectionProvider}();
+/// dbProvider.SetActiveMainReferenceDb();
+/// using (var context = Services.ServiceProvider.GetRequiredService{RpgDbContext}())
+/// {
+///     // context is now connected to "res://main-ref.db"
+///     // Read game template data, etc.
+/// }
+/// </code>
+///     </para>
+///     This setup allows you to dynamically switch the database connection for RpgDbContext based on game state, keeping
+///     your main reference data separate from player-specific world data. Remember to place main-ref.db in your project's
+///     res:// directory (or adjust the path in WorldDbConnectionProvider) and ensure it's exported with your game. Player
+///     world databases will be created in the user://worlds/ directory.
+/// </remarks>
 public interface IWorldDbConnectionProvider
 {
     /// <summary>
