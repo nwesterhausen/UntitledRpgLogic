@@ -7,7 +7,7 @@ namespace UntitledRpgLogic.StateMachines;
 /// <summary>
 ///     A state machine for the main menu of the game. Provides rigorous control over the main menu state and transitions.
 /// </summary>
-public class MainMenu
+public class MainMenuStateMachine
 {
     public enum State
     {
@@ -38,14 +38,14 @@ public class MainMenu
         Back
     }
 
-    private readonly ILogger<MainMenu> _logger;
+    private readonly ILogger<MainMenuStateMachine> _logger;
     private readonly StateMachine<State, Trigger> _machine;
 
     private State _state = State.MainMenu;
 
-    public MainMenu(ILogger<MainMenu>? logger = null)
+    public MainMenuStateMachine(ILogger<MainMenuStateMachine>? logger = null)
     {
-        _logger = logger ?? NullLogger<MainMenu>.Instance;
+        _logger = logger ?? NullLogger<MainMenuStateMachine>.Instance;
         _machine = new StateMachine<State, Trigger>(() => _state, s => _state = s);
 
         _machine.Configure(State.MainMenu)
@@ -75,6 +75,8 @@ public class MainMenu
             .SubstateOf(State.Settings);
 
         _machine.OnTransitioned(Transition);
+
+        _logger.LogDebug("MainMenu state machine initialized with initial state: {InitialState}", _state);
     }
 
     /// <summary>
