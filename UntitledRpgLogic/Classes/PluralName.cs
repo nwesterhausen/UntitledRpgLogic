@@ -48,6 +48,9 @@ public class PluralName
             !singular.EndsWith("oy") && !singular.EndsWith("uy"))
             return string.Concat(singular.AsSpan(0, singular.Length - 1), "ies");
 
+        if (singular.EndsWith('z') && !singular.EndsWith("zz"))
+            return singular + "zes";
+
         if (singular.EndsWith('s') || singular.EndsWith('x') || singular.EndsWith('z') || singular.EndsWith("ch") ||
             singular.EndsWith("sh"))
             return singular + "es";
