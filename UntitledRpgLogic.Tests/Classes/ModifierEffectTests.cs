@@ -268,7 +268,7 @@ public class ModifierEffectTests
     [TestMethod]
     public void ApplyEffect_Defaults_Correctly()
     {
-        ModifierEffectOptions options = new()();
+        ModifierEffectOptions options = new();
         ModifierEffect effect = new(options);
         // Default is Additive, Positive, No Scaling, FlatAmount = 0, Percentage = 0, PercentageOfMax = 0
         Assert.AreEqual(100, effect.ApplyEffect(100, 100, 200)); // Should result in no change
