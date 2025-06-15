@@ -3,6 +3,8 @@
 
 START_DIR=$(pwd)
 cd UntitledRpgLogic || exit 1
+dotnet restore
+dotnet build --configuration Release
 dotnet pack --configuration Release
 
 # Find the most recently modified UntitledRpg.Logic*.nupkg file (excluding .snupkg)
