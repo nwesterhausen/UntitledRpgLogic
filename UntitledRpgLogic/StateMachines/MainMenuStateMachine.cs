@@ -16,12 +16,6 @@ public class MainMenuStateMachine
         LoadGame,
         Settings,
         ShutDown,
-        SettingsAudio,
-        SettingsGraphics,
-        SettingsControls,
-        SettingsGameplay,
-        NewGameSetup,
-        LoadGameSelection
     }
 
     public enum Trigger
@@ -30,12 +24,6 @@ public class MainMenuStateMachine
         SelectLoadGame,
         SelectSettings,
         SelectQuit,
-        SelectSettingsAudio,
-        SelectSettingsGraphics,
-        SelectSettingsControls,
-        SelectSettingsGameplay,
-        Continue,
-        Back
     }
 
     private readonly ILogger<MainMenuStateMachine> _logger;
@@ -53,26 +41,6 @@ public class MainMenuStateMachine
             .Permit(Trigger.SelectLoadGame, State.LoadGame)
             .Permit(Trigger.SelectSettings, State.Settings)
             .Permit(Trigger.SelectQuit, State.ShutDown);
-        _machine.Configure(State.NewGame)
-            .Permit(Trigger.Continue, State.NewGameSetup)
-            .Permit(Trigger.Back, State.MainMenu);
-        _machine.Configure(State.LoadGame)
-            .Permit(Trigger.Continue, State.LoadGameSelection)
-            .Permit(Trigger.Back, State.MainMenu);
-        _machine.Configure(State.Settings)
-            .Permit(Trigger.SelectSettingsAudio, State.SettingsAudio)
-            .Permit(Trigger.SelectSettingsGraphics, State.SettingsGraphics)
-            .Permit(Trigger.SelectSettingsControls, State.SettingsControls)
-            .Permit(Trigger.SelectSettingsGameplay, State.SettingsGameplay)
-            .Permit(Trigger.Back, State.MainMenu);
-        _machine.Configure(State.SettingsAudio)
-            .SubstateOf(State.Settings);
-        _machine.Configure(State.SettingsGraphics)
-            .SubstateOf(State.Settings);
-        _machine.Configure(State.SettingsControls)
-            .SubstateOf(State.Settings);
-        _machine.Configure(State.SettingsGameplay)
-            .SubstateOf(State.Settings);
 
         _machine.OnTransitioned(Transition);
 
