@@ -13,7 +13,7 @@ public class RpgDbContextFactory : IDesignTimeDbContextFactory<RpgDbContext>
     /// <inheritdoc />
     public RpgDbContext CreateDbContext(string[] args)
     {
-        var optionsBuilder = new DbContextOptionsBuilder<RpgDbContext>();
+        DbContextOptionsBuilder<RpgDbContext> optionsBuilder = new();
         // Use your actual connection string here
         optionsBuilder.UseSqlite("Data Source=rpg_world_reference.db");
         return new RpgDbContext(optionsBuilder.Options);

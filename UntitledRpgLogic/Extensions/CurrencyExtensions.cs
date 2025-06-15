@@ -22,19 +22,19 @@ public static class CurrencyExtensions
     public static bool ConvertToCurrency(this ICurrency currency, ICurrency otherCurrency, int? limit = null)
     {
         // Calculate how much can be converted
-        var canConvert = (int)(currency.GetTotalValue() / otherCurrency.Value);
+        int canConvert = (int)(currency.GetTotalValue() / otherCurrency.Value);
 
         if (limit == null || canConvert < limit) limit = canConvert;
 
         if (limit <= 0) return false;
 
         // Calculate how much to subtract from this otherCurrency
-        var toSubtract = limit.Value * otherCurrency.Value;
+        long toSubtract = limit.Value * otherCurrency.Value;
         // Subtract the value from this otherCurrency
-        var remaining = currency.Subtract(toSubtract);
+        long remaining = currency.Subtract(toSubtract);
 
         // Find the actual amount to add to the target otherCurrency
-        var toAdd = toSubtract - remaining;
+        long toAdd = toSubtract - remaining;
         // Add the value to the target otherCurrency
         otherCurrency.Add(toAdd);
 

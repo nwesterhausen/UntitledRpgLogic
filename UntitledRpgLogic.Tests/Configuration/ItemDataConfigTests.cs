@@ -12,15 +12,15 @@ public class ItemDataConfigTests
     [TestMethod]
     public void LoadItemDataConfig_ValidToml_LoadsCorrectly()
     {
-        var tempFilePath = Path.GetTempFileName();
-        var explicitId = Guid.NewGuid();
-        var craftedById = Guid.NewGuid();
-        var materialId = ReservedGuids.MaterialCopper;
+        string tempFilePath = Path.GetTempFileName();
+        Guid explicitId = Guid.NewGuid();
+        Guid craftedById = Guid.NewGuid();
+        Guid materialId = ReservedGuids.MaterialCopper;
 
         // Ensure consistent float string representation
-        var culture = CultureInfo.InvariantCulture;
+        CultureInfo culture = CultureInfo.InvariantCulture;
 
-        var tomlContent = $@"
+        string tomlContent = $@"
 ExplicitId = ""{explicitId}""
 Name = ""Test Sword""
 PluralName = ""Test Swords""
@@ -77,13 +77,13 @@ MaterialId = ""{materialId}""
     [TestMethod]
     public void LoadItemDataConfig_MinimalToml_LoadsCorrectlyWithDefaults()
     {
-        var tempFilePath = Path.GetTempFileName();
-        var materialId = ReservedGuids.MaterialCopper;
+        string tempFilePath = Path.GetTempFileName();
+        Guid materialId = ReservedGuids.MaterialCopper;
 
         // Ensure consistent float string representation
-        var culture = CultureInfo.InvariantCulture;
+        CultureInfo culture = CultureInfo.InvariantCulture;
 
-        var tomlContent = $@"
+        string tomlContent = $@"
 Name = ""Basic Dagger""
 ItemType = ""Weapon""
 Width = {5.0f.ToString(culture)}

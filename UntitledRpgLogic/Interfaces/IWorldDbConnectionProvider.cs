@@ -2,18 +2,21 @@ namespace UntitledRpgLogic.Interfaces;
 
 /// <summary>
 ///     Database connection provider which allows for changing database based on which world is loaded.
-///
-/// This interface and its implementation manage which database file is currently active.
-///
-/// <list type="bullet">
-/// <item>It knows the location of your main-ref.db (assumed to be res://main-ref.db, adjust if needed) and the directory for player worlds (user://worlds/).</item>
-/// <item>CreateNewWorldDb(string worldName): Copies main-ref.db to a new file like user://worlds/worldName.db.</item>
-/// <item>SetActiveWorldDb(string worldName): Sets the connection string to point to the specified player's world database.</item>
-/// <item>SetActiveMainReferenceDb(): Sets the connection string to point to the main-ref.db.</item>
-/// <item>GetCurrentConnectionString(): Provides the connection string for the currently active database.</item>
-/// </list>
+///     This interface and its implementation manage which database file is currently active.
+///     <list type="bullet">
+///         <item>
+///             It knows the location of your main-ref.db (assumed to be res://main-ref.db, adjust if needed) and the
+///             directory for player worlds (user://worlds/).
+///         </item>
+///         <item>CreateNewWorldDb(string worldName): Copies main-ref.db to a new file like user://worlds/worldName.db.</item>
+///         <item>
+///             SetActiveWorldDb(string worldName): Sets the connection string to point to the specified player's world
+///             database.
+///         </item>
+///         <item>SetActiveMainReferenceDb(): Sets the connection string to point to the main-ref.db.</item>
+///         <item>GetCurrentConnectionString(): Provides the connection string for the currently active database.</item>
+///     </list>
 /// </summary>
-/// 
 /// <remarks>
 ///     <para>
 ///         Services.ConfigureServices:

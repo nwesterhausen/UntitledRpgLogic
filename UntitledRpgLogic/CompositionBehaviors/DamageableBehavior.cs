@@ -35,7 +35,7 @@ public class DamageableBehavior<T> : IDamageable
         private set
         {
             if (_currentDamage == value) return;
-            var previousDamage = _currentDamage;
+            int previousDamage = _currentDamage;
             if (value < 0)
             {
 #if DEBUG

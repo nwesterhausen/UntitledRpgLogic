@@ -6,7 +6,8 @@ namespace UntitledRpgLogic.Classes;
 public class PluralName
 {
     /// <summary>
-    ///     Constructs a new PluralName object with the given singular, plural and adjective names. If not supplied, the singular
+    ///     Constructs a new PluralName object with the given singular, plural and adjective names. If not supplied, the
+    ///     singular
     ///     will be used as the adjective and a best guess will be made for the plural.
     /// </summary>
     /// <param name="singular"></param>
@@ -75,7 +76,7 @@ public class PluralName
         {
             try
             {
-                var pluralEnding = Plural[(Singular.Length - 1)..];
+                string pluralEnding = Plural[(Singular.Length - 1)..];
                 if (pluralEnding.Length == 0 || pluralEnding.Equals("es") || pluralEnding.Equals("s"))
                     return $"{Singular}";
             }
@@ -91,14 +92,15 @@ public class PluralName
     }
 
     /// <summary>
-    ///     Deserializes a string into the PluralName object. Expects the string to be in the format: `Singular;Plural;Adjective`
+    ///     Deserializes a string into the PluralName object. Expects the string to be in the format:
+    ///     `Singular;Plural;Adjective`
     /// </summary>
     /// <param name="serialized">serialized string</param>
     /// <returns>PluralName object reconstructed from serialized version</returns>
     /// <exception cref="ArgumentException">failed to deserialize the string</exception>
     public static PluralName Deserialize(string serialized)
     {
-        var parts = serialized.Split(';');
+        string[] parts = serialized.Split(';');
         return parts.Length switch
         {
             0 => throw new ArgumentException("Invalid serialized name format."),

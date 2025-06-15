@@ -24,7 +24,7 @@ public class StatEntry<T> where T : IStat
         {
             // When the base value changes, we want the stat to recalculate its current value
             // for each modifier, in order of priority, run Stat.ApplyModifier(modifier)
-            foreach (var modifier in Modifiers.OrderBy(m => m.Priority)) stat.ApplyModifier(modifier);
+            foreach (IModifier modifier in Modifiers.OrderBy(m => m.Priority)) stat.ApplyModifier(modifier);
         };
     }
 
@@ -63,10 +63,10 @@ public class StatEntry<T> where T : IStat
     {
         if (!IsDamageable) return;
 
-        var damageAmount = damageCalculator.GetPointDamageFromOptions(damageOptions, Stat);
+        int damageAmount = damageCalculator.GetPointDamageFromOptions(damageOptions, Stat);
         if (damageAmount <= 0) return;
 
-        var finalDamage = damageCalculator.CalculateFinalDamage(damageAmount, Mitigations);
+        int finalDamage = damageCalculator.CalculateFinalDamage(damageAmount, Mitigations);
         Damageable?.TakeDamage(finalDamage);
         DamageTakenEvent?.Invoke(this, new StatDamageEventArgs
         {

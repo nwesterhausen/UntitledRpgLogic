@@ -12,11 +12,11 @@ public class SkillDataConfigTests
     [TestMethod]
     public void LoadSkillDataConfig_ValidToml_LoadsCorrectly()
     {
-        var tempFilePath = Path.GetTempFileName();
-        var explicitId = Guid.NewGuid();
-        var culture = CultureInfo.InvariantCulture;
+        string tempFilePath = Path.GetTempFileName();
+        Guid explicitId = Guid.NewGuid();
+        CultureInfo culture = CultureInfo.InvariantCulture;
 
-        var tomlContent = $@"
+        string tomlContent = $@"
 ExplicitId = ""{explicitId}""
 Name = ""Swordsmanship""
 Description = ""The art of wielding swords.""
@@ -44,7 +44,7 @@ ScalingCurve = ""Parabolic""
             Assert.AreEqual("The art of wielding swords.", config.Description);
 
             Assert.IsNotNull(config.LevelingOptions);
-            var levelingOptions = config.LevelingOptions;
+            LevelingOptions? levelingOptions = config.LevelingOptions;
             Assert.AreEqual(50, levelingOptions.MaxLevel);
             Assert.AreEqual(100, levelingOptions.PointsForFirstLevel);
             Assert.AreEqual(1.5f, levelingOptions.ScalingFactorA);
@@ -67,9 +67,9 @@ ScalingCurve = ""Parabolic""
     [TestMethod]
     public void LoadSkillDataConfig_MinimalToml_LoadsCorrectlyWithDefaults()
     {
-        var tempFilePath = Path.GetTempFileName();
+        string tempFilePath = Path.GetTempFileName();
 
-        var tomlContent = @"
+        string tomlContent = @"
 Name = ""Alchemy""
 ";
 
@@ -94,7 +94,7 @@ Name = ""Alchemy""
             Assert.AreEqual(config.Name, skill.Name);
 
             // Must define defaults here, since they are not publicly exposed anywhere
-            var defaultOptions = new LevelingOptions
+            LevelingOptions defaultOptions = new()
             {
                 MaxLevel = 1024,
                 PointsForFirstLevel = 1,

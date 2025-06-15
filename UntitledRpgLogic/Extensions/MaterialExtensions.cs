@@ -26,24 +26,24 @@ public static class MaterialExtensions
         {
             case StateOfMatter.Solid:
             {
-                var p0 = material.StateProperties[StateOfMatter.Solid].DensityAtStateChange;
-                var t0 = material.StateProperties[StateOfMatter.Solid].TemperatureAtStateChange;
-                var t = temperature ?? material.Temperature;
+                float p0 = material.StateProperties[StateOfMatter.Solid].DensityAtStateChange;
+                float t0 = material.StateProperties[StateOfMatter.Solid].TemperatureAtStateChange;
+                float t = temperature ?? material.Temperature;
 
-                return p0 * (1 + material.SolidCoefficientOfExpansion * (t - t0));
+                return p0 * (1 + (material.SolidCoefficientOfExpansion * (t - t0)));
             }
             case StateOfMatter.Liquid:
             {
-                var p0 = material.StateProperties[StateOfMatter.Liquid].DensityAtStateChange;
-                var t0 = material.StateProperties[StateOfMatter.Liquid].TemperatureAtStateChange;
-                var t = temperature ?? material.Temperature;
+                float p0 = material.StateProperties[StateOfMatter.Liquid].DensityAtStateChange;
+                float t0 = material.StateProperties[StateOfMatter.Liquid].TemperatureAtStateChange;
+                float t = temperature ?? material.Temperature;
 
-                return p0 * (1 + material.LiquidCoefficientOfExpansion * (t - t0));
+                return p0 * (1 + (material.LiquidCoefficientOfExpansion * (t - t0)));
             }
             case StateOfMatter.Gas:
             {
-                var t = (temperature ?? material.Temperature) + 273.15; // Convert Celsius to Kelvin
-                var p = pressure ?? material.Pressure;
+                double t = (temperature ?? material.Temperature) + 273.15; // Convert Celsius to Kelvin
+                float p = pressure ?? material.Pressure;
 
                 // Ideal gas law: PV = nRT => Density (ρ) = m / V = (p * M) / (R * T)
                 return p * material.MolarMass / (UniversalGasConstant * t);
@@ -69,7 +69,7 @@ public static class MaterialExtensions
     public static double CalculateWeight(this IMaterial material, double volume, int? pressure = null,
         int? temperature = null)
     {
-        var density = material.Density;
+        double density = material.Density;
         if (pressure != null || temperature != null)
             // update the density first
             density = material.CalculateDensity(pressure, temperature);

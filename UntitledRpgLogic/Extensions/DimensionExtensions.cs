@@ -65,7 +65,7 @@ public static class DimensionExtensions
             // (1/3) * π * h * (r1^2 + r1 * r2 + r2^2) for Conical Frustum
             case ShapeType.ConicalFrustum:
                 return 1f / 3f * MathF.PI * dimensions.Height * (MathF.Pow(dimensions.Width / 2, 2) +
-                                                                 dimensions.Width / 2 * (dimensions.Depth / 2) +
+                                                                 (dimensions.Width / 2 * (dimensions.Depth / 2)) +
                                                                  MathF.Pow(dimensions.Depth / 2, 2));
             default:
 #if DEBUG

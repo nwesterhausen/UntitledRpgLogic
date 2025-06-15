@@ -11,10 +11,10 @@ public class DamageCalculator : IDamageCalculator
     /// <inheritdoc />
     public int CalculateFinalDamage(int damageAmount, IEnumerable<IAppliesDamageMitigation> mitigations)
     {
-        var modifiedDamage = damageAmount;
+        int modifiedDamage = damageAmount;
 
         // Sort and apply mitigation effects in order.
-        foreach (var mitigation in mitigations.OrderBy(m => m.MitigationPriority))
+        foreach (IAppliesDamageMitigation mitigation in mitigations.OrderBy(m => m.MitigationPriority))
             modifiedDamage = mitigation.ApplyMitigation(modifiedDamage);
 
         return modifiedDamage;

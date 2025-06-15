@@ -50,11 +50,11 @@ public static class Utility
         TomletSupport.RegisterMappers();
         try
         {
-            var fileContent = File.ReadAllText(filepath);
+            string fileContent = File.ReadAllText(filepath);
             if (string.IsNullOrEmpty(fileContent))
                 throw new InvalidOperationException($"Configuration file is empty: {filepath}");
 
-            var config = TomletMain.To<T>(fileContent);
+            T config = TomletMain.To<T>(fileContent);
             return config;
         }
         catch (Exception ex)

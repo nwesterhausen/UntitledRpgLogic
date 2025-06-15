@@ -14,13 +14,13 @@ public static class ModifierExtensions
     /// <returns>string representing the modifier (e.g., "+10%", "-5", "+20% (of base)") </returns>
     public static string ToDisplay(this IModifier modifier)
     {
-        var baseEffectString = string.Empty;
+        string baseEffectString = string.Empty;
         if (modifier.ModificationEffect != null) baseEffectString = modifier.ModificationEffect.ToDisplay();
 
         if (modifier.StackEffects != null)
         {
             baseEffectString += " Per Stack:";
-            foreach (var effect in modifier.StackEffects) baseEffectString += $" {effect.ToDisplay()}";
+            foreach (IModifierEffect effect in modifier.StackEffects) baseEffectString += $" {effect.ToDisplay()}";
         }
 
         return baseEffectString;
@@ -33,14 +33,14 @@ public static class ModifierExtensions
     /// <returns></returns>
     private static string ToDisplay(this IModifierEffect effect)
     {
-        var sign = effect.IsPositive ? "+" : "-";
-        var flatAmount = effect.AppliesFlatAmount ? $"{sign}{effect.FlatAmount}" : string.Empty;
-        var percentage = effect.AppliesPercentage ? $"{sign}{effect.Percentage:F2}%" : string.Empty;
-        var percentageOfMax = effect.AppliesPercentageOfMax
+        string sign = effect.IsPositive ? "+" : "-";
+        string flatAmount = effect.AppliesFlatAmount ? $"{sign}{effect.FlatAmount}" : string.Empty;
+        string percentage = effect.AppliesPercentage ? $"{sign}{effect.Percentage:F2}%" : string.Empty;
+        string percentageOfMax = effect.AppliesPercentageOfMax
             ? $"{sign}{effect.PercentageOfMax:F2}% of MAX"
             : string
                 .Empty;
-        var scaling = effect.ScalesOnBaseValue
+        string scaling = effect.ScalesOnBaseValue
             ? $"(scaled at {effect.ScalingFactor:F2}%)"
             : string
                 .Empty;

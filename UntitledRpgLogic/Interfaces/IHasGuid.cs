@@ -6,7 +6,7 @@ namespace UntitledRpgLogic.Interfaces;
 public interface IHasGuid
 {
     /// <summary>
-    ///    The unique identifier for the object, represented as a Guid.
+    ///     The unique identifier for the object, represented as a Guid.
     /// </summary>
     public Guid Guid { get; }
 

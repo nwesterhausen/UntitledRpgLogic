@@ -11,22 +11,22 @@ public class MaterialDataConfigTests
     [TestMethod]
     public void LoadMaterialDataConfig_ValidToml_LoadsCorrectly()
     {
-        var tempFilePath = Path.GetTempFileName();
-        var explicitId = Guid.NewGuid();
+        string tempFilePath = Path.GetTempFileName();
+        Guid explicitId = Guid.NewGuid();
 
         // Ensure consistent float/double string representation
-        var culture = CultureInfo.InvariantCulture;
+        CultureInfo culture = CultureInfo.InvariantCulture;
 
         // Define colors as hex strings for TOML
-        var liquidColorHex = "#FF0000"; // Red
-        var solidColorHex = "#00FF00"; // Green
-        var gasColorHex = "#0000FF"; // Blue
+        string liquidColorHex = "#FF0000"; // Red
+        string solidColorHex = "#00FF00"; // Green
+        string gasColorHex = "#0000FF"; // Blue
 
-        var expectedLiquidColor = ColorTranslator.FromHtml(liquidColorHex);
-        var expectedSolidColor = ColorTranslator.FromHtml(solidColorHex);
-        var expectedGasColor = ColorTranslator.FromHtml(gasColorHex);
+        Color expectedLiquidColor = ColorTranslator.FromHtml(liquidColorHex);
+        Color expectedSolidColor = ColorTranslator.FromHtml(solidColorHex);
+        Color expectedGasColor = ColorTranslator.FromHtml(gasColorHex);
 
-        var tomlContent = $@"
+        string tomlContent = $@"
 ExplicitId = ""{explicitId}""
 Name = ""Testium""
 PluralName = ""Testia""
@@ -90,13 +90,13 @@ LiquidCoefficientOfExpansion = {0.000210.ToString(culture)}
     [TestMethod]
     public void LoadMaterialDataConfig_MinimalToml_LoadsCorrectlyWithDefaults()
     {
-        var tempFilePath = Path.GetTempFileName();
+        string tempFilePath = Path.GetTempFileName();
 
-        var culture = CultureInfo.InvariantCulture;
-        var solidColorHex = "#CCCCCC"; // Gray
-        var expectedSolidColor = ColorTranslator.FromHtml(solidColorHex);
+        CultureInfo culture = CultureInfo.InvariantCulture;
+        string solidColorHex = "#CCCCCC"; // Gray
+        Color expectedSolidColor = ColorTranslator.FromHtml(solidColorHex);
 
-        var tomlContent = $@"
+        string tomlContent = $@"
 Name = ""Basic Rock""
 TemperatureAtLiquidStateChange = {1200.0f.ToString(culture)}
 DensityAtLiquidStateChange = {2.2f.ToString(culture)}

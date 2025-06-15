@@ -68,16 +68,15 @@ public class BaseStat : IStat
             if (Variation == StatVariation.Complex || Variation == StatVariation.Minor)
             {
                 // These stats are not meant to be directly set, so we do not let it get changed here.
-                var exception =
-                    new InvalidOperationException("Cannot directly set the value of a complex or minor stat.");
+                InvalidOperationException exception = new("Cannot directly set the value of a complex or minor stat.");
                 LogErrorEvent(exception, EventIds.STAT_ILLEGAL_CHANGE, Name,
                     "Setting value directly is not allowed for this stat type.");
                 return;
             }
 
             if (_apparentValue == value) return;
-            var valueChange = value - _apparentValue;
-            var oldValue = _apparentValue;
+            int valueChange = value - _apparentValue;
+            int oldValue = _apparentValue;
 
 
             // Ensure the apparent value is within the defined min and max range
@@ -218,14 +217,14 @@ public class BaseStat : IStat
             return;
         }
 
-        if (!LinkedStats.TryGetValue(stat.Guid, out var ratio))
+        if (!LinkedStats.TryGetValue(stat.Guid, out float ratio))
         {
             Logger.LogWarning("Stat {StatName} is not linked to {LinkedStatName}.", Name, stat.Name);
             return;
         }
 
         // Calculate the change in value
-        var change = (int)(e.Delta * ratio);
+        int change = (int)(e.Delta * ratio);
         // Update the apparent value based on the change
         _apparentValue += change;
     }

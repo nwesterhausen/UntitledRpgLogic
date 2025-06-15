@@ -9,10 +9,10 @@ public class StatDataConfigTests
     [TestMethod]
     public void LoadStatDataConfig_ValidToml_LoadsCorrectly()
     {
-        var tempFilePath = Path.GetTempFileName();
-        var explicitId = Guid.NewGuid();
+        string tempFilePath = Path.GetTempFileName();
+        Guid explicitId = Guid.NewGuid();
 
-        var tomlContent = $@"
+        string tomlContent = $@"
 ExplicitId = ""{explicitId}""
 Name = ""Strength""
 Description = ""Measures physical power.""
@@ -51,9 +51,9 @@ MinValue = 10
     [TestMethod]
     public void LoadStatDataConfig_MinimalToml_LoadsCorrectlyWithDefaults()
     {
-        var tempFilePath = Path.GetTempFileName();
+        string tempFilePath = Path.GetTempFileName();
 
-        var tomlContent = @"
+        string tomlContent = @"
 Name = ""Agility""
 ";
 

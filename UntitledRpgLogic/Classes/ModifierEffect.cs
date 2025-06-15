@@ -75,10 +75,10 @@ public class ModifierEffect : IModifierEffect
     /// <returns></returns>
     private int ApplyAdditiveEffect(int baseValue, int currentValue, int maxValue)
     {
-        var returnValue = currentValue;
+        int returnValue = currentValue;
         if (ScalesOnBaseValue)
         {
-            var scaledBaseValue = baseValue * ScalingFactor;
+            float scaledBaseValue = baseValue * ScalingFactor;
             if (IsPositive)
             {
                 if (AppliesFlatAmount)
@@ -131,12 +131,12 @@ public class ModifierEffect : IModifierEffect
     /// <returns></returns>
     private int ApplyMultiplicativeEffect(int baseValue, int currentValue, int maxValue)
     {
-        var returnValue = currentValue;
+        int returnValue = currentValue;
         if (IsPositive)
         {
             if (ScalesOnBaseValue)
             {
-                var scaledBaseValue = baseValue * ScalingFactor;
+                float scaledBaseValue = baseValue * ScalingFactor;
                 if (AppliesFlatAmount)
                     returnValue += (FlatAmount + (int)Math.Round(scaledBaseValue)) * currentValue;
                 if (AppliesPercentage)
@@ -157,7 +157,7 @@ public class ModifierEffect : IModifierEffect
 
         if (ScalesOnBaseValue)
         {
-            var scaledBaseValue = baseValue * ScalingFactor;
+            float scaledBaseValue = baseValue * ScalingFactor;
             if (AppliesFlatAmount)
                 returnValue -= (FlatAmount + (int)Math.Round(scaledBaseValue)) * currentValue;
             if (AppliesPercentage)

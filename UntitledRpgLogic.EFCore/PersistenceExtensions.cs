@@ -22,7 +22,7 @@ public static class PersistenceExtensions
         where TDbModel : class
     {
         // Map the domain object to its persistence model.
-        var model = domainObj.ToDbModel();
+        TDbModel model = domainObj.ToDbModel();
         // Use the DbContext to add the model.
         context.Set<TDbModel>().Add(model);
         // Save changes asynchronously.
@@ -43,7 +43,7 @@ public static class AggregatePersistenceExtensions
         where TDomain : IPersistableAggregate<TAggregateDbModel>
         where TAggregateDbModel : class
     {
-        var aggregateModel = domainAggregate.ToDbAggregateModel();
+        TAggregateDbModel aggregateModel = domainAggregate.ToDbAggregateModel();
         // If it’s a new aggregate, use Add; if it already exists, you might use Update.
         // Here we assume an Add for simplicity.
         context.Set<TAggregateDbModel>().Add(aggregateModel);

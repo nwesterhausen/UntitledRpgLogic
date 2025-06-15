@@ -74,7 +74,7 @@ public class ItemStorageBehavior : IItemStorage
 
         if (IsFull) return false; // Inventory is full
 
-        var cancelableEventArgs = new CancelableItemActionEventArgs(item);
+        CancelableItemActionEventArgs cancelableEventArgs = new(item);
         BeforeItemStored?.Invoke(this, cancelableEventArgs);
         if (cancelableEventArgs.Cancel) return false; // Storing the item was canceled
 
@@ -92,7 +92,7 @@ public class ItemStorageBehavior : IItemStorage
     {
         if (_items.TryGetValue(itemId, out item))
         {
-            var cancelableEventArgs = new CancelableItemActionEventArgs(item);
+            CancelableItemActionEventArgs cancelableEventArgs = new(item);
             BeforeItemRetrieved?.Invoke(this, cancelableEventArgs);
             if (cancelableEventArgs.Cancel)
             {

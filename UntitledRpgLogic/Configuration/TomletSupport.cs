@@ -68,7 +68,7 @@ public static class TomletSupport
     {
         if (value is TomlString str)
         {
-            var colorString = str.Value.Trim();
+            string colorString = str.Value.Trim();
             if (colorString.StartsWith("#")) colorString = colorString.Substring(1); // Remove the '#' if present
 
             if (colorString.Length == 6) colorString = "FF" + colorString; // Add alpha channel if missing
@@ -99,7 +99,7 @@ public static class TomletSupport
     {
         if (value is TomlString str)
         {
-            if (Enum.TryParse<DimensionScale>(str.Value, true, out var scale)) return scale;
+            if (Enum.TryParse(str.Value, true, out DimensionScale scale)) return scale;
 
             return str.Value.ToLower() switch
             {
@@ -134,7 +134,7 @@ public static class TomletSupport
     {
         if (value is TomlString str)
         {
-            if (Enum.TryParse<MassScale>(str.Value, true, out var scale)) return scale;
+            if (Enum.TryParse(str.Value, true, out MassScale scale)) return scale;
 
             return str.Value.ToLower() switch
             {

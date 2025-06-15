@@ -39,7 +39,8 @@ public class LevelingBehavior : IHasLeveling
     private int _expPoints;
 
     /// <summary>
-    ///     Initializes a new behavior that implements <see cref="IHasLeveling" /> interface with the specified leveling options.
+    ///     Initializes a new behavior that implements <see cref="IHasLeveling" /> interface with the specified leveling
+    ///     options.
     /// </summary>
     /// <param name="options"></param>
     public LevelingBehavior(LevelingOptions options)
@@ -66,9 +67,9 @@ public class LevelingBehavior : IHasLeveling
         get => _expPoints;
         set
         {
-            var oldValue = _expPoints;
-            var oldLevel = Level;
-            var newValue = value >= 0 ? value : 0;
+            int oldValue = _expPoints;
+            int oldLevel = Level;
+            int newValue = value >= 0 ? value : 0;
             if (oldValue == newValue) return;
 
             _expPoints = newValue;

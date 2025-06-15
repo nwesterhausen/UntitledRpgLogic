@@ -20,16 +20,16 @@ public partial class MainWindow : Window
         PrefabGrid.ColumnDefinitions.Clear();
         PrefabGrid.Children.Clear();
 
-        for (var i = 0; i < 16; i++)
+        for (int i = 0; i < 16; i++)
         {
             PrefabGrid.RowDefinitions.Add(new RowDefinition(GridLength.Star));
             PrefabGrid.ColumnDefinitions.Add(new ColumnDefinition(GridLength.Star));
         }
 
-        for (var row = 0; row < 16; row++)
-        for (var col = 0; col < 16; col++)
+        for (int row = 0; row < 16; row++)
+        for (int col = 0; col < 16; col++)
         {
-            var border = new Border
+            Border border = new()
             {
                 BorderBrush = Brushes.Gray,
                 BorderThickness = new Thickness(0.5),
@@ -44,17 +44,17 @@ public partial class MainWindow : Window
 
     private void PrefabGrid_PointerPressed(object? sender, PointerPressedEventArgs e)
     {
-        var position = e.GetPosition(PrefabGrid);
+        Point position = e.GetPosition(PrefabGrid);
         // Get cell size
-        var cellWidth = PrefabGrid.Bounds.Width / PrefabGrid.ColumnDefinitions.Count;
-        var cellHeight = PrefabGrid.Bounds.Height / PrefabGrid.RowDefinitions.Count;
+        double cellWidth = PrefabGrid.Bounds.Width / PrefabGrid.ColumnDefinitions.Count;
+        double cellHeight = PrefabGrid.Bounds.Height / PrefabGrid.RowDefinitions.Count;
 
         // Calculate row and column
-        var col = (int)(position.X / cellWidth);
-        var row = (int)(position.Y / cellHeight);
+        int col = (int)(position.X / cellWidth);
+        int row = (int)(position.Y / cellHeight);
 
         // Find the child at (row, col)
-        foreach (var child in PrefabGrid.Children)
+        foreach (Control? child in PrefabGrid.Children)
             if (Grid.GetRow(child) == row && Grid.GetColumn(child) == col)
                 if (child is Border border)
                     border.Background = Brushes.Red; // Change background color

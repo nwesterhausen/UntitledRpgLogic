@@ -163,11 +163,11 @@ public partial class LoggingBehavior : IHasLogging
     }
     return true;
 #else
-        if (!EventArgumentMap.TryGetValue(eventId, out var expectedTypes))
+        if (!EventArgumentMap.TryGetValue(eventId, out Type[]? expectedTypes))
             return false;
         if (args.Length != expectedTypes.Length)
             return false;
-        for (var i = 0; i < expectedTypes.Length; i++)
+        for (int i = 0; i < expectedTypes.Length; i++)
             if (args[i] != null && args[i]?.GetType() != expectedTypes[i])
                 return false;
 
