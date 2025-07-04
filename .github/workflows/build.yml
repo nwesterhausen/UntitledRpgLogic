@@ -1,4 +1,4 @@
-name: Build
+name: Continuous Integration
 
 on:
   push:
@@ -8,17 +8,27 @@ on:
 
 jobs:
   build:
+    name: Build and Test
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v3
         with:
-          fetch-depth: 0 # fetch all history for git version
+          fetch-depth: 0
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: 8.0.x
+
+      - name: Cache NuGet packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.nuget/packages
+          # Use a key that changes when packages.lock.json changes
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
 
       - name: Restore dependencies
         run: dotnet restore
