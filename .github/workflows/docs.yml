@@ -50,14 +50,14 @@ jobs:
       - name: Install local tools
         run: dotnet tool restore
 
-      - run: dotnet docfx docfx.json
+      - run: dotnet docfx ./.docfx/docfx.json
         name: Compile Docs
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3
         with:
           # Upload entire repository
-          path: '_site'
+          path: '.docfx/_site'
 
       - name: Deploy to GitHub Pages
         id: deployment
