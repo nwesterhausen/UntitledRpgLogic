@@ -46,7 +46,7 @@ public class Name : IStringSerializable<Name>
     }
 
     /// <inheritdoc />
-    public Name Deserialize(string serialized)
+    public static Name Deserialize(string serialized)
     {
         string[] parts = serialized.Split(';');
         return parts.Length switch

@@ -18,10 +18,10 @@ public enum ScalingCurveType
     /// <summary>
     ///     Polynomial scaling increases the value by a power of the level.
     /// </summary>
-    Parabolic = 2,
+    Exponential = 2,
 
     /// <summary>
     ///     Logarithmic scaling increases the value by a logarithmic function of the level.
     /// </summary>
-    Logarithmic = 3
+    Polynomial = 3
 }

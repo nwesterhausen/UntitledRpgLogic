@@ -1,4 +1,6 @@
-namespace UntitledRpgLogic.Extensions;
+using UntitledRpgLogic.Core.Interfaces;
+
+namespace UntitledRpgLogic.Extensions.Common;
 
 /// <summary>
 ///     Extensions for currency-related operations.

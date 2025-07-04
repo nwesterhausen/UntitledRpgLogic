@@ -1,133 +1,65 @@
-using UntitledRpgLogic.Core.Events;
 using UntitledRpgLogic.Core.Interfaces;
-using UntitledRpgLogic.Core.Options;
 
 namespace UntitledRpgLogic.Core.Classes;
 
 /// <summary>
-///     A wrapper for a stat that contains additional information such as damageable behavior, mitigations, and modifiers.
+///     A data container for a stat and its related modifiers, mitigations, and damage state.
+///     The logic for operating on this data is handled by an IStatService.
 /// </summary>
 /// <typeparam name="T">The stat contained within this entry</typeparam>
-public class StatEntry<T> where T : IStat
+public class StatEntry<T> : IDamageable where T : IStat
 {
     /// <summary>
-    ///     Creates a new instance of the <see cref="StatEntry{T}" /> class with the specified stat.
     /// </summary>
     /// <param name="stat"></param>
     /// <param name="isDamageable"></param>
-    public StatEntry(T stat, bool? isDamageable = null)
+    /// <param name="isHealable"></param>
+    public StatEntry(T stat, bool isDamageable = false, bool isHealable = false)
     {
+        if (isHealable && !isDamageable)
+            throw new ArgumentException("A stat cannot be healable if it is not damageable.", nameof(isHealable));
+
         Stat = stat;
-        if (isDamageable.HasValue && isDamageable.Value) Damageable = new DamageableBehavior<T>(stat);
-        stat.BaseValueChanged += () =>
-        {
-            // When the base value changes, we want the stat to recalculate its current value
-            // for each modifier, in order of priority, run Stat.ApplyModifier(modifier)
-            foreach (IModifier modifier in Modifiers.OrderBy(m => m.Priority)) stat.ApplyModifier(modifier);
-        };
+        IsDamageable = isDamageable;
+        IsHealable = isHealable;
     }
 
-    /// <summary>
-    ///     The stat that this entry represents.
-    /// </summary>
+    /// <summary>The stat that this entry represents.</summary>
     public T Stat { get; }
 
-    /// <summary>
-    ///     The damageable behavior for the stat, if it is damageable.
-    /// </summary>
-    private IDamageable? Damageable { get; }
+    /// <summary>Whether the stat is damageable or not.</summary>
+    public bool IsDamageable { get; }
+
+    /// <summary>Whether the stat can be healed or not.</summary>
+    public bool IsHealable { get; }
+
+
+    /// <summary>A list of mitigations that apply to this stat entry.</summary>
+    public List<IAppliesDamageMitigation> Mitigations { get; } = [];
+
+    /// <summary>A list of modifiers that apply to this stat entry.</summary>
+    public List<IModifier> Modifiers { get; } = [];
 
     /// <summary>
-    ///     Whether the stat is damageable or not.
+    ///     A helper to calculate what percentage of the stat's maximum value a given point value represents.
+    ///     This is simple, dependency-free logic that is acceptable in a data class.
     /// </summary>
-    public bool IsDamageable => Damageable != null;
-
-    /// <summary>
-    ///     The list of mitigations that apply to this stat entry, such as damage reduction or resistance effects.
-    /// </summary>
-    private List<IAppliesDamageMitigation> Mitigations { get; } = [];
-
-    /// <summary>
-    ///     The list of modifiers that apply to this stat entry, such as buffs, debuffs, or other effects that modify the
-    ///     stat's value.
-    /// </summary>
-    private List<IModifier> Modifiers { get; } = []; // For buffs, debuffs, etc.
-
-    /// <summary>
-    ///     Apply damage to the stat entry using the provided damage options and damage calculator.
-    /// </summary>
-    /// <param name="damageOptions"></param>
-    /// <param name="damageCalculator"></param>
-    public void ApplyDamage(DamageOptions damageOptions, IDamageCalculator damageCalculator)
-    {
-        if (!IsDamageable) return;
-
-        int damageAmount = damageCalculator.GetPointDamageFromOptions(damageOptions, Stat);
-        if (damageAmount <= 0) return;
-
-        int finalDamage = damageCalculator.CalculateFinalDamage(damageAmount, Mitigations);
-        Damageable?.TakeDamage(finalDamage);
-        DamageTakenEvent?.Invoke(this, new StatDamageEventArgs
-        {
-            IncomingDamage = damageAmount,
-            IncomingDamagePercentage = PointsAsPercentageOfMax(damageAmount),
-            FinalDamage = finalDamage,
-            FinalDamagePercentage = PointsAsPercentageOfMax(finalDamage),
-            SourceId = damageOptions.SourceId,
-            StatName = Stat.Name
-        });
-    }
-
-    /// <summary>
-    ///     Returns what percentage of the stat's maximum value a given point value represents.
-    /// </summary>
-    /// <param name="pointValue"></param>
-    /// <returns></returns>
     public float PointsAsPercentageOfMax(int pointValue)
     {
         if (Stat.MaxValue <= 0) return 0f;
-
         return pointValue / (float)Stat.MaxValue * 100f;
     }
 
-    /// <summary>
-    ///     Add a mitigation to this stat entry.
-    /// </summary>
-    /// <param name="mitigation"></param>
-    public void AddMitigation(IAppliesDamageMitigation mitigation)
-    {
-        Mitigations.Add(mitigation);
-    }
+    #region IDamageable Implementation
 
-    /// <summary>
-    ///     Remove a mitigation from this stat entry.
-    /// </summary>
-    /// <param name="mitigation"></param>
-    public void RemoveMitigation(IAppliesDamageMitigation mitigation)
-    {
-        Mitigations.Remove(mitigation);
-    }
+    // Explicitly implement the interface property to avoid confusion.
+    IStat IDamageable.Stat => Stat;
 
-    /// <summary>
-    ///     Add a modifier to this stat entry, such as buffs, debuffs, or other effects that modify the stat's value.
-    /// </summary>
-    /// <param name="modifier"></param>
-    public void AddModifier(IModifier modifier)
-    {
-        Modifiers.Add(modifier);
-    }
+    /// <inheritdoc />
+    public int CurrentDamage { get; set; }
 
-    /// <summary>
-    ///     Remove a modifier from this stat entry.
-    /// </summary>
-    /// <param name="modifier"></param>
-    public void RemoveModifier(IModifier modifier)
-    {
-        Modifiers.Remove(modifier);
-    }
+    /// <inheritdoc />
+    public float CurrentPercentageDamage { get; set; }
 
-    /// <summary>
-    ///     Event that is raised when damage is applied to the stat entry.
-    /// </summary>
-    public event EventHandler<StatDamageEventArgs>? DamageTakenEvent;
+    #endregion
 }

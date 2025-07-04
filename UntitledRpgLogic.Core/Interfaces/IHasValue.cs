@@ -1,5 +1,3 @@
-using UntitledRpgLogic.Core.Events;
-
 namespace UntitledRpgLogic.Core.Interfaces;
 
 /// <summary>
@@ -11,10 +9,4 @@ public interface IHasValue
     ///     Gets the current value.
     /// </summary>
     public int Value { get; }
-
-
-    /// <summary>
-    ///     Event that is triggered when the value changes.
-    /// </summary>
-    event EventHandler<ValueChangedEventArgs> ValueChanged;
 }

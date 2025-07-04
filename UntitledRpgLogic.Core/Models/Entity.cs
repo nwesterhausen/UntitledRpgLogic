@@ -21,6 +21,9 @@ public record Entity : IEntity
     }
 
     /// <inheritdoc />
+    public string Name { get; }
+
+    /// <inheritdoc />
     public Guid Guid { get; }
 
     /// <inheritdoc />
@@ -28,9 +31,6 @@ public record Entity : IEntity
 
     /// <inheritdoc />
     public string ShortGuid { get; }
-
-    /// <inheritdoc />
-    public string Name { get; }
 
     /// <inheritdoc />
     public string PluralName { get; }

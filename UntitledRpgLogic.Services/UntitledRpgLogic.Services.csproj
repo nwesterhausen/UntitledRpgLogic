@@ -6,4 +6,9 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+        <ProjectReference Include="..\UntitledRpgLogic.Core\UntitledRpgLogic.Core.csproj"/>
+        <ProjectReference Include="..\UntitledRpgLogic.Extensions.Logging\UntitledRpgLogic.Extensions.Logging.csproj"/>
+    </ItemGroup>
+
 </Project>

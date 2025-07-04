@@ -1,29 +1,23 @@
 namespace UntitledRpgLogic.Core.Interfaces;
 
 /// <summary>
-///     Used to mark a Stat as being able to take damage.
+///     Defines the contract for an object that can take damage.
+///     The logic for applying damage is handled by a service.
 /// </summary>
 public interface IDamageable
 {
     /// <summary>
-    ///     The current damage applied to the stat in points.
+    ///     The stat that is being damaged.
     /// </summary>
-    public int CurrentDamage { get; }
+    IStat Stat { get; }
 
     /// <summary>
-    ///     The current damage applied to the stat as a percentage of its maximum value.
+    ///     The current damage applied to the stat, in points.
     /// </summary>
-    public float CurrentPercentageDamage { get; }
+    int CurrentDamage { get; set; }
 
     /// <summary>
-    ///     Apply damage to the stat, reducing its value by the specified amount.
+    ///     The current damage as a percentage of the stat's maximum value.
     /// </summary>
-    /// <param name="amount"></param>
-    public void TakeDamage(int amount);
-
-    /// <summary>
-    ///     Event that is raised when damage is applied to the stat. The event should notify of the total amount of damage
-    ///     taken.
-    /// </summary>
-    event EventHandler<int> DamageTaken;
+    float CurrentPercentageDamage { get; set; }
 }

@@ -1,4 +1,7 @@
-namespace UntitledRpgLogic.Extensions;
+using UntitledRpgLogic.Core;
+using UntitledRpgLogic.Core.Interfaces;
+
+namespace UntitledRpgLogic.Extensions.Common;
 
 /// <summary>
 ///     Extensions to provide tooltip-related functionality for various objects in the RPG logic.

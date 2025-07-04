@@ -43,9 +43,4 @@ public interface IMaterial : IHasName, IHasGuid
     ///     The pressure exerted on the material in Kilopascals (kPa).
     /// </summary>
     float Pressure { get; }
-
-    /// <summary>
-    ///     The density of the material in grams per cubic centimeter (g/cm³).
-    /// </summary>
-    double Density => this.CalculateDensity();
 }

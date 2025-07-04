@@ -1,4 +1,6 @@
-namespace UntitledRpgLogic.Extensions;
+using UntitledRpgLogic.Core.Interfaces;
+
+namespace UntitledRpgLogic.Extensions.Common;
 
 /// <summary>
 ///     Extensions to provide display string functionality for modifiers in the RPG logic.

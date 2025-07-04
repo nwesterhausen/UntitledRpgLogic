@@ -43,6 +43,9 @@ public class BaseItem : IItem
     private NameBehavior NameBehavior { get; }
 
     /// <inheritdoc />
+    public string Name => NameBehavior.Name;
+
+    /// <inheritdoc />
     public Guid Guid => GuidBehavior.Guid;
 
     /// <inheritdoc />
@@ -50,9 +53,6 @@ public class BaseItem : IItem
 
     /// <inheritdoc />
     public string Id => GuidBehavior.Id;
-
-    /// <inheritdoc />
-    public string Name => NameBehavior.Name;
 
     /// <inheritdoc />
     public string PluralName => NameBehavior.PluralName;

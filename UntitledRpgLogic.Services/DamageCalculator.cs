@@ -1,7 +1,7 @@
 using UntitledRpgLogic.Core.Interfaces;
 using UntitledRpgLogic.Core.Options;
 
-namespace UntitledRpgLogic.Core.Game;
+namespace UntitledRpgLogic.Services;
 
 /// <summary>
 ///     Implements the IDamageCalculator interface to calculate final damage after applying mitigations.
