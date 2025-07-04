@@ -1,3 +1,4 @@
+using UntitledRpgLogic.Core.Classes;
 using UntitledRpgLogic.Core.Interfaces;
 
 namespace UntitledRpgLogic.Core.Models;
@@ -21,7 +22,7 @@ public record Entity : IEntity
     }
 
     /// <inheritdoc />
-    public string Name { get; }
+    public Name Name { get; }
 
     /// <inheritdoc />
     public Guid Guid { get; }

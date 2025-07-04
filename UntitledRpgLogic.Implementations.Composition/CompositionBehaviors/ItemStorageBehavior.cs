@@ -1,4 +1,8 @@
-namespace UntitledRpgLogic.CompositionBehaviors;
+using UntitledRpgLogic.Core.Events;
+using UntitledRpgLogic.Core.Interfaces;
+using UntitledRpgLogic.Core.Options;
+
+namespace UntitledRpgLogic.Implementations.Composition.CompositionBehaviors;
 
 /// <summary>
 ///     Behavior for an inventory that supports storing items.
@@ -42,8 +46,8 @@ public class ItemStorageBehavior : IItemStorage
     /// <param name="options">options to configure the item storage behavior</param>
     public ItemStorageBehavior(ItemStorageOptions options)
     {
-        _ableToStoreItem = options.AbleToStoreItem;
-        _calculateItemStorageUsage = options.CalculateItemStorageUsage;
+        //_ableToStoreItem = options.AbleToStoreItem;
+        //_calculateItemStorageUsage = options.CalculateItemStorageUsage;
         HasLimitedStorage = options.HasLimitedStorage;
     }
 
@@ -76,7 +80,7 @@ public class ItemStorageBehavior : IItemStorage
 
         _items.Add(item.Guid, item);
 
-        ItemStored?.Invoke(this, new SuccessfulItemStorageEventArgs(item.Name, 1, item.Guid, ItemCount));
+        ItemStored?.Invoke(this, new SuccessfulItemStorageEventArgs(item.Name.Singular, 1, item.Guid, ItemCount));
 
         RefreshUsage();
 
@@ -97,7 +101,8 @@ public class ItemStorageBehavior : IItemStorage
             }
 
             _items.Remove(itemId);
-            ItemRetrieved?.Invoke(this, new SuccessfulItemStorageEventArgs(item.Name, 1, item.Guid, ItemCount));
+            ItemRetrieved?.Invoke(this,
+                new SuccessfulItemStorageEventArgs(item.Name.Singular, 1, item.Guid, ItemCount));
             RefreshUsage();
             return true; // Item successfully retrieved
         }

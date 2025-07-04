@@ -1,4 +1,7 @@
-namespace UntitledRpgLogic.CompositionBehaviors;
+using UntitledRpgLogic.Core.Events;
+using UntitledRpgLogic.Core.Interfaces;
+
+namespace UntitledRpgLogic.Implementations.Composition.CompositionBehaviors;
 
 /// <summary>
 ///     Behavior for an inventory that supports storing currencies.

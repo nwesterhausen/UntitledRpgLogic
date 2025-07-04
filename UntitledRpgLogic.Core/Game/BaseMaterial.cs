@@ -18,8 +18,11 @@ public class BaseMaterial : IMaterial
     /// <param name="config"></param>
     public BaseMaterial(MaterialDataConfig config)
     {
-        NameBehavior = new NameBehavior(config.Name, config.PluralName, config.NameAsAdjective);
-        GuidBehavior = new GuidBehavior(config.ExplicitId);
+        Name = new Name(config.Name, config.PluralName, config.NameAsAdjective);
+        Guid = config.ExplicitId ?? Guid.NewGuid();
+        Id = Convert.ToBase64String(Guid.ToByteArray());
+        ShortGuid = Guid.ToString("N")[..8].ToUpperInvariant();
+
         State = StateOfMatter.Solid; // Default to solid, will be updated as needed.
         Temperature = 20; // Default temperature in Celsius.
         Pressure = 101.325f; // Default pressure in kPa (standard atmospheric pressure).
@@ -56,32 +59,15 @@ public class BaseMaterial : IMaterial
     }
 
     /// <summary>
-    ///     Behavior to handle the name of the material, including its plural form and adjective form.
-    /// </summary>
-    private NameBehavior NameBehavior { get; }
-
-    /// <summary>
     ///     Behavior to handle the GUID of the material, including its ID and short GUID.
     /// </summary>
-    private GuidBehavior GuidBehavior { get; }
+    public Guid Guid { get; }
+
+    public string Id { get; }
+    public string ShortGuid { get; }
 
     /// <inheritdoc />
-    public string Name => NameBehavior.Name;
-
-    /// <inheritdoc />
-    public string PluralName => NameBehavior.PluralName;
-
-    /// <inheritdoc />
-    public string NameAsAdjective => NameBehavior.NameAsAdjective;
-
-    /// <inheritdoc />
-    public Guid Guid => GuidBehavior.Guid;
-
-    /// <inheritdoc />
-    public string Id => GuidBehavior.Id;
-
-    /// <inheritdoc />
-    public string ShortGuid => GuidBehavior.ShortGuid;
+    public Name Name { get; }
 
     /// <inheritdoc />
     public StateOfMatter State { get; }
