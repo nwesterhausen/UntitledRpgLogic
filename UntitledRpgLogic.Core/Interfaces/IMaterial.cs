@@ -1,8 +1,7 @@
-using UntitledRpgLogic.Classes;
-using UntitledRpgLogic.Enums;
-using UntitledRpgLogic.Extensions;
+using UntitledRpgLogic.Core.Classes;
+using UntitledRpgLogic.Core.Enums;
 
-namespace UntitledRpgLogic.Interfaces;
+namespace UntitledRpgLogic.Core.Interfaces;
 
 /// <summary>
 ///     Represents a material with its properties and states of matter. Can be used to determine a weight or roughly how

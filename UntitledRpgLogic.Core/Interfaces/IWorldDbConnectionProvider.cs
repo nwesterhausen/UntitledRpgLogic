@@ -1,4 +1,4 @@
-namespace UntitledRpgLogic.Interfaces;
+namespace UntitledRpgLogic.Core.Interfaces;
 
 /// <summary>
 ///     Database connection provider which allows for changing database based on which world is loaded.

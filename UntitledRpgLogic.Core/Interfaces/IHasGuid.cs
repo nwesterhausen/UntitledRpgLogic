@@ -1,4 +1,4 @@
-namespace UntitledRpgLogic.Interfaces;
+namespace UntitledRpgLogic.Core.Interfaces;
 
 /// <summary>
 ///     Interface for classes that have a guid.
@@ -12,11 +12,13 @@ public interface IHasGuid
 
     /// <summary>
     ///     A base-64 encoded string representation of the Guid.
+    ///     This value is derived from the Guid property.
     /// </summary>
     public string Id { get; }
 
     /// <summary>
-    ///     The first 8 characters of the base-64 encoded Guid, used as a short identifier.
+    ///     The first 8 characters of the guid, used as a short identifier.
+    ///     This value is derived from the Guid property.
     /// </summary>
     public string ShortGuid { get; }
 }

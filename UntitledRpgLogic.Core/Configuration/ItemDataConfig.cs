@@ -1,7 +1,7 @@
-using UntitledRpgLogic.Enums;
-using UntitledRpgLogic.Interfaces;
+using UntitledRpgLogic.Core.Enums;
+using UntitledRpgLogic.Core.Interfaces;
 
-namespace UntitledRpgLogic.Configuration;
+namespace UntitledRpgLogic.Core.Configuration;
 
 /// <summary>
 ///     The definition for the configuration of an Item. This is what is parsed from a TOML file to then create an actual

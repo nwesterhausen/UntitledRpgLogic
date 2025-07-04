@@ -1,4 +1,4 @@
-namespace UntitledRpgLogic.Interfaces;
+namespace UntitledRpgLogic.Core.Interfaces;
 
 /// <summary>
 ///     Interface for objects that can be persisted to a database.

@@ -1,8 +1,8 @@
 using System.Drawing;
-using UntitledRpgLogic.Configuration;
-using UntitledRpgLogic.Interfaces;
+using UntitledRpgLogic.Core.Configuration;
+using UntitledRpgLogic.Core.Interfaces;
 
-namespace UntitledRpgLogic.Game;
+namespace UntitledRpgLogic.Core.Game;
 
 /// <summary>
 ///     Provides a few predefined materials that can be used in the game.

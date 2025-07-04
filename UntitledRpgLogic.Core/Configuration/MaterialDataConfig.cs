@@ -1,8 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 using System.Drawing;
-using UntitledRpgLogic.Interfaces;
+using UntitledRpgLogic.Core.Interfaces;
 
-namespace UntitledRpgLogic.Configuration;
+namespace UntitledRpgLogic.Core.Configuration;
 
 /// <summary>
 ///     The configuration for a material in the game. This class defines the properties of a material, including its name,

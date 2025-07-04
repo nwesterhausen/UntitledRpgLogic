@@ -1,4 +1,4 @@
-namespace UntitledRpgLogic.Interfaces;
+namespace UntitledRpgLogic.Core.Interfaces;
 
 /// <summary>
 ///     Interface for objects that can be crafted, indicating they have a crafter associated with them.

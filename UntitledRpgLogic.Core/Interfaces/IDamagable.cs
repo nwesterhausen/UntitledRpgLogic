@@ -1,4 +1,4 @@
-namespace UntitledRpgLogic.Interfaces;
+namespace UntitledRpgLogic.Core.Interfaces;
 
 /// <summary>
 ///     Used to mark a Stat as being able to take damage.

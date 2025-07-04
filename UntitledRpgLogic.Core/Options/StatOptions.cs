@@ -1,7 +1,7 @@
 using Microsoft.Extensions.Logging;
-using UntitledRpgLogic.Enums;
+using UntitledRpgLogic.Core.Enums;
 
-namespace UntitledRpgLogic.Options;
+namespace UntitledRpgLogic.Core.Options;
 
 /// <summary>
 ///     Represents configuration options for a character stat, including its value range, name, and logging.

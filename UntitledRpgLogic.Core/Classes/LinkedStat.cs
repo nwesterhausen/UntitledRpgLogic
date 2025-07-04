@@ -1,6 +1,6 @@
-using UntitledRpgLogic.Interfaces;
+using UntitledRpgLogic.Core.Interfaces;
 
-namespace UntitledRpgLogic.Classes;
+namespace UntitledRpgLogic.Core.Classes;
 
 /// <summary>
 ///     Represents a stat dependency that links a dependent stat to another stat. When the linked stat's value changes,

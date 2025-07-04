@@ -1,4 +1,4 @@
-namespace UntitledRpgLogic.Events;
+namespace UntitledRpgLogic.Core.Events;
 
 /// <summary>
 ///     Arguments for the ValueChanged event.

@@ -1,7 +1,7 @@
-using UntitledRpgLogic.Interfaces;
-using UntitledRpgLogic.Options;
+using UntitledRpgLogic.Core.Interfaces;
+using UntitledRpgLogic.Core.Options;
 
-namespace UntitledRpgLogic.Configuration;
+namespace UntitledRpgLogic.Core.Configuration;
 
 /// <summary>
 ///     Configuration for a Skill in the RPG logic.

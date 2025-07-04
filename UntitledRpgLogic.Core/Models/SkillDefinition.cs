@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
-using UntitledRpgLogic.Enums;
+using UntitledRpgLogic.Core.Enums;
 
-namespace UntitledRpgLogic.Models;
+namespace UntitledRpgLogic.Core.Models;
 
 /// <summary>
 ///     A skill definition in the RPG logic, for usage with a database.

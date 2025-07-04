@@ -1,9 +1,11 @@
-namespace UntitledRpgLogic.Classes;
+using UntitledRpgLogic.Core.Interfaces;
+
+namespace UntitledRpgLogic.Core.Classes;
 
 /// <summary>
 ///     Contains the name of an object. Has a singular, a plural and a form when used as an adjective.
 /// </summary>
-public class PluralName
+public class Name : IStringSerializable<Name>
 {
     /// <summary>
     ///     Constructs a new PluralName object with the given singular, plural and adjective names. If not supplied, the
@@ -13,7 +15,7 @@ public class PluralName
     /// <param name="singular"></param>
     /// <param name="plural"></param>
     /// <param name="adjective"></param>
-    public PluralName(string singular, string? plural = null, string? adjective = null)
+    public Name(string singular, string? plural = null, string? adjective = null)
     {
         Singular = singular;
         Plural = plural ?? BestGuessPlural(singular);
@@ -23,17 +25,38 @@ public class PluralName
     /// <summary>
     ///     The singular name of the object, e.g. "a Sword".
     /// </summary>
-    public string Singular { get; }
+    public string Singular { get; init; }
 
     /// <summary>
     ///     The plural name of the object, e.g. "two Swords".
     /// </summary>
-    public string Plural { get; }
+    public string Plural { get; init; }
 
     /// <summary>
     ///     The name used as an adjective, e.g. "Sword soup".
     /// </summary>
-    public string Adjective { get; }
+    public string Adjective { get; init; }
+
+    /// <inheritdoc />
+    public string Serialize()
+    {
+        if (Singular.Equals(Adjective)) return $"{Singular}:{Plural}";
+
+        return $"{Singular};{Plural};{Adjective}";
+    }
+
+    /// <inheritdoc />
+    public Name Deserialize(string serialized)
+    {
+        string[] parts = serialized.Split(';');
+        return parts.Length switch
+        {
+            0 => throw new ArgumentException("Invalid serialized name format."),
+            1 => new Name(parts[0]),
+            2 => new Name(parts[0], parts[1]),
+            _ => new Name(parts[0], parts[1], parts[2])
+        };
+    }
 
     /// <summary>
     ///     Given a name, it will do its best to pluralize it.
@@ -66,50 +89,5 @@ public class PluralName
     public string GetName(int count = 1)
     {
         return count == 1 ? Singular : Plural;
-    }
-
-    /// <summary>
-    ///     Serializes the name into a string format that can be easily stored or transmitted.
-    /// </summary>
-    /// <returns>the names separated by semicolons, avoiding duplicates</returns>
-    /// <remarks>if the plural is derived using <see cref="BestGuessPlural" /> it will be omitted in the result</remarks>
-    public string Serialize()
-    {
-        if (Singular.Equals(Adjective))
-        {
-            try
-            {
-                string pluralEnding = Plural[(Singular.Length - 1)..];
-                if (pluralEnding.Length == 0 || pluralEnding.Equals("es") || pluralEnding.Equals("s"))
-                    return $"{Singular}";
-            }
-            catch (Exception)
-            {
-                // If there's an error in slicing, don't throw an error just move on.
-            }
-
-            return $"{Singular};{Plural}";
-        }
-
-        return $"{Singular};{Plural};{Adjective}";
-    }
-
-    /// <summary>
-    ///     Deserializes a string into the PluralName object. Expects the string to be in the format:
-    ///     `Singular;Plural;Adjective`
-    /// </summary>
-    /// <param name="serialized">serialized string</param>
-    /// <returns>PluralName object reconstructed from serialized version</returns>
-    /// <exception cref="ArgumentException">failed to deserialize the string</exception>
-    public static PluralName Deserialize(string serialized)
-    {
-        string[] parts = serialized.Split(';');
-        return parts.Length switch
-        {
-            0 => throw new ArgumentException("Invalid serialized name format."),
-            1 => new PluralName(parts[0]),
-            2 => new PluralName(parts[0], parts[1]),
-            _ => new PluralName(parts[0], parts[1], parts[2])
-        };
     }
 }

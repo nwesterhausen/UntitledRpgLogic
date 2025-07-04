@@ -1,6 +1,6 @@
-using UntitledRpgLogic.Enums;
+using UntitledRpgLogic.Core.Enums;
 
-namespace UntitledRpgLogic.Interfaces;
+namespace UntitledRpgLogic.Core.Interfaces;
 
 /// <summary>
 ///     Interface for classes that have a quality. Provides a way to access the quality of the object.

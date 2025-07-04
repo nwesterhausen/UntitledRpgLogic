@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace UntitledRpgLogic.Models;
+namespace UntitledRpgLogic.Core.Models;
 
 /// <summary>
 ///     Represents a link between two stats, where one stat is dependent on another. Provides a one-to-many relationship

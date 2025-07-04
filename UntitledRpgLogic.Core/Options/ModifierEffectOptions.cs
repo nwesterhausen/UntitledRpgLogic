@@ -1,4 +1,4 @@
-namespace UntitledRpgLogic.Options;
+namespace UntitledRpgLogic.Core.Options;
 
 /// <summary>
 ///     Options for creating a modifier effect.

@@ -1,7 +1,3 @@
-using UntitledRpgLogic.Events;
-using UntitledRpgLogic.Interfaces;
-using UntitledRpgLogic.Options;
-
 namespace UntitledRpgLogic.CompositionBehaviors;
 
 /// <summary>

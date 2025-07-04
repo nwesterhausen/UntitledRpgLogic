@@ -1,8 +1,7 @@
 using Tomlet;
-using UntitledRpgLogic.Configuration;
-using UntitledRpgLogic.Interfaces;
+using UntitledRpgLogic.Core.Interfaces;
 
-namespace UntitledRpgLogic;
+namespace UntitledRpgLogic.Core;
 
 /// <summary>
 ///     Various utility methods that are used throughout the project.

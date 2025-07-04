@@ -1,6 +1,6 @@
-using UntitledRpgLogic.Enums;
+using UntitledRpgLogic.Core.Enums;
 
-namespace UntitledRpgLogic.Interfaces;
+namespace UntitledRpgLogic.Core.Interfaces;
 
 /// <summary>
 ///     An interface that defines the basic properties of an item in the game.

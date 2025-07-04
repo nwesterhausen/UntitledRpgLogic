@@ -1,9 +1,8 @@
-using UntitledRpgLogic.CompositionBehaviors;
-using UntitledRpgLogic.Events;
-using UntitledRpgLogic.Interfaces;
-using UntitledRpgLogic.Options;
+using UntitledRpgLogic.Core.Events;
+using UntitledRpgLogic.Core.Interfaces;
+using UntitledRpgLogic.Core.Options;
 
-namespace UntitledRpgLogic.Classes;
+namespace UntitledRpgLogic.Core.Classes;
 
 /// <summary>
 ///     A wrapper for a stat that contains additional information such as damageable behavior, mitigations, and modifiers.

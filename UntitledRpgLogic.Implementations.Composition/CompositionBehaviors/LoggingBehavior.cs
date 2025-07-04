@@ -1,7 +1,3 @@
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Abstractions;
-using UntitledRpgLogic.Interfaces;
-
 namespace UntitledRpgLogic.CompositionBehaviors;
 
 /// <summary>
@@ -39,6 +35,9 @@ public partial class LoggingBehavior : IHasLogging
         Logger = logger ?? NullLogger<LoggingBehavior>.Instance;
         _logger = Logger;
     }
+
+    /// <inheritdoc />
+    public ILogger Logger { get; }
 
     /// <inheritdoc />
     public void LogEvent(EventId eventId, params object?[] args)
@@ -124,9 +123,6 @@ public partial class LoggingBehavior : IHasLogging
 
         _logger.LogError(eventId, exception, defaultErrorMessage);
     }
-
-    /// <inheritdoc />
-    public ILogger Logger { get; }
 
     /// <summary>
     ///     Log an error with a custom message and exception.

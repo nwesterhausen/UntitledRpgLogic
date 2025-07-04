@@ -1,6 +1,4 @@
-using UntitledRpgLogic.CompositionBehaviors;
-
-namespace UntitledRpgLogic.Options;
+namespace UntitledRpgLogic.Core.Options;
 
 /// <summary>
 ///     Options for configuring the item storage behavior.

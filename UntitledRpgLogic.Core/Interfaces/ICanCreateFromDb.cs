@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Logging;
 
-namespace UntitledRpgLogic.Interfaces;
+namespace UntitledRpgLogic.Core.Interfaces;
 
 /// <summary>
 ///     Defines a contract for types that can be created from a database model.

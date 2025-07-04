@@ -1,6 +1,6 @@
-using UntitledRpgLogic.Interfaces;
+using UntitledRpgLogic.Core.Interfaces;
 
-namespace UntitledRpgLogic.Configuration;
+namespace UntitledRpgLogic.Core.Configuration;
 
 /// <summary>
 ///     Configuration for a Stat in the RPG logic.

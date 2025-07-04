@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace UntitledRpgLogic.Models;
+namespace UntitledRpgLogic.Core.Models;
 
 /// <summary>
 ///     Represents an entity's stat, defined by a StatDefinition, with a base value and an apparent value.

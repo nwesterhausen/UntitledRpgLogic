@@ -1,4 +1,4 @@
-namespace UntitledRpgLogic;
+namespace UntitledRpgLogic.Core;
 
 /// <summary>
 ///     A collection of reserved GUIDs used throughout the game system. These GUIDs are reserved for specific purposes

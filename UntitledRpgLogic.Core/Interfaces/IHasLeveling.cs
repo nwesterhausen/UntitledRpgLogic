@@ -1,7 +1,7 @@
-using UntitledRpgLogic.Enums;
-using UntitledRpgLogic.Events;
+using UntitledRpgLogic.Core.Enums;
+using UntitledRpgLogic.Core.Events;
 
-namespace UntitledRpgLogic.Interfaces;
+namespace UntitledRpgLogic.Core.Interfaces;
 
 /// <summary>
 ///     Interface for classes which have leveling capabilities. Depends on the value reflecting its internal

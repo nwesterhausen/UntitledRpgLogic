@@ -1,4 +1,4 @@
-namespace UntitledRpgLogic.Enums;
+namespace UntitledRpgLogic.Core.Enums;
 
 /// <summary>
 ///     Defines the specific type of item, used in conjunction with <see cref="ItemType" />.

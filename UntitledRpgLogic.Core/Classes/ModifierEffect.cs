@@ -1,7 +1,7 @@
-using UntitledRpgLogic.Interfaces;
-using UntitledRpgLogic.Options;
+using UntitledRpgLogic.Core.Interfaces;
+using UntitledRpgLogic.Core.Options;
 
-namespace UntitledRpgLogic.Classes;
+namespace UntitledRpgLogic.Core.Classes;
 
 /// <summary>
 ///     Effects that each stack of a modification can have on a stat.

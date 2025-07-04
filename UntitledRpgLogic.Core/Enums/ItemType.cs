@@ -1,4 +1,4 @@
-namespace UntitledRpgLogic.Enums;
+namespace UntitledRpgLogic.Core.Enums;
 
 /// <summary>
 ///     Defines the general category of an item.

@@ -1,6 +1,3 @@
-using UntitledRpgLogic.Interfaces;
-using UntitledRpgLogic.Models;
-
 namespace UntitledRpgLogic.Extensions;
 
 /// <summary>

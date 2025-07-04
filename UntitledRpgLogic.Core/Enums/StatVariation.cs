@@ -1,4 +1,4 @@
-namespace UntitledRpgLogic.Enums;
+namespace UntitledRpgLogic.Core.Enums;
 
 /// <summary>
 ///     Represents detail about what kind of stat this is.

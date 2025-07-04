@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 
-namespace UntitledRpgLogic;
+namespace UntitledRpgLogic.Core;
 
 /// <summary>
 ///     Default values used in the RPG logic.

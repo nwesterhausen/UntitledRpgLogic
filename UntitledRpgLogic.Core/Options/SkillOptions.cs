@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Logging;
 
-namespace UntitledRpgLogic.Options;
+namespace UntitledRpgLogic.Core.Options;
 
 /// <summary>
 ///     Options for instantiating a skill.

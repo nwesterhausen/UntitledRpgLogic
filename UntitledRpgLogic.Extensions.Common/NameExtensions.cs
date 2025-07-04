@@ -1,5 +1,3 @@
-using UntitledRpgLogic.Interfaces;
-
 namespace UntitledRpgLogic.Extensions;
 
 /// <summary>

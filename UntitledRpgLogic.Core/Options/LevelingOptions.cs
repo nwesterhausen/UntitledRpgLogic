@@ -1,9 +1,10 @@
-using UntitledRpgLogic.Enums;
+using UntitledRpgLogic.Core.Enums;
+using UntitledRpgLogic.Core.Interfaces;
 
-namespace UntitledRpgLogic.Options;
+namespace UntitledRpgLogic.Core.Options;
 
 /// <summary>
-///     Options for configuring <see cref="Interfaces.IHasLeveling" />-derived objects.
+///     Options for configuring <see cref="IHasLeveling" />-derived objects.
 /// </summary>
 public class LevelingOptions
 {

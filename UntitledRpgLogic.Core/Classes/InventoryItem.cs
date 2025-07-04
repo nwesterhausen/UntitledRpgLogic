@@ -1,4 +1,4 @@
-namespace UntitledRpgLogic.Classes;
+namespace UntitledRpgLogic.Core.Classes;
 
 /// <summary>
 ///     An item stored within an inventory. Cannot be interacted with directly, but provides information about the item.

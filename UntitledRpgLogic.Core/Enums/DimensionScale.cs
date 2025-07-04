@@ -1,7 +1,7 @@
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 
-namespace UntitledRpgLogic.Enums;
+namespace UntitledRpgLogic.Core.Enums;
 
 /// <summary>
 ///     Available Dimensions to use for shapes

@@ -1,6 +1,6 @@
-using UntitledRpgLogic.Interfaces;
+using UntitledRpgLogic.Core.Interfaces;
 
-namespace UntitledRpgLogic.Events;
+namespace UntitledRpgLogic.Core.Events;
 
 /// <summary>
 ///     Event arguments for item actions that can be canceled.

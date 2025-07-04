@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
-using UntitledRpgLogic.Enums;
+using UntitledRpgLogic.Core.Enums;
 
-namespace UntitledRpgLogic.Models;
+namespace UntitledRpgLogic.Core.Models;
 
 /// <summary>
 ///     Database model for a definition of a stat. This is used to define properties of a stat like name, value range

@@ -1,11 +1,10 @@
 using Microsoft.Extensions.Logging;
-using UntitledRpgLogic.CompositionBehaviors;
-using UntitledRpgLogic.Configuration;
-using UntitledRpgLogic.Enums;
-using UntitledRpgLogic.Events;
-using UntitledRpgLogic.Interfaces;
+using UntitledRpgLogic.Core.Configuration;
+using UntitledRpgLogic.Core.Enums;
+using UntitledRpgLogic.Core.Events;
+using UntitledRpgLogic.Core.Interfaces;
 
-namespace UntitledRpgLogic.Game;
+namespace UntitledRpgLogic.Core.Game;
 
 /// <summary>
 ///     Represents a base stat in the RPG logic, implementing the IStat interface.

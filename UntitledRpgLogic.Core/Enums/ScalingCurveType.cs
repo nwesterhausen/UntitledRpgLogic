@@ -1,4 +1,4 @@
-namespace UntitledRpgLogic.Enums;
+namespace UntitledRpgLogic.Core.Enums;
 
 /// <summary>
 ///     How the experience points required for each level are scaled.

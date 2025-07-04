@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace UntitledRpgLogic.Models;
+namespace UntitledRpgLogic.Core.Models;
 
 /// <summary>
 ///     Represents a modification effect that can be applied to stats, such as buffs or debuffs. Consumed by modifiers to

@@ -1,11 +1,10 @@
 using System.Drawing;
-using UntitledRpgLogic.Classes;
-using UntitledRpgLogic.CompositionBehaviors;
-using UntitledRpgLogic.Configuration;
-using UntitledRpgLogic.Enums;
-using UntitledRpgLogic.Interfaces;
+using UntitledRpgLogic.Core.Classes;
+using UntitledRpgLogic.Core.Configuration;
+using UntitledRpgLogic.Core.Enums;
+using UntitledRpgLogic.Core.Interfaces;
 
-namespace UntitledRpgLogic.Game;
+namespace UntitledRpgLogic.Core.Game;
 
 /// <summary>
 ///     A base class for materials in the game. This class implements the <see cref="IMaterial" /> interface and provides

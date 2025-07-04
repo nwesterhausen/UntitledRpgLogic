@@ -1,7 +1,3 @@
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Abstractions;
-using Stateless;
-
 namespace UntitledRpgLogic.StateMachines;
 
 /// <summary>
@@ -15,7 +11,7 @@ public class MainMenuStateMachine
         NewGame,
         LoadGame,
         Settings,
-        ShutDown,
+        ShutDown
     }
 
     public enum Trigger
@@ -23,7 +19,7 @@ public class MainMenuStateMachine
         SelectNewGame,
         SelectLoadGame,
         SelectSettings,
-        SelectQuit,
+        SelectQuit
     }
 
     private readonly ILogger<MainMenuStateMachine> _logger;

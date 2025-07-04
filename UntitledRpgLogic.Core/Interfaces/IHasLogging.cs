@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Logging;
 
-namespace UntitledRpgLogic.Interfaces;
+namespace UntitledRpgLogic.Core.Interfaces;
 
 /// <summary>
 ///     For classes that have logging capabilities.

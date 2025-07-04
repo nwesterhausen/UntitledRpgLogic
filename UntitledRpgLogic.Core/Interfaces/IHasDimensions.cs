@@ -1,7 +1,6 @@
-using UntitledRpgLogic.Enums;
-using UntitledRpgLogic.Extensions;
+using UntitledRpgLogic.Core.Enums;
 
-namespace UntitledRpgLogic.Interfaces;
+namespace UntitledRpgLogic.Core.Interfaces;
 
 /// <summary>
 ///     Defines an interface for classes that have dimensions: width, height, and depth.

@@ -1,6 +1,6 @@
-using UntitledRpgLogic.Interfaces;
+using UntitledRpgLogic.Core.Interfaces;
 
-namespace UntitledRpgLogic.Options;
+namespace UntitledRpgLogic.Core.Options;
 
 /// <summary>
 ///     Options for creating a currency.
@@ -14,7 +14,7 @@ public class CurrencyOptions
 
     /// <summary>
     ///     The plural name of the currency. Specify this if you prefer the plural to match the singalar or
-    ///     if the plural is not simply derived by <see cref="Classes.PluralName.BestGuessPlural" />
+    ///     if the plural is not simply derived by <see cref="Classes.Name.BestGuessPlural" />
     /// </summary>
     public string? PluralName { get; set; }
 

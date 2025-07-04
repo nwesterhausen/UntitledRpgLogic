@@ -1,6 +1,6 @@
-using UntitledRpgLogic.Classes;
+using UntitledRpgLogic.Core.Classes;
 
-namespace UntitledRpgLogic.Interfaces;
+namespace UntitledRpgLogic.Core.Interfaces;
 
 /// <summary>
 ///     Interface for dependent stats that rely on other stats to calculate their value.

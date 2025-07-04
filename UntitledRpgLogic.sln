@@ -5,10 +5,6 @@ VisualStudioVersion = 17.14.36221.1 d17.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UntitledRpgLogic.Core", "UntitledRpgLogic.Core\UntitledRpgLogic.Core.csproj", "{E685FD76-EFED-4853-97BD-D4103C74A737}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UntitledRpgLogic.Tests", "UntitledRpgLogic.Tests\UntitledRpgLogic.Tests.csproj", "{0356C0E3-486A-43AE-931C-10B6693F8AE1}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UntitledRpgLogic.EFCore", "UntitledRpgLogic.EFCore\UntitledRpgLogic.EFCore.csproj", "{93B4C8AA-883B-4E6B-BE0F-FF5621357B69}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UntitledRpgLogic.Infrastructure.Data", "UntitledRpgLogic.Infrastructure.Data\UntitledRpgLogic.Infrastructure.Data.csproj", "{AA836628-234D-4AB8-9100-E72AD3560113}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UntitledRpgLogic.Infrastructure.Configuration", "UntitledRpgLogic.Infrastructure.Configuration\UntitledRpgLogic.Infrastructure.Configuration.csproj", "{21753340-1D1C-49FE-AD17-EB27EF324526}"
@@ -45,14 +41,6 @@ Global
 		{E685FD76-EFED-4853-97BD-D4103C74A737}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E685FD76-EFED-4853-97BD-D4103C74A737}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E685FD76-EFED-4853-97BD-D4103C74A737}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0356C0E3-486A-43AE-931C-10B6693F8AE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0356C0E3-486A-43AE-931C-10B6693F8AE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0356C0E3-486A-43AE-931C-10B6693F8AE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0356C0E3-486A-43AE-931C-10B6693F8AE1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{93B4C8AA-883B-4E6B-BE0F-FF5621357B69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{93B4C8AA-883B-4E6B-BE0F-FF5621357B69}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{93B4C8AA-883B-4E6B-BE0F-FF5621357B69}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{93B4C8AA-883B-4E6B-BE0F-FF5621357B69}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AA836628-234D-4AB8-9100-E72AD3560113}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AA836628-234D-4AB8-9100-E72AD3560113}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AA836628-234D-4AB8-9100-E72AD3560113}.Release|Any CPU.ActiveCfg = Release|Any CPU

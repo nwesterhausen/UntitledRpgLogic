@@ -1,25 +1,40 @@
-using System.ComponentModel.DataAnnotations;
+using UntitledRpgLogic.Core.Interfaces;
 
-namespace UntitledRpgLogic.Models;
+namespace UntitledRpgLogic.Core.Models;
 
 /// <summary>
-///     Represents a base entity in the game. This class is used for storing data in the database.
+///     Represents an entity in the game world.
 /// </summary>
-public class Entity
+public record Entity : IEntity
 {
-    /// <summary>
-    ///     The unique identifier for the entity. This is used to reference the entity in the game and in the database.
-    /// </summary>
-    [Key]
-    public Guid Id { get; init; }
+    public Entity(Guid guid)
+    {
+        // assign primary first
+        Guid = guid;
+        // derive get-only propertys
+        Id = Convert.ToBase64String(guid.ToByteArray());
+        ShortGuid = guid.ToString("N")[..8].ToUpperInvariant();
+    }
 
-    /// <summary>
-    ///     The skills that this entity has.
-    /// </summary>
-    public ICollection<EntitySkills> Skills { get; init; } = [];
+    public Entity() : this(Guid.NewGuid())
+    {
+    }
 
-    /// <summary>
-    ///     The stats that this entity has.
-    /// </summary>
-    public ICollection<EntityStats> Stats { get; init; } = [];
+    /// <inheritdoc />
+    public Guid Guid { get; }
+
+    /// <inheritdoc />
+    public string Id { get; }
+
+    /// <inheritdoc />
+    public string ShortGuid { get; }
+
+    /// <inheritdoc />
+    public string Name { get; }
+
+    /// <inheritdoc />
+    public string PluralName { get; }
+
+    /// <inheritdoc />
+    public string NameAsAdjective { get; }
 }

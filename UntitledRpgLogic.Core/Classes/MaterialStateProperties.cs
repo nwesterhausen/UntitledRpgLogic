@@ -1,6 +1,6 @@
 using System.Drawing;
 
-namespace UntitledRpgLogic.Classes;
+namespace UntitledRpgLogic.Core.Classes;
 
 /// <summary>
 ///     Properties of a material in different states of matter. Provides information about the color, temperature and

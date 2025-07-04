@@ -1,13 +1,12 @@
 using Microsoft.Extensions.Logging;
-using UntitledRpgLogic.CompositionBehaviors;
-using UntitledRpgLogic.Configuration;
-using UntitledRpgLogic.Enums;
-using UntitledRpgLogic.Events;
-using UntitledRpgLogic.Interfaces;
-using UntitledRpgLogic.Models;
-using UntitledRpgLogic.Options;
+using UntitledRpgLogic.Core.Configuration;
+using UntitledRpgLogic.Core.Enums;
+using UntitledRpgLogic.Core.Events;
+using UntitledRpgLogic.Core.Interfaces;
+using UntitledRpgLogic.Core.Models;
+using UntitledRpgLogic.Core.Options;
 
-namespace UntitledRpgLogic.Game;
+namespace UntitledRpgLogic.Core.Game;
 
 /// <summary>
 ///     Represents a base skill in the RPG logic, implementing the ISkill interface.

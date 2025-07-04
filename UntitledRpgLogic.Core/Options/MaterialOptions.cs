@@ -1,6 +1,6 @@
-using UntitledRpgLogic.Classes;
+using UntitledRpgLogic.Core.Classes;
 
-namespace UntitledRpgLogic.Options;
+namespace UntitledRpgLogic.Core.Options;
 
 /// <summary>
 ///     Options for configuring <see cref="BaseImplementations.MaterialBase" />-derived objects.
@@ -10,7 +10,7 @@ public class MaterialOptions
     /// <summary>
     ///     The name of the material.
     /// </summary>
-    public required PluralName PluralName { get; init; }
+    public required Name Name { get; init; }
 
     /// <summary>
     ///     The properties of the material in the solid state.

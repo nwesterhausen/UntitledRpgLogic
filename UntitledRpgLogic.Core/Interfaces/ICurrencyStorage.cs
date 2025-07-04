@@ -1,6 +1,6 @@
-using UntitledRpgLogic.Events;
+using UntitledRpgLogic.Core.Events;
 
-namespace UntitledRpgLogic.Interfaces;
+namespace UntitledRpgLogic.Core.Interfaces;
 
 /// <summary>
 ///     Interface for a currency storage system that allows depositing and withdrawing currency.

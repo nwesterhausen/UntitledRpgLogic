@@ -1,8 +1,3 @@
-using UntitledRpgLogic.Enums;
-using UntitledRpgLogic.Events;
-using UntitledRpgLogic.Interfaces;
-using UntitledRpgLogic.Options;
-
 namespace UntitledRpgLogic.CompositionBehaviors;
 
 /// <inheritdoc />
@@ -84,6 +79,30 @@ public class LevelingBehavior : IHasLeveling
     public int Value => ExpPoints;
 
     /// <inheritdoc />
+    public int Level { get; private set; }
+
+    /// <inheritdoc />
+    public int MaxLevel { get; init; }
+
+    /// <inheritdoc />
+    public int ExperienceToNextLevel => CalculateExperienceToNextLevel();
+
+    /// <inheritdoc />
+    public float ScalingFactorA { get; init; }
+
+    /// <inheritdoc />
+    public int PointsForFirstLevel { get; init; }
+
+    /// <inheritdoc />
+    public float ScalingFactorB { get; init; }
+
+    /// <inheritdoc />
+    public float ScalingFactorC { get; init; }
+
+    /// <inheritdoc />
+    public ScalingCurveType ScalingCurve { get; init; }
+
+    /// <inheritdoc />
     public void AddPoint()
     {
         ExpPoints++;
@@ -122,34 +141,10 @@ public class LevelingBehavior : IHasLeveling
     /// </summary>
     public event EventHandler<ValueChangedEventArgs>? ValueChanged;
 
-    /// <inheritdoc />
-    public int Level { get; private set; }
-
-    /// <inheritdoc />
-    public int MaxLevel { get; init; }
-
-    /// <inheritdoc />
-    public int ExperienceToNextLevel => CalculateExperienceToNextLevel();
-
-    /// <inheritdoc />
-    public float ScalingFactorA { get; init; }
-
-    /// <inheritdoc />
-    public int PointsForFirstLevel { get; init; }
-
     /// <summary>
     ///     Event that is triggered when the level changes.
     /// </summary>
     public event EventHandler<ValueChangedEventArgs>? LevelChanged;
-
-    /// <inheritdoc />
-    public float ScalingFactorB { get; init; }
-
-    /// <inheritdoc />
-    public float ScalingFactorC { get; init; }
-
-    /// <inheritdoc />
-    public ScalingCurveType ScalingCurve { get; init; }
 
     /// <summary>
     ///     Calculates the level based on the current experience points and scaling factor.

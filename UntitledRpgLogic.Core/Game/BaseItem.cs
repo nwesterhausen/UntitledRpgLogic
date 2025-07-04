@@ -1,9 +1,8 @@
-using UntitledRpgLogic.CompositionBehaviors;
-using UntitledRpgLogic.Configuration;
-using UntitledRpgLogic.Enums;
-using UntitledRpgLogic.Interfaces;
+using UntitledRpgLogic.Core.Configuration;
+using UntitledRpgLogic.Core.Enums;
+using UntitledRpgLogic.Core.Interfaces;
 
-namespace UntitledRpgLogic.Game;
+namespace UntitledRpgLogic.Core.Game;
 
 /// <summary>
 ///     Data defining an item in the game. This would provide the data-side of an item (where the 'visual' side would

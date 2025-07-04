@@ -1,6 +1,6 @@
-using UntitledRpgLogic.Options;
+using UntitledRpgLogic.Core.Options;
 
-namespace UntitledRpgLogic.Interfaces;
+namespace UntitledRpgLogic.Core.Interfaces;
 
 /// <summary>
 ///     Interface for the damage calculator service.
