@@ -7,7 +7,7 @@
           "files": [
             "**/*.csproj"
           ],
-          "src": "./UntitledRpgLogic"
+          "src": "./UntitledRpgLogic.*/"
         }
       ],
       "dest": "api"
