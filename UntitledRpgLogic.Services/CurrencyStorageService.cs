@@ -1,27 +1,26 @@
 using UntitledRpgLogic.Core.Events;
 using UntitledRpgLogic.Core.Interfaces;
 
-namespace UntitledRpgLogic.Implementations.Composition.CompositionBehaviors;
+namespace UntitledRpgLogic.Services;
 
 /// <summary>
-///     Behavior for an inventory that supports storing currencies.
+///     Service for an inventory that supports storing currencies.
 /// </summary>
-public class CurrencyStorageBehavior : ICurrencyStorage
+public class CurrencyStorageService : ICurrencyStorageService
 {
-    /// <summary>
-    ///     The stored currencies in the inventory, indexed by their currency identifier (GUID).
-    /// </summary>
-    private Dictionary<Guid, ICurrency> _currencies = new();
+    private readonly Dictionary<Guid, ICurrency> _currencies = new();
 
     /// <inheritdoc />
     public ICurrency? DepositCurrency(ICurrency currency, int? amount = null)
     {
+        // Logic from CurrencyStorageBehavior will go here
         throw new NotImplementedException();
     }
 
     /// <inheritdoc />
     public ICurrency? WithdrawCurrency(ICurrency currency, int amount = 1)
     {
+        // Logic from CurrencyStorageBehavior will go here
         throw new NotImplementedException();
     }
 

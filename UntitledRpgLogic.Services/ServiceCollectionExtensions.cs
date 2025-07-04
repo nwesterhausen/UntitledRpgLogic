@@ -15,15 +15,13 @@ public static class ServiceCollectionExtensions
     /// <returns>The IServiceCollection so that additional calls can be chained.</returns>
     public static IServiceCollection AddApplicationServices(this IServiceCollection services)
     {
-        // Register the open generic leveling service.
-        // The DI container will automatically create a LevelingService<T> for any T that is requested.
-        // For example, it will create a LevelingService<ISkill> when the SkillService requests it.
         services.AddScoped(typeof(ILevelingService<>), typeof(LevelingService<>));
 
-        // Register the concrete services that depend on the generic service.
         services.AddScoped<ISkillService, SkillService>();
         services.AddScoped<IStatService, StatService>();
         services.AddScoped<IDamageCalculator, DamageCalculator>();
+        services.AddScoped<IItemStorageService, ItemStorageService>();
+        services.AddScoped<ICurrencyStorageService, CurrencyStorageService>();
 
         return services;
     }
