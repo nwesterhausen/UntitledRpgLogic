@@ -1,7 +1,7 @@
 using System.Drawing;
 using System.Globalization;
 
-namespace UntitledRpgLogic.Configuration;
+namespace UntitledRpgLogic.Infrastructure.Configuration;
 
 /// <summary>
 ///     Tomlet support for custom types that are not natively supported by Tomlet.

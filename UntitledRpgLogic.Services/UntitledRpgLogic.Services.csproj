@@ -4,7 +4,30 @@
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <Deterministic>true</Deterministic>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <PublishRelease>true</PublishRelease>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <DebugType>portable</DebugType>
+        <IncludeSymbols>true</IncludeSymbols>
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+        <!-- Optional (set by default in .NET SDK 8+): 
+                Embed source files that are not tracked by the source control manager in the PDB -->
+        <EmbedUntrackedSources>true</EmbedUntrackedSources>
+        <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+        <!-- Package metadata -->
+        <AssemblyName>UntitledRpgLogic.Services</AssemblyName>
+        <PackageId>UntitledRpgLogic.Services</PackageId>
+        <!-- Version is set by GitVersion -->
+        <Authors>Nicholas Westerhausen</Authors>
+        <RepositoryType>git</RepositoryType>
+        <RepositoryUrl>https://github.com/nwesterhausen/UntitledRpgLogic</RepositoryUrl>
     </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="GitVersion.MsBuild" Version="6.3.0" PrivateAssets="All"/>
+        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All"/>
+    </ItemGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\UntitledRpgLogic.Core\UntitledRpgLogic.Core.csproj"/>
