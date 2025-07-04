@@ -19,7 +19,10 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9 # v4
         with:
-          dotnet-version: 8.0.x
+          # This will install both .NET 8 and .NET 9
+          dotnet-version: |
+            8.0.x
+            9.0.x
 
       - name: Cache NuGet packages
         uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4
