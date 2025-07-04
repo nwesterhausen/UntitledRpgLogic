@@ -69,7 +69,7 @@ public static class MaterialExtensions
     public static double CalculateWeight(this IMaterial material, double volume, int? pressure = null,
         int? temperature = null)
     {
-        double density = material.Density;
+        double density = material.CalculateDensity();
         if (pressure != null || temperature != null)
             // update the density first
             density = material.CalculateDensity(pressure, temperature);
