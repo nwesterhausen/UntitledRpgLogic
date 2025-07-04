@@ -8,6 +8,11 @@ namespace UntitledRpgLogic.Core.Classes;
 public class Name : IStringSerializable<Name>
 {
     /// <summary>
+    ///     An empty name.
+    /// </summary>
+    public static readonly Name Empty = new(string.Empty);
+
+    /// <summary>
     ///     Constructs a new PluralName object with the given singular, plural and adjective names. If not supplied, the
     ///     singular
     ///     will be used as the adjective and a best guess will be made for the plural.

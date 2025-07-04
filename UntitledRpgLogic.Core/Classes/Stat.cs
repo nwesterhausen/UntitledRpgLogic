@@ -6,8 +6,8 @@ using UntitledRpgLogic.Core.Interfaces;
 namespace UntitledRpgLogic.Core.Classes;
 
 /// <summary>
-///     A data container representing a stat. All logic is handled by a service.
-///     This class includes guardrails to ensure its internal state remains valid.
+///     A data container representing a stat. All business logic is handled by a service.
+///     This class includes property validation to ensure its internal state remains valid.
 /// </summary>
 public class Stat : IStat
 {
@@ -20,25 +20,28 @@ public class Stat : IStat
     private int _value;
 
     /// <summary>
+    ///     Initializes a new instance of the <see cref="Stat"/> class from a configuration object.
     /// </summary>
-    /// <param name="config"></param>
-    /// <param name="instanceId"></param>
+    /// <param name="config">The configuration data used to define the stat's properties.</param>
+    /// <param name="instanceId">The unique identifier of the entity instance this stat belongs to, if any.</param>
     public Stat(StatDataConfig config, Guid? instanceId = null)
     {
-        // Directly initialize properties from config
+        // Initialize IHasGuid properties
         Guid = config.ExplicitId ?? Guid.NewGuid();
-        // Cache IHasGuid fields
         Id = Convert.ToBase64String(Guid.ToByteArray());
         ShortGuid = Guid.ToString("N")[..8].ToUpperInvariant();
 
+        // Initialize other properties from config
         Name = Name.Deserialize(config.Name);
         InstanceId = instanceId ?? Guid.Empty;
+        Variation = config.Variation ?? StatVariation.Pseudo;
 
-        // Set backing fields first, then use properties to ensure validation logic is applied.
+        // Set backing fields for min/max first to establish the valid range.
         _minValue = config.MinValue ?? DefaultValues.STAT_DEFAULT_MIN_VALUE;
+        // The MaxValue property setter contains validation logic against _minValue, so we call it here.
         MaxValue = config.MaxValue ?? DefaultValues.STAT_DEFAULT_MAX_VALUE;
 
-        // Initialize state using the properties to enforce clamping.
+        // Initialize state using the properties to enforce clamping against the newly set min/max values.
         BaseValue = _minValue;
         Value = _minValue;
     }
@@ -57,7 +60,7 @@ public class Stat : IStat
     /// <inheritdoc />
     public Name Name { get; }
 
-    /// <inheritdoc />
+    /// <inheritdoc cref="IHasMutableValue" />
     public int Value
     {
         get => _value;
@@ -119,14 +122,6 @@ public class Stat : IStat
     public event Action? BaseValueChanged;
 
     /// <inheritdoc />
-    public void ApplyModifier(IModifier modifier)
-    {
-        // The service calculates the new value and sets it via the Value property,
-        // which automatically clamps it.
-        Value = modifier.ApplyModification(BaseValue, Value, MaxValue);
-    }
-
-    /// <inheritdoc />
     public void InvokeValueChanged(ValueChangedEventArgs args)
     {
         ValueChanged?.Invoke(this, args);
@@ -136,24 +131,5 @@ public class Stat : IStat
     public void InvokeBaseValueChanged()
     {
         BaseValueChanged?.Invoke();
-    }
-
-    /// <inheritdoc />
-    public void AddPoints(int points)
-    {
-        BaseValue += points;
-    }
-
-
-    /// <inheritdoc />
-    public void RemovePoints(int points)
-    {
-        BaseValue -= points;
-    }
-
-    /// <inheritdoc />
-    public void SetPoints(int points)
-    {
-        BaseValue = points;
     }
 }

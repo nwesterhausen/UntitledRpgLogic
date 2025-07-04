@@ -1,9 +1,8 @@
-// C:/Users/nwest/source/repos/UntitledRpgLogic/UntitledRpgLogic.Services/LevelingService.cs
-
 using Microsoft.Extensions.Logging;
 using UntitledRpgLogic.Core.Enums;
 using UntitledRpgLogic.Core.Events;
 using UntitledRpgLogic.Core.Interfaces;
+using UntitledRpgLogic.Extensions.Logging;
 
 namespace UntitledRpgLogic.Services;
 
@@ -19,6 +18,7 @@ public class LevelingService<T> : ILevelingService<T> where T : IHasLeveling
         _logger = logger;
     }
 
+    /// <inheritdoc />
     public void AddPoints(T target, int points)
     {
         if (points == 0) return;
@@ -30,11 +30,13 @@ public class LevelingService<T> : ILevelingService<T> where T : IHasLeveling
         CheckForLevelChange(target);
     }
 
+    /// <inheritdoc />
     public void RemovePoints(T target, int points)
     {
         AddPoints(target, -points);
     }
 
+    /// <inheritdoc />
     public void SetPoints(T target, int points)
     {
         int oldValue = target.Value;
@@ -44,6 +46,7 @@ public class LevelingService<T> : ILevelingService<T> where T : IHasLeveling
         CheckForLevelChange(target);
     }
 
+    /// <inheritdoc />
     public int GetTotalPointsForLevel(T target, int targetLevel)
     {
         if (targetLevel <= 1) return 0;
@@ -61,6 +64,7 @@ public class LevelingService<T> : ILevelingService<T> where T : IHasLeveling
         };
     }
 
+    /// <inheritdoc />
     public int GetPointsToNextLevel(T target)
     {
         if (target.Level >= target.MaxLevel) return 0;
@@ -68,6 +72,7 @@ public class LevelingService<T> : ILevelingService<T> where T : IHasLeveling
         return Math.Max(0, totalPointsForNextLevel - target.Value);
     }
 
+    /// <inheritdoc />
     public float GetProgressToNextLevel(T target)
     {
         if (target.Level >= target.MaxLevel) return 1.0f;

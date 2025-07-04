@@ -14,6 +14,11 @@ public interface IStat : IHasName, IHasMutableValue, IHasGuid, IInstantiable
     /// </summary>
     event Action? BaseValueChanged;
 
+    /// <summary>
+    ///     A method for the owning service to invoke the BaseValueChanged event.
+    /// </summary>
+    void InvokeBaseValueChanged();
+
     // note: inherited ValueChanged event handler from IHasValue
 
     #endregion
@@ -65,26 +70,12 @@ public interface IStat : IHasName, IHasMutableValue, IHasGuid, IInstantiable
     /// <summary>
     ///     The effective percentage of the stat, which is the EffectiveValue divided by EffectiveMaxValue.
     /// </summary>
-    public float EffectivePercent => (float)EffectiveValue / EffectiveMaxValue;
+    float EffectivePercent => EffectiveMaxValue > 0 ? (float)EffectiveValue / EffectiveMaxValue : 0f;
 
     /// <summary>
     ///     The percentage of the stat, which is the Value divided by MaxValue.
     /// </summary>
     public float Percent => EffectivePercent;
-
-    #endregion
-
-    #region Direct State Changes (called by IStatService)
-
-    /// <summary>
-    ///     Apply a modifier to the stat, which can be a buff, debuff, or any other effect that modifies the stat's value.
-    /// </summary>
-    /// <param name="modifier"></param>
-    void ApplyModifier(IModifier modifier);
-
-    /// <summary>
-    /// </summary>
-    void InvokeBaseValueChanged();
 
     #endregion
 }

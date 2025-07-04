@@ -1,3 +1,4 @@
+using UntitledRpgLogic.Core.Enums;
 using UntitledRpgLogic.Core.Interfaces;
 
 namespace UntitledRpgLogic.Core.Configuration;
@@ -34,4 +35,9 @@ public class StatDataConfig : ITomlConfig
     ///     zero that it cannot drop below.
     /// </summary>
     public int? MinValue { get; init; }
+
+    /// <summary>
+    ///     What kind of stat is it?
+    /// </summary>
+    public StatVariation? Variation { get; set; }
 }

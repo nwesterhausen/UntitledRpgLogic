@@ -33,7 +33,6 @@ public class StatEntry<T> : IDamageable where T : IStat
     /// <summary>Whether the stat can be healed or not.</summary>
     public bool IsHealable { get; }
 
-
     /// <summary>A list of mitigations that apply to this stat entry.</summary>
     public List<IAppliesDamageMitigation> Mitigations { get; } = [];
 
@@ -42,7 +41,6 @@ public class StatEntry<T> : IDamageable where T : IStat
 
     /// <summary>
     ///     A helper to calculate what percentage of the stat's maximum value a given point value represents.
-    ///     This is simple, dependency-free logic that is acceptable in a data class.
     /// </summary>
     public float PointsAsPercentageOfMax(int pointValue)
     {

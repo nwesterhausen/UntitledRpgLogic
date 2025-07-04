@@ -1,3 +1,4 @@
+using UntitledRpgLogic.Core.Classes;
 using UntitledRpgLogic.Core.Configuration;
 using UntitledRpgLogic.Core.Enums;
 using UntitledRpgLogic.Core.Interfaces;
@@ -16,8 +17,10 @@ public class BaseItem : IItem
     /// <param name="config"></param>
     public BaseItem(ItemDataConfig config)
     {
-        GuidBehavior = new GuidBehavior(config.ExplicitId);
-        NameBehavior = new NameBehavior(config.Name, config.PluralName, config.NameAsAdjective);
+        Guid = config.ExplicitId ?? Guid.NewGuid();
+        Id = Convert.ToBase64String(Guid.ToByteArray());
+        ShortGuid = Guid.ToString("N")[..8].ToUpperInvariant();
+        Name = Name.Deserialize(config.Name);
         Quality = config.ItemQuality ?? Quality.None;
         ItemType = config.ItemType;
         ItemSubtype = config.ItemSubtype ?? ItemSubtype.None;
@@ -30,35 +33,6 @@ public class BaseItem : IItem
         Depth = config.Depth ?? 1.0f;
     }
 
-    /// <summary>
-    ///     How we track our GUID, the behavior contains any helper methods or other functionality that is needed for working
-    ///     with the GUID.
-    /// </summary>
-    private GuidBehavior GuidBehavior { get; }
-
-    /// <summary>
-    ///     The name behavior contains any helper methods or other functionality that is needed for working with the names
-    ///     of an object or entity.
-    /// </summary>
-    private NameBehavior NameBehavior { get; }
-
-    /// <inheritdoc />
-    public string Name => NameBehavior.Name;
-
-    /// <inheritdoc />
-    public Guid Guid => GuidBehavior.Guid;
-
-    /// <inheritdoc />
-    public string ShortGuid => GuidBehavior.ShortGuid;
-
-    /// <inheritdoc />
-    public string Id => GuidBehavior.Id;
-
-    /// <inheritdoc />
-    public string PluralName => NameBehavior.PluralName;
-
-    /// <inheritdoc />
-    public string NameAsAdjective => NameBehavior.NameAsAdjective;
 
     /// <inheritdoc />
     public Quality Quality { get; }
@@ -73,7 +47,7 @@ public class BaseItem : IItem
     public Guid CraftedBy { get; }
 
     /// <inheritdoc />
-    public DimensionScale DimensionScale { get; }
+    public DimensionScale DimensionScale { get; set; }
 
     /// <inheritdoc />
     public ShapeType ShapeType { get; }
@@ -86,4 +60,9 @@ public class BaseItem : IItem
 
     /// <inheritdoc />
     public float Depth { get; set; }
+
+    public Guid Guid { get; }
+    public string Id { get; }
+    public string ShortGuid { get; }
+    public Name Name { get; }
 }
