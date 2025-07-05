@@ -46,7 +46,7 @@ public interface IStat : IHasName, IHasMutableValue, IHasGuid, IInstantiable
     /// <summary>
     ///     The current base value of the stat, which is the underlying value before any modifications.
     /// </summary>
-    public int BaseValue { get; set; }
+    int BaseValue { get; set; }
 
     /// <summary>
     ///     Get the stats that are linked to this stat. This is used to retrieve all the stats that this stat depends on.
@@ -60,12 +60,12 @@ public interface IStat : IHasName, IHasMutableValue, IHasGuid, IInstantiable
     /// <summary>
     ///     The effective maximum value of the stat, which is the difference between MaxValue and MinValue.
     /// </summary>
-    public int EffectiveMaxValue => MaxValue - MinValue;
+    int EffectiveMaxValue => MaxValue - MinValue;
 
     /// <summary>
     ///     The effective value of the stat, which is the difference between Value and MinValue.
     /// </summary>
-    public int EffectiveValue => Value - MinValue;
+    int EffectiveValue => Value - MinValue;
 
     /// <summary>
     ///     The effective percentage of the stat, which is the EffectiveValue divided by EffectiveMaxValue.
@@ -75,7 +75,7 @@ public interface IStat : IHasName, IHasMutableValue, IHasGuid, IInstantiable
     /// <summary>
     ///     The percentage of the stat, which is the Value divided by MaxValue.
     /// </summary>
-    public float Percent => EffectivePercent;
+    float Percent => EffectivePercent;
 
     #endregion
 }

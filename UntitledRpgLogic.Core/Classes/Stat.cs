@@ -20,7 +20,7 @@ public class Stat : IStat
     private int _value;
 
     /// <summary>
-    ///     Initializes a new instance of the <see cref="Stat"/> class from a configuration object.
+    ///     Initializes a new instance of the <see cref="Stat" /> class from a configuration object.
     /// </summary>
     /// <param name="config">The configuration data used to define the stat's properties.</param>
     /// <param name="instanceId">The unique identifier of the entity instance this stat belongs to, if any.</param>

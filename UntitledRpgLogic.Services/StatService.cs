@@ -178,7 +178,7 @@ public class StatService : IStatService
         int change = (int)(sourceArgs.Delta * ratio);
         if (change == 0) return;
 
-        this.AddPoints(dependentStat, change);
+        AddPoints(dependentStat, change);
 
         _logger.LogDebug("Propagated change from linked stat. {DependentStat} changed by {Change}.",
             dependentStat.Name, change);

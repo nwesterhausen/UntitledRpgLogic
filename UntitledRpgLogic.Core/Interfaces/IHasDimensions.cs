@@ -15,39 +15,39 @@ public interface IHasDimensions
     /// <remarks>
     ///     This property must be settable to allow for scale conversions.
     /// </remarks>
-    public DimensionScale DimensionScale { get; set; }
+    DimensionScale DimensionScale { get; set; }
 
     /// <summary>
     ///     The type of shape the object is. This is used to determine how the dimensions are interpreted.
     /// </summary>
-    public ShapeType ShapeType { get; }
+    ShapeType ShapeType { get; }
 
     /// <summary>
     ///     The width of the object in the specified dimension scale.
     /// </summary>
-    public float Width { get; set; }
+    float Width { get; set; }
 
     /// <summary>
     ///     The height of the object in the specified dimension scale.
     /// </summary>
-    public float Height { get; set; }
+    float Height { get; set; }
 
     /// <summary>
     ///     The depth of the object in the specified dimension scale.
     /// </summary>
-    public float Depth { get; set; }
+    float Depth { get; set; }
 
     /// <summary>
     ///     The volume of the object. This can be cached in the implementing class
     ///     if performance is a concern.
     /// </summary>
-    public float Volume => CalculateVolume();
+    float Volume => CalculateVolume();
 
     /// <summary>
     ///     Calculates the volume of the object based on its shape and dimensions.
     /// </summary>
     /// <returns>Volume in cubic units of the current <see cref="DimensionScale" />, or 0f if shape is unknown.</returns>
-    public float CalculateVolume()
+    float CalculateVolume()
     {
         return ShapeType switch
         {
@@ -79,7 +79,7 @@ public interface IHasDimensions
     ///     Converts the dimensions from its current scale to the specified target scale.
     /// </summary>
     /// <param name="targetScale">The dimension scale to convert to.</param>
-    public void ChangeScale(DimensionScale targetScale)
+    void ChangeScale(DimensionScale targetScale)
     {
         if (DimensionScale == targetScale) return;
 

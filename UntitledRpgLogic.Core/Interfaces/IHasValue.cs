@@ -8,5 +8,5 @@ public interface IHasValue
     /// <summary>
     ///     Gets the current value.
     /// </summary>
-    public int Value { get; }
+    int Value { get; }
 }
