@@ -1,5 +1,7 @@
-﻿namespace UntitledRpgLogic.Services;
+﻿using UntitledRpgLogic.Core.Interfaces;
 
-internal class CultureService
+namespace UntitledRpgLogic.Services;
+
+public class CultureService : ICultureService
 {
 }

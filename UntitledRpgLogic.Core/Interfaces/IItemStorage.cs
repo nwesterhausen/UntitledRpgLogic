@@ -13,6 +13,11 @@ public interface IItemStorage
     int ItemCount { get; }
 
     /// <summary>
+    ///     Gets the number of unique items currently stored.
+    /// </summary>
+    int UniqueItemCount { get; }
+
+    /// <summary>
     ///     Whether the inventory has limited storage capacity for items.
     /// </summary>
     bool HasLimitedStorage { get; }

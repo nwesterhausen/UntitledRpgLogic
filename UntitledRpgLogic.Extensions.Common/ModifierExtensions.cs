@@ -31,7 +31,7 @@ public static class ModifierExtensions
     /// </summary>
     /// <param name="effect"></param>
     /// <returns></returns>
-    private static string ToDisplay(this IModifierEffect effect)
+    public static string ToDisplay(this IModifierEffect effect)
     {
         string sign = effect.IsPositive ? "+" : "-";
         string flatAmount = effect.AppliesFlatAmount ? $"{sign}{effect.FlatAmount}" : string.Empty;

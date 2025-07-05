@@ -7,11 +7,17 @@ using UntitledRpgLogic.Core.Interfaces;
 
 namespace UntitledRpgLogic.Services;
 
+/// <summary>
+/// </summary>
 public class SkillService : ISkillService
 {
     private readonly ILevelingService<ISkill> _levelingService;
     private readonly ILogger<SkillService> _logger;
 
+    /// <summary>
+    /// </summary>
+    /// <param name="levelingService"></param>
+    /// <param name="logger"></param>
     public SkillService(ILevelingService<ISkill> levelingService, ILogger<SkillService> logger)
     {
         _levelingService = levelingService;
@@ -63,12 +69,14 @@ public class SkillService : ISkillService
 
     // The delegation for these methods is already clean and correct.
     // Adding guard clauses here provides an extra layer of safety.
+    /// <inheritdoc />
     public int GetTotalPointsForLevel(ISkill skill, int targetLevel)
     {
         ArgumentNullException.ThrowIfNull(skill);
         return _levelingService.GetTotalPointsForLevel(skill, targetLevel);
     }
 
+    /// <inheritdoc />
     public float GetProgressToNextLevel(ISkill skill)
     {
         ArgumentNullException.ThrowIfNull(skill);

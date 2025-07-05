@@ -4,10 +4,10 @@ namespace UntitledRpgLogic.Core.Interfaces;
 ///     And ability that can be activated by the player, performing an action such as attacking, casting a spell, or using
 ///     a skill.
 /// </summary>
-public interface IActiveAbility
+public interface IActiveAbility : IActiveEffect
 {
     /// <summary>
-    ///     Activates the ability, performing its action.
+    ///     Activates the spell ability with specific context.
     /// </summary>
-    public void Activate();
+    new void Activate();
 }

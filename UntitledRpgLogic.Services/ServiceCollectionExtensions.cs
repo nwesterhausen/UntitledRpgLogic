@@ -15,13 +15,18 @@ public static class ServiceCollectionExtensions
     /// <returns>The IServiceCollection so that additional calls can be chained.</returns>
     public static IServiceCollection AddApplicationServices(this IServiceCollection services)
     {
+        // SCOPED SERVICES
+        // -- These are created each time they are asked for and disposed of with the creator.
         services.AddScoped(typeof(ILevelingService<>), typeof(LevelingService<>));
-
-        services.AddScoped<ISkillService, SkillService>();
-        services.AddScoped<IStatService, StatService>();
-        services.AddScoped<IDamageCalculator, DamageCalculator>();
         services.AddScoped<IItemStorageService, ItemStorageService>();
         services.AddScoped<ICurrencyStorageService, CurrencyStorageService>();
+
+        // SINGLETON SERVICES
+        // -- These are created the first time they're asked for and never disposed (until program ends)
+        services.AddSingleton<ICultureService, CultureService>();
+        services.AddSingleton<ISkillService, SkillService>();
+        services.AddSingleton<IStatService, StatService>();
+        services.AddSingleton<IDamageCalculator, DamageCalculator>();
 
         return services;
     }
