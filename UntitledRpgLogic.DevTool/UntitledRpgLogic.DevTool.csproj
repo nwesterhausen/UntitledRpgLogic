@@ -17,7 +17,7 @@
     </ItemGroup>
 
     <Target Name="UpdateTailwindCSS" BeforeTargets="Compile">
-        <Exec Command="bunx @tailwindcss/cli -i .\wwwroot\css\app.css -o .\wwwroot\css\app.min.css"
+        <Exec Command="bunx @tailwindcss/cli -i &quot;$(ProjectDir)wwwroot\css\app.css&quot; -o &quot;$(ProjectDir)wwwroot\css\app.min.css&quot;"
               ContinueOnError="true">
             <Output TaskParameter="ExitCode" PropertyName="ErrorCode"/>
         </Exec>
