@@ -30,7 +30,7 @@ public static class TomletSupport
     /// </summary>
     /// <param name="t"></param>
     /// <returns></returns>
-    private static TomlValue? SerializeGuid(Guid t)
+    private static TomlValue SerializeGuid(Guid t)
     {
         return new TomlString(t.ToString());
     }
@@ -53,7 +53,7 @@ public static class TomletSupport
     /// </summary>
     /// <param name="color"></param>
     /// <returns></returns>
-    private static TomlValue? SerializeColor(Color color)
+    private static TomlValue SerializeColor(Color color)
     {
         return new TomlString(color.ToArgb().ToString("X8"));
     }
@@ -84,7 +84,7 @@ public static class TomletSupport
     /// </summary>
     /// <param name="scale"></param>
     /// <returns></returns>
-    private static TomlValue? SerializeDimensionScale(DimensionScale scale)
+    private static TomlValue SerializeDimensionScale(DimensionScale scale)
     {
         return new TomlString(scale.ToString());
     }
@@ -119,7 +119,7 @@ public static class TomletSupport
     /// </summary>
     /// <param name="scale"></param>
     /// <returns></returns>
-    private static TomlValue? SerializeMassScale(MassScale scale)
+    private static TomlValue SerializeMassScale(MassScale scale)
     {
         return new TomlString(scale.ToString());
     }

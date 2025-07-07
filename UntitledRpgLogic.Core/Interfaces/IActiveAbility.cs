@@ -9,5 +9,5 @@ public interface IActiveAbility : IActiveEffect
     /// <summary>
     ///     Activates the spell ability with specific context.
     /// </summary>
-    new void Activate();
+    void Activate();
 }

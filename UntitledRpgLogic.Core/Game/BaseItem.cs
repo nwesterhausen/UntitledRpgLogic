@@ -61,8 +61,15 @@ public class BaseItem : IItem
     /// <inheritdoc />
     public float Depth { get; set; }
 
+    /// <inheritdoc />
     public Guid Guid { get; }
+
+    /// <inheritdoc />
     public string Id { get; }
+
+    /// <inheritdoc />
     public string ShortGuid { get; }
+
+    /// <inheritdoc />
     public Name Name { get; }
 }

@@ -176,16 +176,4 @@ public class ModifierEffect : IModifierEffect
 
         return returnValue;
     }
-
-    /// <inheritdoc />
-    public string ToDisplay()
-    {
-        throw new NotImplementedException();
-    }
-
-    /// <inheritdoc />
-    public string ToDescription()
-    {
-        throw new NotImplementedException();
-    }
 }

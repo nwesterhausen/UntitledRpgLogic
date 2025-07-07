@@ -1,6 +1,5 @@
 @inherits ComponentBase
 
-
 <NavLink
     @attributes="@AdditionalAttributes"
     Match="@Match"
@@ -10,12 +9,12 @@
 </NavLink>
 
 @code {
-    [Parameter] public string Href { get; set; } // Parameter for the link's URL
+    [Parameter] public string Href { get; set; } = string.Empty; // Parameter for the link's URL
 
     [Parameter] public NavLinkMatch Match { get; set; } // Parameter for NavLinkMatch
 
     [Parameter(CaptureUnmatchedValues = true)]
-    public IReadOnlyDictionary<string, object> AdditionalAttributes { get; set; } // To pass through other HTML attributes
+    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; } // To pass through other HTML attributes
 
-    [Parameter] public RenderFragment ChildContent { get; set; } // To include nested content
+    [Parameter] public RenderFragment? ChildContent { get; set; } // To include nested content
 }

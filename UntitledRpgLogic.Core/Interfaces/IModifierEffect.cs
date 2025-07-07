@@ -1,5 +1,8 @@
 namespace UntitledRpgLogic.Core.Interfaces;
 
+/// <summary>
+///     Interface for modifier effects that can be applied to stats.
+/// </summary>
 public interface IModifierEffect
 {
     /// <summary>

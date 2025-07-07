@@ -1,4 +1,4 @@
-@inject IJSRuntime JSRuntime
+@inject IJSRuntime JsRuntime
 
 <label class="swap swap-rotate">
     <!-- this hidden checkbox controls the state -->
@@ -29,14 +29,14 @@
         // When checked, the moon icon is shown (dark theme).
         // When unchecked, the sun icon is shown (light theme).
         var theme = isChecked ? "tooling-dark" : "tooling-light";
-        await JSRuntime.InvokeVoidAsync("setTheme", theme);
+        await JsRuntime.InvokeVoidAsync("setTheme", theme);
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
-            await JSRuntime.InvokeVoidAsync("initializeTheme", true);
+            await JsRuntime.InvokeVoidAsync("initializeTheme", true);
         }
     }
 }

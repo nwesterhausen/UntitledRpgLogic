@@ -58,12 +58,13 @@ public class BaseMaterial : IMaterial
         };
     }
 
-    /// <summary>
-    ///     Behavior to handle the GUID of the material, including its ID and short GUID.
-    /// </summary>
+    /// <inheritdoc />
     public Guid Guid { get; }
 
+    /// <inheritdoc />
     public string Id { get; }
+
+    /// <inheritdoc />
     public string ShortGuid { get; }
 
     /// <inheritdoc />

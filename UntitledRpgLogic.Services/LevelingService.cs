@@ -13,6 +13,10 @@ public class LevelingService<T> : ILevelingService<T> where T : IHasLeveling
 {
     private readonly ILogger<LevelingService<T>> _logger;
 
+    /// <summary>
+    ///     Constructs a new instance of the LevelingService.
+    /// </summary>
+    /// <param name="logger"></param>
     public LevelingService(ILogger<LevelingService<T>> logger)
     {
         _logger = logger;

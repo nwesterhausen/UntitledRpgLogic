@@ -9,20 +9,60 @@ namespace UntitledRpgLogic.StateMachines;
 /// </summary>
 public class MainMenuStateMachine
 {
+    /// <summary>
+    ///     Represents the various states that the main menu can be in.
+    /// </summary>
     public enum State
     {
+        /// <summary>
+        ///     The main menu is at the root level.
+        /// </summary>
         MainMenu,
+
+        /// <summary>
+        ///     The user is in the new game creation screen.
+        /// </summary>
         NewGame,
+
+        /// <summary>
+        ///     The user is in the load game screen.
+        /// </summary>
         LoadGame,
+
+        /// <summary>
+        ///     The user is in the settings menu.
+        /// </summary>
         Settings,
+
+        /// <summary>
+        ///     The game is shutting down.
+        /// </summary>
         ShutDown
     }
 
+    /// <summary>
+    ///     Represents the triggers that can cause a state transition in the main menu.
+    /// </summary>
     public enum Trigger
     {
+        /// <summary>
+        ///     The user has selected the new game option.
+        /// </summary>
         SelectNewGame,
+
+        /// <summary>
+        ///     The user has selected the load game option.
+        /// </summary>
         SelectLoadGame,
+
+        /// <summary>
+        ///     The user has selected the settings option.
+        /// </summary>
         SelectSettings,
+
+        /// <summary>
+        ///     The user has selected the quit option.
+        /// </summary>
         SelectQuit
     }
 
@@ -31,6 +71,10 @@ public class MainMenuStateMachine
 
     private State _state = State.MainMenu;
 
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="MainMenuStateMachine" /> class.
+    /// </summary>
+    /// <param name="logger">A logger instance for logging state machine transitions and information.</param>
     public MainMenuStateMachine(ILogger<MainMenuStateMachine>? logger = null)
     {
         _logger = logger ?? NullLogger<MainMenuStateMachine>.Instance;
@@ -52,6 +96,10 @@ public class MainMenuStateMachine
     /// </summary>
     public Action<Trigger> TriggerAction => _machine.Fire;
 
+    /// <summary>
+    ///     Logs the transition and invokes the StateChanged event.
+    /// </summary>
+    /// <param name="t">The transition that occurred.</param>
     private void Transition(StateMachine<State, Trigger>.Transition t)
     {
         _logger.LogDebug(

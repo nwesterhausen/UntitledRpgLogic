@@ -20,6 +20,12 @@ public class Skill : ISkill
     // Private backing fields for properties that require validation.
     private int _value;
 
+    /// <summary>
+    ///     Constructs a new Skill instance from a <see cref="SkillDataConfig" />.
+    /// </summary>
+    /// <param name="config"></param>
+    /// <param name="instanceId"></param>
+    /// <exception cref="ArgumentOutOfRangeException"></exception>
     public Skill(SkillDataConfig config, Guid? instanceId = null)
     {
         // IHasGuid
