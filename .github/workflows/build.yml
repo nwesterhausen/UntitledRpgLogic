@@ -11,12 +11,12 @@ jobs:
     name: Build and Test
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+      - name: 📝 Checkout repository
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
           fetch-depth: 0
 
-      - name: Setup .NET
+      - name: ⚙️ Setup .NET
         uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9 # v4
         with:
           # This will install both .NET 8 and .NET 9
@@ -24,12 +24,12 @@ jobs:
             8.0.x
             9.0.x
 
-      - name: Setup Bun
+      - name: 🥟 Setup Bun
         uses: oven-sh/setup-bun@v1
         with:
           bun-version: latest
 
-      - name: Cache NuGet packages
+      - name: 📦 Cache NuGet packages
         uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4
         with:
           path: ~/.nuget/packages
@@ -38,14 +38,14 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-nuget-
 
-      - name: Restore dependencies
-        run: dotnet restore
+      - name: 📥 Restore dependencies
+        run: |
+          dotnet workload restore
+          dotnet tool restore
+          dotnet restore
 
-      - name: Install local tools
-        run: dotnet tool restore
-
-      - name: Build
+      - name: 🔨 Build
         run: dotnet build --no-restore
 
-      - name: Test
+      - name: 🚀 Test
         run: dotnet test --no-build --verbosity normal
