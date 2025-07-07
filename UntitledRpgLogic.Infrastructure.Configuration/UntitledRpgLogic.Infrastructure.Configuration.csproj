@@ -25,14 +25,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="GitVersion.MsBuild" Version="6.3.0" PrivateAssets="All"/>
-        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All"/>
-        <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.6"/>
-        <PackageReference Include="Samboy063.Tomlet" Version="6.1.0"/>
+        <PackageReference Include="GitVersion.MsBuild" Version="6.3.0" PrivateAssets="All" />
+        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
+        <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.6" />
+        <PackageReference Include="Samboy063.Tomlet" Version="6.1.0" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\UntitledRpgLogic.Core\UntitledRpgLogic.Core.csproj"/>
+        <ProjectReference Include="..\UntitledRpgLogic.Core\UntitledRpgLogic.Core.csproj" />
     </ItemGroup>
 
 </Project>
