@@ -2,8 +2,7 @@
 
 <label class="swap swap-rotate">
     <!-- this hidden checkbox controls the state -->
-    <input type="checkbox" class="theme-controller" @onchange="OnThemeChange"/>
-
+    <input type="checkbox" class="theme-controller" @onchange="OnThemeChange" id="theme-toggle-checkbox"/>
     <!-- sun icon -->
     <svg
         class="swap-off h-10 w-10 fill-current"
@@ -24,7 +23,6 @@
 </label>
 
 @code {
-
     private async Task OnThemeChange(ChangeEventArgs e)
     {
         var isChecked = (bool)(e.Value ?? false);
@@ -34,4 +32,11 @@
         await JSRuntime.InvokeVoidAsync("setTheme", theme);
     }
 
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("initializeTheme", true);
+        }
+    }
 }
