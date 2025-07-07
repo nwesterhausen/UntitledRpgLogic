@@ -23,6 +23,7 @@
 </label>
 
 @code {
+
     private async Task OnThemeChange(ChangeEventArgs e)
     {
         var isChecked = (bool)(e.Value ?? false);
@@ -39,4 +40,5 @@
             await JsRuntime.InvokeVoidAsync("initializeTheme", true);
         }
     }
+
 }
