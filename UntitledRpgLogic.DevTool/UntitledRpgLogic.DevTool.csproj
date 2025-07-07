@@ -8,20 +8,33 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="9.0.6"/>
-        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="9.0.6" PrivateAssets="all"/>
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="9.0.6" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer"
+            Version="9.0.6" PrivateAssets="all" />
     </ItemGroup>
 
     <ItemGroup>
-        <None Include="wwwroot\js\theme-change.js"/>
+        <None Include="wwwroot\js\theme-change.js" />
     </ItemGroup>
 
     <Target Name="UpdateTailwindCSS" BeforeTargets="Compile">
-        <Exec Command="bunx @tailwindcss/cli -i &quot;$(ProjectDir)wwwroot\css\app.css&quot; -o &quot;$(ProjectDir)wwwroot\css\app.min.css&quot;"
-              ContinueOnError="true">
-            <Output TaskParameter="ExitCode" PropertyName="ErrorCode"/>
+        <Message Text="Running bun install in $(ProjectDir)" Importance="high" />
+        <Exec Command="bun install"
+            WorkingDirectory="$(ProjectDir)"
+            ContinueOnError="true">
+            <Output TaskParameter="ExitCode" PropertyName="BunInstallErrorCode" />
         </Exec>
-        <Error Condition="'$(ErrorCode)' != '0'" Text="Error building CSS file"/>
+        <Error Condition="'$(BunInstallErrorCode)' != '0'" Text="Error running 'bun install'." />
+
+        <Message Text="Running bunx for Tailwind CSS build" Importance="high" />
+        <Exec
+            Command="bunx @tailwindcss/cli -i &quot;$(ProjectDir)wwwroot\css\app.css&quot; -o &quot;$(ProjectDir)wwwroot\css\app.min.css&quot;"
+            WorkingDirectory="$(ProjectDir)"
+            ContinueOnError="true">
+            <Output TaskParameter="ExitCode" PropertyName="TailwindErrorCode" />
+        </Exec>
+        <Error Condition="'$(TailwindErrorCode)' != '0'"
+            Text="Error building CSS file with Tailwind CSS." />
     </Target>
 
 </Project>
