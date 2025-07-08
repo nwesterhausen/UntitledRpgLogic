@@ -55,6 +55,9 @@ jobs:
           dotnet tool restore
           dotnet restore
 
+      - name: 🚀 Publish Dev Tool
+        run: dotnet publish UntitledRpgLogic.DevTool/UntitledRpgLogic.DevTool.csproj -c Release -o ./.docfx/_site/devtool --nologo --no-build
+
       - run: dotnet docfx ./.docfx/docfx.json
         name: 📚 Compile Docs
 
