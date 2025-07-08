@@ -1,4 +1,4 @@
-name: Deploy Documentation to Github Pages
+name: Deploy Dev Tooling App
 
 on:
   push:
@@ -20,8 +20,8 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  docs:
-    name: Deploy Documentation
+  deploy:
+    name: Deploy Dev Tool
     runs-on: ubuntu-latest
     steps:
       - name: 📝 Checkout repository
@@ -31,11 +31,9 @@ jobs:
 
       - name: ⚙️ Setup .NET 8 & 9
         uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9 # v4
-        id: setup-dotnet
+        id: setup-dotnet-cf
         with:
-          dotnet-version: |
-            8.0.x
-            9.0.x
+          dotnet-version: 9.0.x
 
       - name: 🥟 Setup Bun
         uses: oven-sh/setup-bun@735343b667d3e6f658f44d0eca948eb6282f2b76 # v2
@@ -46,7 +44,7 @@ jobs:
         uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4
         with:
           path: ~/.dotnet # Path to cache for SDKs and Workloads
-          key: ${{ runner.os }}-dotnet-workloads-${{ hashFiles('global.json') }}-${{ steps.setup-dotnet.outputs.dotnet-version }}
+          key: ${{ runner.os }}-dotnet-workloads-${{ hashFiles('global.json') }}-${{ steps.setup-dotnet-cf.outputs.dotnet-version }}
           restore-keys: |
             ${{ runner.os }}-dotnet-workloads-
 
@@ -72,15 +70,15 @@ jobs:
           dotnet tool restore
           dotnet restore
 
-      - run: dotnet docfx ./.docfx/docfx.json
-        name: 📚 Compile Docs
+      - name: 🚀 Publish Dev Tool
+        run: dotnet publish UntitledRpgLogic.DevTool/UntitledRpgLogic.DevTool.csproj -c Release -o ./blazor_publish_output --nologo --base-path
 
-      - name: 📤 Upload artifact
-        uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3
+      - name: ☁️ Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
         with:
-          # Upload entire repository
-          path: '.docfx/_site'
-
-      - name: 🚀 Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: ${{ secrets.CLOUDFLARE_PAGES_PROJECT_NAME_DEVTOOL }} # Name of your Cloudflare Pages project
+          directory: ./blazor_publish_output # The directory containing your published Blazor app files
+          # No build command is typically needed here as dotnet publish already built the app
+          # command: "echo No build command needed, already published"
