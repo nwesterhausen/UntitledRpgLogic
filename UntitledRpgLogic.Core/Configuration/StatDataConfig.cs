@@ -40,4 +40,7 @@ public class StatDataConfig : ITomlConfig
     ///     What kind of stat is it?
     /// </summary>
     public StatVariation? Variation { get; set; }
+
+    /// <inheritdoc />
+    public ConfigType ConfigType => ConfigType.Stat;
 }

@@ -11,43 +11,34 @@ namespace UntitledRpgLogic.Core.Interfaces;
 /// </remarks>
 public interface ITomlConfigHandler
 {
-    /// <summary>
-    ///     Loads a TOML configuration file and deserializes its contents into an object of the specified type.
-    /// </summary>
-    /// <remarks>
-    ///     The method expects the file at <paramref name="filePath" /> to be in a valid TOML format.
-    ///     Ensure that the specified type <typeparamref name="T" /> has a structure that matches the TOML file's
-    ///     schema.
-    /// </remarks>
-    /// <typeparam name="T">The type of the configuration object to deserialize. Must implement <see cref="ITomlConfig" />.</typeparam>
-    /// <param name="filePath">
-    ///     The path to the TOML configuration file to load. This parameter cannot be
-    ///     <see langword="null" /> or empty.
-    /// </param>
-    /// <returns>An instance of type <typeparamref name="T" /> populated with the deserialized configuration data.</returns>
-    /// <exception cref="InvalidOperationException">When the TOML cannot be parsed into <see cref="T" /></exception>
-    T LoadConfigFromFile<T>(string filePath) where T : ITomlConfig;
 
     /// <summary>
-    ///     Deserializes a TOML configuration from the specified byte array.
+    /// Loads a TOML configuration from the specified file.
     /// </summary>
-    /// <typeparam name="T">The type of the configuration object to deserialize. Must implement <see cref="ITomlConfig" />.</typeparam>
-    /// <param name="bytes">A byte array containing the TOML configuration data. Cannot be <see langword="null" />.</param>
-    /// <returns>An instance of type <typeparamref name="T" /> populated with the deserialized configuration data.</returns>
-    /// <exception cref="InvalidOperationException">When the TOML cannot be parsed into <see cref="T" /></exception>
-    T LoadConfig<T>(byte[] bytes) where T : ITomlConfig;
+    /// <param name="filePath">The path to the TOML file to be loaded. Must not be null or empty.</param>
+    /// <returns>An <see cref="ITomlConfig"/> instance representing the configuration data from the file.</returns>
+    /// <exception cref="InvalidOperationException">When the TOML cannot be parsed into <see cref="ITomlConfig" /></exception>
+    ITomlConfig LoadConfigFromFile(string filePath);
+
+    /// <summary>
+    /// Loads a TOML configuration from the specified byte array.
+    /// </summary>
+    /// <param name="bytes">The byte array containing the TOML configuration data. Cannot be null or empty.</param>
+    /// <returns>An <see cref="ITomlConfig"/> instance representing the loaded configuration.</returns>
+    /// <exception cref="InvalidOperationException">When the TOML cannot be parsed into <see cref="ITomlConfig" /></exception>
+    ITomlConfig LoadConfig(byte[] bytes);
 
     /// <summary>
     ///     Serializes the specified configuration object into a TOML format and returns it as a byte array.
     /// </summary>
-    /// <typeparam name="T">
+    /// <typeparam name="TConfig">
     ///     The type of the configuration object, which must implement the <see cref="ITomlConfig" />
     ///     interface.
     /// </typeparam>
     /// <param name="config">The configuration object to serialize. Must not be <see langword="null" />.</param>
     /// <returns>A byte array containing the serialized TOML representation of the configuration object.</returns>
-    /// <exception cref="InvalidOperationException">When <see cref="T" /> cannot be serialized into TOML</exception>
-    byte[] SaveConfig<T>(T config) where T : ITomlConfig;
+    /// <exception cref="InvalidOperationException">When <see typecref="TConfig" /> cannot be serialized into TOML</exception>
+    byte[] SaveConfig<TConfig>(TConfig config) where TConfig : ITomlConfig;
 
     /// <summary>
     ///     Saves the specified configuration object to a file in TOML format.
@@ -57,12 +48,12 @@ public interface ITomlConfigHandler
     ///     specified file. Ensure that the file path is valid and that the application has write permissions for the target
     ///     location.
     /// </remarks>
-    /// <typeparam name="T">The type of the configuration object, which must implement <see cref="ITomlConfig" />.</typeparam>
+    /// <typeparam name="TConfig">The type of the configuration object, which must implement <see cref="ITomlConfig" />.</typeparam>
     /// <param name="config">The configuration object to save. Must not be <see langword="null" />.</param>
     /// <param name="filePath">
     ///     The path to the file where the configuration will be saved. Must not be <see langword="null" />
     ///     or empty.
     /// </param>
-    /// <exception cref="InvalidOperationException">When <see cref="T" /> cannot be serialized into TOML</exception>
-    void SaveConfigToFile<T>(T config, string filePath) where T : ITomlConfig;
+    /// <exception cref="InvalidOperationException">When <see typecref="TConfig" /> cannot be serialized into TOML</exception>
+    void SaveConfigToFile<TConfig>(TConfig config, string filePath) where TConfig : ITomlConfig;
 }

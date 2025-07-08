@@ -1,3 +1,4 @@
+using UntitledRpgLogic.Core.Enums;
 using UntitledRpgLogic.Core.Interfaces;
 using UntitledRpgLogic.Core.Options;
 
@@ -28,4 +29,7 @@ public class SkillDataConfig : ITomlConfig
     ///     Options for the leveling behavior of the skill. If not provided, the default leveling options will be used.
     /// </summary>
     public LevelingOptions? LevelingOptions { get; init; }
+
+    /// <inheritdoc />
+    public ConfigType ConfigType => ConfigType.Skill;
 }

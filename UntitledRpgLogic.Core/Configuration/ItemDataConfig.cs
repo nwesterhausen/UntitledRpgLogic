@@ -92,4 +92,7 @@ public class ItemDataConfig : ITomlConfig
     ///     <see cref="ExplicitId" />
     /// </summary>
     public Guid MaterialId { get; init; }
+
+    /// <inheritdoc />
+    public ConfigType ConfigType => ConfigType.Item;
 }

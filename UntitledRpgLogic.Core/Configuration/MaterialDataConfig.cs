@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Drawing;
+using UntitledRpgLogic.Core.Enums;
 using UntitledRpgLogic.Core.Interfaces;
 
 namespace UntitledRpgLogic.Core.Configuration;
@@ -110,4 +111,7 @@ public class MaterialDataConfig : ITomlConfig
     /// </summary>
     [Required]
     public required double LiquidCoefficientOfExpansion { get; set; }
+
+    /// <inheritdoc />
+    public ConfigType ConfigType => ConfigType.Material;
 }
