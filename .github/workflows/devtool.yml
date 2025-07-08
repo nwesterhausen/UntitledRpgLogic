@@ -70,7 +70,7 @@ jobs:
           dotnet restore
 
       - name: 🚀 Publish Dev Tool
-        run: dotnet publish UntitledRpgLogic.DevTool/UntitledRpgLogic.DevTool.csproj -c Release -o ./blazor_publish_output --nologo --base-path /
+        run: dotnet publish UntitledRpgLogic.DevTool/UntitledRpgLogic.DevTool.csproj -c Release -o ./blazor_publish_output --nologo
 
       - name: ☁️ Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
