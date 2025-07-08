@@ -4,18 +4,29 @@
     "config:recommended",
     "helpers:pinGitHubActionDigests"
   ],
+  "baseBranches": [
+    "next"
+  ],
   "packageRules": [
     {
       "groupName": "all dependencies",
       "groupSlug": "all-deps",
       "automerge": true,
-      "matchPackageNames": ["*"]
+      "matchPackageNames": [
+        "*"
+      ]
     },
     {
-      "matchPackageNames": ["dotnet-sdk"],
+      "matchPackageNames": [
+        "dotnet-sdk"
+      ],
       "allowedVersions": "<9"
     },
     {
-      "matchPackageNames": ["GodotSharp{/,}**", "Godot.NET.Sdk{/,}**"]
-    }]
+      "matchPackageNames": [
+        "GodotSharp{/,}**",
+        "Godot.NET.Sdk{/,}**"
+      ]
+    }
+  ]
 }
