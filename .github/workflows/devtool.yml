@@ -73,7 +73,7 @@ jobs:
         run: dotnet publish UntitledRpgLogic.DevTool/UntitledRpgLogic.DevTool.csproj -c Release -o ./blazor_publish_output --nologo
 
       - name: ☁️ Deploy to Cloudflare Pages
-        uses: cloudflare/wrangler-action@v3
+        uses: cloudflare/wrangler-action@da0e0dfe58b7a431659754fdf3f186c529afbe65 # v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
