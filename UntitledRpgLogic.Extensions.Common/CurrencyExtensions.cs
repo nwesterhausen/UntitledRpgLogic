@@ -36,7 +36,7 @@ public static class CurrencyExtensions
         // Find the actual amount to add to the target otherCurrency
         long toAdd = toSubtract - remaining;
         // Add the value to the target otherCurrency
-        otherCurrency.Add(toAdd);
+        _ = otherCurrency.Add(toAdd);
 
         return true;
     }

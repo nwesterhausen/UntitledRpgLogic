@@ -8,7 +8,7 @@ namespace UntitledRpgLogic.Services;
 /// </summary>
 public class CurrencyStorageService : ICurrencyStorageService
 {
-    private readonly Dictionary<Guid, ICurrency> _currencies = new();
+    private readonly Dictionary<Guid, ICurrency> _currencies = [];
 
     /// <inheritdoc />
     public ICurrency? DepositCurrency(ICurrency currency, int? amount = null)

@@ -28,7 +28,7 @@ public static partial class MapperRegistration
         if (value is TomlString str)
         {
             string colorString = str.Value.Trim();
-            if (colorString.StartsWith("#")) colorString = colorString.Substring(1); // Remove the '#' if present
+            if (colorString.StartsWith("#")) colorString = colorString[1..]; // Remove the '#' if present
 
             if (colorString.Length == 6) colorString = "FF" + colorString; // Add alpha channel if missing
 

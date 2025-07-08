@@ -103,7 +103,8 @@ public class EffectApplicationService : IEffectApplicationService
                             summonComponent.DurationInSeconds);
                     // In a real game, this would trigger your summoning system to instantiate creatures.
                     break;
-
+                case EffectComponentType.None:
+                    break;
                 default:
                     _logger.LogWarning("Unsupported effect component type encountered: {ComponentType}",
                         component.ComponentType);

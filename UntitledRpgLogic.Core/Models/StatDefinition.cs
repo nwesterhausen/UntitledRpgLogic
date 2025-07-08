@@ -45,5 +45,5 @@ public record StatDefinition
     /// <summary>
     ///     Stats that this stat depends on (if any).
     /// </summary>
-    public ICollection<LinkedStats> LinkedStats { get; init; } = new List<LinkedStats>();
+    public ICollection<LinkedStats> LinkedStats { get; init; } = [];
 }

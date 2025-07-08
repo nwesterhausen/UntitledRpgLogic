@@ -80,7 +80,7 @@ public class MainMenuStateMachine
         _logger = logger ?? NullLogger<MainMenuStateMachine>.Instance;
         _machine = new StateMachine<State, Trigger>(() => _state, s => _state = s);
 
-        _machine.Configure(State.MainMenu)
+        _ = _machine.Configure(State.MainMenu)
             .Permit(Trigger.SelectNewGame, State.NewGame)
             .Permit(Trigger.SelectLoadGame, State.LoadGame)
             .Permit(Trigger.SelectSettings, State.Settings)

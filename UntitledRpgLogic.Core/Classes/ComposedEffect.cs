@@ -23,7 +23,7 @@ public class ComposedEffect : IActiveEffect
         IEffectApplicationService effectApplicationService)
     {
         Name = new Name(name);
-        _components = new List<IEffectComponent>(components);
+        _components = [.. components];
         _effectApplicationService = effectApplicationService;
 
         // Generate a new GUID for this effect instance

@@ -26,7 +26,7 @@ public interface ITomlConfigHandler
     /// </param>
     /// <returns>An instance of type <typeparamref name="T" /> populated with the deserialized configuration data.</returns>
     /// <exception cref="InvalidOperationException">When the TOML cannot be parsed into <see cref="T" /></exception>
-    public T LoadConfigFromFile<T>(string filePath) where T : ITomlConfig;
+    T LoadConfigFromFile<T>(string filePath) where T : ITomlConfig;
 
     /// <summary>
     ///     Deserializes a TOML configuration from the specified byte array.
@@ -35,7 +35,7 @@ public interface ITomlConfigHandler
     /// <param name="bytes">A byte array containing the TOML configuration data. Cannot be <see langword="null" />.</param>
     /// <returns>An instance of type <typeparamref name="T" /> populated with the deserialized configuration data.</returns>
     /// <exception cref="InvalidOperationException">When the TOML cannot be parsed into <see cref="T" /></exception>
-    public T LoadConfig<T>(byte[] bytes) where T : ITomlConfig;
+    T LoadConfig<T>(byte[] bytes) where T : ITomlConfig;
 
     /// <summary>
     ///     Serializes the specified configuration object into a TOML format and returns it as a byte array.
@@ -47,7 +47,7 @@ public interface ITomlConfigHandler
     /// <param name="config">The configuration object to serialize. Must not be <see langword="null" />.</param>
     /// <returns>A byte array containing the serialized TOML representation of the configuration object.</returns>
     /// <exception cref="InvalidOperationException">When <see cref="T" /> cannot be serialized into TOML</exception>
-    public byte[] SaveConfig<T>(T config) where T : ITomlConfig;
+    byte[] SaveConfig<T>(T config) where T : ITomlConfig;
 
     /// <summary>
     ///     Saves the specified configuration object to a file in TOML format.
@@ -64,5 +64,5 @@ public interface ITomlConfigHandler
     ///     or empty.
     /// </param>
     /// <exception cref="InvalidOperationException">When <see cref="T" /> cannot be serialized into TOML</exception>
-    public void SaveConfigToFile<T>(T config, string filePath) where T : ITomlConfig;
+    void SaveConfigToFile<T>(T config, string filePath) where T : ITomlConfig;
 }

@@ -25,29 +25,29 @@ public static class MaterialExtensions
         switch (material.State)
         {
             case StateOfMatter.Solid:
-            {
-                float p0 = material.StateProperties[StateOfMatter.Solid].DensityAtStateChange;
-                float t0 = material.StateProperties[StateOfMatter.Solid].TemperatureAtStateChange;
-                float t = temperature ?? material.Temperature;
+                {
+                    float p0 = material.StateProperties[StateOfMatter.Solid].DensityAtStateChange;
+                    float t0 = material.StateProperties[StateOfMatter.Solid].TemperatureAtStateChange;
+                    float t = temperature ?? material.Temperature;
 
-                return p0 * (1 + (material.SolidCoefficientOfExpansion * (t - t0)));
-            }
+                    return p0 * (1 + (material.SolidCoefficientOfExpansion * (t - t0)));
+                }
             case StateOfMatter.Liquid:
-            {
-                float p0 = material.StateProperties[StateOfMatter.Liquid].DensityAtStateChange;
-                float t0 = material.StateProperties[StateOfMatter.Liquid].TemperatureAtStateChange;
-                float t = temperature ?? material.Temperature;
+                {
+                    float p0 = material.StateProperties[StateOfMatter.Liquid].DensityAtStateChange;
+                    float t0 = material.StateProperties[StateOfMatter.Liquid].TemperatureAtStateChange;
+                    float t = temperature ?? material.Temperature;
 
-                return p0 * (1 + (material.LiquidCoefficientOfExpansion * (t - t0)));
-            }
+                    return p0 * (1 + (material.LiquidCoefficientOfExpansion * (t - t0)));
+                }
             case StateOfMatter.Gas:
-            {
-                double t = (temperature ?? material.Temperature) + 273.15; // Convert Celsius to Kelvin
-                float p = pressure ?? material.Pressure;
+                {
+                    double t = (temperature ?? material.Temperature) + 273.15; // Convert Celsius to Kelvin
+                    float p = pressure ?? material.Pressure;
 
-                // Ideal gas law: PV = nRT => Density (ρ) = m / V = (p * M) / (R * T)
-                return p * material.MolarMass / (UniversalGasConstant * t);
-            }
+                    // Ideal gas law: PV = nRT => Density (ρ) = m / V = (p * M) / (R * T)
+                    return p * material.MolarMass / (UniversalGasConstant * t);
+                }
             default:
 #if DEBUG
                 throw new InvalidOperationException($"Cannot calculate density for unknown state: {material.State}");

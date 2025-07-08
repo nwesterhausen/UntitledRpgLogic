@@ -1,12 +1,10 @@
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 
 namespace UntitledRpgLogic.Core.Enums;
 
 /// <summary>
 ///     Scale for mass measurements in the RPG logic.
 /// </summary>
-[SuppressMessage("ReSharper", "InconsistentNaming")]
 public enum MassScale
 {
     /// <summary>

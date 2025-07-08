@@ -24,7 +24,7 @@ public record Material : IMaterial
     public StateOfMatter State { get; init; }
 
     /// <inheritdoc />
-    public Dictionary<StateOfMatter, MaterialStateProperties> StateProperties { get; init; } = new();
+    public Dictionary<StateOfMatter, MaterialStateProperties> StateProperties { get; init; } = [];
 
     /// <inheritdoc />
     public double MolarMass { get; init; }

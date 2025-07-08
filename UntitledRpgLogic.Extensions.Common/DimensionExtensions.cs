@@ -29,6 +29,7 @@ public static class HasDimensionsExtensions
 
             ShapeType.ConicalFrustum =>
                 $"Top Radius: {dimensions.Width / 2f}, Bottom Radius: {dimensions.Depth / 2f}, Height: {dimensions.Height}",
+            ShapeType.RectangularPrism => throw new NotImplementedException(),
 
             // The default arm now throws an exception for unhandled shapes, which is safer.
             _ => throw new NotSupportedException(

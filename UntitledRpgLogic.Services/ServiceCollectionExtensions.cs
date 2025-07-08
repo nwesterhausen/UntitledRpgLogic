@@ -17,16 +17,16 @@ public static class ServiceCollectionExtensions
     {
         // SCOPED SERVICES
         // -- These are created each time they are asked for and disposed of with the creator.
-        services.AddScoped(typeof(ILevelingService<>), typeof(LevelingService<>));
-        services.AddScoped<IItemStorageService, ItemStorageService>();
-        services.AddScoped<ICurrencyStorageService, CurrencyStorageService>();
+        _ = services.AddScoped(typeof(ILevelingService<>), typeof(LevelingService<>));
+        _ = services.AddScoped<IItemStorageService, ItemStorageService>();
+        _ = services.AddScoped<ICurrencyStorageService, CurrencyStorageService>();
 
         // SINGLETON SERVICES
         // -- These are created the first time they're asked for and never disposed (until program ends)
-        services.AddSingleton<ICultureService, CultureService>();
-        services.AddSingleton<ISkillService, SkillService>();
-        services.AddSingleton<IStatService, StatService>();
-        services.AddSingleton<IDamageCalculator, DamageCalculator>();
+        _ = services.AddSingleton<ICultureService, CultureService>();
+        _ = services.AddSingleton<ISkillService, SkillService>();
+        _ = services.AddSingleton<IStatService, StatService>();
+        _ = services.AddSingleton<IDamageCalculator, DamageCalculator>();
 
         return services;
     }

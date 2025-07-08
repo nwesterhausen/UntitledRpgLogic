@@ -64,6 +64,7 @@ public class LevelingService<T> : ILevelingService<T> where T : IHasLeveling
             ScalingCurveType.Polynomial => (int)((target.ScalingFactorA *
                                                   Math.Pow(targetLevel - 1, target.ScalingFactorB)) +
                                                  target.ScalingFactorC),
+            ScalingCurveType.None => throw new NotImplementedException(),
             _ => throw new NotSupportedException($"Unsupported scaling curve type: {target.ScalingCurve}")
         };
     }

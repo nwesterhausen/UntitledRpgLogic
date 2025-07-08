@@ -70,7 +70,7 @@ public interface IHasDimensions
                                         (MathF.Pow(Width / 2f, 2) +
                                          (Width / 2f * (Depth / 2f)) +
                                          MathF.Pow(Depth / 2f, 2)),
-
+            ShapeType.RectangularPrism => throw new NotImplementedException(),
             _ => 0f // A discard pattern handles any unlisted enum members.
         };
     }

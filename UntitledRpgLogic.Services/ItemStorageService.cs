@@ -8,7 +8,7 @@ namespace UntitledRpgLogic.Services;
 /// </summary>
 public class ItemStorageService : IItemStorageService
 {
-    private readonly Dictionary<Guid, IStorable> _items = new();
+    private readonly Dictionary<Guid, IStorable> _items = [];
 
     /// <inheritdoc />
     public bool StoreItem(IStorable item)
@@ -37,7 +37,7 @@ public class ItemStorageService : IItemStorageService
                 return false;
             }
 
-            _items.Remove(itemId);
+            _ = _items.Remove(itemId);
             ItemRetrieved?.Invoke(this,
                 new SuccessfulItemStorageEventArgs(item.Name.Singular, 1, item.Guid, _items.Count));
             return true;

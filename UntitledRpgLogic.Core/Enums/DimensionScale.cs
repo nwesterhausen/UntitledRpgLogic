@@ -1,12 +1,10 @@
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 
 namespace UntitledRpgLogic.Core.Enums;
 
 /// <summary>
 ///     Available Dimensions to use for shapes
 /// </summary>
-[SuppressMessage("ReSharper", "InconsistentNaming")]
 public enum DimensionScale
 {
     /// <summary>

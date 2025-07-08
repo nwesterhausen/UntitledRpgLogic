@@ -153,7 +153,7 @@ public class StatService : IStatService
     /// <inheritdoc />
     public void RemoveModifier(StatEntry<IStat> statEntry, IModifier modifier)
     {
-        statEntry.Modifiers.Remove(modifier);
+        _ = statEntry.Modifiers.Remove(modifier);
         RecalculateStatValue(statEntry);
     }
 
@@ -166,7 +166,7 @@ public class StatService : IStatService
     /// <inheritdoc />
     public void RemoveMitigation(StatEntry<IStat> statEntry, IAppliesDamageMitigation mitigation)
     {
-        statEntry.Mitigations.Remove(mitigation);
+        _ = statEntry.Mitigations.Remove(mitigation);
     }
 
     /// <summary>

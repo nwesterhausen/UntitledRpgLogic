@@ -60,7 +60,7 @@ public class ItemDataConfig : ITomlConfig
 
     /// <summary>
     ///     Optionally specify a specific dimension scale for the item's width, height, and depth. If not provided, they
-    ///     will be interpreted as being in the default scale of <see cref="Enums.DimensionScale.cm" />.
+    ///     will be interpreted as being in the default scale of <see cref="DimensionScale.cm" />.
     /// </summary>
     public DimensionScale? DimensionScale { get; init; }
 

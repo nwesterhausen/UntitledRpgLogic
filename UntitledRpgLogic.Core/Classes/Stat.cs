@@ -110,7 +110,7 @@ public class Stat : IStat
     public StatVariation Variation { get; init; }
 
     /// <inheritdoc />
-    public Dictionary<Guid, float> LinkedStats { get; } = new();
+    public Dictionary<Guid, float> LinkedStats { get; } = [];
 
     /// <inheritdoc />
     public Guid InstanceId { get; init; }

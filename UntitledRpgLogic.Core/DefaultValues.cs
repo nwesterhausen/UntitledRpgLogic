@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using UntitledRpgLogic.Core.Enums;
 
 namespace UntitledRpgLogic.Core;
@@ -6,7 +5,6 @@ namespace UntitledRpgLogic.Core;
 /// <summary>
 ///     Default values used in the RPG logic.
 /// </summary>
-[SuppressMessage("ReSharper", "InconsistentNaming")]
 public static class DefaultValues
 {
     /// <summary>
