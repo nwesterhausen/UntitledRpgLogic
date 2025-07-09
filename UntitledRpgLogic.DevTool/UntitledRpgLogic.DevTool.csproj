@@ -24,29 +24,15 @@
             Include="..\UntitledRpgLogic.Infrastructure.Configuration\UntitledRpgLogic.Infrastructure.Configuration.csproj" />
     </ItemGroup>
 
-    <PropertyGroup>
-        <HasBun
-            Condition="Exists('$([System.IO.Path]::GetFullPath(`bun.exe`))') Or Exists('$([System.IO.Path]::GetFullPath(`bun`))')">
-            true</HasBun>
-    </PropertyGroup>
+    <Target Name="RebuildTailwindCSS"
+        BeforeTargets="PrepareForBuild">
 
-    <Target Name="UpdateFrontend"
-        BeforeTargets="PrepareForBuild"
-        Inputs="tailwind.config.js;wwwroot/css/app.css"
-        Outputs="wwwroot/css/app.min.css">
+        <Message Text="Checking for bun, falling back to npm if not found..." Importance="high" />
 
-        <Exec Condition="'$(HasBun)' == 'true'"
-            Command="bun install"
-            WorkingDirectory="$(ProjectDir)" />
-        <Exec Condition="'$(HasBun)' == 'true'"
-            Command="bun run build"
+        <Exec Command="command -v bun &amp;&amp; bun install || npm install"
             WorkingDirectory="$(ProjectDir)" />
 
-        <Exec Condition="'$(HasBun)' != 'true'"
-            Command="npm install"
-            WorkingDirectory="$(ProjectDir)" />
-        <Exec Condition="'$(HasBun)' != 'true'"
-            Command="npm run build"
+        <Exec Command="command -v bun &amp;&amp; bun run build || npm run build"
             WorkingDirectory="$(ProjectDir)" />
 
     </Target>
