@@ -29,10 +29,20 @@
 
         <Message Text="Checking for bun, falling back to npm if not found..." Importance="high" />
 
-        <Exec Command="command -v bun &amp;&amp; bun install || npm install"
+        <Exec Condition="'$(OS)' == 'Windows_NT'"
+            Command="(where bun >nul 2>nul &amp;&amp; bun install) || (npm install)"
             WorkingDirectory="$(ProjectDir)" />
 
-        <Exec Command="command -v bun &amp;&amp; bun run build || npm run build"
+        <Exec Condition="'$(OS)' == 'Windows_NT'"
+            Command="(where bun >nul 2>nul &amp;&amp; bun run build) || (npm run build)"
+            WorkingDirectory="$(ProjectDir)" />
+
+        <Exec Condition="'$(OS)' != 'Windows_NT'"
+            Command="bash -c &quot;command -v bun &amp;&amp; bun install || npm install&quot;"
+            WorkingDirectory="$(ProjectDir)" />
+
+        <Exec Condition="'$(OS)' != 'Windows_NT'"
+            Command="bash -c &quot;command -v bun &amp;&amp; bun run build || npm run build&quot;"
             WorkingDirectory="$(ProjectDir)" />
 
     </Target>
