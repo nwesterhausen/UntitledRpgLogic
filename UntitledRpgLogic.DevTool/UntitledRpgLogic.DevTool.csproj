@@ -30,22 +30,22 @@
             true</HasBun>
     </PropertyGroup>
 
-    <Target Name="UpdateTailwindCSS"
+    <Target Name="UpdateFrontend"
         BeforeTargets="PrepareForBuild"
-        Inputs="wwwroot/css/app.css"
+        Inputs="tailwind.config.js;wwwroot/css/app.css"
         Outputs="wwwroot/css/app.min.css">
 
-        <Exec Condition="$(HasBun)"
+        <Exec Condition="'$(HasBun)' == 'true'"
             Command="bun install"
             WorkingDirectory="$(ProjectDir)" />
-        <Exec Condition="$(HasBun)"
+        <Exec Condition="'$(HasBun)' == 'true'"
             Command="bun run build"
             WorkingDirectory="$(ProjectDir)" />
 
-        <Exec Condition="!$(HasBun)"
+        <Exec Condition="'$(HasBun)' != 'true'"
             Command="npm install"
             WorkingDirectory="$(ProjectDir)" />
-        <Exec Condition="!$(HasBun)"
+        <Exec Condition="'$(HasBun)' != 'true'"
             Command="npm run build"
             WorkingDirectory="$(ProjectDir)" />
 
