@@ -9,30 +9,28 @@
 
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="9.0.7" />
-        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="9.0.7" PrivateAssets="all" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer"
+            Version="9.0.7" PrivateAssets="all" />
     </ItemGroup>
 
     <ItemGroup>
         <None Include="wwwroot\js\theme-change.js" />
+        <None Include="wwwroot/css/app.css" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\UntitledRpgLogic.Core\UntitledRpgLogic.Core.csproj" />
-      <ProjectReference Include="..\UntitledRpgLogic.Infrastructure.Configuration\UntitledRpgLogic.Infrastructure.Configuration.csproj" />
+        <ProjectReference Include="..\UntitledRpgLogic.Core\UntitledRpgLogic.Core.csproj" />
+        <ProjectReference
+            Include="..\UntitledRpgLogic.Infrastructure.Configuration\UntitledRpgLogic.Infrastructure.Configuration.csproj" />
     </ItemGroup>
 
-    <Target Name="UpdateTailwindCSS" BeforeTargets="Compile">
-        <Message Text="Running bun install in $(ProjectDir)" Importance="high" />
-        <Exec Command="bun install" WorkingDirectory="$(ProjectDir)" ContinueOnError="true">
-            <Output TaskParameter="ExitCode" PropertyName="BunInstallErrorCode" />
-        </Exec>
-        <Error Condition="'$(BunInstallErrorCode)' != '0'" Text="Error running 'bun install'." />
-
-        <Message Text="Running bunx for Tailwind CSS build" Importance="high" />
-        <Exec Command="bunx @tailwindcss/cli -i &quot;$(ProjectDir)wwwroot\css\app.css&quot; -o &quot;$(ProjectDir)wwwroot\css\app.min.css&quot;" WorkingDirectory="$(ProjectDir)" ContinueOnError="true">
-            <Output TaskParameter="ExitCode" PropertyName="TailwindErrorCode" />
-        </Exec>
-        <Error Condition="'$(TailwindErrorCode)' != '0'" Text="Error building CSS file with Tailwind CSS." />
+    <Target Name="UpdateTailwindCSS"
+        BeforeTargets="PrepareForBuild"
+        Inputs="wwwroot/css/app.css"
+        Outputs="wwwroot/css/app.min.css">
+        <Exec Command="bun install" WorkingDirectory="$(ProjectDir)" />
+        <Exec Command="bun run build" WorkingDirectory="$(ProjectDir)" />
     </Target>
+
 
 </Project>

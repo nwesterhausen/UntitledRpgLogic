@@ -35,3 +35,8 @@ report.[0-9]_.[0-9]_.[0-9]_.[0-9]_.json
 
 # Generated files
 /wwwroot/css/app.min.css
+
+# lockfiles -- we just rely on specify exact version in package.json
+bun.lock
+package-lock.json
+yarn.lock
