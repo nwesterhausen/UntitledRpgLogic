@@ -5,8 +5,5 @@
     "daisyui": "^5.0.43",
     "tailwindcss": "^4.1.11",
     "@tailwindcss/cli": "^4.1.11"
-  },
-  "scripts": {
-    "build": "@tailwindcss -i \"wwwroot/css/app.css\" -o \"wwwroot/css/app.min.css\""
   }
 }
