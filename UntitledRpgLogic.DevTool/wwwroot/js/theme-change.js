@@ -1,5 +1,5 @@
-const DarkTheme = "macchiato";
-const LightTheme = "latte";
+const DarkTheme = "dim";
+const LightTheme = "emerald";
 
 function setDarkTheme(darkTheme) {
     if (darkTheme) {
