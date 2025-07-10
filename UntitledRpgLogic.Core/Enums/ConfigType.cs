@@ -16,6 +16,16 @@ public enum ConfigType
     Unknown,
 
     /// <summary>
+    ///     Configuration that describes the author of a configuration module.
+    /// </summary>
+    Author,
+
+    /// <summary>
+    ///     Configuration that describes a module, which can contain multiple configurations.
+    /// </summary>
+    ModuleInfo,
+
+    /// <summary>
     ///     Configuration for an ItemDataConfig.
     /// </summary>
     Item,
