@@ -27,10 +27,7 @@
     private async Task OnThemeChange(ChangeEventArgs e)
     {
         var isChecked = (bool)(e.Value ?? false);
-        // When checked, the moon icon is shown (dark theme).
-        // When unchecked, the sun icon is shown (light theme).
-        var theme = isChecked ? "tooling-dark" : "tooling-light";
-        await JsRuntime.InvokeVoidAsync("setTheme", theme);
+        await JsRuntime.InvokeVoidAsync("setDarkTheme", isChecked);
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
