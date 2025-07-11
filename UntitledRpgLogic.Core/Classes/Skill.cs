@@ -99,9 +99,6 @@ public class Skill : ISkill
     /// <inheritdoc />
     public int MaxLevel { get; }
 
-    // NOTE: ExperienceToNextLevel is a calculated value and does not belong on the data class.
-    // It is computed by the SkillService. This property should be removed from the ISkill interface.
-
     /// <inheritdoc />
     public float ScalingFactorA { get; }
 
