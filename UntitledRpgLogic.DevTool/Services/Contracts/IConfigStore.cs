@@ -33,9 +33,16 @@ public interface IConfigStore
     /// <summary>
     /// Gets or sets the author information.
     /// </summary>
-    AuthorConfig Author { get; set; }
+    AuthorConfig Author { get; }
+    String AuthorName { get; set; }
+    String AuthorWebsite { get; set; }
+    String AuthorGuid { get; set; }
     /// <summary>
     /// Gets or sets the module information.
     /// </summary>
     ModuleInfoConfig ModuleInfo { get; set; }
+    /// <summary>
+    ///     Event that is triggered when the configuration store changes.
+    /// </summary>
+    event Action OnChange;
 }

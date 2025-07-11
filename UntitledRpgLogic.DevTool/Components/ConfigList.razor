@@ -8,20 +8,49 @@
     <li class="list-row gap-x-2">
         <div class="p-4 pb-2 text-xs tracking-wide opacity-60">Module Configs</div>
         <div class="self-center">
+            <a href="/create" class="btn-xs btn btn-outline btn-primary">Create</a>
             <button class="btn-xs btn btn-outline btn-accent">Export</button>
             <button class="btn-xs btn btn-outline btn-error">Clear</button>
         </div>
     </li>
     
-@if (configs.Any())
+    @if (string.IsNullOrEmpty(ConfigStore.Author.AuthorName) || string.IsNullOrEmpty(ConfigStore.ModuleInfo.Name))
+    {
+        <li class="list-row gap-x-2">
+            <div class="self-center">
+            @if (string.IsNullOrEmpty(ConfigStore.Author.AuthorName))
+            {
+                <a href="/settings" class="btn btn-xs btn-outline btn-primary me-2">Set Author</a>
+            }
+                @if (string.IsNullOrEmpty(ConfigStore.ModuleInfo.Name))
+            {
+                <a href="/settings" class="btn btn-xs btn-outline btn-primary">Set Module Info</a>
+            }
+        </div>
+        </li>
+    }
+    
+    @if (!string.IsNullOrEmpty( ConfigStore.Author.AuthorName))
+    {
+        <li class="list-row">
+            <div class="px-4">
+                <div class="text-md"><span class="font-bold text-sm">Author: </span>@ConfigStore.Author.AuthorName</div>
+                <div class="badge badge-outline badge-sm font-mono font-semibold">
+                    @ConfigStore.Author.AuthorId.ToString("N")[..8]
+                </div>
+            </div>
+        </li>
+    }
+    
+    @if (configs.Any())
     {
         @foreach (var configItem in configs)
         {
             <li class="list-row flex justify-between">
-                <div>
-                    <div class="text-lg">Iron Sword</div>
-                    <div class="badge badge-sm font-bold badge-info">ITEM</div>
-                    <div class="badge badge-outline badge-sm font-mono font-semibold">2f9a00e</div>
+                <div class="p-4">
+                    <div class="text-lg">@GetConfigDisplayName(configItem.Config)</div>
+                    <div class="badge badge-sm font-bold badge-info">@GetConfigTypeName(configItem.Config.ConfigType)</div>
+                    <div class="badge badge-outline badge-sm font-mono font-semibold">@configItem.Id.ToString("N")[..8]</div>
                 </div>
                 <div>
                     <button class="btn btn-square btn-ghost">
@@ -44,8 +73,11 @@
     }
 else
 {
-    <li class="p-4 text-center text-base-content/50">
-        No configuration files. </li>
+        <li class="list-row">
+            <div class="p-4 text-center text-base-content/50">
+                No configuration files.
+            </div>
+        </li>
 }
 </ul>
 
@@ -57,6 +89,7 @@ else
     protected override async Task OnInitializedAsync()
     {
         await LoadConfigs();
+        ConfigStore.OnChange += StateHasChanged;
     }
 
     private async Task LoadConfigs()
