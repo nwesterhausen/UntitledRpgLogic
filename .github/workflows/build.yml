@@ -71,7 +71,9 @@ jobs:
         run: dotnet test --no-build --verbosity normal
 
       - name: 📦 Create NuGet packages
-        run: dotnet pack --configuration Release --output ${{ env.NuGetDirectory }}
+        run: |
+          dotnet build --configuration Release
+          dotnet pack --configuration Release --output ${{ env.NuGetDirectory }}
         
       - name: 📎 Upload NuGet packages as artifacts
         uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4
