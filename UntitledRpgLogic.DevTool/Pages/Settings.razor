@@ -1,7 +1,7 @@
-@using UntitledRpgLogic.DevTool.Services.Contracts
 @inject IConfigStore ConfigStore
 
 @page "/settings"
+@using UntitledRpgLogic.DevTool.Services.Contracts
 
 <h1 class="text-2xl mb-4">Settings</h1>
 
@@ -23,3 +23,19 @@
     <input @bind="ConfigStore.AuthorGuid" type="text" placeholder="Type here" class="input input-bordered w-full max-w-xs" />
 </div>
 
+@code {
+
+    // This method is called when the component is initialized
+    protected override void OnInitialized()
+    {
+        Refresh();
+        ConfigStore.OnChange += Refresh;
+    }
+
+    private void Refresh()
+    {
+        // This method can be used to refresh the component if needed
+        StateHasChanged();
+    }
+
+}
