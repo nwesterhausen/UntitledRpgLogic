@@ -9,7 +9,8 @@
 
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="9.0.7" />
-        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="9.0.7" PrivateAssets="all" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer"
+            Version="9.0.7" PrivateAssets="all" />
         <PackageReference Include="Serilog" Version="4.3.0" />
         <PackageReference Include="Serilog.Extensions.Logging" Version="9.0.2" />
         <PackageReference Include="Serilog.Sinks.BrowserConsole" Version="8.0.0" />
@@ -22,22 +23,33 @@
 
     <ItemGroup>
         <ProjectReference Include="..\UntitledRpgLogic.Core\UntitledRpgLogic.Core.csproj" />
-        <ProjectReference Include="..\UntitledRpgLogic.Infrastructure.Configuration\UntitledRpgLogic.Infrastructure.Configuration.csproj" />
+        <ProjectReference
+            Include="..\UntitledRpgLogic.Infrastructure.Configuration\UntitledRpgLogic.Infrastructure.Configuration.csproj" />
     </ItemGroup>
 
     <Target Name="RebuildTailwindCSS" BeforeTargets="PrepareForBuild">
-        <Exec Condition="'$(OS)' == 'Windows_NT'" Command="(where bun &gt;nul 2&gt;nul &amp;&amp; bun install) || (npm install)" WorkingDirectory="$(ProjectDir)" ContinueOnError="true">
+        <Exec Condition="'$(OS)' == 'Windows_NT'"
+            Command="(where bun &gt;nul 2&gt;nul &amp;&amp; bun install) || (npm install)"
+            WorkingDirectory="$(ProjectDir)" ContinueOnError="true">
             <Output TaskParameter="ExitCode" PropertyName="TailwindErrorCode" />
         </Exec>
-        <Exec Condition="'$(OS)' == 'Windows_NT'" Command="(where.exe bun &gt;nul 2&gt;nul &amp;&amp; bunx @tailwindcss/cli -i &quot;$(ProjectDir)wwwroot\css\app.css&quot; -o &quot;$(ProjectDir)wwwroot\css\app.min.css&quot;) || (npx @tailwindcss/cli -i &quot;$(ProjectDir)wwwroot\css\app.css&quot; -o &quot;$(ProjectDir)wwwroot\css\app.min.css&quot;)" WorkingDirectory="$(ProjectDir)" ContinueOnError="true">
-            <Output TaskParameter="ExitCode" PropertyName="TailwindErrorCode" />
-        </Exec> <Exec Condition="'$(OS)' != 'Windows_NT'" Command="bash -c &quot;command -v bun &amp;&amp; bun install || npm install&quot;" WorkingDirectory="$(ProjectDir)" ContinueOnError="true">
-            <Output TaskParameter="ExitCode" PropertyName="TailwindErrorCode" />
-        </Exec>
-        <Exec Condition="'$(OS)' != 'Windows_NT'" Command="bash -c &quot;command -v bun &amp;&amp; bunx @tailwindcss/cli -i &quot;$(ProjectDir)wwwroot\css\app.css&quot; -o &quot;$(ProjectDir)wwwroot\css\app.min.css&quot; || npx @tailwindcss/cli -i &quot;$(ProjectDir)wwwroot\css\app.css&quot; -o &quot;$(ProjectDir)wwwroot\css\app.min.css&quot;&quot;" WorkingDirectory="$(ProjectDir)" ContinueOnError="true">
+        <Exec Condition="'$(OS)' == 'Windows_NT'"
+            Command="(where.exe bun &gt;nul 2&gt;nul &amp;&amp; bunx @tailwindcss/cli -i &quot;$(ProjectDir)wwwroot\css\app.css&quot; -o &quot;$(ProjectDir)wwwroot\css\app.min.css&quot;) || (npx @tailwindcss/cli -i &quot;$(ProjectDir)wwwroot\css\app.css&quot; -o &quot;$(ProjectDir)wwwroot\css\app.min.css&quot;)"
+            WorkingDirectory="$(ProjectDir)" ContinueOnError="true">
             <Output TaskParameter="ExitCode" PropertyName="TailwindErrorCode" />
         </Exec>
-        <Error Condition="'$(TailwindErrorCode)' != '0'" Text="Error building CSS file with Tailwind CSS." />
+        <Exec Condition="'$(OS)' != 'Windows_NT'"
+            Command="bash -c &quot;command -v bun &amp;&amp; bun install || npm install&quot;"
+            WorkingDirectory="$(ProjectDir)" ContinueOnError="true">
+            <Output TaskParameter="ExitCode" PropertyName="TailwindErrorCode" />
+        </Exec>
+        <Exec Condition="'$(OS)' != 'Windows_NT'"
+            Command="bash -c &quot;command -v bun &amp;&amp; bunx @tailwindcss/cli -i &quot;$(ProjectDir)wwwroot\css\app.css&quot; -o &quot;$(ProjectDir)wwwroot\css\app.min.css&quot; || npx @tailwindcss/cli -i &quot;$(ProjectDir)wwwroot\css\app.css&quot; -o &quot;$(ProjectDir)wwwroot\css\app.min.css&quot;&quot;"
+            WorkingDirectory="$(ProjectDir)" ContinueOnError="true">
+            <Output TaskParameter="ExitCode" PropertyName="TailwindErrorCode" />
+        </Exec>
+        <Error Condition="'$(TailwindErrorCode)' != '0'"
+            Text="Error building CSS file with Tailwind CSS." />
     </Target>
 
 

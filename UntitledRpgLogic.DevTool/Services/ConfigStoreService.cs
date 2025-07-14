@@ -38,14 +38,16 @@ public class ConfigStoreService : IConfigStore
             {
                 this.ModuleInfo.Name = value;
             }
-            _jsRuntime.InvokeVoidAsync("updateUserDetailCache", "moduleName", this.ModuleInfo.Name)
+            _jsRuntime.InvokeVoidAsync("SaveToStorage", "moduleName", this.ModuleInfo.Name)
                 .ConfigureAwait(true);
             OnChange?.Invoke();
         }
     }
 
     /// <inheritdoc />
-    public string ModuleDescription { get => this.ModuleInfo.Description;
+    public string ModuleDescription
+    {
+        get => this.ModuleInfo.Description;
         set
         {
             if (this.ModuleInfo.Description == value)
@@ -60,10 +62,11 @@ public class ConfigStoreService : IConfigStore
             {
                 this.ModuleInfo.Description = value;
             }
-            _jsRuntime.InvokeVoidAsync("updateUserDetailCache", "moduleDescription", this.ModuleInfo.Description)
+            _jsRuntime.InvokeVoidAsync("SaveToStorage", "moduleDescription", this.ModuleInfo.Description)
                 .ConfigureAwait(true);
             OnChange?.Invoke();
-        } }
+        }
+    }
 
     /// <inheritdoc />
     public string ModuleVersion
@@ -83,7 +86,7 @@ public class ConfigStoreService : IConfigStore
             {
                 this.ModuleInfo.Version = value;
             }
-            _jsRuntime.InvokeVoidAsync("updateUserDetailCache", "moduleVersion", this.ModuleInfo.Version)
+            _jsRuntime.InvokeVoidAsync("SaveToStorage", "moduleVersion", this.ModuleInfo.Version)
                 .ConfigureAwait(true);
             OnChange?.Invoke();
         }
@@ -100,7 +103,7 @@ public class ConfigStoreService : IConfigStore
                 return;
             }
             this.ModuleInfo.VersionNumber = value;
-            _jsRuntime.InvokeVoidAsync("updateUserDetailCache", "moduleVersionNumber", this.ModuleInfo.VersionNumber)
+            _jsRuntime.InvokeVoidAsync("SaveToStorage", "moduleVersionNumber", this.ModuleInfo.VersionNumber)
                 .ConfigureAwait(true);
             OnChange?.Invoke();
         }
@@ -133,7 +136,7 @@ public class ConfigStoreService : IConfigStore
                 }
             }
 
-            _jsRuntime.InvokeVoidAsync("updateUserDetailCache", "moduleGuid", this.ModuleInfo.Id.ToString())
+            _jsRuntime.InvokeVoidAsync("SaveToStorage", "moduleGuid", this.ModuleInfo.Id.ToString())
                 .ConfigureAwait(true);
             OnChange?.Invoke();
         }
@@ -192,7 +195,7 @@ public class ConfigStoreService : IConfigStore
                 }
             }
 
-            _jsRuntime.InvokeVoidAsync("updateUserDetailCache", "authorGuid", Author.AuthorId.ToString())
+            _jsRuntime.InvokeVoidAsync("SaveToStorage", "authorGuid", Author.AuthorId.ToString())
                 .ConfigureAwait(true);
             OnChange?.Invoke();
         }
@@ -215,7 +218,7 @@ public class ConfigStoreService : IConfigStore
             }
 
             Author.AuthorName = value;
-            _jsRuntime.InvokeVoidAsync("updateUserDetailCache", "authorName", Author.AuthorName)
+            _jsRuntime.InvokeVoidAsync("SaveToStorage", "authorName", Author.AuthorName)
                 .ConfigureAwait(true);
             OnChange?.Invoke();
         }
@@ -238,7 +241,7 @@ public class ConfigStoreService : IConfigStore
             }
 
             Author.Website = value;
-            _jsRuntime.InvokeVoidAsync("updateUserDetailCache", "authorUrl", Author.Website)
+            _jsRuntime.InvokeVoidAsync("SaveToStorage", "authorUrl", Author.Website)
                 .ConfigureAwait(true);
             OnChange?.Invoke();
         }
@@ -246,33 +249,20 @@ public class ConfigStoreService : IConfigStore
 
     private async Task InitializeFromCache()
     {
-        string? authorName = await _jsRuntime.InvokeAsync<string?>("readCache", "authorName");
-        string? authorGuid = await _jsRuntime.InvokeAsync<string?>("readCache", "authorGuid");
-        string? authorUrl = await _jsRuntime.InvokeAsync<string?>("readCache", "authorUrl");
-        string? moduleName = await _jsRuntime.InvokeAsync<string?>("readCache", "moduleName");
-        string? moduleDescription = await _jsRuntime.InvokeAsync<string?>("readCache", "moduleDescription");
-        string? moduleVersion = await _jsRuntime.InvokeAsync<string?>("readCache", "moduleVersion");
-        int? moduleVersionNumber =
-            await _jsRuntime.InvokeAsync<int>("readCache", "moduleVersionNumber");
-        string? moduleGuid = await _jsRuntime.InvokeAsync<string?>("readCache", "moduleGuid");
+        Author.AuthorName = await _jsRuntime.InvokeAsync<string>("LoadStringFromStorage", "authorName");
+        Author.Website = await _jsRuntime.InvokeAsync<string>("LoadStringFromStorage", "authorUrl");
+        ModuleInfo.Name = await _jsRuntime.InvokeAsync<string>("LoadStringFromStorage", "moduleName");
+        ModuleInfo.Description = await _jsRuntime.InvokeAsync<string>("LoadStringFromStorage", "moduleDescription");
+        ModuleInfo.Version = await _jsRuntime.InvokeAsync<string>("LoadStringFromStorage", "moduleVersion");
+        ModuleInfo.VersionNumber = await _jsRuntime.InvokeAsync<int>("LoadIntegerFromStorage", "moduleVersionNumber");
+        string authorGuid = await _jsRuntime.InvokeAsync<string>("LoadStringFromStorage", "authorGuid");
+        string moduleGuid = await _jsRuntime.InvokeAsync<string>("LoadStringFromStorage", "moduleGuid");
 
-        Author.AuthorName = authorName ?? string.Empty;
         Author.AuthorId = string.IsNullOrWhiteSpace(authorGuid) ? Guid.NewGuid() : Guid.Parse(authorGuid);
-        Author.Website = authorUrl ?? string.Empty;
-        ModuleInfo.Name = moduleName ?? string.Empty;
-        ModuleInfo.Description = moduleDescription ?? string.Empty;
-        ModuleInfo.Version = moduleVersion ?? "1.0.0";
-        ModuleInfo.VersionNumber = moduleVersionNumber ?? 1;
         ModuleInfo.Id = string.IsNullOrWhiteSpace(moduleGuid) ? Guid.NewGuid() : Guid.Parse(moduleGuid);
 
-        await _jsRuntime.InvokeVoidAsync("updateUserDetailCache", "authorName", Author.AuthorName);
-        await _jsRuntime.InvokeVoidAsync("updateUserDetailCache", "authorGuid", Author.AuthorId.ToString());
-        await _jsRuntime.InvokeVoidAsync("updateUserDetailCache", "authorUrl", Author.Website);
-        await _jsRuntime.InvokeVoidAsync("updateUserDetailCache", "moduleName", ModuleInfo.Name);
-        await _jsRuntime.InvokeVoidAsync("updateUserDetailCache", "moduleDescription", ModuleInfo.Description);
-        await _jsRuntime.InvokeVoidAsync("updateUserDetailCache", "moduleVersion", ModuleInfo.Version);
-        await _jsRuntime.InvokeVoidAsync("updateUserDetailCache", "moduleVersionNumber", ModuleInfo.VersionNumber);
-        await _jsRuntime.InvokeVoidAsync("updateUserDetailCache", "moduleGuid", ModuleInfo.Id.ToString());
+        await _jsRuntime.InvokeVoidAsync("SaveToStorage", "authorGuid", Author.AuthorId.ToString());
+        await _jsRuntime.InvokeVoidAsync("SaveToStorage", "moduleGuid", ModuleInfo.Id.ToString());
 
         this.IsReady = true;
         OnChange?.Invoke();
