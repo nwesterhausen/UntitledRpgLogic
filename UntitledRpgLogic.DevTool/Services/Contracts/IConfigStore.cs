@@ -40,9 +40,16 @@ public interface IConfigStore
     /// <summary>
     /// Gets or sets the module information.
     /// </summary>
-    ModuleInfoConfig ModuleInfo { get; set; }
+    ModuleInfoConfig ModuleInfo { get; }
+    String ModuleName { get; set; }
+    String ModuleDescription { get; set; }
+    String ModuleVersion { get; set; }
+    int ModuleVersionNumber { get; set; }
+    String ModuleGuid { get; set; }
     /// <summary>
     ///     Event that is triggered when the configuration store changes.
     /// </summary>
     event Action OnChange;
+
+    bool IsReady { get; }
 }

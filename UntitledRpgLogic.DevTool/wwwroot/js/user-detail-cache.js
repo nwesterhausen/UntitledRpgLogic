@@ -4,7 +4,9 @@ const UserDetailCacheKeys = {
     authorUrl: "authorUrl",
     moduleName: "moduleName",
     moduleGuid: "moduleGuid",
-    moduleDescription: "moduleDescription"
+    moduleDescription: "moduleDescription",
+    moduleVersion: "moduleVersion",
+    moduleVersionNumber: "moduleVersionNumber",
 };
 
 // Create a cookie to store the module i
