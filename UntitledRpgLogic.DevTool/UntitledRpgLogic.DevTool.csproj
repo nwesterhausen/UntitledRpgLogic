@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
 
     <PropertyGroup>
         <TargetFramework>net9.0</TargetFramework>
@@ -39,9 +39,8 @@
         <Exec Condition="'$(OS)' != 'Windows_NT'" Command="bash -c &quot;command -v bun &amp;&amp; bunx @tailwindcss/cli -i &quot;$(ProjectDir)wwwroot\css\app.css&quot; -o &quot;$(ProjectDir)wwwroot\css\app.min.css&quot; || npx @tailwindcss/cli -i &quot;$(ProjectDir)wwwroot\css\app.css&quot; -o &quot;$(ProjectDir)wwwroot\css\app.min.css&quot;&quot;" WorkingDirectory="$(ProjectDir)" ContinueOnError="true">
             <Output TaskParameter="ExitCode" PropertyName="TailwindErrorCode" />
         </Exec>
-        <Error Condition="'$(TailwindErrorCode)' != '0'"
-            Text="Error building CSS file with Tailwind CSS." />
-	</Target>
+        <Error Condition="'$(TailwindErrorCode)' != '0'" Text="Error building CSS file with Tailwind CSS." />
+    </Target>
 
 
 </Project>

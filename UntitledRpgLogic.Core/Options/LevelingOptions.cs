@@ -6,7 +6,7 @@ namespace UntitledRpgLogic.Core.Options;
 /// <summary>
 ///     Options for configuring <see cref="IHasLeveling" />-derived objects.
 /// </summary>
-public class LevelingOptions
+public record LevelingOptions
 {
     /// <summary>
     ///     The maximum level this object can achieve.
