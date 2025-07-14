@@ -11,20 +11,19 @@ namespace UntitledRpgLogic.Core.Interfaces;
 /// </remarks>
 public interface ITomlConfigHandler
 {
-
     /// <summary>
-    /// Loads a TOML configuration from the specified file.
+    ///     Loads a TOML configuration from the specified file.
     /// </summary>
     /// <param name="filePath">The path to the TOML file to be loaded. Must not be null or empty.</param>
-    /// <returns>An <see cref="ITomlConfig"/> instance representing the configuration data from the file.</returns>
+    /// <returns>An <see cref="ITomlConfig" /> instance representing the configuration data from the file.</returns>
     /// <exception cref="InvalidOperationException">When the TOML cannot be parsed into <see cref="ITomlConfig" /></exception>
     ITomlConfig LoadConfigFromFile(string filePath);
 
     /// <summary>
-    /// Loads a TOML configuration from the specified byte array.
+    ///     Loads a TOML configuration from the specified byte array.
     /// </summary>
     /// <param name="bytes">The byte array containing the TOML configuration data. Cannot be null or empty.</param>
-    /// <returns>An <see cref="ITomlConfig"/> instance representing the loaded configuration.</returns>
+    /// <returns>An <see cref="ITomlConfig" /> instance representing the loaded configuration.</returns>
     /// <exception cref="InvalidOperationException">When the TOML cannot be parsed into <see cref="ITomlConfig" /></exception>
     ITomlConfig LoadConfig(byte[] bytes);
 

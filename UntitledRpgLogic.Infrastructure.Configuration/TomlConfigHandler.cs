@@ -1,5 +1,5 @@
-using Microsoft.Extensions.Logging;
 using System.Text;
+using Microsoft.Extensions.Logging;
 using Tomlet;
 using Tomlet.Models;
 using UntitledRpgLogic.Core.Configuration;
@@ -19,9 +19,6 @@ namespace UntitledRpgLogic.Infrastructure.Configuration;
 /// </remarks>
 public class TomlConfigHandler : ITomlConfigHandler
 {
-
-    private readonly ILogger<TomlConfigHandler> _logger;
-
     private readonly Dictionary<ConfigType, Type> _configTypeMappings = new()
     {
         { ConfigType.Item, typeof(ItemDataConfig) },
@@ -30,11 +27,13 @@ public class TomlConfigHandler : ITomlConfigHandler
         { ConfigType.Stat, typeof(StatDataConfig) }
     };
 
+    private readonly ILogger<TomlConfigHandler> _logger;
+
     /// <summary>
-    /// Initializes a new instance of the <see cref="TomlConfigHandler"/> class.
+    ///     Initializes a new instance of the <see cref="TomlConfigHandler" /> class.
     /// </summary>
-    /// <param name="logger">The logger instance used for logging operations. Cannot be <see langword="null"/>.</param>
-    /// <exception cref="ArgumentNullException">Thrown if <paramref name="logger"/> is <see langword="null"/>.</exception>
+    /// <param name="logger">The logger instance used for logging operations. Cannot be <see langword="null" />.</param>
+    /// <exception cref="ArgumentNullException">Thrown if <paramref name="logger" /> is <see langword="null" />.</exception>
     public TomlConfigHandler(ILogger<TomlConfigHandler> logger)
     {
         _logger = logger ?? throw new ArgumentNullException(nameof(logger), "Logger cannot be null.");
@@ -118,7 +117,7 @@ public class TomlConfigHandler : ITomlConfigHandler
     {
         if (config == null)
             throw new ArgumentNullException(nameof(config), "Configuration object cannot be null.");
-        
+
         try
         {
             return TomletMain.TomlStringFrom(config);
@@ -148,7 +147,8 @@ public class TomlConfigHandler : ITomlConfigHandler
             }
 
             // Extract the ConfigType from the document
-            if (!tomlDocument.TryGetValue("ConfigType", out TomlValue? configType) || configType is not TomlString configTypeString)
+            if (!tomlDocument.TryGetValue("ConfigType", out TomlValue? configType) ||
+                configType is not TomlString configTypeString)
             {
                 _logger.LogError("'ConfigType' is not set or not a string");
                 throw new InvalidOperationException("'ConfigType' is not set or not a string.");
@@ -156,7 +156,8 @@ public class TomlConfigHandler : ITomlConfigHandler
 
             if (!Enum.TryParse(configTypeString.Value, true, out ConfigType foundConfigType))
             {
-                _logger.LogError("Invalid 'ConfigType' value '{ConfigTypeValue}' found in TOML document.", configTypeString.Value);
+                _logger.LogError("Invalid 'ConfigType' value '{ConfigTypeValue}' found in TOML document.",
+                    configTypeString.Value);
                 throw new InvalidOperationException($"Invalid 'ConfigType' value '{configTypeString.Value}'.");
             }
 
