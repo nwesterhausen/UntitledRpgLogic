@@ -1,3 +1,14 @@
+const DarkTheme = "dim";
+const LightTheme = "emerald";
+
+function setDarkTheme(darkTheme) {
+    if (darkTheme) {
+        setTheme(DarkTheme);
+    } else {
+        setTheme(LightTheme);
+    }
+}
+
 function setTheme(theme) {
     document.documentElement.setAttribute("data-theme", theme);
     console.log(`Theme changed to: ${theme}`);
@@ -33,10 +44,10 @@ function initializeTheme(updateCheckbox = false) {
         setTheme(theme);
     } else {
         const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)").matches;
-        setTheme(prefersDarkScheme ? "tooling-dark" : "tooling-light");
+        setTheme(prefersDarkScheme ? DarkTheme : LightTheme);
     }
     if (updateCheckbox) {
-        document.getElementById("theme-toggle-checkbox").checked = theme === "tooling-dark";
+        document.getElementById("theme-toggle-checkbox").checked = theme === DarkTheme;
     }
 }
 

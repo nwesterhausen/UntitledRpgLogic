@@ -1,8 +1,9 @@
 @page "/config-test"
-@using UntitledRpgLogic.Core.Interfaces
+@using System.Text
+@using Tomlet
 @using UntitledRpgLogic.Core.Configuration
-@using UntitledRpgLogic.Core.Enums
-@using Tomlet // Needed for TomletMain.TomlStringFrom
+@using UntitledRpgLogic.Core.Interfaces
+
 @inject ITomlConfigHandler ConfigHandler
 @inject ILogger<ConfigTestPage> Logger
 
@@ -13,12 +14,16 @@
     <div class="card bg-base-200 shadow-xl mb-6">
         <div class="card-body">
             <h4 class="card-title text-secondary">Input TOML</h4>
-            <p class="text-sm text-neutral-content mb-2">Paste your TOML content below (e.g., for an ItemDataConfig with ConfigType="Item").</p>
-            <textarea @bind="InputTomlContent" class="textarea textarea-bordered h-48 font-mono text-sm" placeholder="Paste TOML here..."></textarea>
+            <p class="text-sm text-neutral-content mb-2">Paste your TOML content below (e.g., for an ItemDataConfig with
+                ConfigType="Item").</p>
+            <textarea @bind="InputTomlContent" class="textarea textarea-bordered h-48 font-mono text-sm"
+                      placeholder="Paste TOML here..."></textarea>
             <div class="card-actions justify-end mt-4">
                 <button @onclick="LoadConfig" class="btn btn-primary">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                         stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
                     </svg>
                     Load Config
                 </button>
@@ -33,11 +38,19 @@
             <div>
                 @if (IsError)
                 {
-                    <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none"
+                         viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
                 }
                 else
                 {
-                    <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none"
+                         viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
                 }
                 <span>@StatusMessage</span>
             </div>
@@ -53,15 +66,42 @@
                 <div class="overflow-x-auto">
                     <table class="table w-full">
                         <tbody>
-                            <tr><th class="w-1/4">Config Type:</th><td>@LoadedItemConfig.ConfigType</td></tr>
-                            <tr><th class="w-1/4">Name:</th><td>@LoadedItemConfig.Name</td></tr>
-                            <tr><th class="w-1/4">Item Type:</th><td>@LoadedItemConfig.ItemType</td></tr>
-                            <tr><th class="w-1/4">Item Subtype:</th><td>@LoadedItemConfig.ItemSubtype</td></tr>
-                            <tr><th class="w-1/4">Item Quality:</th><td>@LoadedItemConfig.ItemQuality</td></tr>
-                            <tr><th class="w-1/4">Width:</th><td>@LoadedItemConfig.Width</td></tr>
-                            <tr><th class="w-1/4">Height:</th><td>@LoadedItemConfig.Height</td></tr>
-                            <tr><th class="w-1/4">Depth:</th><td>@LoadedItemConfig.Depth</td></tr>
-                            <tr><th class="w-1/4">Material ID:</th><td>@LoadedItemConfig.MaterialId</td></tr>
+                        <tr>
+                            <th class="w-1/4">Config Type:</th>
+                            <td>@LoadedItemConfig.ConfigType</td>
+                        </tr>
+                        <tr>
+                            <th class="w-1/4">Name:</th>
+                            <td>@LoadedItemConfig.Name</td>
+                        </tr>
+                        <tr>
+                            <th class="w-1/4">Item Type:</th>
+                            <td>@LoadedItemConfig.ItemType</td>
+                        </tr>
+                        <tr>
+                            <th class="w-1/4">Item Subtype:</th>
+                            <td>@LoadedItemConfig.ItemSubtype</td>
+                        </tr>
+                        <tr>
+                            <th class="w-1/4">Item Quality:</th>
+                            <td>@LoadedItemConfig.ItemQuality</td>
+                        </tr>
+                        <tr>
+                            <th class="w-1/4">Width:</th>
+                            <td>@LoadedItemConfig.Width</td>
+                        </tr>
+                        <tr>
+                            <th class="w-1/4">Height:</th>
+                            <td>@LoadedItemConfig.Height</td>
+                        </tr>
+                        <tr>
+                            <th class="w-1/4">Depth:</th>
+                            <td>@LoadedItemConfig.Depth</td>
+                        </tr>
+                        <tr>
+                            <th class="w-1/4">Material ID:</th>
+                            <td>@LoadedItemConfig.MaterialId</td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
@@ -72,8 +112,10 @@
             }
             <div class="card-actions justify-end mt-4">
                 <button @onclick="SaveAndDisplayConfig" class="btn btn-accent" disabled="@(LoadedItemConfig == null)">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                         stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                     </svg>
                     Save & Display Config (TOML)
                 </button>
@@ -85,8 +127,10 @@
     <div class="card bg-base-200 shadow-xl">
         <div class="card-body">
             <h4 class="card-title text-secondary">Output TOML</h4>
-            <p class="text-sm text-neutral-content mb-2">This textarea shows the TOML generated from the loaded item config.</p>
-            <textarea @bind="OutputTomlContent" class="textarea textarea-bordered h-48 font-mono text-sm" readonly></textarea>
+            <p class="text-sm text-neutral-content mb-2">This textarea shows the TOML generated from the loaded item
+                config.</p>
+            <textarea @bind="OutputTomlContent" class="textarea textarea-bordered h-48 font-mono text-sm"
+                      readonly></textarea>
         </div>
     </div>
 </div>
@@ -99,7 +143,7 @@
     private bool IsError { get; set; }
 
     /// <summary>
-    /// Handles loading configuration from the input textarea.
+    ///     Handles loading configuration from the input textarea.
     /// </summary>
     private void LoadConfig()
     {
@@ -117,7 +161,7 @@
         try
         {
             // Convert string to byte array as TomlConfigHandler expects byte[]
-            var contentBytes = System.Text.Encoding.UTF8.GetBytes(InputTomlContent);
+            var contentBytes = Encoding.UTF8.GetBytes(InputTomlContent);
             LoadedItemConfig = (ItemDataConfig)ConfigHandler.LoadConfig(contentBytes);
             SetStatus("Configuration loaded successfully!");
         }
@@ -129,7 +173,7 @@
     }
 
     /// <summary>
-    /// Handles saving the current loaded configuration back to TOML string.
+    ///     Handles saving the current loaded configuration back to TOML string.
     /// </summary>
     private void SaveAndDisplayConfig()
     {
@@ -160,4 +204,5 @@
         StatusMessage = message;
         IsError = isError;
     }
+
 }

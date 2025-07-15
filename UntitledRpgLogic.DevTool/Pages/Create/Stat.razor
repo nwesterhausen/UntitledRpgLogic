@@ -1,0 +1,154 @@
+@page "/create/stat"
+@using UntitledRpgLogic.Core.Configuration
+@using UntitledRpgLogic.Core.Enums
+
+<div class="container mx-auto p-6">
+    <div class="card bg-base-100 shadow-xl">
+        <div class="card-body">
+            <h2 class="card-title text-2xl mb-6">New Stat</h2>
+
+            <EditForm Model="@statConfig" OnValidSubmit="@HandleValidSubmit">
+                <DataAnnotationsValidator/>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Basic Information -->
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">Name <span class="text-error">*</span></span>
+                        </label>
+                        <InputText @bind-Value="statConfig.Name" class="input input-bordered"
+                                   placeholder="Enter stat name"/>
+                        <ValidationMessage For="@(() => statConfig.Name)" class="text-error text-sm"/>
+                    </div>
+
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">Stat Variation</span>
+                        </label>
+                        <InputSelect @bind-Value="statConfig.Variation" class="select select-bordered">
+                            <option value="">Select variation (optional)</option>
+                            @foreach (var variation in Enum.GetValues<StatVariation>())
+                            {
+                                <option value="@variation">@variation</option>
+                            }
+                        </InputSelect>
+                        <div class="label">
+                            <span class="label-text-alt">Defines the type/category of this stat</span>
+                        </div>
+                    </div>
+
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">Minimum Value</span>
+                        </label>
+                        <InputNumber @bind-Value="statConfig.MinValue" class="input input-bordered"
+                                     placeholder="Enter minimum value (optional)"/>
+                        <div class="label">
+                            <span class="label-text-alt">Lowest value this stat can have</span>
+                        </div>
+                    </div>
+
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">Maximum Value</span>
+                        </label>
+                        <InputNumber @bind-Value="statConfig.MaxValue" class="input input-bordered"
+                                     placeholder="Enter maximum value (optional)"/>
+                        <div class="label">
+                            <span class="label-text-alt">Highest value this stat can reach</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Description -->
+                <div class="form-control mt-4">
+                    <label class="label">
+                        <span class="label-text">Description</span>
+                    </label>
+                    <InputTextArea @bind-Value="statConfig.Description" class="textarea textarea-bordered h-24"
+                                   placeholder="Enter stat description (optional)"/>
+                </div>
+
+                <!-- Stat Range Preview -->
+                @if (statConfig.MinValue.HasValue || statConfig.MaxValue.HasValue)
+                {
+                    <div class="alert alert-info mt-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                             class="stroke-current shrink-0 w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <div>
+                            <h3 class="font-bold">Stat Range Preview:</h3>
+                            <p>
+                                @if (statConfig.MinValue.HasValue && statConfig.MaxValue.HasValue)
+                                {
+                                    <span>Range: @statConfig.MinValue - @statConfig.MaxValue</span>
+                                }
+                                else if (statConfig.MinValue.HasValue)
+                                {
+                                    <span>Minimum: @statConfig.MinValue (no maximum limit)</span>
+                                }
+                                else if (statConfig.MaxValue.HasValue)
+                                {
+                                    <span>Maximum: @statConfig.MaxValue (no minimum limit)</span>
+                                }
+                            </p>
+                        </div>
+                    </div>
+                }
+
+                <!-- Advanced Options -->
+                <div class="collapse collapse-arrow bg-base-200 mt-4">
+                    <input type="checkbox"/>
+                    <div class="collapse-title text-xl font-medium">
+                        Advanced Options
+                    </div>
+                    <div class="collapse-content">
+                        <div class="form-control">
+                            <label class="label">
+                                <span class="label-text">Explicit ID</span>
+                            </label>
+                            <InputText @bind-Value="explicitIdString" class="input input-bordered"
+                                       placeholder="Enter explicit GUID (optional)"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-actions justify-end mt-6">
+                    <button type="button" class="btn btn-ghost" @onclick="ResetForm">Reset</button>
+                    <button type="submit" class="btn btn-primary">Create Stat</button>
+                </div>
+            </EditForm>
+        </div>
+    </div>
+</div>
+
+@code {
+    private StatDataConfig statConfig = new() { Name = "" };
+    private string explicitIdString = "";
+
+    protected override void OnInitialized()
+    {
+        ResetForm();
+    }
+
+    private void HandleValidSubmit()
+    {
+        // Parse explicit ID
+        if (!string.IsNullOrEmpty(explicitIdString) && Guid.TryParse(explicitIdString, out var explicitId))
+        {
+            statConfig = statConfig with { ExplicitId = explicitId };
+        }
+
+        // TODO: Handle stat creation logic
+        Console.WriteLine($"Stat created: {statConfig.Name}");
+    }
+
+    private void ResetForm()
+    {
+        statConfig = new StatDataConfig { Name = "" };
+        explicitIdString = "";
+    }
+
+}

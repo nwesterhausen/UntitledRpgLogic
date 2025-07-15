@@ -2,9 +2,14 @@ name: Continuous Integration
 
 on:
   push:
-    branches: [ "main", "next" ]
+    branches: [ "next" ]
   pull_request:
     branches: [ "main", "next" ]
+
+env:
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+  DOTNET_NOLOGO: true
+  NuGetDirectory: ${{ github.workspace}}/nuget
 
 jobs:
   build:
@@ -53,6 +58,20 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-dotnet-tools-
 
+      - name: 🌳 Install GitVersion
+        uses: gittools/actions/gitversion/setup@1918cb0db30e20631f273e322d08c48af11db368 #v4.0.1
+        with:
+          versionSpec: '6.3.x'
+
+      - name: 🔢 Determine Version
+        id: gitversion
+        uses: gittools/actions/gitversion/execute@1918cb0db30e20631f273e322d08c48af11db368 #v4.0.1
+
+      - name: 💬 Display Version Info
+        run: |
+          echo "SemVer: ${{ steps.gitversion.outputs.semVer }}"
+          echo "InformationalVersion: ${{ steps.gitversion.outputs.informationalVersion }}"
+
       - name: 📥 Restore dependencies
         run: |
           dotnet workload restore
@@ -64,3 +83,77 @@ jobs:
 
       - name: 🚀 Test
         run: dotnet test --no-build --verbosity normal
+
+  package:
+    name: Create and Upload Packages
+    runs-on: ubuntu-latest
+    needs: build
+    continue-on-error: true # This ensures that if the packaging job fails, the overall workflow status is not affected.
+    outputs:
+      packages: ${{ steps.list_packages.outputs.matrix }}
+    steps:
+      - name: 📝 Checkout repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        with:
+            fetch-depth: 0 # required for gitversion to properly version
+
+      - name: ⚙️ Setup .NET
+        uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9 # v4
+        with:
+          dotnet-version: 9.0.x # A single SDK version is sufficient for packaging.
+
+      - name: 🥟 Setup Bun
+        uses: oven-sh/setup-bun@735343b667d3e6f658f44d0eca948eb6282f2b76 # v2
+        with:
+          bun-version: latest
+
+      - name: 📦 Cache DotNet Workloads
+        uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4
+        with:
+          path: ~/.dotnet # Path to cache for SDKs and Workloads
+          key: ${{ runner.os }}-dotnet-workloads-${{ hashFiles('global.json') }}-${{ steps.setup-dotnet.outputs.dotnet-version }}
+          restore-keys: |
+            ${{ runner.os }}-dotnet-workloads-
+
+      - name: 📦 Cache NuGet packages
+        uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
+
+      - name: 📦 Cache DotNet Tools
+        uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4
+        with:
+          path: ~/.dotnet/tools # Path to cache for global tools
+          key: ${{ runner.os }}-dotnet-tools-${{ hashFiles('.config/dotnet-tools.json') }}
+          restore-keys: |
+            ${{ runner.os }}-dotnet-tools-
+
+      - name: 🌳 Install GitVersion
+        uses: gittools/actions/gitversion/setup@v1.1.1
+        with:
+          versionSpec: '5.x'
+
+      - name: 🔢 Determine Version
+        id: gitversion
+        uses: gittools/actions/gitversion/execute@v1.1.1
+
+      - name: 📥 Restore dependencies
+        run: |
+          dotnet workload restore
+          dotnet tool restore
+          dotnet restore
+
+      - name: 📦 Create NuGet packages
+        run: |
+          dotnet build --configuration Release
+          dotnet pack --configuration Release --output ${{ env.NuGetDirectory }}
+
+      - name: 📎 Upload NuGet packages as artifacts
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: nuget-packages
+          path: ${{ env.NuGetDirectory }}/*.nupkg
+          retention-days: 30

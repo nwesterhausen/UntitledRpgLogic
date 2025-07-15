@@ -1,5 +1,5 @@
 @using UntitledRpgLogic.DevTool.Components
-<div class="navbar bg-primary shadow-sm">
+<div class="navbar bg-primary text-primary-content shadow-sm">
     <div class="navbar-start">
         <div class="dropdown">
             <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
@@ -10,87 +10,23 @@
             </div>
             <ul
                 tabindex="0"
-                class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
-                <li>
-                    <MenuNavLink Href="/settings">@ConfigureText</MenuNavLink>
-                </li>
-                <li>
-                    <details>
-                        <summary>@TestingText</summary>
-                        <ul class="p-2">
-                            <li><MenuNavLink Href="/config-test">@ConfigTestText</MenuNavLink></li>
-                        </ul>
-                    </details>
-                </li>
-                <li>
-                    <details>
-                        <summary>@CreateText</summary>
-                        <ul class="p-2">
-                            <li>
-                                <MenuNavLink Href="/create/material">@CreateMaterialText</MenuNavLink>
-                            </li>
-                            <li>
-                                <MenuNavLink Href="/create/item">@CreateItemText</MenuNavLink>
-                            </li>
-                        </ul>
-                    </details>
-                </li>
-                <li>
-                    <MenuNavLink Href="/import">@ImportText</MenuNavLink>
-                </li>
+                class="menu dropdown-content bg-neutral text-neutral-content border-base rounded-box z-100 mt-3 w-52 p-2 shadow">
+                <NavMenuContents/>
             </ul>
         </div>
         <a class="btn btn-ghost text-xl" href="/">UntitledRpg Dev Tooling</a>
     </div>
     <div class="navbar-start hidden lg:flex">
-        <ul class="menu menu-horizontal px-1">
-            <li>
-                <details>
-                    <summary>@TestingText</summary>
-                    <ul class="p-2">
-                        <li><MenuNavLink Href="/config-test">@ConfigTestText</MenuNavLink></li>
-                    </ul>
-                </details>
-            </li>
-            <li>
-                <details>
-                    <summary>@CreateText</summary>
-                    <ul class="p-2">
-                        <li>
-                            <MenuNavLink Href="/create/material">@CreateMaterialText</MenuNavLink>
-                        </li>
-                        <li>
-                            <MenuNavLink Href="/create/item">@CreateItemText</MenuNavLink>
-                        </li>
-                    </ul>
-                </details>
-            </li>
-            <li>
-                <MenuNavLink Href="/settings">@ConfigureText</MenuNavLink>
-            </li>
-            <li>
-                <MenuNavLink Href="/import">@ImportText</MenuNavLink>
-            </li>
+        <ul class="menu menu-horizontal px-1 z-100">
+            <NavMenuContents/>
         </ul>
     </div>
-    <div class="navbar-end">
+    <div class="navbar-end mx-5">
         <div class="flex gap-2">
             <ThemeChanger/>
-            <a class="btn">@ExportText</a>
         </div>
     </div>
 </div>
 
 @code{
-    const string TestingText = "Testing";
-    const string ConfigTestText = "Configuration";
-
-    const string ConfigureText = "Configure Tooling";
-    const string CreateText = "Create";
-    const string ExportText = "Export";
-
-    const string CreateMaterialText = "Material";
-    const string CreateItemText = "Item";
-
-    const string ImportText = "Import";
 }
