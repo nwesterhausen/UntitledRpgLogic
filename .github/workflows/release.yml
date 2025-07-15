@@ -69,8 +69,6 @@ jobs:
       - name: 🔢 Determine Version
         id: gitversion
         uses: gittools/actions/gitversion/execute@1918cb0db30e20631f273e322d08c48af11db368 #v4.0.1
-        with:
-          overrideConfig: 'mode=Mainline'
 
       - name: 💬 Display Version Info
         run: |
