@@ -4,6 +4,12 @@ next-version: 0.7.0
 mode: ContinuousDelivery
 branches:
   main:
+    label: rc
+    increment: Minor
+    prevent-increment:
+      of-merged-branch: true
+      when-current-commit-tagged: false
+    mode: ContinuousDelivery
     is-release-branch: true
   develop:
     regex: "^dev(elop)?(ment)?$|^next$"
