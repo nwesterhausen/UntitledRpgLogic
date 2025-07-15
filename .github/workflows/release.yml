@@ -70,9 +70,7 @@ jobs:
         id: gitversion
         uses: gittools/actions/gitversion/execute@1918cb0db30e20631f273e322d08c48af11db368 #v4.0.1
         with:
-          overrideConfig: |
-            mode=Mainline
-            branches.main.is-release-branch=true
+          overrideConfig: 'mode=Mainline'
 
       - name: 💬 Display Version Info
         run: |
@@ -102,13 +100,14 @@ jobs:
           done
 
       - name: 🎉 Create GitHub Release
-        uses: actions/create-release@0cb9c9b65d5d1901c1f53e5e66eaf4afd303e70e # v1
+        uses: softprops/action-gh-release@72f2c25fcb47643c292f7107632f7a47c1df5cd8 # v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: v${{ steps.gitversion.outputs.semVer }}
-          release_name: Release v${{ steps.gitversion.outputs.semVer }}
+          name: Release v${{ steps.gitversion.outputs.semVer }}
           body: ${{ steps.gitversion.outputs.notes }}
           draft: false
           prerelease: ${{ steps.gitversion.outputs.preReleaseTag != '' }}
           files: ${{ env.NuGetDirectory }}/*.nupkg
+          make_latest: ${{ steps.gitversion.outputs.preReleaseTag == '' }}

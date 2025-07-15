@@ -10,10 +10,13 @@ public class ConfigStoreService : IConfigStore
 {
     private readonly ConcurrentDictionary<Guid, ITomlConfig> _configs = new();
     private readonly IJSRuntime _jsRuntime;
+    private readonly ILogger<ConfigStoreService> _logger;
 
-    public ConfigStoreService(IJSRuntime jsRuntime)
+    public ConfigStoreService(IJSRuntime jsRuntime, ILogger<ConfigStoreService> logger)
     {
         _jsRuntime = jsRuntime;
+        _logger = logger;
+
         InitializeFromCache().ConfigureAwait(true);
     }
 
@@ -30,6 +33,7 @@ public class ConfigStoreService : IConfigStore
             {
                 return;
             }
+
             if (string.IsNullOrWhiteSpace(value))
             {
                 this.ModuleInfo.Name = string.Empty;
@@ -38,6 +42,7 @@ public class ConfigStoreService : IConfigStore
             {
                 this.ModuleInfo.Name = value;
             }
+
             _jsRuntime.InvokeVoidAsync("SaveToStorage", "moduleName", this.ModuleInfo.Name)
                 .ConfigureAwait(true);
             OnChange?.Invoke();
@@ -54,6 +59,7 @@ public class ConfigStoreService : IConfigStore
             {
                 return;
             }
+
             if (string.IsNullOrWhiteSpace(value))
             {
                 this.ModuleInfo.Description = string.Empty;
@@ -62,6 +68,7 @@ public class ConfigStoreService : IConfigStore
             {
                 this.ModuleInfo.Description = value;
             }
+
             _jsRuntime.InvokeVoidAsync("SaveToStorage", "moduleDescription", this.ModuleInfo.Description)
                 .ConfigureAwait(true);
             OnChange?.Invoke();
@@ -78,6 +85,7 @@ public class ConfigStoreService : IConfigStore
             {
                 return;
             }
+
             if (string.IsNullOrWhiteSpace(value))
             {
                 this.ModuleInfo.Version = "1.0.0";
@@ -86,6 +94,7 @@ public class ConfigStoreService : IConfigStore
             {
                 this.ModuleInfo.Version = value;
             }
+
             _jsRuntime.InvokeVoidAsync("SaveToStorage", "moduleVersion", this.ModuleInfo.Version)
                 .ConfigureAwait(true);
             OnChange?.Invoke();
@@ -102,6 +111,7 @@ public class ConfigStoreService : IConfigStore
             {
                 return;
             }
+
             this.ModuleInfo.VersionNumber = value;
             _jsRuntime.InvokeVoidAsync("SaveToStorage", "moduleVersionNumber", this.ModuleInfo.VersionNumber)
                 .ConfigureAwait(true);
@@ -258,12 +268,16 @@ public class ConfigStoreService : IConfigStore
         string authorGuid = await _jsRuntime.InvokeAsync<string>("LoadStringFromStorage", "authorGuid");
         string moduleGuid = await _jsRuntime.InvokeAsync<string>("LoadStringFromStorage", "moduleGuid");
 
+        _logger.LogInformation("Checking for cached AuthorGuid: {AuthorGuid}, ModuleGuid: {ModuleGuid}",
+            authorGuid, moduleGuid);
         Author.AuthorId = string.IsNullOrWhiteSpace(authorGuid) ? Guid.NewGuid() : Guid.Parse(authorGuid);
         ModuleInfo.Id = string.IsNullOrWhiteSpace(moduleGuid) ? Guid.NewGuid() : Guid.Parse(moduleGuid);
 
         await _jsRuntime.InvokeVoidAsync("SaveToStorage", "authorGuid", Author.AuthorId.ToString());
         await _jsRuntime.InvokeVoidAsync("SaveToStorage", "moduleGuid", ModuleInfo.Id.ToString());
 
+        _logger.LogInformation("Initialized: {AuthorData}, {ModuleData}",
+            Author, ModuleInfo);
         this.IsReady = true;
         OnChange?.Invoke();
     }
