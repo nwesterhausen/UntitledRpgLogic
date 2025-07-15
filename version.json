@@ -1,13 +1,20 @@
 {
-  "$schema": "https://raw.githubusercontent.com/dotnet/Nerdbank.GitVersioning/main/src/NerdBank.GitVersioning/version.schema.json",
-  "version": "0.5",
-  "publicReleaseRefSpec": [
-    "^refs/heads/main",
-    "^refs/heads/v\\d+(?:\\.\\d+)?$"
-  ],
-  "cloudBuild": {
-    "buildNumber": {
-      "enabled": true
+  "$schema": "https://gitversion.net/schema/v5.8/schema.json",
+  "next-version": "0.7.0",
+  "mode": "ContinuousDelivery",
+  "branches": {
+    "main": {
+      "tag": "v",
+      "prevent-increment-of-merged-branch-version": true,
+      "track-merge-target": false,
+      "is-release-branch": true
+    },
+    "next": {
+      "mode": "ContinuousDeployment",
+      "tag": "alpha",
+      "increment": "Minor",
+      "prevent-increment-of-merged-branch-version": true,
+      "track-merge-target": true
     }
   }
 }
