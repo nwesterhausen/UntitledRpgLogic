@@ -1,20 +1,14 @@
 {
-  "$schema": "https://gitversion.net/schema/v5.8/schema.json",
+  "$schema": "https://gitversion.net/schemas/6.3/GitVersion.configuration.json",
+  "workflow": "GitFlow/v1",
   "next-version": "0.7.0",
   "mode": "ContinuousDelivery",
   "branches": {
     "main": {
-      "tag": "v",
-      "prevent-increment-of-merged-branch-version": true,
-      "track-merge-target": false,
       "is-release-branch": true
     },
-    "next": {
-      "mode": "ContinuousDeployment",
-      "tag": "alpha",
-      "increment": "Minor",
-      "prevent-increment-of-merged-branch-version": true,
-      "track-merge-target": true
+    "develop": {
+      "regex": "^dev(elop)?(ment)?$|^next$"
     }
   }
 }
