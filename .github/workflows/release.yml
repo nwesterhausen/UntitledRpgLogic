@@ -90,13 +90,6 @@ jobs:
       - name: 📦 Create NuGet packages
         run: dotnet pack --configuration Release --no-build --output ${{ env.NuGetDirectory }}
 
-      - name: 📤 Upload NuGet packages to GitHub Packages
-        run: |
-          for file in $(find ${{ env.NuGetDirectory }} -name "*.nupkg" ! -name "*.symbols.nupkg" ! -name "*.snupkg"); do
-            echo "Publishing $file"
-            dotnet nuget push "$file" --api-key "${{ secrets.GITHUB_TOKEN }}" --source "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json" --skip-duplicate
-          done
-
       - name: 🎉 Create GitHub Release
         uses: softprops/action-gh-release@72f2c25fcb47643c292f7107632f7a47c1df5cd8 # v2
         env:
@@ -107,5 +100,4 @@ jobs:
           body: ${{ steps.gitversion.outputs.notes }}
           draft: false
           prerelease: ${{ steps.gitversion.outputs.preReleaseTag != '' }}
-          files: ${{ env.NuGetDirectory }}/*.nupkg
           make_latest: ${{ steps.gitversion.outputs.preReleaseTag == '' }}
