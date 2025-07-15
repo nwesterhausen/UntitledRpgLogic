@@ -69,6 +69,10 @@ jobs:
       - name: 🔢 Determine Version
         id: gitversion
         uses: gittools/actions/gitversion/execute@1918cb0db30e20631f273e322d08c48af11db368 #v4.0.1
+        with:
+          overrideConfig: |
+            mode=Mainline
+            branches.main.is-release-branch=true
 
       - name: 💬 Display Version Info
         run: |
@@ -98,7 +102,7 @@ jobs:
           done
 
       - name: 🎉 Create GitHub Release
-        uses: actions/create-release@v1
+        uses: actions/create-release@0cb9c9b65d5d1901c1f53e5e66eaf4afd303e70e # v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
