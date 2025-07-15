@@ -1,45 +1,45 @@
+/**
+ * The theme name for dark mode.
+ * @type {string}
+ */
 const DarkTheme = "dim";
+
+/**
+ * The theme name for light mode.
+ * @type {string}
+ */
 const LightTheme = "emerald";
 
+/**
+ * Sets the theme to dark or light based on the parameter.
+ * @param {boolean} darkTheme - If true, sets dark theme; otherwise, sets light theme.
+ */
 function setDarkTheme(darkTheme) {
-    if (darkTheme) {
+    if (darkTheme === true) {
         setTheme(DarkTheme);
     } else {
         setTheme(LightTheme);
     }
 }
 
+/**
+ * Applies the specified theme and stores the preference.
+ * @param {string} theme - The theme to apply.
+ */
 function setTheme(theme) {
     document.documentElement.setAttribute("data-theme", theme);
     console.log(`Theme changed to: ${theme}`);
-    // Create a cookie to remember the user's theme choice
-    createThemeCookie(theme);
+    // Save the theme to local storage
+    SaveToStorage("theme", theme);
 }
 
-// Create a theme cookie to remember the user's choice
-function createThemeCookie(theme) {
-    const date = new Date();
-    date.setTime(date.getTime() + (365 * 24 * 60 * 60 * 1000)); // 1 year expiration
-    document.cookie = `theme=${theme}; expires=${date.toUTCString()}; path=/`;
-}
-
-// Read the theme cookie to set the initial theme
-function readThemeCookie() {
-    const name = "theme=";
-    const decodedCookie = decodeURIComponent(document.cookie);
-    const cookies = decodedCookie.split(';');
-    for (let i = 0; i < cookies.length; i++) {
-        let cookie = cookies[i].trim();
-        if (cookie.indexOf(name) === 0) {
-            return cookie.substring(name.length, cookie.length);
-        }
-    }
-    return null; // No theme cookie found
-}
-
-// Initialize theme based on cookie or system preference
+/**
+ * Initializes the theme based on stored preference or system setting.
+ * Optionally updates a checkbox to reflect the current theme.
+ * @param {boolean} [updateCheckbox=false] - Whether to update the theme toggle checkbox.
+ */
 function initializeTheme(updateCheckbox = false) {
-    const theme = readThemeCookie();
+    const theme = LoadStringFromStorage("theme");
     if (theme) {
         setTheme(theme);
     } else {
@@ -51,4 +51,5 @@ function initializeTheme(updateCheckbox = false) {
     }
 }
 
+// Initialize theme on script load
 initializeTheme();
