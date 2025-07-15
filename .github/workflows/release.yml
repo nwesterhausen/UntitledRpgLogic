@@ -2,8 +2,8 @@ name: Publish Release
 
 on:
   push:
-    tags:
-      - 'v*.*.*'
+    branches:
+      - main
 
 env:
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
@@ -14,14 +14,15 @@ jobs:
   release:
     name: Build and Publish Release
     runs-on: ubuntu-latest
+    # Permissions are required to create a release and publish packages.
     permissions:
-      contents: read
+      contents: write
       packages: write
     steps:
       - name: 📝 Checkout repository
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
-          fetch-depth: 0
+          fetch-depth: 0 # full depth required for gitversion
 
       - name: ⚙️ Setup .NET 8 & 9
         uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9 # v4
@@ -60,6 +61,20 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-dotnet-tools-
 
+      - name: 🌳 Install GitVersion
+        uses: gittools/actions/gitversion/setup@v1.1.1
+        with:
+          versionSpec: '5.x'
+
+      - name: 🔢 Determine Version
+        id: gitversion
+        uses: gittools/actions/gitversion/execute@v1.1.1
+
+      - name: 💬 Display Version Info
+        run: |
+          echo "SemVer: ${{ steps.gitversion.outputs.semVer }}"
+          echo "InformationalVersion: ${{ steps.gitversion.outputs.informationalVersion }}"
+
       - name: 📥 Restore dependencies
         run: |
           dotnet workload restore
@@ -81,3 +96,15 @@ jobs:
             echo "Publishing $file"
             dotnet nuget push "$file" --api-key "${{ secrets.GITHUB_TOKEN }}" --source "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json" --skip-duplicate
           done
+
+      - name: 🎉 Create GitHub Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ steps.gitversion.outputs.semVer }}
+          release_name: Release v${{ steps.gitversion.outputs.semVer }}
+          body: ${{ steps.gitversion.outputs.notes }}
+          draft: false
+          prerelease: ${{ steps.gitversion.outputs.preReleaseTag != '' }}
+          files: ${{ env.NuGetDirectory }}/*.nupkg
