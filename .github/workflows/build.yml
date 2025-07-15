@@ -61,7 +61,7 @@ jobs:
       - name: 🌳 Install GitVersion
         uses: gittools/actions/gitversion/setup@1918cb0db30e20631f273e322d08c48af11db368 #v4.0.1
         with:
-          versionSpec: '6.3.x'
+          versionSpec: '6.x'
 
       - name: 🔢 Determine Version
         id: gitversion
@@ -134,7 +134,7 @@ jobs:
       - name: 🌳 Install GitVersion
         uses: gittools/actions/gitversion/setup@1918cb0db30e20631f273e322d08c48af11db368 # v4.0.1
         with:
-          versionSpec: '5.x'
+          versionSpec: '6.x'
 
       - name: 🔢 Determine Version
         id: gitversion
