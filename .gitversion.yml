@@ -8,7 +8,7 @@ branches:
     # ContinuousDeployment mode means a new version is generated for every commit on this branch.
     mode: ContinuousDeployment
     # This sets the pre-release tag for versions built from the 'next' branch (e.g., 1.1.0-next.1).
-    tag: next
+    label: next
     # When 'next' is merged into 'main', it will increment the Minor version number.
     # For example, if main is 1.0.0, the next release will be 1.1.0.
     increment: Minor
@@ -25,7 +25,7 @@ branches:
     mode: ContinuousDeployment
     # By setting the tag to an empty string, we ensure no pre-release label (like -alpha or -rc) is added.
     # This results in clean versions like 1.0.0, 1.1.0, etc.
-    tag: ''
+    label: ''
     # This prevents the version from being bumped on the 'next' branch after it's merged into 'main'.
     prevent-increment-of-merged-branch-version: true
     # Marks this as a release branch.
@@ -36,6 +36,6 @@ branches:
     # ContinuousDeployment mode to get a build metadata for each build in the PR.
     mode: ContinuousDeployment
     # The pre-release tag will be 'pr' followed by the PR number (e.g., 1.1.0-pr.123).
-    tag: pr
+    label: pr
     # The version increment strategy is inherited from the target branch ('next' in your case).
     increment: Inherit
