@@ -68,12 +68,13 @@ jobs:
 
       - name: 📥 Restore dependencies
         run: |
+          cd ${{ github.workspace }}/src
           dotnet workload restore
           dotnet tool restore
           dotnet restore
 
-      - run: dotnet docfx ./.docfx/docfx.json
-        name: 📚 Compile Docs
+      - name: 📚 Compile Docs
+        run: dotnet docfx ./.docfx/docfx.json
 
       - name: 📤 Upload artifact
         uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3
