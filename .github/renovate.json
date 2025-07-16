@@ -4,9 +4,6 @@
     "config:recommended",
     "helpers:pinGitHubActionDigests"
   ],
-  "baseBranches": [
-    "next"
-  ],
   "packageRules": [
     {
       "groupName": "all dependencies",
