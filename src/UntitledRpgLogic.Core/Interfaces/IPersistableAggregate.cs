@@ -6,9 +6,9 @@ namespace UntitledRpgLogic.Core.Interfaces;
 /// <typeparam name="TAggregateDbModel">the model used to persist the object in the database</typeparam>
 public interface IPersistableAggregate<out TAggregateDbModel>
 {
-    /// <summary>
-    ///     Maps the domain aggregate to its composite database model,
-    ///     including relationships, e.g. for stats and skills.
-    /// </summary>
-    TAggregateDbModel ToDbAggregateModel();
+	/// <summary>
+	///     Maps the domain aggregate to its composite database model,
+	///     including relationships, e.g. for stats and skills.
+	/// </summary>
+	public TAggregateDbModel ToDbAggregateModel();
 }

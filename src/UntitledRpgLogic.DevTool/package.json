@@ -1,9 +1,9 @@
 {
-  "name": "untitledrpglogic.devtool",
-  "private": true,
-  "dependencies": {
-    "daisyui": "^5.0.43",
-    "tailwindcss": "^4.1.11",
-    "@tailwindcss/cli": "^4.1.11"
-  }
+	"name": "untitledrpglogic.devtool",
+	"private": true,
+	"dependencies": {
+		"daisyui": "^5.0.43",
+		"tailwindcss": "^4.1.11",
+		"@tailwindcss/cli": "^4.1.11"
+	}
 }

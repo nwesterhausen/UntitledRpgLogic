@@ -6,18 +6,18 @@ namespace UntitledRpgLogic.Core.Interfaces;
 /// </summary>
 public interface IDamageable
 {
-    /// <summary>
-    ///     The stat that is being damaged.
-    /// </summary>
-    IStat Stat { get; }
+	/// <summary>
+	///     The stat that is being damaged.
+	/// </summary>
+	public IStat Stat { get; }
 
-    /// <summary>
-    ///     The current damage applied to the stat, in points.
-    /// </summary>
-    int CurrentDamage { get; set; }
+	/// <summary>
+	///     The current damage applied to the stat, in points.
+	/// </summary>
+	public int CurrentDamage { get; set; }
 
-    /// <summary>
-    ///     The current damage as a percentage of the stat's maximum value.
-    /// </summary>
-    float CurrentPercentageDamage { get; set; }
+	/// <summary>
+	///     The current damage as a percentage of the stat's maximum value.
+	/// </summary>
+	public float CurrentPercentageDamage { get; set; }
 }

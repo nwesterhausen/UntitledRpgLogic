@@ -7,8 +7,8 @@ namespace UntitledRpgLogic.Core.Interfaces;
 /// </summary>
 public interface IHasQuality
 {
-    /// <summary>
-    ///     Describes the quality of the object. This can be used to determine how good or valuable the object is.
-    /// </summary>
-    Quality Quality { get; }
+	/// <summary>
+	///     Describes the quality of the object. This can be used to determine how good or valuable the object is.
+	/// </summary>
+	public Quality Quality { get; }
 }

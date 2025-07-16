@@ -1,13 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <!-- Package metadata -->
-        <AssemblyName>UntitledRpgLogic.Extensions.Common</AssemblyName>
-        <PackageId>UntitledRpgLogic.Extensions.Common</PackageId>
-    </PropertyGroup>
+	<PropertyGroup>
+		<!-- Package metadata -->
+		<AssemblyName>UntitledRpgLogic.Extensions.Common</AssemblyName>
+		<PackageId>UntitledRpgLogic.Extensions.Common</PackageId>
+	</PropertyGroup>
 
-    <ItemGroup>
-        <ProjectReference Include="..\UntitledRpgLogic.Core\UntitledRpgLogic.Core.csproj" />
-    </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\UntitledRpgLogic.Core\UntitledRpgLogic.Core.csproj"/>
+	</ItemGroup>
 
 </Project>

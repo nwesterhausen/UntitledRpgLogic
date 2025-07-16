@@ -1,9 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <!-- Package metadata -->
-        <AssemblyName>UntitledRpgLogic.Resources</AssemblyName>
-        <PackageId>UntitledRpgLogic.Resources</PackageId>
-    </PropertyGroup>
+	<PropertyGroup>
+		<!-- Package metadata -->
+		<AssemblyName>UntitledRpgLogic.Resources</AssemblyName>
+		<PackageId>UntitledRpgLogic.Resources</PackageId>
+	</PropertyGroup>
 
 </Project>

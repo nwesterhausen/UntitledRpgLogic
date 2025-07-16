@@ -7,10 +7,10 @@ namespace UntitledRpgLogic.Core.Interfaces;
 /// </summary>
 public interface IActiveEffect : IEffect
 {
-    /// <summary>
-    ///     Activates the effect, triggering its logic.
-    ///     The actual application logic is typically handled by a dedicated service.
-    /// </summary>
-    /// <param name="context">The context in which the effect is activated (e.g., caster, targets).</param>
-    void Activate(EffectActivationContext context);
+	/// <summary>
+	///     Activates the effect, triggering its logic.
+	///     The actual application logic is typically handled by a dedicated service.
+	/// </summary>
+	/// <param name="context">The context in which the effect is activated (e.g., caster, targets).</param>
+	public void Activate(EffectActivationContext context);
 }

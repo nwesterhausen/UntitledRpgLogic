@@ -7,18 +7,23 @@ namespace UntitledRpgLogic.Core.Enums;
 /// </summary>
 public enum MassScale
 {
-    /// <summary>
-    ///     milligram
-    /// </summary>
-    [Description("Milligram")] mg = 10,
+	/// <summary>
+	///     An unspecified dimension scale (None).
+	/// </summary>
+	None = 0,
 
-    /// <summary>
-    ///     gram
-    /// </summary>
-    [Description("Gram")] g = 11,
+	/// <summary>
+	///     milligram
+	/// </summary>
+	[Description("Milligram")] Mg = 10,
 
-    /// <summary>
-    ///     kilogram
-    /// </summary>
-    [Description("Kilogram")] kg = 12
+	/// <summary>
+	///     gram
+	/// </summary>
+	[Description("Gram")] G = 11,
+
+	/// <summary>
+	///     kilogram
+	/// </summary>
+	[Description("Kilogram")] Kg = 12
 }

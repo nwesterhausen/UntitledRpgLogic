@@ -7,23 +7,28 @@ namespace UntitledRpgLogic.Core.Enums;
 /// </summary>
 public enum DimensionScale
 {
-    /// <summary>
-    ///     millimeter
-    /// </summary>
-    [Description("Millimeter")] mm = 5,
+	/// <summary>
+	///     An unspecified dimension scale (None).
+	/// </summary>
+	None = 0,
 
-    /// <summary>
-    ///     centimeter
-    /// </summary>
-    [Description("Centimeter")] cm = 6,
+	/// <summary>
+	///     millimeter
+	/// </summary>
+	[Description("Millimeter")] Mm = 5,
 
-    /// <summary>
-    ///     meter
-    /// </summary>
-    [Description("Meter")] m = 7,
+	/// <summary>
+	///     centimeter
+	/// </summary>
+	[Description("Centimeter")] Cm = 6,
 
-    /// <summary>
-    ///     kilometer
-    /// </summary>
-    [Description("Kilometer")] km = 8
+	/// <summary>
+	///     meter
+	/// </summary>
+	[Description("Meter")] M = 7,
+
+	/// <summary>
+	///     kilometer
+	/// </summary>
+	[Description("Kilometer")] Km = 8
 }

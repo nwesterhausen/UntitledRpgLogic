@@ -8,49 +8,50 @@ namespace UntitledRpgLogic.Core.Classes;
 /// </summary>
 public class ComposedEffect : IActiveEffect
 {
-    private readonly List<IEffectComponent> _components;
-    private readonly IEffectApplicationService _effectApplicationService; // Dependency for activating the effect
+	private readonly List<IEffectComponent> components;
+	private readonly IEffectApplicationService effectApplicationService; // Dependency for activating the effect
 
-    /// <summary>
-    ///     Initializes a new instance of the <see cref="ComposedEffect" /> class.
-    /// </summary>
-    /// <param name="name">The name of the effect (e.g., "Fireball", "Featherfall").</param>
-    /// <param name="components">The collection of micro-effect components that define this effect's behavior.</param>
-    /// <param name="effectApplicationService">The service responsible for applying the effect's logic.</param>
-    public ComposedEffect(
-        string name,
-        IEnumerable<IEffectComponent> components,
-        IEffectApplicationService effectApplicationService)
-    {
-        Name = new Name(name);
-        _components = [.. components];
-        _effectApplicationService = effectApplicationService;
+	/// <summary>
+	///     Initializes a new instance of the <see cref="ComposedEffect" /> class.
+	/// </summary>
+	/// <param name="name">The name of the effect (e.g., "Fireball", "Featherfall").</param>
+	/// <param name="components">The collection of micro-effect components that define this effect's behavior.</param>
+	/// <param name="effectApplicationService">The service responsible for applying the effect's logic.</param>
+	public ComposedEffect(
+		string name,
+		IEnumerable<IEffectComponent> components,
+		IEffectApplicationService effectApplicationService)
+	{
+		this.Name = new Name(name);
+		this.components = [.. components];
+		this.effectApplicationService = effectApplicationService;
 
-        // Generate a new GUID for this effect instance
-        Guid = Guid.NewGuid();
-        Id = Convert.ToBase64String(Guid.ToByteArray());
-        ShortGuid = Guid.ToString("N")[..8].ToUpperInvariant();
-    }
+		// Generate a new GUID for this effect instance
+		this.Guid = Guid.NewGuid();
+		this.Id = Convert.ToBase64String(this.Guid.ToByteArray());
+		this.ShortGuid = this.Guid.ToString("N")[..8].ToUpperInvariant();
+	}
 
-    /// <inheritdoc />
-    public Guid Guid { get; }
+	/// <inheritdoc />
+	public Guid Guid { get; }
 
-    /// <inheritdoc />
-    public string Id { get; }
+	/// <inheritdoc />
+	public string Id { get; }
 
-    /// <inheritdoc />
-    public string ShortGuid { get; }
+	/// <inheritdoc />
+	public string ShortGuid { get; }
 
-    /// <inheritdoc />
-    public Name Name { get; }
+	/// <inheritdoc />
+	public Name Name { get; }
 
-    /// <inheritdoc />
-    public IReadOnlyCollection<IEffectComponent> Components => _components.AsReadOnly();
+	/// <inheritdoc />
+	public IReadOnlyCollection<IEffectComponent> EffectComponents => this.components.AsReadOnly();
 
-    /// <inheritdoc />
-    public void Activate(EffectActivationContext context)
-    {
-        // Delegate the actual application logic to the EffectApplicationService
-        _effectApplicationService.ApplyEffect(this, context.Caster, context.Targets);
-    }
+	/// <inheritdoc />
+	public void Activate(EffectActivationContext context)
+	{
+		ArgumentNullException.ThrowIfNull(context, nameof(context));
+		// Delegate the actual application logic to the EffectApplicationService
+		this.effectApplicationService.ApplyEffect(this, context.Caster, context.Targets);
+	}
 }

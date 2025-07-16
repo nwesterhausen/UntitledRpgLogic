@@ -8,54 +8,59 @@ namespace UntitledRpgLogic.Services;
 /// </summary>
 public class ItemStorageService : IItemStorageService
 {
-    private readonly Dictionary<Guid, IStorable> _items = [];
+	private readonly Dictionary<Guid, IStorable> items = [];
 
-    /// <inheritdoc />
-    public bool StoreItem(IStorable item)
-    {
-        CancelableItemActionEventArgs cancelableEventArgs = new(item);
-        BeforeItemStored?.Invoke(this, cancelableEventArgs);
-        if (cancelableEventArgs.Cancel) return false;
+	/// <inheritdoc />
+	public bool StoreItem(IStorable item)
+	{
+		ArgumentNullException.ThrowIfNull(item, nameof(item));
 
-        _items.Add(item.Guid, item);
+		CancelableItemActionEventArgs cancelableEventArgs = new(item);
+		this.StoringItem?.Invoke(this, cancelableEventArgs);
+		if (cancelableEventArgs.Cancel)
+		{
+			return false;
+		}
 
-        ItemStored?.Invoke(this, new SuccessfulItemStorageEventArgs(item.Name.Singular, 1, item.Guid, _items.Count));
+		this.items.Add(item.Guid, item);
 
-        return true;
-    }
+		this.ItemStored?.Invoke(this, new SuccessfulItemStorageEventArgs(item.Name.Singular, 1, item.Guid, this.items.Count));
 
-    /// <inheritdoc />
-    public bool TryRetrieveItem(Guid itemId, out IStorable? item)
-    {
-        if (_items.TryGetValue(itemId, out item))
-        {
-            CancelableItemActionEventArgs cancelableEventArgs = new(item);
-            BeforeItemRetrieved?.Invoke(this, cancelableEventArgs);
-            if (cancelableEventArgs.Cancel)
-            {
-                item = null;
-                return false;
-            }
+		return true;
+	}
 
-            _ = _items.Remove(itemId);
-            ItemRetrieved?.Invoke(this,
-                new SuccessfulItemStorageEventArgs(item.Name.Singular, 1, item.Guid, _items.Count));
-            return true;
-        }
+	/// <inheritdoc />
+	public bool TryRetrieveItem(Guid itemId, out IStorable? item)
+	{
+		if (this.items.TryGetValue(itemId, out item))
+		{
+			CancelableItemActionEventArgs cancelableEventArgs = new(item);
+			this.RetrievingItem?.Invoke(this, cancelableEventArgs);
+			if (cancelableEventArgs.Cancel)
+			{
+				item = null;
+				return false;
+			}
 
-        item = null;
-        return false;
-    }
+			_ = this.items.Remove(itemId);
+			this.ItemRetrieved?.Invoke(this,
+				new SuccessfulItemStorageEventArgs(item.Name.Singular, 1, item.Guid, this.items.Count));
+			return true;
+		}
 
-    /// <inheritdoc />
-    public event EventHandler<SuccessfulItemStorageEventArgs>? ItemStored;
+		item = null;
+		return false;
+	}
 
-    /// <inheritdoc />
-    public event EventHandler<CancelableItemActionEventArgs>? BeforeItemStored;
+	/// <inheritdoc />
+	public event EventHandler<SuccessfulItemStorageEventArgs>? ItemStored;
 
-    /// <inheritdoc />
-    public event EventHandler<SuccessfulItemStorageEventArgs>? ItemRetrieved;
+	/// <inheritdoc />
+	public event EventHandler<CancelableItemActionEventArgs>? StoringItem;
 
-    /// <inheritdoc />
-    public event EventHandler<CancelableItemActionEventArgs>? BeforeItemRetrieved;
+	/// <inheritdoc />
+	public event EventHandler<SuccessfulItemStorageEventArgs>? ItemRetrieved;
+
+	/// <inheritdoc />
+	public event EventHandler<CancelableItemActionEventArgs>? RetrievingItem;
 }

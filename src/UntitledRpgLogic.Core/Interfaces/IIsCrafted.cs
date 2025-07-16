@@ -5,9 +5,9 @@ namespace UntitledRpgLogic.Core.Interfaces;
 /// </summary>
 public interface IIsCrafted
 {
-    /// <summary>
-    ///     The reference to the crafter that created this item. This is a GUID that points to an entity or a special case
-    ///     (like GM-crafted items).
-    /// </summary>
-    Guid CraftedBy { get; }
+	/// <summary>
+	///     The reference to the crafter that created this item. This is a GUID that points to an entity or a special case
+	///     (like GM-crafted items).
+	/// </summary>
+	public Guid CraftedBy { get; }
 }

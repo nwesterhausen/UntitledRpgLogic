@@ -8,44 +8,44 @@ namespace UntitledRpgLogic.Core.Classes.EffectComponents;
 /// </summary>
 public class DurationEffectComponent : IEffectComponent
 {
-    /// <summary>
-    ///     Initializes a new instance of the <see cref="DurationEffectComponent" /> class.
-    /// </summary>
-    /// <param name="name">The name of this duration component.</param>
-    /// <param name="durationInSeconds">The duration of the effect in seconds. Use -1 for permanent effects.</param>
-    public DurationEffectComponent(string name, float durationInSeconds)
-    {
-        Name = new Name(name);
-        DurationInSeconds = durationInSeconds;
+	/// <summary>
+	///     Initializes a new instance of the <see cref="DurationEffectComponent" /> class.
+	/// </summary>
+	/// <param name="name">The name of this duration component.</param>
+	/// <param name="durationInSeconds">The duration of the effect in seconds. Use -1 for permanent effects.</param>
+	public DurationEffectComponent(string name, float durationInSeconds)
+	{
+		this.Name = new Name(name);
+		this.DurationInSeconds = durationInSeconds;
 
-        // Generate a new GUID for this component instance
-        Guid = Guid.NewGuid();
-        Id = Convert.ToBase64String(Guid.ToByteArray());
-        ShortGuid = Guid.ToString("N")[..8].ToUpperInvariant();
-    }
+		// Generate a new GUID for this component instance
+		this.Guid = Guid.NewGuid();
+		this.Id = Convert.ToBase64String(this.Guid.ToByteArray());
+		this.ShortGuid = this.Guid.ToString("N")[..8].ToUpperInvariant();
+	}
 
-    /// <summary>
-    ///     The duration of the effect in seconds. If -1, the effect is permanent.
-    /// </summary>
-    public float DurationInSeconds { get; }
+	/// <summary>
+	///     The duration of the effect in seconds. If -1, the effect is permanent.
+	/// </summary>
+	public float DurationInSeconds { get; }
 
-    /// <summary>
-    ///     Gets a value indicating whether the effect is permanent.
-    /// </summary>
-    public bool IsPermanent => DurationInSeconds < 0;
+	/// <summary>
+	///     Gets a value indicating whether the effect is permanent.
+	/// </summary>
+	public bool IsPermanent => this.DurationInSeconds < 0;
 
-    /// <inheritdoc />
-    public Guid Guid { get; }
+	/// <inheritdoc />
+	public Guid Guid { get; }
 
-    /// <inheritdoc />
-    public string Id { get; }
+	/// <inheritdoc />
+	public string Id { get; }
 
-    /// <inheritdoc />
-    public string ShortGuid { get; }
+	/// <inheritdoc />
+	public string ShortGuid { get; }
 
-    /// <inheritdoc />
-    public Name Name { get; }
+	/// <inheritdoc />
+	public Name Name { get; }
 
-    /// <inheritdoc />
-    public EffectComponentType ComponentType => EffectComponentType.Duration;
+	/// <inheritdoc />
+	public EffectComponentType ComponentType => EffectComponentType.Duration;
 }

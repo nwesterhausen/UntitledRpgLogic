@@ -1,13 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-    <PropertyGroup>
-        <!-- Package metadata -->
-        <AssemblyName>UntitledRpgLogic.Core</AssemblyName>
-        <PackageId>UntitledRpgLogic.Core</PackageId>
-        <!-- Version is set by GitVersion -->
-        <PackageReadmeFile>README.md</PackageReadmeFile>
-    </PropertyGroup>
+	<PropertyGroup>
+		<!-- Package metadata -->
+		<AssemblyName>UntitledRpgLogic.Core</AssemblyName>
+		<PackageId>UntitledRpgLogic.Core</PackageId>
+		<!-- Version is set by GitVersion -->
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+	</PropertyGroup>
 
-    <ItemGroup>
-        <None Include="..\..\README.md" Pack="true" PackagePath="\" />
-    </ItemGroup>
+	<ItemGroup>
+		<None Include="..\..\README.md" Pack="true" PackagePath="\"/>
+	</ItemGroup>
 </Project>

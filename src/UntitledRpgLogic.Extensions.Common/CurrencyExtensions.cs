@@ -7,37 +7,46 @@ namespace UntitledRpgLogic.Extensions.Common;
 /// </summary>
 public static class CurrencyExtensions
 {
-    /// <summary>
-    ///     Convert this currency into another currency. Any limit which cannot be wholly converted is retained in this
-    ///     currency.
-    /// </summary>
-    /// <param name="currency">this currency (converting from)</param>
-    /// <param name="otherCurrency">target currency to convert into</param>
-    /// <param name="limit">(optional) a limit to how many of target currency to convert into</param>
-    /// <returns>true if any amount was successfully converted</returns>
-    /// <remarks>
-    ///     this will act similar to <see cref="ICurrency.Subtract" /> in that it removes <see cref="ITradable.Value" /> from
-    ///     this currency. it performs <see cref="ICurrency.Add" /> on the target currency.
-    /// </remarks>
-    public static bool ConvertToCurrency(this ICurrency currency, ICurrency otherCurrency, int? limit = null)
-    {
-        // Calculate how much can be converted
-        int canConvert = (int)(currency.GetTotalValue() / otherCurrency.Value);
+	/// <summary>
+	///     Convert this currency into another currency. Any limit which cannot be wholly converted is retained in this
+	///     currency.
+	/// </summary>
+	/// <param name="currency">this currency (converting from)</param>
+	/// <param name="otherCurrency">target currency to convert into</param>
+	/// <param name="limit">(optional) a limit to how many of target currency to convert into</param>
+	/// <returns>true if any amount was successfully converted</returns>
+	/// <remarks>
+	///     this will act similar to <see cref="ICurrency.Subtract" /> in that it removes <see cref="ITradable.Value" /> from
+	///     this currency. it performs <see cref="ICurrency.Add" /> on the target currency.
+	/// </remarks>
+	public static bool ConvertToCurrency(this ICurrency currency, ICurrency otherCurrency, int? limit = null)
+	{
+		ArgumentNullException.ThrowIfNull(currency, nameof(currency));
+		ArgumentNullException.ThrowIfNull(otherCurrency, nameof(otherCurrency));
 
-        if (limit == null || canConvert < limit) limit = canConvert;
+		// Calculate how much can be converted
+		var canConvert = (int)(currency.GetTotalValue() / otherCurrency.Value);
 
-        if (limit <= 0) return false;
+		if (limit == null || canConvert < limit)
+		{
+			limit = canConvert;
+		}
 
-        // Calculate how much to subtract from this otherCurrency
-        long toSubtract = limit.Value * otherCurrency.Value;
-        // Subtract the value from this otherCurrency
-        long remaining = currency.Subtract(toSubtract);
+		if (limit <= 0)
+		{
+			return false;
+		}
 
-        // Find the actual amount to add to the target otherCurrency
-        long toAdd = toSubtract - remaining;
-        // Add the value to the target otherCurrency
-        _ = otherCurrency.Add(toAdd);
+		// Calculate how much to subtract from this otherCurrency
+		var toSubtract = limit.Value * otherCurrency.Value;
+		// Subtract the value from this otherCurrency
+		var remaining = currency.Subtract(toSubtract);
 
-        return true;
-    }
+		// Find the actual amount to add to the target otherCurrency
+		var toAdd = toSubtract - remaining;
+		// Add the value to the target otherCurrency
+		_ = otherCurrency.Add(toAdd);
+
+		return true;
+	}
 }

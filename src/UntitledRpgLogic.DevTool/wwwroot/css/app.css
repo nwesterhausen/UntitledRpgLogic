@@ -2,6 +2,6 @@
 
 @config "../../tailwind.config.js";
 @plugin "daisyui" {
-    themes: emerald --default,
-    dim;
+	themes: emerald --default,
+	dim;
 }

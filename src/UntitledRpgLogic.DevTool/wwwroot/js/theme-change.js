@@ -15,11 +15,11 @@ const LightTheme = "emerald";
  * @param {boolean} darkTheme - If true, sets dark theme; otherwise, sets light theme.
  */
 function setDarkTheme(darkTheme) {
-    if (darkTheme === true) {
-        setTheme(DarkTheme);
-    } else {
-        setTheme(LightTheme);
-    }
+	if (darkTheme === true) {
+		setTheme(DarkTheme);
+	} else {
+		setTheme(LightTheme);
+	}
 }
 
 /**
@@ -27,10 +27,10 @@ function setDarkTheme(darkTheme) {
  * @param {string} theme - The theme to apply.
  */
 function setTheme(theme) {
-    document.documentElement.setAttribute("data-theme", theme);
-    console.log(`Theme changed to: ${theme}`);
-    // Save the theme to local storage
-    SaveToStorage("theme", theme);
+	document.documentElement.setAttribute("data-theme", theme);
+	console.log(`Theme changed to: ${theme}`);
+	// Save the theme to local storage
+	SaveToStorage("theme", theme);
 }
 
 /**
@@ -39,16 +39,16 @@ function setTheme(theme) {
  * @param {boolean} [updateCheckbox=false] - Whether to update the theme toggle checkbox.
  */
 function initializeTheme(updateCheckbox = false) {
-    const theme = LoadStringFromStorage("theme");
-    if (theme) {
-        setTheme(theme);
-    } else {
-        const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)").matches;
-        setTheme(prefersDarkScheme ? DarkTheme : LightTheme);
-    }
-    if (updateCheckbox) {
-        document.getElementById("theme-toggle-checkbox").checked = theme === DarkTheme;
-    }
+	const theme = LoadStringFromStorage("theme");
+	if (theme) {
+		setTheme(theme);
+	} else {
+		const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)").matches;
+		setTheme(prefersDarkScheme ? DarkTheme : LightTheme);
+	}
+	if (updateCheckbox) {
+		document.getElementById("theme-toggle-checkbox").checked = theme === DarkTheme;
+	}
 }
 
 // Initialize theme on script load

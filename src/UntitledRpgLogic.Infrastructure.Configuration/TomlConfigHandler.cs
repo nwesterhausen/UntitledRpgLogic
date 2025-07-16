@@ -19,159 +19,179 @@ namespace UntitledRpgLogic.Infrastructure.Configuration;
 /// </remarks>
 public class TomlConfigHandler : ITomlConfigHandler
 {
-    private readonly Dictionary<ConfigType, Type> _configTypeMappings = new()
-    {
-        { ConfigType.Item, typeof(ItemDataConfig) },
-        { ConfigType.Material, typeof(MaterialDataConfig) },
-        { ConfigType.Skill, typeof(SkillDataConfig) },
-        { ConfigType.Stat, typeof(StatDataConfig) }
-    };
+	private readonly Dictionary<ConfigType, Type> configTypeMappings = new()
+	{
+		{ ConfigType.Item, typeof(ItemDataConfig) },
+		{ ConfigType.Material, typeof(MaterialDataConfig) },
+		{ ConfigType.Skill, typeof(SkillDataConfig) },
+		{ ConfigType.Stat, typeof(StatDataConfig) }
+	};
 
-    private readonly ILogger<TomlConfigHandler> _logger;
+	private readonly ILogger<TomlConfigHandler> logger;
 
-    /// <summary>
-    ///     Initializes a new instance of the <see cref="TomlConfigHandler" /> class.
-    /// </summary>
-    /// <param name="logger">The logger instance used for logging operations. Cannot be <see langword="null" />.</param>
-    /// <exception cref="ArgumentNullException">Thrown if <paramref name="logger" /> is <see langword="null" />.</exception>
-    public TomlConfigHandler(ILogger<TomlConfigHandler> logger)
-    {
-        _logger = logger ?? throw new ArgumentNullException(nameof(logger), "Logger cannot be null.");
+	/// <summary>
+	///     Initializes a new instance of the <see cref="TomlConfigHandler" /> class.
+	/// </summary>
+	/// <param name="logger">The logger instance used for logging operations. Cannot be <see langword="null" />.</param>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="logger" /> is <see langword="null" />.</exception>
+	public TomlConfigHandler(ILogger<TomlConfigHandler> logger)
+	{
+		this.logger = logger ?? throw new ArgumentNullException(nameof(logger), "Logger cannot be null.");
 
-        // Register mappers for custom types only once
-        MapperRegistration.RegisterMappers();
-    }
+		// Register mappers for custom types only once
+		MapperRegistration.RegisterMappers();
+	}
 
-    /// <inheritdoc />
-    public ITomlConfig LoadConfigFromFile(string filePath)
-    {
-        if (string.IsNullOrEmpty(filePath))
-            throw new ArgumentException("File path cannot be null or empty.", nameof(filePath));
+	/// <inheritdoc />
+	public ITomlConfig LoadConfigFromFile(string filePath)
+	{
+		if (string.IsNullOrEmpty(filePath))
+		{
+			throw new ArgumentException("File path cannot be null or empty.", nameof(filePath));
+		}
 
-        if (!File.Exists(filePath))
-            throw new FileNotFoundException($"Configuration file not found: {filePath}");
-        try
-        {
-            string fileContent = File.ReadAllText(filePath);
+		if (!File.Exists(filePath))
+		{
+			throw new FileNotFoundException($"Configuration file not found: {filePath}");
+		}
 
-            return ParseTomlConfigFromText(fileContent);
-        }
-        catch (Exception ex)
-        {
-            throw new InvalidOperationException($"Failed to load configuration from {filePath}", ex);
-        }
-    }
+		try
+		{
+			var fileContent = File.ReadAllText(filePath);
 
-    /// <inheritdoc />
-    public ITomlConfig LoadConfig(byte[] bytes)
-    {
-        if (bytes == null || bytes.Length == 0)
-            throw new ArgumentException("Byte array cannot be null or empty.", nameof(bytes));
+			return this.ParseTomlConfigFromText(fileContent);
+		}
+		catch (Exception ex)
+		{
+			throw new InvalidOperationException($"Failed to load configuration from {filePath}", ex);
+		}
+	}
 
-        try
-        {
-            string tomlText = Encoding.UTF8.GetString(bytes);
-            return ParseTomlConfigFromText(tomlText);
-        }
-        catch (Exception ex)
-        {
-            throw new InvalidOperationException("Failed to load configuration from byte array.", ex);
-        }
-    }
+	/// <inheritdoc />
+	public ITomlConfig LoadConfig(byte[] bytes)
+	{
+		if (bytes == null || bytes.Length == 0)
+		{
+			throw new ArgumentException("Byte array cannot be null or empty.", nameof(bytes));
+		}
 
-    /// <inheritdoc />
-    public byte[] SaveConfig<T>(T config) where T : ITomlConfig
-    {
-        if (config == null)
-            throw new ArgumentNullException(nameof(config), "Configuration object cannot be null.");
-        try
-        {
-            string tomlString = SerializeToml(config);
-            return Encoding.UTF8.GetBytes(tomlString);
-        }
-        catch (Exception ex)
-        {
-            throw new InvalidOperationException($"Failed to serialize {nameof(T)} to TOML.", ex);
-        }
-    }
+		try
+		{
+			var tomlText = Encoding.UTF8.GetString(bytes);
+			return this.ParseTomlConfigFromText(tomlText);
+		}
+		catch (Exception ex)
+		{
+			throw new InvalidOperationException("Failed to load configuration from byte array.", ex);
+		}
+	}
 
-    /// <inheritdoc />
-    public void SaveConfigToFile<T>(T config, string filePath) where T : ITomlConfig
-    {
-        if (string.IsNullOrEmpty(filePath))
-            throw new ArgumentException("File path cannot be null or empty.", nameof(filePath));
-        if (config == null)
-            throw new ArgumentNullException(nameof(config), "Configuration object cannot be null.");
-        try
-        {
-            string tomlString = SerializeToml(config);
-            File.WriteAllText(filePath, tomlString);
-        }
-        catch (Exception ex)
-        {
-            throw new InvalidOperationException($"Failed to save configuration to {filePath}", ex);
-        }
-    }
+	/// <inheritdoc />
+	public byte[] SaveConfig<T>(T config) where T : ITomlConfig
+	{
+		if (config == null)
+		{
+			throw new ArgumentNullException(nameof(config), "Configuration object cannot be null.");
+		}
 
-    private static string SerializeToml<T>(T config) where T : ITomlConfig
-    {
-        if (config == null)
-            throw new ArgumentNullException(nameof(config), "Configuration object cannot be null.");
+		try
+		{
+			var tomlString = SerializeToml(config);
+			return Encoding.UTF8.GetBytes(tomlString);
+		}
+		catch (Exception ex)
+		{
+			throw new InvalidOperationException($"Failed to serialize {nameof(T)} to TOML.", ex);
+		}
+	}
 
-        try
-        {
-            return TomletMain.TomlStringFrom(config);
-        }
-        catch (Exception ex)
-        {
-            throw new InvalidOperationException("Failed to serialize configuration to TOML.", ex);
-        }
-    }
+	/// <inheritdoc />
+	public void SaveConfigToFile<T>(T config, string filePath) where T : ITomlConfig
+	{
+		if (string.IsNullOrEmpty(filePath))
+		{
+			throw new ArgumentException("File path cannot be null or empty.", nameof(filePath));
+		}
 
-    private ITomlConfig ParseTomlConfigFromText(string text)
-    {
-        if (string.IsNullOrEmpty(text))
-            throw new ArgumentException("TOML text cannot be null or empty.", nameof(text));
+		if (config == null)
+		{
+			throw new ArgumentNullException(nameof(config), "Configuration object cannot be null.");
+		}
 
-        try
-        {
-            // Parse TOML into TomlDocument
-            TomlParser parser = new();
-            TomlDocument tomlDocument = parser.Parse(text);
+		try
+		{
+			var tomlString = SerializeToml(config);
+			File.WriteAllText(filePath, tomlString);
+		}
+		catch (Exception ex)
+		{
+			throw new InvalidOperationException($"Failed to save configuration to {filePath}", ex);
+		}
+	}
 
-            // Check if the document contains the expected field
-            if (!tomlDocument.ContainsKey("ConfigType"))
-            {
-                _logger.LogError("TOML document does not contain required 'ConfigType' field.");
-                throw new InvalidOperationException("TOML document does not contain required 'ConfigType' field.");
-            }
+	private static string SerializeToml<T>(T config) where T : ITomlConfig
+	{
+		if (config == null)
+		{
+			throw new ArgumentNullException(nameof(config), "Configuration object cannot be null.");
+		}
 
-            // Extract the ConfigType from the document
-            if (!tomlDocument.TryGetValue("ConfigType", out TomlValue? configType) ||
-                configType is not TomlString configTypeString)
-            {
-                _logger.LogError("'ConfigType' is not set or not a string");
-                throw new InvalidOperationException("'ConfigType' is not set or not a string.");
-            }
+		try
+		{
+			return TomletMain.TomlStringFrom(config);
+		}
+		catch (Exception ex)
+		{
+			throw new InvalidOperationException("Failed to serialize configuration to TOML.", ex);
+		}
+	}
 
-            if (!Enum.TryParse(configTypeString.Value, true, out ConfigType foundConfigType))
-            {
-                _logger.LogError("Invalid 'ConfigType' value '{ConfigTypeValue}' found in TOML document.",
-                    configTypeString.Value);
-                throw new InvalidOperationException($"Invalid 'ConfigType' value '{configTypeString.Value}'.");
-            }
+	private ITomlConfig ParseTomlConfigFromText(string text)
+	{
+		if (string.IsNullOrEmpty(text))
+		{
+			throw new ArgumentException("TOML text cannot be null or empty.", nameof(text));
+		}
 
-            if (!_configTypeMappings.TryGetValue(foundConfigType, out Type? configTypeToLoad))
-            {
-                _logger.LogError("No mapping found for ConfigType '{ConfigType}'", foundConfigType);
-                throw new InvalidOperationException($"No mapping found for ConfigType '{foundConfigType}'.");
-            }
+		try
+		{
+			// Parse TOML into TomlDocument
+			TomlParser parser = new();
+			var tomlDocument = parser.Parse(text);
 
-            return (ITomlConfig)TomletMain.To(configTypeToLoad, tomlDocument);
-        }
-        catch (Exception ex)
-        {
-            throw new InvalidOperationException("Failed to parse TOML text.", ex);
-        }
-    }
+			// Check if the document contains the expected field
+			if (!tomlDocument.ContainsKey("ConfigType"))
+			{
+				this.logger.LogError("TOML document does not contain required 'ConfigType' field.");
+				throw new InvalidOperationException("TOML document does not contain required 'ConfigType' field.");
+			}
+
+			// Extract the ConfigType from the document
+			if (!tomlDocument.TryGetValue("ConfigType", out var configType) ||
+			    configType is not TomlString configTypeString)
+			{
+				this.logger.LogError("'ConfigType' is not set or not a string");
+				throw new InvalidOperationException("'ConfigType' is not set or not a string.");
+			}
+
+			if (!Enum.TryParse(configTypeString.Value, true, out ConfigType foundConfigType))
+			{
+				this.logger.LogError("Invalid 'ConfigType' value '{ConfigTypeValue}' found in TOML document.",
+					configTypeString.Value);
+				throw new InvalidOperationException($"Invalid 'ConfigType' value '{configTypeString.Value}'.");
+			}
+
+			if (!this.configTypeMappings.TryGetValue(foundConfigType, out var configTypeToLoad))
+			{
+				this.logger.LogError("No mapping found for ConfigType '{ConfigType}'", foundConfigType);
+				throw new InvalidOperationException($"No mapping found for ConfigType '{foundConfigType}'.");
+			}
+
+			return (ITomlConfig)TomletMain.To(configTypeToLoad, tomlDocument);
+		}
+		catch (Exception ex)
+		{
+			throw new InvalidOperationException("Failed to parse TOML text.", ex);
+		}
+	}
 }

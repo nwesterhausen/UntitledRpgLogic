@@ -3,29 +3,29 @@
 
 <h3 class="text-3xl font-bold mb-6 text-primary">Create Configurations</h3>
 <p>Create a new: <select class="select select-neutral" @bind="_selectedType">
-        <option value="Material">Material</option>
-        <option value="Item">Item</option>
-        <option value="Stat">Stat</option>
-        <option value="Skill">Skill</option>
-    </select></p>
+		<option value="Material">Material</option>
+		<option value="Item">Item</option>
+		<option value="Stat">Stat</option>
+		<option value="Skill">Skill</option>
+	</select></p>
 
 @if (_selectedType == "Material")
 {
-    <Material/>
+	<Material/>
 }
 else if (_selectedType == "Item")
 {
-    <Item/>
+	<Item/>
 }
 else if (_selectedType == "Stat")
 {
-    <Stat/>
+	<Stat/>
 }
 else if (_selectedType == "Skill")
 {
-    <Skill/>
+	<Skill/>
 }
 
 @code {
-    private string _selectedType = "Material";
+	private string _selectedType = "Material";
 }

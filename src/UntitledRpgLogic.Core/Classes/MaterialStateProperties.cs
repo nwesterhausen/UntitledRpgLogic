@@ -8,19 +8,19 @@ namespace UntitledRpgLogic.Core.Classes;
 /// </summary>
 public class MaterialStateProperties
 {
-    /// <summary>
-    ///     A color to represent the material in this state. This can be used to visually represent the material in a game or
-    ///     application.
-    /// </summary>
-    public Color Color { get; set; }
+	/// <summary>
+	///     A color to represent the material in this state. This can be used to visually represent the material in a game or
+	///     application.
+	/// </summary>
+	public Color Color { get; set; }
 
-    /// <summary>
-    ///     The temperature at which the material changes state, in degrees Celsius (°C).
-    /// </summary>
-    public float TemperatureAtStateChange { get; set; }
+	/// <summary>
+	///     The temperature at which the material changes state, in degrees Celsius (°C).
+	/// </summary>
+	public float TemperatureAtStateChange { get; set; }
 
-    /// <summary>
-    ///     The density of the material at the state change, in grams per cubic centimeter (g/cm³).
-    /// </summary>
-    public float DensityAtStateChange { get; set; }
+	/// <summary>
+	///     The density of the material at the state change, in grams per cubic centimeter (g/cm³).
+	/// </summary>
+	public float DensityAtStateChange { get; set; }
 }

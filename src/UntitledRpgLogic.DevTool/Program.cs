@@ -8,32 +8,35 @@ using UntitledRpgLogic.DevTool.Services.Contracts;
 using UntitledRpgLogic.Infrastructure.Configuration;
 
 Log.Logger = new LoggerConfiguration()
-    .MinimumLevel.Debug()
-    .WriteTo.BrowserConsole()
-    .CreateLogger();
+	.MinimumLevel.Debug()
+	.WriteTo.BrowserConsole()
+	.CreateLogger();
 
 try
 {
-    WebAssemblyHostBuilder builder = WebAssemblyHostBuilder.CreateDefault(args);
-    builder.RootComponents.Add<App>("#app");
-    builder.RootComponents.Add<HeadOutlet>("head::after");
+	var builder = WebAssemblyHostBuilder.CreateDefault(args);
+	builder.RootComponents.Add<App>("#app");
+	builder.RootComponents.Add<HeadOutlet>("head::after");
 
-    builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+	_ = builder.Services.AddScoped(_ => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
-    builder.Services.AddConfigurationInfrastructure();
-    builder.Services.AddSingleton<IConfigStore, ConfigStoreService>();
+	_ = builder.Services.AddConfigurationInfrastructure();
+	_ = builder.Services.AddSingleton<IConfigStore, ConfigStoreService>();
 
-    // Replace Microsoft logger for Serilog
-    builder.Logging.ClearProviders();
-    builder.Logging.AddProvider(new SerilogLoggerProvider(Log.Logger));
+	// Replace Microsoft logger for Serilog
+#pragma warning disable CA2000
+	_ = builder.Logging.ClearProviders();
+	_ = builder.Logging.AddProvider(new SerilogLoggerProvider(Log.Logger));
+#pragma warning restore CA2000
 
-    await builder.Build().RunAsync();
+	await builder.Build().RunAsync().ConfigureAwait(false);
 }
 catch (Exception ex)
 {
-    Log.Fatal(ex, "An error occurred during application startup");
+	Log.Fatal(ex, "An error occurred during application startup");
+	throw;
 }
 finally
 {
-    Log.CloseAndFlush();
+	await Log.CloseAndFlushAsync().ConfigureAwait(false);
 }

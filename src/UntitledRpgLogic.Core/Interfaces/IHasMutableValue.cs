@@ -8,19 +8,19 @@ namespace UntitledRpgLogic.Core.Interfaces;
 /// </summary>
 public interface IHasMutableValue : IHasValue
 {
-    /// <summary>
-    ///     The current integer value of the object, which can be read or written to.
-    ///     This hides the read-only 'Value' property from the base IHasValue interface.
-    /// </summary>
-    new int Value { get; set; }
+	/// <summary>
+	///     The current integer value of the object, which can be read or written to.
+	///     This hides the read-only 'Value' property from the base IHasValue interface.
+	/// </summary>
+	public new int Value { get; set; }
 
-    /// <summary>
-    ///     Event that is triggered when the value changes.
-    /// </summary>
-    event EventHandler<ValueChangedEventArgs>? ValueChanged;
+	/// <summary>
+	///     Event that is triggered when the value changes.
+	/// </summary>
+	public event EventHandler<ValueChangedEventArgs>? ValueChanged;
 
-    /// <summary>
-    ///     A method for the owning service to invoke the ValueChanged event.
-    /// </summary>
-    void InvokeValueChanged(ValueChangedEventArgs args);
+	/// <summary>
+	///     A method for the owning service to invoke the ValueChanged event.
+	/// </summary>
+	public void InvokeValueChanged(ValueChangedEventArgs args);
 }

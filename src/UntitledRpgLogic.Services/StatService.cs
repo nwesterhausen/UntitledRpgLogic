@@ -14,193 +14,238 @@ namespace UntitledRpgLogic.Services;
 /// </summary>
 public class StatService : IStatService
 {
-    private readonly IDamageCalculator _damageCalculator;
-    private readonly ILogger<StatService> _logger;
+	private readonly IDamageCalculator damageCalculator;
+	private readonly ILogger<StatService> logger;
 
-    /// <summary>
-    ///     Initializes a new instance of the <see cref="StatService" /> class.
-    /// </summary>
-    /// <param name="damageCalculator">The service used for damage calculations.</param>
-    /// <param name="logger">The logger for recording service operations.</param>
-    public StatService(IDamageCalculator damageCalculator, ILogger<StatService> logger)
-    {
-        _damageCalculator = damageCalculator;
-        _logger = logger;
-    }
+	/// <summary>
+	///     Initializes a new instance of the <see cref="StatService" /> class.
+	/// </summary>
+	/// <param name="damageCalculator">The service used for damage calculations.</param>
+	/// <param name="logger">The logger for recording service operations.</param>
+	public StatService(IDamageCalculator damageCalculator, ILogger<StatService> logger)
+	{
+		this.damageCalculator = damageCalculator;
+		this.logger = logger;
+	}
 
-    /// <inheritdoc />
-    public event EventHandler<StatDamageEventArgs>? StatDamageTaken;
+	/// <inheritdoc />
+	public event EventHandler<StatDamageEventArgs>? StatDamageTaken;
 
-    /// <inheritdoc />
-    public event EventHandler<StatHealEventArgs>? StatHealed;
+	/// <inheritdoc />
+	public event EventHandler<StatHealEventArgs>? StatHealed;
 
-    /// <inheritdoc />
-    public void Heal(StatEntry<IStat> statEntry, HealOptions healOptions)
-    {
-        // Ensure the stat can be healed and is currently damaged
-        if (!statEntry.IsHealable || statEntry is not IDamageable { CurrentDamage: > 0 } damageable) return;
+	/// <inheritdoc />
+	public void Heal(StatEntry<IStat> statEntry, HealOptions healOptions)
+	{
+		ArgumentNullException.ThrowIfNull(statEntry, nameof(statEntry));
+		ArgumentNullException.ThrowIfNull(healOptions, nameof(healOptions));
 
-        int healAmount = healOptions.BaseAmount; // Can be expanded with more complex logic later
-        if (healAmount <= 0) return;
+		// Ensure the stat can be healed and is currently damaged
+		if (!statEntry.IsHealable || statEntry is not IDamageable { CurrentDamage: > 0 } damageable)
+		{
+			return;
+		}
 
-        int previousDamage = damageable.CurrentDamage;
-        int newTotalDamage = Math.Max(0, previousDamage - healAmount);
+		var healAmount = healOptions.BaseAmount; // Can be expanded with more complex logic later
+		if (healAmount <= 0)
+		{
+			return;
+		}
 
-        damageable.CurrentDamage = newTotalDamage;
-        damageable.CurrentPercentageDamage = statEntry.PointsAsPercentageOfMax(newTotalDamage);
+		var previousDamage = damageable.CurrentDamage;
+		var newTotalDamage = Math.Max(0, previousDamage - healAmount);
 
-        int actualHealAmount = previousDamage - newTotalDamage;
-        if (actualHealAmount <= 0) return;
+		damageable.CurrentDamage = newTotalDamage;
+		damageable.CurrentPercentageDamage = statEntry.PointsAsPercentageOfMax(newTotalDamage);
 
-        StatHealed?.Invoke(this, new StatHealEventArgs
-        {
-            HealAmount = actualHealAmount,
-            HealPercentage = statEntry.PointsAsPercentageOfMax(actualHealAmount),
-            SourceId = healOptions.SourceId,
-            StatName = statEntry.Stat.Name.Singular
-        });
-    }
+		var actualHealAmount = previousDamage - newTotalDamage;
+		if (actualHealAmount <= 0)
+		{
+			return;
+		}
 
-    /// <inheritdoc />
-    public void AddPoints(IStat target, int points)
-    {
-        if (points == 0) return;
-        ArgumentNullException.ThrowIfNull(target);
+		this.StatHealed?.Invoke(this,
+			new StatHealEventArgs
+			{
+				HealAmount = actualHealAmount,
+				HealPercentage = statEntry.PointsAsPercentageOfMax(actualHealAmount),
+				SourceId = healOptions.SourceId,
+				StatName = statEntry.Stat.Name.Singular
+			});
+	}
 
-        target.BaseValue += points;
-    }
+	/// <inheritdoc />
+	public void AddPoints(IStat target, int points)
+	{
+		if (points == 0)
+		{
+			return;
+		}
 
-    /// <inheritdoc />
-    public void RemovePoints(IStat target, int points)
-    {
-        AddPoints(target, -points);
-    }
+		ArgumentNullException.ThrowIfNull(target);
 
-    /// <inheritdoc />
-    public void SetPoints(IStat stat, int points)
-    {
-        if (stat.Variation is StatVariation.Complex or StatVariation.Minor)
-        {
-            _logger.LogIllegalStatChange(stat.Name.Singular, "Cannot directly set value of a complex/minor stat.");
-            return;
-        }
+		target.BaseValue += points;
+	}
 
-        if (stat.Value == points) return;
+	/// <inheritdoc />
+	public void RemovePoints(IStat target, int points) => this.AddPoints(target, -points);
 
-        int oldValue = stat.Value;
-        int clampedValue = Math.Clamp(points, stat.MinValue, stat.MaxValue);
+	/// <inheritdoc />
+	public void SetPoints(IStat stat, int points)
+	{
+		ArgumentNullException.ThrowIfNull(stat, nameof(stat));
 
-        stat.Value = clampedValue;
-        stat.BaseValue += clampedValue - oldValue;
+		if (stat.Variation is StatVariation.Complex or StatVariation.Minor)
+		{
+			this.logger.LogIllegalStatChange(stat.Name.Singular, "Cannot directly set value of a complex/minor stat.");
+			return;
+		}
 
-        stat.InvokeValueChanged(new ValueChangedEventArgs(oldValue, stat.Value));
-        stat.InvokeBaseValueChanged();
-    }
+		if (stat.Value == points)
+		{
+			return;
+		}
 
-    /// <inheritdoc />
-    public void LinkStats(IStat sourceStat, IStat dependentStat, float ratio)
-    {
-        ArgumentNullException.ThrowIfNull(sourceStat);
-        ArgumentNullException.ThrowIfNull(dependentStat);
+		var oldValue = stat.Value;
+		var clampedValue = Math.Clamp(points, stat.MinValue, stat.MaxValue);
 
-        if (!dependentStat.LinkedStats.TryAdd(sourceStat.Guid, ratio))
-        {
-            _logger.LogWarning("Stat {DependentStat} is already linked to {SourceStat}.",
-                dependentStat.Name, sourceStat.Name);
-            return;
-        }
+		stat.Value = clampedValue;
+		stat.BaseValue += clampedValue - oldValue;
 
-        sourceStat.ValueChanged += (sender, args) => { HandleLinkedStatChange(dependentStat, args, ratio); };
+		stat.InvokeValueChanged(new ValueChangedEventArgs(oldValue, stat.Value));
+		stat.InvokeBaseValueChanged();
+	}
 
-        _logger.LogInformation("Successfully linked {DependentStat} to {SourceStat} with a ratio of {Ratio}.",
-            dependentStat.Name, sourceStat.Name, ratio);
-    }
+	/// <inheritdoc />
+	public void LinkStats(IStat sourceStat, IStat dependentStat, float ratio)
+	{
+		ArgumentNullException.ThrowIfNull(sourceStat);
+		ArgumentNullException.ThrowIfNull(dependentStat);
 
-    /// <inheritdoc />
-    public void ApplyDamage(StatEntry<IStat> statEntry, DamageOptions damageOptions)
-    {
-        if (!statEntry.IsDamageable || statEntry is not IDamageable damageable) return;
+		if (!dependentStat.LinkedStats.TryAdd(sourceStat.Guid, ratio))
+		{
+			this.logger.LogWarning("Stat {DependentStat} is already linked to {SourceStat}.",
+				dependentStat.Name, sourceStat.Name);
+			return;
+		}
 
-        int incomingDamage = _damageCalculator.GetPointDamageFromOptions(damageOptions, statEntry.Stat);
-        if (incomingDamage <= 0) return;
-        int finalDamage = _damageCalculator.CalculateFinalDamage(incomingDamage, statEntry.Mitigations);
-        if (finalDamage <= 0) return;
+		sourceStat.ValueChanged += (sender, args) => this.HandleLinkedStatChange(dependentStat, args, ratio);
 
-        int previousDamage = damageable.CurrentDamage;
-        int newTotalDamage = Math.Clamp(previousDamage + finalDamage, statEntry.Stat.MinValue, statEntry.Stat.MaxValue);
+		this.logger.LogInformation("Successfully linked {DependentStat} to {SourceStat} with a ratio of {Ratio}.",
+			dependentStat.Name, sourceStat.Name, ratio);
+	}
 
-        damageable.CurrentDamage = newTotalDamage;
-        damageable.CurrentPercentageDamage = statEntry.PointsAsPercentageOfMax(newTotalDamage);
+	/// <inheritdoc />
+	public void ApplyDamage(StatEntry<IStat> statEntry, DamageOptions damageOptions)
+	{
+		ArgumentNullException.ThrowIfNull(statEntry, nameof(statEntry));
+		ArgumentNullException.ThrowIfNull(damageOptions, nameof(damageOptions));
 
-        StatDamageTaken?.Invoke(this, new StatDamageEventArgs
-        {
-            IncomingDamage = incomingDamage,
-            IncomingDamagePercentage = statEntry.PointsAsPercentageOfMax(incomingDamage),
-            FinalDamage = finalDamage,
-            FinalDamagePercentage = statEntry.PointsAsPercentageOfMax(finalDamage),
-            SourceId = damageOptions.SourceId,
-            StatName = statEntry.Stat.Name.Singular
-        });
-    }
+		if (!statEntry.IsDamageable || statEntry is not IDamageable damageable)
+		{
+			return;
+		}
 
-    /// <inheritdoc />
-    public void AddModifier(StatEntry<IStat> statEntry, IModifier modifier)
-    {
-        statEntry.Modifiers.Add(modifier);
-        RecalculateStatValue(statEntry);
-    }
+		var incomingDamage = this.damageCalculator.GetPointDamageFromOptions(damageOptions, statEntry.Stat);
+		if (incomingDamage <= 0)
+		{
+			return;
+		}
 
-    /// <inheritdoc />
-    public void RemoveModifier(StatEntry<IStat> statEntry, IModifier modifier)
-    {
-        _ = statEntry.Modifiers.Remove(modifier);
-        RecalculateStatValue(statEntry);
-    }
+		var finalDamage = this.damageCalculator.CalculateFinalDamage(incomingDamage, statEntry.Mitigations);
+		if (finalDamage <= 0)
+		{
+			return;
+		}
 
-    /// <inheritdoc />
-    public void AddMitigation(StatEntry<IStat> statEntry, IAppliesDamageMitigation mitigation)
-    {
-        statEntry.Mitigations.Add(mitigation);
-    }
+		var previousDamage = damageable.CurrentDamage;
+		var newTotalDamage = Math.Clamp(previousDamage + finalDamage, statEntry.Stat.MinValue, statEntry.Stat.MaxValue);
 
-    /// <inheritdoc />
-    public void RemoveMitigation(StatEntry<IStat> statEntry, IAppliesDamageMitigation mitigation)
-    {
-        _ = statEntry.Mitigations.Remove(mitigation);
-    }
+		damageable.CurrentDamage = newTotalDamage;
+		damageable.CurrentPercentageDamage = statEntry.PointsAsPercentageOfMax(newTotalDamage);
 
-    /// <summary>
-    ///     Handles the event when a source stat's value changes, and applies the
-    ///     proportional change to the dependent stat.
-    /// </summary>
-    private void HandleLinkedStatChange(IStat dependentStat, ValueChangedEventArgs sourceArgs, float ratio)
-    {
-        int change = (int)(sourceArgs.Delta * ratio);
-        if (change == 0) return;
+		this.StatDamageTaken?.Invoke(this,
+			new StatDamageEventArgs
+			{
+				IncomingDamage = incomingDamage,
+				IncomingDamagePercentage = statEntry.PointsAsPercentageOfMax(incomingDamage),
+				FinalDamage = finalDamage,
+				FinalDamagePercentage = statEntry.PointsAsPercentageOfMax(finalDamage),
+				SourceId = damageOptions.SourceId,
+				StatName = statEntry.Stat.Name.Singular
+			});
+	}
 
-        AddPoints(dependentStat, change);
+	/// <inheritdoc />
+	public void AddModifier(StatEntry<IStat> statEntry, IModifier modifier)
+	{
+		ArgumentNullException.ThrowIfNull(statEntry, nameof(statEntry));
+		statEntry.Modifiers.Add(modifier);
+		this.RecalculateStatValue(statEntry);
+	}
 
-        _logger.LogDebug("Propagated change from linked stat. {DependentStat} changed by {Change}.",
-            dependentStat.Name, change);
-    }
+	/// <inheritdoc />
+	public void RemoveModifier(StatEntry<IStat> statEntry, IModifier modifier)
+	{
+		ArgumentNullException.ThrowIfNull(statEntry, nameof(statEntry));
+		_ = statEntry.Modifiers.Remove(modifier);
+		this.RecalculateStatValue(statEntry);
+	}
 
-    /// <summary>
-    ///     Recalculates a stat's final value by resetting it to its base value
-    ///     and then applying all active modifiers in order of priority.
-    /// </summary>
-    private void RecalculateStatValue(StatEntry<IStat> statEntry)
-    {
-        IStat stat = statEntry.Stat;
-        int oldValue = stat.Value;
+	/// <inheritdoc />
+	public void AddMitigation(StatEntry<IStat> statEntry, IAppliesDamageMitigation mitigation)
+	{
+		ArgumentNullException.ThrowIfNull(statEntry, nameof(statEntry));
+		ArgumentNullException.ThrowIfNull(mitigation, nameof(mitigation));
+		statEntry.Mitigations.Add(mitigation);
+	}
 
-        stat.Value = stat.BaseValue;
+	/// <inheritdoc />
+	public void RemoveMitigation(StatEntry<IStat> statEntry, IAppliesDamageMitigation mitigation)
+	{
+		ArgumentNullException.ThrowIfNull(statEntry, nameof(statEntry));
+		ArgumentNullException.ThrowIfNull(mitigation, nameof(mitigation));
+		_ = statEntry.Mitigations.Remove(mitigation);
+	}
 
-        foreach (IModifier modifier in statEntry.Modifiers.OrderBy(m => m.Priority))
-        {
-            stat.Value = modifier.ApplyModification(stat.BaseValue, stat.Value, stat.MaxValue);
-            _logger.LogModifierApplied(modifier.Name.Singular, stat.Name.Singular);
-        }
+	/// <summary>
+	///     Handles the event when a source stat's value changes, and applies the
+	///     proportional change to the dependent stat.
+	/// </summary>
+	private void HandleLinkedStatChange(IStat dependentStat, ValueChangedEventArgs sourceArgs, float ratio)
+	{
+		var change = (int)(sourceArgs.Delta * ratio);
+		if (change == 0)
+		{
+			return;
+		}
 
-        if (oldValue != stat.Value) stat.InvokeValueChanged(new ValueChangedEventArgs(oldValue, stat.Value));
-    }
+		this.AddPoints(dependentStat, change);
+
+		this.logger.LogDebug("Propagated change from linked stat. {DependentStat} changed by {Change}.",
+			dependentStat.Name, change);
+	}
+
+	/// <summary>
+	///     Recalculates a stat's final value by resetting it to its base value
+	///     and then applying all active modifiers in order of priority.
+	/// </summary>
+	private void RecalculateStatValue(StatEntry<IStat> statEntry)
+	{
+		var stat = statEntry.Stat;
+		var oldValue = stat.Value;
+
+		stat.Value = stat.BaseValue;
+
+		foreach (var modifier in statEntry.Modifiers.OrderBy(m => m.Priority))
+		{
+			stat.Value = modifier.ApplyModification(stat.BaseValue, stat.Value, stat.MaxValue);
+			this.logger.LogModifierApplied(modifier.Name.Singular, stat.Name.Singular);
+		}
+
+		if (oldValue != stat.Value)
+		{
+			stat.InvokeValueChanged(new ValueChangedEventArgs(oldValue, stat.Value));
+		}
+	}
 }

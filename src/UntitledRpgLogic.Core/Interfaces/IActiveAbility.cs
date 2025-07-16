@@ -6,8 +6,8 @@ namespace UntitledRpgLogic.Core.Interfaces;
 /// </summary>
 public interface IActiveAbility : IActiveEffect
 {
-    /// <summary>
-    ///     Activates the spell ability with specific context.
-    /// </summary>
-    void Activate();
+	/// <summary>
+	///     Activates the spell ability with specific context.
+	/// </summary>
+	public void Activate();
 }

@@ -5,9 +5,9 @@ namespace UntitledRpgLogic.Core.Interfaces;
 /// </summary>
 public interface IUnitOfWork : IDisposable
 {
-    /// <summary>
-    ///     Commits all changes made in the unit of work to the database.
-    /// </summary>
-    /// <returns>number of state entries written to the database</returns>
-    int Commit();
+	/// <summary>
+	///     Commits all changes made in the unit of work to the database.
+	/// </summary>
+	/// <returns>number of state entries written to the database</returns>
+	public int Commit();
 }

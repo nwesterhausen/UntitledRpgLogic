@@ -15,147 +15,149 @@ namespace UntitledRpgLogic.Core.Classes;
 /// </summary>
 public class Skill : ISkill
 {
-    private int _level;
+	private int level;
 
-    // Private backing fields for properties that require validation.
-    private int _value;
+	// Private backing fields for properties that require validation.
+	private int value;
 
-    /// <summary>
-    ///     Constructs a new Skill instance from a <see cref="SkillDataConfig" />.
-    /// </summary>
-    /// <param name="config"></param>
-    /// <param name="instanceId"></param>
-    /// <exception cref="ArgumentOutOfRangeException"></exception>
-    public Skill(SkillDataConfig config, Guid? instanceId = null)
-    {
-        // IHasGuid
-        Guid = config.ExplicitId ?? Guid.NewGuid();
-        Id = Convert.ToBase64String(Guid.ToByteArray());
-        ShortGuid = Guid.ToString("N")[..8].ToUpperInvariant();
+	/// <summary>
+	///     Constructs a new Skill instance from a <see cref="SkillDataConfig" />.
+	/// </summary>
+	/// <param name="config"></param>
+	/// <param name="instanceId"></param>
+	/// <exception cref="ArgumentOutOfRangeException"></exception>
+	public Skill(SkillDataConfig config, Guid? instanceId = null)
+	{
+		ArgumentNullException.ThrowIfNull(config, nameof(config));
 
-        // IHasName
-        Name = Name.Deserialize(config.Name);
+		// IHasGuid
+		this.Guid = config.ExplicitId ?? Guid.NewGuid();
+		this.Id = Convert.ToBase64String(this.Guid.ToByteArray());
+		this.ShortGuid = this.Guid.ToString("N")[..8].ToUpperInvariant();
 
-        // IInstantiable
-        InstanceId = instanceId ?? Guid.Empty;
+		// IHasName
+		this.Name = Name.Deserialize(config.Name);
 
-        // IHasLeveling - Configuration with Validation
-        LevelingOptions levelingOptions = config.LevelingOptions ?? new LevelingOptions();
+		// IInstantiable
+		this.InstanceId = instanceId ?? Guid.Empty;
 
-        MaxLevel = levelingOptions.MaxLevel ?? DefaultValues.SKILL_DEFAULT_MAX_LEVEL;
-        if (MaxLevel < 1)
-            throw new ArgumentOutOfRangeException(nameof(config.LevelingOptions.MaxLevel),
-                "MaxLevel must be at least 1.");
+		// IHasLeveling - Configuration with Validation
+		var levelingOptions = config.LevelingOptions ?? new LevelingOptions();
 
-        PointsForFirstLevel = levelingOptions.PointsForFirstLevel ?? DefaultValues.SKILL_DEFAULT_POINTS_FOR_FIRST_LEVEL;
-        if (PointsForFirstLevel < 1)
-            throw new ArgumentOutOfRangeException(nameof(config.LevelingOptions.PointsForFirstLevel),
-                "PointsForFirstLevel must be at least 1.");
+		this.MaxLevel = levelingOptions.MaxLevel ?? DefaultValues.SkillDefaultMaxLevel;
+		if (this.MaxLevel < 1)
+		{
+			throw new ArgumentOutOfRangeException(nameof(config),
+				"LevelingOptions.MaxLevel must be at least 1.");
+		}
 
-        ScalingFactorA = levelingOptions.ScalingFactorA ?? DefaultValues.SKILL_DEFAULT_SCALING_ALPHA;
-        ScalingFactorB = levelingOptions.ScalingFactorB ?? DefaultValues.SKILL_DEFAULT_SCALING_BETA;
-        ScalingFactorC = levelingOptions.ScalingFactorC ?? DefaultValues.SKILL_DEFAULT_SCALING_GAMMA;
-        ScalingCurve = levelingOptions.ScalingCurve ?? DefaultValues.SKILL_DEFAULT_SCALING_CURVE;
+		this.PointsForFirstLevel = levelingOptions.PointsForFirstLevel ?? DefaultValues.SkillDefaultPointsForFirstLevel;
+		if (this.PointsForFirstLevel < 1)
+		{
+			throw new ArgumentOutOfRangeException(nameof(config),
+				"LevelingOptions.PointsForFirstLevel must be at least 1.");
+		}
 
-        // IHasLeveling - Initial State using properties to enforce guardrails
-        Level = 1;
-        Value = 0; // Represents current experience points
-    }
+		this.ScalingFactorA = levelingOptions.ScalingFactorA ?? DefaultValues.SkillDefaultScalingAlpha;
+		this.ScalingFactorB = levelingOptions.ScalingFactorB ?? DefaultValues.SkillDefaultScalingBeta;
+		this.ScalingFactorC = levelingOptions.ScalingFactorC ?? DefaultValues.SkillDefaultScalingGamma;
+		this.ScalingCurve = levelingOptions.ScalingCurve ?? DefaultValues.SkillDefaultScalingCurve;
 
-    // IHasGuid Implementation
-    /// <inheritdoc />
-    public Guid Guid { get; }
+		// IHasLeveling - Initial State using properties to enforce guardrails
+		this.Level = 1;
+		this.Value = 0; // Represents current experience points
+	}
 
-    /// <inheritdoc />
-    public string Id { get; }
+	// IHasGuid Implementation
+	/// <inheritdoc />
+	public Guid Guid { get; }
 
-    /// <inheritdoc />
-    public string ShortGuid { get; }
+	/// <inheritdoc />
+	public string Id { get; }
 
-    // IHasName Implementation
-    /// <inheritdoc />
-    public Name Name { get; }
+	/// <inheritdoc />
+	public string ShortGuid { get; }
 
-    // IInstantiable Implementation
-    /// <inheritdoc />
-    public Guid InstanceId { get; init; }
+	// IHasName Implementation
+	/// <inheritdoc />
+	public Name Name { get; }
 
-    // IHasLeveling Implementation with Guardrails
+	// IInstantiable Implementation
+	/// <inheritdoc />
+	public Guid InstanceId { get; init; }
 
-    /// <inheritdoc cref="IHasMutableValue" />
-    public int Value
-    {
-        get => _value;
-        set => _value = Math.Max(0, value); // Experience cannot be negative
-    }
+	// IHasLeveling Implementation with Guardrails
 
-    /// <inheritdoc />
-    public int Level
-    {
-        get => _level;
-        set => _level = Math.Clamp(value, 1, MaxLevel); // Level is always between 1 and MaxLevel
-    }
+	/// <inheritdoc cref="IHasMutableValue" />
+	public int Value
+	{
+		get => this.value;
+		set => this.value = Math.Max(0, value); // Experience cannot be negative
+	}
 
-    /// <inheritdoc />
-    public int MaxLevel { get; }
+	/// <inheritdoc />
+	public int Level
+	{
+		get => this.level;
+		set => this.level = Math.Clamp(value, 1, this.MaxLevel); // Level is always between 1 and MaxLevel
+	}
 
-    /// <inheritdoc />
-    public float ScalingFactorA { get; }
+	/// <inheritdoc />
+	public int MaxLevel { get; }
 
-    /// <inheritdoc />
-    public float ScalingFactorB { get; }
+	/// <inheritdoc />
+	public float ScalingFactorA { get; }
 
-    /// <inheritdoc />
-    public float ScalingFactorC { get; }
+	/// <inheritdoc />
+	public float ScalingFactorB { get; }
 
-    /// <inheritdoc />
-    public ScalingCurveType ScalingCurve { get; }
+	/// <inheritdoc />
+	public float ScalingFactorC { get; }
 
-    /// <inheritdoc />
-    public int PointsForFirstLevel { get; }
+	/// <inheritdoc />
+	public ScalingCurveType ScalingCurve { get; }
 
-    /// <inheritdoc />
-    public event EventHandler<ValueChangedEventArgs>? ValueChanged;
+	/// <inheritdoc />
+	public int PointsForFirstLevel { get; }
 
-    /// <inheritdoc />
-    public event EventHandler<ValueChangedEventArgs>? LevelChanged;
+	/// <inheritdoc />
+	public event EventHandler<ValueChangedEventArgs>? ValueChanged;
 
-    // Methods for the service to invoke events
-    /// <inheritdoc />
-    public void InvokeValueChanged(ValueChangedEventArgs args)
-    {
-        ValueChanged?.Invoke(this, args);
-    }
+	/// <inheritdoc />
+	public event EventHandler<ValueChangedEventArgs>? LevelChanged;
 
-    /// <inheritdoc />
-    public void InvokeLevelChanged(ValueChangedEventArgs args)
-    {
-        LevelChanged?.Invoke(this, args);
-    }
+	// Methods for the service to invoke events
+	/// <inheritdoc />
+	public void InvokeValueChanged(ValueChangedEventArgs args) => this.ValueChanged?.Invoke(this, args);
 
-    /// <summary>
-    ///     Creates a new Skill instance from a database model.
-    /// </summary>
-    public static Skill FromDbModel(SkillDefinition dbModel, Guid? instanceId = null)
-    {
-        // This factory method reuses the main constructor, so all validation is applied.
-        return new Skill(new SkillDataConfig
-        {
-            ExplicitId = dbModel.Id,
-            Name = dbModel.Name,
-            LevelingOptions = new LevelingOptions
-            {
-                MaxLevel = dbModel.MaxLevel,
-                ScalingFactorA = dbModel.ScalingFactorA,
-                ScalingFactorB = dbModel.ScalingFactorB,
-                ScalingFactorC = dbModel.ScalingFactorC,
-                PointsForFirstLevel = dbModel.PointsForFirstLevel,
-                ScalingCurve = dbModel.ScalingCurve
-            }
-        }, instanceId);
-    }
+	/// <inheritdoc />
+	public void InvokeLevelChanged(ValueChangedEventArgs args) => this.LevelChanged?.Invoke(this, args);
 
-    // NOTE: The AddPoints, RemovePoints, and SetPoints methods have been removed.
-    // This logic is the responsibility of the SkillService and should be removed from the ISkill interface
-    // and its base interfaces (like IHasChangeableValue).
+	/// <summary>
+	///     Creates a new Skill instance from a database model.
+	/// </summary>
+	public static Skill FromDbModel(SkillDefinition dbModel, Guid? instanceId = null)
+	{
+		ArgumentNullException.ThrowIfNull(dbModel, nameof(dbModel));
+		// This factory method reuses the main constructor, so all validation is applied.
+		return new Skill(
+			new SkillDataConfig
+			{
+				ExplicitId = dbModel.Id,
+				Name = dbModel.Name,
+				LevelingOptions = new LevelingOptions
+				{
+					MaxLevel = dbModel.MaxLevel,
+					ScalingFactorA = dbModel.ScalingFactorA,
+					ScalingFactorB = dbModel.ScalingFactorB,
+					ScalingFactorC = dbModel.ScalingFactorC,
+					PointsForFirstLevel = dbModel.PointsForFirstLevel,
+					ScalingCurve = dbModel.ScalingCurve
+				}
+			}, instanceId);
+	}
+
+	// NOTE: The AddPoints, RemovePoints, and SetPoints methods have been removed.
+	// This logic is the responsibility of the SkillService and should be removed from the ISkill interface
+	// and its base interfaces (like IHasChangeableValue).
 }

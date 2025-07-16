@@ -1,8 +1,8 @@
 module.exports = {
-    content:
-        [
-            './**/*.razor',
-            './wwwroot/index.html',
-        ],
+	content:
+		[
+			'./**/*.razor',
+			'./wwwroot/index.html',
+		],
 }
 

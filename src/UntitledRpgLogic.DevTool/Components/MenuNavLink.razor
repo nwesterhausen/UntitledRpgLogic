@@ -1,20 +1,20 @@
 @inherits ComponentBase
 
 <NavLink
-    @attributes="@AdditionalAttributes"
-    Match="@Match"
-    ActiveClass="menu-active"
-    href="@Href">
-    @ChildContent
+	@attributes="@AdditionalAttributes"
+	Match="@Match"
+	ActiveClass="menu-active"
+	href="@Href">
+	@ChildContent
 </NavLink>
 
 @code {
-    [Parameter] public string Href { get; set; } = string.Empty; // Parameter for the link's URL
+	[Parameter] public string Href { get; set; } = string.Empty; // Parameter for the link's URL
 
-    [Parameter] public NavLinkMatch Match { get; set; } // Parameter for NavLinkMatch
+	[Parameter] public NavLinkMatch Match { get; set; } // Parameter for NavLinkMatch
 
-    [Parameter(CaptureUnmatchedValues = true)]
-    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; } // To pass through other HTML attributes
+	[Parameter(CaptureUnmatchedValues = true)]
+	public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; } // To pass through other HTML attributes
 
-    [Parameter] public RenderFragment? ChildContent { get; set; } // To include nested content
+	[Parameter] public RenderFragment? ChildContent { get; set; } // To include nested content
 }

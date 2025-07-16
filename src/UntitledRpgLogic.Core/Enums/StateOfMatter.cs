@@ -5,18 +5,23 @@ namespace UntitledRpgLogic.Core.Enums;
 /// </summary>
 public enum StateOfMatter
 {
-    /// <summary>
-    ///     The solid state of matter.
-    /// </summary>
-    Solid = 1,
+	/// <summary>
+	///     An unspecified dimension scale (None).
+	/// </summary>
+	None = 0,
 
-    /// <summary>
-    ///     The liquid state of matter.
-    /// </summary>
-    Liquid = 2,
+	/// <summary>
+	///     The solid state of matter.
+	/// </summary>
+	Solid = 1,
 
-    /// <summary>
-    ///     The gaseous state of matter.
-    /// </summary>
-    Gas = 3
+	/// <summary>
+	///     The liquid state of matter.
+	/// </summary>
+	Liquid = 2,
+
+	/// <summary>
+	///     The gaseous state of matter.
+	/// </summary>
+	Gas = 3
 }

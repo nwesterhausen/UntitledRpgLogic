@@ -5,13 +5,13 @@ namespace UntitledRpgLogic.Core.Interfaces;
 /// </summary>
 public interface IHasTooltipString
 {
-    /// <summary>
-    ///     Gets the tooltip string of the object. Should be short and concise, ideally one line.
-    /// </summary>
-    string TooltipString { get; }
+	/// <summary>
+	///     Gets the tooltip string of the object. Should be short and concise, ideally one line.
+	/// </summary>
+	public string TooltipString { get; }
 
-    /// <summary>
-    ///     Get a longer description for the tooltip, which can be used to provide more detailed information about the object.
-    /// </summary>
-    string TooltipDescription { get; }
+	/// <summary>
+	///     Get a longer description for the tooltip, which can be used to provide more detailed information about the object.
+	/// </summary>
+	public string TooltipDescription { get; }
 }

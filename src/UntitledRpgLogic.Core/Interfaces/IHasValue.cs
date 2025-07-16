@@ -5,8 +5,8 @@ namespace UntitledRpgLogic.Core.Interfaces;
 /// </summary>
 public interface IHasValue
 {
-    /// <summary>
-    ///     Gets the current value.
-    /// </summary>
-    int Value { get; }
+	/// <summary>
+	///     Gets the current value.
+	/// </summary>
+	public int Value { get; }
 }

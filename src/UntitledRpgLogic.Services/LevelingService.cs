@@ -11,131 +11,159 @@ namespace UntitledRpgLogic.Services;
 /// </summary>
 public class LevelingService<T> : ILevelingService<T> where T : IHasLeveling
 {
-    private readonly ILogger<LevelingService<T>> _logger;
+	private readonly ILogger<LevelingService<T>> logger;
 
-    /// <summary>
-    ///     Constructs a new instance of the LevelingService.
-    /// </summary>
-    /// <param name="logger"></param>
-    public LevelingService(ILogger<LevelingService<T>> logger)
-    {
-        _logger = logger;
-    }
+	/// <summary>
+	///     Constructs a new instance of the LevelingService.
+	/// </summary>
+	/// <param name="logger"></param>
+	public LevelingService(ILogger<LevelingService<T>> logger) => this.logger = logger;
 
-    /// <inheritdoc />
-    public void AddPoints(T target, int points)
-    {
-        if (points == 0) return;
+	/// <inheritdoc />
+	public void AddPoints(T target, int points)
+	{
+		if (points == 0)
+		{
+			return;
+		}
 
-        int oldValue = target.Value;
-        target.Value += points;
+		var oldValue = target.Value;
+		target.Value += points;
 
-        LogValueChange(target, oldValue);
-        CheckForLevelChange(target);
-    }
+		this.LogValueChange(target, oldValue);
+		this.CheckForLevelChange(target);
+	}
 
-    /// <inheritdoc />
-    public void RemovePoints(T target, int points)
-    {
-        AddPoints(target, -points);
-    }
+	/// <inheritdoc />
+	public void RemovePoints(T target, int points) => this.AddPoints(target, -points);
 
-    /// <inheritdoc />
-    public void SetPoints(T target, int points)
-    {
-        int oldValue = target.Value;
-        target.Value = points;
+	/// <inheritdoc />
+	public void SetPoints(T target, int points)
+	{
+		var oldValue = target.Value;
+		target.Value = points;
 
-        LogValueChange(target, oldValue);
-        CheckForLevelChange(target);
-    }
+		this.LogValueChange(target, oldValue);
+		this.CheckForLevelChange(target);
+	}
 
-    /// <inheritdoc />
-    public int GetTotalPointsForLevel(T target, int targetLevel)
-    {
-        if (targetLevel <= 1) return 0;
-        if (targetLevel > target.MaxLevel) targetLevel = target.MaxLevel;
+	/// <inheritdoc />
+	public int GetTotalPointsForLevel(T target, int targetLevel)
+	{
+		if (targetLevel <= 1)
+		{
+			return 0;
+		}
 
-        return target.ScalingCurve switch
-        {
-            ScalingCurveType.Linear => target.PointsForFirstLevel + (int)(target.ScalingFactorA * (targetLevel - 2)),
-            ScalingCurveType.Exponential => (int)(target.PointsForFirstLevel *
-                                                  Math.Pow(target.ScalingFactorA, targetLevel - 2)),
-            ScalingCurveType.Polynomial => (int)((target.ScalingFactorA *
-                                                  Math.Pow(targetLevel - 1, target.ScalingFactorB)) +
-                                                 target.ScalingFactorC),
-            ScalingCurveType.None => throw new NotImplementedException(),
-            _ => throw new NotSupportedException($"Unsupported scaling curve type: {target.ScalingCurve}")
-        };
-    }
+		if (targetLevel > target.MaxLevel)
+		{
+			targetLevel = target.MaxLevel;
+		}
 
-    /// <inheritdoc />
-    public int GetPointsToNextLevel(T target)
-    {
-        if (target.Level >= target.MaxLevel) return 0;
-        int totalPointsForNextLevel = GetTotalPointsForLevel(target, target.Level + 1);
-        return Math.Max(0, totalPointsForNextLevel - target.Value);
-    }
+		return target.ScalingCurve switch
+		{
+			ScalingCurveType.Linear => target.PointsForFirstLevel + (int)(target.ScalingFactorA * (targetLevel - 2)),
+			ScalingCurveType.Exponential => (int)(target.PointsForFirstLevel *
+			                                      Math.Pow(target.ScalingFactorA, targetLevel - 2)),
+			ScalingCurveType.Polynomial => (int)((target.ScalingFactorA *
+			                                      Math.Pow(targetLevel - 1, target.ScalingFactorB)) +
+			                                     target.ScalingFactorC),
+			ScalingCurveType.None => throw new NotImplementedException(),
+			_ => throw new NotSupportedException($"Unsupported scaling curve type: {target.ScalingCurve}")
+		};
+	}
 
-    /// <inheritdoc />
-    public float GetProgressToNextLevel(T target)
-    {
-        if (target.Level >= target.MaxLevel) return 1.0f;
+	/// <inheritdoc />
+	public int GetPointsToNextLevel(T target)
+	{
+		if (target.Level >= target.MaxLevel)
+		{
+			return 0;
+		}
 
-        int pointsForCurrentLevel = GetTotalPointsForLevel(target, target.Level);
-        int pointsForNextLevel = GetTotalPointsForLevel(target, target.Level + 1);
+		var totalPointsForNextLevel = this.GetTotalPointsForLevel(target, target.Level + 1);
+		return Math.Max(0, totalPointsForNextLevel - target.Value);
+	}
 
-        int pointsNeededForThisLevel = pointsForNextLevel - pointsForCurrentLevel;
-        if (pointsNeededForThisLevel <= 0) return 1.0f;
+	/// <inheritdoc />
+	public float GetProgressToNextLevel(T target)
+	{
+		if (target.Level >= target.MaxLevel)
+		{
+			return 1.0f;
+		}
 
-        int pointsEarnedThisLevel = target.Value - pointsForCurrentLevel;
-        return Math.Clamp((float)pointsEarnedThisLevel / pointsNeededForThisLevel, 0.0f, 1.0f);
-    }
+		var pointsForCurrentLevel = this.GetTotalPointsForLevel(target, target.Level);
+		var pointsForNextLevel = this.GetTotalPointsForLevel(target, target.Level + 1);
 
-    private void LogValueChange(T target, int oldValue)
-    {
-        if (target.Value == oldValue) return;
+		var pointsNeededForThisLevel = pointsForNextLevel - pointsForCurrentLevel;
+		if (pointsNeededForThisLevel <= 0)
+		{
+			return 1.0f;
+		}
 
-        target.InvokeValueChanged(new ValueChangedEventArgs(oldValue, target.Value));
-        int pointsChanged = target.Value - oldValue;
+		var pointsEarnedThisLevel = target.Value - pointsForCurrentLevel;
+		return Math.Clamp((float)pointsEarnedThisLevel / pointsNeededForThisLevel, 0.0f, 1.0f);
+	}
 
-        if (target is IHasName namedTarget)
-            // Use the new generic helper
-            _logger.LogLevelablePointsChanged(typeof(T).Name, namedTarget.Name.Singular, pointsChanged, target.Value);
-        else
-            // Fallback for unnamed items
-            _logger.LogLevelablePointsChangedGeneric(typeof(T).Name, pointsChanged, target.Value);
-    }
+	private void LogValueChange(T target, int oldValue)
+	{
+		if (target.Value == oldValue)
+		{
+			return;
+		}
 
-    private void CheckForLevelChange(T target)
-    {
-        int oldLevel = target.Level;
-        int newLevel = CalculateLevelFromPoints(target);
+		target.InvokeValueChanged(new ValueChangedEventArgs(oldValue, target.Value));
+		var pointsChanged = target.Value - oldValue;
 
-        if (newLevel != oldLevel)
-        {
-            target.Level = newLevel;
-            target.InvokeLevelChanged(new ValueChangedEventArgs(oldLevel, newLevel));
+		if (target is IHasName namedTarget)
+		{
+			// Use the new generic helper
+			this.logger.LogLevelablePointsChanged(typeof(T).Name, namedTarget.Name.Singular, pointsChanged, target.Value);
+		}
+		else
+		{
+			// Fallback for unnamed items
+			this.logger.LogLevelablePointsChangedGeneric(typeof(T).Name, pointsChanged, target.Value);
+		}
+	}
 
-            if (target is IHasName namedTarget)
-                // Use the new generic helper
-                _logger.LogLevelableChanged(typeof(T).Name, namedTarget.Name.Singular, oldLevel, newLevel);
-            else
-                // Fallback for unnamed items
-                _logger.LogLevelableChangedGeneric(typeof(T).Name, oldLevel, newLevel);
-        }
-    }
+	private void CheckForLevelChange(T target)
+	{
+		var oldLevel = target.Level;
+		var newLevel = this.CalculateLevelFromPoints(target);
 
-    private int CalculateLevelFromPoints(T target)
-    {
-        int calculatedLevel = 1;
-        while (calculatedLevel < target.MaxLevel)
-        {
-            if (target.Value < GetTotalPointsForLevel(target, calculatedLevel + 1)) break;
+		if (newLevel != oldLevel)
+		{
+			target.Level = newLevel;
+			target.InvokeLevelChanged(new ValueChangedEventArgs(oldLevel, newLevel));
 
-            calculatedLevel++;
-        }
+			if (target is IHasName namedTarget)
+			{
+				// Use the new generic helper
+				this.logger.LogLevelableChanged(typeof(T).Name, namedTarget.Name.Singular, oldLevel, newLevel);
+			}
+			else
+			{
+				// Fallback for unnamed items
+				this.logger.LogLevelableChangedGeneric(typeof(T).Name, oldLevel, newLevel);
+			}
+		}
+	}
 
-        return calculatedLevel;
-    }
+	private int CalculateLevelFromPoints(T target)
+	{
+		var calculatedLevel = 1;
+		while (calculatedLevel < target.MaxLevel)
+		{
+			if (target.Value < this.GetTotalPointsForLevel(target, calculatedLevel + 1))
+			{
+				break;
+			}
+
+			calculatedLevel++;
+		}
+
+		return calculatedLevel;
+	}
 }

@@ -10,39 +10,39 @@ namespace UntitledRpgLogic.Core.Enums;
 /// </remarks>
 public enum ConfigType
 {
-    /// <summary>
-    ///     Default / Unknown configuration type.
-    /// </summary>
-    Unknown,
+	/// <summary>
+	///     Default / Unknown configuration type.
+	/// </summary>
+	Unknown,
 
-    /// <summary>
-    ///     Configuration that describes the author of a configuration module.
-    /// </summary>
-    Author,
+	/// <summary>
+	///     Configuration that describes the author of a configuration module.
+	/// </summary>
+	Author,
 
-    /// <summary>
-    ///     Configuration that describes a module, which can contain multiple configurations.
-    /// </summary>
-    ModuleInfo,
+	/// <summary>
+	///     Configuration that describes a module, which can contain multiple configurations.
+	/// </summary>
+	ModuleInfo,
 
-    /// <summary>
-    ///     Configuration for an ItemDataConfig.
-    /// </summary>
-    Item,
+	/// <summary>
+	///     Configuration for an ItemDataConfig.
+	/// </summary>
+	Item,
 
-    /// <summary>
-    ///     Configuration for a MaterialDataConfig.
-    /// </summary>
-    Material,
+	/// <summary>
+	///     Configuration for a MaterialDataConfig.
+	/// </summary>
+	Material,
 
-    /// <summary>
-    ///     Configuration for a SkillDataConfig.
-    /// </summary>
-    Skill,
+	/// <summary>
+	///     Configuration for a SkillDataConfig.
+	/// </summary>
+	Skill,
 
-    /// <summary>
-    ///     Configuration for a StatDataConfig.
-    /// </summary>
-    Stat
-    // Add other configuration types as your game grows
+	/// <summary>
+	///     Configuration for a StatDataConfig.
+	/// </summary>
+	Stat
+	// Add other configuration types as your game grows
 }

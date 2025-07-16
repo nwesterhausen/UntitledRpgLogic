@@ -8,8 +8,8 @@ namespace UntitledRpgLogic.Core.Interfaces;
 /// </summary>
 public interface IEffectComponent : IHasGuid, IHasName
 {
-    /// <summary>
-    ///     Gets the type of this effect component, useful for discrimination when processing.
-    /// </summary>
-    EffectComponentType ComponentType { get; }
+	/// <summary>
+	///     Gets the type of this effect component, useful for discrimination when processing.
+	/// </summary>
+	public EffectComponentType ComponentType { get; }
 }
