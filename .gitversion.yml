@@ -15,9 +15,10 @@ branches:
     # This ensures that the pre-release version numbers are based on the version of the main branch.
     track-merge-target: true
     # We want to increment the version on this branch.
-    prevent-increment-of-merged-branch-version: false
+    prevent-increment:
+      of-merged-branch-version: false
     # This helps in creating stable pre-release package versions.
-    is-pre-release-branch: true
+    is-release-branch: false
 
   # This defines the behavior for the 'main' branch, your release branch.
   main:
@@ -27,7 +28,8 @@ branches:
     # This results in clean versions like 1.0.0, 1.1.0, etc.
     label: ''
     # This prevents the version from being bumped on the 'next' branch after it's merged into 'main'.
-    prevent-increment-of-merged-branch-version: true
+    prevent-increment:
+      of-merged-branch: true
     # Marks this as a release branch.
     is-release-branch: true
 
