@@ -24,13 +24,11 @@ jobs:
         with:
           fetch-depth: 0 # full depth required for gitversion
 
-      - name: ⚙️ Setup .NET 8 & 9
+      - name: ⚙️ Setup .NET 9
         uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9 # v4
         id: setup-dotnet
         with:
-          dotnet-version: |
-            8.0.x
-            9.0.x
+          dotnet-version: 9.0.x
 
       - name: 🥟 Setup Bun
         uses: oven-sh/setup-bun@735343b667d3e6f658f44d0eca948eb6282f2b76 # v2
@@ -77,18 +75,25 @@ jobs:
 
       - name: 📥 Restore dependencies
         run: |
+          cd ${{ github.workspace }}/src
           dotnet workload restore
           dotnet tool restore
           dotnet restore
 
       - name: 🔨 Build
-        run: dotnet build --configuration Release --no-restore
+        run: |
+          cd ${{ github.workspace }}/src
+          dotnet build --configuration Release --no-restore
 
       - name: 🚀 Test
-        run: dotnet test --configuration Release --no-build --verbosity normal
+        run: |
+          cd ${{ github.workspace }}/src
+          dotnet test --configuration Release --no-build --verbosity normal
 
       - name: 📦 Create NuGet packages
-        run: dotnet pack --configuration Release --no-build --output ${{ env.NuGetDirectory }}
+        run: |
+          cd ${{ github.workspace }}/src
+          dotnet pack --configuration Release --no-build --output ${{ env.NuGetDirectory }}
 
       - name: 🎉 Create GitHub Release
         uses: softprops/action-gh-release@72f2c25fcb47643c292f7107632f7a47c1df5cd8 # v2

@@ -1,0 +1,167 @@
+@using UntitledRpgLogic.Core.Configuration
+@using UntitledRpgLogic.Core.Enums
+@using UntitledRpgLogic.Core.Interfaces
+@using UntitledRpgLogic.DevTool.Services.Contracts
+@inject IConfigStore ConfigStore
+
+<ul class="list rounded-box bg-base-100 shadow-md">
+	<li class="list-row gap-x-2">
+		<div class="p-4 pb-2 text-xs tracking-wide opacity-60">Module Configs</div>
+		<div class="self-center">
+			<a href="/create" class="btn-xs btn btn-outline btn-primary">Create</a>
+			<button class="btn-xs btn btn-outline btn-accent">Export</button>
+			<button class="btn-xs btn btn-outline btn-error">Clear</button>
+		</div>
+	</li>
+
+	@if (string.IsNullOrEmpty(ConfigStore.Author.AuthorName) || string.IsNullOrEmpty(ConfigStore.ModuleInfo.Name))
+	{
+		<li class="list-row gap-x-2">
+			<div class="self-center">
+				@if (string.IsNullOrEmpty(ConfigStore.Author.AuthorName))
+				{
+					<a href="/settings" class="btn btn-xs btn-outline btn-primary me-2">Set Author</a>
+				}
+				@if (string.IsNullOrEmpty(ConfigStore.ModuleInfo.Name))
+				{
+					<a href="/settings" class="btn btn-xs btn-outline btn-primary">Set Module Info</a>
+				}
+			</div>
+		</li>
+	}
+
+	@if (!string.IsNullOrEmpty(ConfigStore.Author.AuthorName))
+	{
+		<li class="list-row">
+			<div class="px-4">
+				<div class="text-md"><span class="font-bold text-sm">Author: </span>@ConfigStore.Author.AuthorName</div>
+				<div class="badge badge-outline badge-sm font-mono font-semibold">
+					@ConfigStore.Author.AuthorId.ToString("N")[..8]
+				</div>
+			</div>
+		</li>
+	}
+
+	@if (_configs.Any())
+	{
+		@foreach (var configItem in _configs)
+		{
+			<li class="list-row flex justify-between">
+				<div class="p-4">
+					<div class="text-lg">@GetConfigDisplayName(configItem.Config)</div>
+					<div class="badge badge-sm font-bold badge-info">@GetConfigTypeName(configItem.Config.ConfigType)</div>
+					<div class="badge badge-outline badge-sm font-mono font-semibold">@configItem.Id.ToString("N")[..8]</div>
+				</div>
+				<div>
+					<button class="btn btn-square btn-ghost">
+						<svg fill="none" stroke-width="2" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-linecap="round"
+						     stroke-linejoin="round" viewBox="0 0 24 24" height="1em" width="1em"
+						     style="overflow: visible; color: currentcolor;">
+							<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+							<path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+						</svg>
+					</button>
+					<button class="btn btn-square btn-ghost">
+						<svg fill="none" stroke-width="2" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-linecap="round"
+						     stroke-linejoin="round" viewBox="0 0 24 24" height="1em" width="1em"
+						     style="overflow: visible; color: currentcolor;" class="stroke-error">
+							<path d="M3 6 5 6 21 6"></path>
+							<path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+							<path d="M10 11 10 17"></path>
+							<path d="M14 11 14 17"></path>
+						</svg>
+					</button>
+				</div>
+			</li>
+		}
+	}
+	else
+	{
+		<li class="list-row">
+			<div class="p-4 text-center text-base-content/50">
+				No configuration files.
+			</div>
+		</li>
+	}
+</ul>
+
+
+@code {
+
+	private readonly List<ConfigItem> _configs = new();
+
+	protected override async Task OnInitializedAsync()
+	{
+		await LoadConfigs();
+		ConfigStore.OnChange += StateHasChanged;
+	}
+
+	private async Task LoadConfigs()
+	{
+		_configs.Clear();
+
+		foreach (var key in ConfigStore.GetAllKeys())
+		{
+			var config = ConfigStore.GetConfig(key);
+			if (config != null)
+			{
+				_configs.Add(new ConfigItem { Id = key, Config = config });
+			}
+		}
+
+		StateHasChanged();
+	}
+
+	private string GetConfigDisplayName(ITomlConfig config)
+	{
+		return config switch
+		{
+			MaterialDataConfig material => material.Name,
+			ItemDataConfig item => item.Name,
+			SkillDataConfig skill => skill.Name,
+			StatDataConfig stat => stat.Name,
+			AuthorConfig author => author.AuthorName,
+			ModuleInfoConfig module => module.Name,
+			_ when HasNameProperty(config) => GetNamePropertyValue(config),
+			_ => config.ConfigType.ToString()
+		};
+	}
+
+	private bool HasNameProperty(ITomlConfig config)
+	{
+		var nameProperty = config.GetType().GetProperty("Name");
+		return nameProperty != null && nameProperty.PropertyType == typeof(string);
+	}
+
+	private string GetNamePropertyValue(ITomlConfig config)
+	{
+		var nameProperty = config.GetType().GetProperty("Name");
+		return nameProperty?.GetValue(config)?.ToString() ?? config.ConfigType.ToString();
+	}
+
+	private string GetConfigTypeName(ConfigType configType)
+	{
+		return configType switch
+		{
+			ConfigType.Author => "Author",
+			ConfigType.ModuleInfo => "Module",
+			ConfigType.Item => "Item",
+			ConfigType.Material => "Material",
+			ConfigType.Skill => "Skill",
+			ConfigType.Stat => "Stat",
+			_ => "Unknown"
+		};
+	}
+
+	private record ConfigItem
+	{
+		public required Guid Id { get; init; }
+		public required ITomlConfig Config { get; init; }
+	}
+
+	public async Task RefreshConfigs()
+	{
+		await LoadConfigs();
+	}
+
+}

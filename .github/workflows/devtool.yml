@@ -65,15 +65,20 @@ jobs:
 
       - name: 📥 Restore dependencies
         run: |
+          cd ${{ github.workspace }}/src
           dotnet workload restore
           dotnet tool restore
           dotnet restore
 
       - name: 🚀 Publish Dev Tool
-        run: dotnet publish UntitledRpgLogic.DevTool/UntitledRpgLogic.DevTool.csproj -c Release -o ./blazor_publish_output --nologo
+        run: |
+          cd ${{ github.workspace }}/src
+          dotnet publish UntitledRpgLogic.DevTool/UntitledRpgLogic.DevTool.csproj -c Release -o ./blazor_publish_output --nologo
 
       - name: ☁️ Deploy to Cloudflare Pages
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-        run: bunx wrangler pages deploy ./blazor_publish_output/wwwroot --project-name=${{ secrets.CLOUDFLARE_PAGES_PROJECT_NAME_DEVTOOL }} --commit-dirty=true
+        run: |
+          cd ${{ github.workspace }}/src
+          bunx wrangler pages deploy ./blazor_publish_output/wwwroot --project-name=${{ secrets.CLOUDFLARE_PAGES_PROJECT_NAME_DEVTOOL }} --commit-dirty=true

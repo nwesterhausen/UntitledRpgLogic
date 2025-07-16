@@ -1,0 +1,230 @@
+@page "/create/item"
+@using UntitledRpgLogic.Core.Configuration
+@using UntitledRpgLogic.Core.Enums
+
+<div class="container mx-auto p-6">
+	<div class="card bg-base-100 shadow-xl">
+		<div class="card-body">
+			<h2 class="card-title text-2xl mb-6">New Item</h2>
+
+			<EditForm Model="@_itemConfig" OnValidSubmit="@HandleValidSubmit">
+				<DataAnnotationsValidator/>
+
+				<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+					<!-- Basic Information -->
+					<div class="form-control">
+						<label class="label">
+							<span class="label-text">Name <span class="text-error">*</span></span>
+						</label>
+						<InputText @bind-Value="_itemConfig.Name" class="input input-bordered"
+						           placeholder="Enter item name"/>
+						<ValidationMessage For="@(() => _itemConfig.Name)" class="text-error text-sm"/>
+					</div>
+
+					<div class="form-control">
+						<label class="label">
+							<span class="label-text">Plural Name</span>
+						</label>
+						<InputText @bind-Value="_itemConfig.PluralName" class="input input-bordered"
+						           placeholder="Enter plural name (optional)"/>
+					</div>
+
+					<div class="form-control">
+						<label class="label">
+							<span class="label-text">Name as Adjective</span>
+						</label>
+						<InputText @bind-Value="_itemConfig.NameAsAdjective" class="input input-bordered"
+						           placeholder="Enter adjective form (optional)"/>
+					</div>
+
+					<div class="form-control">
+						<label class="label">
+							<span class="label-text">Item Type <span class="text-error">*</span></span>
+						</label>
+						<InputSelect @bind-Value="_itemConfig.ItemType" class="select select-bordered">
+							<option value="">Select item type</option>
+							@foreach (var type in Enum.GetValues<ItemType>())
+							{
+								<option value="@type">@type</option>
+							}
+						</InputSelect>
+						<ValidationMessage For="@(() => _itemConfig.ItemType)" class="text-error text-sm"/>
+					</div>
+
+					<div class="form-control">
+						<label class="label">
+							<span class="label-text">Item Subtype</span>
+						</label>
+						<InputSelect @bind-Value="_itemConfig.ItemSubtype" class="select select-bordered">
+							<option value="">Select subtype (optional)</option>
+							@foreach (var subtype in Enum.GetValues<ItemSubtype>())
+							{
+								<option value="@subtype">@subtype</option>
+							}
+						</InputSelect>
+					</div>
+
+					<div class="form-control">
+						<label class="label">
+							<span class="label-text">Quality</span>
+						</label>
+						<InputSelect @bind-Value="_itemConfig.ItemQuality" class="select select-bordered">
+							<option value="">Select quality (optional)</option>
+							@foreach (var quality in Enum.GetValues<Quality>())
+							{
+								<option value="@quality">@quality</option>
+							}
+						</InputSelect>
+					</div>
+
+					<!-- Dimensions -->
+					<div class="form-control">
+						<label class="label">
+							<span class="label-text">Dimension Scale</span>
+						</label>
+						<InputSelect @bind-Value="_itemConfig.DimensionScale" class="select select-bordered">
+							<option value="">Select scale (optional)</option>
+							@foreach (var scale in Enum.GetValues<DimensionScale>())
+							{
+								<option value="@scale">@scale</option>
+							}
+						</InputSelect>
+					</div>
+
+					<div class="form-control">
+						<label class="label">
+							<span class="label-text">Width <span class="text-error">*</span></span>
+						</label>
+						<InputNumber @bind-Value="_itemConfig.Width" class="input input-bordered"
+						             placeholder="Enter width"/>
+						<ValidationMessage For="@(() => _itemConfig.Width)" class="text-error text-sm"/>
+					</div>
+
+					<div class="form-control">
+						<label class="label">
+							<span class="label-text">Height <span class="text-error">*</span></span>
+						</label>
+						<InputNumber @bind-Value="_itemConfig.Height" class="input input-bordered"
+						             placeholder="Enter height"/>
+						<ValidationMessage For="@(() => _itemConfig.Height)" class="text-error text-sm"/>
+					</div>
+
+					<div class="form-control">
+						<label class="label">
+							<span class="label-text">Depth</span>
+						</label>
+						<InputNumber @bind-Value="_itemConfig.Depth" class="input input-bordered"
+						             placeholder="Enter depth (optional)"/>
+					</div>
+
+					<div class="form-control">
+						<label class="label">
+							<span class="label-text">Shape Type</span>
+						</label>
+						<InputSelect @bind-Value="_itemConfig.ShapeType" class="select select-bordered">
+							<option value="">Select shape (optional)</option>
+							@foreach (var shape in Enum.GetValues<ShapeType>())
+							{
+								<option value="@shape">@shape</option>
+							}
+						</InputSelect>
+					</div>
+
+					<div class="form-control">
+						<label class="label">
+							<span class="label-text">Material ID <span class="text-error">*</span></span>
+						</label>
+						<InputText @bind-Value="_materialIdString" class="input input-bordered"
+						           placeholder="Enter material GUID"/>
+						<ValidationMessage For="@(() => _itemConfig.MaterialId)" class="text-error text-sm"/>
+					</div>
+				</div>
+
+				<!-- Description -->
+				<div class="form-control mt-4">
+					<label class="label">
+						<span class="label-text">Description</span>
+					</label>
+					<InputTextArea @bind-Value="_itemConfig.Description" class="textarea textarea-bordered h-24"
+					               placeholder="Enter item description (optional)"/>
+				</div>
+
+				<!-- Advanced Options -->
+				<div class="collapse collapse-arrow bg-base-200 mt-4">
+					<input type="checkbox"/>
+					<div class="collapse-title text-xl font-medium">
+						Advanced Options
+					</div>
+					<div class="collapse-content">
+						<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+							<div class="form-control">
+								<label class="label">
+									<span class="label-text">Explicit ID</span>
+								</label>
+								<InputText @bind-Value="_explicitIdString" class="input input-bordered"
+								           placeholder="Enter explicit GUID (optional)"/>
+							</div>
+
+							<div class="form-control">
+								<label class="label">
+									<span class="label-text">Crafted By</span>
+								</label>
+								<InputText @bind-Value="_craftedByString" class="input input-bordered"
+								           placeholder="Enter crafter GUID (optional)"/>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="card-actions justify-end mt-6">
+					<button type="button" class="btn btn-ghost" @onclick="ResetForm">Reset</button>
+					<button type="submit" class="btn btn-primary">Create Item</button>
+				</div>
+			</EditForm>
+		</div>
+	</div>
+</div>
+
+@code {
+	private ItemDataConfig _itemConfig = new() { Name = "", ItemType = ItemType.Junk, Width = 1, Height = 1, MaterialId = Guid.Empty };
+	private string _materialIdString = "";
+	private string _explicitIdString = "";
+	private string _craftedByString = "";
+
+	protected override void OnInitialized()
+	{
+		ResetForm();
+	}
+
+	private void HandleValidSubmit()
+	{
+		// Parse GUIDs
+		if (Guid.TryParse(_materialIdString, out var materialId))
+		{
+			_itemConfig = _itemConfig with { MaterialId = materialId };
+		}
+
+		if (!string.IsNullOrEmpty(_explicitIdString) && Guid.TryParse(_explicitIdString, out var explicitId))
+		{
+			_itemConfig = _itemConfig with { ExplicitId = explicitId };
+		}
+
+		if (!string.IsNullOrEmpty(_craftedByString) && Guid.TryParse(_craftedByString, out var craftedBy))
+		{
+			_itemConfig = _itemConfig with { CraftedBy = craftedBy };
+		}
+
+		// TODO: Handle item creation logic
+		// For now, just show success message
+		Console.WriteLine($"Item created: {_itemConfig.Name}");
+	}
+
+	private void ResetForm()
+	{
+		_itemConfig = new ItemDataConfig { Name = "", ItemType = ItemType.Junk, Width = 1, Height = 1, MaterialId = Guid.Empty };
+		_materialIdString = "";
+		_explicitIdString = "";
+		_craftedByString = "";
+	}
+
+}

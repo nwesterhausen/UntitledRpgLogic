@@ -1,7 +1,0 @@
-@import "tailwindcss";
-
-@config "../../tailwind.config.js";
-@plugin "daisyui" {
-    themes: emerald --default,
-    dim;
-}

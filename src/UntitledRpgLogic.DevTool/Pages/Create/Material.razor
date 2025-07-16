@@ -1,0 +1,255 @@
+@page "/create/material"
+@using System.Drawing
+@using UntitledRpgLogic.Core.Configuration
+
+<div class="container mx-auto p-6">
+	<div class="card bg-base-100 shadow-xl">
+		<div class="card-body">
+			<h2 class="card-title text-2xl mb-6">New Material</h2>
+
+			<EditForm Model="@_materialConfig" OnValidSubmit="@HandleValidSubmit">
+				<DataAnnotationsValidator/>
+
+				<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+					<!-- Basic Information -->
+					<div class="form-control">
+						<label class="label">
+							<span class="label-text">Name <span class="text-error">*</span></span>
+						</label>
+						<InputText @bind-Value="_materialConfig.Name" class="input input-bordered"
+						           placeholder="Enter material name"/>
+						<ValidationMessage For="@(() => _materialConfig.Name)" class="text-error text-sm"/>
+					</div>
+
+					<div class="form-control">
+						<label class="label">
+							<span class="label-text">Plural Name</span>
+						</label>
+						<InputText @bind-Value="_materialConfig.PluralName" class="input input-bordered"
+						           placeholder="Enter plural name (optional)"/>
+					</div>
+
+					<div class="form-control">
+						<label class="label">
+							<span class="label-text">Name as Adjective</span>
+						</label>
+						<InputText @bind-Value="_materialConfig.NameAsAdjective" class="input input-bordered"
+						           placeholder="Enter adjective form (optional)"/>
+					</div>
+
+					<div class="form-control">
+						<label class="label">
+							<span class="label-text">Molar Mass (g/mol) <span class="text-error">*</span></span>
+						</label>
+						<InputNumber @bind-Value="_materialConfig.MolarMass" class="input input-bordered"
+						             placeholder="Enter molar mass"/>
+						<ValidationMessage For="@(() => _materialConfig.MolarMass)" class="text-error text-sm"/>
+					</div>
+				</div>
+
+				<!-- Solid State Properties -->
+				<div class="divider">Solid State Properties</div>
+				<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+					<div class="form-control">
+						<label class="label">
+							<span class="label-text">Solid Color <span class="text-error">*</span></span>
+						</label>
+						<input type="color" @bind="_solidColorHex" class="input input-bordered h-12"/>
+						<ValidationMessage For="@(() => _materialConfig.SolidColor)" class="text-error text-sm"/>
+					</div>
+
+					<div class="form-control">
+						<label class="label">
+                            <span class="label-text">Solid State Change Temperature (°C) <span
+		                            class="text-error">*</span></span>
+						</label>
+						<InputNumber @bind-Value="_materialConfig.TemperatureAtSolidStateChange"
+						             class="input input-bordered" placeholder="Enter temperature"/>
+						<ValidationMessage For="@(() => _materialConfig.TemperatureAtSolidStateChange)"
+						                   class="text-error text-sm"/>
+					</div>
+
+					<div class="form-control">
+						<label class="label">
+							<span class="label-text">Solid Density (g/cm³) <span class="text-error">*</span></span>
+						</label>
+						<InputNumber @bind-Value="_materialConfig.DensityAtSolidStateChange" class="input input-bordered"
+						             placeholder="Enter density"/>
+						<ValidationMessage For="@(() => _materialConfig.DensityAtSolidStateChange)"
+						                   class="text-error text-sm"/>
+					</div>
+				</div>
+
+				<!-- Liquid State Properties -->
+				<div class="divider">Liquid State Properties</div>
+				<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+					<div class="form-control">
+						<label class="label">
+							<span class="label-text">Liquid Color</span>
+						</label>
+						<input type="color" @bind="_liquidColorHex" class="input input-bordered h-12"/>
+						<div class="label">
+							<span class="label-text-alt">Optional - defaults to red if not specified</span>
+						</div>
+					</div>
+
+					<div class="form-control">
+						<label class="label">
+                            <span class="label-text">Liquid State Change Temperature (°C) <span
+		                            class="text-error">*</span></span>
+						</label>
+						<InputNumber @bind-Value="_materialConfig.TemperatureAtLiquidStateChange"
+						             class="input input-bordered" placeholder="Enter temperature"/>
+						<ValidationMessage For="@(() => _materialConfig.TemperatureAtLiquidStateChange)"
+						                   class="text-error text-sm"/>
+					</div>
+
+					<div class="form-control">
+						<label class="label">
+							<span class="label-text">Liquid Density (g/cm³) <span class="text-error">*</span></span>
+						</label>
+						<InputNumber @bind-Value="_materialConfig.DensityAtLiquidStateChange"
+						             class="input input-bordered" placeholder="Enter density"/>
+						<ValidationMessage For="@(() => _materialConfig.DensityAtLiquidStateChange)"
+						                   class="text-error text-sm"/>
+					</div>
+				</div>
+
+				<!-- Gas State Properties -->
+				<div class="divider">Gas State Properties</div>
+				<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+					<div class="form-control">
+						<label class="label">
+							<span class="label-text">Gas Color</span>
+						</label>
+						<input type="color" @bind="_gasColorHex" class="input input-bordered h-12"/>
+						<div class="label">
+							<span class="label-text-alt">Optional - defaults to gray if not specified</span>
+						</div>
+					</div>
+
+					<div class="form-control">
+						<label class="label">
+							<span class="label-text">Gas State Change Temperature (°C) <span class="text-error">*</span></span>
+						</label>
+						<InputNumber @bind-Value="_materialConfig.TemperatureAtGasStateChange"
+						             class="input input-bordered" placeholder="Enter temperature"/>
+						<ValidationMessage For="@(() => _materialConfig.TemperatureAtGasStateChange)"
+						                   class="text-error text-sm"/>
+					</div>
+
+					<div class="form-control">
+						<label class="label">
+							<span class="label-text">Gas Density (g/cm³) <span class="text-error">*</span></span>
+						</label>
+						<InputNumber @bind-Value="_materialConfig.DensityAtGasStateChange" class="input input-bordered"
+						             placeholder="Enter density"/>
+						<ValidationMessage For="@(() => _materialConfig.DensityAtGasStateChange)"
+						                   class="text-error text-sm"/>
+					</div>
+				</div>
+
+				<!-- Advanced Options -->
+				<div class="collapse collapse-arrow bg-base-200 mt-4">
+					<input type="checkbox"/>
+					<div class="collapse-title text-xl font-medium">
+						Advanced Options
+					</div>
+					<div class="collapse-content">
+						<div class="form-control">
+							<label class="label">
+								<span class="label-text">Explicit ID</span>
+							</label>
+							<InputText @bind-Value="_explicitIdString" class="input input-bordered"
+							           placeholder="Enter explicit GUID (optional)"/>
+						</div>
+					</div>
+				</div>
+
+				<div class="card-actions justify-end mt-6">
+					<button type="button" class="btn btn-ghost" @onclick="ResetForm">Reset</button>
+					<button type="submit" class="btn btn-primary">Create Material</button>
+				</div>
+			</EditForm>
+		</div>
+	</div>
+</div>
+
+@code {
+
+	private MaterialDataConfig _materialConfig = new()
+	{
+		Name = "",
+		SolidColor = Color.Black,
+		TemperatureAtSolidStateChange = 0,
+		DensityAtSolidStateChange = 1,
+		TemperatureAtLiquidStateChange = 100,
+		DensityAtLiquidStateChange = 1,
+		TemperatureAtGasStateChange = 373,
+		DensityAtGasStateChange = 0.001f,
+		MolarMass = 1,
+		SolidCoefficientOfExpansion = 0,
+		LiquidCoefficientOfExpansion = 0
+	};
+
+	private string _explicitIdString = "";
+	private string _solidColorHex = "#000000";
+	private string _liquidColorHex = "#ff0000";
+	private string _gasColorHex = "#808080";
+
+	protected override void OnInitialized()
+	{
+		ResetForm();
+	}
+
+	private void HandleValidSubmit()
+	{
+		// Parse colors
+		if (ColorTranslator.FromHtml(_solidColorHex) is Color solidColor)
+		{
+			_materialConfig.SolidColor = solidColor;
+		}
+
+		if (!string.IsNullOrEmpty(_liquidColorHex) && ColorTranslator.FromHtml(_liquidColorHex) is Color liquidColor)
+		{
+			_materialConfig.LiquidColor = liquidColor;
+		}
+
+		if (!string.IsNullOrEmpty(_gasColorHex) && ColorTranslator.FromHtml(_gasColorHex) is Color gasColor)
+		{
+			_materialConfig.GasColor = gasColor;
+		}
+
+		// Parse explicit ID
+		if (!string.IsNullOrEmpty(_explicitIdString) && Guid.TryParse(_explicitIdString, out var explicitId))
+		{
+			_materialConfig = _materialConfig with { ExplicitId = explicitId };
+		}
+
+		// TODO: Handle material creation logic
+		Console.WriteLine($"Material created: {_materialConfig.Name}");
+	}
+
+	private void ResetForm()
+	{
+		_materialConfig = new MaterialDataConfig
+		{
+			Name = "",
+			SolidColor = Color.Black,
+			TemperatureAtSolidStateChange = 0,
+			DensityAtSolidStateChange = 1,
+			TemperatureAtLiquidStateChange = 100,
+			DensityAtLiquidStateChange = 1,
+			TemperatureAtGasStateChange = 373,
+			DensityAtGasStateChange = 0.001f,
+			MolarMass = 1,
+			SolidCoefficientOfExpansion = 0,
+			LiquidCoefficientOfExpansion = 0
+		};
+		_explicitIdString = "";
+		_solidColorHex = "#000000";
+		_liquidColorHex = "#ff0000";
+		_gasColorHex = "#808080";
+	}
+
+}

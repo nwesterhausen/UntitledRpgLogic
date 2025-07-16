@@ -1,0 +1,2 @@
+#$schema: https://gitversion.net/schemas/6.3/GitVersion.configuration.json
+workflow: GitHubFlow/v1

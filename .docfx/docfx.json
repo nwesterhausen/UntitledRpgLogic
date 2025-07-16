@@ -4,15 +4,15 @@
       "src": [
         {
           "files": [
-            "UntitledRpgLogic.Core/UntitledRpgLogic.Core.csproj",
-            "UntitledRpgLogic.Extensions.Common/UntitledRpgLogic.Extensions.Common.csproj",
-            "UntitledRpgLogic.Extensions.Godot/UntitledRpgLogic.Extensions.Godot.csproj",
-            "UntitledRpgLogic.Extensions.Logging/UntitledRpgLogic.Extensions.Logging.csproj",
-            "UntitledRpgLogic.Infrastructure.Configuration/UntitledRpgLogic.Infrastructure.Configuration.csproj",
-            "UntitledRpgLogic.Infrastructure.Data/UntitledRpgLogic.Infrastructure.Data.csproj",
-            "UntitledRpgLogic.Resources/UntitledRpgLogic.Resources.csproj",
-            "UntitledRpgLogic.Services/UntitledRpgLogic.Services.csproj",
-            "UntitledRpgLogic.StateMachines/UntitledRpgLogic.StateMachines.csproj"
+            "src/UntitledRpgLogic.Core/UntitledRpgLogic.Core.csproj",
+            "src/UntitledRpgLogic.Extensions.Common/UntitledRpgLogic.Extensions.Common.csproj",
+            "src/UntitledRpgLogic.Extensions.Godot/UntitledRpgLogic.Extensions.Godot.csproj",
+            "src/UntitledRpgLogic.Extensions.Logging/UntitledRpgLogic.Extensions.Logging.csproj",
+            "src/UntitledRpgLogic.Infrastructure.Configuration/UntitledRpgLogic.Infrastructure.Configuration.csproj",
+            "src/UntitledRpgLogic.Infrastructure.Data/UntitledRpgLogic.Infrastructure.Data.csproj",
+            "src/UntitledRpgLogic.Resources/UntitledRpgLogic.Resources.csproj",
+            "src/UntitledRpgLogic.Services/UntitledRpgLogic.Services.csproj",
+            "src/UntitledRpgLogic.StateMachines/UntitledRpgLogic.StateMachines.csproj"
           ],
           "src": ".."
         }

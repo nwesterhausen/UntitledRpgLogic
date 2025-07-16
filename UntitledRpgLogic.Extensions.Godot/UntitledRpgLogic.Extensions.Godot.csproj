@@ -1,9 +1,0 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
-    <PropertyGroup>
-        <!-- Package metadata -->
-        <AssemblyName>UntitledRpgLogic.Extensions.Godot</AssemblyName>
-        <PackageId>UntitledRpgLogic.Extensions.Godot</PackageId>
-    </PropertyGroup>
-
-</Project>
