@@ -19,6 +19,8 @@ branches:
       of-merged-branch: false
     # This helps in creating stable pre-release package versions.
     is-release-branch: false
+    # required field
+    regex: next
 
   # This defines the behavior for the 'main' branch, your release branch.
   main:
@@ -32,6 +34,8 @@ branches:
       of-merged-branch: true
     # Marks this as a release branch.
     is-release-branch: true
+    # required field
+    regex: main
 
   # This section configures the versioning for pull requests.
   pull-request:
@@ -41,3 +45,5 @@ branches:
     label: pr
     # The version increment strategy is inherited from the target branch ('next' in your case).
     increment: Inherit
+    # required field
+    regex: ^(?!(main|next)$).*
