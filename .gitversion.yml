@@ -16,7 +16,7 @@ branches:
     track-merge-target: true
     # We want to increment the version on this branch.
     prevent-increment:
-      of-merged-branch-version: false
+      of-merged-branch: false
     # This helps in creating stable pre-release package versions.
     is-release-branch: false
 
