@@ -56,21 +56,21 @@ The manifest fields provide easy access to key information about the package. Th
 
 | Field Name     | Data Type         | Description                                                                                                        |
 | :------------- | :---------------- | :----------------------------------------------------------------------------------------------------------------- |
-| `Id`           | `string` (GUID)   | The unique identifier for this package.                                                                            |
-| `Name`         | `string`          | The human-readable name of the package.                                                                            |
-| `Description`  | `string`          | A detailed description of the package's contents and purpose.                                                      |
-| `Version`      | `string`          | The semantic version string (e.g., "1.2.3"). Setting this automatically populates the Major/Minor/Patch versions. |
-| `AuthorName`   | `string`          | The name of the package author or studio.                                                                          |
-| `AuthorId`     | `string` (GUID)   | The unique identifier for the author.                                                                              |
-| `Dependencies` | `string[]` (GUIDs)| An array of `Id`s from other `.urpglib` packages that this package depends on.                                      |
+| `id`           | `string` (GUID)   | The unique identifier for this package.                                                                            |
+| `name`         | `string`          | The human-readable name of the package.                                                                            |
+| `description`  | `string`          | A detailed description of the package's contents and purpose.                                                      |
+| `version`      | `string`          | The semantic version string (e.g., "1.2.3"). Setting this automatically populates the Major/Minor/Patch versions. |
+| `authorName`   | `string`          | The name of the package author or studio.                                                                          |
+| `authorId`     | `string` (GUID)   | The unique identifier for the author.                                                                              |
+| `dependencies` | `string[]` (GUIDs)| An array of `id`s from other `.urpglib` packages that this package depends on.                                      |
 
 The following fields are available after parsing the JSON into the `PackageManifest` object, but they are not present in the JSON itself:
 
 | Field Name     | Data Type         | Description                                                                                                        |
 | :------------- | :---------------- | :----------------------------------------------------------------------------------------------------------------- |
-| `MajorVersion` | `number`          | The major version number, parsed from the `Version` string.                                                        |
-| `MinorVersion` | `number`          | The minor version number, parsed from the `Version` string.                                                         |
-| `PatchVersion` | `number`          | The patch version number, parsed from the `Version` string.                                                        |
+| `majorVersion` | `number`          | The major version number, parsed from the `version` string.                                                        |
+| `minorVersion` | `number`          | The minor version number, parsed from the `version` string.                                                        |
+| `patchVersion` | `number`          | The patch version number, parsed from the `version` string.                                                        |
 
 ---
 
@@ -129,18 +129,18 @@ If any new versions of the manifest schema are introduced, they will be document
 
 | Field Name     | Data Type         | Description                                                                                                        |
 | :------------- | :---------------- | :----------------------------------------------------------------------------------------------------------------- |
-| `Id`           | `string` (GUID)   | The unique identifier for this package.                                                                            |
-| `Name`         | `string`          | The human-readable name of the package.                                                                            |
-| `Description`  | `string`          | A detailed description of the package's contents and purpose.                                                      |
-| `Version`      | `string`          | The semantic version string (e.g., "1.2.3"). Setting this automatically populates the Major/Minor/Patch versions. |
-| `AuthorName`   | `string`          | The name of the package author or studio.                                                                          |
-| `AuthorId`     | `string` (GUID)   | The unique identifier for the author.                                                                              |
-| `Dependencies` | `string[]` (GUIDs)| An array of `Id`s from other `.urpglib` packages that this package depends on.                                      |
+| `id`           | `string` (GUID)   | The unique identifier for this package.                                                                            |
+| `name`         | `string`          | The human-readable name of the package.                                                                            |
+| `description`  | `string`          | A detailed description of the package's contents and purpose.                                                      |
+| `version`      | `string`          | The semantic version string (e.g., "1.2.3"). Setting this automatically populates the Major/Minor/Patch versions. |
+| `authorName`   | `string`          | The name of the package author or studio.                                                                          |
+| `authorId`     | `string` (GUID)   | The unique identifier for the author.                                                                              |
+| `dependencies` | `string[]` (GUIDs)| An array of `id`s from other `.urpglib` packages that this package depends on.                                      |
 
 The following fields are available after parsing the JSON into the `PackageManifest` object, but they are not present in the JSON itself:
 
 | Field Name     | Data Type         | Description                                                                                                        |
 | :------------- | :---------------- | :----------------------------------------------------------------------------------------------------------------- |
-| `MajorVersion` | `number`          | The major version number, parsed from the `Version` string.                                                        |
-| `MinorVersion` | `number`          | The minor version number, parsed from the `Version` string.                                                         |
-| `PatchVersion` | `number`          | The patch version number, parsed from the `Version` string.
+| `majorVersion` | `number`          | The major version number, parsed from the `version` string.                                                        |
+| `minorVersion` | `number`          | The minor version number, parsed from the `version` string.                                                        |
+| `patchVersion` | `number`          | The patch version number, parsed from the `version` string.                                                        |
