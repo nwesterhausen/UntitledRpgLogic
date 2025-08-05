@@ -3,7 +3,7 @@ namespace UntitledRpgLogic.LibraryFile;
 /// <summary>
 ///		Constants used throughout the URPG library file format library.
 /// </summary>
-public static class UrpgConstants
+public static class UrpglibConstants
 {
 	/// <summary>
 	/// The unique 8-byte signature for .urpglib files.

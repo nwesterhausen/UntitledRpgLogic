@@ -8,7 +8,7 @@ namespace UntitledRpgLogic.LibraryFile;
 /// <summary>
 ///		Handles writing .urpglib files, including header, manifest, and payload.
 /// </summary>
-public static class UrpgWriter
+public static class UrpglibWriter
 {
 	private static readonly JsonSerializerOptions DefaultJsonSerializerOptions = new()
 	{
@@ -71,11 +71,11 @@ public static class UrpgWriter
 		await using var writer1 = writer.ConfigureAwait(false);
 
 		// -- Write Header --
-		writer.Write(UrpgConstants.MagicBytes);
-		writer.Write(UrpgConstants.CurrentHeaderSchemaVersion);
-		writer.Write(UrpgConstants.CurrentManifestSchemaVersion);
+		writer.Write(UrpglibConstants.MagicBytes);
+		writer.Write(UrpglibConstants.CurrentHeaderSchemaVersion);
+		writer.Write(UrpglibConstants.CurrentManifestSchemaVersion);
 		writer.Write((byte)compressionType);
-		writer.Write(UrpgConstants.CurrentPayloadSchemaVersion);
+		writer.Write(UrpglibConstants.CurrentPayloadSchemaVersion);
 		writer.Write((uint)manifestJsonBytes.Length);
 
 		// -- Write Manifest --

@@ -3,7 +3,7 @@ namespace UntitledRpgLogic.LibraryFile;
 /// <summary>
 /// Contains the structured, binary data from the file header.
 /// </summary>
-public sealed record UrpgHeader
+public sealed record UrpglibHeader
 {
 	/// <summary>
 	///		The version of the header schema used in this file.

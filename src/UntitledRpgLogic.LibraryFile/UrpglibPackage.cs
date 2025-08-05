@@ -8,12 +8,12 @@ namespace UntitledRpgLogic.LibraryFile;
 /// Represents the complete, deserialized .urpglib package,
 /// providing access to its manifest and a stream for its payload data.
 /// </summary>
-public sealed class UrpgPackage : IDisposable
+public sealed class UrpglibPackage : IDisposable
 {
 	/// <summary>
 	/// The structured header data read from the file.
 	/// </summary>
-	public UrpgHeader Header { get; }
+	public UrpglibHeader Header { get; }
 
 	/// <summary>
 	/// The deserialized manifest containing package metadata.
@@ -23,7 +23,7 @@ public sealed class UrpgPackage : IDisposable
 	private readonly Stream payloadStream;
 	private bool disposed;
 
-	internal UrpgPackage(UrpgHeader header, PackageManifest manifest, Stream payloadStream)
+	internal UrpglibPackage(UrpglibHeader header, PackageManifest manifest, Stream payloadStream)
 	{
 		this.Header = header;
 		this.Manifest = manifest;

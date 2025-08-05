@@ -6,11 +6,11 @@ namespace UntitledRpgLogic.LibraryFile;
 /// <remarks>This exception is typically used to indicate that a file being processed is invalid or corrupted
 /// according to the URPG file format specification. Ensure that the file being provided adheres to the expected format
 /// before attempting to process it.</remarks>
-public class UrpgFileFormatException : Exception
+public class UrpglibFileFormatException : Exception
 {
 	/// <summary>
 	/// Represents an exception that is thrown when an error occurs related to the URPG file format.
 	/// </summary>
 	/// <param name="message">The message that describes the error.</param>
-	public UrpgFileFormatException(string message) : base(message) { }
+	public UrpglibFileFormatException(string message) : base(message) { }
 }
