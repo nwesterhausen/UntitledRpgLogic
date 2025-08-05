@@ -16,7 +16,24 @@ public static class UrpglibReader
 	/// <returns>A UrpgPackage object for accessing the file's contents.</returns>
 	public static async Task<UrpglibPackage> ReadAsync(string filePath, bool readPayloadIntoMemory = false)
 	{
+		ArgumentNullException.ThrowIfNull(filePath, nameof(filePath));
+
 		var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read);
+
+		// Check file existence and accessibility
+		if (!fileStream.CanRead)
+		{
+			await fileStream.DisposeAsync().ConfigureAwait(false);
+			throw new FileNotFoundException($"The file '{filePath}' does not exist or cannot be read.");
+		}
+		if (fileStream.Length < UrpglibConstants.MinFileSize)
+		{
+			var length =fileStream.Length;
+			await fileStream.DisposeAsync().ConfigureAwait(false);
+			throw new UrpglibFileSizeException($"The file '{filePath}' is smaller than the minimum required size of {UrpglibConstants.MinFileSize} bytes.",
+				new EndOfStreamException($"Stream must be at least {UrpglibConstants.MinFileSize} bytes, was actually {length} bytes"));
+		}
+
 		using var reader = new BinaryReader(fileStream, Encoding.UTF8, leaveOpen: true);
 
 		// 1. Read and Validate Header
@@ -42,14 +59,47 @@ public static class UrpglibReader
 			await fileStream.DisposeAsync().ConfigureAwait(false);
 			throw new UrpglibVersionMismatchException($"File header version ({header.HeaderSchemaVersion}) is newer than supported version ({UrpglibConstants.CurrentHeaderSchemaVersion}). Please update the application.");
 		}
+		if (header.ManifestSchemaVersion > UrpglibConstants.CurrentManifestSchemaVersion)
+		{
+			await fileStream.DisposeAsync().ConfigureAwait(false);
+			throw new UrpglibVersionMismatchException($"Manifest schema version ({header.ManifestSchemaVersion}) is newer than supported version ({UrpglibConstants.CurrentManifestSchemaVersion}). Please update the application.");
+		}
+		// --- Size Sanity Check ---
+		if (header.ManifestLength < 1)
+		{
+			await fileStream.DisposeAsync().ConfigureAwait(false);
+			throw new UrpglibFileFormatException($"Manifest length ({header.ManifestLength}) is less than 1 byte. The file may be corrupted.");
+		}
+		if (header.ManifestLength > fileStream.Length - fileStream.Position)
+		{
+			int remainingBytes = (int)(fileStream.Length - fileStream.Position);
+			await fileStream.DisposeAsync().ConfigureAwait(false);
+			throw new UrpglibFileFormatException($"Manifest length ({header.ManifestLength}) exceeds remaining file size ({remainingBytes}). The file may be corrupted.");
+		}
 
 		// 2. Read and Deserialize Manifest
 		var manifestJsonBytes = reader.ReadBytes((int)header.ManifestLength);
-		var manifest = JsonSerializer.Deserialize<PackageManifest>(manifestJsonBytes);
+		PackageManifest manifest;
+		try
+		{
+			manifest = JsonSerializer.Deserialize<PackageManifest>(manifestJsonBytes, UrpglibConstants.DefaultJsonSerializerOptions);
+		} catch (JsonException ex)
+		{
+			await fileStream.DisposeAsync().ConfigureAwait(false);
+			throw new UrpglibFileFormatException("Failed to deserialize package manifest.", ex);
+		}
 		if (manifest == null)
 		{
 			await fileStream.DisposeAsync().ConfigureAwait(false);
 			throw new UrpglibFileFormatException("Failed to deserialize package manifest.");
+		}
+
+		// --- Size Sanity Check ---
+		// Check that the payload is a valid size (greater than 0)
+		if (fileStream.Length - fileStream.Position <= 0)
+		{
+			await fileStream.DisposeAsync().ConfigureAwait(false);
+			throw new UrpglibFileFormatException("Payload size is zero or negative. The file may be corrupted.");
 		}
 
 		// 3. Prepare Payload Stream

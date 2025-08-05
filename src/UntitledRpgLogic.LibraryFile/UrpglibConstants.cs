@@ -1,3 +1,5 @@
+using System.Text.Json;
+
 namespace UntitledRpgLogic.LibraryFile;
 
 /// <summary>
@@ -26,4 +28,44 @@ public static class UrpglibConstants
 	/// The current version of the payload data structure this library can write.
 	/// </summary>
 	public const ushort CurrentPayloadSchemaVersion = 1;
+
+	/// <summary>
+	///		The minimum size of a valid .urpglib file in bytes.
+	/// </summary>
+	/// <remarks>
+	/// Based on the file format specification, the header section is 18 bytes total.
+	/// <list type="bullet">
+	///   <item>
+	///     <description>Magic Bytes: 8 bytes</description>
+	///   </item>
+	///   <item>
+	///     <description>Header Schema Version: 1 byte</description>
+	///   </item>
+	///   <item>
+	///     <description>Manifest Schema Version: 2 bytes</description>
+	///   </item>
+	///   <item>
+	///     <description>Payload Compression: 1 byte</description>
+	///   </item>
+	///   <item>
+	///     <description>Payload Schema Version: 2 bytes</description>
+	///   </item>
+	///   <item>
+	///     <description>Manifest Length: 4 bytes</description>
+	///   </item>
+	/// </list>
+	/// Total: 8 + 1 + 2 + 1 + 2 + 4 = 18 bytes
+	/// </remarks>
+	public const long MinFileSize = 18;
+
+	/// <summary>
+	/// Gets the default <see cref="JsonSerializerOptions"/> instance configured with the expected urpglib file settings.
+	/// </summary>
+	/// <remarks>The default options use camel case for property naming and do not write indented JSON. These
+	/// settings are commonly used for consistent and compact JSON serialization.</remarks>
+	public readonly static JsonSerializerOptions DefaultJsonSerializerOptions = new JsonSerializerOptions
+	{
+		PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+		WriteIndented = false
+	};
 }

@@ -10,11 +10,6 @@ namespace UntitledRpgLogic.LibraryFile;
 /// </summary>
 public static class UrpglibWriter
 {
-	private static readonly JsonSerializerOptions DefaultJsonSerializerOptions = new()
-	{
-		WriteIndented = false,
-		PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-	};
 
 	/// <summary>
 	/// Creates a .urpglib file from a manifest and a collection of data files.
@@ -62,7 +57,7 @@ public static class UrpglibWriter
 		await compressionStream.DisposeAsync().ConfigureAwait(false);
 
 		// 2. Serialize manifest to JSON
-		var manifestJsonBytes = JsonSerializer.SerializeToUtf8Bytes(manifest, DefaultJsonSerializerOptions);
+		var manifestJsonBytes = JsonSerializer.SerializeToUtf8Bytes(manifest, UrpglibConstants.DefaultJsonSerializerOptions);
 
 		// 3. Write the final .urpglib file
 		var fileStream = new FileStream(outputPath, FileMode.Create, FileAccess.Write, FileShare.None);
