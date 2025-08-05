@@ -43,10 +43,10 @@ public record MaterialDataConfig : ITomlConfig
 	public Color? LiquidColor { get; set; }
 
 	/// <summary>
-	///     The temperature at which the material changes state, in degrees Celsius (°C).
+	/// The temperature at which the material boils from a liquid to a gas, in °C.
 	/// </summary>
-	[Required]
-	public required float TemperatureAtLiquidStateChange { get; set; }
+	/// <remarks>Should be null only if the material doesn't have a standard boiling point.</remarks>
+	public float? BoilingPointCelsius { get; set; }
 
 	/// <summary>
 	///     The density of the material at the state change, in grams per cubic centimeter (g/cm³).
@@ -62,16 +62,22 @@ public record MaterialDataConfig : ITomlConfig
 	public required Color SolidColor { get; set; }
 
 	/// <summary>
-	///     The temperature at which the material changes state, in degrees Celsius (°C).
+	/// The temperature at which the material melts from a solid to a liquid, in °C.
 	/// </summary>
-	[Required]
-	public required float TemperatureAtSolidStateChange { get; set; }
+	/// <remarks>Null for materials that decompose or combust instead of melting (e.g., wood).</remarks>
+	public float? MeltingPointCelsius { get; set; }
 
 	/// <summary>
 	///     The density of the material at the state change, in grams per cubic centimeter (g/cm³).
 	/// </summary>
 	[Required]
 	public required float DensityAtSolidStateChange { get; set; }
+
+	/// <summary>
+	/// Optional. The temperature for materials that turn directly from a solid to a gas, in °C.
+	/// </summary>
+	/// <remarks>Relevant for materials like Dry Ice or Iodine.</remarks>
+	public float? SublimationPointCelsius { get; set; }
 
 	/// <summary>
 	///     Optional. A color to represent the material in this state. This can be used to visually represent the material in a
@@ -109,6 +115,52 @@ public record MaterialDataConfig : ITomlConfig
 	/// </summary>
 	[Required]
 	public required double LiquidCoefficientOfExpansion { get; set; }
+
+	/// <summary>
+	/// The ultimate tensile strength in Megapascals (MPa).
+	/// Represents resistance to being pulled apart.
+	/// </summary>
+	public float? TensileStrengthMPa { get; set; }
+
+	/// <summary>
+	/// The ultimate compressive strength in Megapascals (MPa).
+	/// Represents resistance to being crushed.
+	/// </summary>
+	public float? CompressiveStrengthMPa { get; set; }
+
+	/// <summary>
+	/// The material's hardness on the Mohs scale. A key factor for sharpness and wear resistance.
+	/// </summary>
+	public float? HardnessMohs { get; set; }
+
+	/// <summary>
+	/// A textual description of how the material breaks (e.g., "Brittle", "Conchoidal", "Hackly").
+	/// This is a primary indicator of toughness vs. brittleness.
+	/// </summary>
+	public FractureType FractureType { get; set; } = FractureType.None;
+
+	/// <summary>
+	/// Resistance to elastic deformation. Defines Stiffness (Rigidity vs. Flexibility)
+	/// </summary>
+	public float? YoungsModulusGPa { get; set; }
+
+	/// <summary>
+	/// Ability to absorb a sudden blow. Defines Durability vs. Shock/Impact
+	/// </summary>
+	public float? ImpactStrengthJm2 { get; set; }
+
+	/// <summary>
+	/// Resistance to failure from cyclic stress. Defines Durability vs. Repeated Use/Wear
+	/// </summary>
+	public float? FatigueLimitMPa { get; set; }
+
+	/// <summary>
+	/// How much a material expands/contracts with heat. Defines Durability vs. Temperature Change
+	/// </summary>
+	/// <remarks>
+	/// This can be simply set from the <see cref="SolidCoefficientOfExpansion"/>, lower is better.
+	/// </remarks>
+	public float? ThermalExpansionAlpha { get; set; }
 
 	/// <inheritdoc />
 	public ConfigType ConfigType => ConfigType.Material;

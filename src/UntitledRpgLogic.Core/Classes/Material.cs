@@ -1,3 +1,4 @@
+using System.Drawing;
 using UntitledRpgLogic.Core.Enums;
 using UntitledRpgLogic.Core.Interfaces;
 
@@ -36,8 +37,58 @@ public record Material : IMaterial
 	public double LiquidCoefficientOfExpansion { get; init; }
 
 	/// <inheritdoc />
-	public float Temperature { get; init; }
+	public float Temperature { get; set; }
 
 	/// <inheritdoc />
-	public float Pressure { get; init; }
+	public float Pressure { get; set; }
+
+
+	/// <inheritdoc />
+	public Dictionary<StateOfMatter, Color> Colors { get; init; } = [];
+
+
+	/// <inheritdoc />
+	public float MeltingPointCelcius { get; init; }
+
+
+	/// <inheritdoc />
+	public float BoilingPointCelcius { get; init; }
+
+
+	/// <inheritdoc />
+	public float? SublimationPointCelcius { get; init; }
+
+
+	/// <inheritdoc />
+	public float? SolidDensityGcm3 { get; init; }
+
+	/// <inheritdoc />
+	public float? LiquidDensityGcm3 { get; init; }
+
+	/// <inheritdoc />
+	public float? GasDensityGcm3 { get; init; }
+
+	/// <inheritdoc />
+	public float? TensileStrengthMPa { get; init; }
+
+	/// <inheritdoc />
+	public float? CompressiveStrengthMPa { get; init; }
+
+	/// <inheritdoc />
+	public float? HardnessMohs { get; init; }
+
+	/// <inheritdoc />
+	public FractureType? FractureType { get; init; }
+
+	/// <inheritdoc />
+	public float? YoungsModulusGPa { get; init; }
+
+	/// <inheritdoc />
+	public float? ImpactStrengthJm2 { get; init; }
+
+	/// <inheritdoc />
+	public float? FatigueLimitMPa { get; init; }
+
+	/// <inheritdoc />
+	public float? ThermalExpansionAlpha { get; init; }
 }

@@ -38,7 +38,7 @@ public class BaseMaterial : IMaterial
 				new MaterialStateProperties
 				{
 					Color = config.SolidColor,
-					TemperatureAtStateChange = config.TemperatureAtSolidStateChange,
+					TemperatureAtStateChange = config.TemperatureAtSolidStateChange ?? float.MinNumber,
 					DensityAtStateChange = config.DensityAtSolidStateChange
 				}
 			},
@@ -46,7 +46,7 @@ public class BaseMaterial : IMaterial
 				StateOfMatter.Liquid, new MaterialStateProperties
 				{
 					Color = config.LiquidColor ?? Color.Red, // Default to red if not provided.
-					TemperatureAtStateChange = config.TemperatureAtLiquidStateChange,
+					TemperatureAtStateChange = config.TemperatureAtLiquidStateChange ?? float.MinNumber,
 					DensityAtStateChange = config.DensityAtLiquidStateChange
 				}
 			},
