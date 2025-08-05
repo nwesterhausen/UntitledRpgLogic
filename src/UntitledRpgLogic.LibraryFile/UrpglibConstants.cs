@@ -63,7 +63,7 @@ public static class UrpglibConstants
 	/// </summary>
 	/// <remarks>The default options use camel case for property naming and do not write indented JSON. These
 	/// settings are commonly used for consistent and compact JSON serialization.</remarks>
-	public readonly static JsonSerializerOptions DefaultJsonSerializerOptions = new JsonSerializerOptions
+	public static readonly JsonSerializerOptions? DefaultJsonSerializerOptions = new JsonSerializerOptions
 	{
 		PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
 		WriteIndented = false

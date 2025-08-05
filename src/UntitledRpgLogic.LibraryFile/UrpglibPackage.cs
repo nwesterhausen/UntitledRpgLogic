@@ -18,12 +18,12 @@ public sealed class UrpglibPackage : IDisposable
 	/// <summary>
 	/// The deserialized manifest containing package metadata.
 	/// </summary>
-	public PackageManifest Manifest { get; }
+	public PackageManifest? Manifest { get; }
 
 	private readonly Stream payloadStream;
 	private bool disposed;
 
-	internal UrpglibPackage(UrpglibHeader header, PackageManifest manifest, Stream payloadStream)
+	internal UrpglibPackage(UrpglibHeader header, PackageManifest? manifest, Stream payloadStream)
 	{
 		this.Header = header;
 		this.Manifest = manifest;
@@ -46,7 +46,7 @@ public sealed class UrpglibPackage : IDisposable
 		// Reset position to the beginning of the payload stream for reading.
 		this.payloadStream.Position = 0;
 
-		Stream decompressionStream = this.Header.PayloadCompression switch
+		var decompressionStream = this.Header.PayloadCompression switch
 		{
 			PayloadCompressionType.Gzip => new GZipStream(this.payloadStream, CompressionMode.Decompress, leaveOpen: true),
 			PayloadCompressionType.None => this.payloadStream,

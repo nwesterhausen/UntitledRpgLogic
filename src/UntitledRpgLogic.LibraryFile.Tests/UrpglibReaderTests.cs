@@ -1,6 +1,7 @@
 using System.Text;
 using System.Text.Json;
-#pragma warning disable CA1707
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+#pragma warning disable CA1707 // Naming rules disallow underscores in identifiers
 
 namespace UntitledRpgLogic.LibraryFile.Tests;
 
@@ -83,7 +84,7 @@ public class UrpglibReaderTests
 
 		// Act & Assert
 		var exception = await Assert.ThrowsExceptionAsync<UrpglibFileFormatException>(
-			() => UrpglibReader.ReadAsync(filePath));
+			() => UrpglibReader.ReadAsync(filePath)).ConfigureAwait(false);
 
 		Assert.IsNotNull(exception);
 		Assert.IsTrue(exception.Message.Contains("Invalid file signature", StringComparison.InvariantCultureIgnoreCase));
@@ -95,7 +96,7 @@ public class UrpglibReaderTests
 		// Arrange
 		var filePath = Path.Combine(this.tempDirectory, "newer_version.urpglib");
 		var manifest = CreateTestManifest();
-		await this.CreateUrpglibFileWithVersion(filePath, manifest, (byte)(UrpglibConstants.CurrentHeaderSchemaVersion + 1)).ConfigureAwait(false);
+		await this.CreateUrpglibFileWithVersion(filePath, manifest, UrpglibConstants.CurrentHeaderSchemaVersion + 1).ConfigureAwait(false);
 
 		// Act & Assert
 		var exception = await Assert.ThrowsExceptionAsync<UrpglibVersionMismatchException>(
@@ -207,8 +208,8 @@ public class UrpglibReaderTests
 		// Arrange
 		var filePath = Path.Combine(this.tempDirectory, "truncated.urpglib");
 		// The file actually doesn't contain the full manifest data, simulating a truncated file
-		await this.CreateUrpglibFileWithManifestLength(filePath, 10).ConfigureAwait(false); 
-		
+		await this.CreateUrpglibFileWithManifestLength(filePath, 10).ConfigureAwait(false);
+
 		// Act & Assert
 		await Assert.ThrowsExceptionAsync<UrpglibFileFormatException>(
 			() => UrpglibReader.ReadAsync(filePath)).ConfigureAwait(false);

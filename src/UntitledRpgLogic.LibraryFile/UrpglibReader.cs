@@ -28,7 +28,7 @@ public static class UrpglibReader
 		}
 		if (fileStream.Length < UrpglibConstants.MinFileSize)
 		{
-			var length =fileStream.Length;
+			var length = fileStream.Length;
 			await fileStream.DisposeAsync().ConfigureAwait(false);
 			throw new UrpglibFileSizeException($"The file '{filePath}' is smaller than the minimum required size of {UrpglibConstants.MinFileSize} bytes.",
 				new EndOfStreamException($"Stream must be at least {UrpglibConstants.MinFileSize} bytes, was actually {length} bytes"));
@@ -72,22 +72,24 @@ public static class UrpglibReader
 		}
 		if (header.ManifestLength > fileStream.Length - fileStream.Position)
 		{
-			int remainingBytes = (int)(fileStream.Length - fileStream.Position);
+			var remainingBytes = (int)(fileStream.Length - fileStream.Position);
 			await fileStream.DisposeAsync().ConfigureAwait(false);
 			throw new UrpglibFileFormatException($"Manifest length ({header.ManifestLength}) exceeds remaining file size ({remainingBytes}). The file may be corrupted.");
 		}
 
 		// 2. Read and Deserialize Manifest
 		var manifestJsonBytes = reader.ReadBytes((int)header.ManifestLength);
-		PackageManifest manifest;
+		PackageManifest? manifest;
 		try
 		{
 			manifest = JsonSerializer.Deserialize<PackageManifest>(manifestJsonBytes, UrpglibConstants.DefaultJsonSerializerOptions);
-		} catch (JsonException ex)
+		}
+		catch (JsonException ex)
 		{
 			await fileStream.DisposeAsync().ConfigureAwait(false);
 			throw new UrpglibFileFormatException("Failed to deserialize package manifest.", ex);
 		}
+
 		if (manifest == null)
 		{
 			await fileStream.DisposeAsync().ConfigureAwait(false);
