@@ -81,7 +81,7 @@ public class Name : IStringSerializable<Name>
 		}
 
 		if (singular.EndsWith('y') && !singular.EndsWith("ay") && !singular.EndsWith("ey") &&
-		    !singular.EndsWith("oy") && !singular.EndsWith("uy"))
+			!singular.EndsWith("oy") && !singular.EndsWith("uy"))
 		{
 			return string.Concat(singular.AsSpan(0, singular.Length - 1), "ies");
 		}
@@ -92,7 +92,7 @@ public class Name : IStringSerializable<Name>
 		}
 
 		if (singular.EndsWith('s') || singular.EndsWith('x') || singular.EndsWith('z') || singular.EndsWith("ch") ||
-		    singular.EndsWith("sh"))
+			singular.EndsWith("sh"))
 		{
 			return singular + "es";
 		}
