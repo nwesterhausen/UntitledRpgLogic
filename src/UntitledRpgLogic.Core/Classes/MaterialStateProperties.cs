@@ -6,7 +6,7 @@ namespace UntitledRpgLogic.Core.Classes;
 ///     Properties of a material in different states of matter. Provides information about the color, temperature and
 ///     denisty of the material when it changes state.
 /// </summary>
-public class MaterialStateProperties
+public record MaterialStateProperties
 {
 	/// <summary>
 	///     A color to represent the material in this state. This can be used to visually represent the material in a game or

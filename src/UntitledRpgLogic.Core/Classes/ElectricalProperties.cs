@@ -31,4 +31,9 @@ public record ElectricalProperties
 	{
 		Conductivity = conductivity;
 	}
+
+	/// <summary>
+	/// An empty instance of <see cref="ElectricalProperties"/>.
+	/// </summary>
+	public static readonly ElectricalProperties Empty = new ElectricalProperties(conductivity: null);
 }

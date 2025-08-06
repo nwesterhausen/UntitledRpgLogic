@@ -44,4 +44,9 @@ public record ThermalProperties
 		IgnitionTemperature = ignitionTemperature;
 		ThermalConductivity = thermalConductivity;
 	}
+
+	/// <summary>
+	/// An empty instance of <see cref="ThermalProperties"/>.
+	/// </summary>
+	public static readonly ThermalProperties Empty = new ThermalProperties(meltingPoint: null, boilingPoint: null, ignitionTemperature: null, thermalConductivity: null);
 }

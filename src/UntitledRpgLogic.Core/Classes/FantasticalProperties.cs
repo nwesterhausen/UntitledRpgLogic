@@ -51,4 +51,8 @@ public record FantasticalProperties
 		Purity = purity;
 		Luminosity = luminosity;
 	}
+	/// <summary>
+	/// An empty instance of <see cref="FantasticalProperties"/>.
+	/// </summary>
+	public static readonly FantasticalProperties Empty = new FantasticalProperties(aetherialConductivity: null, elementalAttunement: null, manaCapacity: null, purity: null, luminosity: null);
 }

@@ -6,19 +6,17 @@ using System.Text.Json;
 namespace UntitledRpgLogic.LibraryFile.Tests;
 
 [TestClass]
-public class UrpglibReaderTests
+internal class UrpglibReaderTests : IDisposable
 {
 	private string tempDirectory = null!;
 
-	[TestInitialize]
-	public void Setup()
+	public UrpglibReaderTests()
 	{
 		this.tempDirectory = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
-		Directory.CreateDirectory(this.tempDirectory);
+		_ = Directory.CreateDirectory(this.tempDirectory);
 	}
 
-	[TestCleanup]
-	public void Cleanup()
+	public void Dispose()
 	{
 		if (Directory.Exists(this.tempDirectory))
 		{
@@ -32,7 +30,7 @@ public class UrpglibReaderTests
 		// Arrange
 		var filePath = Path.Combine(this.tempDirectory, "test.urpglib");
 		var manifest = CreateTestManifest();
-		await this.CreateValidUrpglibFile(filePath, manifest).ConfigureAwait(true);
+		await CreateValidUrpglibFile(filePath, manifest).ConfigureAwait(true);
 
 		// Act
 		var package = await UrpglibReader.ReadAsync(filePath, readPayloadIntoMemory: true).ConfigureAwait(true);
@@ -55,7 +53,7 @@ public class UrpglibReaderTests
 		// Arrange
 		var filePath = Path.Combine(this.tempDirectory, "test.urpglib");
 		var manifest = CreateTestManifest();
-		await this.CreateValidUrpglibFile(filePath, manifest).ConfigureAwait(false);
+		await CreateValidUrpglibFile(filePath, manifest).ConfigureAwait(false);
 
 		// Act
 		var package = await UrpglibReader.ReadAsync(filePath, readPayloadIntoMemory: false).ConfigureAwait(false);
@@ -83,7 +81,7 @@ public class UrpglibReaderTests
 		]).ConfigureAwait(false);
 
 		// Act & Assert
-		var exception = await Assert.ThrowsExceptionAsync<UrpglibFileFormatException>(
+		var exception = await Assert.ThrowsExactlyAsync<UrpglibFileFormatException>(
 			() => UrpglibReader.ReadAsync(filePath)).ConfigureAwait(false);
 
 		Assert.IsNotNull(exception);
@@ -96,10 +94,10 @@ public class UrpglibReaderTests
 		// Arrange
 		var filePath = Path.Combine(this.tempDirectory, "newer_version.urpglib");
 		var manifest = CreateTestManifest();
-		await this.CreateUrpglibFileWithVersion(filePath, manifest, UrpglibConstants.CurrentHeaderSchemaVersion + 1).ConfigureAwait(false);
+		await CreateUrpglibFileWithVersion(filePath, manifest, UrpglibConstants.CurrentHeaderSchemaVersion + 1).ConfigureAwait(false);
 
 		// Act & Assert
-		var exception = await Assert.ThrowsExceptionAsync<UrpglibVersionMismatchException>(
+		var exception = await Assert.ThrowsExactlyAsync<UrpglibVersionMismatchException>(
 			() => UrpglibReader.ReadAsync(filePath)).ConfigureAwait(false);
 
 		Assert.IsNotNull(exception);
@@ -111,10 +109,10 @@ public class UrpglibReaderTests
 	{
 		// Arrange
 		var filePath = Path.Combine(this.tempDirectory, "invalid_manifest.urpglib");
-		await this.CreateUrpglibFileWithInvalidManifest(filePath).ConfigureAwait(false);
+		await CreateUrpglibFileWithInvalidManifest(filePath).ConfigureAwait(false);
 
 		// Act & Assert
-		var exception = await Assert.ThrowsExceptionAsync<UrpglibFileFormatException>(
+		var exception = await Assert.ThrowsExactlyAsync<UrpglibFileFormatException>(
 			() => UrpglibReader.ReadAsync(filePath)).ConfigureAwait(false);
 
 		Assert.IsNotNull(exception);
@@ -129,7 +127,7 @@ public class UrpglibReaderTests
 		await File.WriteAllBytesAsync(filePath, []).ConfigureAwait(false);
 
 		// Act & Assert
-		await Assert.ThrowsExceptionAsync<UrpglibFileSizeException>(
+		_ = await Assert.ThrowsExactlyAsync<UrpglibFileSizeException>(
 			() => UrpglibReader.ReadAsync(filePath)).ConfigureAwait(false);
 	}
 
@@ -139,7 +137,7 @@ public class UrpglibReaderTests
 		// Arrange
 		var filePath = Path.Combine(this.tempDirectory, "gzip_test.urpglib");
 		var manifest = CreateTestManifest();
-		await this.CreateValidUrpglibFile(filePath, manifest, PayloadCompressionType.Gzip).ConfigureAwait(false);
+		await CreateValidUrpglibFile(filePath, manifest, PayloadCompressionType.Gzip).ConfigureAwait(false);
 
 		// Act
 		var package = await UrpglibReader.ReadAsync(filePath).ConfigureAwait(false);
@@ -158,7 +156,7 @@ public class UrpglibReaderTests
 		// Arrange
 		var filePath = Path.Combine(this.tempDirectory, "no_compression_test.urpglib");
 		var manifest = CreateTestManifest();
-		await this.CreateValidUrpglibFile(filePath, manifest, PayloadCompressionType.None).ConfigureAwait(false);
+		await CreateValidUrpglibFile(filePath, manifest, PayloadCompressionType.None).ConfigureAwait(false);
 
 		// Act
 		var package = await UrpglibReader.ReadAsync(filePath).ConfigureAwait(false);
@@ -178,7 +176,7 @@ public class UrpglibReaderTests
 		var filePath = Path.Combine(this.tempDirectory, "large_manifest.urpglib");
 		var manifest = CreateTestManifest();
 		manifest.Description = new string('A', 10000); // Large description
-		await this.CreateValidUrpglibFile(filePath, manifest).ConfigureAwait(false);
+		await CreateValidUrpglibFile(filePath, manifest).ConfigureAwait(false);
 
 		// Act
 		var package = await UrpglibReader.ReadAsync(filePath).ConfigureAwait(false);
@@ -198,7 +196,7 @@ public class UrpglibReaderTests
 		var filePath = Path.Combine(this.tempDirectory, "nonexistent.urpglib");
 
 		// Act & Assert
-		await Assert.ThrowsExceptionAsync<FileNotFoundException>(
+		_ = await Assert.ThrowsExactlyAsync<FileNotFoundException>(
 			() => UrpglibReader.ReadAsync(filePath)).ConfigureAwait(false);
 	}
 
@@ -208,10 +206,10 @@ public class UrpglibReaderTests
 		// Arrange
 		var filePath = Path.Combine(this.tempDirectory, "truncated.urpglib");
 		// The file actually doesn't contain the full manifest data, simulating a truncated file
-		await this.CreateUrpglibFileWithManifestLength(filePath, 10).ConfigureAwait(false);
+		await CreateUrpglibFileWithManifestLength(filePath, 10).ConfigureAwait(false);
 
 		// Act & Assert
-		await Assert.ThrowsExceptionAsync<UrpglibFileFormatException>(
+		_ = await Assert.ThrowsExactlyAsync<UrpglibFileFormatException>(
 			() => UrpglibReader.ReadAsync(filePath)).ConfigureAwait(false);
 	}
 
@@ -220,10 +218,10 @@ public class UrpglibReaderTests
 	{
 		// Arrange
 		var filePath = Path.Combine(this.tempDirectory, "zero_manifest.urpglib");
-		await this.CreateUrpglibFileWithManifestLength(filePath, 0).ConfigureAwait(false);
+		await CreateUrpglibFileWithManifestLength(filePath, 0).ConfigureAwait(false);
 
 		// Act & Assert
-		await Assert.ThrowsExceptionAsync<UrpglibFileFormatException>(
+		_ = await Assert.ThrowsExactlyAsync<UrpglibFileFormatException>(
 			() => UrpglibReader.ReadAsync(filePath)).ConfigureAwait(false);
 	}
 
@@ -233,7 +231,7 @@ public class UrpglibReaderTests
 		// Arrange
 		var filePath = Path.Combine(this.tempDirectory, "concurrent_test.urpglib");
 		var manifest = CreateTestManifest();
-		await this.CreateValidUrpglibFile(filePath, manifest).ConfigureAwait(false);
+		await CreateValidUrpglibFile(filePath, manifest).ConfigureAwait(false);
 
 		// Act
 		var tasks = Enumerable.Range(0, 10).Select(async _ =>
@@ -268,7 +266,7 @@ public class UrpglibReaderTests
 		};
 	}
 
-	private async Task CreateValidUrpglibFile(string filePath, PackageManifest manifest, PayloadCompressionType compression = PayloadCompressionType.None)
+	private static async Task CreateValidUrpglibFile(string filePath, PackageManifest manifest, PayloadCompressionType compression = PayloadCompressionType.None)
 	{
 		var fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write);
 		await using var stream = fileStream.ConfigureAwait(false);
@@ -295,7 +293,7 @@ public class UrpglibReaderTests
 		writer.Write(dummyPayload);
 	}
 
-	private async Task CreateUrpglibFileWithVersion(string filePath, PackageManifest manifest, byte headerVersion)
+	private static async Task CreateUrpglibFileWithVersion(string filePath, PackageManifest manifest, byte headerVersion)
 	{
 		var fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write);
 		await using var stream = fileStream.ConfigureAwait(false);
@@ -322,7 +320,7 @@ public class UrpglibReaderTests
 		writer.Write(dummyPayload);
 	}
 
-	private async Task CreateUrpglibFileWithInvalidManifest(string filePath)
+	private static async Task CreateUrpglibFileWithInvalidManifest(string filePath)
 	{
 		var fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write);
 		await using var stream = fileStream.ConfigureAwait(false);
@@ -348,7 +346,7 @@ public class UrpglibReaderTests
 		writer.Write(dummyPayload);
 	}
 
-	private async Task CreateUrpglibFileWithManifestLength(string filePath, uint manifestLength)
+	private static async Task CreateUrpglibFileWithManifestLength(string filePath, uint manifestLength)
 	{
 		var fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write);
 		await using var stream = fileStream.ConfigureAwait(false);

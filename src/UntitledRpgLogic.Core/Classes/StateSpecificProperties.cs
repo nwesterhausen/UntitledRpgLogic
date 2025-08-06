@@ -30,4 +30,9 @@ public record StateSpecificProperties
 	{
 		Color = color;
 	}
+
+	/// <summary>
+	/// An empty instance of <see cref="StateSpecificProperties"/>.
+	/// </summary>
+	public static readonly StateSpecificProperties Empty = new StateSpecificProperties(Color.Empty);
 }

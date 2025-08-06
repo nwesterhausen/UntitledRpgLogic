@@ -9,6 +9,11 @@ namespace UntitledRpgLogic.Core.Classes;
 /// </summary>
 public record Material : IMaterial
 {
+	/// <summary>
+	/// 	An empty material instance.
+	/// </summary>
+	public static readonly IMaterial Empty = new Material(Name.Empty, Guid.Empty, MechanicalProperties.Empty, ThermalProperties.Empty, ElectricalProperties.Empty, FantasticalProperties.Empty, new Dictionary<StateOfMatter, StateSpecificProperties>());
+
 	/// <inheritdoc />
 	public Name Name { get; }
 	/// <inheritdoc />

@@ -46,4 +46,7 @@ public record Item : IItem
 
 	/// <inheritdoc />
 	public float Depth { get; set; }
+
+	/// <inheritdoc />
+	public IMaterial PrimaryMaterial { get; set; } = Material.Empty;
 }

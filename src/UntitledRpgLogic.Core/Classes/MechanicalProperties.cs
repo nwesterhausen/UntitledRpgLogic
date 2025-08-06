@@ -69,4 +69,9 @@ public record MechanicalProperties
 		ArgumentNullException.ThrowIfNull(config, nameof(config));
 		return new MechanicalProperties(config.Density, config.Hardness, config.Toughness, config.Stiffness, config.Malleability, config.Viscosity, config.SurfaceTension, config.Adhesion);
 	}
+
+	/// <summary>
+	/// An empty instance of <see cref="MechanicalProperties"/>.
+	/// </summary>
+	public static readonly MechanicalProperties Empty = new MechanicalProperties(density: null, hardness: null, toughness: null, stiffness: null, malleability: null, viscosity: null, surfaceTension: null, adhesion: null);
 }
