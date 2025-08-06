@@ -49,6 +49,9 @@ public static class MaterialExtensions
 					// Ideal gas law: PV = nRT => Density (ρ) = m / V = (p * M) / (R * T)
 					return p * material.MolarMass / (UniversalGasConstant * t);
 				}
+
+			case StateOfMatter.None:
+				break;
 			default:
 #if DEBUG
 				throw new InvalidOperationException($"Cannot calculate density for unknown state: {material.State}");
