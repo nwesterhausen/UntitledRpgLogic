@@ -1,4 +1,4 @@
-using System.Drawing;
+using UntitledRpgLogic.Core.Configuration;
 using UntitledRpgLogic.Core.Enums;
 using UntitledRpgLogic.Core.Interfaces;
 
@@ -10,7 +10,20 @@ namespace UntitledRpgLogic.Core.Classes;
 public record Material : IMaterial
 {
 	/// <inheritdoc />
-	public Guid Guid { get; init; }
+	public Name Name { get; }
+	/// <inheritdoc />
+	public Guid Guid { get; }
+	/// <inheritdoc />
+	public MechanicalProperties Mechanical { get; }
+	/// <inheritdoc />
+	public ThermalProperties Thermal { get; }
+	/// <inheritdoc />
+	public ElectricalProperties Electrical { get; }
+	/// <inheritdoc />
+	public FantasticalProperties Fantastical { get; }
+	/// <inheritdoc />
+	public IReadOnlyDictionary<StateOfMatter, StateSpecificProperties> States { get; }
+
 
 	/// <inheritdoc />
 	public string Id { get; init; } = string.Empty;
@@ -18,77 +31,42 @@ public record Material : IMaterial
 	/// <inheritdoc />
 	public string ShortGuid { get; init; } = string.Empty;
 
-	/// <inheritdoc />
-	public Name Name { get; init; } = Name.Empty;
 
-	/// <inheritdoc />
-	public StateOfMatter State { get; init; }
+	private Material(Name name, Guid guid, MechanicalProperties mechanical, ThermalProperties thermal, ElectricalProperties electrical, FantasticalProperties fantastical, Dictionary<StateOfMatter, StateSpecificProperties> states)
+	{
+		this.Name = name;
+		this.Guid = guid;
+		this.Mechanical = mechanical;
+		this.Thermal = thermal;
+		this.Electrical = electrical;
+		this.Fantastical = fantastical;
+		this.States = states;
 
-	/// <inheritdoc />
-	public Dictionary<StateOfMatter, MaterialStateProperties> StateProperties { get; init; } = [];
+		this.Id = Convert.ToBase64String(this.Guid.ToByteArray());
+		this.ShortGuid = this.Guid.ToString("N")[..8].ToUpperInvariant();
+	}
 
-	/// <inheritdoc />
-	public double MolarMass { get; init; }
+	/// <summary>
+	/// 	Creates a Material instance from the provided configuration.
+	/// </summary>
+	/// <param name="config">material data config to use</param>
+	/// <returns>a material instance</returns>
+	public static Material FromConfig(MaterialDataConfig config)
+	{
+		ArgumentNullException.ThrowIfNull(config, nameof(config));
 
-	/// <inheritdoc />
-	public double SolidCoefficientOfExpansion { get; init; }
+		var name = new Name(config.Name, config.PluralName, config.NameAsAdjective);
+		var mechanical = MechanicalProperties.FromConfig(config.Mechanical);
+		var thermal = ThermalProperties.FromConfig(config.Thermal);
+		var electrical = ElectricalProperties.FromConfig(config.Electrical);
+		var fantastical = FantasticalProperties.FromConfig(config.Fantastical);
 
-	/// <inheritdoc />
-	public double LiquidCoefficientOfExpansion { get; init; }
+		var states = new Dictionary<StateOfMatter, StateSpecificProperties>();
+		foreach (var (state, stateConfig) in config.States)
+		{
+			states[state] = StateSpecificProperties.FromConfig(stateConfig);
+		}
 
-	/// <inheritdoc />
-	public float Temperature { get; set; }
-
-	/// <inheritdoc />
-	public float Pressure { get; set; }
-
-
-	/// <inheritdoc />
-	public Dictionary<StateOfMatter, Color> Colors { get; init; } = [];
-
-
-	/// <inheritdoc />
-	public float MeltingPointCelcius { get; init; }
-
-
-	/// <inheritdoc />
-	public float BoilingPointCelcius { get; init; }
-
-
-	/// <inheritdoc />
-	public float? SublimationPointCelcius { get; init; }
-
-
-	/// <inheritdoc />
-	public float? SolidDensityGcm3 { get; init; }
-
-	/// <inheritdoc />
-	public float? LiquidDensityGcm3 { get; init; }
-
-	/// <inheritdoc />
-	public float? GasDensityGcm3 { get; init; }
-
-	/// <inheritdoc />
-	public float? TensileStrengthMPa { get; init; }
-
-	/// <inheritdoc />
-	public float? CompressiveStrengthMPa { get; init; }
-
-	/// <inheritdoc />
-	public float? HardnessMohs { get; init; }
-
-	/// <inheritdoc />
-	public FractureType? FractureType { get; init; }
-
-	/// <inheritdoc />
-	public float? YoungsModulusGPa { get; init; }
-
-	/// <inheritdoc />
-	public float? ImpactStrengthJm2 { get; init; }
-
-	/// <inheritdoc />
-	public float? FatigueLimitMPa { get; init; }
-
-	/// <inheritdoc />
-	public float? ThermalExpansionAlpha { get; init; }
+		return new Material(name, config.ExplicitId ?? Guid.NewGuid(), mechanical, thermal, electrical, fantastical, states);
+	}
 }

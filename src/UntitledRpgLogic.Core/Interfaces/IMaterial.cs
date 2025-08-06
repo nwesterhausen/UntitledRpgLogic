@@ -1,4 +1,4 @@
-using System.Drawing;
+using UntitledRpgLogic.Core.Classes;
 using UntitledRpgLogic.Core.Enums;
 
 namespace UntitledRpgLogic.Core.Interfaces;
@@ -10,115 +10,23 @@ namespace UntitledRpgLogic.Core.Interfaces;
 public interface IMaterial : IHasName, IHasGuid
 {
 	/// <summary>
-	///     The current state of matter of the material.
+	/// Mechanical properties of the material.
 	/// </summary>
-	public StateOfMatter State { get; }
-
+	public MechanicalProperties Mechanical { get; }
 	/// <summary>
-	///     The molar mass of the material in grams per mole (g/mol).
+	/// Thermal properties of the material.
 	/// </summary>
-	public double MolarMass { get; }
-
+	public ThermalProperties Thermal { get; }
 	/// <summary>
-	///     Coefficient of Expansion (α) in 1/°C for the solid state.
+	/// Electrical properties of the material.
 	/// </summary>
-	public double SolidCoefficientOfExpansion { get; }
-
+	public ElectricalProperties Electrical { get; }
 	/// <summary>
-	///     Coefficient of Expansion (β) in 1/°C for the liquid state.
+	/// Fantastical properties of the material.
 	/// </summary>
-	public double LiquidCoefficientOfExpansion { get; }
-
+	public FantasticalProperties Fantastical { get; }
 	/// <summary>
-	/// 	The material's colors at each state of matter.
+	/// Properties specific to the material's state of matter.
 	/// </summary>
-	public Dictionary<StateOfMatter, Color> Colors { get; }
-
-	/// <summary>
-	/// The melting point of the material in Celcius.
-	/// </summary>
-	public float MeltingPointCelcius { get; }
-	/// <summary>
-	/// The boiling point of the material in Celcius
-	/// </summary>
-	public float BoilingPointCelcius { get; }
-	/// <summary>
-	/// The sublimiation point (if exists) of the material in Celcius
-	/// </summary>
-	public float? SublimationPointCelcius { get; }
-	/// <summary>
-	/// Whether this material sublimates.
-	/// </summary>
-	public bool CanSublimate => this.SublimationPointCelcius is null;
-
-	/// <summary>
-	/// The density of the material in its solid state in g/cm³.
-	/// </summary>
-	public float? SolidDensityGcm3 { get; }
-
-	/// <summary>
-	/// The density of the material in its liquid state, typically at its melting point, in g/cm³.
-	/// </summary>
-	public float? LiquidDensityGcm3 { get; }
-
-	/// <summary>
-	/// The density of the material in its gaseous state, typically at its boiling point, in g/cm³.
-	/// </summary>
-	public float? GasDensityGcm3 { get; }
-
-	/// <summary>
-	/// The ultimate tensile strength in Megapascals (MPa).
-	/// Represents resistance to being pulled apart.
-	/// </summary>
-	public float? TensileStrengthMPa { get; }
-
-	/// <summary>
-	/// The ultimate compressive strength in Megapascals (MPa).
-	/// Represents resistance to being crushed.
-	/// </summary>
-	public float? CompressiveStrengthMPa { get; }
-
-	/// <summary>
-	/// The material's hardness on the Mohs scale. A key factor for sharpness and wear resistance.
-	/// </summary>
-	public float? HardnessMohs { get; }
-
-	/// <summary>
-	/// A textual description of how the material breaks (e.g., "Brittle", "Conchoidal", "Hackly").
-	/// This is a primary indicator of toughness vs. brittleness.
-	/// </summary>
-	public FractureType? FractureType { get; }
-
-	/// <summary>
-	/// Resistance to elastic deformation. Defines Stiffness (Rigidity vs. Flexibility)
-	/// </summary>
-	public float? YoungsModulusGPa { get; }
-
-	/// <summary>
-	/// Ability to absorb a sudden blow. Defines Durability vs. Shock/Impact
-	/// </summary>
-	public float? ImpactStrengthJm2 { get; }
-
-	/// <summary>
-	/// Resistance to failure from cyclic stress. Defines Durability vs. Repeated Use/Wear
-	/// </summary>
-	public float? FatigueLimitMPa { get; }
-
-	/// <summary>
-	/// How much a material expands/contracts with heat. Defines Durability vs. Temperature Change
-	/// </summary>
-	/// <remarks>
-	/// This can be simply set from the <see cref="SolidCoefficientOfExpansion"/>, lower is better.
-	/// </remarks>
-	public float? ThermalExpansionAlpha { get; }
-
-	/// <summary>
-	///     The materials current temperature in degrees Celsius (°C).
-	/// </summary>
-	public float Temperature { get; }
-
-	/// <summary>
-	///     The current pressure exerted on the material in Kilopascals (kPa).
-	/// </summary>
-	public float Pressure { get; }
+	public IReadOnlyDictionary<StateOfMatter, StateSpecificProperties> States { get; }
 }

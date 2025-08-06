@@ -24,19 +24,11 @@ public class SummonEffectComponent : IEffectComponent
 		this.NumberOfCreatures = numberOfCreatures;
 		this.DurationInSeconds = durationInSeconds;
 
-		// Ensure this component is specifically for Summoning magic.
-		this.MagicType = MagicType.Summoning;
-
 		// Generate a new GUID for this component instance
 		this.Guid = Guid.NewGuid();
 		this.Id = Convert.ToBase64String(this.Guid.ToByteArray());
 		this.ShortGuid = this.Guid.ToString("N")[..8].ToUpperInvariant();
 	}
-
-	/// <summary>
-	///     The type of magic this component belongs to (should be MagicType.Summoning).
-	/// </summary>
-	public MagicType MagicType { get; }
 
 	/// <summary>
 	///     The identifier for the type of creature that will be summoned.

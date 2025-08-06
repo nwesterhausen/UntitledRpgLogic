@@ -63,8 +63,8 @@ public class EffectApplicationService : IEffectApplicationService
 					if (component is ElementalEffectComponent elementalComponent)
 					{
 						// Example: Apply elemental damage or status effect
-						this.logger.LogDebug("  Elemental: Type: {ElementType}, Intensity: {Intensity}",
-							elementalComponent.ElementType, elementalComponent.Intensity);
+						this.logger.LogDebug("  Magic Type: {ElementType}, Intensity: {Intensity}",
+							elementalComponent.MagicType, elementalComponent.Intensity);
 					}
 
 					// This might interact with a damage calculation system or apply status effects

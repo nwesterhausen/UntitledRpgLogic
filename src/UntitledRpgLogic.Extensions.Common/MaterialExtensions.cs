@@ -1,4 +1,3 @@
-using UntitledRpgLogic.Core.Enums;
 using UntitledRpgLogic.Core.Interfaces;
 
 namespace UntitledRpgLogic.Extensions.Common;
@@ -9,78 +8,39 @@ namespace UntitledRpgLogic.Extensions.Common;
 public static class MaterialExtensions
 {
 	/// <summary>
-	///     The universal gas constant in J/(mol·K), used in the ideal gas law for calculating density in the gas state.
-	/// </summary>
-	private const double UniversalGasConstant = 8.314;
-
-	/// <summary>
-	///     Calculate the density of a material based on its state, pressure, and temperature.
-	/// </summary>
-	/// <param name="material">the material to use</param>
-	/// <param name="pressure">(optional) specify a pressure to use for the calculation</param>
-	/// <param name="temperature">(optional) specify a temperature to use for the calculation</param>
-	/// <returns>the Density of the material</returns>
-	public static double CalculateDensity(this IMaterial material, int? pressure = null, int? temperature = null)
-	{
-		ArgumentNullException.ThrowIfNull(material);
-		switch (material.State)
-		{
-			case StateOfMatter.Solid:
-				{
-					var p0 = material.StateProperties[StateOfMatter.Solid].DensityAtStateChange;
-					var t0 = material.StateProperties[StateOfMatter.Solid].TemperatureAtStateChange;
-					var t = temperature ?? material.Temperature;
-
-					return p0 * (1 + (material.SolidCoefficientOfExpansion * (t - t0)));
-				}
-			case StateOfMatter.Liquid:
-				{
-					var p0 = material.StateProperties[StateOfMatter.Liquid].DensityAtStateChange;
-					var t0 = material.StateProperties[StateOfMatter.Liquid].TemperatureAtStateChange;
-					var t = temperature ?? material.Temperature;
-
-					return p0 * (1 + (material.LiquidCoefficientOfExpansion * (t - t0)));
-				}
-			case StateOfMatter.Gas:
-				{
-					var t = (temperature ?? material.Temperature) + 273.15; // Convert Celsius to Kelvin
-					var p = pressure ?? material.Pressure;
-
-					// Ideal gas law: PV = nRT => Density (ρ) = m / V = (p * M) / (R * T)
-					return p * material.MolarMass / (UniversalGasConstant * t);
-				}
-
-			case StateOfMatter.None:
-				break;
-			default:
-#if DEBUG
-				throw new InvalidOperationException($"Cannot calculate density for unknown state: {material.State}");
-#endif
-				break;
-		}
-
-		return 0; // Default return value if no state matches
-	}
-
-	/// <summary>
 	///     Calculate the weight of a material based on its volume, pressure, and temperature.
 	/// </summary>
 	/// <param name="material"></param>
 	/// <param name="volume"></param>
-	/// <param name="pressure"></param>
-	/// <param name="temperature"></param>
 	/// <returns></returns>
-	public static double CalculateWeight(this IMaterial material, double volume, int? pressure = null,
-		int? temperature = null)
+	public static double CalculateWeight(this IMaterial material, double volume)
 	{
-		var density = material.CalculateDensity();
-		if (pressure != null || temperature != null)
+		ArgumentNullException.ThrowIfNull(material, nameof(material));
+
+		if (material.Mechanical.Density is null or <= 0)
 		{
-			// update the density first
-			density = material.CalculateDensity(pressure, temperature);
+			return 0f;
 		}
 
-		// Weight = Density * Volume [g/cm³ * cm³ = g]
-		return density * volume;
+		// Weight (kg) = Density (kg/m^3) * Volume (m^3)
+		return material.Mechanical.Density.Value * volume;
+	}
+	/// <summary>
+	/// Gets the material's attunement value for a specific magic type.
+	/// A positive value could indicate a weakness or amplification, while a negative value could indicate resistance.
+	/// </summary>
+	/// <param name="material">The material.</param>
+	/// <param name="magicTypeGuid">The Guid of the magic type to check.</param>
+	/// <returns>The attunement value, or 0f if no attunement is defined for that magic type.</returns>
+	public static float GetAttunement(this IMaterial material, Guid magicTypeGuid)
+	{
+		ArgumentNullException.ThrowIfNull(material, nameof(material));
+
+		if (material.Fantastical.ElementalAttunement is null)
+		{
+			return 0f;
+		}
+
+		return material.Fantastical.ElementalAttunement.GetValueOrDefault(magicTypeGuid, 0f);
 	}
 }
