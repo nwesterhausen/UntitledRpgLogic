@@ -17,7 +17,7 @@ public interface ITomlConfigHandler
 	/// <param name="filePath">The path to the TOML file to be loaded. Must not be null or empty.</param>
 	/// <returns>An <see cref="ITomlConfig" /> instance representing the configuration data from the file.</returns>
 	/// <exception cref="InvalidOperationException">When the TOML cannot be parsed into <see cref="ITomlConfig" /></exception>
-	public ITomlConfig LoadConfigFromFile(string filePath);
+	public TConfig LoadConfigFromFile<TConfig>(string filePath) where TConfig : ITomlConfig;
 
 	/// <summary>
 	///     Loads a TOML configuration from the specified byte array.
@@ -25,7 +25,7 @@ public interface ITomlConfigHandler
 	/// <param name="bytes">The byte array containing the TOML configuration data. Cannot be null or empty.</param>
 	/// <returns>An <see cref="ITomlConfig" /> instance representing the loaded configuration.</returns>
 	/// <exception cref="InvalidOperationException">When the TOML cannot be parsed into <see cref="ITomlConfig" /></exception>
-	public ITomlConfig LoadConfig(byte[] bytes);
+	public TConfig LoadConfig<TConfig>(byte[] bytes) where TConfig : ITomlConfig;
 
 	/// <summary>
 	///     Serializes the specified configuration object into a TOML format and returns it as a byte array.

@@ -12,17 +12,16 @@ namespace UntitledRpgLogic.Services;
 public class EffectApplicationService : IEffectApplicationService
 {
 	private readonly ILogger<EffectApplicationService> logger;
-	private readonly IStatService statService;
+	//private readonly IStatService statService;
 
 	/// <summary>
 	///     Creation of the service with dependency injection.
 	/// </summary>
 	/// <param name="logger"></param>
-	/// <param name="statService"></param>
-	public EffectApplicationService(ILogger<EffectApplicationService> logger, IStatService statService)
+	public EffectApplicationService(ILogger<EffectApplicationService> logger)
 	{
 		this.logger = logger;
-		this.statService = statService;
+		//this.statService = statService;
 	}
 
 	/// <inheritdoc />

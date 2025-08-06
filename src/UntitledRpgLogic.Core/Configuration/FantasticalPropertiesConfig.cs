@@ -3,7 +3,7 @@ namespace UntitledRpgLogic.Core.Configuration;
 /// <summary>
 /// Properties related to the fantastical or magical aspects of a material.
 /// </summary>
-public class FantasticalPropertiesConfig
+public record FantasticalPropertiesConfig
 {
 	/// <summary>
 	/// A relative measure of how well the material channels magical energy.
@@ -13,7 +13,7 @@ public class FantasticalPropertiesConfig
 	/// <summary>
 	/// A material's natural affinity for one or more elemental types, referenced by the Element's Guid.
 	/// </summary>
-	public Dictionary<Guid, float>? ElementalAttunement { get; }
+	public Dictionary<Guid, float>? ElementalAttunement { get; init; }
 
 	/// <summary>
 	/// A relative measure of how much magical energy a material can store.

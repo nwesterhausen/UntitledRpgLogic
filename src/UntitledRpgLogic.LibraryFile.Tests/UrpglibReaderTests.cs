@@ -8,13 +8,7 @@ namespace UntitledRpgLogic.LibraryFile.Tests;
 [TestClass]
 internal sealed class UrpglibReaderTests : IDisposable
 {
-	private string tempDirectory = null!;
-
-	public UrpglibReaderTests()
-	{
-		this.tempDirectory = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
-		_ = Directory.CreateDirectory(this.tempDirectory);
-	}
+	private readonly string tempDirectory = null!;
 
 	public void Dispose()
 	{
@@ -366,6 +360,13 @@ internal sealed class UrpglibReaderTests : IDisposable
 		writer.Write(manifestLength);
 
 		// If manifest length is not zero, the file will become invalid because there is no actual manifest data written.
+	}
+
+	[TestInitialize]
+	public void TestInitialize()
+	{
+		this.tempDirectory = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+		_ = Directory.CreateDirectory(this.tempDirectory);
 	}
 
 	#endregion
