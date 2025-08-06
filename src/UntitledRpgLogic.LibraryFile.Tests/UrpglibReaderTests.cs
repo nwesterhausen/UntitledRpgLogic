@@ -6,7 +6,7 @@ using System.Text.Json;
 namespace UntitledRpgLogic.LibraryFile.Tests;
 
 [TestClass]
-internal class UrpglibReaderTests : IDisposable
+internal sealed class UrpglibReaderTests : IDisposable
 {
 	private string tempDirectory = null!;
 

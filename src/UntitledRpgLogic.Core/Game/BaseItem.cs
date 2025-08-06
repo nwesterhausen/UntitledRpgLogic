@@ -73,4 +73,7 @@ public class BaseItem : IItem
 
 	/// <inheritdoc />
 	public Name Name { get; }
+
+	/// <inheritdoc />
+	public IMaterial PrimaryMaterial { get; } = Material.Empty;
 }
