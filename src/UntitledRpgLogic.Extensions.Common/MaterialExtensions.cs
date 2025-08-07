@@ -9,75 +9,43 @@ namespace UntitledRpgLogic.Extensions.Common;
 public static class MaterialExtensions
 {
 	/// <summary>
-	///     The universal gas constant in J/(mol·K), used in the ideal gas law for calculating density in the gas state.
+	/// Gets the material's attunement value for a specific magic type.
+	/// A positive value could indicate a weakness or amplification, while a negative value could indicate resistance.
 	/// </summary>
-	private const double UniversalGasConstant = 8.314;
-
-	/// <summary>
-	///     Calculate the density of a material based on its state, pressure, and temperature.
-	/// </summary>
-	/// <param name="material">the material to use</param>
-	/// <param name="pressure">(optional) specify a pressure to use for the calculation</param>
-	/// <param name="temperature">(optional) specify a temperature to use for the calculation</param>
-	/// <returns>the Density of the material</returns>
-	public static double CalculateDensity(this IMaterial material, int? pressure = null, int? temperature = null)
+	/// <param name="material">The material.</param>
+	/// <param name="magicTypeGuid">The Guid of the magic type to check.</param>
+	/// <returns>The attunement value, or 0f if no attunement is defined for that magic type.</returns>
+	public static float GetAttunement(this IMaterial material, Guid magicTypeGuid)
 	{
-		ArgumentNullException.ThrowIfNull(material);
-		switch (material.State)
+		ArgumentNullException.ThrowIfNull(material, nameof(material));
+
+		if (material.Fantastical.ElementalAttunement is null)
 		{
-			case StateOfMatter.Solid:
-				{
-					var p0 = material.StateProperties[StateOfMatter.Solid].DensityAtStateChange;
-					var t0 = material.StateProperties[StateOfMatter.Solid].TemperatureAtStateChange;
-					var t = temperature ?? material.Temperature;
-
-					return p0 * (1 + (material.SolidCoefficientOfExpansion * (t - t0)));
-				}
-			case StateOfMatter.Liquid:
-				{
-					var p0 = material.StateProperties[StateOfMatter.Liquid].DensityAtStateChange;
-					var t0 = material.StateProperties[StateOfMatter.Liquid].TemperatureAtStateChange;
-					var t = temperature ?? material.Temperature;
-
-					return p0 * (1 + (material.LiquidCoefficientOfExpansion * (t - t0)));
-				}
-			case StateOfMatter.Gas:
-				{
-					var t = (temperature ?? material.Temperature) + 273.15; // Convert Celsius to Kelvin
-					var p = pressure ?? material.Pressure;
-
-					// Ideal gas law: PV = nRT => Density (ρ) = m / V = (p * M) / (R * T)
-					return p * material.MolarMass / (UniversalGasConstant * t);
-				}
-			default:
-#if DEBUG
-				throw new InvalidOperationException($"Cannot calculate density for unknown state: {material.State}");
-#endif
-				break;
+			return 0f;
 		}
 
-		return 0; // Default return value if no state matches
+		return material.Fantastical.ElementalAttunement.GetValueOrDefault(magicTypeGuid, 0f);
 	}
 
 	/// <summary>
-	///     Calculate the weight of a material based on its volume, pressure, and temperature.
+	/// Calculates the weight of an item based on its volume and material density.
 	/// </summary>
-	/// <param name="material"></param>
-	/// <param name="volume"></param>
-	/// <param name="pressure"></param>
-	/// <param name="temperature"></param>
-	/// <returns></returns>
-	public static double CalculateWeight(this IMaterial material, double volume, int? pressure = null,
-		int? temperature = null)
+	/// <param name="item">The item to calculate the weight for.</param>
+	/// <returns>The calculated weight in kilograms. Returns 0 if density is not defined.</returns>
+	public static float CalculateWeight(this IItem item)
 	{
-		var density = material.CalculateDensity();
-		if (pressure != null || temperature != null)
+		ArgumentNullException.ThrowIfNull(item, nameof(item));
+
+		var density = item.PrimaryMaterial.Mechanical.Density;
+		if (density is null or <= 0)
 		{
-			// update the density first
-			density = material.CalculateDensity(pressure, temperature);
+			return 0f;
 		}
 
-		// Weight = Density * Volume [g/cm³ * cm³ = g]
-		return density * volume;
+		// Calculate volume in cubic meters to match density in kg/m^3
+		var volumeInMeters = item.CalculateVolumeIn(DimensionScale.M);
+
+		// Weight (kg) = Density (kg/m^3) * Volume (m^3)
+		return density.Value * volumeInMeters;
 	}
 }

@@ -122,7 +122,7 @@ public class StatService : IStatService
 		ArgumentNullException.ThrowIfNull(sourceStat);
 		ArgumentNullException.ThrowIfNull(dependentStat);
 
-		if (!dependentStat.LinkedStats.TryAdd(sourceStat.Guid, ratio))
+		if (!dependentStat.LinkedStats.TryAdd(sourceStat.Identifier, ratio))
 		{
 			this.logger.LogWarning("Stat {DependentStat} is already linked to {SourceStat}.",
 				dependentStat.Name, sourceStat.Name);

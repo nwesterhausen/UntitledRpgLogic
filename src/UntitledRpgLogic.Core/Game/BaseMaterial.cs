@@ -1,4 +1,3 @@
-using System.Drawing;
 using UntitledRpgLogic.Core.Classes;
 using UntitledRpgLogic.Core.Configuration;
 using UntitledRpgLogic.Core.Enums;
@@ -12,85 +11,64 @@ namespace UntitledRpgLogic.Core.Game;
 /// </summary>
 public class BaseMaterial : IMaterial
 {
+	/// <inheritdoc />
+	public Name Name { get; }
+	/// <inheritdoc />
+	public Guid Identifier { get; }
+	/// <inheritdoc />
+	public MechanicalProperties Mechanical { get; }
+	/// <inheritdoc />
+	public ThermalProperties Thermal { get; }
+	/// <inheritdoc />
+	public ElectricalProperties Electrical { get; }
+	/// <inheritdoc />
+	public FantasticalProperties Fantastical { get; }
+	/// <inheritdoc />
+	public IReadOnlyDictionary<StateOfMatter, StateSpecificProperties> States { get; }
+
+
+	/// <inheritdoc />
+	public string Id { get; init; } = string.Empty;
+
+	/// <inheritdoc />
+	public string ShortId { get; init; } = string.Empty;
+
+
+	private BaseMaterial(Name name, Guid guid, MechanicalProperties mechanical, ThermalProperties thermal, ElectricalProperties electrical, FantasticalProperties fantastical, Dictionary<StateOfMatter, StateSpecificProperties> states)
+	{
+		this.Name = name;
+		this.Identifier = guid;
+		this.Mechanical = mechanical;
+		this.Thermal = thermal;
+		this.Electrical = electrical;
+		this.Fantastical = fantastical;
+		this.States = states;
+
+		this.Id = Convert.ToBase64String(this.Identifier.ToByteArray());
+		this.ShortId = this.Identifier.ToString("N")[..8].ToUpperInvariant();
+	}
+
 	/// <summary>
-	///     Creates an instance of <see cref="BaseMaterial" /> using the provided configuration (which is loaded from TOML).
+	/// 	Creates a Material instance from the provided configuration.
 	/// </summary>
-	/// <param name="config"></param>
-	public BaseMaterial(MaterialDataConfig config)
+	/// <param name="config">material data config to use</param>
+	/// <returns>a material instance</returns>
+	public static BaseMaterial FromConfig(MaterialDataConfig config)
 	{
 		ArgumentNullException.ThrowIfNull(config, nameof(config));
 
-		this.Name = new Name(config.Name, config.PluralName, config.NameAsAdjective);
-		this.Guid = config.ExplicitId ?? Guid.NewGuid();
-		this.Id = Convert.ToBase64String(this.Guid.ToByteArray());
-		this.ShortGuid = this.Guid.ToString("N")[..8].ToUpperInvariant();
+		var name = new Name(config.Name, config.PluralName, config.NameAsAdjective);
+		var mechanical = MechanicalProperties.FromConfig(config.Mechanical);
+		var thermal = ThermalProperties.FromConfig(config.Thermal);
+		var electrical = ElectricalProperties.FromConfig(config.Electrical);
+		var fantastical = FantasticalProperties.FromConfig(config.Fantastical);
 
-		this.State = StateOfMatter.Solid; // Default to solid, will be updated as needed.
-		this.Temperature = 20; // Default temperature in Celsius.
-		this.Pressure = 101.325f; // Default pressure in kPa (standard atmospheric pressure).
-		this.MolarMass = config.MolarMass;
-		this.SolidCoefficientOfExpansion = config.SolidCoefficientOfExpansion;
-		this.LiquidCoefficientOfExpansion = config.LiquidCoefficientOfExpansion;
-		this.StateProperties = new Dictionary<StateOfMatter, MaterialStateProperties>
+		var states = new Dictionary<StateOfMatter, StateSpecificProperties>();
+		foreach (var (state, stateConfig) in config.States)
 		{
-			{
-				StateOfMatter.Solid,
-				new MaterialStateProperties
-				{
-					Color = config.SolidColor,
-					TemperatureAtStateChange = config.TemperatureAtSolidStateChange,
-					DensityAtStateChange = config.DensityAtSolidStateChange
-				}
-			},
-			{
-				StateOfMatter.Liquid, new MaterialStateProperties
-				{
-					Color = config.LiquidColor ?? Color.Red, // Default to red if not provided.
-					TemperatureAtStateChange = config.TemperatureAtLiquidStateChange,
-					DensityAtStateChange = config.DensityAtLiquidStateChange
-				}
-			},
-			{
-				StateOfMatter.Gas, new MaterialStateProperties
-				{
-					Color = config.GasColor ?? Color.Gray, // Default to gray if not provided.
-					TemperatureAtStateChange = config.TemperatureAtGasStateChange,
-					DensityAtStateChange = config.DensityAtGasStateChange
-				}
-			}
-		};
+			states[state] = StateSpecificProperties.FromConfig(stateConfig);
+		}
+
+		return new BaseMaterial(name, config.ExplicitId ?? Guid.NewGuid(), mechanical, thermal, electrical, fantastical, states);
 	}
-
-	/// <inheritdoc />
-	public Guid Guid { get; }
-
-	/// <inheritdoc />
-	public string Id { get; }
-
-	/// <inheritdoc />
-	public string ShortGuid { get; }
-
-	/// <inheritdoc />
-	public Name Name { get; }
-
-	/// <inheritdoc />
-	public StateOfMatter State { get; }
-
-	/// <inheritdoc />
-	public Dictionary<StateOfMatter, MaterialStateProperties> StateProperties { get; }
-
-	/// <inheritdoc />
-	public double MolarMass { get; }
-
-	/// <inheritdoc />
-	public double SolidCoefficientOfExpansion { get; }
-
-	/// <inheritdoc />
-	public double LiquidCoefficientOfExpansion { get; }
-
-	/// <inheritdoc />
-	public float Temperature { get; }
-
-	/// <inheritdoc />
-	public float Pressure { get; }
 }

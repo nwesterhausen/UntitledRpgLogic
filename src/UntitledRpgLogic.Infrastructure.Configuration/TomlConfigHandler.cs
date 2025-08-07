@@ -43,7 +43,7 @@ public class TomlConfigHandler : ITomlConfigHandler
 	}
 
 	/// <inheritdoc />
-	public ITomlConfig LoadConfigFromFile(string filePath)
+	public TConfig LoadConfigFromFile<TConfig>(string filePath) where TConfig : ITomlConfig
 	{
 		if (string.IsNullOrEmpty(filePath))
 		{
@@ -59,7 +59,7 @@ public class TomlConfigHandler : ITomlConfigHandler
 		{
 			var fileContent = File.ReadAllText(filePath);
 
-			return this.ParseTomlConfigFromText(fileContent);
+			return this.ParseTomlConfigFromText<TConfig>(fileContent);
 		}
 		catch (Exception ex)
 		{
@@ -68,7 +68,7 @@ public class TomlConfigHandler : ITomlConfigHandler
 	}
 
 	/// <inheritdoc />
-	public ITomlConfig LoadConfig(byte[] bytes)
+	public TConfig LoadConfig<TConfig>(byte[] bytes) where TConfig : ITomlConfig
 	{
 		if (bytes == null || bytes.Length == 0)
 		{
@@ -78,7 +78,7 @@ public class TomlConfigHandler : ITomlConfigHandler
 		try
 		{
 			var tomlText = Encoding.UTF8.GetString(bytes);
-			return this.ParseTomlConfigFromText(tomlText);
+			return this.ParseTomlConfigFromText<TConfig>(tomlText);
 		}
 		catch (Exception ex)
 		{
@@ -87,7 +87,7 @@ public class TomlConfigHandler : ITomlConfigHandler
 	}
 
 	/// <inheritdoc />
-	public byte[] SaveConfig<T>(T config) where T : ITomlConfig
+	public byte[] SaveConfig<TConfig>(TConfig config) where TConfig : ITomlConfig
 	{
 		if (config == null)
 		{
@@ -101,12 +101,12 @@ public class TomlConfigHandler : ITomlConfigHandler
 		}
 		catch (Exception ex)
 		{
-			throw new InvalidOperationException($"Failed to serialize {nameof(T)} to TOML.", ex);
+			throw new InvalidOperationException($"Failed to serialize {nameof(TConfig)} to TOML.", ex);
 		}
 	}
 
 	/// <inheritdoc />
-	public void SaveConfigToFile<T>(T config, string filePath) where T : ITomlConfig
+	public void SaveConfigToFile<TConfig>(TConfig config, string filePath) where TConfig : ITomlConfig
 	{
 		if (string.IsNullOrEmpty(filePath))
 		{
@@ -129,7 +129,7 @@ public class TomlConfigHandler : ITomlConfigHandler
 		}
 	}
 
-	private static string SerializeToml<T>(T config) where T : ITomlConfig
+	private static string SerializeToml<TConfig>(TConfig config) where TConfig : ITomlConfig
 	{
 		if (config == null)
 		{
@@ -146,7 +146,7 @@ public class TomlConfigHandler : ITomlConfigHandler
 		}
 	}
 
-	private ITomlConfig ParseTomlConfigFromText(string text)
+	private TConfig ParseTomlConfigFromText<TConfig>(string text) where TConfig : ITomlConfig
 	{
 		if (string.IsNullOrEmpty(text))
 		{
@@ -187,7 +187,7 @@ public class TomlConfigHandler : ITomlConfigHandler
 				throw new InvalidOperationException($"No mapping found for ConfigType '{foundConfigType}'.");
 			}
 
-			return (ITomlConfig)TomletMain.To(configTypeToLoad, tomlDocument);
+			return (TConfig)TomletMain.To(configTypeToLoad, tomlDocument);
 		}
 		catch (Exception ex)
 		{

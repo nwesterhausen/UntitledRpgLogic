@@ -9,13 +9,13 @@ namespace UntitledRpgLogic.Core.Classes;
 public record Item : IItem
 {
 	/// <inheritdoc />
-	public Guid Guid { get; init; }
+	public Guid Identifier { get; init; }
 
 	/// <inheritdoc />
 	public string Id { get; init; } = string.Empty;
 
 	/// <inheritdoc />
-	public string ShortGuid { get; init; } = string.Empty;
+	public string ShortId { get; init; } = string.Empty;
 
 	/// <inheritdoc />
 	public Name Name { get; init; } = Name.Empty;
@@ -46,4 +46,7 @@ public record Item : IItem
 
 	/// <inheritdoc />
 	public float Depth { get; set; }
+
+	/// <inheritdoc />
+	public IMaterial PrimaryMaterial { get; set; } = Material.Empty;
 }

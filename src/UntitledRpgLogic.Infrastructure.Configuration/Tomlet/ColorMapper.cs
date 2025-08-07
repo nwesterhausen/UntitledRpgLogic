@@ -25,7 +25,7 @@ public static partial class MapperRegistration
 		if (value is TomlString str)
 		{
 			var colorString = str.Value.Trim();
-			if (colorString.StartsWith("#"))
+			if (colorString.StartsWith('#'))
 			{
 				colorString = colorString[1..]; // Remove the '#' if present
 			}

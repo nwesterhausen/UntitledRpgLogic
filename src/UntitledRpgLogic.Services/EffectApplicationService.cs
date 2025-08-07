@@ -12,17 +12,16 @@ namespace UntitledRpgLogic.Services;
 public class EffectApplicationService : IEffectApplicationService
 {
 	private readonly ILogger<EffectApplicationService> logger;
-	private readonly IStatService statService;
+	//private readonly IStatService statService;
 
 	/// <summary>
 	///     Creation of the service with dependency injection.
 	/// </summary>
 	/// <param name="logger"></param>
-	/// <param name="statService"></param>
-	public EffectApplicationService(ILogger<EffectApplicationService> logger, IStatService statService)
+	public EffectApplicationService(ILogger<EffectApplicationService> logger)
 	{
 		this.logger = logger;
-		this.statService = statService;
+		//this.statService = statService;
 	}
 
 	/// <inheritdoc />
@@ -31,7 +30,7 @@ public class EffectApplicationService : IEffectApplicationService
 		ArgumentNullException.ThrowIfNull(effect, nameof(effect));
 
 		this.logger.LogInformation("Applying effect: {EffectName} (ID: {EffectShortGuid})", effect.Name.Singular,
-			effect.ShortGuid);
+			effect.ShortId);
 
 		foreach (var component in effect.EffectComponents)
 		{
@@ -63,8 +62,8 @@ public class EffectApplicationService : IEffectApplicationService
 					if (component is ElementalEffectComponent elementalComponent)
 					{
 						// Example: Apply elemental damage or status effect
-						this.logger.LogDebug("  Elemental: Type: {ElementType}, Intensity: {Intensity}",
-							elementalComponent.ElementType, elementalComponent.Intensity);
+						this.logger.LogDebug("  Magic Type: {ElementType}, Intensity: {Intensity}",
+							elementalComponent.MagicType, elementalComponent.Intensity);
 					}
 
 					// This might interact with a damage calculation system or apply status effects

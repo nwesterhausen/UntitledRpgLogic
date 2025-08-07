@@ -1,8 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using UntitledRpgLogic.Core.Interfaces;
 
-// Other necessary usings for concrete implementations in this project
-
 namespace UntitledRpgLogic.Infrastructure.Configuration;
 
 /// <summary>

@@ -4,6 +4,7 @@
 		<!-- Package metadata -->
 		<AssemblyName>UntitledRpgLogic.StateMachines</AssemblyName>
 		<PackageId>UntitledRpgLogic.StateMachines</PackageId>
+		<RootNamespace>UntitledRpgLogic.StateMachines</RootNamespace>
 	</PropertyGroup>
 
 	<ItemGroup>

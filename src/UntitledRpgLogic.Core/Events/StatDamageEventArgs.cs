@@ -11,6 +11,12 @@ public class StatDamageEventArgs : EventArgs
 	public Guid? SourceId { get; init; }
 
 	/// <summary>
+	/// The Guid of the MagicTypeDataConfig that defines the type of damage.
+	/// Can be null for physical damage.
+	/// </summary>
+	public Guid? MagicType { get; }
+
+	/// <summary>
 	///     Gets the amount of damage before any mitigation is applied.
 	/// </summary>
 	public int IncomingDamage { get; init; }

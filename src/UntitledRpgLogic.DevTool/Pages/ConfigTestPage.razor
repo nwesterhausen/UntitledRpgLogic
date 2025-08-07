@@ -162,7 +162,7 @@
 		{
 			// Convert string to byte array as TomlConfigHandler expects byte[]
 			var contentBytes = Encoding.UTF8.GetBytes(InputTomlContent);
-			LoadedItemConfig = (ItemDataConfig)ConfigHandler.LoadConfig(contentBytes);
+			LoadedItemConfig = ConfigHandler.LoadConfig<ItemDataConfig>(contentBytes);
 			SetStatus("Configuration loaded successfully!");
 		}
 		catch (Exception ex)

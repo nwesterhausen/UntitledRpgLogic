@@ -4,6 +4,7 @@
 		<!-- Package metadata -->
 		<AssemblyName>UntitledRpgLogic.Infrastructure.Configuration</AssemblyName>
 		<PackageId>UntitledRpgLogic.Infrastructure.Configuration</PackageId>
+		<RootNamespace>UntitledRpgLogic.Infrastructure.Configuration</RootNamespace>
 	</PropertyGroup>
 
 	<ItemGroup>

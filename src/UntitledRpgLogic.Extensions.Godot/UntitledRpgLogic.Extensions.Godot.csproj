@@ -4,6 +4,7 @@
 		<!-- Package metadata -->
 		<AssemblyName>UntitledRpgLogic.Extensions.Godot</AssemblyName>
 		<PackageId>UntitledRpgLogic.Extensions.Godot</PackageId>
+		<RootNamespace>UntitledRpgLogic.Extensions.Godot</RootNamespace>
 	</PropertyGroup>
 
 </Project>

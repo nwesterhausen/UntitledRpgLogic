@@ -42,10 +42,7 @@ internal sealed class ConfigStoreService : IConfigStore
 				this.ModuleInfo.Name = value;
 			}
 
-#pragma warning disable CA2012
-			_ = this.jsRuntime.InvokeVoidAsync("SaveToStorage", "moduleName", this.ModuleInfo.Name)
-				.ConfigureAwait(true);
-#pragma warning restore CA2012
+			_ = Task.Run(async () => await this.jsRuntime.InvokeVoidAsync("SaveToStorage", "moduleName", this.ModuleInfo.Name).ConfigureAwait(false)).ConfigureAwait(true);
 			this.OnChange?.Invoke();
 		}
 	}
@@ -69,10 +66,7 @@ internal sealed class ConfigStoreService : IConfigStore
 			{
 				this.ModuleInfo.Description = value;
 			}
-#pragma warning disable CA2012
-			_ = this.jsRuntime.InvokeVoidAsync("SaveToStorage", "moduleDescription", this.ModuleInfo.Description)
-				.ConfigureAwait(true);
-#pragma warning restore CA2012
+			_ = Task.Run(async () => await this.jsRuntime.InvokeVoidAsync("SaveToStorage", "moduleDescription", this.ModuleInfo.Description).ConfigureAwait(false)).ConfigureAwait(true);
 			this.OnChange?.Invoke();
 		}
 	}
@@ -97,10 +91,7 @@ internal sealed class ConfigStoreService : IConfigStore
 				this.ModuleInfo.Version = value;
 			}
 
-#pragma warning disable CA2012
-			_ = this.jsRuntime.InvokeVoidAsync("SaveToStorage", "moduleVersion", this.ModuleInfo.Version)
-				.ConfigureAwait(true);
-#pragma warning restore CA2012
+			_ = Task.Run(async () => await this.jsRuntime.InvokeVoidAsync("SaveToStorage", "moduleVersion", this.ModuleInfo.Version).ConfigureAwait(false)).ConfigureAwait(true);
 			this.OnChange?.Invoke();
 		}
 	}
@@ -116,11 +107,8 @@ internal sealed class ConfigStoreService : IConfigStore
 				return;
 			}
 
-#pragma warning disable CA2012
 			this.ModuleInfo.VersionNumber = value;
-			_ = this.jsRuntime.InvokeVoidAsync("SaveToStorage", "moduleVersionNumber", this.ModuleInfo.VersionNumber)
-				.ConfigureAwait(true);
-#pragma warning restore CA2012
+			_ = Task.Run(async () => await this.jsRuntime.InvokeVoidAsync("SaveToStorage", "moduleVersionNumber", this.ModuleInfo.VersionNumber).ConfigureAwait(false)).ConfigureAwait(true);
 			this.OnChange?.Invoke();
 		}
 	}
@@ -152,10 +140,10 @@ internal sealed class ConfigStoreService : IConfigStore
 				}
 			}
 
-#pragma warning disable CA2012
-			_ = this.jsRuntime.InvokeVoidAsync("SaveToStorage", "moduleGuid", this.ModuleInfo.Id.ToString())
-				.ConfigureAwait(true);
-#pragma warning restore CA2012
+
+			_ = Task.Run(async () =>
+					await this.jsRuntime.InvokeVoidAsync("SaveToStorage", "moduleGuid", this.ModuleInfo.Id.ToString())
+				.ConfigureAwait(false)).ConfigureAwait(true);
 			this.OnChange?.Invoke();
 		}
 	}
@@ -210,10 +198,8 @@ internal sealed class ConfigStoreService : IConfigStore
 				}
 			}
 
-#pragma warning disable CA2012
-			_ = this.jsRuntime.InvokeVoidAsync("SaveToStorage", "authorGuid", this.Author.AuthorId.ToString())
+			_ = Task.Run(async () => await this.jsRuntime.InvokeVoidAsync("SaveToStorage", "authorGuid", this.Author.AuthorId.ToString()).ConfigureAwait(false))
 				.ConfigureAwait(true);
-#pragma warning restore CA2012
 			this.OnChange?.Invoke();
 		}
 	}
@@ -235,10 +221,7 @@ internal sealed class ConfigStoreService : IConfigStore
 			}
 
 			this.Author.AuthorName = value;
-#pragma warning disable CA2012
-			_ = this.jsRuntime.InvokeVoidAsync("SaveToStorage", "authorName", this.Author.AuthorName)
-				.ConfigureAwait(true);
-#pragma warning restore CA2012
+			_ = Task.Run(async () => await this.jsRuntime.InvokeVoidAsync("SaveToStorage", "authorName", this.Author.AuthorName).ConfigureAwait(false)).ConfigureAwait(true);
 			this.OnChange?.Invoke();
 		}
 	}
@@ -260,10 +243,8 @@ internal sealed class ConfigStoreService : IConfigStore
 			}
 
 			this.Author.Website = value;
-#pragma warning disable CA2012
-			_ = this.jsRuntime.InvokeVoidAsync("SaveToStorage", "authorUrl", this.Author.Website)
-				.ConfigureAwait(true);
-#pragma warning restore CA2012
+
+			_ = Task.Run(async () => await this.jsRuntime.InvokeVoidAsync("SaveToStorage", "authorUrl", this.Author.Website).ConfigureAwait(false)).ConfigureAwait(true);
 			this.OnChange?.Invoke();
 		}
 	}

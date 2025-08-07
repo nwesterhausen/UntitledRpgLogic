@@ -28,9 +28,9 @@ public class Stat : IStat
 	{
 		ArgumentNullException.ThrowIfNull(config, nameof(config));
 		// Initialize IHasGuid properties
-		this.Guid = config.ExplicitId ?? Guid.NewGuid();
-		this.Id = Convert.ToBase64String(this.Guid.ToByteArray());
-		this.ShortGuid = this.Guid.ToString("N")[..8].ToUpperInvariant();
+		this.Identifier = config.ExplicitId ?? Guid.NewGuid();
+		this.Id = Convert.ToBase64String(this.Identifier.ToByteArray());
+		this.ShortId = this.Identifier.ToString("N")[..8].ToUpperInvariant();
 
 		// Initialize other properties from config
 		this.Name = Name.Deserialize(config.Name);
@@ -49,13 +49,13 @@ public class Stat : IStat
 
 	// IHasGuid
 	/// <inheritdoc />
-	public Guid Guid { get; }
+	public Guid Identifier { get; }
 
 	/// <inheritdoc />
 	public string Id { get; }
 
 	/// <inheritdoc />
-	public string ShortGuid { get; }
+	public string ShortId { get; }
 
 	// IHasName
 	/// <inheritdoc />

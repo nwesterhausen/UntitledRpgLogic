@@ -12,24 +12,24 @@ public class ElementalEffectComponent : IEffectComponent
 	///     Initializes a new instance of the <see cref="ElementalEffectComponent" /> class.
 	/// </summary>
 	/// <param name="name">The name of this elemental component (e.g., "Fire Blast").</param>
-	/// <param name="elementType">The specific elemental type of energy.</param>
+	/// <param name="magicType">The specific elemental type of energy.</param>
 	/// <param name="intensity">The intensity or power of the elemental effect (e.g., heat in Celsius).</param>
-	public ElementalEffectComponent(string name, ElementType elementType, float intensity)
+	public ElementalEffectComponent(string name, Guid magicType, float intensity)
 	{
 		this.Name = new Name(name);
-		this.ElementType = elementType;
+		this.MagicType = magicType;
 		this.Intensity = intensity;
 
 		// Generate a new GUID for this component instance
-		this.Guid = Guid.NewGuid();
-		this.Id = Convert.ToBase64String(this.Guid.ToByteArray());
-		this.ShortGuid = this.Guid.ToString("N")[..8].ToUpperInvariant();
+		this.Identifier = Guid.NewGuid();
+		this.Id = Convert.ToBase64String(this.Identifier.ToByteArray());
+		this.ShortId = this.Identifier.ToString("N")[..8].ToUpperInvariant();
 	}
 
 	/// <summary>
-	///     The type of elemental energy this component represents.
+	/// The Guid of the MagicTypeDataConfig that defines the element of this effect.
 	/// </summary>
-	public ElementType ElementType { get; }
+	public Guid MagicType { get; set; }
 
 	/// <summary>
 	///     The intensity or power of the elemental effect. The unit depends on the ElementType (e.g., Celsius for Fire).
@@ -37,13 +37,13 @@ public class ElementalEffectComponent : IEffectComponent
 	public float Intensity { get; }
 
 	/// <inheritdoc />
-	public Guid Guid { get; }
+	public Guid Identifier { get; }
 
 	/// <inheritdoc />
 	public string Id { get; }
 
 	/// <inheritdoc />
-	public string ShortGuid { get; }
+	public string ShortId { get; }
 
 	/// <inheritdoc />
 	public Name Name { get; }

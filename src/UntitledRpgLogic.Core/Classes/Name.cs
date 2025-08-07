@@ -80,19 +80,23 @@ public class Name : IStringSerializable<Name>
 			return string.Empty;
 		}
 
-		if (singular.EndsWith('y') && !singular.EndsWith("ay") && !singular.EndsWith("ey") &&
-			!singular.EndsWith("oy") && !singular.EndsWith("uy"))
+		if (singular.EndsWith('y') &&
+			!singular.EndsWith("ay", StringComparison.InvariantCultureIgnoreCase) &&
+			!singular.EndsWith("ey", StringComparison.InvariantCultureIgnoreCase) &&
+			!singular.EndsWith("oy", StringComparison.InvariantCultureIgnoreCase) &&
+			!singular.EndsWith("uy", StringComparison.InvariantCultureIgnoreCase))
 		{
 			return string.Concat(singular.AsSpan(0, singular.Length - 1), "ies");
 		}
 
-		if (singular.EndsWith('z') && !singular.EndsWith("zz"))
+		if (singular.EndsWith('z') && !singular.EndsWith("zz", StringComparison.InvariantCultureIgnoreCase))
 		{
 			return singular + "zes";
 		}
 
-		if (singular.EndsWith('s') || singular.EndsWith('x') || singular.EndsWith('z') || singular.EndsWith("ch") ||
-			singular.EndsWith("sh"))
+		if (singular.EndsWith('s') || singular.EndsWith('x') || singular.EndsWith('z') ||
+			singular.EndsWith("ch", StringComparison.InvariantCultureIgnoreCase) ||
+			singular.EndsWith("sh", StringComparison.InvariantCultureIgnoreCase))
 		{
 			return singular + "es";
 		}

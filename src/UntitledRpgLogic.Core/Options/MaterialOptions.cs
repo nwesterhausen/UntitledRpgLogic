@@ -13,21 +13,6 @@ public class MaterialOptions
 	public required Name Name { get; init; }
 
 	/// <summary>
-	///     The properties of the material in the solid state.
-	/// </summary>
-	public required MaterialStateProperties SolidStateProperties { get; init; }
-
-	/// <summary>
-	///     The properties of the material in the liquid state.
-	/// </summary>
-	public required MaterialStateProperties LiquidStateProperties { get; init; }
-
-	/// <summary>
-	///     The properties of the material in the gas state.
-	/// </summary>
-	public required MaterialStateProperties GasStateProperties { get; init; }
-
-	/// <summary>
 	///     The molar mass of the material in grams per mole (g/mol).
 	/// </summary>
 	public double MolarMass { get; init; } = 18.01528; // Default to water's molar mass

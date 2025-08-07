@@ -8,7 +8,7 @@ public interface IHasGuid
 	/// <summary>
 	///     The unique identifier for the object, represented as a Guid.
 	/// </summary>
-	public Guid Guid { get; }
+	public Guid Identifier { get; }
 
 	/// <summary>
 	///     A base-64 encoded string representation of the Guid.
@@ -20,5 +20,5 @@ public interface IHasGuid
 	///     The first 8 characters of the guid, used as a short identifier.
 	///     This value is derived from the Guid property.
 	/// </summary>
-	public string ShortGuid { get; }
+	public string ShortId { get; }
 }

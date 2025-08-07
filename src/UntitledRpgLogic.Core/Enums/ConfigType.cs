@@ -43,6 +43,10 @@ public enum ConfigType
 	/// <summary>
 	///     Configuration for a StatDataConfig.
 	/// </summary>
-	Stat
-	// Add other configuration types as your game grows
+	Stat,
+
+	/// <summary>
+	/// 	 Configuration for a MagicTypeConfig.
+	/// </summary>
+	MagicType,
 }

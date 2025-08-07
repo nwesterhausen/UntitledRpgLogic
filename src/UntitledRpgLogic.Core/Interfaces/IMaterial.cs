@@ -10,37 +10,23 @@ namespace UntitledRpgLogic.Core.Interfaces;
 public interface IMaterial : IHasName, IHasGuid
 {
 	/// <summary>
-	///     The current state of matter of the material.
+	/// Mechanical properties of the material.
 	/// </summary>
-	public StateOfMatter State { get; }
-
+	public MechanicalProperties Mechanical { get; }
 	/// <summary>
-	///     The properties of the material in different states of matter.
+	/// Thermal properties of the material.
 	/// </summary>
-	public Dictionary<StateOfMatter, MaterialStateProperties> StateProperties { get; }
-
+	public ThermalProperties Thermal { get; }
 	/// <summary>
-	///     The molar mass of the material in grams per mole (g/mol).
+	/// Electrical properties of the material.
 	/// </summary>
-	public double MolarMass { get; }
-
+	public ElectricalProperties Electrical { get; }
 	/// <summary>
-	///     Coefficient of Expansion (α) in 1/°C for the solid state.
+	/// Fantastical properties of the material.
 	/// </summary>
-	public double SolidCoefficientOfExpansion { get; }
-
+	public FantasticalProperties Fantastical { get; }
 	/// <summary>
-	///     Coefficient of Expansion (β) in 1/°C for the liquid state.
+	/// Properties specific to the material's state of matter.
 	/// </summary>
-	public double LiquidCoefficientOfExpansion { get; }
-
-	/// <summary>
-	///     The materials current temperature in degrees Celsius (°C).
-	/// </summary>
-	public float Temperature { get; }
-
-	/// <summary>
-	///     The pressure exerted on the material in Kilopascals (kPa).
-	/// </summary>
-	public float Pressure { get; }
+	public IReadOnlyDictionary<StateOfMatter, StateSpecificProperties> States { get; }
 }

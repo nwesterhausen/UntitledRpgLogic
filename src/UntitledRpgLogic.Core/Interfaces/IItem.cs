@@ -16,4 +16,10 @@ public interface IItem : IHasGuid, IHasName, IHasQuality, IIsCrafted, IHasDimens
 	///     The subtype of the item. This can be used to further categorize the item within its type.
 	/// </summary>
 	public ItemSubtype ItemSubtype { get; }
+
+	/// <summary>
+	/// 	 The primary material the item is made from. This can affect the item's properties, such as weight, durability, and
+	/// 	 magical attributes.
+	/// </summary>
+	public IMaterial PrimaryMaterial { get; }
 }
