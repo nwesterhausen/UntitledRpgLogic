@@ -1,0 +1,34 @@
+@*
+    File: src/UntitledRpgLogic.DevTool/Components/Config/ItemDataConfigEditor.razor
+    Purpose: Editor for ItemDataConfig objects.
+*@
+@using UntitledRpgLogic.Core.Configuration
+@using UntitledRpgLogic.Core.Enums
+@using UntitledRpgLogic.DevTool.Components.Form
+
+@if (Value != null)
+{
+    <fieldset class="border p-2 mb-3">
+        <legend>Item Data</legend>
+        <NameInputField Label="Name" @bind-Value="Value.Name" />
+        <TextAreaInputField Label="Description" @bind-Value="Value.Description" />
+        <EnumSelectField TEnum="ItemType" Label="Item Type" @bind-Value="Value.ItemType" />
+        <EnumSelectField TEnum="ItemSubtype" Label="Item Subtype" @bind-Value="Value.ItemSubtype" />
+        <NumberInputField Label="Value" @bind-Value="Value.Value" />
+        <NumberInputField Label="Weight" @bind-Value="Value.Weight" />
+        <NumberInputField Label="Volume" @bind-Value="Value.Volume" />
+
+        <!-- TODO: Implement a Guid list editor to select effects -->
+        <div class="mb-3">
+            <label class="form-label">Effects</label>
+            <div class="p-2 border bg-gray-100 rounded">
+                @(Value.Effects?.Count ?? 0) effects linked.
+            </div>
+        </div>
+    </fieldset>
+}
+
+@code {
+    [Parameter]
+    public ItemDataConfig? Value { get; set; }
+}

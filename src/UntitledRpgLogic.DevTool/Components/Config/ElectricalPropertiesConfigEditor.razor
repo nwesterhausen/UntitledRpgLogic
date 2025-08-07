@@ -1,0 +1,23 @@
+@*
+    File: src/UntitledRpgLogic.DevTool/Components/Config/ElectricalPropertiesConfigEditor.razor
+    Purpose: Editor for ElectricalPropertiesConfig objects.
+*@
+@using UntitledRpgLogic.Core.Configuration
+@using UntitledRpgLogic.DevTool.Components.Form
+
+@if (Value != null)
+{
+    <fieldset class="border p-2 mb-3">
+        <legend>Electrical Properties</legend>
+        <NumberInputField Label="Conductivity" @bind-Value="Value.Conductivity" />
+        <NumberInputField Label="Resistivity" @bind-Value="Value.Resistivity" />
+        <NumberInputField Label="Capacitance" @bind-Value="Value.Capacitance" />
+        <NumberInputField Label="Inductance" @bind-Value="Value.Inductance" />
+    </fieldset>
+}
+
+
+@code {
+    [Parameter]
+    public ElectricalPropertiesConfig? Value { get; set; }
+}

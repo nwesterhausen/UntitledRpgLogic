@@ -1,0 +1,23 @@
+@*
+    File: src/UntitledRpgLogic.DevTool/Components/Config/StatDataConfigEditor.razor
+    Purpose: Editor for StatDataConfig objects.
+*@
+@using UntitledRpgLogic.Core.Configuration
+@using UntitledRpgLogic.DevTool.Components.Form
+
+@if (Value != null)
+{
+    <fieldset class="border p-2 mb-3">
+        <legend>Stat Data</legend>
+        <NameInputField Label="Name" @bind-Value="Value.Name" />
+        <TextAreaInputField Label="Description" @bind-Value="Value.Description" />
+        <CheckboxInputField Label="Is Vital" @bind-Value="Value.IsVital" />
+        <NumberInputField Label="Min Value" @bind-Value="Value.Min" />
+        <NumberInputField Label="Max Value" @bind-Value="Value.Max" />
+    </fieldset>
+}
+
+@code {
+    [Parameter]
+    public StatDataConfig? Value { get; set; }
+}

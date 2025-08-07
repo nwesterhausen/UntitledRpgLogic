@@ -22,6 +22,7 @@ try
 
 	_ = builder.Services.AddConfigurationInfrastructure();
 	_ = builder.Services.AddSingleton<IConfigStore, ConfigStoreService>();
+	_ = builder.Services.AddSingleton<IConfigFactory, ConfigFactory>();
 
 	// Replace Microsoft logger for Serilog
 #pragma warning disable CA2000

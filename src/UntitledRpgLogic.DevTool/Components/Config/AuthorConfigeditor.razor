@@ -1,0 +1,20 @@
+@*
+    File: src/UntitledRpgLogic.DevTool/Components/Config/AuthorConfigEditor.razor
+    Purpose: Editor for AuthorConfig objects.
+*@
+@using UntitledRpgLogic.Core.Configuration
+@using UntitledRpgLogic.DevTool.Components.Form
+
+@if (Value != null)
+{
+    <fieldset class="border p-2 mb-3">
+        <legend>Author</legend>
+        <StringInputField Label="Name" @bind-Value="Value.Name" />
+        <StringInputField Label="Email" @bind-Value="Value.Email" />
+    </fieldset>
+}
+
+@code {
+    [Parameter]
+    public AuthorConfig? Value { get; set; }
+}

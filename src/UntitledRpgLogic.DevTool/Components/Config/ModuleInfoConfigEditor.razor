@@ -1,0 +1,35 @@
+@*
+    File: src/UntitledRpgLogic.DevTool/Components/Config/ModuleInfoConfigEditor.razor
+    Purpose: Editor for ModuleInfoConfig objects.
+*@
+@using UntitledRpgLogic.Core.Configuration
+@using UntitledRpgLogic.DevTool.Components.Form
+
+@if (Value != null)
+{
+    <fieldset class="border p-2 mb-3">
+        <legend>Module Info</legend>
+        <StringInputField Label="Module Name" @bind-Value="Value.ModuleName" />
+        <StringInputField Label="Version" @bind-Value="Value.Version" />
+        <StringInputField Label="Website" @bind-Value="Value.Website" />
+        <TextAreaInputField Label="Description" @bind-Value="Value.Description" />
+
+        <!-- TODO: Implement a list editor for authors -->
+        <div class="mb-3">
+            <label class="form-label">Authors</label>
+            <div class="p-2 border bg-gray-100 rounded">
+                @foreach (var author in Value.Authors)
+                {
+                    <div class="p-2 border-b">
+                        <AuthorConfigEditor Value="author" />
+                    </div>
+                }
+            </div>
+        </div>
+    </fieldset>
+}
+
+@code {
+    [Parameter]
+    public ModuleInfoConfig? Value { get; set; }
+}

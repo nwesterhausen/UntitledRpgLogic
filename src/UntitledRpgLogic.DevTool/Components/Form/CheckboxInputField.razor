@@ -1,0 +1,26 @@
+@*
+    File: src/UntitledRpgLogic.DevTool/Components/Form/CheckboxInputField.razor
+    Purpose: Provides a checkbox input for boolean values within an EditForm.
+*@
+@using Microsoft.AspNetCore.Components.Forms
+@inherits InputCheckbox
+
+<div class="mb-3">
+    <label for="@Id" class="form-label">@Label</label>
+    <InputCheckbox id="@Id" @bind-Value="CurrentValue" class="form-checkbox h-5 w-5 text-blue-600" />
+    <ValidationMessage For="ValidationFor" />
+</div>
+
+@code {
+    /// <summary>
+    /// Specifies the label text for the input field.
+    /// </summary>
+    [Parameter]
+    public string Label { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Gets or sets the expression to identify the value being validated.
+    /// </summary>
+    [Parameter]
+    public Expression<Func<bool>>? ValidationFor { get; set; }
+}

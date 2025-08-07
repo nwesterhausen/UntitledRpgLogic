@@ -1,0 +1,27 @@
+@*
+    File: src/UntitledRpgLogic.DevTool/Components/Config/FantasticalPropertiesConfigEditor.razor
+    Purpose: Editor for FantasticalPropertiesConfig objects.
+*@
+@using UntitledRpgLogic.Core.Configuration
+@using UntitledRpgLogic.DevTool.Components.Form
+
+@if (Value != null)
+{
+    <fieldset class="border p-2 mb-3">
+        <legend>Fantastical Properties</legend>
+        <NumberInputField Label="Mana" @bind-Value="Value.Mana" />
+
+        <!-- TODO: Implement a dictionary editor for Magic Affinity -->
+        <div class="mb-3">
+            <label class="form-label">Magic Affinity</label>
+            <div class="p-2 border bg-gray-100 rounded">
+                @(Value.MagicAffinity?.Count ?? 0) entries.
+            </div>
+        </div>
+    </fieldset>
+}
+
+@code {
+    [Parameter]
+    public FantasticalPropertiesConfig? Value { get; set; }
+}

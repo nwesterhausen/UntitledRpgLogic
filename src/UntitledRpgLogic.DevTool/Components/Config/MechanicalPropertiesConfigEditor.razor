@@ -1,0 +1,24 @@
+@*
+    File: src/UntitledRpgLogic.DevTool/Components/Config/MechanicalPropertiesConfigEditor.razor
+    Purpose: Editor for MechanicalPropertiesConfig objects.
+*@
+@using UntitledRpgLogic.Core.Configuration
+@using UntitledRpgLogic.Core.Enums
+@using UntitledRpgLogic.DevTool.Components.Form
+
+@if (Value != null)
+{
+    <fieldset class="border p-2 mb-3">
+        <legend>Mechanical Properties</legend>
+        <NumberInputField Label="Hardness" @bind-Value="Value.Hardness" />
+        <NumberInputField Label="Malleability" @bind-Value="Value.Malleability" />
+        <NumberInputField Label="Ductility" @bind-Value="Value.Ductility" />
+        <NumberInputField Label="Toughness" @bind-Value="Value.Toughness" />
+        <EnumSelectField TEnum="FractureType" Label="Fracture Type" @bind-Value="Value.FractureType" />
+    </fieldset>
+}
+
+@code {
+    [Parameter]
+    public MechanicalPropertiesConfig? Value { get; set; }
+}

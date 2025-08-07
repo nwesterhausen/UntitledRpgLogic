@@ -1,0 +1,35 @@
+@*
+    File: src/UntitledRpgLogic.DevTool/Components/Config/MaterialDataConfigEditor.razor
+    Purpose: Editor for MaterialDataConfig objects.
+*@
+@using UntitledRpgLogic.Core.Configuration
+@using UntitledRpgLogic.DevTool.Components.Form
+
+@if (Value != null)
+{
+    <fieldset class="border p-2 mb-3">
+        <legend>Material Data</legend>
+        <NameInputField Label="Name" @bind-Value="Value.Name" />
+        <TextAreaInputField Label="Description" @bind-Value="Value.Description" />
+        <ColorInputField Label="Color" @bind-Value="Value.Color" />
+
+        <!-- TODO: Implement a dictionary editor for material states -->
+        <div class="mb-3">
+            <label class="form-label">States</label>
+            <div class="p-2 border bg-gray-100 rounded">
+                @foreach (var state in Value.States)
+                {
+                    <div class="p-2 border-b">
+                        <h4 class="font-bold">@state.Key</h4>
+                        <StateSpecificPropertiesConfigEditor Value="state.Value" />
+                    </div>
+                }
+            </div>
+        </div>
+    </fieldset>
+}
+
+@code {
+    [Parameter]
+    public MaterialDataConfig? Value { get; set; }
+}

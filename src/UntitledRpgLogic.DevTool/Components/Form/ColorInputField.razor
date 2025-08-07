@@ -1,101 +1,59 @@
 @*
-    A reusable component for a color input field.
-    It provides a text input for hex color codes and a color picker.
+    File: src/UntitledRpgLogic.DevTool/Components/Form/ColorInputField.razor
+    Purpose: Provides a color input for hex string values.
 *@
-@inherits InputBase<Color?>
-@using System.Drawing
-@using System.Globalization
+@using System.Linq.Expressions
+@using System.Text.RegularExpressions
+@inherits InputBase<string>
 
-<div class="form-control">
-    <label class="label">
-        <span class="label-text">@Label</span>
-    </label>
-    <div class="input-group">
-        <span>#</span>
-        <input type="text" @bind="HexValue" @bind:event="oninput" class="input input-bordered w-full" />
-        <input type="color" @bind="HexValue" @bind:event="oninput" class="w-10 h-full p-1" />
-    </div>
-    <div class="label">
-        <span class="label-text-alt"><ValidationMessage For="() => CurrentValue" /></span>
-    </div>
+<div class="mb-3">
+    <label for="@Id" class="form-label">@Label</label>
+    <input id="@Id" type="color" @bind="CurrentValue" class="form-input" />
+    <ValidationMessage For="ValidationFor" />
 </div>
 
 @code {
-    private string _hexValue = "#ffffff";
+    /// <summary>
+    /// Gets or sets the unique identifier for the input element.
+    /// Defaults to a new GUID if not provided.
+    /// </summary>
+    [Parameter]
+    public string Id { get; set; } = Guid.NewGuid().ToString();
 
     /// <summary>
-    /// The text to display in the label for this input field.
+    /// Specifies the label text for the input field.
     /// </summary>
     [Parameter]
     public string Label { get; set; } = string.Empty;
 
     /// <summary>
-    /// Gets or sets the color value as a hex string.
-    /// This acts as a proxy to the base component's CurrentValue property.
+    /// Gets or sets the expression to identify the value being validated.
     /// </summary>
-    private string HexValue
-    {
-        get => _hexValue;
-        set
-        {
-            if (_hexValue == value) return;
-            _hexValue = value;
-
-            try
-            {
-                // When the hex value changes, update the underlying CurrentValue
-                // which is managed by the InputBase class.
-                CurrentValue = ColorTranslator.FromHtml(value);
-            }
-            catch (Exception)
-            {
-                // If the hex is invalid, set the value to null or handle as needed.
-                CurrentValue = null;
-            }
-        }
-    }
+    [Parameter]
+    public Expression<Func<string?>>? ValidationFor { get; set; }
 
     /// <summary>
-    /// This is required for the InputBase to work correctly.
-    /// It defines how a string value is parsed into the component's type.
+    /// Parses the string value from the input. This override provides basic validation.
     /// </summary>
-    protected override bool TryParseValueFromString(string? value, out Color? result, out string validationErrorMessage)
+    protected override bool TryParseValueFromString(string? value, out string result, out string validationErrorMessage)
     {
-        if (string.IsNullOrWhiteSpace(value))
+        // Default to black if the value is null or empty.
+        result = value ?? "#000000";
+        validationErrorMessage = string.Empty;
+
+        // Allow empty strings to pass through.
+        if (string.IsNullOrEmpty(value))
         {
-            result = null;
-            validationErrorMessage = string.Empty;
             return true;
         }
 
-        try
+        // Validate that the string is in a valid hex format (e.g., #RRGGBB).
+        if (Regex.IsMatch(value, "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{8})$"))
         {
-            result = ColorTranslator.FromHtml(value);
-            validationErrorMessage = string.Empty;
             return true;
         }
-        catch (Exception)
-        {
-            result = null;
-            validationErrorMessage = "Invalid hex color format.";
-            return false;
-        }
-    }
 
-    /// <summary>
-    /// When the component's parameters are set, ensure the local hex value
-    /// reflects the CurrentValue from the base class.
-    /// </summary>
-    protected override void OnParametersSet()
-    {
-        if (CurrentValue.HasValue)
-        {
-            _hexValue = $"#{CurrentValue.Value.R:X2}{CurrentValue.Value.G:X2}{CurrentValue.Value.B:X2}";
-        }
-        else
-        {
-            // Set a default if the bound value is null
-            _hexValue = "#000000";
-        }
+        validationErrorMessage = "Invalid hex color format. Must be in #RRGGBB or #AARRGGBB format.";
+        return false;
     }
 }
