@@ -9,23 +9,23 @@ namespace UntitledRpgLogic.Core.Models;
 public record Entity : IEntity
 {
 	/// <summary>
-	///     Creates an instance of <see cref="Entity" /> using the provided <see cref="Guid" />.
+	///     Creates an instance of <see cref="Entity" /> using the provided <see cref="Identifier" />.
 	/// </summary>
-	/// <param name="guid"></param>
-	public Entity(Guid guid)
+	/// <param name="identifier"></param>
+	public Entity(Guid identifier)
 	{
 		// assign primary first
-		this.Guid = guid;
-		// derive get-only propertys
-		this.Id = Convert.ToBase64String(guid.ToByteArray());
-		this.ShortGuid = guid.ToString("N")[..8].ToUpperInvariant();
+		this.Identifier = identifier;
+		// derive get-only properties
+		this.Id = Convert.ToBase64String(identifier.ToByteArray());
+		this.ShortId = identifier.ToString("N")[..8].ToUpperInvariant();
 
 		// assign name
 		this.Name = Name.Empty;
 	}
 
 	/// <summary>
-	///     Create a new entity with a new <see cref="Guid" />.
+	///     Create a new entity with a new <see cref="Identifier" />.
 	/// </summary>
 	public Entity() : this(Guid.NewGuid())
 	{
@@ -35,11 +35,11 @@ public record Entity : IEntity
 	public Name Name { get; }
 
 	/// <inheritdoc />
-	public Guid Guid { get; }
+	public Guid Identifier { get; }
 
 	/// <inheritdoc />
 	public string Id { get; }
 
 	/// <inheritdoc />
-	public string ShortGuid { get; }
+	public string ShortId { get; }
 }

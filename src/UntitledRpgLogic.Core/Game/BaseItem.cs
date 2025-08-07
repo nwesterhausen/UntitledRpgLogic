@@ -19,9 +19,9 @@ public class BaseItem : IItem
 	{
 		ArgumentNullException.ThrowIfNull(config, nameof(config));
 
-		this.Guid = config.ExplicitId ?? Guid.NewGuid();
-		this.Id = Convert.ToBase64String(this.Guid.ToByteArray());
-		this.ShortGuid = this.Guid.ToString("N")[..8].ToUpperInvariant();
+		this.Identifier = config.ExplicitId ?? Guid.NewGuid();
+		this.Id = Convert.ToBase64String(this.Identifier.ToByteArray());
+		this.ShortId = this.Identifier.ToString("N")[..8].ToUpperInvariant();
 		this.Name = Name.Deserialize(config.Name);
 		this.Quality = config.ItemQuality ?? Quality.None;
 		this.ItemType = config.ItemType;
@@ -63,13 +63,13 @@ public class BaseItem : IItem
 	public float Depth { get; set; }
 
 	/// <inheritdoc />
-	public Guid Guid { get; }
+	public Guid Identifier { get; }
 
 	/// <inheritdoc />
 	public string Id { get; }
 
 	/// <inheritdoc />
-	public string ShortGuid { get; }
+	public string ShortId { get; }
 
 	/// <inheritdoc />
 	public Name Name { get; }

@@ -17,7 +17,7 @@ public record Material : IMaterial
 	/// <inheritdoc />
 	public Name Name { get; }
 	/// <inheritdoc />
-	public Guid Guid { get; }
+	public Guid Identifier { get; }
 	/// <inheritdoc />
 	public MechanicalProperties Mechanical { get; }
 	/// <inheritdoc />
@@ -34,21 +34,21 @@ public record Material : IMaterial
 	public string Id { get; init; } = string.Empty;
 
 	/// <inheritdoc />
-	public string ShortGuid { get; init; } = string.Empty;
+	public string ShortId { get; init; } = string.Empty;
 
 
 	private Material(Name name, Guid guid, MechanicalProperties mechanical, ThermalProperties thermal, ElectricalProperties electrical, FantasticalProperties fantastical, Dictionary<StateOfMatter, StateSpecificProperties> states)
 	{
 		this.Name = name;
-		this.Guid = guid;
+		this.Identifier = guid;
 		this.Mechanical = mechanical;
 		this.Thermal = thermal;
 		this.Electrical = electrical;
 		this.Fantastical = fantastical;
 		this.States = states;
 
-		this.Id = Convert.ToBase64String(this.Guid.ToByteArray());
-		this.ShortGuid = this.Guid.ToString("N")[..8].ToUpperInvariant();
+		this.Id = Convert.ToBase64String(this.Identifier.ToByteArray());
+		this.ShortId = this.Identifier.ToString("N")[..8].ToUpperInvariant();
 	}
 
 	/// <summary>

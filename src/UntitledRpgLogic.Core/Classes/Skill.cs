@@ -31,9 +31,9 @@ public class Skill : ISkill
 		ArgumentNullException.ThrowIfNull(config, nameof(config));
 
 		// IHasGuid
-		this.Guid = config.ExplicitId ?? Guid.NewGuid();
-		this.Id = Convert.ToBase64String(this.Guid.ToByteArray());
-		this.ShortGuid = this.Guid.ToString("N")[..8].ToUpperInvariant();
+		this.Identifier = config.ExplicitId ?? Guid.NewGuid();
+		this.Id = Convert.ToBase64String(this.Identifier.ToByteArray());
+		this.ShortId = this.Identifier.ToString("N")[..8].ToUpperInvariant();
 
 		// IHasName
 		this.Name = Name.Deserialize(config.Name);
@@ -70,13 +70,13 @@ public class Skill : ISkill
 
 	// IHasGuid Implementation
 	/// <inheritdoc />
-	public Guid Guid { get; }
+	public Guid Identifier { get; }
 
 	/// <inheritdoc />
 	public string Id { get; }
 
 	/// <inheritdoc />
-	public string ShortGuid { get; }
+	public string ShortId { get; }
 
 	// IHasName Implementation
 	/// <inheritdoc />
