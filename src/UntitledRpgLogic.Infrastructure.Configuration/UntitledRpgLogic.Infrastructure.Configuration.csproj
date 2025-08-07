@@ -13,7 +13,6 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\UntitledRpgLogic.Core\UntitledRpgLogic.Core.csproj"/>
-		<ProjectReference Include="..\UntitledRpgLogic.Core\UntitledRpgLogic.LibraryFile.csproj"/>
 	</ItemGroup>
 
 </Project>
