@@ -4,6 +4,7 @@
 		<!-- Package metadata -->
 		<AssemblyName>UntitledRpgLogic.Extensions.Common</AssemblyName>
 		<PackageId>UntitledRpgLogic.Extensions.Common</PackageId>
+		<RootNamespace>UntitledRpgLogic.Extensions.Common</RootNamespace>
 	</PropertyGroup>
 
 	<ItemGroup>

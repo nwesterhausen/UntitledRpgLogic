@@ -3,6 +3,7 @@
 		<!-- Package metadata -->
 		<AssemblyName>UntitledRpgLogic.Core</AssemblyName>
 		<PackageId>UntitledRpgLogic.Core</PackageId>
+		<RootNamespace>UntitledRpgLogic.Core</RootNamespace>
 		<!-- Version is set by GitVersion -->
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 	</PropertyGroup>

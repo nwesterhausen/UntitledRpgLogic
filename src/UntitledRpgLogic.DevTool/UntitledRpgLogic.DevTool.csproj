@@ -21,7 +21,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\UntitledRpgLogic.Core\UntitledRpgLogic.Core.csproj" />
-		<ProjectReference Include="..\UntitledRpgLogic.Infrastructure.Data\UntitledRpgLogic.Infrastructure.Data.csproj" />
+		<ProjectReference Include="..\UntitledRpgLogic.Infrastructure.Configuration\UntitledRpgLogic.Infrastructure.Configuration.csproj" />
 	</ItemGroup>
 
 	<Target Name="RebuildTailwindCSS" BeforeTargets="PrepareForBuild">

@@ -4,6 +4,7 @@
 		<!-- Package metadata -->
 		<AssemblyName>UntitledRpgLogic.Services</AssemblyName>
 		<PackageId>UntitledRpgLogic.Services</PackageId>
+		<RootNamespace>UntitledRpgLogic.Services</RootNamespace>
 	</PropertyGroup>
 
 	<ItemGroup>
