@@ -27,7 +27,7 @@ public class ElementalEffectComponent : IEffectComponent
 	}
 
 	/// <summary>
-	/// The Guid of the MagicTypeDataConfig that defines the element of this effect.
+	///     The Guid of the MagicTypeDataConfig that defines the element of this effect.
 	/// </summary>
 	public Guid MagicType { get; set; }
 

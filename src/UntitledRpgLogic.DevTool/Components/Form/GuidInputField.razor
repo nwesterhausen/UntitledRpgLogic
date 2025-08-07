@@ -2,15 +2,15 @@
     A reusable component for a GUID input field.
     It provides a text input with validation and a button to generate a new GUID.
 *@
-@inherits InputBase<string>
-@using Microsoft.AspNetCore.Components.Forms;
+@inherits InputBase<Guid>
+@using System.Diagnostics.CodeAnalysis
 
 <div class="form-control">
     <label class="label">
         <span class="label-text">@Label</span>
     </label>
     <div class="input-group">
-        <InputText @bind-Value="CurrentValue" class="input input-bordered w-full font-mono" />
+        <input @bind="CurrentValueAsString" class="input input-bordered w-full font-mono" />
         <button type="button" class="btn btn-square" @onclick="GenerateNewGuid">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h5V4H4zm0 12v5h5v-5H4zM15 4v5h5V4h-5zm0 12v5h5v-5h-5z" />
@@ -34,23 +34,36 @@
     /// </summary>
     private void GenerateNewGuid()
     {
-        CurrentValue = Guid.NewGuid().ToString();
+        CurrentValue = Guid.NewGuid();
+    }
+
+    /// <inheritdoc />
+    protected override string FormatValueAsString(Guid value)
+    {
+        return value.ToString("D");
     }
 
     /// <summary>
     /// Parses the string value and validates if it's a valid GUID.
     /// </summary>
-    protected override bool TryParseValueFromString(string? value, out string result, out string validationErrorMessage)
+    protected override bool TryParseValueFromString(string? value, [MaybeNullWhen(false)] out Guid result, [NotNullWhen(false)] out string? validationErrorMessage)
     {
-        if (Guid.TryParse(value, out _))
+        if (string.IsNullOrEmpty(value))
         {
-            result = value!;
-            validationErrorMessage = string.Empty;
+            result = Guid.Empty;
+            validationErrorMessage = null;
+            return true;
+        }
+
+        if (Guid.TryParse(value, out var guid))
+        {
+            result = guid;
+            validationErrorMessage = null;
             return true;
         }
         else
         {
-            result = value ?? string.Empty;
+            result = Guid.Empty;
             validationErrorMessage = "The value is not a valid GUID.";
             return false;
         }

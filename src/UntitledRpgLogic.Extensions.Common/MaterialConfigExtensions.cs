@@ -4,13 +4,13 @@ using UntitledRpgLogic.Core.Enums;
 namespace UntitledRpgLogic.Extensions.Common;
 
 /// <summary>
-/// Extensions for MaterialDataConfig to handle inheritance and merging of properties.
+///     Extensions for MaterialDataConfig to handle inheritance and merging of properties.
 /// </summary>
 public static class MaterialConfigExtensions
 {
 	/// <summary>
-	/// Merges the properties of a base MaterialDataConfig into a child config.
-	/// Properties explicitly defined in the child config will take precedence.
+	///     Merges the properties of a base MaterialDataConfig into a child config.
+	///     Properties explicitly defined in the child config will take precedence.
 	/// </summary>
 	/// <param name="childConfig">The child configuration that inherits properties.</param>
 	/// <param name="baseConfig">The base configuration to inherit from.</param>
@@ -39,40 +39,37 @@ public static class MaterialConfigExtensions
 	}
 
 	private static MechanicalPropertiesConfig MergeMechanical(MechanicalPropertiesConfig baseProps, MechanicalPropertiesConfig childProps) =>
-	  new()
-	  {
-		  Density = childProps.Density ?? baseProps.Density,
-		  Hardness = childProps.Hardness ?? baseProps.Hardness,
-		  Toughness = childProps.Toughness ?? baseProps.Toughness,
-		  Stiffness = childProps.Stiffness ?? baseProps.Stiffness,
-		  Malleability = childProps.Malleability ?? baseProps.Malleability,
-		  Viscosity = childProps.Viscosity ?? baseProps.Viscosity,
-		  SurfaceTension = childProps.SurfaceTension ?? baseProps.SurfaceTension,
-		  Adhesion = childProps.Adhesion ?? baseProps.Adhesion
-	  };
+		new()
+		{
+			Density = childProps.Density ?? baseProps.Density,
+			Hardness = childProps.Hardness ?? baseProps.Hardness,
+			Toughness = childProps.Toughness ?? baseProps.Toughness,
+			Stiffness = childProps.Stiffness ?? baseProps.Stiffness,
+			Malleability = childProps.Malleability ?? baseProps.Malleability,
+			Viscosity = childProps.Viscosity ?? baseProps.Viscosity,
+			SurfaceTension = childProps.SurfaceTension ?? baseProps.SurfaceTension,
+			Adhesion = childProps.Adhesion ?? baseProps.Adhesion
+		};
 
 	private static ThermalPropertiesConfig MergeThermal(ThermalPropertiesConfig baseProps, ThermalPropertiesConfig childProps) =>
-	  new()
-	  {
-		  MeltingPoint = childProps.MeltingPoint ?? baseProps.MeltingPoint,
-		  BoilingPoint = childProps.BoilingPoint ?? baseProps.BoilingPoint,
-		  IgnitionTemperature = childProps.IgnitionTemperature ?? baseProps.IgnitionTemperature,
-		  ThermalConductivity = childProps.ThermalConductivity ?? baseProps.ThermalConductivity
-	  };
+		new()
+		{
+			MeltingPoint = childProps.MeltingPoint ?? baseProps.MeltingPoint,
+			BoilingPoint = childProps.BoilingPoint ?? baseProps.BoilingPoint,
+			IgnitionTemperature = childProps.IgnitionTemperature ?? baseProps.IgnitionTemperature,
+			ThermalConductivity = childProps.ThermalConductivity ?? baseProps.ThermalConductivity
+		};
 
 	private static ElectricalPropertiesConfig MergeElectrical(ElectricalPropertiesConfig baseProps, ElectricalPropertiesConfig childProps) =>
-	  new()
-	  {
-		  Conductivity = childProps.Conductivity ?? baseProps.Conductivity,
-	  };
+		new() { Conductivity = childProps.Conductivity ?? baseProps.Conductivity };
 
 	private static FantasticalPropertiesConfig MergeFantastical(FantasticalPropertiesConfig baseProps, FantasticalPropertiesConfig childProps)
 	{
 		// Merge dictionaries
-		var mergedAttunement = new Dictionary<Guid, float>(baseProps.ElementalAttunement ?? new());
-		if (childProps.ElementalAttunement != null)
+		var mergedAttunement = new Dictionary<Guid, float>(baseProps.MagicalAttunement ?? new Dictionary<Guid, float>());
+		if (childProps.MagicalAttunement != null)
 		{
-			foreach (var (element, value) in childProps.ElementalAttunement)
+			foreach (var (element, value) in childProps.MagicalAttunement)
 			{
 				mergedAttunement[element] = value;
 			}
@@ -84,20 +81,21 @@ public static class MaterialConfigExtensions
 			ManaCapacity = childProps.ManaCapacity ?? baseProps.ManaCapacity,
 			Purity = childProps.Purity ?? baseProps.Purity,
 			Luminosity = childProps.Luminosity ?? baseProps.Luminosity,
-			ElementalAttunement = mergedAttunement
+			MagicalAttunement = mergedAttunement
 		};
 		;
 	}
 
 	private static Dictionary<StateOfMatter, StateSpecificPropertiesConfig> MergeStates(
-	  IReadOnlyDictionary<StateOfMatter, StateSpecificPropertiesConfig> baseStates,
-	  IReadOnlyDictionary<StateOfMatter, StateSpecificPropertiesConfig> childStates)
+		IReadOnlyDictionary<StateOfMatter, StateSpecificPropertiesConfig> baseStates,
+		IReadOnlyDictionary<StateOfMatter, StateSpecificPropertiesConfig> childStates)
 	{
 		var merged = new Dictionary<StateOfMatter, StateSpecificPropertiesConfig>(baseStates);
 		foreach (var (state, props) in childStates)
 		{
 			merged[state] = props; // Child state properties completely overwrite base
 		}
+
 		return merged;
 	}
 }

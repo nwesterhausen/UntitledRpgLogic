@@ -1,22 +1,27 @@
+@using UntitledRpgLogic.Core.Configuration
+@using UntitledRpgLogic.DevTool.Components.Form
 @*
     File: src/UntitledRpgLogic.DevTool/Components/Config/ThermalPropertiesConfigEditor.razor
     Purpose: Editor for ThermalPropertiesConfig objects.
 *@
-@using UntitledRpgLogic.Core.Configuration
-@using UntitledRpgLogic.DevTool.Components.Form
 
 @if (Value != null)
 {
-    <fieldset class="border p-2 mb-3">
-        <legend>Thermal Properties</legend>
-        <NumberInputField Label="Melting Point" @bind-Value="Value.MeltingPoint" />
-        <NumberInputField Label="Boiling Point" @bind-Value="Value.BoilingPoint" />
-        <NumberInputField Label="Specific Heat" @bind-Value="Value.SpecificHeat" />
-        <NumberInputField Label="Thermal Conductivity" @bind-Value="Value.ThermalConductivity" />
-    </fieldset>
+	<fieldset class="border p-2 mb-3">
+		<legend>Thermal Properties</legend>
+		<NumberInputField Label="Melting Point" @bind-Value="Value.MeltingPoint"/>
+		<NumberInputField Label="Boiling Point" @bind-Value="Value.BoilingPoint"/>
+		<NumberInputField Label="Ignition Temperature" @bind-Value="Value.IgnitionTemperature"/>
+		<NumberInputField Label="Thermal Conductivity" @bind-Value="Value.ThermalConductivity"/>
+	</fieldset>
 }
 
 @code {
-    [Parameter]
-    public ThermalPropertiesConfig? Value { get; set; }
+
+	/// <summary>
+	///     The <see cref="ThermalPropertiesConfig" /> instance being edited.
+	/// </summary>
+	[Parameter]
+	public ThermalPropertiesConfig? Value { get; set; }
+
 }

@@ -31,7 +31,9 @@ public class Skill : ISkill
 		ArgumentNullException.ThrowIfNull(config, nameof(config));
 
 		// IHasGuid
-		this.Identifier = config.ExplicitId ?? Guid.NewGuid();
+		this.Identifier = config.ExplicitId == Guid.Empty
+			? Guid.NewGuid()
+			: config.ExplicitId;
 		this.Id = Convert.ToBase64String(this.Identifier.ToByteArray());
 		this.ShortId = this.Identifier.ToString("N")[..8].ToUpperInvariant();
 

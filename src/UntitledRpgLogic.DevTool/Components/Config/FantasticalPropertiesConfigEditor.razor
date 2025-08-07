@@ -1,27 +1,47 @@
+@using UntitledRpgLogic.Core.Configuration
+@using UntitledRpgLogic.DevTool.Components.Form
 @*
     File: src/UntitledRpgLogic.DevTool/Components/Config/FantasticalPropertiesConfigEditor.razor
     Purpose: Editor for FantasticalPropertiesConfig objects.
 *@
-@using UntitledRpgLogic.Core.Configuration
-@using UntitledRpgLogic.DevTool.Components.Form
 
 @if (Value != null)
 {
-    <fieldset class="border p-2 mb-3">
-        <legend>Fantastical Properties</legend>
-        <NumberInputField Label="Mana" @bind-Value="Value.Mana" />
+	<fieldset class="border p-2 mb-3">
+		<legend>Fantastical Properties</legend>
+		<NumberInputField
+			Label="Aetherial Conductivity"
+			Description="A relative measure of how well the material channels magical energy."
+			@bind-Value="Value.AetherialConductivity"/>
+		<NumberInputField
+			Label="Mana Capacity"
+			Description="A relative measure of how much magical energy a material can store."
+			@bind-Value="Value.ManaCapacity"/>
+		<NumberInputField
+			Label="Purity"
+			Description="Negative values indicate corruption, positive values indicate purity."
+			@bind-Value="Value.Purity"/>
+		<NumberInputField
+			Label="Luminosity"
+			Description="A relative measure of a material's natural light emission."
+			@bind-Value="Value.Luminosity"/>
 
-        <!-- TODO: Implement a dictionary editor for Magic Affinity -->
-        <div class="mb-3">
-            <label class="form-label">Magic Affinity</label>
-            <div class="p-2 border bg-gray-100 rounded">
-                @(Value.MagicAffinity?.Count ?? 0) entries.
-            </div>
-        </div>
-    </fieldset>
+		<!-- TODO: Implement a dictionary editor for Magic Affinity -->
+		<div class="mb-3">
+			<label class="form-label">Magical Affinities</label>
+			<div class="p-2 border bg-gray-100 rounded">
+				@(Value.MagicalAttunement?.Count ?? 0) entries.
+			</div>
+		</div>
+	</fieldset>
 }
 
 @code {
-    [Parameter]
-    public FantasticalPropertiesConfig? Value { get; set; }
+
+	/// <summary>
+	///     The <see cref="FantasticalPropertiesConfig" /> instance being edited.
+	/// </summary>
+	[Parameter]
+	public FantasticalPropertiesConfig? Value { get; set; }
+
 }

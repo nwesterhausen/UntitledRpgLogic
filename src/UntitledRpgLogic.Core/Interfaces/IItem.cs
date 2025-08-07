@@ -18,8 +18,8 @@ public interface IItem : IHasGuid, IHasName, IHasQuality, IIsCrafted, IHasDimens
 	public ItemSubtype ItemSubtype { get; }
 
 	/// <summary>
-	/// 	 The primary material the item is made from. This can affect the item's properties, such as weight, durability, and
-	/// 	 magical attributes.
+	///     The primary material the item is made from. This can affect the item's properties, such as weight, durability, and
+	///     magical attributes.
 	/// </summary>
 	public IMaterial PrimaryMaterial { get; }
 }

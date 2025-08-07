@@ -28,14 +28,16 @@ public class Stat : IStat
 	{
 		ArgumentNullException.ThrowIfNull(config, nameof(config));
 		// Initialize IHasGuid properties
-		this.Identifier = config.ExplicitId ?? Guid.NewGuid();
+		this.Identifier = config.ExplicitId == Guid.Empty
+			? Guid.NewGuid()
+			: config.ExplicitId;
 		this.Id = Convert.ToBase64String(this.Identifier.ToByteArray());
 		this.ShortId = this.Identifier.ToString("N")[..8].ToUpperInvariant();
 
 		// Initialize other properties from config
 		this.Name = Name.Deserialize(config.Name);
 		this.InstanceId = instanceId ?? Guid.Empty;
-		this.Variation = config.Variation ?? StatVariation.Pseudo;
+		this.Variation = config.Variation;
 
 		// Set backing fields for min/max first to establish the valid range.
 		this.minValue = config.MinValue ?? DefaultValues.StatDefaultMinValue;

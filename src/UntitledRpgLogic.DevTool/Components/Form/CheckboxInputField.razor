@@ -2,25 +2,45 @@
     File: src/UntitledRpgLogic.DevTool/Components/Form/CheckboxInputField.razor
     Purpose: Provides a checkbox input for boolean values within an EditForm.
 *@
-@using Microsoft.AspNetCore.Components.Forms
-@inherits InputCheckbox
+@using System.Diagnostics.CodeAnalysis
+@inherits InputBase<bool>
 
-<div class="mb-3">
-    <label for="@Id" class="form-label">@Label</label>
-    <InputCheckbox id="@Id" @bind-Value="CurrentValue" class="form-checkbox h-5 w-5 text-blue-600" />
-    <ValidationMessage For="ValidationFor" />
+<div class="form-control">
+	<label class="label cursor-pointer">
+		<span class="label-text">@Label</span>
+		<input type="checkbox" @bind="CurrentValue" id="@Id" class="toggle" @attributes="AdditionalAttributes"/>
+	</label>
+	<div class="label">
+		<span class="label-text-alt"><ValidationMessage For="() => CurrentValue"/></span>
+	</div>
 </div>
 
 @code {
-    /// <summary>
-    /// Specifies the label text for the input field.
-    /// </summary>
-    [Parameter]
-    public string Label { get; set; } = string.Empty;
 
-    /// <summary>
-    /// Gets or sets the expression to identify the value being validated.
-    /// </summary>
-    [Parameter]
-    public Expression<Func<bool>>? ValidationFor { get; set; }
+	/// <summary>
+	///     Gets or sets a unique identifier for the input.
+	///     If not specified, a random GUID is used.
+	/// </summary>
+	[Parameter]
+	public string Id { get; set; } = $"checkbox-{Guid.NewGuid()}";
+
+	/// <summary>
+	///     Specifies the label text for the input field.
+	/// </summary>
+	[Parameter]
+	public string Label { get; set; } = string.Empty;
+
+	/// <summary>
+	///     This method is required by InputBase, but since we are binding directly to a bool,
+	///     we don't need a complex parsing logic.
+	/// </summary>
+	protected override bool TryParseValueFromString(string? value, out bool result, [NotNullWhen(false)] out string? validationErrorMessage)
+	{
+		// Blazor's @bind for a checkbox to a bool handles the conversion.
+		// This override is just to satisfy the abstract base class.
+		result = CurrentValue;
+		validationErrorMessage = null;
+		return true;
+	}
+
 }

@@ -1,35 +1,46 @@
+@using UntitledRpgLogic.Core.Configuration
+@using UntitledRpgLogic.DevTool.Components.Form
 @*
     File: src/UntitledRpgLogic.DevTool/Components/Config/MaterialDataConfigEditor.razor
     Purpose: Editor for MaterialDataConfig objects.
 *@
-@using UntitledRpgLogic.Core.Configuration
-@using UntitledRpgLogic.DevTool.Components.Form
 
 @if (Value != null)
 {
-    <fieldset class="border p-2 mb-3">
-        <legend>Material Data</legend>
-        <NameInputField Label="Name" @bind-Value="Value.Name" />
-        <TextAreaInputField Label="Description" @bind-Value="Value.Description" />
-        <ColorInputField Label="Color" @bind-Value="Value.Color" />
+	<fieldset class="border p-2 mb-3">
+		<legend>Material Data</legend>
+		<StringInputField Label="Name" @bind-Value="Value.Name"/>
+		<StringInputField Label="Plural Name" @bind-Value="Value.PluralName"/>
+		<StringInputField Label="Name as Adjective" @bind-Value="Value.NameAsAdjective"/>
+		<MechanicalPropertiesConfigEditor Value="Value.Mechanical"/>
+		<ThermalPropertiesConfigEditor Value="Value.Thermal"/>
+		<ElectricalPropertiesConfigEditor Value="Value.Electrical"/>
+		<FantasticalPropertiesConfigEditor Value="Value.Fantastical"/>
 
-        <!-- TODO: Implement a dictionary editor for material states -->
-        <div class="mb-3">
-            <label class="form-label">States</label>
-            <div class="p-2 border bg-gray-100 rounded">
-                @foreach (var state in Value.States)
-                {
-                    <div class="p-2 border-b">
-                        <h4 class="font-bold">@state.Key</h4>
-                        <StateSpecificPropertiesConfigEditor Value="state.Value" />
-                    </div>
-                }
-            </div>
-        </div>
-    </fieldset>
+		<!-- TODO: Implement a dictionary editor for material states -->
+		<div class="mb-3">
+			<label class="form-label">States</label>
+			<div class="p-2 border bg-gray-100 rounded">
+				@foreach (var state in Value.States)
+				{
+					<div class="p-2 border-b">
+						<h4 class="font-bold">@state.Key</h4>
+						<StateSpecificPropertiesConfigEditor Value="state.Value"/>
+					</div>
+				}
+			</div>
+		</div>
+
+		<GuidInputField Label="Material ID" Description="Define a unique identifier for this material." @bind-Value="Value.ExplicitId"/>
+	</fieldset>
 }
 
 @code {
-    [Parameter]
-    public MaterialDataConfig? Value { get; set; }
+
+	/// <summary>
+	///     The <see cref="MaterialDataConfig" /> instance being edited.
+	/// </summary>
+	[Parameter]
+	public MaterialDataConfig? Value { get; set; }
+
 }

@@ -1,19 +1,18 @@
+@using UntitledRpgLogic.Core.Configuration
+@using UntitledRpgLogic.DevTool.Components.Form
 @*
     File: src/UntitledRpgLogic.DevTool/Components/Config/StateSpecificPropertiesConfigEditor.razor
     Purpose: Editor for StateSpecificPropertiesConfig objects.
 *@
-@using UntitledRpgLogic.Core.Configuration
-@using UntitledRpgLogic.DevTool.Components.Form
 
 @if (Value != null)
 {
-    <fieldset class="border p-2 mb-3">
-        <legend>State Specific Properties</legend>
-        <ColorInputField Label="Color" @bind-Value="Value.Color" />
-    </fieldset>
+	<fieldset class="border p-2 mb-3">
+		<legend>State Specific Properties</legend>
+		<ColorInputField Label="Color" @bind-Value="Value.Color"/>
+	</fieldset>
 }
 
 @code {
-    [Parameter]
-    public StateSpecificPropertiesConfig? Value { get; set; }
+	[Parameter] public StateSpecificPropertiesConfig? Value { get; set; }
 }

@@ -46,7 +46,7 @@ public enum ConfigType
 	Stat,
 
 	/// <summary>
-	/// 	 Configuration for a MagicTypeConfig.
+	///     Configuration for a MagicTypeConfig.
 	/// </summary>
-	MagicType,
+	MagicType
 }

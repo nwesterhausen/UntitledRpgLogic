@@ -9,26 +9,28 @@
 @if (Value != null)
 {
     <fieldset class="border p-2 mb-3">
-        <legend>Item Data</legend>
-        <NameInputField Label="Name" @bind-Value="Value.Name" />
-        <TextAreaInputField Label="Description" @bind-Value="Value.Description" />
+	    <legend>Item Data</legend>
+	    <StringInputField Label="Name" @bind-Value="Value.Name" />
+	    <StringInputField Label="Plural Name" @bind-Value="Value.PluralName" />
+	    <StringInputField Label="Name as Adjective" @bind-Value="Value.NameAsAdjective" />
+	    <EnumSelectField TEnum="Quality" Label="Quality" @bind-Value="Value.ItemQuality" />
         <EnumSelectField TEnum="ItemType" Label="Item Type" @bind-Value="Value.ItemType" />
         <EnumSelectField TEnum="ItemSubtype" Label="Item Subtype" @bind-Value="Value.ItemSubtype" />
-        <NumberInputField Label="Value" @bind-Value="Value.Value" />
-        <NumberInputField Label="Weight" @bind-Value="Value.Weight" />
-        <NumberInputField Label="Volume" @bind-Value="Value.Volume" />
-
-        <!-- TODO: Implement a Guid list editor to select effects -->
-        <div class="mb-3">
-            <label class="form-label">Effects</label>
-            <div class="p-2 border bg-gray-100 rounded">
-                @(Value.Effects?.Count ?? 0) effects linked.
-            </div>
-        </div>
+        <TextAreaInputField Label="Description" @bind-Value="Value.Description" />
+        <EnumSelectField TEnum="DimensionScale" Label="Dimension Scale" @bind-Value="Value.DimensionScale" />
+        <NumberInputField Label="Width" @bind-Value="Value.Width" />
+        <NumberInputField Label="Height" @bind-Value="Value.Height" />
+        <NumberInputField Label="Depth" @bind-Value="Value.Depth" />
+        <EnumSelectField TEnum="ShapeType" Label="Shape Type" @bind-Value="Value.ShapeType" />
+        <GuidInputField Label="Material" @bind-Value="Value.MaterialId" />
+        <GuidInputField Label="Crafted By" @bind-Value="Value.CraftedBy" />
     </fieldset>
 }
 
 @code {
+	/// <summary>
+	///		The <see cref="ItemDataConfig"/> instance being edited.
+	/// </summary>
     [Parameter]
     public ItemDataConfig? Value { get; set; }
 }

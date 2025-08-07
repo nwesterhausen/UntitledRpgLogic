@@ -55,6 +55,8 @@ internal interface IConfigStore
 	/// <param name="config">a config to replace the config stored at <see cparamref="key" /></param>
 	public void UpdateConfig(Guid key, ITomlConfig config);
 
+	public Task UpdateConfigAsync(Guid key, ITomlConfig config) => Task.Run(() => this.UpdateConfig(key, config));
+
 	/// <summary>
 	///     Get all keys in the configuration store.
 	/// </summary>

@@ -19,9 +19,9 @@ public record AuthorConfig : ITomlConfig
 	public required string AuthorName { get; set; }
 
 	/// <summary>
-	///     The unique identifier for the author.
+	///     The unique identifier for the author. This is used to distinguish the author from others in the system.
 	/// </summary>
-	public Guid AuthorId { get; set; } = Guid.NewGuid();
+	public Guid ExplicitId { get; set; } = Guid.Empty;
 
 	/// <inheritdoc />
 	public ConfigType ConfigType => ConfigType.Author;

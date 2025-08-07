@@ -11,30 +11,8 @@ namespace UntitledRpgLogic.Core.Game;
 /// </summary>
 public class BaseMaterial : IMaterial
 {
-	/// <inheritdoc />
-	public Name Name { get; }
-	/// <inheritdoc />
-	public Guid Identifier { get; }
-	/// <inheritdoc />
-	public MechanicalProperties Mechanical { get; }
-	/// <inheritdoc />
-	public ThermalProperties Thermal { get; }
-	/// <inheritdoc />
-	public ElectricalProperties Electrical { get; }
-	/// <inheritdoc />
-	public FantasticalProperties Fantastical { get; }
-	/// <inheritdoc />
-	public IReadOnlyDictionary<StateOfMatter, StateSpecificProperties> States { get; }
-
-
-	/// <inheritdoc />
-	public string Id { get; init; } = string.Empty;
-
-	/// <inheritdoc />
-	public string ShortId { get; init; } = string.Empty;
-
-
-	private BaseMaterial(Name name, Guid guid, MechanicalProperties mechanical, ThermalProperties thermal, ElectricalProperties electrical, FantasticalProperties fantastical, Dictionary<StateOfMatter, StateSpecificProperties> states)
+	private BaseMaterial(Name name, Guid guid, MechanicalProperties mechanical, ThermalProperties thermal, ElectricalProperties electrical,
+		FantasticalProperties fantastical, Dictionary<StateOfMatter, StateSpecificProperties> states)
 	{
 		this.Name = name;
 		this.Identifier = guid;
@@ -48,8 +26,36 @@ public class BaseMaterial : IMaterial
 		this.ShortId = this.Identifier.ToString("N")[..8].ToUpperInvariant();
 	}
 
+	/// <inheritdoc />
+	public Name Name { get; }
+
+	/// <inheritdoc />
+	public Guid Identifier { get; }
+
+	/// <inheritdoc />
+	public MechanicalProperties Mechanical { get; }
+
+	/// <inheritdoc />
+	public ThermalProperties Thermal { get; }
+
+	/// <inheritdoc />
+	public ElectricalProperties Electrical { get; }
+
+	/// <inheritdoc />
+	public FantasticalProperties Fantastical { get; }
+
+	/// <inheritdoc />
+	public IReadOnlyDictionary<StateOfMatter, StateSpecificProperties> States { get; }
+
+
+	/// <inheritdoc />
+	public string Id { get; init; }
+
+	/// <inheritdoc />
+	public string ShortId { get; init; }
+
 	/// <summary>
-	/// 	Creates a Material instance from the provided configuration.
+	///     Creates a Material instance from the provided configuration.
 	/// </summary>
 	/// <param name="config">material data config to use</param>
 	/// <returns>a material instance</returns>
@@ -69,6 +75,10 @@ public class BaseMaterial : IMaterial
 			states[state] = StateSpecificProperties.FromConfig(stateConfig);
 		}
 
-		return new BaseMaterial(name, config.ExplicitId ?? Guid.NewGuid(), mechanical, thermal, electrical, fantastical, states);
+		var explicitId = config.ExplicitId == Guid.Empty
+			? Guid.NewGuid()
+			: config.ExplicitId;
+
+		return new BaseMaterial(name, explicitId, mechanical, thermal, electrical, fantastical, states);
 	}
 }

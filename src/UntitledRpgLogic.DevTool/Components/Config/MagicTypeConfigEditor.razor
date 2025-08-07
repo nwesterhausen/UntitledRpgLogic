@@ -1,21 +1,26 @@
+@using UntitledRpgLogic.Core.Configuration
+@using UntitledRpgLogic.DevTool.Components.Form
 @*
     File: src/UntitledRpgLogic.DevTool/Components/Config/MagicTypeConfigEditor.razor
     Purpose: Editor for MagicTypeConfig objects.
 *@
-@using UntitledRpgLogic.Core.Configuration
-@using UntitledRpgLogic.DevTool.Components.Form
 
 @if (Value != null)
 {
-    <fieldset class="border p-2 mb-3">
-        <legend>Magic Type</legend>
-        <NameInputField Label="Name" @bind-Value="Value.Name" />
-        <TextAreaInputField Label="Description" @bind-Value="Value.Description" />
-        <ColorInputField Label="Color" @bind-Value="Value.Color" />
-    </fieldset>
+	<fieldset class="border p-2 mb-3">
+		<legend>Magic Type</legend>
+		<StringInputField Label="Name" @bind-Value="Value.Name"/>
+		<TextAreaInputField Label="Description" @bind-Value="Value.Description"/>
+		<GuidInputField Label="Magic Type ID" Description="Define a unique identifier for this magic type." @bind-Value="Value.ExplicitId"/>
+	</fieldset>
 }
 
 @code {
-    [Parameter]
-    public MagicTypeConfig? Value { get; set; }
+
+	/// <summary>
+	///     The <see cref="MagicTypeConfig" /> instance being edited.
+	/// </summary>
+	[Parameter]
+	public MagicTypeConfig? Value { get; set; }
+
 }

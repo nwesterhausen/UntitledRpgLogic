@@ -15,11 +15,6 @@ namespace UntitledRpgLogic.Core.Configuration;
 public record ModuleInfoConfig : ITomlConfig
 {
 	/// <summary>
-	///     The unique identifier for the module.
-	/// </summary>
-	public Guid Id { get; set; } = Guid.NewGuid();
-
-	/// <summary>
 	///     The name of the module.
 	/// </summary>
 	public required string Name { get; set; }
@@ -38,6 +33,11 @@ public record ModuleInfoConfig : ITomlConfig
 	///     A numeric representation of the module's version, which can be used for comparisons, sorting, or dependency management.
 	/// </summary>
 	public int VersionNumber { get; set; } = 1;
+
+	/// <summary>
+	///     The Unique identifier for the module. This is used to distinguish the module from others in the system.
+	/// </summary>
+	public Guid ExplicitId { get; set; } = Guid.Empty;
 
 	/// <inheritdoc />
 	public ConfigType ConfigType => ConfigType.ModuleInfo;

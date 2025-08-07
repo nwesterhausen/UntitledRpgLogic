@@ -1,23 +1,27 @@
+@using UntitledRpgLogic.Core.Configuration
+@using UntitledRpgLogic.DevTool.Components.Form
 @*
     File: src/UntitledRpgLogic.DevTool/Components/Config/SkillDataConfigEditor.razor
     Purpose: Editor for SkillDataConfig objects.
 *@
-@using UntitledRpgLogic.Core.Configuration
-@using UntitledRpgLogic.Core.Enums
-@using UntitledRpgLogic.DevTool.Components.Form
 
 @if (Value != null)
 {
-    <fieldset class="border p-2 mb-3">
-        <legend>Skill Data</legend>
-        <NameInputField Label="Name" @bind-Value="Value.Name" />
-        <TextAreaInputField Label="Description" @bind-Value="Value.Description" />
-        <NumberInputField Label="Max Level" @bind-Value="Value.MaxLevel" />
-        <EnumSelectField TEnum="ScalingCurveType" Label="Scaling Curve" @bind-Value="Value.ScalingCurve" />
-    </fieldset>
+	<fieldset class="border p-2 mb-3">
+		<legend>Skill Data</legend>
+		<StringInputField Label="Name" @bind-Value="Value.Name"/>
+		<TextAreaInputField Label="Description" @bind-Value="Value.Description"/>
+		@* Leveling Option Input: Todo *@
+		<GuidInputField Label="Skill ID" Description="Define a unique identifier for this skill." @bind-Value="Value.ExplicitId"/>
+	</fieldset>
 }
 
 @code {
-    [Parameter]
-    public SkillDataConfig? Value { get; set; }
+
+	/// <summary>
+	///     The <see cref="SkillDataConfig" /> instance being edited.
+	/// </summary>
+	[Parameter]
+	public SkillDataConfig? Value { get; set; }
+
 }

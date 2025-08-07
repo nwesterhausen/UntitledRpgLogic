@@ -19,17 +19,18 @@ public class BaseItem : IItem
 	{
 		ArgumentNullException.ThrowIfNull(config, nameof(config));
 
-		this.Identifier = config.ExplicitId ?? Guid.NewGuid();
+		this.Identifier = config.ExplicitId == Guid.Empty
+			? Guid.NewGuid()
+			: config.ExplicitId;
 		this.Id = Convert.ToBase64String(this.Identifier.ToByteArray());
 		this.ShortId = this.Identifier.ToString("N")[..8].ToUpperInvariant();
 		this.Name = Name.Deserialize(config.Name);
-		this.Quality = config.ItemQuality ?? Quality.None;
+		this.Quality = config.ItemQuality;
 		this.ItemType = config.ItemType;
-		this.ItemSubtype = config.ItemSubtype ?? ItemSubtype.None;
-		this.CraftedBy = config.CraftedBy ?? ReservedGuids.GameSystem;
-		this.DimensionScale = config.DimensionScale ?? DimensionScale.Cm;
-		this.ShapeType = config.ShapeType ??
-						 ShapeType.RectangularPrism; // Actually base this on ItemType and ItemSubtype in the future.
+		this.ItemSubtype = config.ItemSubtype;
+		this.CraftedBy = config.CraftedBy;
+		this.DimensionScale = config.DimensionScale;
+		this.ShapeType = config.ShapeType;
 		this.Width = config.Width;
 		this.Height = config.Height;
 		this.Depth = config.Depth ?? 1.0f;

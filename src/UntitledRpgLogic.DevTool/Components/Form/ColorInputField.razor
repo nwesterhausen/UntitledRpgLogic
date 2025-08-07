@@ -7,53 +7,55 @@
 @inherits InputBase<string>
 
 <div class="mb-3">
-    <label for="@Id" class="form-label">@Label</label>
-    <input id="@Id" type="color" @bind="CurrentValue" class="form-input" />
-    <ValidationMessage For="ValidationFor" />
+	<label for="@Id" class="form-label">@Label</label>
+	<input id="@Id" type="color" @bind="CurrentValue" class="form-input"/>
+	<ValidationMessage For="ValidationFor"/>
 </div>
 
 @code {
-    /// <summary>
-    /// Gets or sets the unique identifier for the input element.
-    /// Defaults to a new GUID if not provided.
-    /// </summary>
-    [Parameter]
-    public string Id { get; set; } = Guid.NewGuid().ToString();
 
-    /// <summary>
-    /// Specifies the label text for the input field.
-    /// </summary>
-    [Parameter]
-    public string Label { get; set; } = string.Empty;
+	/// <summary>
+	///     Gets or sets the unique identifier for the input element.
+	///     Defaults to a new GUID if not provided.
+	/// </summary>
+	[Parameter]
+	public string Id { get; set; } = Guid.NewGuid().ToString();
 
-    /// <summary>
-    /// Gets or sets the expression to identify the value being validated.
-    /// </summary>
-    [Parameter]
-    public Expression<Func<string?>>? ValidationFor { get; set; }
+	/// <summary>
+	///     Specifies the label text for the input field.
+	/// </summary>
+	[Parameter]
+	public string Label { get; set; } = string.Empty;
 
-    /// <summary>
-    /// Parses the string value from the input. This override provides basic validation.
-    /// </summary>
-    protected override bool TryParseValueFromString(string? value, out string result, out string validationErrorMessage)
-    {
-        // Default to black if the value is null or empty.
-        result = value ?? "#000000";
-        validationErrorMessage = string.Empty;
+	/// <summary>
+	///     Gets or sets the expression to identify the value being validated.
+	/// </summary>
+	[Parameter]
+	public Expression<Func<string?>>? ValidationFor { get; set; }
 
-        // Allow empty strings to pass through.
-        if (string.IsNullOrEmpty(value))
-        {
-            return true;
-        }
+	/// <summary>
+	///     Parses the string value from the input. This override provides basic validation.
+	/// </summary>
+	protected override bool TryParseValueFromString(string? value, out string result, out string validationErrorMessage)
+	{
+		// Default to black if the value is null or empty.
+		result = value ?? "#000000";
+		validationErrorMessage = string.Empty;
 
-        // Validate that the string is in a valid hex format (e.g., #RRGGBB).
-        if (Regex.IsMatch(value, "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{8})$"))
-        {
-            return true;
-        }
+		// Allow empty strings to pass through.
+		if (string.IsNullOrEmpty(value))
+		{
+			return true;
+		}
 
-        validationErrorMessage = "Invalid hex color format. Must be in #RRGGBB or #AARRGGBB format.";
-        return false;
-    }
+		// Validate that the string is in a valid hex format (e.g., #RRGGBB).
+		if (Regex.IsMatch(value, "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{8})$"))
+		{
+			return true;
+		}
+
+		validationErrorMessage = "Invalid hex color format. Must be in #RRGGBB or #AARRGGBB format.";
+		return false;
+	}
+
 }

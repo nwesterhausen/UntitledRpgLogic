@@ -3,6 +3,7 @@
     Purpose: Provides a UI for creating new configuration files.
 *@
 @page "/create-config"
+@using System.ComponentModel.DataAnnotations
 @using UntitledRpgLogic.Core.Enums
 @using UntitledRpgLogic.Core.Interfaces
 @using UntitledRpgLogic.Core.Configuration
@@ -20,7 +21,7 @@
     <ValidationSummary />
 
     <div class="mb-3">
-        <EnumSelectField TEnum="ConfigType" Label="Select Config Type" @bind-Value="SelectedConfigType" ValueChanged="OnConfigTypeChanged" />
+        <EnumSelectField TEnum="ConfigType" Label="Select Config Type" @bind-Value="SelectedConfigType" />
     </div>
 
     @if (ActiveConfig != null)
@@ -31,21 +32,26 @@
                 case ConfigType.ModuleInfo:
                     <ModuleInfoConfigEditor Value="(ModuleInfoConfig)ActiveConfig" />
                     break;
-                case ConfigType.StatData:
+                case ConfigType.Stat:
                     <StatDataConfigEditor Value="(StatDataConfig)ActiveConfig" />
                     break;
-                case ConfigType.SkillData:
+                case ConfigType.Skill:
                     <SkillDataConfigEditor Value="(SkillDataConfig)ActiveConfig" />
                     break;
-                case ConfigType.ItemData:
+                case ConfigType.Item:
                     <ItemDataConfigEditor Value="(ItemDataConfig)ActiveConfig" />
                     break;
-                case ConfigType.MaterialData:
+                case ConfigType.Material:
                     <MaterialDataConfigEditor Value="(MaterialDataConfig)ActiveConfig" />
                     break;
                 case ConfigType.MagicType:
                     <MagicTypeConfigEditor Value="(MagicTypeConfig)ActiveConfig" />
                     break;
+                case ConfigType.Author:
+	                break;
+                case ConfigType.Unknown:
+                default:
+	                throw new ArgumentOutOfRangeException();
             }
         </div>
 
@@ -55,32 +61,39 @@
 
 
 @code {
-    private ConfigType _selectedConfigType;
+    private ConfigType selectedConfigType;
 
     private ITomlConfig? ActiveConfig { get; set; }
 
     private ConfigType SelectedConfigType
     {
-        get => _selectedConfigType;
+        get => selectedConfigType;
         set
         {
-            _selectedConfigType = value;
+            selectedConfigType = value;
             ActiveConfig = ConfigFactory.Create(value);
         }
-    }
-
-    private void OnConfigTypeChanged(ConfigType newType)
-    {
-        SelectedConfigType = newType;
-        StateHasChanged();
     }
 
     private async Task HandleSave()
     {
         if (ActiveConfig != null)
         {
-            await ConfigStore.SaveConfigAsync(ActiveConfig);
-            NavigationManager.NavigateTo("/"); // Navigate back to the config list after saving
+            if (ActiveConfig.ExplicitId == Guid.Empty)
+            {
+                // Generate a new GUID if not set
+                ActiveConfig.ExplicitId = Guid.NewGuid();
+            }
+            // Ensure the config is valid before saving
+            var validationContext = new ValidationContext(ActiveConfig);
+            if (!Validator.TryValidateObject(ActiveConfig, validationContext, null, true))
+            {
+                // Handle validation errors (e.g., show a message to the user)
+                return;
+            }
+
+            await ConfigStore.UpdateConfigAsync(ActiveConfig.ExplicitId, ActiveConfig);
+            NavigationManager.NavigateTo("/create-config"); // Navigate back to the config list after saving
         }
     }
 }

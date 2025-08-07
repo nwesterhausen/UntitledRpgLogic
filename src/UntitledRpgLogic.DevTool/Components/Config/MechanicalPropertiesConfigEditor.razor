@@ -1,24 +1,56 @@
+@using UntitledRpgLogic.Core.Configuration
+@using UntitledRpgLogic.DevTool.Components.Form
 @*
     File: src/UntitledRpgLogic.DevTool/Components/Config/MechanicalPropertiesConfigEditor.razor
     Purpose: Editor for MechanicalPropertiesConfig objects.
 *@
-@using UntitledRpgLogic.Core.Configuration
-@using UntitledRpgLogic.Core.Enums
-@using UntitledRpgLogic.DevTool.Components.Form
 
 @if (Value != null)
 {
-    <fieldset class="border p-2 mb-3">
-        <legend>Mechanical Properties</legend>
-        <NumberInputField Label="Hardness" @bind-Value="Value.Hardness" />
-        <NumberInputField Label="Malleability" @bind-Value="Value.Malleability" />
-        <NumberInputField Label="Ductility" @bind-Value="Value.Ductility" />
-        <NumberInputField Label="Toughness" @bind-Value="Value.Toughness" />
-        <EnumSelectField TEnum="FractureType" Label="Fracture Type" @bind-Value="Value.FractureType" />
-    </fieldset>
+	<fieldset class="border p-2 mb-3">
+		<legend>Solid Mechanical Properties</legend>
+		<NumberInputField
+			Label="Density"
+			Description="Mass per unit volume, in kg/m³."
+			@bind-Value="Value.Density"/>
+		<NumberInputField
+			Label="Hardness"
+			Description="Resistance to scratching or indentation, on a scale of 0 to 10. Affects edge retention and armor penetration."
+			@bind-Value="Value.Hardness"/>
+		<NumberInputField
+			Label="Toughness"
+			Description="Resistance to fracture, in J/m². Affects how well the material can absorb energy before breaking. Affects durability and resistance to chipping/shattering."
+			@bind-Value="Value.Toughness"/>
+		<NumberInputField
+			Label="Stiffness"
+			Description="Resistance to deformation under stress, in GPa. A high value means the material is very rigid."
+			@bind-Value="Value.Stiffness"/>
+		<NumberInputField
+			Label="Malleability"
+			Description="Ability to deform under compressive stress without breaking, on a scale of 0 to 10. Affects how well the material can be shaped or formed."
+			@bind-Value="Value.Malleability"/>
+		<legend>Liquid Mechanical Properties</legend>
+		<NumberInputField
+			Label="Viscosity"
+			Description="Resistance to flow, in Pa·s. Affects how easily the liquid can be poured or moved."
+			@bind-Value="Value.Viscosity"/>
+		<NumberInputField
+			Label="Surface Tension"
+			Description="The cohesive force at the surface of a liquid, in N/m. Affects coating and droplet formation."
+			@bind-Value="Value.SurfaceTension"/>
+		<NumberInputField
+			Label="Adhesion"
+			Description="The tendency of a liquid to stick to surfaces, on a scale of 0 to 10. Affects how well the liquid interacts with materials."
+			@bind-Value="Value.Adhesion"/>
+	</fieldset>
 }
 
 @code {
-    [Parameter]
-    public MechanicalPropertiesConfig? Value { get; set; }
+
+	/// <summary>
+	///     The <see cref="MechanicalPropertiesConfig" /> instance being edited.
+	/// </summary>
+	[Parameter]
+	public MechanicalPropertiesConfig? Value { get; set; }
+
 }
