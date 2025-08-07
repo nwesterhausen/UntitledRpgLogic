@@ -1,5 +1,4 @@
 @page "/Create"
-@using UntitledRpgLogic.DevTool.Pages.Create
 
 <h3 class="text-3xl font-bold mb-6 text-primary">Create Configurations</h3>
 <p>Create a new: <select class="select select-neutral" @bind="_selectedType">
@@ -11,19 +10,23 @@
 
 @if (_selectedType == "Material")
 {
-	<Material/>
+	@* <Material/> *@
+	<p>Material</p>
 }
 else if (_selectedType == "Item")
 {
-	<Item/>
+	@* <Item/> *@
+	<p>Item</p>
 }
 else if (_selectedType == "Stat")
 {
-	<Stat/>
+	@* <Stat/> *@
+	<p>Stat</p>
 }
 else if (_selectedType == "Skill")
 {
-	<Skill/>
+	@* <Skill/> *@
+	<p>Skill</p>
 }
 
 @code {

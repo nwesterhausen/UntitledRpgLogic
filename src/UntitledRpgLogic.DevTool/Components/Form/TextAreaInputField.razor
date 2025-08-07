@@ -1,0 +1,35 @@
+@*
+    A reusable component for a multi-line text area field.
+    It wraps the standard InputTextArea component with a label and form control styling.
+*@
+@inherits InputBase<string>
+@using Microsoft.AspNetCore.Components.Forms
+
+<div class="form-control">
+    <label class="label">
+        <span class="label-text">@Label</span>
+    </label>
+    <InputTextArea @bind-Value="CurrentValue" class="textarea textarea-bordered h-24" />
+    <div class="label">
+        <span class="label-text-alt"><ValidationMessage For="() => CurrentValue" /></span>
+    </div>
+</div>
+
+@code {
+    /// <summary>
+    /// The text to display in the label for this input field.
+    /// </summary>
+    [Parameter]
+    public string Label { get; set; } = string.Empty;
+
+    /// <summary>
+    /// This is required for the InputBase to work correctly.
+    /// It defines how a string value is parsed into the component's type.
+    /// </summary>
+    protected override bool TryParseValueFromString(string? value, out string result, out string validationErrorMessage)
+    {
+        result = value ?? string.Empty;
+        validationErrorMessage = string.Empty;
+        return true;
+    }
+}

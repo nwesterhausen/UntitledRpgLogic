@@ -12,7 +12,7 @@ public record StateSpecificProperties
 	/// <summary>
 	/// Gets the color of the material in this state.
 	/// </summary>
-	public Color Color { get; }
+	public Color Color { get; set; }
 
 	/// <summary>
 	/// Creates a <see cref="StateSpecificProperties"/> instance from a configuration object.
