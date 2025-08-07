@@ -13,7 +13,9 @@ public enum TargetingType
 	/// <summary>
 	///     Targets a single entity.
 	/// </summary>
+#pragma warning disable CA1720
 	Single = 1,
+#pragma warning restore CA1720
 
 	/// <summary>
 	///     Targets an area, affecting all entities within that area.
@@ -28,5 +30,10 @@ public enum TargetingType
 	/// <summary>
 	///     Targets the caster or user of the effect.
 	/// </summary>
-	Self = 4
+	Self = 4,
+
+	/// <summary>
+	///		Targets multiple specific entities, which may include allies or enemies.
+	/// </summary>
+	Multiple = 5
 }

@@ -6,7 +6,9 @@ using System.Text.Json;
 namespace UntitledRpgLogic.LibraryFile.Tests;
 
 [TestClass]
-internal sealed class UrpglibReaderTests : IDisposable
+#pragma warning disable CA1515
+public sealed class UrpglibReaderTests : IDisposable
+#pragma warning restore CA1515
 {
 	private readonly string tempDirectory = null!;
 
@@ -140,6 +142,7 @@ internal sealed class UrpglibReaderTests : IDisposable
 		using (package)
 		{
 			Assert.AreEqual(PayloadCompressionType.Gzip, package.Header.PayloadCompression);
+			Assert.IsNotNull(package.Manifest);
 			Assert.AreEqual(manifest.Name, package.Manifest.Name);
 		}
 	}
@@ -159,6 +162,7 @@ internal sealed class UrpglibReaderTests : IDisposable
 		using (package)
 		{
 			Assert.AreEqual(PayloadCompressionType.None, package.Header.PayloadCompression);
+			Assert.IsNotNull(package.Manifest);
 			Assert.AreEqual(manifest.Name, package.Manifest.Name);
 		}
 	}
@@ -178,6 +182,7 @@ internal sealed class UrpglibReaderTests : IDisposable
 		// Assert
 		using (package)
 		{
+			Assert.IsNotNull(package.Manifest);
 			Assert.AreEqual(10000, package.Manifest.Description.Length);
 			Assert.AreEqual(manifest.Name, package.Manifest.Name);
 		}
@@ -233,6 +238,7 @@ internal sealed class UrpglibReaderTests : IDisposable
 			var package = await UrpglibReader.ReadAsync(filePath, readPayloadIntoMemory: true).ConfigureAwait(false);
 			using (package)
 			{
+				Assert.IsNotNull(package.Manifest);
 				return package.Manifest.Name;
 			}
 		});
@@ -362,8 +368,7 @@ internal sealed class UrpglibReaderTests : IDisposable
 		// If manifest length is not zero, the file will become invalid because there is no actual manifest data written.
 	}
 
-	[TestInitialize]
-	public void TestInitialize()
+	public UrpglibReaderTests()
 	{
 		this.tempDirectory = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
 		_ = Directory.CreateDirectory(this.tempDirectory);
