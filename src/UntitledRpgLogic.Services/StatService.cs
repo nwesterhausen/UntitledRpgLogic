@@ -70,7 +70,7 @@ public class StatService : IStatService
 				HealAmount = actualHealAmount,
 				HealPercentage = statEntry.PointsAsPercentageOfMax(actualHealAmount),
 				SourceId = healOptions.SourceId,
-				StatName = statEntry.Stat.Name.Singular
+				StatName = statEntry.Stat.Name
 			});
 	}
 
@@ -97,7 +97,7 @@ public class StatService : IStatService
 
 		if (stat.Variation is StatVariation.Complex or StatVariation.Minor)
 		{
-			this.logger.LogIllegalStatChange(stat.Name.Singular, "Cannot directly set value of a complex/minor stat.");
+			this.logger.LogIllegalStatChange(stat.Name, "Cannot directly set value of a complex/minor stat.");
 			return;
 		}
 
@@ -122,14 +122,9 @@ public class StatService : IStatService
 		ArgumentNullException.ThrowIfNull(sourceStat);
 		ArgumentNullException.ThrowIfNull(dependentStat);
 
-		if (!dependentStat.LinkedStats.TryAdd(sourceStat.Identifier, ratio))
-		{
-			this.logger.LogWarning("Stat {DependentStat} is already linked to {SourceStat}.",
-				dependentStat.Name, sourceStat.Name);
-			return;
-		}
+		throw new NotImplementedException("Linking stats is not yet implemented. (needs consideration due to stat definitions)");
 
-		sourceStat.ValueChanged += (sender, args) => this.HandleLinkedStatChange(dependentStat, args, ratio);
+		sourceStat.OnValueChanged += (sender, args) => this.HandleLinkedStatChange(dependentStat, args, ratio);
 
 		this.logger.LogInformation("Successfully linked {DependentStat} to {SourceStat} with a ratio of {Ratio}.",
 			dependentStat.Name, sourceStat.Name, ratio);
@@ -172,7 +167,7 @@ public class StatService : IStatService
 				FinalDamage = finalDamage,
 				FinalDamagePercentage = statEntry.PointsAsPercentageOfMax(finalDamage),
 				SourceId = damageOptions.SourceId,
-				StatName = statEntry.Stat.Name.Singular
+				StatName = statEntry.Stat.Name
 			});
 	}
 
@@ -240,7 +235,7 @@ public class StatService : IStatService
 		foreach (var modifier in statEntry.Modifiers.OrderBy(m => m.Priority))
 		{
 			stat.Value = modifier.ApplyModification(stat.BaseValue, stat.Value, stat.MaxValue);
-			this.logger.LogModifierApplied(modifier.Name.Singular, stat.Name.Singular);
+			this.logger.LogModifierApplied(modifier.Name.Singular, stat.Name);
 		}
 
 		if (oldValue != stat.Value)

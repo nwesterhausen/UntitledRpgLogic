@@ -12,12 +12,6 @@ public record Item : IItem
 	public Guid Identifier { get; init; }
 
 	/// <inheritdoc />
-	public string Id { get; init; } = string.Empty;
-
-	/// <inheritdoc />
-	public string ShortId { get; init; } = string.Empty;
-
-	/// <inheritdoc />
 	public Name Name { get; init; } = Name.Empty;
 
 	/// <inheritdoc />

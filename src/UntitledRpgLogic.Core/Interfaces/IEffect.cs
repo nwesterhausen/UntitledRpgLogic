@@ -2,7 +2,7 @@ namespace UntitledRpgLogic.Core.Interfaces;
 
 /// <summary>
 /// </summary>
-public interface IEffect : IHasGuid, IHasName
+public interface IEffect : IHasIdentifier, IHasName
 {
 	/// <summary>
 	///     An immutable collection of the effect components that make up this effect.

@@ -123,23 +123,23 @@ internal sealed class ConfigStoreService : IConfigStore
 	/// <inheritdoc />
 	public string ModuleGuid
 	{
-		get => this.ModuleInfo.ExplicitId.ToString();
+		get => this.ModuleInfo.Id.ToString();
 		set
 		{
-			if (this.ModuleInfo.ExplicitId.ToString() == value)
+			if (this.ModuleInfo.Id.ToString() == value)
 			{
 				return;
 			}
 
 			if (string.IsNullOrWhiteSpace(value))
 			{
-				this.ModuleInfo.ExplicitId = Guid.NewGuid();
+				this.ModuleInfo.Id = Guid.NewGuid();
 			}
 			else
 			{
 				if (Guid.TryParse(value, out var guid))
 				{
-					this.ModuleInfo.ExplicitId = guid;
+					this.ModuleInfo.Id = guid;
 				}
 				else
 				{
@@ -149,7 +149,7 @@ internal sealed class ConfigStoreService : IConfigStore
 
 
 			_ = Task.Run(async () =>
-				await this.jsRuntime.InvokeVoidAsync("SaveToStorage", "moduleGuid", this.ModuleInfo.ExplicitId.ToString())
+				await this.jsRuntime.InvokeVoidAsync("SaveToStorage", "moduleGuid", this.ModuleInfo.Id.ToString())
 					.ConfigureAwait(false)).ConfigureAwait(true);
 			this.OnChange?.Invoke();
 		}
@@ -176,28 +176,28 @@ internal sealed class ConfigStoreService : IConfigStore
 
 	/// <inheritdoc />
 	public AuthorConfig Author { get; } =
-		new() { AuthorName = "", Website = "", ExplicitId = Guid.NewGuid() };
+		new() { AuthorName = "", Website = "", Id = Guid.NewGuid() };
 
 	/// <inheritdoc />
 	public string AuthorGuid
 	{
-		get => this.Author.ExplicitId.ToString();
+		get => this.Author.Id.ToString();
 		set
 		{
-			if (this.Author.ExplicitId.ToString() == value)
+			if (this.Author.Id.ToString() == value)
 			{
 				return;
 			}
 
 			if (string.IsNullOrWhiteSpace(value))
 			{
-				this.Author.ExplicitId = Guid.NewGuid();
+				this.Author.Id = Guid.NewGuid();
 			}
 			else
 			{
 				if (Guid.TryParse(value, out var guid))
 				{
-					this.Author.ExplicitId = guid;
+					this.Author.Id = guid;
 				}
 				else
 				{
@@ -205,7 +205,7 @@ internal sealed class ConfigStoreService : IConfigStore
 				}
 			}
 
-			_ = Task.Run(async () => await this.jsRuntime.InvokeVoidAsync("SaveToStorage", "authorGuid", this.Author.ExplicitId.ToString())
+			_ = Task.Run(async () => await this.jsRuntime.InvokeVoidAsync("SaveToStorage", "authorGuid", this.Author.Id.ToString())
 					.ConfigureAwait(false))
 				.ConfigureAwait(true);
 			this.OnChange?.Invoke();
@@ -276,11 +276,11 @@ internal sealed class ConfigStoreService : IConfigStore
 
 		this.logger.LogInformation("Checking for cached AuthorGuid: {AuthorGuid}, ModuleGuid: {ModuleGuid}",
 			authorGuid, moduleGuid);
-		this.Author.ExplicitId = string.IsNullOrWhiteSpace(authorGuid) ? Guid.NewGuid() : Guid.Parse(authorGuid);
-		this.ModuleInfo.ExplicitId = string.IsNullOrWhiteSpace(moduleGuid) ? Guid.NewGuid() : Guid.Parse(moduleGuid);
+		this.Author.Id = string.IsNullOrWhiteSpace(authorGuid) ? Guid.NewGuid() : Guid.Parse(authorGuid);
+		this.ModuleInfo.Id = string.IsNullOrWhiteSpace(moduleGuid) ? Guid.NewGuid() : Guid.Parse(moduleGuid);
 
-		await this.jsRuntime.InvokeVoidAsync("SaveToStorage", "authorGuid", this.Author.ExplicitId.ToString()).ConfigureAwait(false);
-		await this.jsRuntime.InvokeVoidAsync("SaveToStorage", "moduleGuid", this.ModuleInfo.ExplicitId.ToString()).ConfigureAwait(false);
+		await this.jsRuntime.InvokeVoidAsync("SaveToStorage", "authorGuid", this.Author.Id.ToString()).ConfigureAwait(false);
+		await this.jsRuntime.InvokeVoidAsync("SaveToStorage", "moduleGuid", this.ModuleInfo.Id.ToString()).ConfigureAwait(false);
 
 		this.logger.LogInformation("Initialized: {AuthorData}, {ModuleData}",
 			this.Author, this.ModuleInfo);

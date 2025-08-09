@@ -37,7 +37,7 @@ public record ModuleInfoConfig : ITomlConfig
 	/// <summary>
 	///     The Unique identifier for the module. This is used to distinguish the module from others in the system.
 	/// </summary>
-	public Guid ExplicitId { get; set; } = Guid.Empty;
+	public Guid Id { get; init; } = Guid.Empty;
 
 	/// <inheritdoc />
 	public ConfigType ConfigType => ConfigType.ModuleInfo;

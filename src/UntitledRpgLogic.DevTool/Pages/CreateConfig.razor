@@ -79,10 +79,10 @@
 	{
 		if (ActiveConfig != null)
 		{
-			if (ActiveConfig.ExplicitId == Guid.Empty)
+			if (ActiveConfig.Id == Guid.Empty)
 			{
 				// Generate a new GUID if not set
-				ActiveConfig.ExplicitId = Guid.NewGuid();
+				ActiveConfig.Id = Guid.NewGuid();
 			}
 
 			// Ensure the config is valid before saving
@@ -93,7 +93,7 @@
 				return;
 			}
 
-			await ConfigStore.UpdateConfigAsync(ActiveConfig.ExplicitId, ActiveConfig);
+			await ConfigStore.UpdateConfigAsync(ActiveConfig.Id, ActiveConfig);
 			NavigationManager.NavigateTo("/create-config"); // Navigate back to the config list after saving
 		}
 	}

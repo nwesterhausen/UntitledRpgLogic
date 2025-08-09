@@ -31,11 +31,9 @@ public class Skill : ISkill
 		ArgumentNullException.ThrowIfNull(config, nameof(config));
 
 		// IHasGuid
-		this.Identifier = config.ExplicitId == Guid.Empty
+		this.Identifier = config.Id == Guid.Empty
 			? Guid.NewGuid()
-			: config.ExplicitId;
-		this.Id = Convert.ToBase64String(this.Identifier.ToByteArray());
-		this.ShortId = this.Identifier.ToString("N")[..8].ToUpperInvariant();
+			: config.Id;
 
 		// IHasName
 		this.Name = Name.Deserialize(config.Name);
@@ -71,14 +69,9 @@ public class Skill : ISkill
 	}
 
 	// IHasGuid Implementation
-	/// <inheritdoc />
-	public Guid Identifier { get; }
 
 	/// <inheritdoc />
-	public string Id { get; }
-
-	/// <inheritdoc />
-	public string ShortId { get; }
+	public Guid Identifier { get; init; }
 
 	// IHasName Implementation
 	/// <inheritdoc />
@@ -123,14 +116,14 @@ public class Skill : ISkill
 	public int PointsForFirstLevel { get; }
 
 	/// <inheritdoc />
-	public event EventHandler<ValueChangedEventArgs>? ValueChanged;
+	public event EventHandler<ValueChangedEventArgs>? OnValueChanged;
 
 	/// <inheritdoc />
 	public event EventHandler<ValueChangedEventArgs>? LevelChanged;
 
 	// Methods for the service to invoke events
 	/// <inheritdoc />
-	public void InvokeValueChanged(ValueChangedEventArgs args) => this.ValueChanged?.Invoke(this, args);
+	public void InvokeValueChanged(ValueChangedEventArgs args) => this.OnValueChanged?.Invoke(this, args);
 
 	/// <inheritdoc />
 	public void InvokeLevelChanged(ValueChangedEventArgs args) => this.LevelChanged?.Invoke(this, args);
@@ -145,7 +138,7 @@ public class Skill : ISkill
 		return new Skill(
 			new SkillDataConfig
 			{
-				ExplicitId = dbModel.Id,
+				Id = dbModel.Id,
 				Name = dbModel.Name,
 				LevelingOptions = new LevelingOptions
 				{

@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using UntitledRpgLogic.Core.Enums;
+using UntitledRpgLogic.Core.Interfaces;
 
 namespace UntitledRpgLogic.Core.Models;
 
@@ -9,14 +10,8 @@ namespace UntitledRpgLogic.Core.Models;
 ///     defines
 ///     how those stats would behave.
 /// </summary>
-public record StatDefinition
+public record StatDefinition : IDefinition
 {
-	/// <summary>
-	///     The GUID for the stat. Any instances of this stat refer to this definition via this ID.
-	/// </summary>
-	[Key]
-	public Guid Id { get; init; }
-
 	/// <summary>
 	///     The name of the stat. This is used to identify the stat in the game and is used in the UI.
 	/// </summary>
@@ -38,6 +33,11 @@ public record StatDefinition
 	public int MaxValue { get; init; }
 
 	/// <summary>
+	///     The base value of the stat. This is the value that the stat starts at.
+	/// </summary>
+	public int BaseValue { get; init; }
+
+	/// <summary>
 	///     The type of stat this is. This is used to determine how the stat behaves in the game.
 	/// </summary>
 	public required StatVariation Variation { get; init; }
@@ -46,4 +46,11 @@ public record StatDefinition
 	///     Stats that this stat depends on (if any).
 	/// </summary>
 	public ICollection<LinkedStats> LinkedStats { get; init; } = [];
+
+	/// <inheritdoc />
+	[Key]
+	public Guid Id { get; init; }
+
+	/// <inheritdoc />
+	public ConfigType ConfigType => ConfigType.Stat;
 }

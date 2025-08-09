@@ -21,16 +21,13 @@ public class BaseMaterial : IMaterial
 		this.Electrical = electrical;
 		this.Fantastical = fantastical;
 		this.States = states;
-
-		this.Id = Convert.ToBase64String(this.Identifier.ToByteArray());
-		this.ShortId = this.Identifier.ToString("N")[..8].ToUpperInvariant();
 	}
 
 	/// <inheritdoc />
 	public Name Name { get; }
 
 	/// <inheritdoc />
-	public Guid Identifier { get; }
+	public Guid Identifier { get; init; }
 
 	/// <inheritdoc />
 	public MechanicalProperties Mechanical { get; }
@@ -46,13 +43,6 @@ public class BaseMaterial : IMaterial
 
 	/// <inheritdoc />
 	public IReadOnlyDictionary<StateOfMatter, StateSpecificProperties> States { get; }
-
-
-	/// <inheritdoc />
-	public string Id { get; init; }
-
-	/// <inheritdoc />
-	public string ShortId { get; init; }
 
 	/// <summary>
 	///     Creates a Material instance from the provided configuration.
@@ -75,9 +65,9 @@ public class BaseMaterial : IMaterial
 			states[state] = StateSpecificProperties.FromConfig(stateConfig);
 		}
 
-		var explicitId = config.ExplicitId == Guid.Empty
+		var explicitId = config.Id == Guid.Empty
 			? Guid.NewGuid()
-			: config.ExplicitId;
+			: config.Id;
 
 		return new BaseMaterial(name, explicitId, mechanical, thermal, electrical, fantastical, states);
 	}

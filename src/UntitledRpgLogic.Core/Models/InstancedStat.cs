@@ -1,38 +1,136 @@
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using UntitledRpgLogic.Core.Classes;
+using UntitledRpgLogic.Core.Events;
+using UntitledRpgLogic.Core.Interfaces;
+// Required for [NotMapped]
 
 namespace UntitledRpgLogic.Core.Models;
 
 /// <summary>
-///     Represents an entity's stat, defined by a StatDefinition, with a base value and an apparent value.
+///     Represents a specific instance of a stat for an entity.
+///     It holds the dynamic data that can change during gameplay, while referencing its immutable definition.
 /// </summary>
-public class InstancedStat
+public sealed class InstancedStat : IStat, IInstance
 {
-	/// <summary>
-	///     The unique identifier for the instanced stat. This is used to identify the stat in the database and in the game.
-	/// </summary>
-	[Key]
-	public Guid Id { get; init; }
+	// ReSharper disable once InconsistentNaming
+	private int _baseValue;
+
+	// ReSharper disable once InconsistentNaming
+	private Name _name = Name.Empty;
+
+	// ReSharper disable once InconsistentNaming
+	private int _value;
 
 	/// <summary>
-	///     The unique identifier for the stat definition that this instanced stat is based on. This links the instanced stat
-	///     to its definition.
+	///     This constructor is intended for use by Entity Framework Core.
 	/// </summary>
-	public Guid StatDefinitionId { get; init; }
+	private InstancedStat()
+	{
+	}
 
 	/// <summary>
-	///     The base value of the stat, which is the raw value before any modifications or effects are applied.
+	///     Initializes a new instance of the <see cref="InstancedStat" /> class for game logic.
 	/// </summary>
-	public int BaseValue { get; init; }
+	/// <param name="statDefinition">stat definition to base this instance on.</param>
+	public InstancedStat(StatDefinition statDefinition) : this()
+	{
+		ArgumentNullException.ThrowIfNull(statDefinition, nameof(statDefinition));
+
+		this.Identifier = Guid.NewGuid();
+		this.StatDefinition = statDefinition;
+		this.StatDefinitionId = statDefinition.Id; // Set the foreign key
+		this.Value = statDefinition.BaseValue;
+		this._name = new Name(statDefinition.Name);
+	}
+
+	// Foreign Key to the StatDefinition table
+	/// <summary>
+	///     The ID of the stat's definition.
+	///     This is used to link this instance to its immutable definition.
+	/// </summary>
+	public Guid StatDefinitionId { get; private set; }
+
+	/// <inheritdoc />
+	public Guid InstanceId => this.Identifier;
+
+	/// <inheritdoc />
+	public Guid Identifier { get; init; }
+
+	/// <inheritdoc />
+	public event EventHandler<ValueChangedEventArgs>? OnBaseValueChanged;
+
+	/// <inheritdoc />
+	public void InvokeBaseValueChanged() =>
+		this.OnBaseValueChanged?.Invoke(this, new ValueChangedEventArgs(this.StatDefinition.BaseValue, this.Value));
 
 	/// <summary>
-	///     The apparent value of the stat, which may differ from the base value due to modifications, buffs, or debuffs.
+	///     Gets the immutable definition for this stat.
+	///     EF Core will use the StatDefinitionId to "lazy load" this property.
 	/// </summary>
-	public int ApparentValue { get; init; }
+	public StatDefinition StatDefinition { get; } = null!; // Changed to private set, virtual for lazy loading
 
-	/// <summary>
-	///     The stat definition that this instanced stat is based on. This provides the properties and behavior of the stat.
-	/// </summary>
-	[ForeignKey(nameof(StatDefinitionId))]
-	public StatDefinition? StatDefinition { get; init; }
+	/// <inheritdoc cref="IHasMutableValue" />
+	public int Value
+	{
+		get => this._value;
+		set
+		{
+			var clampedValue = Math.Clamp(value, this.StatDefinition.MinValue, this.StatDefinition.MaxValue);
+			if (this._value == clampedValue)
+			{
+				return;
+			}
+
+			var oldValue = this._value;
+			this._value = clampedValue;
+			this.OnValueChanged?.Invoke(this, new ValueChangedEventArgs(oldValue, this._value));
+		}
+	}
+
+	/// <inheritdoc />
+	[field: NotMapped] // Tell EF Core to ignore this property
+	public event EventHandler<ValueChangedEventArgs>? OnValueChanged;
+
+	/// <inheritdoc />
+	public void InvokeValueChanged(ValueChangedEventArgs args) =>
+		this.OnValueChanged?.Invoke(this, args);
+
+	/// <inheritdoc />
+	[field: NotMapped] // Tell EF Core to ignore this property
+	public Name Name
+	{
+		get
+		{
+			if (this._name != Name.Empty)
+			{
+				return this._name;
+			}
+
+			// ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
+			if (this.StatDefinition != null)
+			{
+				this._name = new Name(this.StatDefinition.Name);
+			}
+
+			return this._name;
+		}
+	}
+
+	/// <inheritdoc />
+	public int BaseValue
+	{
+		get => this._baseValue;
+		set
+		{
+			var clampedValue = Math.Clamp(value, this.StatDefinition.MinValue, this.StatDefinition.MaxValue);
+			if (this._baseValue == clampedValue)
+			{
+				return;
+			}
+
+			var oldValue = this._baseValue;
+			this._baseValue = clampedValue;
+			this.OnBaseValueChanged?.Invoke(this, new ValueChangedEventArgs(oldValue, this._value));
+		}
+	}
 }

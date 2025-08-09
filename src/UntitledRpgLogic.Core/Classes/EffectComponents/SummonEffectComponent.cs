@@ -26,8 +26,6 @@ public class SummonEffectComponent : IEffectComponent
 
 		// Generate a new GUID for this component instance
 		this.Identifier = Guid.NewGuid();
-		this.Id = Convert.ToBase64String(this.Identifier.ToByteArray());
-		this.ShortId = this.Identifier.ToString("N")[..8].ToUpperInvariant();
 	}
 
 	/// <summary>
@@ -46,14 +44,9 @@ public class SummonEffectComponent : IEffectComponent
 	/// </summary>
 	public float DurationInSeconds { get; }
 
-	/// <inheritdoc />
-	public Guid Identifier { get; }
 
 	/// <inheritdoc />
-	public string Id { get; }
-
-	/// <inheritdoc />
-	public string ShortId { get; }
+	public Guid Identifier { get; init; }
 
 	/// <inheritdoc />
 	public Name Name { get; }

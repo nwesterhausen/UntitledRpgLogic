@@ -17,7 +17,7 @@ public interface IHasMutableValue : IHasValue
 	/// <summary>
 	///     Event that is triggered when the value changes.
 	/// </summary>
-	public event EventHandler<ValueChangedEventArgs>? ValueChanged;
+	public event EventHandler<ValueChangedEventArgs>? OnValueChanged;
 
 	/// <summary>
 	///     A method for the owning service to invoke the ValueChanged event.
