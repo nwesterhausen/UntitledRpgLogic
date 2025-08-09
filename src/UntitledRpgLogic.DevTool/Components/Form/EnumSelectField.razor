@@ -6,42 +6,44 @@
 @inherits InputBase<TEnum>
 
 <div class="form-control">
-    <label class="label">
-        <span class="label-text">@Label</span>
-    </label>
-    <InputSelect @bind-Value="CurrentValue" class="select select-bordered w-full">
-        @foreach (var value in Enum.GetValues(typeof(TEnum)))
-        {
-            <option value="@value">@value.ToString()</option>
-        }
-    </InputSelect>
-    <div class="label">
-        <span class="label-text-alt"><ValidationMessage For="() => CurrentValue" /></span>
-    </div>
+	<label class="label">
+		<span class="label-text">@Label</span>
+	</label>
+	<InputSelect @bind-Value="CurrentValue" class="select select-bordered w-full">
+		@foreach (var value in Enum.GetValues(typeof(TEnum)))
+		{
+			<option value="@value">@value.ToString()</option>
+		}
+	</InputSelect>
+	<div class="label">
+		<span class="label-text-alt"><ValidationMessage For="() => CurrentValue"/></span>
+	</div>
 </div>
 
 @code {
-    /// <summary>
-    /// The text to display in the label for this input field.
-    /// </summary>
-    [Parameter]
-    public string Label { get; set; } = string.Empty;
 
-    /// <summary>
-    /// This is required for the InputBase to work correctly.
-    /// It defines how a string value is parsed into the component's enum type.
-    /// </summary>
-    protected override bool TryParseValueFromString(string? value, out TEnum result, out string validationErrorMessage)
-    {
-        if (Enum.TryParse<TEnum>(value, out var parsedValue))
-        {
-            result = parsedValue;
-            validationErrorMessage = string.Empty;
-            return true;
-        }
+	/// <summary>
+	///     The text to display in the label for this input field.
+	/// </summary>
+	[Parameter]
+	public string Label { get; set; } = string.Empty;
 
-        result = default;
-        validationErrorMessage = $"The value '{value}' is not a valid {typeof(TEnum).Name}.";
-        return false;
-    }
+	/// <summary>
+	///     This is required for the InputBase to work correctly.
+	///     It defines how a string value is parsed into the component's enum type.
+	/// </summary>
+	protected override bool TryParseValueFromString(string? value, out TEnum result, out string validationErrorMessage)
+	{
+		if (Enum.TryParse<TEnum>(value, out var parsedValue))
+		{
+			result = parsedValue;
+			validationErrorMessage = string.Empty;
+			return true;
+		}
+
+		result = default;
+		validationErrorMessage = $"The value '{value}' is not a valid {typeof(TEnum).Name}.";
+		return false;
+	}
+
 }

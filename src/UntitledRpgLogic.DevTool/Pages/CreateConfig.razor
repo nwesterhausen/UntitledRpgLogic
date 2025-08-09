@@ -4,9 +4,9 @@
 *@
 @page "/create-config"
 @using System.ComponentModel.DataAnnotations
+@using UntitledRpgLogic.Core.Configuration
 @using UntitledRpgLogic.Core.Enums
 @using UntitledRpgLogic.Core.Interfaces
-@using UntitledRpgLogic.Core.Configuration
 @using UntitledRpgLogic.DevTool.Components.Config
 @using UntitledRpgLogic.DevTool.Components.Form
 @using UntitledRpgLogic.DevTool.Services.Contracts
@@ -16,84 +16,86 @@
 
 <h3>Create New Config</h3>
 
-<EditForm Model="@this" OnValidSubmit="HandleSave">
-    <DataAnnotationsValidator />
-    <ValidationSummary />
+<EditForm Model="@(this)" OnValidSubmit="HandleSave">
+	<DataAnnotationsValidator/>
+	<ValidationSummary/>
 
-    <div class="mb-3">
-        <EnumSelectField TEnum="ConfigType" Label="Select Config Type" @bind-Value="SelectedConfigType" />
-    </div>
+	<div class="mb-3">
+		<EnumSelectField TEnum="ConfigType" Label="Select Config Type" @bind-Value="SelectedConfigType"/>
+	</div>
 
-    @if (ActiveConfig != null)
-    {
-        <div class="p-4 border rounded-md bg-base-200">
-            @switch (SelectedConfigType)
-            {
-                case ConfigType.ModuleInfo:
-                    <ModuleInfoConfigEditor Value="(ModuleInfoConfig)ActiveConfig" />
-                    break;
-                case ConfigType.Stat:
-                    <StatDataConfigEditor Value="(StatDataConfig)ActiveConfig" />
-                    break;
-                case ConfigType.Skill:
-                    <SkillDataConfigEditor Value="(SkillDataConfig)ActiveConfig" />
-                    break;
-                case ConfigType.Item:
-                    <ItemDataConfigEditor Value="(ItemDataConfig)ActiveConfig" />
-                    break;
-                case ConfigType.Material:
-                    <MaterialDataConfigEditor Value="(MaterialDataConfig)ActiveConfig" />
-                    break;
-                case ConfigType.MagicType:
-                    <MagicTypeConfigEditor Value="(MagicTypeConfig)ActiveConfig" />
-                    break;
-                case ConfigType.Author:
-	                break;
-                case ConfigType.Unknown:
-                default:
-	                throw new ArgumentOutOfRangeException();
-            }
-        </div>
+	@if (ActiveConfig != null)
+	{
+		<div class="p-4 border rounded-md bg-base-200">
+			@switch (SelectedConfigType)
+			{
+				case ConfigType.ModuleInfo:
+					<ModuleInfoConfigEditor Value="(ModuleInfoConfig)ActiveConfig"/>
+					break;
+				case ConfigType.Stat:
+					<StatDataConfigEditor Value="(StatDataConfig)ActiveConfig"/>
+					break;
+				case ConfigType.Skill:
+					<SkillDataConfigEditor Value="(SkillDataConfig)ActiveConfig"/>
+					break;
+				case ConfigType.Item:
+					<ItemDataConfigEditor Value="(ItemDataConfig)ActiveConfig"/>
+					break;
+				case ConfigType.Material:
+					<MaterialDataConfigEditor Value="(MaterialDataConfig)ActiveConfig"/>
+					break;
+				case ConfigType.MagicType:
+					<MagicTypeConfigEditor Value="(MagicTypeConfig)ActiveConfig"/>
+					break;
+				case ConfigType.Author:
+					break;
+				case ConfigType.Unknown:
+				default:
+					throw new ArgumentOutOfRangeException();
+			}
+		</div>
 
-        <button type="submit" class="btn btn-primary mt-3">Save Config</button>
-    }
+		<button type="submit" class="btn btn-primary mt-3">Save Config</button>
+	}
 </EditForm>
 
 
 @code {
-    private ConfigType selectedConfigType;
+	private ConfigType selectedConfigType;
 
-    private ITomlConfig? ActiveConfig { get; set; }
+	private ITomlConfig? ActiveConfig { get; set; }
 
-    private ConfigType SelectedConfigType
-    {
-        get => selectedConfigType;
-        set
-        {
-            selectedConfigType = value;
-            ActiveConfig = ConfigFactory.Create(value);
-        }
-    }
+	private ConfigType SelectedConfigType
+	{
+		get => selectedConfigType;
+		set
+		{
+			selectedConfigType = value;
+			ActiveConfig = ConfigFactory.Create(value);
+		}
+	}
 
-    private async Task HandleSave()
-    {
-        if (ActiveConfig != null)
-        {
-            if (ActiveConfig.ExplicitId == Guid.Empty)
-            {
-                // Generate a new GUID if not set
-                ActiveConfig.ExplicitId = Guid.NewGuid();
-            }
-            // Ensure the config is valid before saving
-            var validationContext = new ValidationContext(ActiveConfig);
-            if (!Validator.TryValidateObject(ActiveConfig, validationContext, null, true))
-            {
-                // Handle validation errors (e.g., show a message to the user)
-                return;
-            }
+	private async Task HandleSave()
+	{
+		if (ActiveConfig != null)
+		{
+			if (ActiveConfig.ExplicitId == Guid.Empty)
+			{
+				// Generate a new GUID if not set
+				ActiveConfig.ExplicitId = Guid.NewGuid();
+			}
 
-            await ConfigStore.UpdateConfigAsync(ActiveConfig.ExplicitId, ActiveConfig);
-            NavigationManager.NavigateTo("/create-config"); // Navigate back to the config list after saving
-        }
-    }
+			// Ensure the config is valid before saving
+			var validationContext = new ValidationContext(ActiveConfig);
+			if (!Validator.TryValidateObject(ActiveConfig, validationContext, null, true))
+			{
+				// Handle validation errors (e.g., show a message to the user)
+				return;
+			}
+
+			await ConfigStore.UpdateConfigAsync(ActiveConfig.ExplicitId, ActiveConfig);
+			NavigationManager.NavigateTo("/create-config"); // Navigate back to the config list after saving
+		}
+	}
+
 }

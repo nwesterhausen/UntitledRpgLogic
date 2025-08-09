@@ -1,36 +1,38 @@
+@using UntitledRpgLogic.Core.Configuration
+@using UntitledRpgLogic.Core.Enums
+@using UntitledRpgLogic.DevTool.Components.Form
 @*
     File: src/UntitledRpgLogic.DevTool/Components/Config/ItemDataConfigEditor.razor
     Purpose: Editor for ItemDataConfig objects.
 *@
-@using UntitledRpgLogic.Core.Configuration
-@using UntitledRpgLogic.Core.Enums
-@using UntitledRpgLogic.DevTool.Components.Form
 
 @if (Value != null)
 {
-    <fieldset class="border p-2 mb-3">
-	    <legend>Item Data</legend>
-	    <StringInputField Label="Name" @bind-Value="Value.Name" />
-	    <StringInputField Label="Plural Name" @bind-Value="Value.PluralName" />
-	    <StringInputField Label="Name as Adjective" @bind-Value="Value.NameAsAdjective" />
-	    <EnumSelectField TEnum="Quality" Label="Quality" @bind-Value="Value.ItemQuality" />
-        <EnumSelectField TEnum="ItemType" Label="Item Type" @bind-Value="Value.ItemType" />
-        <EnumSelectField TEnum="ItemSubtype" Label="Item Subtype" @bind-Value="Value.ItemSubtype" />
-        <TextAreaInputField Label="Description" @bind-Value="Value.Description" />
-        <EnumSelectField TEnum="DimensionScale" Label="Dimension Scale" @bind-Value="Value.DimensionScale" />
-        <NumberInputField Label="Width" @bind-Value="Value.Width" />
-        <NumberInputField Label="Height" @bind-Value="Value.Height" />
-        <NumberInputField Label="Depth" @bind-Value="Value.Depth" />
-        <EnumSelectField TEnum="ShapeType" Label="Shape Type" @bind-Value="Value.ShapeType" />
-        <GuidInputField Label="Material" @bind-Value="Value.MaterialId" />
-        <GuidInputField Label="Crafted By" @bind-Value="Value.CraftedBy" />
-    </fieldset>
+	<fieldset class="border p-2 mb-3">
+		<legend>Item Data</legend>
+		<StringInputField Label="Name" @bind-Value="Value.Name"/>
+		<StringInputField Label="Plural Name" @bind-Value="Value.PluralName"/>
+		<StringInputField Label="Name as Adjective" @bind-Value="Value.NameAsAdjective"/>
+		<EnumSelectField TEnum="Quality" Label="Quality" @bind-Value="Value.ItemQuality"/>
+		<EnumSelectField TEnum="ItemType" Label="Item Type" @bind-Value="Value.ItemType"/>
+		<EnumSelectField TEnum="ItemSubtype" Label="Item Subtype" @bind-Value="Value.ItemSubtype"/>
+		<TextAreaInputField Label="Description" @bind-Value="Value.Description"/>
+		<EnumSelectField TEnum="DimensionScale" Label="Dimension Scale" @bind-Value="Value.DimensionScale"/>
+		<NumberInputField Label="Width" @bind-Value="Value.Width"/>
+		<NumberInputField Label="Height" @bind-Value="Value.Height"/>
+		<NumberInputField Label="Depth" @bind-Value="Value.Depth"/>
+		<EnumSelectField TEnum="ShapeType" Label="Shape Type" @bind-Value="Value.ShapeType"/>
+		<GuidInputField Label="Material" @bind-Value="Value.MaterialId"/>
+		<GuidInputField Label="Crafted By" @bind-Value="Value.CraftedBy"/>
+	</fieldset>
 }
 
 @code {
+
 	/// <summary>
-	///		The <see cref="ItemDataConfig"/> instance being edited.
+	///     The <see cref="ItemDataConfig" /> instance being edited.
 	/// </summary>
-    [Parameter]
-    public ItemDataConfig? Value { get; set; }
+	[Parameter]
+	public ItemDataConfig? Value { get; set; }
+
 }
