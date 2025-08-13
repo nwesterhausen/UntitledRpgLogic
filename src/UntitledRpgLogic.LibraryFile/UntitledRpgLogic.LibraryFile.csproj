@@ -2,9 +2,9 @@
 
   <PropertyGroup>
 		<!-- Package metadata -->
-		<AssemblyName>UntitledRpgLogic.Infrastructure.Configuration</AssemblyName>
-		<PackageId>UntitledRpgLogic.Infrastructure.Configuration</PackageId>
-		<RootNamespace>UntitledRpgLogic.Infrastructure.Configuration</RootNamespace>
+		<AssemblyName>UntitledRpgLogic.LibraryFile</AssemblyName>
+		<PackageId>UntitledRpgLogic.LibraryFile</PackageId>
+		<RootNamespace>UntitledRpgLogic.LibraryFile</RootNamespace>
     <!-- Version Info -->
     <Version>1.0.0</Version>
     <FileVersion>$('Version')</FileVersion>

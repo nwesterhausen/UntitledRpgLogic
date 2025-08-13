@@ -1,7 +1,7 @@
 namespace UntitledRpgLogic.UnitTests;
 
 [TestClass]
-sealed public class PlaceholderTests
+internal sealed class PlaceholderTests
 {
 	[TestMethod]
 	public void TemporaryPlaceholderTest() =>
