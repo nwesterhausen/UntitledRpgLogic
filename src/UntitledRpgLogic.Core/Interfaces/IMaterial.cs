@@ -7,7 +7,7 @@ namespace UntitledRpgLogic.Core.Interfaces;
 ///     Represents a material with its properties and states of matter. Can be used to determine a weight or roughly how
 ///     a material might behave in different conditions.
 /// </summary>
-public interface IMaterial : IHasName, IHasGuid
+public interface IMaterial : IHasName, IHasIdentifier
 {
 	/// <summary>
 	/// Mechanical properties of the material.

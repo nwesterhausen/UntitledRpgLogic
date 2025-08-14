@@ -14,22 +14,22 @@ public class ElementalEffectComponent : IEffectComponent
 	/// <param name="name">The name of this elemental component (e.g., "Fire Blast").</param>
 	/// <param name="magicType">The specific elemental type of energy.</param>
 	/// <param name="intensity">The intensity or power of the elemental effect (e.g., heat in Celsius).</param>
-	public ElementalEffectComponent(string name, Guid magicType, float intensity)
+	public ElementalEffectComponent(string name, Ulid magicType, float intensity)
 	{
 		this.Name = new Name(name);
 		this.MagicType = magicType;
 		this.Intensity = intensity;
 
 		// Generate a new GUID for this component instance
-		this.Identifier = Guid.NewGuid();
-		this.Id = Convert.ToBase64String(this.Identifier.ToByteArray());
-		this.ShortId = this.Identifier.ToString("N")[..8].ToUpperInvariant();
+		this.Identifier = Ulid.NewUlid();
+		this.Id = this.Identifier.ToString();
+		this.ShortId = this.Identifier.ToGuid().ToString("N")[..8].ToUpperInvariant();
 	}
 
 	/// <summary>
-	/// The Guid of the MagicTypeDataConfig that defines the element of this effect.
+	/// The Ulid of the MagicTypeDataConfig that defines the element of this effect.
 	/// </summary>
-	public Guid MagicType { get; set; }
+	public Ulid MagicType { get; set; }
 
 	/// <summary>
 	///     The intensity or power of the elemental effect. The unit depends on the ElementType (e.g., Celsius for Fire).
@@ -37,7 +37,7 @@ public class ElementalEffectComponent : IEffectComponent
 	public float Intensity { get; }
 
 	/// <inheritdoc />
-	public Guid Identifier { get; }
+	public Ulid Identifier { get; }
 
 	/// <inheritdoc />
 	public string Id { get; }

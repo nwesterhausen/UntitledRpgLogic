@@ -9,13 +9,7 @@ namespace UntitledRpgLogic.Core.Classes;
 public record Item : IItem
 {
 	/// <inheritdoc />
-	public Guid Identifier { get; init; }
-
-	/// <inheritdoc />
-	public string Id { get; init; } = string.Empty;
-
-	/// <inheritdoc />
-	public string ShortId { get; init; } = string.Empty;
+	public Ulid Identifier { get; init; } = Ulid.NewUlid();
 
 	/// <inheritdoc />
 	public Name Name { get; init; } = Name.Empty;
@@ -30,7 +24,7 @@ public record Item : IItem
 	public ItemSubtype ItemSubtype { get; init; }
 
 	/// <inheritdoc />
-	public Guid CraftedBy { get; init; }
+	public Ulid CraftedBy { get; init; } = WellKnownIdentifiers.GameSystem;
 
 	/// <inheritdoc />
 	public DimensionScale DimensionScale { get; set; }

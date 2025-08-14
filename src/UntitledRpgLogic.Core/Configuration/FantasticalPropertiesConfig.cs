@@ -13,7 +13,7 @@ public record FantasticalPropertiesConfig
 	/// <summary>
 	/// A material's natural affinity for one or more elemental types, referenced by the Element's Guid.
 	/// </summary>
-	public Dictionary<Guid, float>? ElementalAttunement { get; init; }
+	public Dictionary<Ulid, float>? ElementalAttunement { get; init; }
 
 	/// <summary>
 	/// A relative measure of how much magical energy a material can store.

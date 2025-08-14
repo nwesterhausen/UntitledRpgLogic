@@ -20,7 +20,7 @@ public interface IItemStorageService
 	/// <param name="itemId">The unique identifier of the item to retrieve.</param>
 	/// <param name="item">The retrieved item, or null if not found.</param>
 	/// <returns>True if the item was found and retrieved; otherwise, false.</returns>
-	public bool TryRetrieveItem(Guid itemId, out IStorable? item);
+	public bool TryRetrieveItem(Ulid itemId, out IStorable? item);
 
 	/// <summary>
 	///     Occurs when an item is stored in the inventory.

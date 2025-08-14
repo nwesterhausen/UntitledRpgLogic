@@ -21,7 +21,7 @@ internal interface IConfigStore
 
 	public string AuthorName { get; set; }
 	public string AuthorWebsite { get; set; }
-	public string AuthorGuid { get; set; }
+	public string AuthorIdentifier { get; set; }
 
 	/// <summary>
 	///     Gets or sets the module information.
@@ -32,7 +32,7 @@ internal interface IConfigStore
 	public string ModuleDescription { get; set; }
 	public string ModuleVersion { get; set; }
 	public int ModuleVersionNumber { get; set; }
-	public string ModuleGuid { get; set; }
+	public string ModuleIdentifier { get; set; }
 
 	public bool IsReady { get; }
 
@@ -46,20 +46,20 @@ internal interface IConfigStore
 	///         langword="null" />
 	///     .
 	/// </returns>
-	public ITomlConfig? GetConfig(Guid key);
+	public ITomlConfig? GetConfig(Ulid key);
 
 	/// <summary>
 	///     Update the configuration for a given key.
 	/// </summary>
 	/// <param name="key">unique identifier for the config to update</param>
 	/// <param name="config">a config to replace the config stored at <see cparamref="key" /></param>
-	public void UpdateConfig(Guid key, ITomlConfig config);
+	public void UpdateConfig(Ulid key, ITomlConfig config);
 
 	/// <summary>
 	///     Get all keys in the configuration store.
 	/// </summary>
 	/// <returns></returns>
-	public IEnumerable<Guid> GetAllKeys();
+	public IEnumerable<Ulid> GetAllKeys();
 
 	/// <summary>
 	///     Event that is triggered when the configuration store changes.

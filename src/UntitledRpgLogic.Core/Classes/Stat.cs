@@ -24,17 +24,15 @@ public class Stat : IStat
 	/// </summary>
 	/// <param name="config">The configuration data used to define the stat's properties.</param>
 	/// <param name="instanceId">The unique identifier of the entity instance this stat belongs to, if any.</param>
-	public Stat(StatDataConfig config, Guid? instanceId = null)
+	public Stat(StatDataConfig config, Ulid? instanceId = null)
 	{
 		ArgumentNullException.ThrowIfNull(config, nameof(config));
 		// Initialize IHasGuid properties
-		this.Identifier = config.ExplicitId ?? Guid.NewGuid();
-		this.Id = Convert.ToBase64String(this.Identifier.ToByteArray());
-		this.ShortId = this.Identifier.ToString("N")[..8].ToUpperInvariant();
+		this.Identifier = config.Identifier;
 
 		// Initialize other properties from config
 		this.Name = Name.Deserialize(config.Name);
-		this.InstanceId = instanceId ?? Guid.Empty;
+		this.InstanceId = instanceId ?? Ulid.NewUlid();
 		this.Variation = config.Variation ?? StatVariation.Pseudo;
 
 		// Set backing fields for min/max first to establish the valid range.
@@ -47,15 +45,8 @@ public class Stat : IStat
 		this.Value = this.minValue;
 	}
 
-	// IHasGuid
 	/// <inheritdoc />
-	public Guid Identifier { get; }
-
-	/// <inheritdoc />
-	public string Id { get; }
-
-	/// <inheritdoc />
-	public string ShortId { get; }
+	public Ulid Identifier { get; }
 
 	// IHasName
 	/// <inheritdoc />
@@ -115,20 +106,20 @@ public class Stat : IStat
 	public StatVariation Variation { get; init; }
 
 	/// <inheritdoc />
-	public Dictionary<Guid, float> LinkedStats { get; } = [];
+	public Dictionary<Ulid, float> LinkedStats { get; } = [];
 
 	/// <inheritdoc />
-	public Guid InstanceId { get; init; }
+	public Ulid InstanceId { get; init; }
 
 	/// <inheritdoc />
 	public event EventHandler<ValueChangedEventArgs>? ValueChanged;
 
 	/// <inheritdoc />
-	public event Action? BaseValueChanged;
+	public event EventHandler<ValueChangedEventArgs>? BaseValueChanged;
 
 	/// <inheritdoc />
 	public void InvokeValueChanged(ValueChangedEventArgs args) => this.ValueChanged?.Invoke(this, args);
 
 	/// <inheritdoc />
-	public void InvokeBaseValueChanged() => this.BaseValueChanged?.Invoke();
+	public void InvokeBaseValueChanged(ValueChangedEventArgs args) => this.BaseValueChanged?.Invoke(this, args);
 }

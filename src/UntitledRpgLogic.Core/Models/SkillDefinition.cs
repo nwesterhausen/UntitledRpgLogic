@@ -12,7 +12,7 @@ public record SkillDefinition
 	///     The unique identifier for the skill definition. This is used to identify the skill in the database.
 	/// </summary>
 	[Key]
-	public Guid Id { get; init; }
+	public Ulid Id { get; init; }
 
 	/// <summary>
 	///     The name of the skill. This is used to identify the skill in the game and should be unique.

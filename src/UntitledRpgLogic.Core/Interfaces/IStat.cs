@@ -1,23 +1,24 @@
 using UntitledRpgLogic.Core.Enums;
+using UntitledRpgLogic.Core.Events;
 
 namespace UntitledRpgLogic.Core.Interfaces;
 
 /// <summary>
 ///     Interface for a Stat in the RPG logic.
 /// </summary>
-public interface IStat : IHasName, IHasMutableValue, IHasGuid, IInstantiable
+public interface IStat : IHasName, IHasMutableValue, IHasIdentifier, IInstantiable
 {
 	#region UI Subscription Events
 
 	/// <summary>
 	///     Event raised when the base value of the stat changes. Should trigger recalculation of the apparent value.
 	/// </summary>
-	public event Action? BaseValueChanged;
+	public event EventHandler<ValueChangedEventArgs>? BaseValueChanged;
 
 	/// <summary>
 	///     A method for the owning service to invoke the BaseValueChanged event.
 	/// </summary>
-	public void InvokeBaseValueChanged();
+	public void InvokeBaseValueChanged(ValueChangedEventArgs args);
 
 	// note: inherited ValueChanged event handler from IHasValue
 
@@ -51,7 +52,7 @@ public interface IStat : IHasName, IHasMutableValue, IHasGuid, IInstantiable
 	/// <summary>
 	///     Get the stats that are linked to this stat. This is used to retrieve all the stats that this stat depends on.
 	/// </summary>
-	public Dictionary<Guid, float> LinkedStats { get; }
+	public Dictionary<Ulid, float> LinkedStats { get; }
 
 	#endregion
 

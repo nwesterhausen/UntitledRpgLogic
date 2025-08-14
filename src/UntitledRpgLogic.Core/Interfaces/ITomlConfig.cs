@@ -5,7 +5,7 @@ namespace UntitledRpgLogic.Core.Interfaces;
 /// <summary>
 ///     Interface to simply add type safety to reading TOML configuration files.
 /// </summary>
-public interface ITomlConfig
+public interface ITomlConfig : IHasIdentifier
 {
 	/// <summary>
 	///     Gets the type of the object model represented by this configuration.

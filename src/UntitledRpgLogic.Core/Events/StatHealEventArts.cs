@@ -18,7 +18,7 @@ public class StatHealEventArgs : EventArgs
 	/// <summary>
 	///     The unique identifier of the entity or effect that caused the heal.
 	/// </summary>
-	public Guid SourceId { get; init; }
+	public Ulid SourceId { get; init; }
 
 	/// <summary>
 	///     The name of the stat that was healed.

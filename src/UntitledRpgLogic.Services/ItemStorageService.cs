@@ -8,7 +8,7 @@ namespace UntitledRpgLogic.Services;
 /// </summary>
 public class ItemStorageService : IItemStorageService
 {
-	private readonly Dictionary<Guid, IStorable> items = [];
+	private readonly Dictionary<Ulid, IStorable> items = [];
 
 	/// <inheritdoc />
 	public bool StoreItem(IStorable item)
@@ -30,7 +30,7 @@ public class ItemStorageService : IItemStorageService
 	}
 
 	/// <inheritdoc />
-	public bool TryRetrieveItem(Guid itemId, out IStorable? item)
+	public bool TryRetrieveItem(Ulid itemId, out IStorable? item)
 	{
 		if (this.items.TryGetValue(itemId, out item))
 		{

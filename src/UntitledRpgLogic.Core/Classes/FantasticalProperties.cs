@@ -15,7 +15,7 @@ public record FantasticalProperties
 	/// <summary>
 	/// Gets the elemental attunement values for the material.
 	/// </summary>
-	public IReadOnlyDictionary<Guid, float>? ElementalAttunement { get; }
+	public IReadOnlyDictionary<Ulid, float>? ElementalAttunement { get; }
 
 	/// <summary>
 	/// Gets the mana capacity of the material.
@@ -43,7 +43,7 @@ public record FantasticalProperties
 
 		return new FantasticalProperties(config.AetherialConductivity, config.ElementalAttunement, config.ManaCapacity, config.Purity, config.Luminosity);
 	}
-	private FantasticalProperties(float? aetherialConductivity, Dictionary<Guid, float>? elementalAttunement, float? manaCapacity, float? purity, float? luminosity)
+	private FantasticalProperties(float? aetherialConductivity, Dictionary<Ulid, float>? elementalAttunement, float? manaCapacity, float? purity, float? luminosity)
 	{
 		AetherialConductivity = aetherialConductivity;
 		ElementalAttunement = elementalAttunement;

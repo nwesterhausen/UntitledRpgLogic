@@ -113,7 +113,7 @@ public class StatService : IStatService
 		stat.BaseValue += clampedValue - oldValue;
 
 		stat.InvokeValueChanged(new ValueChangedEventArgs(oldValue, stat.Value));
-		stat.InvokeBaseValueChanged();
+		stat.InvokeBaseValueChanged(new ValueChangedEventArgs(stat.BaseValue - (clampedValue - oldValue), stat.BaseValue));
 	}
 
 	/// <inheritdoc />

@@ -19,9 +19,7 @@ public class SpellAbility : IActiveAbility
 
 		// The GUID, Id, ShortGuid for the ability can be derived or separate.
 		// For simplicity, we'll generate new ones for the ability itself.
-		this.Identifier = Guid.NewGuid();
-		this.Id = Convert.ToBase64String(this.Identifier.ToByteArray());
-		this.ShortId = this.Identifier.ToString("N")[..8].ToUpperInvariant();
+		this.Identifier = Ulid.NewUlid();
 	}
 
 	/// <summary>
@@ -30,13 +28,7 @@ public class SpellAbility : IActiveAbility
 	public IActiveEffect ActiveEffect { get; }
 
 	/// <inheritdoc />
-	public Guid Identifier { get; }
-
-	/// <inheritdoc />
-	public string Id { get; }
-
-	/// <inheritdoc />
-	public string ShortId { get; }
+	public Ulid Identifier { get; }
 
 	/// <inheritdoc />
 	public Name Name { get; }

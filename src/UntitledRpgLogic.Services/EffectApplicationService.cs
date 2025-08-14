@@ -30,7 +30,7 @@ public class EffectApplicationService : IEffectApplicationService
 		ArgumentNullException.ThrowIfNull(effect, nameof(effect));
 
 		this.logger.LogInformation("Applying effect: {EffectName} (ID: {EffectShortGuid})", effect.Name.Singular,
-			effect.ShortId);
+			effect.Identifier.ToString());
 
 		foreach (var component in effect.EffectComponents)
 		{

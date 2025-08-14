@@ -19,9 +19,7 @@ public class DurationEffectComponent : IEffectComponent
 		this.DurationInSeconds = durationInSeconds;
 
 		// Generate a new GUID for this component instance
-		this.Identifier = Guid.NewGuid();
-		this.Id = Convert.ToBase64String(this.Identifier.ToByteArray());
-		this.ShortId = this.Identifier.ToString("N")[..8].ToUpperInvariant();
+		this.Identifier = Ulid.NewUlid();
 	}
 
 	/// <summary>
@@ -35,13 +33,7 @@ public class DurationEffectComponent : IEffectComponent
 	public bool IsPermanent => this.DurationInSeconds < 0;
 
 	/// <inheritdoc />
-	public Guid Identifier { get; }
-
-	/// <inheritdoc />
-	public string Id { get; }
-
-	/// <inheritdoc />
-	public string ShortId { get; }
+	public Ulid Identifier { get; }
 
 	/// <inheritdoc />
 	public Name Name { get; }

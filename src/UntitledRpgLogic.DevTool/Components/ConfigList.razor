@@ -36,7 +36,7 @@
 			<div class="px-4">
 				<div class="text-md"><span class="font-bold text-sm">Author: </span>@ConfigStore.Author.AuthorName</div>
 				<div class="badge badge-outline badge-sm font-mono font-semibold">
-					@ConfigStore.Author.AuthorId.ToString("N")[..8]
+					@ConfigStore.Author.Identifier.ToString()
 				</div>
 			</div>
 		</li>
@@ -50,7 +50,7 @@
 				<div class="p-4">
 					<div class="text-lg">@GetConfigDisplayName(configItem.Config)</div>
 					<div class="badge badge-sm font-bold badge-info">@GetConfigTypeName(configItem.Config.ConfigType)</div>
-					<div class="badge badge-outline badge-sm font-mono font-semibold">@configItem.Id.ToString("N")[..8]</div>
+					<div class="badge badge-outline badge-sm font-mono font-semibold">@configItem.Id.ToString()</div>
 				</div>
 				<div>
 					<button class="btn btn-square btn-ghost">
@@ -155,7 +155,7 @@
 
 	private record ConfigItem
 	{
-		public required Guid Id { get; init; }
+		public required Ulid Id { get; init; }
 		public required ITomlConfig Config { get; init; }
 	}
 

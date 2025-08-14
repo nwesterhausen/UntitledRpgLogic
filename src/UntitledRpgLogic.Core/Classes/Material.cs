@@ -12,12 +12,12 @@ public record Material : IMaterial
 	/// <summary>
 	/// 	An empty material instance.
 	/// </summary>
-	public static readonly IMaterial Empty = new Material(Name.Empty, Guid.Empty, MechanicalProperties.Empty, ThermalProperties.Empty, ElectricalProperties.Empty, FantasticalProperties.Empty, new Dictionary<StateOfMatter, StateSpecificProperties>());
+	public static readonly IMaterial Empty = new Material(Name.Empty, Ulid.NewUlid(), MechanicalProperties.Empty, ThermalProperties.Empty, ElectricalProperties.Empty, FantasticalProperties.Empty, new Dictionary<StateOfMatter, StateSpecificProperties>());
 
 	/// <inheritdoc />
 	public Name Name { get; }
 	/// <inheritdoc />
-	public Guid Identifier { get; }
+	public Ulid Identifier { get; }
 	/// <inheritdoc />
 	public MechanicalProperties Mechanical { get; }
 	/// <inheritdoc />
@@ -37,18 +37,18 @@ public record Material : IMaterial
 	public string ShortId { get; init; } = string.Empty;
 
 
-	private Material(Name name, Guid guid, MechanicalProperties mechanical, ThermalProperties thermal, ElectricalProperties electrical, FantasticalProperties fantastical, Dictionary<StateOfMatter, StateSpecificProperties> states)
+	private Material(Name name, Ulid identifier, MechanicalProperties mechanical, ThermalProperties thermal, ElectricalProperties electrical, FantasticalProperties fantastical, Dictionary<StateOfMatter, StateSpecificProperties> states)
 	{
 		this.Name = name;
-		this.Identifier = guid;
+		this.Identifier = identifier;
 		this.Mechanical = mechanical;
 		this.Thermal = thermal;
 		this.Electrical = electrical;
 		this.Fantastical = fantastical;
 		this.States = states;
 
-		this.Id = Convert.ToBase64String(this.Identifier.ToByteArray());
-		this.ShortId = this.Identifier.ToString("N")[..8].ToUpperInvariant();
+		this.Id = this.Identifier.ToString();
+		this.ShortId = this.Identifier.ToGuid().ToString("N")[..8].ToUpperInvariant();
 	}
 
 	/// <summary>
@@ -72,6 +72,6 @@ public record Material : IMaterial
 			states[state] = StateSpecificProperties.FromConfig(stateConfig);
 		}
 
-		return new Material(name, config.ExplicitId ?? Guid.NewGuid(), mechanical, thermal, electrical, fantastical, states);
+		return new Material(name, config.Identifier, mechanical, thermal, electrical, fantastical, states);
 	}
 }

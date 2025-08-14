@@ -2,7 +2,7 @@ namespace UntitledRpgLogic.Core.Interfaces;
 
 /// <summary>
 /// </summary>
-public interface IEffect : IHasGuid, IHasName
+public interface IEffect : IHasIdentifier, IHasName
 {
 	/// <summary>
 	///     An immutable collection of the effect components that make up this effect.
@@ -25,16 +25,16 @@ public interface IEffect : IHasGuid, IHasName
 		this.EffectComponents.Where(x => x.GetType() == typeof(T)).Cast<T>();
 
 	/// <summary>
-	///     Retrieves an effect component by its GUID from this effect.
+	///     Retrieves an effect component by its ULID from this effect.
 	/// </summary>
-	/// <param name="identifier">the guid for the effect to get</param>
-	/// <returns>The component with the specific GUID or null if not found.</returns>
-	public IEffectComponent? GetComponent(Guid identifier) => this.EffectComponents.FirstOrDefault(x => x.Identifier == identifier);
+	/// <param name="identifier">the ULID for the effect to get</param>
+	/// <returns>The component with the specific ULID or null if not found.</returns>
+	public IEffectComponent? GetComponent(Ulid identifier) => this.EffectComponents.FirstOrDefault(x => x.Identifier == identifier);
 
 	/// <summary>
-	///     Checks if this effect has a component with a specific GUID.
+	///     Checks if this effect has a component with a specific ULID.
 	/// </summary>
-	/// <param name="identifier">the GUID of the effect</param>
+	/// <param name="identifier">the ULID of the effect</param>
 	/// <returns>True if the component is part of this effect, false otherwise.</returns>
-	public bool HasComponent(Guid identifier) => this.EffectComponents.Any(x => x.Identifier == identifier);
+	public bool HasComponent(Ulid identifier) => this.EffectComponents.Any(x => x.Identifier == identifier);
 }

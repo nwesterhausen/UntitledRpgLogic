@@ -7,7 +7,7 @@ namespace UntitledRpgLogic.Core.Interfaces;
 public interface IInstantiable
 {
 	/// <summary>
-	///     The instance ID of the created object. If not an instance, set this to be <see cref="Guid.Empty" />.
+	///     The instance ID of the created object.
 	/// </summary>
-	public Guid InstanceId { get; init; }
+	public Ulid InstanceId { get; init; }
 }

@@ -1,4 +1,5 @@
 using System.Collections.Concurrent;
+using System.Globalization;
 using Microsoft.JSInterop;
 using UntitledRpgLogic.Core.Configuration;
 using UntitledRpgLogic.Core.Interfaces;
@@ -8,7 +9,7 @@ namespace UntitledRpgLogic.DevTool.Services;
 
 internal sealed class ConfigStoreService : IConfigStore
 {
-	private readonly ConcurrentDictionary<Guid, ITomlConfig> configs = new();
+	private readonly ConcurrentDictionary<Ulid, ITomlConfig> configs = new();
 	private readonly IJSRuntime jsRuntime;
 	private readonly ILogger<ConfigStoreService> logger;
 
@@ -114,35 +115,35 @@ internal sealed class ConfigStoreService : IConfigStore
 	}
 
 	/// <inheritdoc />
-	public string ModuleGuid
+	public string ModuleIdentifier
 	{
-		get => this.ModuleInfo.Id.ToString();
+		get => this.ModuleInfo.Identifier.ToString();
 		set
 		{
-			if (this.ModuleInfo.Id.ToString() == value)
+			if (this.ModuleInfo.Identifier.ToString() == value)
 			{
 				return;
 			}
 
 			if (string.IsNullOrWhiteSpace(value))
 			{
-				this.ModuleInfo.Id = Guid.NewGuid();
+				this.ModuleInfo.Identifier = Ulid.NewUlid();
 			}
 			else
 			{
-				if (Guid.TryParse(value, out var guid))
+				if (Ulid.TryParse(value, out var ulid))
 				{
-					this.ModuleInfo.Id = guid;
+					this.ModuleInfo.Identifier = ulid;
 				}
 				else
 				{
-					throw new ArgumentException("Invalid GUID format.", nameof(value));
+					throw new ArgumentException("Invalid ULID format.", nameof(value));
 				}
 			}
 
 
 			_ = Task.Run(async () =>
-					await this.jsRuntime.InvokeVoidAsync("SaveToStorage", "moduleGuid", this.ModuleInfo.Id.ToString())
+					await this.jsRuntime.InvokeVoidAsync("SaveToStorage", "moduleGuid", this.ModuleInfo.Identifier.ToString())
 				.ConfigureAwait(false)).ConfigureAwait(true);
 			this.OnChange?.Invoke();
 		}
@@ -155,50 +156,50 @@ internal sealed class ConfigStoreService : IConfigStore
 	public bool IsReady { get; private set; }
 
 	/// <inheritdoc />
-	public ITomlConfig? GetConfig(Guid key)
+	public ITomlConfig? GetConfig(Ulid key)
 	{
 		_ = this.configs.TryGetValue(key, out var config);
 		return config;
 	}
 
 	/// <inheritdoc />
-	public void UpdateConfig(Guid key, ITomlConfig config) => this.configs[key] = config;
+	public void UpdateConfig(Ulid key, ITomlConfig config) => this.configs[key] = config;
 
 	/// <inheritdoc />
-	public IEnumerable<Guid> GetAllKeys() => this.configs.Keys;
+	public IEnumerable<Ulid> GetAllKeys() => this.configs.Keys;
 
 	/// <inheritdoc />
 	public AuthorConfig Author { get; } =
-		new() { AuthorName = "", Website = "", AuthorId = Guid.NewGuid() };
+		new() { AuthorName = "", Website = "", Identifier = Ulid.NewUlid() };
 
 	/// <inheritdoc />
-	public string AuthorGuid
+	public string AuthorIdentifier
 	{
-		get => this.Author.AuthorId.ToString();
+		get => this.Author.Identifier.ToString();
 		set
 		{
-			if (this.Author.AuthorId.ToString() == value)
+			if (this.Author.Identifier.ToString() == value)
 			{
 				return;
 			}
 
 			if (string.IsNullOrWhiteSpace(value))
 			{
-				this.Author.AuthorId = Guid.NewGuid();
+				this.Author.Identifier = Ulid.NewUlid();
 			}
 			else
 			{
-				if (Guid.TryParse(value, out var guid))
+				if (Ulid.TryParse(value, out var ulid))
 				{
-					this.Author.AuthorId = guid;
+					this.Author.Identifier = ulid;
 				}
 				else
 				{
-					throw new ArgumentException("Invalid GUID format.", nameof(value));
+					throw new ArgumentException("Invalid ULID format.", nameof(value));
 				}
 			}
 
-			_ = Task.Run(async () => await this.jsRuntime.InvokeVoidAsync("SaveToStorage", "authorGuid", this.Author.AuthorId.ToString()).ConfigureAwait(false))
+			_ = Task.Run(async () => await this.jsRuntime.InvokeVoidAsync("SaveToStorage", "authorGuid", this.Author.Identifier.ToString()).ConfigureAwait(false))
 				.ConfigureAwait(true);
 			this.OnChange?.Invoke();
 		}
@@ -259,16 +260,16 @@ internal sealed class ConfigStoreService : IConfigStore
 		this.ModuleInfo.Version = await this.jsRuntime.InvokeAsync<string>("LoadStringFromStorage", "moduleVersion").ConfigureAwait(false);
 		this.ModuleInfo.VersionNumber =
 			await this.jsRuntime.InvokeAsync<int>("LoadIntegerFromStorage", "moduleVersionNumber").ConfigureAwait(false);
-		var authorGuid = await this.jsRuntime.InvokeAsync<string>("LoadStringFromStorage", "authorGuid").ConfigureAwait(false);
-		var moduleGuid = await this.jsRuntime.InvokeAsync<string>("LoadStringFromStorage", "moduleGuid").ConfigureAwait(false);
+		var authorIdentifier = await this.jsRuntime.InvokeAsync<string>("LoadStringFromStorage", "authorIdentifier").ConfigureAwait(false);
+		var moduleIdentifier = await this.jsRuntime.InvokeAsync<string>("LoadStringFromStorage", "authorIdentifier").ConfigureAwait(false);
 
 		this.logger.LogInformation("Checking for cached AuthorGuid: {AuthorGuid}, ModuleGuid: {ModuleGuid}",
-			authorGuid, moduleGuid);
-		this.Author.AuthorId = string.IsNullOrWhiteSpace(authorGuid) ? Guid.NewGuid() : Guid.Parse(authorGuid);
-		this.ModuleInfo.Id = string.IsNullOrWhiteSpace(moduleGuid) ? Guid.NewGuid() : Guid.Parse(moduleGuid);
+			authorIdentifier, moduleIdentifier);
+		this.Author.Identifier = string.IsNullOrWhiteSpace(authorIdentifier) ? Ulid.NewUlid() : Ulid.Parse(authorIdentifier, CultureInfo.InvariantCulture);
+		this.ModuleInfo.Identifier = string.IsNullOrWhiteSpace(moduleIdentifier) ? Ulid.NewUlid() : Ulid.Parse(moduleIdentifier, CultureInfo.InvariantCulture);
 
-		await this.jsRuntime.InvokeVoidAsync("SaveToStorage", "authorGuid", this.Author.AuthorId.ToString()).ConfigureAwait(false);
-		await this.jsRuntime.InvokeVoidAsync("SaveToStorage", "moduleGuid", this.ModuleInfo.Id.ToString()).ConfigureAwait(false);
+		await this.jsRuntime.InvokeVoidAsync("SaveToStorage", "authorGuid", this.Author.Identifier.ToString()).ConfigureAwait(false);
+		await this.jsRuntime.InvokeVoidAsync("SaveToStorage", "moduleGuid", this.ModuleInfo.Identifier.ToString()).ConfigureAwait(false);
 
 		this.logger.LogInformation("Initialized: {AuthorData}, {ModuleData}",
 			this.Author, this.ModuleInfo);
