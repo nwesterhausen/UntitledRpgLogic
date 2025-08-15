@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using UntitledRpgLogic.Core.Classes;
 using UntitledRpgLogic.Core.Interfaces;
 
@@ -25,5 +26,6 @@ public record Entity : IEntity
 	public Name Name { get; init; }
 
 	/// <inheritdoc />
+	[Key]
 	public Ulid Identifier { get; init; } = Ulid.NewUlid();
 }

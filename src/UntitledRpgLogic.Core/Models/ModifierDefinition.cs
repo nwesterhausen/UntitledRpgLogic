@@ -12,7 +12,7 @@ public class ModifierDefinition
 	///     The unique identifier for the modifier. This is used to reference the modifier in the game.
 	/// </summary>
 	[Key]
-	public Guid Id { get; set; }
+	public Ulid Id { get; set; }
 
 	/// <summary>
 	///     The name of the modifier. This is used to identify the modifier in the game and is used in the UI.
@@ -72,15 +72,15 @@ public class ModifierDefinition
 	public int Priority { get; set; }
 
 	/// <summary>
-	///     The GUID for the effect that this modifier applies to the stat when it is active, for 0 or no stacks.
+	///     The ULID for the effect that this modifier applies to the stat when it is active, for 0 or no stacks.
 	/// </summary>
-	public Guid? ModifierEffectId { get; set; }
+	public Ulid? ModifierEffectId { get; set; }
 
 	/// <summary>
-	///     The GUID for the effect that each stack of this modifier has on the stat. This is used when the modifier can stack,
+	///     The ULID for the effect that each stack of this modifier has on the stat. This is used when the modifier can stack,
 	///     allowing it to apply additional effects per stack.
 	/// </summary>
-	public Guid? StackEffectId { get; set; }
+	public Ulid? StackEffectId { get; set; }
 
 	/// <summary>
 	///     The effects this modifier applies to the stat when it is active, for 0 or no stacks.
