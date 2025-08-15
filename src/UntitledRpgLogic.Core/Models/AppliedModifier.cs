@@ -39,15 +39,15 @@ public record AppliedModifier
 	/// </summary>
 	public DateTimeOffset? ExpiresAt { get; init; }
 
- /// <summary>
- ///     The modifier definition being applied by this instance.
- /// </summary>
- [ForeignKey(nameof(ModifierDefinitionId))]
- public ModifierDefinition? ModifierDefinition { get; init; }
+	/// <summary>
+	///     The modifier definition being applied by this instance.
+	/// </summary>
+	[ForeignKey(nameof(ModifierDefinitionId))]
+	public ModifierDefinition? ModifierDefinition { get; init; }
 
- /// <summary>
- ///     The entity that is the target/owner of this applied modifier.
- /// </summary>
- [ForeignKey(nameof(EntityId))]
- public Entity? Entity { get; init; }
+	/// <summary>
+	///     The entity that is the target/owner of this applied modifier.
+	/// </summary>
+	[ForeignKey(nameof(EntityId))]
+	public Entity? Entity { get; init; }
 }

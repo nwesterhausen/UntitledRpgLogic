@@ -11,23 +11,8 @@ namespace UntitledRpgLogic.Core.Game;
 /// </summary>
 public class BaseMaterial : IMaterial
 {
-	/// <inheritdoc />
-	public Name Name { get; }
-	/// <inheritdoc />
-	public Ulid Identifier { get; }
-	/// <inheritdoc />
-	public MechanicalProperties Mechanical { get; }
-	/// <inheritdoc />
-	public ThermalProperties Thermal { get; }
-	/// <inheritdoc />
-	public ElectricalProperties Electrical { get; }
-	/// <inheritdoc />
-	public FantasticalProperties Fantastical { get; }
-	/// <inheritdoc />
-	public IReadOnlyDictionary<StateOfMatter, StateSpecificProperties> States { get; }
-
-
-	private BaseMaterial(Name name, Ulid identifier, MechanicalProperties mechanical, ThermalProperties thermal, ElectricalProperties electrical, FantasticalProperties fantastical, Dictionary<StateOfMatter, StateSpecificProperties> states)
+	private BaseMaterial(Name name, Ulid identifier, MechanicalProperties mechanical, ThermalProperties thermal,
+		ElectricalProperties electrical, FantasticalProperties fantastical, Dictionary<StateOfMatter, StateSpecificProperties> states)
 	{
 		this.Name = name;
 		this.Identifier = identifier;
@@ -38,8 +23,29 @@ public class BaseMaterial : IMaterial
 		this.States = states;
 	}
 
+	/// <inheritdoc />
+	public Name Name { get; }
+
+	/// <inheritdoc />
+	public Ulid Identifier { get; }
+
+	/// <inheritdoc />
+	public MechanicalProperties Mechanical { get; }
+
+	/// <inheritdoc />
+	public ThermalProperties Thermal { get; }
+
+	/// <inheritdoc />
+	public ElectricalProperties Electrical { get; }
+
+	/// <inheritdoc />
+	public FantasticalProperties Fantastical { get; }
+
+	/// <inheritdoc />
+	public IReadOnlyDictionary<StateOfMatter, StateSpecificProperties> States { get; }
+
 	/// <summary>
-	/// 	Creates a Material instance from the provided configuration.
+	///     Creates a Material instance from the provided configuration.
 	/// </summary>
 	/// <param name="config">material data config to use</param>
 	/// <returns>a material instance</returns>

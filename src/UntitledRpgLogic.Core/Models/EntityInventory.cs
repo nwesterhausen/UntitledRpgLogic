@@ -17,15 +17,15 @@ public class EntityInventory
 	/// </summary>
 	public required Ulid ItemInstanceId { get; init; }
 
- /// <summary>
- ///     The entity that owns/holds the item instance.
- /// </summary>
- [ForeignKey(nameof(EntityId))]
- public Entity? Entity { get; init; }
+	/// <summary>
+	///     The entity that owns/holds the item instance.
+	/// </summary>
+	[ForeignKey(nameof(EntityId))]
+	public Entity? Entity { get; init; }
 
- /// <summary>
- ///     The item instance held by the entity.
- /// </summary>
- [ForeignKey(nameof(ItemInstanceId))]
- public ItemInstance? ItemInstance { get; init; }
+	/// <summary>
+	///     The item instance held by the entity.
+	/// </summary>
+	[ForeignKey(nameof(ItemInstanceId))]
+	public ItemInstance? ItemInstance { get; init; }
 }

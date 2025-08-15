@@ -10,34 +10,14 @@ namespace UntitledRpgLogic.Core.Classes;
 public record Material : IMaterial
 {
 	/// <summary>
-	/// 	An empty material instance.
+	///     An empty material instance.
 	/// </summary>
-	public static readonly IMaterial Empty = new Material(Name.Empty, Ulid.NewUlid(), MechanicalProperties.Empty, ThermalProperties.Empty, ElectricalProperties.Empty, FantasticalProperties.Empty, new Dictionary<StateOfMatter, StateSpecificProperties>());
-
-	/// <inheritdoc />
-	public Name Name { get; }
-	/// <inheritdoc />
-	public Ulid Identifier { get; }
-	/// <inheritdoc />
-	public MechanicalProperties Mechanical { get; }
-	/// <inheritdoc />
-	public ThermalProperties Thermal { get; }
-	/// <inheritdoc />
-	public ElectricalProperties Electrical { get; }
-	/// <inheritdoc />
-	public FantasticalProperties Fantastical { get; }
-	/// <inheritdoc />
-	public IReadOnlyDictionary<StateOfMatter, StateSpecificProperties> States { get; }
+	public static readonly IMaterial Empty = new Material(Name.Empty, Ulid.NewUlid(), MechanicalProperties.Empty, ThermalProperties.Empty,
+		ElectricalProperties.Empty, FantasticalProperties.Empty, new Dictionary<StateOfMatter, StateSpecificProperties>());
 
 
-	/// <inheritdoc />
-	public string Id { get; init; } = string.Empty;
-
-	/// <inheritdoc />
-	public string ShortId { get; init; } = string.Empty;
-
-
-	private Material(Name name, Ulid identifier, MechanicalProperties mechanical, ThermalProperties thermal, ElectricalProperties electrical, FantasticalProperties fantastical, Dictionary<StateOfMatter, StateSpecificProperties> states)
+	private Material(Name name, Ulid identifier, MechanicalProperties mechanical, ThermalProperties thermal, ElectricalProperties electrical,
+		FantasticalProperties fantastical, Dictionary<StateOfMatter, StateSpecificProperties> states)
 	{
 		this.Name = name;
 		this.Identifier = identifier;
@@ -51,8 +31,36 @@ public record Material : IMaterial
 		this.ShortId = this.Identifier.ToGuid().ToString("N")[..8].ToUpperInvariant();
 	}
 
+
+	/// <inheritdoc />
+	public string Id { get; init; } = string.Empty;
+
+	/// <inheritdoc />
+	public string ShortId { get; init; } = string.Empty;
+
+	/// <inheritdoc />
+	public Name Name { get; }
+
+	/// <inheritdoc />
+	public Ulid Identifier { get; }
+
+	/// <inheritdoc />
+	public MechanicalProperties Mechanical { get; }
+
+	/// <inheritdoc />
+	public ThermalProperties Thermal { get; }
+
+	/// <inheritdoc />
+	public ElectricalProperties Electrical { get; }
+
+	/// <inheritdoc />
+	public FantasticalProperties Fantastical { get; }
+
+	/// <inheritdoc />
+	public IReadOnlyDictionary<StateOfMatter, StateSpecificProperties> States { get; }
+
 	/// <summary>
-	/// 	Creates a Material instance from the provided configuration.
+	///     Creates a Material instance from the provided configuration.
 	/// </summary>
 	/// <param name="config">material data config to use</param>
 	/// <returns>a material instance</returns>

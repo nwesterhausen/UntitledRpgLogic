@@ -9,18 +9,6 @@ namespace UntitledRpgLogic.Core.Configuration;
 public record StatDataConfig : ITomlConfig
 {
 	/// <summary>
-	///     Optional. If provided in TOML, this specific Ulid will be used for the item; otherwise, a new one will be generated.
-	/// </summary>
-	/// <remarks>
-	///     This allows for consistent referencing of stats across different configurations or systems.
-	///     <br />
-	///     If not provided, a new Ulid will be generated when the configuration is loaded. If this happens when
-	///     validating a configuration pack, the Ulid will be persisted back to the source file before bundling.
-	///     This ensures that every stat has a stable and unique identifier.
-	/// </remarks>
-	public Ulid Identifier { get; set; } = Ulid.NewUlid();
-
-	/// <summary>
 	///     Items will always have a name. This is required.
 	/// </summary>
 	public required string Name { get; set; }
@@ -46,6 +34,18 @@ public record StatDataConfig : ITomlConfig
 	///     What kind of stat is it?
 	/// </summary>
 	public StatVariation? Variation { get; set; }
+
+	/// <summary>
+	///     Optional. If provided in TOML, this specific Ulid will be used for the item; otherwise, a new one will be generated.
+	/// </summary>
+	/// <remarks>
+	///     This allows for consistent referencing of stats across different configurations or systems.
+	///     <br />
+	///     If not provided, a new Ulid will be generated when the configuration is loaded. If this happens when
+	///     validating a configuration pack, the Ulid will be persisted back to the source file before bundling.
+	///     This ensures that every stat has a stable and unique identifier.
+	/// </remarks>
+	public Ulid Identifier { get; set; } = Ulid.NewUlid();
 
 	/// <inheritdoc />
 	public ConfigType ConfigType => ConfigType.Stat;

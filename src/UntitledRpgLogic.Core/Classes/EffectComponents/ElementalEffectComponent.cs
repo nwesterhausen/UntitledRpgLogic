@@ -27,7 +27,7 @@ public class ElementalEffectComponent : IEffectComponent
 	}
 
 	/// <summary>
-	/// The Ulid of the MagicTypeDataConfig that defines the element of this effect.
+	///     The Ulid of the MagicTypeDataConfig that defines the element of this effect.
 	/// </summary>
 	public Ulid MagicType { get; set; }
 
@@ -37,13 +37,13 @@ public class ElementalEffectComponent : IEffectComponent
 	public float Intensity { get; }
 
 	/// <inheritdoc />
-	public Ulid Identifier { get; }
-
-	/// <inheritdoc />
 	public string Id { get; }
 
 	/// <inheritdoc />
 	public string ShortId { get; }
+
+	/// <inheritdoc />
+	public Ulid Identifier { get; }
 
 	/// <inheritdoc />
 	public Name Name { get; }

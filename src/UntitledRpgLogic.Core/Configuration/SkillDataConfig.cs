@@ -10,11 +10,6 @@ namespace UntitledRpgLogic.Core.Configuration;
 public record SkillDataConfig : ITomlConfig
 {
 	/// <summary>
-	///     The ULID identifier for this skill configuration. This is required.
-	/// </summary>
-	public Ulid Identifier { get; set; }
-
-	/// <summary>
 	///     Items will always have a name. This is required.
 	/// </summary>
 	public required string Name { get; set; }
@@ -28,6 +23,11 @@ public record SkillDataConfig : ITomlConfig
 	///     Options for the leveling behavior of the skill. If not provided, the default leveling options will be used.
 	/// </summary>
 	public LevelingOptions? LevelingOptions { get; set; }
+
+	/// <summary>
+	///     The ULID identifier for this skill configuration. This is required.
+	/// </summary>
+	public Ulid Identifier { get; set; }
 
 	/// <inheritdoc />
 	public ConfigType ConfigType => ConfigType.Skill;

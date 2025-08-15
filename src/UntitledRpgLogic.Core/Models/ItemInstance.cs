@@ -40,15 +40,15 @@ public record ItemInstance
 	/// </summary>
 	public Ulid? CraftedBy { get; init; }
 
- /// <summary>
- ///     The item definition that this instance references.
- /// </summary>
- [ForeignKey(nameof(ItemDefinitionId))]
- public ItemDefinition? ItemDefinition { get; init; }
+	/// <summary>
+	///     The item definition that this instance references.
+	/// </summary>
+	[ForeignKey(nameof(ItemDefinitionId))]
+	public ItemDefinition? ItemDefinition { get; init; }
 
- /// <summary>
- ///     The primary material definition (if any) associated with this item instance.
- /// </summary>
- [ForeignKey(nameof(PrimaryMaterialId))]
- public MaterialDefinition? PrimaryMaterial { get; init; }
+	/// <summary>
+	///     The primary material definition (if any) associated with this item instance.
+	/// </summary>
+	[ForeignKey(nameof(PrimaryMaterialId))]
+	public MaterialDefinition? PrimaryMaterial { get; init; }
 }

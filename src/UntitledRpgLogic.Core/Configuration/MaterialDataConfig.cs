@@ -11,18 +11,6 @@ namespace UntitledRpgLogic.Core.Configuration;
 public record MaterialDataConfig : ITomlConfig
 {
 	/// <summary>
-	///     Optional. If provided in TOML, this specific Ulid will be used for the item; otherwise, a new one will be generated.
-	/// </summary>
-	/// <remarks>
-	///     This allows for consistent referencing of stats across different configurations or systems.
-	///     <br />
-	///     If not provided, a new Ulid will be generated when the configuration is loaded. If this happens when
-	///     validating a configuration pack, the Ulid will be persisted back to the source file before bundling.
-	///     This ensures that every stat has a stable and unique identifier.
-	/// </remarks>
-	public Ulid Identifier { get; set; } = Ulid.NewUlid();
-
-	/// <summary>
 	///     Materials will always have a name. This is required.
 	/// </summary>
 	[Required]
@@ -39,31 +27,48 @@ public record MaterialDataConfig : ITomlConfig
 	///     <remarks>If not provided, the Name will be used as the adjective.</remarks>
 	/// </summary>
 	public string? NameAsAdjective { get; init; }
+
 	/// <summary>
-	/// Mechanical properties of the material.
+	///     Mechanical properties of the material.
 	/// </summary>
 	public MechanicalPropertiesConfig Mechanical { get; init; } = new();
+
 	/// <summary>
-	/// Thermal properties of the material.
+	///     Thermal properties of the material.
 	/// </summary>
 	public ThermalPropertiesConfig Thermal { get; init; } = new();
+
 	/// <summary>
-	/// Electrical properties of the material.
+	///     Electrical properties of the material.
 	/// </summary>
 	public ElectricalPropertiesConfig Electrical { get; init; } = new();
+
 	/// <summary>
-	/// Fantastical properties of the material.
+	///     Fantastical properties of the material.
 	/// </summary>
 	public FantasticalPropertiesConfig Fantastical { get; init; } = new();
+
 	/// <summary>
-	/// Properties specific to the material's state of matter.
+	///     Properties specific to the material's state of matter.
 	/// </summary>
 	public Dictionary<StateOfMatter, StateSpecificPropertiesConfig> States { get; init; } = [];
 
 	/// <summary>
-	/// 	If this material extends another material, the Guid of the parent material. This allows for inheritance of properties.
+	///     If this material extends another material, the Guid of the parent material. This allows for inheritance of properties.
 	/// </summary>
 	public Guid? Extends { get; init; }
+
+	/// <summary>
+	///     Optional. If provided in TOML, this specific Ulid will be used for the item; otherwise, a new one will be generated.
+	/// </summary>
+	/// <remarks>
+	///     This allows for consistent referencing of stats across different configurations or systems.
+	///     <br />
+	///     If not provided, a new Ulid will be generated when the configuration is loaded. If this happens when
+	///     validating a configuration pack, the Ulid will be persisted back to the source file before bundling.
+	///     This ensures that every stat has a stable and unique identifier.
+	/// </remarks>
+	public Ulid Identifier { get; set; } = Ulid.NewUlid();
 
 	/// <inheritdoc />
 	public ConfigType ConfigType => ConfigType.Material;
