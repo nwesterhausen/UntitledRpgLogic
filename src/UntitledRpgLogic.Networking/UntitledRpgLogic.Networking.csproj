@@ -1,0 +1,10 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<!-- Package metadata -->
+		<AssemblyName>UntitledRpgLogic.Networking</AssemblyName>
+		<PackageId>UntitledRpgLogic.Networking</PackageId>
+		<RootNamespace>UntitledRpgLogic.Networking</RootNamespace>
+	</PropertyGroup>
+
+</Project>
