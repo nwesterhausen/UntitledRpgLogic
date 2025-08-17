@@ -8,11 +8,11 @@ namespace UntitledRpgLogic.Extensions.Logging;
 public static partial class SkillLoggerExtensions
 {
 	/// <summary>
-	///     Logs the creation of a skill, including its name, level, and maximum level.
+	///     Logs an attempt to add points to a skill that is already at its maximum level.
 	/// </summary>
-	/// <param name="logger"></param>
-	/// <param name="points"></param>
-	/// <param name="skillName"></param>
+	/// <param name="logger">The logger instance.</param>
+	/// <param name="points">The number of points attempted to add.</param>
+	/// <param name="skillName">The name of the skill.</param>
 	[LoggerMessage(
 		EventId = EventIds.SkillAddPointsMaxLevel,
 		Level = LogLevel.Warning,

@@ -10,10 +10,10 @@ public static partial class StatLoggerExtensions
 	/// <summary>
 	///     Logs the creation of a stat with its name, value, and maximum value.
 	/// </summary>
-	/// <param name="logger"></param>
-	/// <param name="statName"></param>
-	/// <param name="statValue"></param>
-	/// <param name="statMaxValue"></param>
+	/// <param name="logger">The logger instance.</param>
+	/// <param name="statName">The name of the stat.</param>
+	/// <param name="statValue">The current value of the stat.</param>
+	/// <param name="statMaxValue">The maximum value of the stat.</param>
 	[LoggerMessage(
 		EventId = EventIds.StatCreated,
 		Level = LogLevel.Information,
@@ -21,14 +21,14 @@ public static partial class StatLoggerExtensions
 	public static partial void LogStatCreated(this ILogger logger, string statName, int statValue, int statMaxValue);
 
 	/// <summary>
-	///     Logs the damage taken by a stat, including the final damage, percentage of final damage, incoming damage,
+	///     Logs the damage taken by a stat, including the final damage, percentage of final damage, and incoming damage.
 	/// </summary>
-	/// <param name="logger"></param>
-	/// <param name="statName"></param>
-	/// <param name="finalDamage"></param>
-	/// <param name="finalDamagePercentage"></param>
-	/// <param name="incomingDamage"></param>
-	/// <param name="sourceId"></param>
+	/// <param name="logger">The logger instance.</param>
+	/// <param name="statName">The name of the stat.</param>
+	/// <param name="finalDamage">The final damage applied after calculations.</param>
+	/// <param name="finalDamagePercentage">The final damage as a percentage of max or current value.</param>
+	/// <param name="incomingDamage">The raw incoming damage before calculations.</param>
+	/// <param name="sourceId">The ID of the source that dealt the damage.</param>
 	[LoggerMessage(
 		EventId = EventIds.StatDamageTaken,
 		Level = LogLevel.Information,
@@ -40,11 +40,11 @@ public static partial class StatLoggerExtensions
 	/// <summary>
 	///     Logs the healing of a stat, including the heal amount, percentage of heal, and source ID.
 	/// </summary>
-	/// <param name="logger"></param>
-	/// <param name="statName"></param>
-	/// <param name="healAmount"></param>
-	/// <param name="healPercentage"></param>
-	/// <param name="sourceId"></param>
+	/// <param name="logger">The logger instance.</param>
+	/// <param name="statName">The name of the stat.</param>
+	/// <param name="healAmount">The amount healed.</param>
+	/// <param name="healPercentage">The heal amount as a percentage.</param>
+	/// <param name="sourceId">The ID of the source that healed the stat.</param>
 	[LoggerMessage(
 		EventId = EventIds.StatHealed,
 		Level = LogLevel.Information,
@@ -55,9 +55,9 @@ public static partial class StatLoggerExtensions
 	/// <summary>
 	///     Logs an illegal attempt to modify a stat, including the stat name and reason for the illegal change.
 	/// </summary>
-	/// <param name="logger"></param>
-	/// <param name="statName"></param>
-	/// <param name="reason"></param>
+	/// <param name="logger">The logger instance.</param>
+	/// <param name="statName">The name of the stat.</param>
+	/// <param name="reason">A description of why the change is illegal.</param>
 	[LoggerMessage(
 		EventId = EventIds.StatIllegalChange,
 		Level = LogLevel.Warning,

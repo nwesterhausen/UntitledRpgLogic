@@ -10,9 +10,9 @@ public static partial class ModifierLoggerExtensions
 	/// <summary>
 	///     Logs the application of a modifier to a stat, including the modifier name and stat name.
 	/// </summary>
-	/// <param name="logger"></param>
-	/// <param name="modifierName"></param>
-	/// <param name="statName"></param>
+	/// <param name="logger">The logger instance.</param>
+	/// <param name="modifierName">The name of the modifier being applied.</param>
+	/// <param name="statName">The name of the affected stat.</param>
 	[LoggerMessage(
 		EventId = EventIds.ModifierApplied,
 		Level = LogLevel.Debug,

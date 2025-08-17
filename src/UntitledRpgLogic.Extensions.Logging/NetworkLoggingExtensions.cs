@@ -10,6 +10,7 @@ public static partial class NetworkLoggingExtensions
 	/// <summary>
 	///     Logs that the network service has started.
 	/// </summary>
+	/// <param name="logger">The logger instance.</param>
 	[LoggerMessage(
 		EventId = EventIds.NetworkServiceStarted,
 		Level = LogLevel.Information,

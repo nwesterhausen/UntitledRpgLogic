@@ -7,11 +7,14 @@ namespace UntitledRpgLogic.Extensions.Logging;
 /// </summary>
 public static partial class LevelableLoggerExtensions
 {
-	/// <param name="logger"></param>
-	/// <param name="itemType"></param>
-	/// <param name="itemName"></param>
-	/// <param name="oldLevel"></param>
-	/// <param name="newLevel"></param>
+	/// <summary>
+	/// Logs a level change for a named levelable item (e.g., a specific skill or character).
+	/// </summary>
+	/// <param name="logger">The logger instance.</param>
+	/// <param name="itemType">The type/category of the item (e.g., "Skill", "Character").</param>
+	/// <param name="itemName">The name of the item.</param>
+	/// <param name="oldLevel">The level before the change.</param>
+	/// <param name="newLevel">The level after the change.</param>
 	[LoggerMessage(
 		EventId = EventIds.LevelableLevelChangedOnNamedItem,
 		Level = LogLevel.Information,
@@ -20,12 +23,12 @@ public static partial class LevelableLoggerExtensions
 		int newLevel);
 
 	/// <summary>
-	///     Logs the level change of a generic levelable item, such as a skill or character, including the item type,
+	/// Logs the level change for a generic levelable item (without a specific name).
 	/// </summary>
-	/// <param name="logger"></param>
-	/// <param name="itemType"></param>
-	/// <param name="oldLevel"></param>
-	/// <param name="newLevel"></param>
+	/// <param name="logger">The logger instance.</param>
+	/// <param name="itemType">The type/category of the item (e.g., "Skill", "Character").</param>
+	/// <param name="oldLevel">The level before the change.</param>
+	/// <param name="newLevel">The level after the change.</param>
 	[LoggerMessage(
 		EventId = EventIds.LevelableLevelChanged,
 		Level = LogLevel.Information,
@@ -34,13 +37,13 @@ public static partial class LevelableLoggerExtensions
 		int newLevel);
 
 	/// <summary>
-	///     Logs the change in points for a levelable item, such as a skill or character, including the item type,
+	/// Logs a points change for a named levelable item (e.g., a specific skill or character).
 	/// </summary>
-	/// <param name="logger"></param>
-	/// <param name="itemType"></param>
-	/// <param name="itemName"></param>
-	/// <param name="pointsGained"></param>
-	/// <param name="totalPoints"></param>
+	/// <param name="logger">The logger instance.</param>
+	/// <param name="itemType">The type/category of the item.</param>
+	/// <param name="itemName">The name of the item.</param>
+	/// <param name="pointsGained">The number of points gained (or lost if negative).</param>
+	/// <param name="totalPoints">The resulting total points after the change.</param>
 	[LoggerMessage(
 		EventId = EventIds.LevelablePointsChangedOnNamedItem,
 		Level = LogLevel.Debug,
@@ -49,12 +52,12 @@ public static partial class LevelableLoggerExtensions
 		int pointsGained, int totalPoints);
 
 	/// <summary>
-	///     Logs the change in points for a generic levelable item, such as a skill or character, including the item type,
+	/// Logs a points change for a generic levelable item (without a specific name).
 	/// </summary>
-	/// <param name="logger"></param>
-	/// <param name="itemType"></param>
-	/// <param name="pointsGained"></param>
-	/// <param name="totalPoints"></param>
+	/// <param name="logger">The logger instance.</param>
+	/// <param name="itemType">The type/category of the item.</param>
+	/// <param name="pointsGained">The number of points gained (or lost if negative).</param>
+	/// <param name="totalPoints">The resulting total points after the change.</param>
 	[LoggerMessage(
 		EventId = EventIds.LevelablePointsChanged,
 		Level = LogLevel.Debug,

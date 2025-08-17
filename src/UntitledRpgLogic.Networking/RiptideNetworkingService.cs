@@ -41,10 +41,25 @@ internal partial class RiptideNetworkingAdapter : INetworkingService
 	}
 
 
+	/// <summary>
+	/// Occurs when a player successfully connects to the server.
+	/// </summary>
 	public event EventHandler<PlayerConnectionEventArgs>? PlayerConnected;
+
+	/// <summary>
+	/// Occurs when a player disconnects from the server.
+	/// </summary>
 	public event EventHandler<PlayerConnectionEventArgs>? PlayerDisconnected;
+
+	/// <summary>
+	/// Occurs when a network message is received from a client or the server.
+	/// </summary>
 	public event EventHandler<MessageReceivedEventArgs>? MessageReceived;
 
+	/// <summary>
+	/// Starts the Riptide server and begins listening for incoming connections.
+	/// </summary>
+	/// <param name="port">The UDP port to listen on.</param>
 	public void StartServer(ushort port)
 	{
 		this.server = new Server();
@@ -55,6 +70,11 @@ internal partial class RiptideNetworkingAdapter : INetworkingService
 		this.server.MessageReceived += this.OnRiptideMessageReceived;
 	}
 
+	/// <summary>
+	/// Starts a Riptide client and connects to a server.
+	/// </summary>
+	/// <param name="address">The hostname or IP address of the server.</param>
+	/// <param name="port">The UDP port of the server.</param>
 	public void StartClient(string address, ushort port)
 	{
 		this.client = new Client();
@@ -63,6 +83,10 @@ internal partial class RiptideNetworkingAdapter : INetworkingService
 		this.client.MessageReceived += this.OnRiptideMessageReceived;
 	}
 
+	/// <summary>
+	/// Processes pending networking events for both client and server.
+	/// Should be called regularly (e.g., once per frame or on a timer).
+	/// </summary>
 	public void PollEvents()
 	{
 		// Renamed from Tick() to Update()
@@ -70,6 +94,12 @@ internal partial class RiptideNetworkingAdapter : INetworkingService
 		this.client?.Update();
 	}
 
+	/// <summary>
+	/// Sends a message directly to a specific connected player.
+	/// </summary>
+	/// <param name="recipientId">The target player's Guid.</param>
+	/// <param name="messageData">The message payload to send.</param>
+	/// <param name="isReliable">True to send reliably; otherwise false for unreliable.</param>
 	public void SendTo(Guid recipientId, ReadOnlySpan<byte> messageData, bool isReliable = true)
 	{
 		if (!this.playerToRiptideIdMap.TryGetValue(recipientId, out var riptideId))
@@ -81,12 +111,21 @@ internal partial class RiptideNetworkingAdapter : INetworkingService
 		this.server?.Send(message, riptideId);
 	}
 
+	/// <summary>
+	/// Broadcasts a message to all connected players.
+	/// </summary>
+	/// <param name="messageData">The message payload to send.</param>
+	/// <param name="isReliable">True to send reliably; otherwise false for unreliable.</param>
 	public void Broadcast(ReadOnlySpan<byte> messageData, bool isReliable = true)
 	{
 		var message = CreateMessage(messageData, isReliable);
 		this.server?.SendToAll(message);
 	}
 
+	/// <summary>
+	/// Disconnects a specific client from the server.
+	/// </summary>
+	/// <param name="clientId">The Guid of the client to disconnect.</param>
 	public void Disconnect(Guid clientId)
 	{
 		if (this.playerToRiptideIdMap.TryGetValue(clientId, out var riptideId))
