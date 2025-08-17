@@ -1,5 +1,5 @@
 using UntitledRpgLogic.Core.Classes;
-using UntitledRpgLogic.Core.Events;
+using UntitledRpgLogic.Core.Contracts.Events;
 using UntitledRpgLogic.Core.Options;
 
 namespace UntitledRpgLogic.Core.Interfaces;

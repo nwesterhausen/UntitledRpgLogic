@@ -1,4 +1,4 @@
-namespace UntitledRpgLogic.Core.Events;
+namespace UntitledRpgLogic.Core.Contracts.Events;
 
 /// <summary>
 ///     Provides data for events related to stat modifications, such as increases or decreases in value.

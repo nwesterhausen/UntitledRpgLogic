@@ -6,26 +6,26 @@ using System.Text.Json;
 namespace UntitledRpgLogic.LibraryFile;
 
 /// <summary>
-///		Handles writing .urpglib files, including header, manifest, and payload.
+///     Handles writing .urpglib files, including header, manifest, and payload.
 /// </summary>
 public static class UrpglibWriter
 {
-
 	/// <summary>
-	/// Creates a .urpglib file from a manifest and a collection of data files.
+	///     Creates a .urpglib file from a manifest and a collection of data files.
 	/// </summary>
 	/// <param name="outputPath">The path to write the .urpglib file.</param>
 	/// <param name="manifest">The package manifest data.</param>
 	/// <param name="files">A dictionary where the key is the path inside the archive and the value is the file content.</param>
 	/// <param name="compressionType">The compression to use for the payload.</param>
-	public static async Task WriteAsync(string outputPath, PackageManifest manifest, IReadOnlyDictionary<string, byte[]> files, PayloadCompressionType compressionType = PayloadCompressionType.Gzip)
+	public static async Task WriteAsync(string outputPath, PackageManifest manifest, IReadOnlyDictionary<string, byte[]> files,
+		PayloadCompressionType compressionType = PayloadCompressionType.Gzip)
 	{
 		// 1. Create the compressed payload in memory.
 		var payloadStream = new MemoryStream();
 
 		Stream compressionStream = compressionType switch
 		{
-			PayloadCompressionType.Gzip => new GZipStream(payloadStream, CompressionMode.Compress, leaveOpen: true),
+			PayloadCompressionType.Gzip => new GZipStream(payloadStream, CompressionMode.Compress, true),
 			PayloadCompressionType.None => payloadStream // No compression, write directly to memory stream
 			,
 			_ => throw new NotSupportedException($"Compression type '{compressionType}' is not supported for writing.")
@@ -62,7 +62,7 @@ public static class UrpglibWriter
 		// 3. Write the final .urpglib file
 		var fileStream = new FileStream(outputPath, FileMode.Create, FileAccess.Write, FileShare.None);
 		await using var stream = fileStream.ConfigureAwait(false);
-		var writer = new BinaryWriter(fileStream, Encoding.UTF8, leaveOpen: false);
+		var writer = new BinaryWriter(fileStream, Encoding.UTF8, false);
 		await using var writer1 = writer.ConfigureAwait(false);
 
 		// -- Write Header --

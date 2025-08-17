@@ -2,35 +2,34 @@
     A reusable component for a color input field.
     It provides a text input for hex color codes and a color picker.
 *@
-@inherits InputBase<Color?>
 @using System.Drawing
-@using System.Globalization
+@inherits InputBase<System.Drawing.Color?>
 
 <div class="form-control">
-    <label class="label">
-        <span class="label-text">@Label</span>
-    </label>
-    <div class="input-group">
-        <span>#</span>
-        <input type="text" value="@_hexValue.Substring(1)" @oninput="OnHexValueChanged" class="input input-bordered w-full" />
-        <input type="color" value="@_hexValue" @oninput="OnHexValueChanged" class="w-10 h-full p-1" />
-    </div>
-    <div class="label">
-        <span class="label-text-alt"><ValidationMessage For="() => CurrentValue" /></span>
-    </div>
+	<label class="label">
+		<span class="label-text">@Label</span>
+	</label>
+	<div class="input-group">
+		<span>#</span>
+		<input type="text" value="@_hexValue.Substring(1)" @oninput="OnHexValueChanged" class="input input-bordered w-full"/>
+		<input type="color" value="@_hexValue" @oninput="OnHexValueChanged" class="w-10 h-full p-1"/>
+	</div>
+	<div class="label">
+		<span class="label-text-alt"><ValidationMessage For="() => CurrentValue"/></span>
+	</div>
 </div>
 
 @code {
-    private string _hexValue = "#ffffff";
+	private string _hexValue = "#ffffff";
 
-    /// <summary>
-    /// The text to display in the label for this input field.
+		/// The text to display in the label for this input field.
+	 input field.
     /// </summary>
     [Parameter]
     public string Label { get; set; } = string.Empty;
 
-    /// <summary>
-    /// Handles the oninput event from the text and color inputs.
+        /// Handles the oninput event from the text and color inputs.
+    color inputs.
     /// </summary>
     private void OnHexValueChanged(ChangeEventArgs e)
     {
@@ -60,9 +59,9 @@
         }
     }
 
-    /// <summary>
-    /// This is required for the InputBase to work correctly.
+        /// This is required for the InputBase to work correctly.
     /// It defines how a string value is parsed into the component's type.
+    component's type.
     /// </summary>
     protected override bool TryParseValueFromString(string? value, out Color? result, out string validationErrorMessage)
     {
@@ -73,9 +72,9 @@
         return true;
     }
 
-    /// <summary>
-    /// When the component's parameters are set, ensure the local hex value
+        /// When the component's parameters are set, ensure the local hex value
     /// reflects the CurrentValue from the base class.
+    m the base class.
     /// </summary>
     protected override void OnParametersSet()
     {

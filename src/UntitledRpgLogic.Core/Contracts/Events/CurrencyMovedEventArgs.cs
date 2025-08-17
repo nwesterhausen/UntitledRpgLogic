@@ -1,4 +1,4 @@
-namespace UntitledRpgLogic.Core.Events;
+namespace UntitledRpgLogic.Core.Contracts.Events;
 
 /// <summary>
 ///     Event arguments for when currency is moved to or from an inventory.

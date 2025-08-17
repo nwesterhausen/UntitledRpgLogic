@@ -4,13 +4,13 @@ using UntitledRpgLogic.Core.Enums;
 namespace UntitledRpgLogic.Extensions.Common;
 
 /// <summary>
-/// Extensions for MaterialDataConfig to handle inheritance and merging of properties.
+///     Extensions for MaterialDataConfig to handle inheritance and merging of properties.
 /// </summary>
 public static class MaterialConfigExtensions
 {
 	/// <summary>
-	/// Merges the properties of a base MaterialDataConfig into a child config.
-	/// Properties explicitly defined in the child config will take precedence.
+	///     Merges the properties of a base MaterialDataConfig into a child config.
+	///     Properties explicitly defined in the child config will take precedence.
 	/// </summary>
 	/// <param name="childConfig">The child configuration that inherits properties.</param>
 	/// <param name="baseConfig">The base configuration to inherit from.</param>
@@ -61,15 +61,12 @@ public static class MaterialConfigExtensions
 		};
 
 	private static ElectricalPropertiesConfig MergeElectrical(ElectricalPropertiesConfig baseProps, ElectricalPropertiesConfig childProps) =>
-		new()
-		{
-			Conductivity = childProps.Conductivity ?? baseProps.Conductivity,
-		};
+		new() { Conductivity = childProps.Conductivity ?? baseProps.Conductivity };
 
 	private static FantasticalPropertiesConfig MergeFantastical(FantasticalPropertiesConfig baseProps, FantasticalPropertiesConfig childProps)
 	{
 		// Merge dictionaries
-		var mergedAttunement = new Dictionary<Ulid, float>(baseProps.ElementalAttunement ?? new());
+		var mergedAttunement = new Dictionary<Ulid, float>(baseProps.ElementalAttunement ?? new Dictionary<Ulid, float>());
 		if (childProps.ElementalAttunement != null)
 		{
 			foreach (var (element, value) in childProps.ElementalAttunement)
@@ -98,6 +95,7 @@ public static class MaterialConfigExtensions
 		{
 			merged[state] = props; // Child state properties completely overwrite base
 		}
+
 		return merged;
 	}
 }

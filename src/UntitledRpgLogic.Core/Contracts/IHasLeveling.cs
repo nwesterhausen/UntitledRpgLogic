@@ -1,5 +1,5 @@
+using UntitledRpgLogic.Core.Contracts.Events;
 using UntitledRpgLogic.Core.Enums;
-using UntitledRpgLogic.Core.Events;
 
 namespace UntitledRpgLogic.Core.Interfaces;
 

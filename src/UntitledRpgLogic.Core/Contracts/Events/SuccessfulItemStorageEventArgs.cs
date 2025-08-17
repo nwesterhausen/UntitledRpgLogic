@@ -1,4 +1,4 @@
-namespace UntitledRpgLogic.Core.Events;
+namespace UntitledRpgLogic.Core.Contracts.Events;
 
 /// <summary>
 ///     Event arguments for when an item is stored in the inventory.

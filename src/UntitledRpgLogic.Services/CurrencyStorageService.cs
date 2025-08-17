@@ -1,4 +1,4 @@
-using UntitledRpgLogic.Core.Events;
+using UntitledRpgLogic.Core.Contracts.Events;
 using UntitledRpgLogic.Core.Interfaces;
 
 namespace UntitledRpgLogic.Services;
