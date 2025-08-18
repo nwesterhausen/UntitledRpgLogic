@@ -13,7 +13,7 @@ namespace UntitledRpgLogic.Networking;
 /// This class acts as an "Adapter" in the Hexagonal Architecture, translating Riptide's
 /// networking logic into domain-centric events and actions.
 /// </summary>
-internal partial class RiptideNetworkingAdapter : INetworkingService
+internal sealed partial class RiptideNetworkingAdapter : INetworkingService
 {
 	private Server? server;
 	private Client? client;
