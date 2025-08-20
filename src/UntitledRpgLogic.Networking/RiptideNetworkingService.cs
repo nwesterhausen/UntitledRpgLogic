@@ -29,10 +29,11 @@ internal sealed partial class RiptideNetworkingAdapter : INetworkingService
 	/// <param name="logger">The logger provided by dependency injection.</param>
 	public RiptideNetworkingAdapter(ILogger<RiptideNetworkingAdapter> logger)
 	{
-		RiptideLogger.Initialize(this.RiptideDebug,
-			this.RiptideInfo,
-			this.RiptideWarning,
-			this.RiptideError,
+		RiptideLogger.Initialize(
+			this.LogRiptideDebug,
+			this.LogRiptideInfo,
+			this.LogRiptideWarning,
+			this.LogRiptideError,
 			false
 		);
 		this.logger = logger;
@@ -189,6 +190,11 @@ internal sealed partial class RiptideNetworkingAdapter : INetworkingService
 			this.MessageReceived?.Invoke(this, new MessageReceivedEventArgs(Guid.Empty, messageData));
 		}
 	}
+
+	private void LogRiptideDebug(string message) => this.RiptideDebug(message);
+	private void LogRiptideInfo(string message) => this.RiptideInfo(message);
+	private void LogRiptideWarning(string message) => this.RiptideWarning(message);
+	private void LogRiptideError(string message) => this.RiptideError(message);
 
 	/// <summary>
 	///		Provides a debug logging method for Riptide messages.
