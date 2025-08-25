@@ -40,7 +40,7 @@
 	<label class="label">
 		<span class="label-text">Module GUID</span>
 	</label>
-	<input @bind="ConfigStore.ModuleGuid" type="text" placeholder="Type here" class="input input-bordered w-full max-w-xs"/>
+	<input @bind="ConfigStore.ModuleIdentifier" type="text" placeholder="Type here" class="input input-bordered w-full max-w-xs"/>
 </div>
 
 <h2 class="text-lg mb-2">Author Configuration</h2>
@@ -58,7 +58,7 @@
 	<label class="label">
 		<span class="label-text">Author GUID</span>
 	</label>
-	<input @bind="ConfigStore.AuthorGuid" type="text" placeholder="Type here" class="input input-bordered w-full max-w-xs"/>
+	<input @bind="ConfigStore.AuthorIdentifier" type="text" placeholder="Type here" class="input input-bordered w-full max-w-xs"/>
 </div>
 
 @code {

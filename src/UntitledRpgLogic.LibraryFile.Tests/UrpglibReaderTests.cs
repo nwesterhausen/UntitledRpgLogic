@@ -10,7 +10,7 @@ namespace UntitledRpgLogic.LibraryFile.Tests;
 public sealed class UrpglibReaderTests : IDisposable
 #pragma warning restore CA1515
 {
-	private readonly string tempDirectory = null!;
+	private readonly string tempDirectory;
 
 	public void Dispose()
 	{

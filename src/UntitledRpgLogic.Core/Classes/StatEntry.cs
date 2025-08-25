@@ -1,5 +1,6 @@
 using System.Collections.ObjectModel;
-using UntitledRpgLogic.Core.Interfaces;
+using UntitledRpgLogic.Core.Interfaces.Common;
+using UntitledRpgLogic.Core.Interfaces.Effects;
 
 namespace UntitledRpgLogic.Core.Classes;
 

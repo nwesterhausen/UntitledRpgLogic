@@ -1,4 +1,4 @@
-using UntitledRpgLogic.Core.Interfaces;
+using UntitledRpgLogic.Core.Interfaces.Effects;
 using UntitledRpgLogic.Core.Options;
 
 namespace UntitledRpgLogic.Core.Classes;

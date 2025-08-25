@@ -1,5 +1,5 @@
 using UntitledRpgLogic.Core;
-using UntitledRpgLogic.Core.Interfaces;
+using UntitledRpgLogic.Core.Interfaces.Common;
 
 namespace UntitledRpgLogic.Extensions.Common;
 

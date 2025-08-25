@@ -1,7 +1,7 @@
 using UntitledRpgLogic.Core.Configuration;
 using UntitledRpgLogic.Core.Enums;
 using UntitledRpgLogic.Core.Events;
-using UntitledRpgLogic.Core.Interfaces;
+using UntitledRpgLogic.Core.Interfaces.Common;
 using UntitledRpgLogic.Core.Models;
 using UntitledRpgLogic.Core.Options;
 
@@ -26,22 +26,16 @@ public class Skill : ISkill
 	/// <param name="config"></param>
 	/// <param name="instanceId"></param>
 	/// <exception cref="ArgumentOutOfRangeException"></exception>
-	public Skill(SkillDataConfig config, Guid? instanceId = null)
+	public Skill(SkillDataConfig config, Ulid? instanceId = null)
 	{
 		ArgumentNullException.ThrowIfNull(config, nameof(config));
 
-		// IHasGuid
-		this.Identifier = config.ExplicitId ?? Guid.NewGuid();
-		this.Id = Convert.ToBase64String(this.Identifier.ToByteArray());
-		this.ShortId = this.Identifier.ToString("N")[..8].ToUpperInvariant();
+		this.Identifier = config.Identifier;
 
-		// IHasName
 		this.Name = Name.Deserialize(config.Name);
 
-		// IInstantiable
-		this.InstanceId = instanceId ?? Guid.Empty;
+		this.InstanceId = instanceId ?? Ulid.NewUlid();
 
-		// IHasLeveling - Configuration with Validation
 		var levelingOptions = config.LevelingOptions ?? new LevelingOptions();
 
 		this.MaxLevel = levelingOptions.MaxLevel ?? DefaultValues.SkillDefaultMaxLevel;
@@ -68,23 +62,15 @@ public class Skill : ISkill
 		this.Value = 0; // Represents current experience points
 	}
 
-	// IHasGuid Implementation
 	/// <inheritdoc />
-	public Guid Identifier { get; }
-
-	/// <inheritdoc />
-	public string Id { get; }
-
-	/// <inheritdoc />
-	public string ShortId { get; }
+	public Ulid Identifier { get; }
 
 	// IHasName Implementation
 	/// <inheritdoc />
 	public Name Name { get; }
 
-	// IInstantiable Implementation
 	/// <inheritdoc />
-	public Guid InstanceId { get; init; }
+	public Ulid InstanceId { get; init; }
 
 	// IHasLeveling Implementation with Guardrails
 
@@ -136,14 +122,14 @@ public class Skill : ISkill
 	/// <summary>
 	///     Creates a new Skill instance from a database model.
 	/// </summary>
-	public static Skill FromDbModel(SkillDefinition dbModel, Guid? instanceId = null)
+	public static Skill FromDbModel(SkillDefinition dbModel, Ulid? instanceId = null)
 	{
 		ArgumentNullException.ThrowIfNull(dbModel, nameof(dbModel));
 		// This factory method reuses the main constructor, so all validation is applied.
 		return new Skill(
 			new SkillDataConfig
 			{
-				ExplicitId = dbModel.Id,
+				Identifier = dbModel.Id,
 				Name = dbModel.Name,
 				LevelingOptions = new LevelingOptions
 				{

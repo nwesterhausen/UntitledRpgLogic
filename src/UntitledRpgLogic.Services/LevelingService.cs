@@ -1,7 +1,8 @@
 using Microsoft.Extensions.Logging;
 using UntitledRpgLogic.Core.Enums;
 using UntitledRpgLogic.Core.Events;
-using UntitledRpgLogic.Core.Interfaces;
+using UntitledRpgLogic.Core.Interfaces.Common;
+using UntitledRpgLogic.Core.Interfaces.Services;
 using UntitledRpgLogic.Extensions.Logging;
 
 namespace UntitledRpgLogic.Services;

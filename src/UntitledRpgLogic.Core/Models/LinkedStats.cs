@@ -10,12 +10,12 @@ public class LinkedStats
 	/// <summary>
 	///     The unique identifier for the dependent stat. This is used to identify the stat that depends on another stat.
 	/// </summary>
-	public Guid DependentStatId { get; init; }
+	public Ulid DependentStatId { get; init; }
 
 	/// <summary>
 	///     The unique identifier for the linked stat. This is used to identify the stat that is being depended on.
 	/// </summary>
-	public Guid LinkedStatId { get; init; }
+	public Ulid LinkedStatId { get; init; }
 
 	/// <summary>
 	///     A simple ratio that defines what percentage of the linked stat's value is added to the dependent stat's value.

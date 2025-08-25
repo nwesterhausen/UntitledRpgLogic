@@ -1,7 +1,8 @@
 using UntitledRpgLogic.Core.Classes;
 using UntitledRpgLogic.Core.Configuration;
 using UntitledRpgLogic.Core.Enums;
-using UntitledRpgLogic.Core.Interfaces;
+using UntitledRpgLogic.Core.Interfaces.Common;
+using UntitledRpgLogic.Core.Interfaces.Inventory;
 
 namespace UntitledRpgLogic.Core.Game;
 
@@ -19,14 +20,12 @@ public class BaseItem : IItem
 	{
 		ArgumentNullException.ThrowIfNull(config, nameof(config));
 
-		this.Identifier = config.ExplicitId ?? Guid.NewGuid();
-		this.Id = Convert.ToBase64String(this.Identifier.ToByteArray());
-		this.ShortId = this.Identifier.ToString("N")[..8].ToUpperInvariant();
+		this.Identifier = config.Identifier;
 		this.Name = Name.Deserialize(config.Name);
 		this.Quality = config.ItemQuality ?? Quality.None;
 		this.ItemType = config.ItemType;
 		this.ItemSubtype = config.ItemSubtype ?? ItemSubtype.None;
-		this.CraftedBy = config.CraftedBy ?? ReservedGuids.GameSystem;
+		this.CraftedBy = config.CraftedBy;
 		this.DimensionScale = config.DimensionScale ?? DimensionScale.Cm;
 		this.ShapeType = config.ShapeType ??
 						 ShapeType.RectangularPrism; // Actually base this on ItemType and ItemSubtype in the future.
@@ -45,7 +44,7 @@ public class BaseItem : IItem
 	public ItemSubtype ItemSubtype { get; }
 
 	/// <inheritdoc />
-	public Guid CraftedBy { get; }
+	public Ulid CraftedBy { get; }
 
 	/// <inheritdoc />
 	public DimensionScale DimensionScale { get; set; }
@@ -63,13 +62,7 @@ public class BaseItem : IItem
 	public float Depth { get; set; }
 
 	/// <inheritdoc />
-	public Guid Identifier { get; }
-
-	/// <inheritdoc />
-	public string Id { get; }
-
-	/// <inheritdoc />
-	public string ShortId { get; }
+	public Ulid Identifier { get; }
 
 	/// <inheritdoc />
 	public Name Name { get; }

@@ -1,4 +1,4 @@
-using UntitledRpgLogic.Core.Interfaces;
+using UntitledRpgLogic.Core.Interfaces.Inventory;
 
 namespace UntitledRpgLogic.Extensions.Common;
 

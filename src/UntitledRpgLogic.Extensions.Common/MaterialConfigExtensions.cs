@@ -26,7 +26,7 @@ public static class MaterialConfigExtensions
 			Name = !string.IsNullOrEmpty(childConfig.Name) ? childConfig.Name : baseConfig.Name,
 			NameAsAdjective = !string.IsNullOrEmpty(childConfig.NameAsAdjective) ? childConfig.NameAsAdjective : baseConfig.NameAsAdjective,
 			PluralName = !string.IsNullOrEmpty(childConfig.PluralName) ? childConfig.PluralName : baseConfig.PluralName,
-			ExplicitId = childConfig.ExplicitId, // Guid is always from the child
+			Identifier = childConfig.Identifier, // Ulid is always from the child
 			Extends = childConfig.Extends ?? baseConfig.Extends,
 
 			// Merge complex properties
@@ -39,37 +39,37 @@ public static class MaterialConfigExtensions
 	}
 
 	private static MechanicalPropertiesConfig MergeMechanical(MechanicalPropertiesConfig baseProps, MechanicalPropertiesConfig childProps) =>
-	  new()
-	  {
-		  Density = childProps.Density ?? baseProps.Density,
-		  Hardness = childProps.Hardness ?? baseProps.Hardness,
-		  Toughness = childProps.Toughness ?? baseProps.Toughness,
-		  Stiffness = childProps.Stiffness ?? baseProps.Stiffness,
-		  Malleability = childProps.Malleability ?? baseProps.Malleability,
-		  Viscosity = childProps.Viscosity ?? baseProps.Viscosity,
-		  SurfaceTension = childProps.SurfaceTension ?? baseProps.SurfaceTension,
-		  Adhesion = childProps.Adhesion ?? baseProps.Adhesion
-	  };
+		new()
+		{
+			Density = childProps.Density ?? baseProps.Density,
+			Hardness = childProps.Hardness ?? baseProps.Hardness,
+			Toughness = childProps.Toughness ?? baseProps.Toughness,
+			Stiffness = childProps.Stiffness ?? baseProps.Stiffness,
+			Malleability = childProps.Malleability ?? baseProps.Malleability,
+			Viscosity = childProps.Viscosity ?? baseProps.Viscosity,
+			SurfaceTension = childProps.SurfaceTension ?? baseProps.SurfaceTension,
+			Adhesion = childProps.Adhesion ?? baseProps.Adhesion
+		};
 
 	private static ThermalPropertiesConfig MergeThermal(ThermalPropertiesConfig baseProps, ThermalPropertiesConfig childProps) =>
-	  new()
-	  {
-		  MeltingPoint = childProps.MeltingPoint ?? baseProps.MeltingPoint,
-		  BoilingPoint = childProps.BoilingPoint ?? baseProps.BoilingPoint,
-		  IgnitionTemperature = childProps.IgnitionTemperature ?? baseProps.IgnitionTemperature,
-		  ThermalConductivity = childProps.ThermalConductivity ?? baseProps.ThermalConductivity
-	  };
+		new()
+		{
+			MeltingPoint = childProps.MeltingPoint ?? baseProps.MeltingPoint,
+			BoilingPoint = childProps.BoilingPoint ?? baseProps.BoilingPoint,
+			IgnitionTemperature = childProps.IgnitionTemperature ?? baseProps.IgnitionTemperature,
+			ThermalConductivity = childProps.ThermalConductivity ?? baseProps.ThermalConductivity
+		};
 
 	private static ElectricalPropertiesConfig MergeElectrical(ElectricalPropertiesConfig baseProps, ElectricalPropertiesConfig childProps) =>
-	  new()
-	  {
-		  Conductivity = childProps.Conductivity ?? baseProps.Conductivity,
-	  };
+		new()
+		{
+			Conductivity = childProps.Conductivity ?? baseProps.Conductivity,
+		};
 
 	private static FantasticalPropertiesConfig MergeFantastical(FantasticalPropertiesConfig baseProps, FantasticalPropertiesConfig childProps)
 	{
 		// Merge dictionaries
-		var mergedAttunement = new Dictionary<Guid, float>(baseProps.ElementalAttunement ?? new());
+		var mergedAttunement = new Dictionary<Ulid, float>(baseProps.ElementalAttunement ?? new());
 		if (childProps.ElementalAttunement != null)
 		{
 			foreach (var (element, value) in childProps.ElementalAttunement)
@@ -90,8 +90,8 @@ public static class MaterialConfigExtensions
 	}
 
 	private static Dictionary<StateOfMatter, StateSpecificPropertiesConfig> MergeStates(
-	  IReadOnlyDictionary<StateOfMatter, StateSpecificPropertiesConfig> baseStates,
-	  IReadOnlyDictionary<StateOfMatter, StateSpecificPropertiesConfig> childStates)
+		IReadOnlyDictionary<StateOfMatter, StateSpecificPropertiesConfig> baseStates,
+		IReadOnlyDictionary<StateOfMatter, StateSpecificPropertiesConfig> childStates)
 	{
 		var merged = new Dictionary<StateOfMatter, StateSpecificPropertiesConfig>(baseStates);
 		foreach (var (state, props) in childStates)

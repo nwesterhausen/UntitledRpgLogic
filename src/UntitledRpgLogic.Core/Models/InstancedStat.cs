@@ -12,13 +12,13 @@ public class InstancedStat
 	///     The unique identifier for the instanced stat. This is used to identify the stat in the database and in the game.
 	/// </summary>
 	[Key]
-	public Guid Id { get; init; }
+	public Ulid Id { get; init; }
 
 	/// <summary>
 	///     The unique identifier for the stat definition that this instanced stat is based on. This links the instanced stat
 	///     to its definition.
 	/// </summary>
-	public Guid StatDefinitionId { get; init; }
+	public Ulid StatDefinitionId { get; init; }
 
 	/// <summary>
 	///     The base value of the stat, which is the raw value before any modifications or effects are applied.

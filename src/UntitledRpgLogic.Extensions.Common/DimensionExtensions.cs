@@ -1,5 +1,5 @@
 using UntitledRpgLogic.Core.Enums;
-using UntitledRpgLogic.Core.Interfaces;
+using UntitledRpgLogic.Core.Interfaces.Common;
 
 namespace UntitledRpgLogic.Extensions.Common;
 
@@ -40,6 +40,7 @@ public static class HasDimensionsExtensions
 		// Append the dimension scale for clarity.
 		return $"{details} ({dimensions.DimensionScale})";
 	}
+
 	/// <summary>
 	/// Converts a dimensional value from a source scale to a target scale.
 	/// </summary>

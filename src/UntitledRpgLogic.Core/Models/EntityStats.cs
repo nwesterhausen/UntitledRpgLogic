@@ -10,12 +10,12 @@ public class EntityStats
 	/// <summary>
 	///     An entity's unique identifier. This is used to reference the entity in the game and in the database.
 	/// </summary>
-	public required Guid EntityId { get; set; }
+	public required Ulid EntityId { get; set; }
 
 	/// <summary>
 	///     A unique identifier for a stat that has been instanced for an entity.
 	/// </summary>
-	public required Guid InstancedStatId { get; set; }
+	public required Ulid InstancedStatId { get; set; }
 
 	/// <summary>
 	///     The entity that this stat belongs to. This is used to link the stat the entity it belongs to, such as a player or
