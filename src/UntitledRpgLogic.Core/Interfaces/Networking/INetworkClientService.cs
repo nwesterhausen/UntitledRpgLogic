@@ -1,3 +1,5 @@
+using UntitledRpgLogic.Core.Events;
+
 namespace UntitledRpgLogic.Core.Interfaces.Networking;
 
 /// <summary>

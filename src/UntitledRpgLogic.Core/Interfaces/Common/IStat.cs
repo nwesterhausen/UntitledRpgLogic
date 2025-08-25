@@ -6,7 +6,7 @@ namespace UntitledRpgLogic.Core.Interfaces.Common;
 /// <summary>
 ///     Interface for a Stat in the RPG logic.
 /// </summary>
-public interface IStat : IHasName, IHasMutableValue, IHasIdentifier, IInstantiable
+public interface IStat : IHasName, IHasMutableValue, IHasIdentifier
 {
 	#region UI Subscription Events
 
