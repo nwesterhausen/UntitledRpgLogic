@@ -4,7 +4,7 @@ using Tomlet;
 using Tomlet.Models;
 using UntitledRpgLogic.Core.Configuration;
 using UntitledRpgLogic.Core.Enums;
-using UntitledRpgLogic.Core.Interfaces;
+using UntitledRpgLogic.Core.Interfaces.Data;
 using UntitledRpgLogic.Infrastructure.Configuration.Tomlet;
 
 namespace UntitledRpgLogic.Infrastructure.Configuration;

@@ -1,5 +1,6 @@
 using Microsoft.Extensions.Logging;
-using UntitledRpgLogic.Core.Interfaces;
+using UntitledRpgLogic.Core.Interfaces.Common;
+using UntitledRpgLogic.Core.Interfaces.Services;
 
 // Assuming you might add more specific logs here
 
@@ -38,7 +39,7 @@ public class SkillService : ISkillService
 		}
 
 		// You might choose to return here if you don't want to add points to a max-level skill
-		// return; 
+		// return;
 		this.logger.LogDebug("Adding {Points} points to skill {SkillName}", points, skill.Name.Singular);
 		this.levelingService.AddPoints(skill, points);
 	}

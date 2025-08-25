@@ -1,5 +1,5 @@
 using UntitledRpgLogic.Core.Configuration;
-using UntitledRpgLogic.Core.Interfaces;
+using UntitledRpgLogic.Core.Interfaces.Data;
 
 namespace UntitledRpgLogic.DevTool.Services.Contracts;
 

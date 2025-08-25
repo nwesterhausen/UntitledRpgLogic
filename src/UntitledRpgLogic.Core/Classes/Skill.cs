@@ -1,7 +1,7 @@
 using UntitledRpgLogic.Core.Configuration;
 using UntitledRpgLogic.Core.Enums;
 using UntitledRpgLogic.Core.Events;
-using UntitledRpgLogic.Core.Interfaces;
+using UntitledRpgLogic.Core.Interfaces.Common;
 using UntitledRpgLogic.Core.Models;
 using UntitledRpgLogic.Core.Options;
 

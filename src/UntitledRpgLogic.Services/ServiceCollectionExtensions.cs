@@ -1,5 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
-using UntitledRpgLogic.Core.Interfaces;
+using UntitledRpgLogic.Core.Interfaces.Services;
 
 namespace UntitledRpgLogic.Services;
 

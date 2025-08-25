@@ -1,7 +1,8 @@
 using UntitledRpgLogic.Core.Classes;
 using UntitledRpgLogic.Core.Configuration;
 using UntitledRpgLogic.Core.Enums;
-using UntitledRpgLogic.Core.Interfaces;
+using UntitledRpgLogic.Core.Interfaces.Common;
+using UntitledRpgLogic.Core.Interfaces.Inventory;
 
 namespace UntitledRpgLogic.Core.Game;
 
@@ -27,7 +28,7 @@ public class BaseItem : IItem
 		this.CraftedBy = config.CraftedBy;
 		this.DimensionScale = config.DimensionScale ?? DimensionScale.Cm;
 		this.ShapeType = config.ShapeType ??
-		                 ShapeType.RectangularPrism; // Actually base this on ItemType and ItemSubtype in the future.
+						 ShapeType.RectangularPrism; // Actually base this on ItemType and ItemSubtype in the future.
 		this.Width = config.Width;
 		this.Height = config.Height;
 		this.Depth = config.Depth ?? 1.0f;

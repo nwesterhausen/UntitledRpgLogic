@@ -1,5 +1,6 @@
 using UntitledRpgLogic.Core.Events;
-using UntitledRpgLogic.Core.Interfaces;
+using UntitledRpgLogic.Core.Interfaces.Inventory;
+using UntitledRpgLogic.Core.Interfaces.Services;
 
 namespace UntitledRpgLogic.Services;
 

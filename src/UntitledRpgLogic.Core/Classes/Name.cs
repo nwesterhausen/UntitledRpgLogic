@@ -1,4 +1,4 @@
-using UntitledRpgLogic.Core.Interfaces;
+using UntitledRpgLogic.Core.Interfaces.Data;
 
 namespace UntitledRpgLogic.Core.Classes;
 
@@ -81,10 +81,10 @@ public class Name : IStringSerializable<Name>
 		}
 
 		if (singular.EndsWith('y') &&
-		    !singular.EndsWith("ay", StringComparison.InvariantCultureIgnoreCase) &&
-		    !singular.EndsWith("ey", StringComparison.InvariantCultureIgnoreCase) &&
-		    !singular.EndsWith("oy", StringComparison.InvariantCultureIgnoreCase) &&
-		    !singular.EndsWith("uy", StringComparison.InvariantCultureIgnoreCase))
+			!singular.EndsWith("ay", StringComparison.InvariantCultureIgnoreCase) &&
+			!singular.EndsWith("ey", StringComparison.InvariantCultureIgnoreCase) &&
+			!singular.EndsWith("oy", StringComparison.InvariantCultureIgnoreCase) &&
+			!singular.EndsWith("uy", StringComparison.InvariantCultureIgnoreCase))
 		{
 			return string.Concat(singular.AsSpan(0, singular.Length - 1), "ies");
 		}
@@ -95,8 +95,8 @@ public class Name : IStringSerializable<Name>
 		}
 
 		if (singular.EndsWith('s') || singular.EndsWith('x') || singular.EndsWith('z') ||
-		    singular.EndsWith("ch", StringComparison.InvariantCultureIgnoreCase) ||
-		    singular.EndsWith("sh", StringComparison.InvariantCultureIgnoreCase))
+			singular.EndsWith("ch", StringComparison.InvariantCultureIgnoreCase) ||
+			singular.EndsWith("sh", StringComparison.InvariantCultureIgnoreCase))
 		{
 			return singular + "es";
 		}

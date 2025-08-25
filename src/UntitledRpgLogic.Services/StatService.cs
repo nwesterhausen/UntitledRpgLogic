@@ -2,7 +2,9 @@ using Microsoft.Extensions.Logging;
 using UntitledRpgLogic.Core.Classes;
 using UntitledRpgLogic.Core.Enums;
 using UntitledRpgLogic.Core.Events;
-using UntitledRpgLogic.Core.Interfaces;
+using UntitledRpgLogic.Core.Interfaces.Common;
+using UntitledRpgLogic.Core.Interfaces.Effects;
+using UntitledRpgLogic.Core.Interfaces.Services;
 using UntitledRpgLogic.Core.Options;
 using UntitledRpgLogic.Extensions.Logging;
 

@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using UntitledRpgLogic.Core.Classes;
-using UntitledRpgLogic.Core.Interfaces;
+using UntitledRpgLogic.Core.Interfaces.Entities;
 
 namespace UntitledRpgLogic.Core.Models;
 

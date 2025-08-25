@@ -1,6 +1,6 @@
 using System.Numerics;
 using UntitledRpgLogic.Core.Enums;
-using UntitledRpgLogic.Core.Interfaces;
+using UntitledRpgLogic.Core.Interfaces.Effects;
 
 namespace UntitledRpgLogic.Core.Classes.EffectComponents;
 

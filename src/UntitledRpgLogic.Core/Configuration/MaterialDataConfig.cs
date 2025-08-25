@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using UntitledRpgLogic.Core.Enums;
-using UntitledRpgLogic.Core.Interfaces;
+using UntitledRpgLogic.Core.Interfaces.Data;
 
 namespace UntitledRpgLogic.Core.Configuration;
 

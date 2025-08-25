@@ -1,5 +1,6 @@
 using UntitledRpgLogic.Core.Enums;
-using UntitledRpgLogic.Core.Interfaces;
+using UntitledRpgLogic.Core.Interfaces.Common;
+using UntitledRpgLogic.Core.Interfaces.Inventory;
 
 namespace UntitledRpgLogic.Core.Classes;
 
