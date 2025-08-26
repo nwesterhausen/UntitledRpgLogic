@@ -18,16 +18,16 @@ public class MessageReceivedEventArgs : EventArgs
 	/// Gets the unique identifier of the client who sent the message.
 	/// This may be null if the message is from the server.
 	/// </summary>
-	public Ulid? SenderId { get; }
+	public string? SenderId { get; }
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="MessageReceivedEventArgs"/> class.
 	/// </summary>
 	/// <param name="data">The raw message data.</param>
 	/// <param name="senderId">The identifier of the message sender.</param>
-	public MessageReceivedEventArgs(byte[] data, Ulid? senderId = null)
+	public MessageReceivedEventArgs(byte[] data, string? senderId = null)
 	{
 		this.Data = data;
-		this.SenderId = senderId ?? Ulid.Empty;
+		this.SenderId = senderId ?? string.Empty;
 	}
 }

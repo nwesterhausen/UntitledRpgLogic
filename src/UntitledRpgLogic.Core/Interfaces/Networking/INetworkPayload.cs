@@ -12,6 +12,11 @@ public interface INetworkPayload
 	public Enums.MessageType MessageType { get; }
 
 	/// <summary>
+	/// The processing priority level of the message.
+	/// </summary>
+	public Enums.MessagePriority MessagePriority { get; }
+
+	/// <summary>
 	/// The unique identifier for the message.
 	/// </summary>
 	public Ulid MessageId { get; }

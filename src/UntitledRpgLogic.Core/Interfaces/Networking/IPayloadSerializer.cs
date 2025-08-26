@@ -3,7 +3,7 @@ namespace UntitledRpgLogic.Core.Interfaces.Networking;
 /// <summary>
 /// Defines the contract for a network payload serializer/deserializer.
 /// </summary>
-public interface IPayloadSerializationService
+public interface IPayloadSerializer
 {
 	/// <summary>
 	/// Serializes the specified network payload into a byte array.
