@@ -1,5 +1,7 @@
 using Microsoft.Extensions.Logging;
-using UntitledRpgLogic.Extensions.Logging;
+using UntitledRpgLogic.Core.Enums;
+
+namespace UntitledRpgLogic.Extensions.Logging;
 
 public static partial class LoggingExtensions
 {

@@ -19,6 +19,8 @@ public static class EventIdValues
 	/// Indicates an unexpected error occurred.
 	/// </summary>
 	public const int UnexpectedError = 900;
+	public const int ValidationError = 901;
+	public const int OperationNotSupported = 902;
 
 	/// ----------------------------------
 	/// Player-Driven Events (1000 - 49xx)

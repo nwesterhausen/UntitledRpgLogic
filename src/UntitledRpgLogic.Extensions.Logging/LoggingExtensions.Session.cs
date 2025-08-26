@@ -1,5 +1,6 @@
 using Microsoft.Extensions.Logging;
-using UntitledRpgLogic.Extensions.Logging;
+
+namespace UntitledRpgLogic.Extensions.Logging;
 
 public static partial class LoggingExtensions
 {

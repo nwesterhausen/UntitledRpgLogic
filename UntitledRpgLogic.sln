@@ -14,6 +14,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UntitledRpgLogic.Extensions.Godot", "src\UntitledRpgLogic.Extensions.Godot\UntitledRpgLogic.Extensions.Godot.csproj", "{35C56A23-ADE1-9C69-8976-50B731BA0D18}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UntitledRpgLogic.Extensions.Logging", "src\UntitledRpgLogic.Extensions.Logging\UntitledRpgLogic.Extensions.Logging.csproj", "{A36ADAF1-EC14-F195-3316-241AAB409FF9}"
+	ProjectSection(ProjectDependencies) = postProject
+		{0935E87A-F552-A403-70B2-0C627D3D2504} = {0935E87A-F552-A403-70B2-0C627D3D2504}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "50 - URPGLIB FileType", "50 - URPGLIB FileType", "{C06EFB68-36E6-494A-AB70-5C0B73C8BF67}"
 EndProject
