@@ -1,7 +1,9 @@
 using Microsoft.Extensions.Logging;
 using UntitledRpgLogic.Core.Classes.EffectComponents;
 using UntitledRpgLogic.Core.Enums;
-using UntitledRpgLogic.Core.Interfaces;
+using UntitledRpgLogic.Core.Interfaces.Effects;
+using UntitledRpgLogic.Core.Interfaces.Entities;
+using UntitledRpgLogic.Core.Interfaces.Services;
 using UntitledRpgLogic.Extensions.Common;
 
 namespace UntitledRpgLogic.Services;
@@ -30,7 +32,7 @@ public class EffectApplicationService : IEffectApplicationService
 		ArgumentNullException.ThrowIfNull(effect, nameof(effect));
 
 		this.logger.LogInformation("Applying effect: {EffectName} (ID: {EffectShortGuid})", effect.Name.Singular,
-			effect.ShortId);
+			effect.Identifier.ToString());
 
 		foreach (var component in effect.EffectComponents)
 		{

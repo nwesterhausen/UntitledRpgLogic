@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<!-- Package metadata -->
+		<AssemblyName>UntitledRpgLogic.Networking</AssemblyName>
+		<PackageId>UntitledRpgLogic.Networking</PackageId>
+		<RootNamespace>UntitledRpgLogic.Networking</RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\UntitledRpgLogic.Core\UntitledRpgLogic.Core.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="LiteNetLib" Version="1.3.1" />
+	  <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.8" />
+	</ItemGroup>
+
+</Project>

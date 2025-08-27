@@ -8,7 +8,7 @@ public class InventoryItem
 	/// <summary>
 	///     The unique identifier for the item in the inventory.
 	/// </summary>
-	public required Guid ItemId { get; init; }
+	public required Ulid ItemId { get; init; }
 
 	/// <summary>
 	///     The name of the item in the inventory.

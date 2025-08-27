@@ -73,17 +73,17 @@ jobs:
 
       - name: 📥 Restore dependencies
         run: |
-          cd ${{ github.workspace }}/src
+          cd ${{ github.workspace }}
           dotnet workload restore
           dotnet tool restore
           dotnet restore
 
       - name: 🔨 Build
         run: |
-          cd ${{ github.workspace }}/src
+          cd ${{ github.workspace }}
           dotnet build --no-restore
 
       - name: 🚀 Test
         run: |
-          cd ${{ github.workspace }}/src
+          cd ${{ github.workspace }}
           dotnet test --no-build --verbosity normal

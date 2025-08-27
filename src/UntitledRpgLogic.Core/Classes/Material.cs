@@ -1,6 +1,6 @@
 using UntitledRpgLogic.Core.Configuration;
 using UntitledRpgLogic.Core.Enums;
-using UntitledRpgLogic.Core.Interfaces;
+using UntitledRpgLogic.Core.Interfaces.Common;
 
 namespace UntitledRpgLogic.Core.Classes;
 
@@ -10,24 +10,26 @@ namespace UntitledRpgLogic.Core.Classes;
 public record Material : IMaterial
 {
 	/// <summary>
-	/// 	An empty material instance.
+	///     An empty material instance.
 	/// </summary>
-	public static readonly IMaterial Empty = new Material(Name.Empty, Guid.Empty, MechanicalProperties.Empty, ThermalProperties.Empty, ElectricalProperties.Empty, FantasticalProperties.Empty, new Dictionary<StateOfMatter, StateSpecificProperties>());
+	public static readonly IMaterial Empty = new Material(Name.Empty, Ulid.NewUlid(), MechanicalProperties.Empty, ThermalProperties.Empty,
+		ElectricalProperties.Empty, FantasticalProperties.Empty, new Dictionary<StateOfMatter, StateSpecificProperties>());
 
-	/// <inheritdoc />
-	public Name Name { get; }
-	/// <inheritdoc />
-	public Guid Identifier { get; }
-	/// <inheritdoc />
-	public MechanicalProperties Mechanical { get; }
-	/// <inheritdoc />
-	public ThermalProperties Thermal { get; }
-	/// <inheritdoc />
-	public ElectricalProperties Electrical { get; }
-	/// <inheritdoc />
-	public FantasticalProperties Fantastical { get; }
-	/// <inheritdoc />
-	public IReadOnlyDictionary<StateOfMatter, StateSpecificProperties> States { get; }
+
+	private Material(Name name, Ulid identifier, MechanicalProperties mechanical, ThermalProperties thermal, ElectricalProperties electrical,
+		FantasticalProperties fantastical, Dictionary<StateOfMatter, StateSpecificProperties> states)
+	{
+		this.Name = name;
+		this.Identifier = identifier;
+		this.Mechanical = mechanical;
+		this.Thermal = thermal;
+		this.Electrical = electrical;
+		this.Fantastical = fantastical;
+		this.States = states;
+
+		this.Id = this.Identifier.ToString();
+		this.ShortId = this.Identifier.ToGuid().ToString("N")[..8].ToUpperInvariant();
+	}
 
 
 	/// <inheritdoc />
@@ -36,23 +38,29 @@ public record Material : IMaterial
 	/// <inheritdoc />
 	public string ShortId { get; init; } = string.Empty;
 
+	/// <inheritdoc />
+	public Name Name { get; }
 
-	private Material(Name name, Guid guid, MechanicalProperties mechanical, ThermalProperties thermal, ElectricalProperties electrical, FantasticalProperties fantastical, Dictionary<StateOfMatter, StateSpecificProperties> states)
-	{
-		this.Name = name;
-		this.Identifier = guid;
-		this.Mechanical = mechanical;
-		this.Thermal = thermal;
-		this.Electrical = electrical;
-		this.Fantastical = fantastical;
-		this.States = states;
+	/// <inheritdoc />
+	public Ulid Identifier { get; }
 
-		this.Id = Convert.ToBase64String(this.Identifier.ToByteArray());
-		this.ShortId = this.Identifier.ToString("N")[..8].ToUpperInvariant();
-	}
+	/// <inheritdoc />
+	public MechanicalProperties Mechanical { get; }
+
+	/// <inheritdoc />
+	public ThermalProperties Thermal { get; }
+
+	/// <inheritdoc />
+	public ElectricalProperties Electrical { get; }
+
+	/// <inheritdoc />
+	public FantasticalProperties Fantastical { get; }
+
+	/// <inheritdoc />
+	public IReadOnlyDictionary<StateOfMatter, StateSpecificProperties> States { get; }
 
 	/// <summary>
-	/// 	Creates a Material instance from the provided configuration.
+	///     Creates a Material instance from the provided configuration.
 	/// </summary>
 	/// <param name="config">material data config to use</param>
 	/// <returns>a material instance</returns>
@@ -72,6 +80,6 @@ public record Material : IMaterial
 			states[state] = StateSpecificProperties.FromConfig(stateConfig);
 		}
 
-		return new Material(name, config.ExplicitId ?? Guid.NewGuid(), mechanical, thermal, electrical, fantastical, states);
+		return new Material(name, config.Identifier, mechanical, thermal, electrical, fantastical, states);
 	}
 }

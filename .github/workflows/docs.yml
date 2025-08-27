@@ -68,7 +68,7 @@ jobs:
 
       - name: 📥 Restore dependencies
         run: |
-          cd ${{ github.workspace }}/src
+          cd ${{ github.workspace }}
           dotnet workload restore
           dotnet tool restore
           dotnet restore

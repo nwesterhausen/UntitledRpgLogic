@@ -1,5 +1,6 @@
 using UntitledRpgLogic.Core.Enums;
-using UntitledRpgLogic.Core.Interfaces;
+using UntitledRpgLogic.Core.Interfaces.Common;
+using UntitledRpgLogic.Core.Interfaces.Inventory;
 
 namespace UntitledRpgLogic.Extensions.Common;
 
@@ -13,9 +14,9 @@ public static class MaterialExtensions
 	/// A positive value could indicate a weakness or amplification, while a negative value could indicate resistance.
 	/// </summary>
 	/// <param name="material">The material.</param>
-	/// <param name="magicTypeGuid">The Guid of the magic type to check.</param>
+	/// <param name="magicTypeId">The Ulid of the magic type to check.</param>
 	/// <returns>The attunement value, or 0f if no attunement is defined for that magic type.</returns>
-	public static float GetAttunement(this IMaterial material, Guid magicTypeGuid)
+	public static float GetAttunement(this IMaterial material, Ulid magicTypeId)
 	{
 		ArgumentNullException.ThrowIfNull(material, nameof(material));
 
@@ -24,7 +25,7 @@ public static class MaterialExtensions
 			return 0f;
 		}
 
-		return material.Fantastical.ElementalAttunement.GetValueOrDefault(magicTypeGuid, 0f);
+		return material.Fantastical.ElementalAttunement.GetValueOrDefault(magicTypeId, 0f);
 	}
 
 	/// <summary>

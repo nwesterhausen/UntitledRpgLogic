@@ -2,7 +2,9 @@ using Microsoft.Extensions.Logging;
 using UntitledRpgLogic.Core.Classes;
 using UntitledRpgLogic.Core.Enums;
 using UntitledRpgLogic.Core.Events;
-using UntitledRpgLogic.Core.Interfaces;
+using UntitledRpgLogic.Core.Interfaces.Common;
+using UntitledRpgLogic.Core.Interfaces.Effects;
+using UntitledRpgLogic.Core.Interfaces.Services;
 using UntitledRpgLogic.Core.Options;
 using UntitledRpgLogic.Extensions.Logging;
 
@@ -97,7 +99,7 @@ public class StatService : IStatService
 
 		if (stat.Variation is StatVariation.Complex or StatVariation.Minor)
 		{
-			this.logger.LogIllegalStatChange(stat.Name.Singular, "Cannot directly set value of a complex/minor stat.");
+			// this.logger.LogIllegalStatChange(stat.Name.Singular, "Cannot directly set value of a complex/minor stat.");
 			return;
 		}
 
@@ -113,7 +115,7 @@ public class StatService : IStatService
 		stat.BaseValue += clampedValue - oldValue;
 
 		stat.InvokeValueChanged(new ValueChangedEventArgs(oldValue, stat.Value));
-		stat.InvokeBaseValueChanged();
+		stat.InvokeBaseValueChanged(new ValueChangedEventArgs(stat.BaseValue - (clampedValue - oldValue), stat.BaseValue));
 	}
 
 	/// <inheritdoc />
@@ -240,7 +242,7 @@ public class StatService : IStatService
 		foreach (var modifier in statEntry.Modifiers.OrderBy(m => m.Priority))
 		{
 			stat.Value = modifier.ApplyModification(stat.BaseValue, stat.Value, stat.MaxValue);
-			this.logger.LogModifierApplied(modifier.Name.Singular, stat.Name.Singular);
+			// this.logger.LogModifierApplied(modifier.Name.Singular, stat.Name.Singular);
 		}
 
 		if (oldValue != stat.Value)

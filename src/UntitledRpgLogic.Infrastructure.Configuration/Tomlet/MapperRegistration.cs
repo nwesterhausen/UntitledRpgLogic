@@ -14,7 +14,7 @@ public static partial class MapperRegistration
 	public static void RegisterMappers()
 	{
 		// Register custom mappers for types that Tomlet does not support by default.
-		TomletMain.RegisterMapper(SerializeGuid, DeserializeGuid);
+		TomletMain.RegisterMapper(SerializeUlid, DeserializeUlid);
 		TomletMain.RegisterMapper(SerializeColor, DeserializeColor);
 		TomletMain.RegisterMapper(SerializeDimensionScale, DeserializeDimensionScale);
 		TomletMain.RegisterMapper(SerializeMassScale, DeserializeMassScale);

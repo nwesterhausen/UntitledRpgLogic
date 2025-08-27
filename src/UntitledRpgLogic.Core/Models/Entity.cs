@@ -1,5 +1,6 @@
+using System.ComponentModel.DataAnnotations;
 using UntitledRpgLogic.Core.Classes;
-using UntitledRpgLogic.Core.Interfaces;
+using UntitledRpgLogic.Core.Interfaces.Entities;
 
 namespace UntitledRpgLogic.Core.Models;
 
@@ -12,34 +13,19 @@ public record Entity : IEntity
 	///     Creates an instance of <see cref="Entity" /> using the provided <see cref="Identifier" />.
 	/// </summary>
 	/// <param name="identifier"></param>
-	public Entity(Guid identifier)
+	public Entity(Ulid identifier)
 	{
 		// assign primary first
 		this.Identifier = identifier;
-		// derive get-only properties
-		this.Id = Convert.ToBase64String(identifier.ToByteArray());
-		this.ShortId = identifier.ToString("N")[..8].ToUpperInvariant();
 
 		// assign name
 		this.Name = Name.Empty;
 	}
 
-	/// <summary>
-	///     Create a new entity with a new <see cref="Identifier" />.
-	/// </summary>
-	public Entity() : this(Guid.NewGuid())
-	{
-	}
+	/// <inheritdoc />
+	public Name Name { get; init; }
 
 	/// <inheritdoc />
-	public Name Name { get; }
-
-	/// <inheritdoc />
-	public Guid Identifier { get; }
-
-	/// <inheritdoc />
-	public string Id { get; }
-
-	/// <inheritdoc />
-	public string ShortId { get; }
+	[Key]
+	public Ulid Identifier { get; init; } = Ulid.NewUlid();
 }

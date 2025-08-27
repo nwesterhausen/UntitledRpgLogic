@@ -12,7 +12,7 @@ public class ModificationEffect
 	///     The unique identifier for the modification effect. This is used to reference the effect in the game.
 	/// </summary>
 	[Key]
-	public Guid Id { get; set; }
+	public Ulid Id { get; set; }
 
 	/// <summary>
 	///     The flat amount of modification that is applied.

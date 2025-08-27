@@ -16,7 +16,7 @@ public enum TargetingType
 	SingleTarget = 1,
 
 	/// <summary>
-	///		Targets multiple specific entities, which may include allies or enemies.
+	///     Targets multiple specific entities, which may include allies or enemies.
 	/// </summary>
 	MultipleTarget = 2,
 
@@ -35,5 +35,5 @@ public enum TargetingType
 	///     Requires physical touch to apply the effect.
 	/// </summary>
 	/// <remarks>This implies a single target.</remarks>
-	Touch = 5,
+	Touch = 5
 }

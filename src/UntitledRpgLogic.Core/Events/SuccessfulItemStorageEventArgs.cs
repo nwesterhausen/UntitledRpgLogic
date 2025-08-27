@@ -13,7 +13,7 @@ public class SuccessfulItemStorageEventArgs : EventArgs
 	/// <param name="amount"></param>
 	/// <param name="itemId"></param>
 	/// <param name="totalInInventory"></param>
-	public SuccessfulItemStorageEventArgs(string item, int amount, Guid itemId, int totalInInventory)
+	public SuccessfulItemStorageEventArgs(string item, int amount, Ulid itemId, int totalInInventory)
 	{
 		this.Item = item;
 		this.Amount = amount;
@@ -34,7 +34,7 @@ public class SuccessfulItemStorageEventArgs : EventArgs
 	/// <summary>
 	///     The unique identifier of the item that was stored.
 	/// </summary>
-	public Guid ItemId { get; }
+	public Ulid ItemId { get; }
 
 	/// <summary>
 	///     Total number of this item in the inventory after storage.

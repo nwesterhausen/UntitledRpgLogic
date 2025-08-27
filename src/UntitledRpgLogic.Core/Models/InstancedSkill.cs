@@ -12,13 +12,13 @@ public class InstancedSkill
 	///     The unique identifier for the instanced skill. This is used to identify the skill instance in the game.
 	/// </summary>
 	[Key]
-	public Guid Id { get; init; }
+	public Ulid Id { get; init; }
 
 	/// <summary>
 	///     The unique identifier for the skill definition that this instanced skill is based on. This links the instanced
 	///     skill to its definition.
 	/// </summary>
-	public required Guid SkillDefinitionId { get; init; }
+	public required Ulid SkillDefinitionId { get; init; }
 
 	/// <summary>
 	///     The total amount of experience points accumulated for this skill instance. This is used to track progress towards

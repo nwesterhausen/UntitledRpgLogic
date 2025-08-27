@@ -12,10 +12,10 @@ namespace UntitledRpgLogic.Core.Models;
 public record StatDefinition
 {
 	/// <summary>
-	///     The GUID for the stat. Any instances of this stat refer to this definition via this ID.
+	///     The ULID for the stat. Any instances of this stat refer to this definition via this ID.
 	/// </summary>
 	[Key]
-	public Guid Id { get; init; }
+	public Ulid Id { get; init; }
 
 	/// <summary>
 	///     The name of the stat. This is used to identify the stat in the game and is used in the UI.

@@ -1,5 +1,5 @@
 using UntitledRpgLogic.Core.Enums;
-using UntitledRpgLogic.Core.Interfaces;
+using UntitledRpgLogic.Core.Interfaces.Data;
 
 namespace UntitledRpgLogic.Core.Configuration;
 
@@ -21,7 +21,7 @@ public record AuthorConfig : ITomlConfig
 	/// <summary>
 	///     The unique identifier for the author.
 	/// </summary>
-	public Guid AuthorId { get; set; } = Guid.NewGuid();
+	public required Ulid Identifier { get; set; }
 
 	/// <inheritdoc />
 	public ConfigType ConfigType => ConfigType.Author;

@@ -1,7 +1,8 @@
 using Microsoft.Extensions.Logging;
 using UntitledRpgLogic.Core.Enums;
 using UntitledRpgLogic.Core.Events;
-using UntitledRpgLogic.Core.Interfaces;
+using UntitledRpgLogic.Core.Interfaces.Common;
+using UntitledRpgLogic.Core.Interfaces.Services;
 using UntitledRpgLogic.Extensions.Logging;
 
 namespace UntitledRpgLogic.Services;
@@ -119,12 +120,12 @@ public class LevelingService<T> : ILevelingService<T> where T : IHasLeveling
 		if (target is IHasName namedTarget)
 		{
 			// Use the new generic helper
-			this.logger.LogLevelablePointsChanged(typeof(T).Name, namedTarget.Name.Singular, pointsChanged, target.Value);
+			// this.logger.LogLevelablePointsChanged(typeof(T).Name, namedTarget.Name.Singular, pointsChanged, target.Value);
 		}
 		else
 		{
 			// Fallback for unnamed items
-			this.logger.LogLevelablePointsChangedGeneric(typeof(T).Name, pointsChanged, target.Value);
+			// this.logger.LogLevelablePointsChangedGeneric(typeof(T).Name, pointsChanged, target.Value);
 		}
 	}
 
@@ -141,12 +142,12 @@ public class LevelingService<T> : ILevelingService<T> where T : IHasLeveling
 			if (target is IHasName namedTarget)
 			{
 				// Use the new generic helper
-				this.logger.LogLevelableChanged(typeof(T).Name, namedTarget.Name.Singular, oldLevel, newLevel);
+				// this.logger.LogLevelableChanged(typeof(T).Name, namedTarget.Name.Singular, oldLevel, newLevel);
 			}
 			else
 			{
 				// Fallback for unnamed items
-				this.logger.LogLevelableChangedGeneric(typeof(T).Name, oldLevel, newLevel);
+				// this.logger.LogLevelableChangedGeneric(typeof(T).Name, oldLevel, newLevel);
 			}
 		}
 	}
