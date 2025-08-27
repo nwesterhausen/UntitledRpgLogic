@@ -99,7 +99,7 @@ public class StatService : IStatService
 
 		if (stat.Variation is StatVariation.Complex or StatVariation.Minor)
 		{
-			this.logger.LogIllegalStatChange(stat.Name.Singular, "Cannot directly set value of a complex/minor stat.");
+			// this.logger.LogIllegalStatChange(stat.Name.Singular, "Cannot directly set value of a complex/minor stat.");
 			return;
 		}
 
@@ -242,7 +242,7 @@ public class StatService : IStatService
 		foreach (var modifier in statEntry.Modifiers.OrderBy(m => m.Priority))
 		{
 			stat.Value = modifier.ApplyModification(stat.BaseValue, stat.Value, stat.MaxValue);
-			this.logger.LogModifierApplied(modifier.Name.Singular, stat.Name.Singular);
+			// this.logger.LogModifierApplied(modifier.Name.Singular, stat.Name.Singular);
 		}
 
 		if (oldValue != stat.Value)
