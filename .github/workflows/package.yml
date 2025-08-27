@@ -64,14 +64,14 @@ jobs:
 
       - name: 📥 Restore dependencies
         run: |
-          cd ${{ github.workspace }}/src
+          cd ${{ github.workspace }}
           dotnet workload restore
           dotnet tool restore
           dotnet restore
 
       - name: 📦 Create NuGet packages
         run: |
-          cd ${{ github.workspace }}/src
+          cd ${{ github.workspace }}
           dotnet build --configuration Release
           dotnet pack --configuration Release --output ${{ env.NuGetDirectory }}
 

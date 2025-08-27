@@ -1,5 +1,7 @@
 using System.Text;
 using System.Text.Json;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 #pragma warning disable CA1707 // Naming rules disallow underscores in identifiers
 

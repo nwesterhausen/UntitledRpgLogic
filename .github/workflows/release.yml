@@ -75,24 +75,24 @@ jobs:
 
       - name: 📥 Restore dependencies
         run: |
-          cd ${{ github.workspace }}/src
+          cd ${{ github.workspace }}
           dotnet workload restore
           dotnet tool restore
           dotnet restore
 
       - name: 🔨 Build
         run: |
-          cd ${{ github.workspace }}/src
+          cd ${{ github.workspace }}
           dotnet build --configuration Release --no-restore
 
       - name: 🚀 Test
         run: |
-          cd ${{ github.workspace }}/src
+          cd ${{ github.workspace }}
           dotnet test --configuration Release --no-build --verbosity normal
 
       - name: 📦 Create NuGet packages
         run: |
-          cd ${{ github.workspace }}/src
+          cd ${{ github.workspace }}
           dotnet pack --configuration Release --no-build --output ${{ env.NuGetDirectory }}
 
       - name: 🎉 Create GitHub Release

@@ -7,5 +7,4 @@
 			-->
 		<TestingPlatformShowTestsFailure>true</TestingPlatformShowTestsFailure>
 	</PropertyGroup>
-
 </Project>

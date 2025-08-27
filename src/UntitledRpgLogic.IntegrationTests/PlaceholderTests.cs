@@ -1,11 +1,16 @@
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
 namespace UntitledRpgLogic.IntegrationTests;
 
 [TestClass]
-internal sealed class PlaceholderTests
+public sealed class PlaceholderTests
 {
 	[TestMethod]
-	public void TemporaryPlaceholderTest() =>
+	public void TemporaryPlaceholderTest()
+	{
 		// This test is a placeholder to ensure the CI passes.
+		var pass = true;
 		// TODO: Remove this test once real tests are added.
-		Assert.IsTrue(true);
+		Assert.IsTrue(pass);
+	}
 }
