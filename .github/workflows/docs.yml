@@ -74,13 +74,13 @@ jobs:
           dotnet restore
 
       - name: 📚 Compile Docs
-        run: dotnet docfx ./.docfx/docfx.json
+        run: dotnet docfx ./docs/docfx.json
 
       - name: 📤 Upload artifact
         uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4
         with:
           # Upload entire repository
-          path: '.docfx/_site'
+          path: 'docs/_site'
 
       - name: 🚀 Deploy to GitHub Pages
         id: deployment
