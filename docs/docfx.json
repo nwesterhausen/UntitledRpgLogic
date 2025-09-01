@@ -42,6 +42,13 @@
         ]
       }
     ],
+		"overwrite": [
+			{
+				"files": [
+					"namespaces/**.md"
+				]
+			}
+		],
     "output": "_site",
     "template": [
       "default",

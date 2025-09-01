@@ -1,6 +1,6 @@
 ---
 uid: UntitledRpgLogic.Core.Interfaces
-summary: Contains interfaces for all core components of the RPG logic, including game entities, actions, and systems.
+summary: *content
 ---
 
 # UntitledRpgLogic.Core.Interfaces
