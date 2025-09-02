@@ -49,6 +49,11 @@ public class RpgDbContext : DbContext
 	/// </summary>
 	public DbSet<ModificationEffect> ModificationEffects { get; set; } = null!;
 
+	/// <summary>
+	/// 	 Table for log entries, which store application logs for auditing and debugging purposes.
+	/// </summary>
+	public DbSet<LogEntry> LogEntries { get; set; } = null!;
+
 	// Instanced and World Data
 	/// <summary>
 	///     Table for entities, which represent characters, NPCs, mobs, etc. in the game world.
