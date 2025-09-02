@@ -119,6 +119,18 @@ public class RpgDbContext : DbContext
 			.WithMany()
 			.HasForeignKey(i => i.PrimaryMaterialId);
 
+		modelBuilder.Entity<LinkedStats>()
+			.HasOne(ls => ls.DependentStat)
+			.WithMany() // StatDefinition does not have a collection of LinkedStats, so this is empty.
+			.HasForeignKey(ls => ls.DependentStatId)
+			.OnDelete(DeleteBehavior.Restrict); // Prevent deleting a StatDefinition if it's in use.
+
+		modelBuilder.Entity<LinkedStats>()
+			.HasOne(ls => ls.LinkedStat)
+			.WithMany()
+			.HasForeignKey(ls => ls.LinkedStatId)
+			.OnDelete(DeleteBehavior.Restrict);
+
 		// Note: Additional relationship configurations will be needed here as the system grows.
 	}
 
