@@ -22,6 +22,31 @@ public record Entity : IEntity
 		this.Name = Name.Empty;
 	}
 
+	/// <summary>
+	///     Creates an instance of <see cref="Entity" /> using the provided <see cref="Name" />.
+	/// </summary>
+	/// <param name="name"></param>
+	public Entity(Name name)
+	{
+		// assign primary first
+		this.Identifier = Ulid.NewUlid();
+
+		// assign name
+		this.Name = name;
+	}
+
+	/// <summary>
+	///     Creates an instance of <see cref="Entity" /> with a new <see cref="Identifier" /> and an empty <see cref="Name" />.
+	/// </summary>
+	public Entity()
+	{
+		// assign primary first
+		this.Identifier = Ulid.NewUlid();
+
+		// assign name
+		this.Name = Name.Empty;
+	}
+
 	/// <inheritdoc />
 	public Name Name { get; init; }
 

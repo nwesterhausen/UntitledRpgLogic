@@ -8,6 +8,28 @@ namespace UntitledRpgLogic.Core.Models;
 public class EntityInventory
 {
 	/// <summary>
+	///     Initializes a new instance of the <see cref="EntityInventory" /> class.
+	///     This parameterless constructor is required by Entity Framework Core for materialization.
+	/// </summary>
+	public EntityInventory()
+	{
+		this.EntityId = Ulid.Empty;
+		this.ItemInstanceId = Ulid.Empty;
+	}
+
+	/// <summary>
+	///     Initializes a new instance of the <see cref="EntityInventory" /> class with the specified entity ID
+	///     and item instance ID.
+	/// </summary>
+	/// <param name="entityId">The unique identifier of the entity owning the item instance.</param>
+	/// <param name="itemInstanceId">The unique identifier of the item instance held by the entity.</param>
+	public EntityInventory(Ulid entityId, Ulid itemInstanceId)
+	{
+		this.EntityId = entityId;
+		this.ItemInstanceId = itemInstanceId;
+	}
+
+	/// <summary>
 	///     FK to the owning entity.
 	/// </summary>
 	public required Ulid EntityId { get; init; }

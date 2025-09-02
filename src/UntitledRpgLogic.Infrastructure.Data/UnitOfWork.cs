@@ -3,7 +3,7 @@ using UntitledRpgLogic.Core.Interfaces.Data;
 namespace UntitledRpgLogic.Infrastructure.Data;
 
 /// <summary>
-/// An implementation of the Unit of Work pattern using Entity Framework Core.
+///     An implementation of the Unit of Work pattern using Entity Framework Core.
 /// </summary>
 public class UnitOfWork : IUnitOfWork
 {
@@ -11,7 +11,7 @@ public class UnitOfWork : IUnitOfWork
 	private bool disposed;
 
 	/// <summary>
-	/// Initializes a new instance of the <see cref="UnitOfWork"/> class.
+	///     Initializes a new instance of the <see cref="UnitOfWork" /> class.
 	/// </summary>
 	/// <param name="context">The database context to be used for this unit of work.</param>
 	public UnitOfWork(RpgDbContext context) => this.context = context ?? throw new ArgumentNullException(nameof(context));
@@ -30,7 +30,7 @@ public class UnitOfWork : IUnitOfWork
 	}
 
 	/// <summary>
-	/// Disposes the underlying DbContext.
+	///     Disposes the underlying DbContext.
 	/// </summary>
 	/// <param name="disposing">True to release both managed and unmanaged resources; false to release only unmanaged resources.</param>
 	protected virtual void Dispose(bool disposing)
@@ -42,6 +42,7 @@ public class UnitOfWork : IUnitOfWork
 				this.context.Dispose();
 			}
 		}
+
 		this.disposed = true;
 	}
 }

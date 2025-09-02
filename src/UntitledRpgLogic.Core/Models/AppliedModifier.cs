@@ -9,6 +9,30 @@ namespace UntitledRpgLogic.Core.Models;
 public record AppliedModifier
 {
 	/// <summary>
+	///     Initializes a new instance of the <see cref="AppliedModifier" /> class.
+	///     This parameterless constructor is required by Entity Framework Core for materialization.
+	/// </summary>
+	public AppliedModifier()
+	{
+		this.Id = Ulid.NewUlid();
+		this.ModifierDefinitionId = Ulid.Empty;
+		this.EntityId = Ulid.Empty;
+	}
+
+	/// <summary>
+	///     Initializes a new instance of the <see cref="AppliedModifier" /> class with the specified modifier definition ID
+	///     and entity ID.
+	/// </summary>
+	/// <param name="modifierDefinitionId">The unique identifier of the modifier definition being applied.</param>
+	/// <param name="entityId">The unique identifier of the entity receiving the modifier.</param>
+	public AppliedModifier(Ulid modifierDefinitionId, Ulid entityId)
+	{
+		this.Id = Ulid.NewUlid();
+		this.ModifierDefinitionId = modifierDefinitionId;
+		this.EntityId = entityId;
+	}
+
+	/// <summary>
 	///     Primary key (ULID) for the applied modifier instance.
 	/// </summary>
 	[Key]

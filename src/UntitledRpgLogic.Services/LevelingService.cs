@@ -3,7 +3,6 @@ using UntitledRpgLogic.Core.Enums;
 using UntitledRpgLogic.Core.Events;
 using UntitledRpgLogic.Core.Interfaces.Common;
 using UntitledRpgLogic.Core.Interfaces.Services;
-using UntitledRpgLogic.Extensions.Logging;
 
 namespace UntitledRpgLogic.Services;
 
@@ -65,10 +64,10 @@ public class LevelingService<T> : ILevelingService<T> where T : IHasLeveling
 		{
 			ScalingCurveType.Linear => target.PointsForFirstLevel + (int)(target.ScalingFactorA * (targetLevel - 2)),
 			ScalingCurveType.Exponential => (int)(target.PointsForFirstLevel *
-												  Math.Pow(target.ScalingFactorA, targetLevel - 2)),
+			                                      Math.Pow(target.ScalingFactorA, targetLevel - 2)),
 			ScalingCurveType.Polynomial => (int)((target.ScalingFactorA *
-												  Math.Pow(targetLevel - 1, target.ScalingFactorB)) +
-												 target.ScalingFactorC),
+			                                      Math.Pow(targetLevel - 1, target.ScalingFactorB)) +
+			                                     target.ScalingFactorC),
 			ScalingCurveType.None => throw new NotImplementedException(),
 			_ => throw new NotSupportedException($"Unsupported scaling curve type: {target.ScalingCurve}")
 		};
@@ -122,11 +121,8 @@ public class LevelingService<T> : ILevelingService<T> where T : IHasLeveling
 			// Use the new generic helper
 			// this.logger.LogLevelablePointsChanged(typeof(T).Name, namedTarget.Name.Singular, pointsChanged, target.Value);
 		}
-		else
-		{
-			// Fallback for unnamed items
-			// this.logger.LogLevelablePointsChangedGeneric(typeof(T).Name, pointsChanged, target.Value);
-		}
+		// Fallback for unnamed items
+		// this.logger.LogLevelablePointsChangedGeneric(typeof(T).Name, pointsChanged, target.Value);
 	}
 
 	private void CheckForLevelChange(T target)
@@ -144,11 +140,8 @@ public class LevelingService<T> : ILevelingService<T> where T : IHasLeveling
 				// Use the new generic helper
 				// this.logger.LogLevelableChanged(typeof(T).Name, namedTarget.Name.Singular, oldLevel, newLevel);
 			}
-			else
-			{
-				// Fallback for unnamed items
-				// this.logger.LogLevelableChangedGeneric(typeof(T).Name, oldLevel, newLevel);
-			}
+			// Fallback for unnamed items
+			// this.logger.LogLevelableChangedGeneric(typeof(T).Name, oldLevel, newLevel);
 		}
 	}
 

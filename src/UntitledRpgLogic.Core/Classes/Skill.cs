@@ -63,14 +63,14 @@ public class Skill : ISkill
 	}
 
 	/// <inheritdoc />
+	public Ulid InstanceId { get; init; }
+
+	/// <inheritdoc />
 	public Ulid Identifier { get; }
 
 	// IHasName Implementation
 	/// <inheritdoc />
 	public Name Name { get; }
-
-	/// <inheritdoc />
-	public Ulid InstanceId { get; init; }
 
 	// IHasLeveling Implementation with Guardrails
 
@@ -130,7 +130,7 @@ public class Skill : ISkill
 			new SkillDataConfig
 			{
 				Identifier = dbModel.Id,
-				Name = dbModel.Name,
+				Name = dbModel.Name.Singular,
 				LevelingOptions = new LevelingOptions
 				{
 					MaxLevel = dbModel.MaxLevel,

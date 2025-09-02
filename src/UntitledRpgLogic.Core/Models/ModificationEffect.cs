@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using UntitledRpgLogic.Core.Options;
 
 namespace UntitledRpgLogic.Core.Models;
 
@@ -8,6 +9,28 @@ namespace UntitledRpgLogic.Core.Models;
 /// </summary>
 public class ModificationEffect
 {
+	/// <summary>
+	///     Initializes a new instance of the <see cref="ModificationEffect" /> class.
+	///     This parameterless constructor is required by Entity Framework Core for materialization.
+	/// </summary>
+	public ModificationEffect()
+	{
+	}
+
+	/// <summary>
+	///     Creates a new modifier effect with the specified options.
+	/// </summary>
+	/// <param name="options"></param>
+	public ModificationEffect(ModifierEffectOptions options)
+	{
+		ArgumentNullException.ThrowIfNull(options, nameof(options));
+
+		this.FlatAmount = options.FlatAmount ?? 0;
+		this.Percentage = options.Percentage ?? 0f;
+		this.PercentageOfMax = options.PercentageOfMax ?? 0f;
+		this.Positive = options.IsPositive ?? true;
+	}
+
 	/// <summary>
 	///     The unique identifier for the modification effect. This is used to reference the effect in the game.
 	/// </summary>

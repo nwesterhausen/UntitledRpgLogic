@@ -46,6 +46,9 @@ public class Stat : IStat
 	}
 
 	/// <inheritdoc />
+	public Ulid InstanceId { get; init; }
+
+	/// <inheritdoc />
 	public Ulid Identifier { get; }
 
 	// IHasName
@@ -107,9 +110,6 @@ public class Stat : IStat
 
 	/// <inheritdoc />
 	public Dictionary<Ulid, float> LinkedStats { get; } = [];
-
-	/// <inheritdoc />
-	public Ulid InstanceId { get; init; }
 
 	/// <inheritdoc />
 	public event EventHandler<ValueChangedEventArgs>? ValueChanged;

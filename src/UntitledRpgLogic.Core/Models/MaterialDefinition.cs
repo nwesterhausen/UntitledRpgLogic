@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using UntitledRpgLogic.Core.Classes;
 
 namespace UntitledRpgLogic.Core.Models;
 
@@ -9,7 +10,26 @@ namespace UntitledRpgLogic.Core.Models;
 public record MaterialDefinition
 {
 	/// <summary>
-	///     Primary key (ULID) for the material definition.
+	///     Constructs a new <see cref="MaterialDefinition" /> with an empty name and default values. (for EF use)
+	/// </summary>
+	public MaterialDefinition()
+	{
+		this.Id = Ulid.NewUlid();
+		this.Name = Name.Empty;
+	}
+
+	/// <summary>
+	///     Constructs a new <see cref="MaterialDefinition" /> with the specified name.
+	/// </summary>
+	/// <param name="name">The display name for the material.</param>
+	public MaterialDefinition(Name name)
+	{
+		this.Id = Ulid.NewUlid();
+		this.Name = name;
+	}
+
+	/// <summary>
+	///     Primary key for the material definition.
 	/// </summary>
 	[Key]
 	public Ulid Id { get; init; }
@@ -17,5 +37,5 @@ public record MaterialDefinition
 	/// <summary>
 	///     Display name for the material.
 	/// </summary>
-	public required string Name { get; init; }
+	public required Name Name { get; init; }
 }

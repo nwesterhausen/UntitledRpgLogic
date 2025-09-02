@@ -9,6 +9,33 @@ namespace UntitledRpgLogic.Core.Models;
 public class InstancedSkill
 {
 	/// <summary>
+	///     Initializes a new instance of the <see cref="InstancedSkill" /> class with default values.
+	///     This constructor sets the skill instance ID to a new ULID, the skill definition ID to an empty ULID,
+	///     and initializes experience points and level to 0.
+	/// </summary>
+	public InstancedSkill()
+	{
+		this.Id = Ulid.NewUlid();
+		this.SkillDefinitionId = Ulid.Empty;
+		this.ExperiencePoints = 0;
+		this.Level = 0;
+	}
+
+	/// <summary>
+	///     Initializes a new instance of the <see cref="InstancedSkill" /> class with the specified skill definition ID.
+	///     This constructor sets the skill instance ID to a new ULID, initializes experience points and level to 0,
+	///     and links the skill instance to the provided skill definition.
+	/// </summary>
+	/// <param name="skillDefinitionId">The unique identifier of the skill definition this instance is based on.</param>
+	public InstancedSkill(Ulid skillDefinitionId)
+	{
+		this.Id = Ulid.NewUlid();
+		this.SkillDefinitionId = skillDefinitionId;
+		this.ExperiencePoints = 0;
+		this.Level = 0;
+	}
+
+	/// <summary>
 	///     The unique identifier for the instanced skill. This is used to identify the skill instance in the game.
 	/// </summary>
 	[Key]

@@ -42,7 +42,7 @@ public static class HasDimensionsExtensions
 	}
 
 	/// <summary>
-	/// Converts a dimensional value from a source scale to a target scale.
+	///     Converts a dimensional value from a source scale to a target scale.
 	/// </summary>
 	/// <param name="value">The dimensional value to convert.</param>
 	/// <param name="fromScale">The original scale of the value.</param>
@@ -70,7 +70,7 @@ public static class HasDimensionsExtensions
 	}
 
 	/// <summary>
-	/// Calculates the volume of an object in the specified target scale.
+	///     Calculates the volume of an object in the specified target scale.
 	/// </summary>
 	/// <param name="dimensions">The object with dimensions.</param>
 	/// <param name="targetScale">The desired scale for the resulting volume.</param>

@@ -8,6 +8,28 @@ namespace UntitledRpgLogic.Core.Models;
 public class EntityStats
 {
 	/// <summary>
+	///     Initializes a new instance of the <see cref="EntityStats" /> class.
+	///     This parameterless constructor is required by Entity Framework Core for materialization.
+	/// </summary>
+	public EntityStats()
+	{
+		this.EntityId = Ulid.Empty;
+		this.InstancedStatId = Ulid.Empty;
+	}
+
+	/// <summary>
+	///     Initializes a new instance of the <see cref="EntityStats" /> class with the specified entity ID
+	///     and item instance ID.
+	/// </summary>
+	/// <param name="entityId">The unique identifier of the entity owning the item instance.</param>
+	/// <param name="instancedStatId">The unique identifier of the stat belonging by the entity.</param>
+	public EntityStats(Ulid entityId, Ulid instancedStatId)
+	{
+		this.EntityId = entityId;
+		this.InstancedStatId = instancedStatId;
+	}
+
+	/// <summary>
 	///     An entity's unique identifier. This is used to reference the entity in the game and in the database.
 	/// </summary>
 	public required Ulid EntityId { get; set; }

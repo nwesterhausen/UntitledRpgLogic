@@ -65,9 +65,9 @@ public interface IHasDimensions
 
 		// Assuming Width is diameter of base 1 and Depth is diameter of base 2.
 		ShapeType.ConicalFrustum => 1f / 3f * MathF.PI * this.Height *
-									(MathF.Pow(this.Width / 2f, 2) +
-									 (this.Width / 2f * (this.Depth / 2f)) +
-									 MathF.Pow(this.Depth / 2f, 2)),
+		                            (MathF.Pow(this.Width / 2f, 2) +
+		                             (this.Width / 2f * (this.Depth / 2f)) +
+		                             MathF.Pow(this.Depth / 2f, 2)),
 		ShapeType.RectangularPrism => throw new NotImplementedException(),
 		_ => 0f // A discard pattern handles any unlisted enum members.
 	};
