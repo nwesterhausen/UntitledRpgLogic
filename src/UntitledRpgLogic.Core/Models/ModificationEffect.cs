@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using UntitledRpgLogic.Core.Interfaces.Data;
 using UntitledRpgLogic.Core.Options;
 
 namespace UntitledRpgLogic.Core.Models;
@@ -7,7 +8,7 @@ namespace UntitledRpgLogic.Core.Models;
 ///     Represents a modification effect that can be applied to stats, such as buffs or debuffs. Consumed by modifiers to
 ///     finally apply the effect to an entity's stats.
 /// </summary>
-public class ModificationEffect
+public class ModificationEffect: IDbEntity<Ulid>
 {
 	/// <summary>
 	///     Initializes a new instance of the <see cref="ModificationEffect" /> class.

@@ -1,12 +1,13 @@
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
+using UntitledRpgLogic.Core.Interfaces.Data;
 
 namespace UntitledRpgLogic.Core.Models;
 
 /// <summary>
 ///     Represents a single log entry to be stored in the database.
 /// </summary>
-public record LogEntry
+public record LogEntry: IDbEntity<Ulid>
 {
 	/// <summary>
 	///     Parameterless constructor for EF Core.

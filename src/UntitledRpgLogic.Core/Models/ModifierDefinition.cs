@@ -1,13 +1,14 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using UntitledRpgLogic.Core.Classes;
+using UntitledRpgLogic.Core.Interfaces.Data;
 
 namespace UntitledRpgLogic.Core.Models;
 
 /// <summary>
 ///     Defines a modifier that can be applied to stats, such as buffs or debuffs.
 /// </summary>
-public record ModifierDefinition
+public record ModifierDefinition: IDbEntity<Ulid>
 {
 	/// <summary>
 	///     Initializes a new instance of the <see cref="ModifierDefinition" /> class with default values.

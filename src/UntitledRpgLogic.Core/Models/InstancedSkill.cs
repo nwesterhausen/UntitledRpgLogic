@@ -1,12 +1,13 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using UntitledRpgLogic.Core.Interfaces.Data;
 
 namespace UntitledRpgLogic.Core.Models;
 
 /// <summary>
 ///     Represents an instanced skill in the RPG logic. This class specifically for storing skill instances in a database.
 /// </summary>
-public class InstancedSkill
+public class InstancedSkill: IDbEntity<Ulid>
 {
 	/// <summary>
 	///     Initializes a new instance of the <see cref="InstancedSkill" /> class with default values.

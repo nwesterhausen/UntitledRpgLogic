@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using UntitledRpgLogic.Core.Classes;
 using UntitledRpgLogic.Core.Configuration;
 using UntitledRpgLogic.Core.Enums;
+using UntitledRpgLogic.Core.Interfaces.Data;
 
 namespace UntitledRpgLogic.Core.Models;
 
@@ -9,7 +10,7 @@ namespace UntitledRpgLogic.Core.Models;
 ///     Definition data for an item type. Instances reference this by ULID.
 ///     Keep values EF-friendly and focused on definition-time attributes.
 /// </summary>
-public record ItemDefinition
+public record ItemDefinition: IDbEntity<Ulid>
 {
 	/// <summary>
 	///     Constructs a new <see cref="ItemDefinition" /> with default values. (mainly for EF use)

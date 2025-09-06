@@ -2,13 +2,14 @@ using System.ComponentModel.DataAnnotations;
 using UntitledRpgLogic.Core.Classes;
 using UntitledRpgLogic.Core.Configuration;
 using UntitledRpgLogic.Core.Enums;
+using UntitledRpgLogic.Core.Interfaces.Data;
 
 namespace UntitledRpgLogic.Core.Models;
 
 /// <summary>
 ///     A skill definition in the RPG logic, for usage with a database.
 /// </summary>
-public record SkillDefinition
+public record SkillDefinition: IDbEntity<Ulid>
 {
 	/// <summary>
 	///     Initializes an empty instance of the <see cref="SkillDefinition" /> class (for EF use).

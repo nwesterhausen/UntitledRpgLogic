@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using UntitledRpgLogic.Core.Classes;
 using UntitledRpgLogic.Core.Configuration;
 using UntitledRpgLogic.Core.Enums;
+using UntitledRpgLogic.Core.Interfaces.Data;
 
 namespace UntitledRpgLogic.Core.Models;
 
@@ -11,7 +12,7 @@ namespace UntitledRpgLogic.Core.Models;
 ///     defines
 ///     how those stats would behave.
 /// </summary>
-public record StatDefinition
+public record StatDefinition: IDbEntity<Ulid>
 {
 	/// <summary>
 	///     Initializes a new instance of the <see cref="StatDefinition" /> class with default values.

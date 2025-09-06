@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using UntitledRpgLogic.Core.Classes;
+using UntitledRpgLogic.Core.Interfaces.Data;
 
 namespace UntitledRpgLogic.Core.Models;
 
@@ -7,7 +8,7 @@ namespace UntitledRpgLogic.Core.Models;
 ///     Minimal material definition for persistence. Instances of items can reference materials by this ULID.
 ///     Additional physical properties can be modeled later as separate tables or owned types.
 /// </summary>
-public record MaterialDefinition
+public record MaterialDefinition: IDbEntity<Ulid>
 {
 	/// <summary>
 	///     Constructs a new <see cref="MaterialDefinition" /> with an empty name and default values. (for EF use)

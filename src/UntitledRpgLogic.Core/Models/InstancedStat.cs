@@ -1,12 +1,13 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using UntitledRpgLogic.Core.Interfaces.Data;
 
 namespace UntitledRpgLogic.Core.Models;
 
 /// <summary>
 ///     Represents an entity's stat, defined by a StatDefinition, with a base value and an apparent value.
 /// </summary>
-public class InstancedStat
+public class InstancedStat: IDbEntity<Ulid>
 {
 	/// <summary>
 	///     Initializes a new instance of the <see cref="InstancedSkill" /> class with default values.

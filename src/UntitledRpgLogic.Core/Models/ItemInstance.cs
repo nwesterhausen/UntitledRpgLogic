@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using UntitledRpgLogic.Core.Interfaces.Data;
 
 namespace UntitledRpgLogic.Core.Models;
 
@@ -7,7 +8,7 @@ namespace UntitledRpgLogic.Core.Models;
 ///     Represents a concrete item instance in the world or inventory.
 ///     Holds its own ULID and current state, and references the item definition by ULID.
 /// </summary>
-public record ItemInstance
+public record ItemInstance: IDbEntity<Ulid>
 {
 	/// <summary>
 	///     Initializes a new instance of the <see cref="ItemInstance" /> class with default values.
