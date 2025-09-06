@@ -24,7 +24,7 @@ public class PhysicsEffectComponent : IEffectComponent
 		this.Mass = mass;
 
 		// Generate a new GUID for this component instance
-		this.Identifier = Ulid.NewUlid();
+		this.Id = Ulid.NewUlid();
 	}
 
 	/// <summary>
@@ -43,7 +43,7 @@ public class PhysicsEffectComponent : IEffectComponent
 	public float Mass { get; }
 
 	/// <inheritdoc />
-	public Ulid Identifier { get; }
+	public Ulid Id { get; }
 
 	/// <inheritdoc />
 	public Name Name { get; }

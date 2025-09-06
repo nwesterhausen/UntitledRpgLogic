@@ -44,7 +44,7 @@ public record ModuleInfoConfig : ITomlConfig
 	///     validating a configuration pack, the Ulid will be persisted back to the source file before bundling.
 	///     This ensures that every stat has a stable and unique identifier.
 	/// </remarks>
-	public Ulid Identifier { get; set; } = Ulid.NewUlid();
+	public Ulid Id { get; set; } = Ulid.NewUlid();
 
 	/// <inheritdoc />
 	public ConfigType ConfigType => ConfigType.ModuleInfo;

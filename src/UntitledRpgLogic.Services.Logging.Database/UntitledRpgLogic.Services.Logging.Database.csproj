@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<!-- Package metadata -->
+		<PackageId>UntitledRpgLogic.Services.Logging.Database</PackageId>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.8"/>
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.8"/>
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\UntitledRpgLogic.Core\UntitledRpgLogic.Core.csproj"/>
+		<ProjectReference Include="..\UntitledRpgLogic.Infrastructure.Data\UntitledRpgLogic.Infrastructure.Data.csproj"/>
+	</ItemGroup>
+
+</Project>

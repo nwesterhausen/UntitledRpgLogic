@@ -1,4 +1,3 @@
-
 namespace UntitledRpgLogic.Core.Interfaces.Abilities;
 
 /// <summary>

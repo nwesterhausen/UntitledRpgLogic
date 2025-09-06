@@ -5,11 +5,11 @@ using Microsoft.Extensions.Logging;
 namespace UntitledRpgLogic.Extensions.Logging;
 
 /// <summary>
-/// High-performance logging extensions for game events (server or client).
+///     High-performance logging extensions for game events (server or client).
 /// </summary>
 /// <remarks>
-/// This class is a partial class. Additional logging methods are defined in other files
-/// named LoggingExtensions.*.cs.
+///     This class is a partial class. Additional logging methods are defined in other files
+///     named LoggingExtensions.*.cs.
 /// </remarks>
 public static partial class LoggerExtensions
 {

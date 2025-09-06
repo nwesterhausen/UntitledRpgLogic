@@ -23,7 +23,7 @@ public class TargetingEffectComponent : IEffectComponent
 		this.Radius = radius;
 
 		// Generate a new GUID for this component instance
-		this.Identifier = Ulid.NewUlid();
+		this.Id = Ulid.NewUlid();
 	}
 
 	/// <summary>
@@ -42,7 +42,7 @@ public class TargetingEffectComponent : IEffectComponent
 	public float? Radius { get; }
 
 	/// <inheritdoc />
-	public Ulid Identifier { get; }
+	public Ulid Id { get; }
 
 	/// <inheritdoc />
 	public Name Name { get; }

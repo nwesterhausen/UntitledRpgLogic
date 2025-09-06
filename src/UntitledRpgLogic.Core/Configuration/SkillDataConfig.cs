@@ -27,7 +27,7 @@ public record SkillDataConfig : ITomlConfig
 	/// <summary>
 	///     The ULID identifier for this skill configuration. This is required.
 	/// </summary>
-	public Ulid Identifier { get; set; }
+	public Ulid Id { get; set; }
 
 	/// <inheritdoc />
 	public ConfigType ConfigType => ConfigType.Skill;

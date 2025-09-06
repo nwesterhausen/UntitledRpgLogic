@@ -8,17 +8,17 @@ public static class EventIdValues
 	/// ----------------------------------
 	/// System & Error (0 - 9xx)
 	/// ----------------------------------
-	/// 
 	/// <summary>
-	/// An invalid or uninitialized event ID.
+	///     An invalid or uninitialized event ID.
 	/// </summary>
 	public const int None = 0;
 
 	/// System & Error
 	/// <summary>
-	/// Indicates an unexpected error occurred.
+	///     Indicates an unexpected error occurred.
 	/// </summary>
 	public const int UnexpectedError = 900;
+
 	public const int ValidationError = 901;
 	public const int OperationNotSupported = 902;
 
@@ -27,25 +27,30 @@ public static class EventIdValues
 	/// ----------------------------------
 	/// Sub-category: Game Session (1000 - 10xx)
 	public const int PlayerLogin = 1000;
+
 	public const int PlayerLogout = 1001;
 
 	/// Sub-category: Inventory (1100 - 11xx)
 	/// <summary>
-	/// Indicates an item has been equipped.
+	///     Indicates an item has been equipped.
 	/// </summary>
 	public const int PlayerEquipItem = 1100;
+
 	/// <summary>
-	/// Indicates an item has been moved within the inventory.
+	///     Indicates an item has been moved within the inventory.
 	/// </summary>
 	public const int PlayerMoveItem = 1101;
+
 	/// <summary>
-	/// Indicates the inventory is full and cannot accept more items.
+	///     Indicates the inventory is full and cannot accept more items.
 	/// </summary>
 	public const int PlayerInventoryFull = 1102;
+
 	public const int PlayerLootItem = 1103;
 
 	/// Sub-category: Combat and Abilities (1200 - 12xx)
 	public const int PlayerUseAbility = 1200;
+
 	public const int PlayerAttack = 1201;
 	public const int PlayerTakeDamage = 1202;
 	public const int PlayerHeal = 1203;
@@ -64,6 +69,7 @@ public static class EventIdValues
 
 	/// Sub-category: Social Interactions (1300 - 13xx)
 	public const int PlayerChatMessageSent = 1300;
+
 	public const int PlayerChatMessageReceived = 1301;
 	public const int PlayerChatMessageFailed = 1302;
 	public const int PlayerPrivateMessageSent = 1303;
@@ -78,8 +84,8 @@ public static class EventIdValues
 	public const int PlayerUnblockedUser = 1312;
 
 	/// Sub-category: Quests and Achievements (1400 - 14xx)
-
 	public const int PlayerQuestAccepted = 1400;
+
 	public const int PlayerQuestCompleted = 1401;
 	public const int PlayerQuestFailed = 1402;
 	public const int PlayerQuestAbandoned = 1403;
@@ -90,15 +96,17 @@ public static class EventIdValues
 	/// ----------------------------------
 	/// Sub-category: Application Lifecycle (5000 - 50xx)
 	/// <summary>
-	/// Indicates the application has loaded and is starting up.
+	///     Indicates the application has loaded and is starting up.
 	/// </summary>
 	public const int ApplicationStarting = 5000;
+
 	public const int ApplicationStarted = 5001;
 	public const int ApplicationStopping = 5002;
 	public const int ApplicationStopped = 5003;
 
 	/// Sub-category: Configuration and Library File Operations (5100 - 51xx)
 	public const int LoadingLibraryFile = 5100;
+
 	public const int LibraryFileLoaded = 5101;
 	public const int LibraryFileLoadFailed = 5102;
 	public const int LibraryHeaderMismatch = 5103;
@@ -119,6 +127,7 @@ public static class EventIdValues
 
 	/// Sub-category: Network Operations (5200 - 52xx)
 	public const int NetworkListenerStarting = 5200;
+
 	public const int NetworkListenerStarted = 5201;
 	public const int NetworkListenerStopping = 5202;
 	public const int NetworkListenerStopped = 5203;
@@ -155,6 +164,7 @@ public static class EventIdValues
 
 	/// Sub-category: Database Operations (5300 - 53xx)
 	public const int DatabaseConnecting = 5300;
+
 	public const int DatabaseConnected = 5301;
 	public const int DatabaseConnectionFailed = 5302;
 	public const int MigrationStarted = 5303;
@@ -183,6 +193,7 @@ public static class EventIdValues
 
 	/// Sub-category: Persistence Operations (5400 - 54xx)
 	public const int PlayerStateSaving = 5400;
+
 	public const int PlayerStateSaved = 5401;
 	public const int PlayerStateSaveFailed = 5402;
 	public const int PlayerStateLoading = 5403;
@@ -191,6 +202,7 @@ public static class EventIdValues
 
 	/// Sub-category: World Events (5500 - 55xx)
 	public const int WorldStateChanged = 5500;
+
 	public const int WeatherChanged = 5501;
 	public const int TimeOfDayChanged = 5502;
 	public const int LootGenerated = 5503;
@@ -198,11 +210,11 @@ public static class EventIdValues
 
 	/// Sub-cagegory: Entity Events (5600 - 56xx)
 	public const int EntitySpawning = 5600;
+
 	public const int EntitySpawned = 5601;
 	public const int EntityDespawning = 5602;
 	public const int EntityDespawned = 5603;
 	public const int EntityStateChanged = 5604;
 	public const int EntityInteraction = 5605;
 	public const int EntityKilled = 5606;
-
 }

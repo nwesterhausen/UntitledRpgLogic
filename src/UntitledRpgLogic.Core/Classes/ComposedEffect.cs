@@ -28,11 +28,11 @@ public class ComposedEffect : IActiveEffect
 		this.effectApplicationService = effectApplicationService;
 
 		// Generate a new GUID for this effect instance
-		this.Identifier = Ulid.NewUlid();
+		this.Id = Ulid.NewUlid();
 	}
 
 	/// <inheritdoc />
-	public Ulid Identifier { get; }
+	public Ulid Id { get; }
 
 	/// <inheritdoc />
 	public Name Name { get; }

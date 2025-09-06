@@ -81,9 +81,22 @@ public record ItemDataConfig : ITomlConfig
 
 	/// <summary>
 	///     A reference to the material that this item is made of. This is a ULID that points to a material entity,
-	///     specified in that material's configuration under <see cref="Identifier" />.
+	///     specified in that material's configuration under <see cref="Id" />.
 	/// </summary>
 	public Ulid MaterialId { get; set; }
+
+	/// <summary>
+	///     The maximum number of this item that can be stacked in a single inventory slot. If this is greater than 1, the item is considered
+	///     stackable.
+	///     If not provided, defaults to 1 (not stackable).
+	/// </summary>
+	public int MaxStack { get; set; } = 1;
+
+	/// <summary>
+	///     The base durability of the item. This represents how much wear and tear the item can take before it breaks or becomes unusable.
+	///     If the item does not have durability, this should be set to 0. (e.g., for consumables or quest items)
+	/// </summary>
+	public int BaseDurability { get; set; }
 
 	/// <summary>
 	///     Optional. If provided in TOML, this specific Ulid will be used for the item; otherwise, a new one will be generated.
@@ -95,7 +108,7 @@ public record ItemDataConfig : ITomlConfig
 	///     validating a configuration pack, the Ulid will be persisted back to the source file before bundling.
 	///     This ensures that every stat has a stable and unique identifier.
 	/// </remarks>
-	public Ulid Identifier { get; set; } = Ulid.NewUlid();
+	public Ulid Id { get; set; } = Ulid.NewUlid();
 
 	/// <inheritdoc />
 	public ConfigType ConfigType => ConfigType.Item;

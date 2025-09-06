@@ -25,7 +25,7 @@ public class SummonEffectComponent : IEffectComponent
 		this.DurationInSeconds = durationInSeconds;
 
 		// Generate a new GUID for this component instance
-		this.Identifier = Ulid.NewUlid();
+		this.Id = Ulid.NewUlid();
 	}
 
 	/// <summary>
@@ -45,7 +45,7 @@ public class SummonEffectComponent : IEffectComponent
 	public float DurationInSeconds { get; }
 
 	/// <inheritdoc />
-	public Ulid Identifier { get; }
+	public Ulid Id { get; }
 
 	/// <inheritdoc />
 	public Name Name { get; }

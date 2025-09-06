@@ -12,7 +12,7 @@ namespace UntitledRpgLogic.Core.Interfaces.Abilities;
 public interface IAbility : IHasIdentifier, IHasName, IHasTooltipString
 {
 	/// <summary>
-	/// Gets the collection of effects that this ability produces when active or equipped.
+	///     Gets the collection of effects that this ability produces when active or equipped.
 	/// </summary>
 	public IEnumerable<IEffect> Effects { get; }
 

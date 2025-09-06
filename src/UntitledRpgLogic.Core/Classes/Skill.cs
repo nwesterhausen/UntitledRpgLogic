@@ -30,7 +30,7 @@ public class Skill : ISkill
 	{
 		ArgumentNullException.ThrowIfNull(config, nameof(config));
 
-		this.Identifier = config.Identifier;
+		this.Id = config.Id;
 
 		this.Name = Name.Deserialize(config.Name);
 
@@ -63,14 +63,14 @@ public class Skill : ISkill
 	}
 
 	/// <inheritdoc />
-	public Ulid Identifier { get; }
+	public Ulid InstanceId { get; init; }
+
+	/// <inheritdoc />
+	public Ulid Id { get; }
 
 	// IHasName Implementation
 	/// <inheritdoc />
 	public Name Name { get; }
-
-	/// <inheritdoc />
-	public Ulid InstanceId { get; init; }
 
 	// IHasLeveling Implementation with Guardrails
 
@@ -129,8 +129,8 @@ public class Skill : ISkill
 		return new Skill(
 			new SkillDataConfig
 			{
-				Identifier = dbModel.Id,
-				Name = dbModel.Name,
+				Id = dbModel.Id,
+				Name = dbModel.Name.Singular,
 				LevelingOptions = new LevelingOptions
 				{
 					MaxLevel = dbModel.MaxLevel,

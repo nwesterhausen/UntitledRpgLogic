@@ -20,7 +20,7 @@ public class BaseItem : IItem
 	{
 		ArgumentNullException.ThrowIfNull(config, nameof(config));
 
-		this.Identifier = config.Identifier;
+		this.Id = config.Id;
 		this.Name = Name.Deserialize(config.Name);
 		this.Quality = config.ItemQuality ?? Quality.None;
 		this.ItemType = config.ItemType;
@@ -28,7 +28,7 @@ public class BaseItem : IItem
 		this.CraftedBy = config.CraftedBy;
 		this.DimensionScale = config.DimensionScale ?? DimensionScale.Cm;
 		this.ShapeType = config.ShapeType ??
-						 ShapeType.RectangularPrism; // Actually base this on ItemType and ItemSubtype in the future.
+		                 ShapeType.RectangularPrism; // Actually base this on ItemType and ItemSubtype in the future.
 		this.Width = config.Width;
 		this.Height = config.Height;
 		this.Depth = config.Depth ?? 1.0f;
@@ -62,7 +62,7 @@ public class BaseItem : IItem
 	public float Depth { get; set; }
 
 	/// <inheritdoc />
-	public Ulid Identifier { get; }
+	public Ulid Id { get; }
 
 	/// <inheritdoc />
 	public Name Name { get; }

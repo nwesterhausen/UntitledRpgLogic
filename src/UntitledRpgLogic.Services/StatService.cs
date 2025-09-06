@@ -6,7 +6,6 @@ using UntitledRpgLogic.Core.Interfaces.Common;
 using UntitledRpgLogic.Core.Interfaces.Effects;
 using UntitledRpgLogic.Core.Interfaces.Services;
 using UntitledRpgLogic.Core.Options;
-using UntitledRpgLogic.Extensions.Logging;
 
 namespace UntitledRpgLogic.Services;
 
@@ -124,7 +123,7 @@ public class StatService : IStatService
 		ArgumentNullException.ThrowIfNull(sourceStat);
 		ArgumentNullException.ThrowIfNull(dependentStat);
 
-		if (!dependentStat.LinkedStats.TryAdd(sourceStat.Identifier, ratio))
+		if (!dependentStat.LinkedStats.TryAdd(sourceStat.Id, ratio))
 		{
 			this.logger.LogWarning("Stat {DependentStat} is already linked to {SourceStat}.",
 				dependentStat.Name, sourceStat.Name);

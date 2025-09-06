@@ -21,9 +21,7 @@ public class ElementalEffectComponent : IEffectComponent
 		this.Intensity = intensity;
 
 		// Generate a new GUID for this component instance
-		this.Identifier = Ulid.NewUlid();
-		this.Id = this.Identifier.ToString();
-		this.ShortId = this.Identifier.ToGuid().ToString("N")[..8].ToUpperInvariant();
+		this.Id = Ulid.NewUlid();
 	}
 
 	/// <summary>
@@ -37,13 +35,7 @@ public class ElementalEffectComponent : IEffectComponent
 	public float Intensity { get; }
 
 	/// <inheritdoc />
-	public string Id { get; }
-
-	/// <inheritdoc />
-	public string ShortId { get; }
-
-	/// <inheritdoc />
-	public Ulid Identifier { get; }
+	public Ulid Id { get; }
 
 	/// <inheritdoc />
 	public Name Name { get; }

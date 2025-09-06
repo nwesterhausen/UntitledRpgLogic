@@ -21,7 +21,7 @@ public record AuthorConfig : ITomlConfig
 	/// <summary>
 	///     The unique identifier for the author.
 	/// </summary>
-	public required Ulid Identifier { get; set; }
+	public required Ulid Id { get; set; }
 
 	/// <inheritdoc />
 	public ConfigType ConfigType => ConfigType.Author;

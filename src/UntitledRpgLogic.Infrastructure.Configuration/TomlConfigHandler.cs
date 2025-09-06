@@ -168,7 +168,7 @@ public class TomlConfigHandler : ITomlConfigHandler
 
 			// Extract the ConfigType from the document
 			if (!tomlDocument.TryGetValue("ConfigType", out var configType) ||
-				configType is not TomlString configTypeString)
+			    configType is not TomlString configTypeString)
 			{
 				this.logger.LogError("'ConfigType' is not set or not a string");
 				throw new InvalidOperationException("'ConfigType' is not set or not a string.");

@@ -28,7 +28,7 @@ public class Stat : IStat
 	{
 		ArgumentNullException.ThrowIfNull(config, nameof(config));
 		// Initialize IHasGuid properties
-		this.Identifier = config.Identifier;
+		this.Id = config.Id;
 
 		// Initialize other properties from config
 		this.Name = Name.Deserialize(config.Name);
@@ -46,7 +46,10 @@ public class Stat : IStat
 	}
 
 	/// <inheritdoc />
-	public Ulid Identifier { get; }
+	public Ulid InstanceId { get; init; }
+
+	/// <inheritdoc />
+	public Ulid Id { get; }
 
 	// IHasName
 	/// <inheritdoc />
@@ -107,9 +110,6 @@ public class Stat : IStat
 
 	/// <inheritdoc />
 	public Dictionary<Ulid, float> LinkedStats { get; } = [];
-
-	/// <inheritdoc />
-	public Ulid InstanceId { get; init; }
 
 	/// <inheritdoc />
 	public event EventHandler<ValueChangedEventArgs>? ValueChanged;
