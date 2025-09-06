@@ -42,7 +42,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UntitledRpgLogic.UnitTests"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UntitledRpgLogic.StateMachines", "src\UntitledRpgLogic.StateMachines\UntitledRpgLogic.StateMachines.csproj", "{B72C1212-A269-CA33-8073-5421EFEF6AA9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UntitledRpgLogic.Extensions.Logging.Database", "src\UntitledRpgLogic.Extensions.Logging.Database\UntitledRpgLogic.Extensions.Logging.Database.csproj", "{BBCA0151-EFF8-1972-C8E5-7509A760665D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UntitledRpgLogic.Services.Logging.Database", "src\UntitledRpgLogic.Services.Logging.Database\UntitledRpgLogic.Services.Logging.Database.csproj", "{BBCA0151-EFF8-1972-C8E5-7509A760665D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -227,7 +227,7 @@ Global
 		{24BE8C12-1645-CAAC-A033-DF4F157A76BF} = {0974684A-DD94-4912-8D47-A694E1BB2109}
 		{B8D23AFA-9BA9-E955-02C2-2F630DF69A16} = {0974684A-DD94-4912-8D47-A694E1BB2109}
 		{B72C1212-A269-CA33-8073-5421EFEF6AA9} = {9E05C637-8267-437E-9898-20273796C76E}
-		{BBCA0151-EFF8-1972-C8E5-7509A760665D} = {9F665B30-3748-41AF-AD49-F734AAFFE331}
+		{BBCA0151-EFF8-1972-C8E5-7509A760665D} = {9E05C637-8267-437E-9898-20273796C76E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9F4ADEF9-791E-4CE2-9A43-DE282B5CAA42}

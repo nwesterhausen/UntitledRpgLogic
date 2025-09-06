@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace UntitledRpgLogic.Core.Models;
 
@@ -10,24 +11,43 @@ public record LogEntry
   /// <summary>
   ///     Parameterless constructor for EF Core.
   /// </summary>
-  public LogEntry()
+  [SetsRequiredMembers]
+  private LogEntry()
   {
     this.Id = Ulid.NewUlid();
     this.Timestamp = DateTimeOffset.UtcNow;
+    this.Message = string.Empty;
   }
 
   /// <summary>
   ///     Initializes a new instance of the <see cref="LogEntry" /> class.
   /// </summary>
+  [SetsRequiredMembers]
   public LogEntry(int level, int eventId, string message, string? category = null, string? parameters = null)
   {
-    this.Id = Ulid.NewUlid();
-    this.Timestamp = DateTimeOffset.UtcNow;
-    this.Level = level;
-    this.EventId = eventId;
-    this.Message = message;
-    this.Category = category;
-    this.Parameters = parameters;
+	  this.Id = Ulid.NewUlid();
+	  this.Timestamp = DateTimeOffset.UtcNow;
+	  this.Level = level;
+	  this.EventId = eventId;
+	  this.Message = message;
+	  this.Category = category;
+	  this.Parameters = parameters;
+  }
+
+  /// <summary>
+  ///     Initializes a new instance of the <see cref="LogEntry" /> class.
+  /// </summary>
+  [SetsRequiredMembers]
+  public LogEntry(int level, int eventId, string message, string? category = null, Ulid? entityId = null, string? parameters = null)
+  {
+	  this.Id = Ulid.NewUlid();
+	  this.Timestamp = DateTimeOffset.UtcNow;
+	  this.Level = level;
+	  this.EventId = eventId;
+	  this.Message = message;
+	  this.Category = category;
+	  this.EntityId = entityId;
+	  this.Parameters = parameters;
   }
 
   /// <summary>
@@ -50,6 +70,11 @@ public record LogEntry
   ///     The event ID associated with the log entry, for structured logging.
   /// </summary>
   public int EventId { get; init; }
+
+  /// <summary>
+  ///	The optional ID of the entity related to this log entry (e.g., a player, an mob, and item).
+  /// </summary>
+  public Ulid? EntityId { get; init; }
 
   /// <summary>
   ///     The log message with placeholders (the message template).

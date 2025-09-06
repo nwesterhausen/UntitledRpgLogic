@@ -7,4 +7,8 @@
 			-->
 		<TestingPlatformShowTestsFailure>true</TestingPlatformShowTestsFailure>
 	</PropertyGroup>
+
+	<ItemGroup>
+	  <PackageReference Update="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+	</ItemGroup>
 </Project>
