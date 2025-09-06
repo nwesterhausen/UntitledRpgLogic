@@ -7,7 +7,7 @@ namespace UntitledRpgLogic.Core.Models;
 /// <summary>
 ///     Represents a single log entry to be stored in the database.
 /// </summary>
-public record LogEntry: IDbEntity<Ulid>
+public record LogEntry : IDbEntity<Ulid>
 {
 	/// <summary>
 	///     Parameterless constructor for EF Core.
@@ -56,12 +56,6 @@ public record LogEntry: IDbEntity<Ulid>
 	}
 
 	/// <summary>
-	///     The unique identifier for the log entry.
-	/// </summary>
-	[Key]
-	public Ulid Id { get; init; }
-
-	/// <summary>
 	///     The timestamp of when the log entry was created.
 	/// </summary>
 	public DateTimeOffset Timestamp { get; init; }
@@ -95,4 +89,10 @@ public record LogEntry: IDbEntity<Ulid>
 	///     The category of the log, typically the name of the logger (e.g., "StatService").
 	/// </summary>
 	public string? Category { get; init; }
+
+	/// <summary>
+	///     The unique identifier for the log entry.
+	/// </summary>
+	[Key]
+	public Ulid Id { get; init; }
 }

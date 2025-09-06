@@ -8,7 +8,7 @@ namespace UntitledRpgLogic.Core.Models;
 ///     Represents a concrete item instance in the world or inventory.
 ///     Holds its own ULID and current state, and references the item definition by ULID.
 /// </summary>
-public record ItemInstance: IDbEntity<Ulid>
+public record ItemInstance : IDbEntity<Ulid>
 {
 	/// <summary>
 	///     Initializes a new instance of the <see cref="ItemInstance" /> class with default values.
@@ -47,12 +47,6 @@ public record ItemInstance: IDbEntity<Ulid>
 	}
 
 	/// <summary>
-	///     Primary key for the item instance.
-	/// </summary>
-	[Key]
-	public Ulid Id { get; init; }
-
-	/// <summary>
 	///     FK to the item definition for this instance.
 	/// </summary>
 	public required Ulid ItemDefinitionId { get; init; }
@@ -88,4 +82,10 @@ public record ItemInstance: IDbEntity<Ulid>
 	/// </summary>
 	[ForeignKey(nameof(PrimaryMaterialId))]
 	public MaterialDefinition? PrimaryMaterial { get; init; }
+
+	/// <summary>
+	///     Primary key for the item instance.
+	/// </summary>
+	[Key]
+	public Ulid Id { get; init; }
 }

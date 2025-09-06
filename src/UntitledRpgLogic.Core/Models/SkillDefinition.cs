@@ -9,7 +9,7 @@ namespace UntitledRpgLogic.Core.Models;
 /// <summary>
 ///     A skill definition in the RPG logic, for usage with a database.
 /// </summary>
-public record SkillDefinition: IDbEntity<Ulid>
+public record SkillDefinition : IDbEntity<Ulid>
 {
 	/// <summary>
 	///     Initializes an empty instance of the <see cref="SkillDefinition" /> class (for EF use).
@@ -62,12 +62,6 @@ public record SkillDefinition: IDbEntity<Ulid>
 	}
 
 	/// <summary>
-	///     The unique identifier for the skill definition. This is used to identify the skill in the database.
-	/// </summary>
-	[Key]
-	public Ulid Id { get; init; }
-
-	/// <summary>
 	///     The name of the skill. This is used to identify the skill in the game and should be unique.
 	/// </summary>
 	public required Name Name { get; init; }
@@ -101,4 +95,10 @@ public record SkillDefinition: IDbEntity<Ulid>
 	///     The type of scaling curve to use for experience requirements (e.g., linear, parabolic, logarithmic).
 	/// </summary>
 	public ScalingCurveType ScalingCurve { get; init; }
+
+	/// <summary>
+	///     The unique identifier for the skill definition. This is used to identify the skill in the database.
+	/// </summary>
+	[Key]
+	public Ulid Id { get; init; }
 }

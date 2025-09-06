@@ -1,4 +1,3 @@
-using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using UntitledRpgLogic.Core.Interfaces.Data.Repositories;
 using UntitledRpgLogic.Core.Models;
@@ -6,7 +5,7 @@ using UntitledRpgLogic.Core.Models;
 namespace UntitledRpgLogic.Infrastructure.Data.Repositories;
 
 /// <summary>
-///		Implements a repository specifically for Entity objects, extending the generic repository.
+///     Implements a repository specifically for Entity objects, extending the generic repository.
 /// </summary>
 public class EntityRepository : Repository<Entity, Ulid>, IEntityRepository
 {
@@ -16,7 +15,7 @@ public class EntityRepository : Repository<Entity, Ulid>, IEntityRepository
 	}
 
 	/// <summary>
-	///		A private property to access the DbContext as RpgDbContext.
+	///     A private property to access the DbContext as RpgDbContext.
 	/// </summary>
 	private RpgDbContext RpgDbContext => (RpgDbContext)this.Context;
 

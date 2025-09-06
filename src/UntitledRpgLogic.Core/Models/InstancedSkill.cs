@@ -7,7 +7,7 @@ namespace UntitledRpgLogic.Core.Models;
 /// <summary>
 ///     Represents an instanced skill in the RPG logic. This class specifically for storing skill instances in a database.
 /// </summary>
-public class InstancedSkill: IDbEntity<Ulid>
+public class InstancedSkill : IDbEntity<Ulid>
 {
 	/// <summary>
 	///     Initializes a new instance of the <see cref="InstancedSkill" /> class with default values.
@@ -37,12 +37,6 @@ public class InstancedSkill: IDbEntity<Ulid>
 	}
 
 	/// <summary>
-	///     The unique identifier for the instanced skill. This is used to identify the skill instance in the game.
-	/// </summary>
-	[Key]
-	public Ulid Id { get; init; }
-
-	/// <summary>
 	///     The unique identifier for the skill definition that this instanced skill is based on. This links the instanced
 	///     skill to its definition.
 	/// </summary>
@@ -64,4 +58,10 @@ public class InstancedSkill: IDbEntity<Ulid>
 	/// </summary>
 	[ForeignKey(nameof(SkillDefinitionId))]
 	public SkillDefinition? SkillDefinition { get; init; }
+
+	/// <summary>
+	///     The unique identifier for the instanced skill. This is used to identify the skill instance in the game.
+	/// </summary>
+	[Key]
+	public Ulid Id { get; init; }
 }

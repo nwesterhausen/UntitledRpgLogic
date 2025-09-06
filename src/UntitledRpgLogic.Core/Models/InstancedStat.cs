@@ -7,7 +7,7 @@ namespace UntitledRpgLogic.Core.Models;
 /// <summary>
 ///     Represents an entity's stat, defined by a StatDefinition, with a base value and an apparent value.
 /// </summary>
-public class InstancedStat: IDbEntity<Ulid>
+public class InstancedStat : IDbEntity<Ulid>
 {
 	/// <summary>
 	///     Initializes a new instance of the <see cref="InstancedSkill" /> class with default values.
@@ -37,12 +37,6 @@ public class InstancedStat: IDbEntity<Ulid>
 	}
 
 	/// <summary>
-	///     The unique identifier for the instanced stat. This is used to identify the stat in the database and in the game.
-	/// </summary>
-	[Key]
-	public Ulid Id { get; init; }
-
-	/// <summary>
 	///     The unique identifier for the stat definition that this instanced stat is based on. This links the instanced stat
 	///     to its definition.
 	/// </summary>
@@ -63,4 +57,10 @@ public class InstancedStat: IDbEntity<Ulid>
 	/// </summary>
 	[ForeignKey(nameof(StatDefinitionId))]
 	public StatDefinition? StatDefinition { get; init; }
+
+	/// <summary>
+	///     The unique identifier for the instanced stat. This is used to identify the stat in the database and in the game.
+	/// </summary>
+	[Key]
+	public Ulid Id { get; init; }
 }

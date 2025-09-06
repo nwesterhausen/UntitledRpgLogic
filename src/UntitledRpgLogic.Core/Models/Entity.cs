@@ -1,7 +1,5 @@
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using UntitledRpgLogic.Core.Classes;
-using UntitledRpgLogic.Core.Interfaces.Data;
 using UntitledRpgLogic.Core.Interfaces.Entities;
 
 namespace UntitledRpgLogic.Core.Models;
@@ -49,13 +47,6 @@ public record Entity : IEntity
 		this.Name = Name.Empty;
 	}
 
-	/// <inheritdoc />
-	public Name Name { get; init; }
-
-	/// <inheritdoc />
-	[Key]
-	public Ulid Id { get; init; } = Ulid.NewUlid();
-
 	/// <summary>
 	///     Gets or sets the entity's inventory.
 	/// </summary>
@@ -70,4 +61,11 @@ public record Entity : IEntity
 	///     Gets or sets the entity's collection of stats.
 	/// </summary>
 	public virtual EntityStats? Stats { get; set; }
+
+	/// <inheritdoc />
+	public Name Name { get; init; }
+
+	/// <inheritdoc />
+	[Key]
+	public Ulid Id { get; init; } = Ulid.NewUlid();
 }

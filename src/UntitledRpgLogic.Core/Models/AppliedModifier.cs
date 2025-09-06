@@ -7,7 +7,7 @@ namespace UntitledRpgLogic.Core.Models;
 /// <summary>
 ///     Represents an applied modifier instance on a specific entity, including stack count and timing.
 /// </summary>
-public record AppliedModifier: IDbEntity<Ulid>
+public record AppliedModifier : IDbEntity<Ulid>
 {
 	/// <summary>
 	///     Initializes a new instance of the <see cref="AppliedModifier" /> class.
@@ -32,12 +32,6 @@ public record AppliedModifier: IDbEntity<Ulid>
 		this.ModifierDefinitionId = modifierDefinitionId;
 		this.EntityId = entityId;
 	}
-
-	/// <summary>
-	///     Primary key (ULID) for the applied modifier instance.
-	/// </summary>
-	[Key]
-	public Ulid Id { get; init; }
 
 	/// <summary>
 	///     FK to the modifier definition being applied.
@@ -75,4 +69,10 @@ public record AppliedModifier: IDbEntity<Ulid>
 	/// </summary>
 	[ForeignKey(nameof(EntityId))]
 	public Entity? Entity { get; init; }
+
+	/// <summary>
+	///     Primary key (ULID) for the applied modifier instance.
+	/// </summary>
+	[Key]
+	public Ulid Id { get; init; }
 }

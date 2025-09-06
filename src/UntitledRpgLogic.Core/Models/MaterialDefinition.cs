@@ -8,7 +8,7 @@ namespace UntitledRpgLogic.Core.Models;
 ///     Minimal material definition for persistence. Instances of items can reference materials by this ULID.
 ///     Additional physical properties can be modeled later as separate tables or owned types.
 /// </summary>
-public record MaterialDefinition: IDbEntity<Ulid>
+public record MaterialDefinition : IDbEntity<Ulid>
 {
 	/// <summary>
 	///     Constructs a new <see cref="MaterialDefinition" /> with an empty name and default values. (for EF use)
@@ -30,13 +30,13 @@ public record MaterialDefinition: IDbEntity<Ulid>
 	}
 
 	/// <summary>
+	///     Display name for the material.
+	/// </summary>
+	public required Name Name { get; init; }
+
+	/// <summary>
 	///     Primary key for the material definition.
 	/// </summary>
 	[Key]
 	public Ulid Id { get; init; }
-
-	/// <summary>
-	///     Display name for the material.
-	/// </summary>
-	public required Name Name { get; init; }
 }

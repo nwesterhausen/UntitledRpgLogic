@@ -12,7 +12,7 @@ namespace UntitledRpgLogic.Core.Models;
 ///     defines
 ///     how those stats would behave.
 /// </summary>
-public record StatDefinition: IDbEntity<Ulid>
+public record StatDefinition : IDbEntity<Ulid>
 {
 	/// <summary>
 	///     Initializes a new instance of the <see cref="StatDefinition" /> class with default values.
@@ -56,12 +56,6 @@ public record StatDefinition: IDbEntity<Ulid>
 	}
 
 	/// <summary>
-	///     The ULID for the stat. Any instances of this stat refer to this definition via this ID.
-	/// </summary>
-	[Key]
-	public Ulid Id { get; init; }
-
-	/// <summary>
 	///     The name of the stat. This is used to identify the stat in the game and is used in the UI.
 	/// </summary>
 	public required Name Name { get; init; }
@@ -90,4 +84,10 @@ public record StatDefinition: IDbEntity<Ulid>
 	///     Stats that this stat depends on (if any).
 	/// </summary>
 	public ICollection<LinkedStats> LinkedStats { get; init; } = [];
+
+	/// <summary>
+	///     The ULID for the stat. Any instances of this stat refer to this definition via this ID.
+	/// </summary>
+	[Key]
+	public Ulid Id { get; init; }
 }

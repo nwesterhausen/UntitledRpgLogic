@@ -12,15 +12,15 @@ namespace UntitledRpgLogic.Infrastructure.Data.Repositories;
 public class Repository<TEntity, TId> : IRepository<TEntity, TId> where TEntity : class, IDbEntity<TId> where TId : notnull
 {
 	/// <summary>
-	///     Gets the database context.
-	/// </summary>
-	protected DbContext Context { get; }
-
-	/// <summary>
-	/// Initializes a new instance of the <see cref="Repository{TEntity, TId}"/> class.
+	///     Initializes a new instance of the <see cref="Repository{TEntity, TId}" /> class.
 	/// </summary>
 	/// <param name="context">The database context.</param>
 	public Repository(DbContext context) => this.Context = context;
+
+	/// <summary>
+	///     Gets the database context.
+	/// </summary>
+	protected DbContext Context { get; }
 
 	/// <inheritdoc />
 	public ValueTask<TEntity?> GetByIdAsync(TId id) => this.Context.Set<TEntity>().FindAsync(id);

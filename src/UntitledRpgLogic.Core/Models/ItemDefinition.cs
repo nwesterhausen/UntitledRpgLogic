@@ -10,7 +10,7 @@ namespace UntitledRpgLogic.Core.Models;
 ///     Definition data for an item type. Instances reference this by ULID.
 ///     Keep values EF-friendly and focused on definition-time attributes.
 /// </summary>
-public record ItemDefinition: IDbEntity<Ulid>
+public record ItemDefinition : IDbEntity<Ulid>
 {
 	/// <summary>
 	///     Constructs a new <see cref="ItemDefinition" /> with default values. (mainly for EF use)
@@ -46,12 +46,6 @@ public record ItemDefinition: IDbEntity<Ulid>
 	}
 
 	/// <summary>
-	///     Primary key for the item definition.
-	/// </summary>
-	[Key]
-	public Ulid Id { get; init; }
-
-	/// <summary>
 	///     Display name for the item.
 	/// </summary>
 	public required Name Name { get; init; }
@@ -85,4 +79,10 @@ public record ItemDefinition: IDbEntity<Ulid>
 	///     Optional maximum durability for items that wear down. 0 means not applicable.
 	/// </summary>
 	public int MaxDurability { get; init; }
+
+	/// <summary>
+	///     Primary key for the item definition.
+	/// </summary>
+	[Key]
+	public Ulid Id { get; init; }
 }

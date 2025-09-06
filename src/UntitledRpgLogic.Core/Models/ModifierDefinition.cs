@@ -8,7 +8,7 @@ namespace UntitledRpgLogic.Core.Models;
 /// <summary>
 ///     Defines a modifier that can be applied to stats, such as buffs or debuffs.
 /// </summary>
-public record ModifierDefinition: IDbEntity<Ulid>
+public record ModifierDefinition : IDbEntity<Ulid>
 {
 	/// <summary>
 	///     Initializes a new instance of the <see cref="ModifierDefinition" /> class with default values.
@@ -30,12 +30,6 @@ public record ModifierDefinition: IDbEntity<Ulid>
 		this.Id = Ulid.NewUlid();
 		this.Name = name;
 	}
-
-	/// <summary>
-	///     The unique identifier for the modifier. This is used to reference the modifier in the game.
-	/// </summary>
-	[Key]
-	public Ulid Id { init; get; }
 
 	/// <summary>
 	///     The name of the modifier. This is used to identify the modifier in the game and is used in the UI.
@@ -116,4 +110,10 @@ public record ModifierDefinition: IDbEntity<Ulid>
 	/// </summary>
 	[ForeignKey(nameof(StackEffectId))]
 	public ModificationEffect? StackEffect { init; get; }
+
+	/// <summary>
+	///     The unique identifier for the modifier. This is used to reference the modifier in the game.
+	/// </summary>
+	[Key]
+	public Ulid Id { init; get; }
 }

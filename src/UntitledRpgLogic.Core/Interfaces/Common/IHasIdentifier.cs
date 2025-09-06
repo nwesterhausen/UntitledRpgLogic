@@ -6,6 +6,6 @@ namespace UntitledRpgLogic.Core.Interfaces.Common;
 ///     Interface for getting identity information.
 /// </summary>
 /// <remarks>
-///		The unique domain identifier for this type of object is also its primary key for persistence.
+///     The unique domain identifier for this type of object is also its primary key for persistence.
 /// </remarks>
 public interface IHasIdentifier : IDbEntity<Ulid>;
