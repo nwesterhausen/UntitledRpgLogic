@@ -55,4 +55,19 @@ public record Entity : IEntity
 	/// <inheritdoc />
 	[Key]
 	public Ulid Id { get; init; } = Ulid.NewUlid();
+
+	/// <summary>
+	///     Gets or sets the entity's inventory.
+	/// </summary>
+	public virtual EntityInventory? Inventory { get; set; }
+
+	/// <summary>
+	///     Gets or sets the entity's collection of skills.
+	/// </summary>
+	public virtual EntitySkills? Skills { get; set; }
+
+	/// <summary>
+	///     Gets or sets the entity's collection of stats.
+	/// </summary>
+	public virtual EntityStats? Stats { get; set; }
 }

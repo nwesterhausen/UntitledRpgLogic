@@ -6,15 +6,17 @@ namespace UntitledRpgLogic.Core.Interfaces.Data;
 ///		The generic repository interface for performing basic data access operations on entities of type TEntity.
 /// </summary>
 /// <typeparam name="TEntity">The class or object that is stored in this table</typeparam>
-public interface IRepository<TEntity>
-	where TEntity : class
+/// <typeparam name="TId">The type of the entity's primary key.</typeparam>
+public interface IRepository<TEntity, in TId>
+	where TEntity : class, IDbEntity<TId>
+	where TId : notnull
 {
 	/// <summary>
 	///		Gets an entity of type TEntity by its unique identifier asynchronously.
 	/// </summary>
-	/// <param name="id">the id of the entity to retrieve</param>
+	/// <param name="id">The identifier of the entity.</param>
 	/// <returns>matching entity or nothing</returns>
-	public ValueTask<TEntity?> GetByIdAsync(Ulid id);
+	public ValueTask<TEntity?> GetByIdAsync(TId id);
 
 	/// <summary>
 	///		Gets all entities of type TEntity from the data source asynchronously.

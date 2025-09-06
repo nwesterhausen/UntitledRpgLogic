@@ -108,12 +108,16 @@ public class RpgDbContext : DbContext
 		ArgumentNullException.ThrowIfNull(modelBuilder, nameof(modelBuilder));
 
 		// Configure composite primary keys for linking tables
-		modelBuilder.Entity<EntityInventory>().HasKey(ei => new { ei.EntityId, ei.ItemInstanceId });
 		modelBuilder.Entity<EntityStats>().HasKey(es => new { es.EntityId, es.InstancedStatId });
 		modelBuilder.Entity<EntitySkills>().HasKey(es => new { es.EntityId, es.InstancedSkillId });
 		modelBuilder.Entity<LinkedStats>().HasKey(ls => new { ls.DependentStatId, ls.LinkedStatId });
 
 		// Configure relationships
+		modelBuilder.Entity<Entity>()
+			.HasOne(e => e.Inventory)
+			.WithOne(i => i.Entity)
+			.HasForeignKey<EntityInventory>(i => i.EntityId);
+
 		modelBuilder.Entity<ItemInstance>()
 			.HasOne(i => i.ItemDefinition)
 			.WithMany()
