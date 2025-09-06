@@ -34,7 +34,7 @@ public record ItemDefinition
 	{
 		ArgumentNullException.ThrowIfNull(config, nameof(config));
 
-		this.Id = config.Identifier;
+		this.Id = config.Id;
 		this.Name = new Name(config.Name, config.PluralName, config.NameAsAdjective);
 		this.Quality = config.ItemQuality ?? Quality.Common;
 		this.ItemType = config.ItemType;

@@ -10,7 +10,7 @@ namespace UntitledRpgLogic.Core.Classes;
 public record Item : IItem
 {
 	/// <inheritdoc />
-	public Ulid Identifier { get; init; } = Ulid.NewUlid();
+	public Ulid Id { get; init; } = Ulid.NewUlid();
 
 	/// <inheritdoc />
 	public Name Name { get; init; } = Name.Empty;

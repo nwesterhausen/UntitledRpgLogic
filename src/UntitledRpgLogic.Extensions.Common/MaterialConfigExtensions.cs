@@ -26,7 +26,7 @@ public static class MaterialConfigExtensions
 			Name = !string.IsNullOrEmpty(childConfig.Name) ? childConfig.Name : baseConfig.Name,
 			NameAsAdjective = !string.IsNullOrEmpty(childConfig.NameAsAdjective) ? childConfig.NameAsAdjective : baseConfig.NameAsAdjective,
 			PluralName = !string.IsNullOrEmpty(childConfig.PluralName) ? childConfig.PluralName : baseConfig.PluralName,
-			Identifier = childConfig.Identifier, // Ulid is always from the child
+			Id = childConfig.Id, // Ulid is always from the child
 			Extends = childConfig.Extends ?? baseConfig.Extends,
 
 			// Merge complex properties

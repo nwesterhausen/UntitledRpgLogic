@@ -44,7 +44,7 @@ public record SkillDefinition
 	{
 		ArgumentNullException.ThrowIfNull(config, nameof(config));
 
-		this.Id = config.Identifier;
+		this.Id = config.Id;
 		this.Name = new Name(config.Name);
 
 		if (config.LevelingOptions is null)

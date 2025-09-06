@@ -20,29 +20,19 @@ public record Material : IMaterial
 		FantasticalProperties fantastical, Dictionary<StateOfMatter, StateSpecificProperties> states)
 	{
 		this.Name = name;
-		this.Identifier = identifier;
+		this.Id = identifier;
 		this.Mechanical = mechanical;
 		this.Thermal = thermal;
 		this.Electrical = electrical;
 		this.Fantastical = fantastical;
 		this.States = states;
-
-		this.Id = this.Identifier.ToString();
-		this.ShortId = this.Identifier.ToGuid().ToString("N")[..8].ToUpperInvariant();
 	}
-
-
-	/// <inheritdoc />
-	public string Id { get; init; } = string.Empty;
-
-	/// <inheritdoc />
-	public string ShortId { get; init; } = string.Empty;
 
 	/// <inheritdoc />
 	public Name Name { get; }
 
 	/// <inheritdoc />
-	public Ulid Identifier { get; }
+	public Ulid Id { get; }
 
 	/// <inheritdoc />
 	public MechanicalProperties Mechanical { get; }
@@ -80,6 +70,6 @@ public record Material : IMaterial
 			states[state] = StateSpecificProperties.FromConfig(stateConfig);
 		}
 
-		return new Material(name, config.Identifier, mechanical, thermal, electrical, fantastical, states);
+		return new Material(name, config.Id, mechanical, thermal, electrical, fantastical, states);
 	}
 }

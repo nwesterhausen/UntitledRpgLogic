@@ -1,5 +1,7 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using UntitledRpgLogic.Core.Classes;
+using UntitledRpgLogic.Core.Interfaces.Data;
 using UntitledRpgLogic.Core.Interfaces.Entities;
 
 namespace UntitledRpgLogic.Core.Models;
@@ -10,13 +12,13 @@ namespace UntitledRpgLogic.Core.Models;
 public record Entity : IEntity
 {
 	/// <summary>
-	///     Creates an instance of <see cref="Entity" /> using the provided <see cref="Identifier" />.
+	///     Creates an instance of <see cref="Entity" /> using the provided <see cref="Id" />.
 	/// </summary>
 	/// <param name="identifier"></param>
 	public Entity(Ulid identifier)
 	{
 		// assign primary first
-		this.Identifier = identifier;
+		this.Id = identifier;
 
 		// assign name
 		this.Name = Name.Empty;
@@ -29,19 +31,19 @@ public record Entity : IEntity
 	public Entity(Name name)
 	{
 		// assign primary first
-		this.Identifier = Ulid.NewUlid();
+		this.Id = Ulid.NewUlid();
 
 		// assign name
 		this.Name = name;
 	}
 
 	/// <summary>
-	///     Creates an instance of <see cref="Entity" /> with a new <see cref="Identifier" /> and an empty <see cref="Name" />.
+	///     Creates an instance of <see cref="Entity" /> with a new <see cref="Id" /> and an empty <see cref="Name" />.
 	/// </summary>
 	public Entity()
 	{
 		// assign primary first
-		this.Identifier = Ulid.NewUlid();
+		this.Id = Ulid.NewUlid();
 
 		// assign name
 		this.Name = Name.Empty;
@@ -52,5 +54,5 @@ public record Entity : IEntity
 
 	/// <inheritdoc />
 	[Key]
-	public Ulid Identifier { get; init; } = Ulid.NewUlid();
+	public Ulid Id { get; init; } = Ulid.NewUlid();
 }

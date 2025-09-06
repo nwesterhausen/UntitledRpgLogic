@@ -28,7 +28,7 @@ public class Stat : IStat
 	{
 		ArgumentNullException.ThrowIfNull(config, nameof(config));
 		// Initialize IHasGuid properties
-		this.Identifier = config.Identifier;
+		this.Id = config.Id;
 
 		// Initialize other properties from config
 		this.Name = Name.Deserialize(config.Name);
@@ -49,7 +49,7 @@ public class Stat : IStat
 	public Ulid InstanceId { get; init; }
 
 	/// <inheritdoc />
-	public Ulid Identifier { get; }
+	public Ulid Id { get; }
 
 	// IHasName
 	/// <inheritdoc />

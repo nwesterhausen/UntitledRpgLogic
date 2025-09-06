@@ -81,7 +81,7 @@ public record ItemDataConfig : ITomlConfig
 
 	/// <summary>
 	///     A reference to the material that this item is made of. This is a ULID that points to a material entity,
-	///     specified in that material's configuration under <see cref="Identifier" />.
+	///     specified in that material's configuration under <see cref="Id" />.
 	/// </summary>
 	public Ulid MaterialId { get; set; }
 
@@ -108,7 +108,7 @@ public record ItemDataConfig : ITomlConfig
 	///     validating a configuration pack, the Ulid will be persisted back to the source file before bundling.
 	///     This ensures that every stat has a stable and unique identifier.
 	/// </remarks>
-	public Ulid Identifier { get; set; } = Ulid.NewUlid();
+	public Ulid Id { get; set; } = Ulid.NewUlid();
 
 	/// <inheritdoc />
 	public ConfigType ConfigType => ConfigType.Item;

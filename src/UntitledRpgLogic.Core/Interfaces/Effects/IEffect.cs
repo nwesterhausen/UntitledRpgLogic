@@ -31,12 +31,12 @@ public interface IEffect : IHasIdentifier, IHasName
 	/// </summary>
 	/// <param name="identifier">the ULID for the effect to get</param>
 	/// <returns>The component with the specific ULID or null if not found.</returns>
-	public IEffectComponent? GetComponent(Ulid identifier) => this.EffectComponents.FirstOrDefault(x => x.Identifier == identifier);
+	public IEffectComponent? GetComponent(Ulid identifier) => this.EffectComponents.FirstOrDefault(x => x.Id == identifier);
 
 	/// <summary>
 	///     Checks if this effect has a component with a specific ULID.
 	/// </summary>
 	/// <param name="identifier">the ULID of the effect</param>
 	/// <returns>True if the component is part of this effect, false otherwise.</returns>
-	public bool HasComponent(Ulid identifier) => this.EffectComponents.Any(x => x.Identifier == identifier);
+	public bool HasComponent(Ulid identifier) => this.EffectComponents.Any(x => x.Id == identifier);
 }

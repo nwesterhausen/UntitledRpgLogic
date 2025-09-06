@@ -47,7 +47,7 @@ public record StatDefinition
 	{
 		ArgumentNullException.ThrowIfNull(config, nameof(config));
 
-		this.Id = config.Identifier;
+		this.Id = config.Id;
 		this.Name = new Name(config.Name);
 		this.Variation = config.Variation ?? StatVariation.Major;
 		this.MinValue = config.MinValue ?? DefaultValues.StatDefaultMinValue;
