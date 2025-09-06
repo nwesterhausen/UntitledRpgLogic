@@ -13,13 +13,13 @@ public class DatabaseLoggerProvider : ILoggerProvider
 	private readonly IServiceProvider serviceProvider;
 	private bool disposed;
 
-	internal IExternalScopeProvider ScopeProvider { get; } = new LoggerExternalScopeProvider();
-
 	/// <summary>
-	///		Constructor for the DatabaseLoggerProvider.
+	///     Constructor for the DatabaseLoggerProvider.
 	/// </summary>
 	/// <param name="serviceProvider"></param>
 	public DatabaseLoggerProvider(IServiceProvider serviceProvider) => this.serviceProvider = serviceProvider;
+
+	internal IExternalScopeProvider ScopeProvider { get; } = new LoggerExternalScopeProvider();
 
 	/// <inheritdoc />
 	public ILogger CreateLogger(string categoryName) =>
@@ -35,7 +35,7 @@ public class DatabaseLoggerProvider : ILoggerProvider
 	}
 
 	/// <summary>
-	/// Disposes the provider and its underlying loggers.
+	///     Disposes the provider and its underlying loggers.
 	/// </summary>
 	/// <param name="disposing">True to release both managed and unmanaged resources; false to release only unmanaged resources.</param>
 	protected virtual void Dispose(bool disposing)

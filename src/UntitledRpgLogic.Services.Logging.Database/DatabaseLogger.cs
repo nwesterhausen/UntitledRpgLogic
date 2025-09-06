@@ -14,42 +14,42 @@ namespace UntitledRpgLogic.Services.Logging.Database;
 public sealed class DatabaseLogger : ILogger, IDisposable
 {
 	/// <summary>
-	/// A `CancellationTokenSource` used to signal cancellation to the background processing task.
+	///     A `CancellationTokenSource` used to signal cancellation to the background processing task.
 	/// </summary>
 	private readonly CancellationTokenSource cancellationTokenSource = new();
 
 	/// <summary>
-	/// The category name associated with this logger instance, typically used to group log messages.
+	///     The category name associated with this logger instance, typically used to group log messages.
 	/// </summary>
 	private readonly string categoryName;
 
 	/// <summary>
-	/// A thread-safe queue for storing log entries before they are processed and written to the database.
+	///     A thread-safe queue for storing log entries before they are processed and written to the database.
 	/// </summary>
 	private readonly BlockingCollection<LogEntry> logQueue = new(new ConcurrentQueue<LogEntry>());
 
 	/// <summary>
-	/// The background task responsible for processing log entries from the queue and writing them to the database.
+	///     The background task responsible for processing log entries from the queue and writing them to the database.
 	/// </summary>
 	private readonly Task processingTask;
 
 	/// <summary>
-	/// The `IServiceProvider` used to resolve dependencies, such as the `RpgDbContext`, for database operations.
+	///     The provider that created this logger, used to access the scope provider for BeginScope.
+	/// </summary>
+	private readonly IExternalScopeProvider scopeProvider;
+
+	/// <summary>
+	///     The `IServiceProvider` used to resolve dependencies, such as the `RpgDbContext`, for database operations.
 	/// </summary>
 	private readonly IServiceProvider serviceProvider;
 
 	/// <summary>
-	///	The provider that created this logger, used to access the scope provider for BeginScope.
+	///     Constructor for the DatabaseLogger. This will start the background processing task.
 	/// </summary>
-	private readonly IExternalScopeProvider scopeProvider;
-
-	///  <summary>
-	/// 		Constructor for the DatabaseLogger. This will start the background processing task.
-	///  </summary>
-	///  <param name="categoryName"></param>
-	///  <param name="serviceProvider"></param>
-	///  <param name="scopeProvider"></param>
-	public DatabaseLogger(string categoryName, IServiceProvider serviceProvider,IExternalScopeProvider scopeProvider)
+	/// <param name="categoryName"></param>
+	/// <param name="serviceProvider"></param>
+	/// <param name="scopeProvider"></param>
+	public DatabaseLogger(string categoryName, IServiceProvider serviceProvider, IExternalScopeProvider scopeProvider)
 	{
 		this.categoryName = categoryName;
 		this.serviceProvider = serviceProvider;
@@ -90,6 +90,7 @@ public sealed class DatabaseLogger : ILogger, IDisposable
 				parameters[pair.Key] = pair.Value;
 			}
 		}
+
 		Ulid? entityId = null;
 
 		// Extract EntityId from the current scope, if available.
@@ -104,6 +105,7 @@ public sealed class DatabaseLogger : ILogger, IDisposable
 					{
 						entityId = id;
 					}
+
 					// We can also merge scope parameters into our log parameters for a richer JSON blob.
 					parameters[pair.Key] = pair.Value;
 				}

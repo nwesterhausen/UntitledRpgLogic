@@ -9,6 +9,6 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <PackageReference Update="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+		<PackageReference Update="Microsoft.NET.Test.Sdk" Version="17.14.1"/>
 	</ItemGroup>
 </Project>

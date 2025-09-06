@@ -50,7 +50,7 @@ public class RpgDbContext : DbContext
 	public DbSet<ModificationEffect> ModificationEffects { get; set; } = null!;
 
 	/// <summary>
-	/// 	 Table for log entries, which store application logs for auditing and debugging purposes.
+	///     Table for log entries, which store application logs for auditing and debugging purposes.
 	/// </summary>
 	public DbSet<LogEntry> LogEntries { get; set; } = null!;
 
