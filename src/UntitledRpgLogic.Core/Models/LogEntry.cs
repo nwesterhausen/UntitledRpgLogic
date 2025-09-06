@@ -25,6 +25,8 @@ public record LogEntry
 	[SetsRequiredMembers]
 	public LogEntry(int level, int eventId, string message, string? category = null, string? parameters = null)
 	{
+		ArgumentNullException.ThrowIfNull(message, nameof(message));
+
 		this.Id = Ulid.NewUlid();
 		this.Timestamp = DateTimeOffset.UtcNow;
 		this.Level = level;
@@ -40,6 +42,8 @@ public record LogEntry
 	[SetsRequiredMembers]
 	public LogEntry(int level, int eventId, string message, string? category = null, Ulid? entityId = null, string? parameters = null)
 	{
+		ArgumentNullException.ThrowIfNull(message, nameof(message));
+
 		this.Id = Ulid.NewUlid();
 		this.Timestamp = DateTimeOffset.UtcNow;
 		this.Level = level;
