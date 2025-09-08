@@ -103,13 +103,13 @@ public class RpgDbContext : DbContext
 	public DbSet<EntitySkills> EntitySkills { get; set; } = null!;
 
 	/// <summary>
-	/// Gets or sets the DbSet for all Ability definitions.
+	///     Gets or sets the DbSet for all Ability definitions.
 	/// </summary>
 	public DbSet<Ability> Abilities { get; set; } = null!;
 
 	/// <summary>
-	/// Gets or sets the DbSet for all Effects (including derived types like DamageEffect, etc.).
-	/// This single DbSet queries the entire "Effects" table hierarchy.
+	///     Gets or sets the DbSet for all Effects (including derived types like DamageEffect, etc.).
+	///     This single DbSet queries the entire "Effects" table hierarchy.
 	/// </summary>
 	public DbSet<Effect> Effects { get; set; } = null!;
 

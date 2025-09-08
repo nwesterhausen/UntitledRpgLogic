@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<!-- Package metadata -->
@@ -8,13 +8,13 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="EFCore.NamingConventions" Version="9.0.0" />
-		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
+		<PackageReference Include="EFCore.NamingConventions"/>
+		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL"/>
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\UntitledRpgLogic.Core\UntitledRpgLogic.Core.csproj" />
-		<ProjectReference Include="..\UntitledRpgLogic.Infrastructure.Data\UntitledRpgLogic.Infrastructure.Data.csproj" />
+		<ProjectReference Include="..\UntitledRpgLogic.Core\UntitledRpgLogic.Core.csproj"/>
+		<ProjectReference Include="..\UntitledRpgLogic.Infrastructure.Data\UntitledRpgLogic.Infrastructure.Data.csproj"/>
 	</ItemGroup>
 
 </Project>
