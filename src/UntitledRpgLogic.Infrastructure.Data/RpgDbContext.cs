@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using UntitledRpgLogic.Core.Classes;
+using UntitledRpgLogic.Core.Enums;
 using UntitledRpgLogic.Core.Models;
 using UntitledRpgLogic.Infrastructure.Data.ValueConverters;
 
@@ -101,6 +102,17 @@ public class RpgDbContext : DbContext
 	/// </summary>
 	public DbSet<EntitySkills> EntitySkills { get; set; } = null!;
 
+	/// <summary>
+	/// Gets or sets the DbSet for all Ability definitions.
+	/// </summary>
+	public DbSet<Ability> Abilities { get; set; } = null!;
+
+	/// <summary>
+	/// Gets or sets the DbSet for all Effects (including derived types like DamageEffect, etc.).
+	/// This single DbSet queries the entire "Effects" table hierarchy.
+	/// </summary>
+	public DbSet<Effect> Effects { get; set; } = null!;
+
 	/// <inheritdoc />
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{
@@ -139,6 +151,28 @@ public class RpgDbContext : DbContext
 			.WithMany()
 			.HasForeignKey(ls => ls.LinkedStatId)
 			.OnDelete(DeleteBehavior.Restrict);
+
+		modelBuilder.Entity<Ability>()
+			.HasMany(ability => ability.ActiveEffects)
+			.WithMany(effect => effect.AbilitiesUsingAsActive)
+			.UsingEntity("AbilityActiveEffects");
+
+		modelBuilder.Entity<Ability>()
+			.HasMany(ability => ability.FailureEffects)
+			.WithMany(effect => effect.AbilitiesUsingAsFailure)
+			.UsingEntity("AbilityFailureEffects");
+
+		// Configure the TPH (Table-Per-Hierarchy) for the Effect model ---
+		modelBuilder.Entity<Effect>()
+			.HasDiscriminator(e => e.EffectType)
+			.HasValue<SummonEffect>(EffectType.Summon)
+			.HasValue<EnchantEffect>(EffectType.Enchant) // Assuming you will create these classes
+			.HasValue<CharmEffect>(EffectType.Charm)
+			.HasValue<HealEffect>(EffectType.Heal)
+			.HasValue<DamageEffect>(EffectType.Damage)
+			.HasValue<BuffEffect>(EffectType.Buff)
+			.HasValue<DebuffEffect>(EffectType.Debuff)
+			.HasValue<ElementalEffect>(EffectType.Elemental);
 
 		// Note: Additional relationship configurations will be needed here as the system grows.
 	}

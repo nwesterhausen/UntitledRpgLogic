@@ -97,6 +97,11 @@ public record SkillDefinition : IDbEntity<Ulid>
 	public ScalingCurveType ScalingCurve { get; init; }
 
 	/// <summary>
+	///     Navigation property for all abilities that belong to this skill discipline.
+	/// </summary>
+	public virtual ICollection<Ability> Abilities { get; } = new List<Ability>();
+
+	/// <summary>
 	///     The unique identifier for the skill definition. This is used to identify the skill in the database.
 	/// </summary>
 	[Key]

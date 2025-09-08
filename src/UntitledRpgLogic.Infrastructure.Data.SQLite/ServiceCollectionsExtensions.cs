@@ -21,7 +21,8 @@ public static class ServiceCollectionsExtensions
 	{
 		// 1. Register the DbContext
 		services.AddDbContext<RpgDbContext>(options =>
-			options.UseSqlite(connectionString));
+			options.UseSqlite(connectionString)
+				.UseSnakeCaseNamingConvention() );
 
 		// 2. Register the Unit of Work and Repositories
 		services.AddScoped<IUnitOfWork, UnitOfWork>();

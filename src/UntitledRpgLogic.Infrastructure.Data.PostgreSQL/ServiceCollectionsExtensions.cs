@@ -20,7 +20,8 @@ public static class ServiceCollectionsExtensions
 	public static IServiceCollection AddPostgresDataAccess(this IServiceCollection services, string connectionString)
 	{
 		services.AddDbContext<RpgDbContext>(options =>
-			options.UseNpgsql(connectionString)); // <-- Only this line changes
+			options.UseNpgsql(connectionString)
+				.UseSnakeCaseNamingConvention()); // <-- Only this line changes
 
 		services.AddScoped<IUnitOfWork, UnitOfWork>();
 		//services.AddScoped<IEntityRepository, EntityRepository>();
