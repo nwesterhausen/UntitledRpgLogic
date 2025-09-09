@@ -6,6 +6,11 @@ namespace UntitledRpgLogic.Core.Enums;
 public enum StatVariation
 {
 	/// <summary>
+	///     Represents an undefined or unclassified stat variation.
+	/// </summary>
+	None = 0,
+
+	/// <summary>
 	///     Major stats are the primary stat which likely influence many other things. Players should have some agency
 	///     over these stats.
 	/// </summary>
@@ -19,7 +24,7 @@ public enum StatVariation
 	/// <summary>
 	///     Represents a fake stat or a stat which is completely contrived
 	/// </summary>
-	Pseudo = 0,
+	Pseudo = 1,
 
 	/// <summary>
 	///     Represents a stat which is a complex calculation or derived from multiple other stats.
