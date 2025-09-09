@@ -1,6 +1,5 @@
 using System.ComponentModel.DataAnnotations;
 using UntitledRpgLogic.Core.Classes;
-using UntitledRpgLogic.Core.Configuration;
 using UntitledRpgLogic.Core.Enums;
 using UntitledRpgLogic.Core.Interfaces.Data;
 
@@ -14,52 +13,13 @@ public record SkillDefinition : IDbEntity<Ulid>
 	/// <summary>
 	///     Initializes an empty instance of the <see cref="SkillDefinition" /> class (for EF use).
 	/// </summary>
-	public SkillDefinition()
-	{
-		this.Id = Ulid.NewUlid();
-		this.Name = Name.Empty;
-		this.MaxLevel = DefaultValues.SkillDefaultMaxLevel;
-		this.ScalingFactorA = DefaultValues.SkillDefaultScalingAlpha;
-		this.ScalingFactorB = DefaultValues.SkillDefaultScalingBeta;
-		this.ScalingFactorC = DefaultValues.SkillDefaultScalingGamma;
-		this.PointsForFirstLevel = DefaultValues.SkillDefaultPointsForFirstLevel;
-		this.ScalingCurve = DefaultValues.SkillDefaultScalingCurve;
-	}
+	public SkillDefinition() => this.Name = Name.Empty;
 
 	/// <summary>
 	///     Initializes a new instance of the <see cref="SkillDefinition" /> class with the specified name.
-	///     This constructor sets the skill ID to a new <see cref="Ulid" />, assigns the provided name, and initializes
-	///     other properties to their default values.
 	/// </summary>
 	/// <param name="name">The name of the skill.</param>
-	public SkillDefinition(Name name) : this() => this.Name = name;
-
-	/// <summary>
-	///     Initializes a new instance of the <see cref="SkillDefinition" /> class using the specified configuration.
-	///     This constructor sets the skill ID and name based on the provided configuration and initializes
-	///     other properties based on the configuration or their default values if not specified.
-	/// </summary>
-	/// <param name="config">The configuration object containing skill data.</param>
-	/// <exception cref="ArgumentNullException">Thrown if the provided configuration is null.</exception>
-	public SkillDefinition(SkillDataConfig config) : this()
-	{
-		ArgumentNullException.ThrowIfNull(config, nameof(config));
-
-		this.Id = config.Id;
-		this.Name = new Name(config.Name);
-
-		if (config.LevelingOptions is null)
-		{
-			return;
-		}
-
-		this.MaxLevel = config.LevelingOptions.MaxLevel ?? DefaultValues.SkillDefaultMaxLevel;
-		this.ScalingFactorA = config.LevelingOptions.ScalingFactorA ?? DefaultValues.SkillDefaultScalingAlpha;
-		this.ScalingFactorB = config.LevelingOptions.ScalingFactorB ?? DefaultValues.SkillDefaultScalingBeta;
-		this.ScalingFactorC = config.LevelingOptions.ScalingFactorC ?? DefaultValues.SkillDefaultScalingGamma;
-		this.PointsForFirstLevel = config.LevelingOptions.PointsForFirstLevel ?? DefaultValues.SkillDefaultPointsForFirstLevel;
-		this.ScalingCurve = config.LevelingOptions.ScalingCurve ?? DefaultValues.SkillDefaultScalingCurve;
-	}
+	public SkillDefinition(Name name) => this.Name = name;
 
 	/// <summary>
 	///     The name of the skill. This is used to identify the skill in the game and should be unique.
@@ -69,32 +29,32 @@ public record SkillDefinition : IDbEntity<Ulid>
 	/// <summary>
 	///     The maximum level the skill can reach.
 	/// </summary>
-	public int MaxLevel { get; init; }
+	public int MaxLevel { get; init; } = DefaultValues.SkillDefaultMaxLevel;
 
 	/// <summary>
 	///     The primary facing factor. One of three scaling factors used to determine the skill's level scaling.
 	/// </summary>
-	public float ScalingFactorA { get; init; }
+	public float ScalingFactorA { get; init; } = DefaultValues.SkillDefaultScalingAlpha;
 
 	/// <summary>
 	///     The secondary facing factor. One of three scaling factors used to determine the skill's level scaling.
 	/// </summary>
-	public float ScalingFactorB { get; init; }
+	public float ScalingFactorB { get; init; } = DefaultValues.SkillDefaultScalingBeta;
 
 	/// <summary>
 	///     The tertiary facing factor. One of three scaling factors used to determine the skill's level scaling.
 	/// </summary>
-	public float ScalingFactorC { get; init; }
+	public float ScalingFactorC { get; init; } = DefaultValues.SkillDefaultScalingGamma;
 
 	/// <summary>
 	///     How many points required to go from level 0 to level 1. This is used in level scaling calculations.
 	/// </summary>
-	public int PointsForFirstLevel { get; init; }
+	public int PointsForFirstLevel { get; init; } = DefaultValues.SkillDefaultPointsForFirstLevel;
 
 	/// <summary>
 	///     The type of scaling curve to use for experience requirements (e.g., linear, parabolic, logarithmic).
 	/// </summary>
-	public ScalingCurveType ScalingCurve { get; init; }
+	public ScalingCurveType ScalingCurve { get; init; } = DefaultValues.SkillDefaultScalingCurve;
 
 	/// <summary>
 	///     Navigation property for all abilities that belong to this skill discipline.
@@ -105,5 +65,5 @@ public record SkillDefinition : IDbEntity<Ulid>
 	///     The unique identifier for the skill definition. This is used to identify the skill in the database.
 	/// </summary>
 	[Key]
-	public Ulid Id { get; init; }
+	public Ulid Id { get; init; } = Ulid.NewUlid();
 }
