@@ -6,52 +6,57 @@ namespace UntitledRpgLogic.Core.Enums;
 public enum ShapeType
 {
 	/// <summary>
+	///     Represents an undefined or unclassified shape type.
+	/// </summary>
+	None = 0,
+
+	/// <summary>
 	///     Spherical shape
 	/// </summary>
-	Sphere = 0,
+	Sphere = 1,
 
 	/// <summary>
 	///     Spheroid shape, which is a 3D shape that is a generalization of a sphere. The width is the major axis, height is
 	///     the
 	///     minor axis.
 	/// </summary>
-	Spheroid = 1,
+	Spheroid = 2,
 
 	/// <summary>
 	///     Ellipsoid shape, which is a 3D shape that is a generalization of a sphere. The width is the major axis, height is
 	///     the
 	///     minor axis, and depth is the intermediate axis.
 	/// </summary>
-	Ellipsoid = 2,
+	Ellipsoid = 3,
 
 	/// <summary>
 	///     Cylindrical shape.
 	/// </summary>
-	Cylinder = 3,
+	Cylinder = 4,
 
 	/// <summary>
 	///     Cone-shaped object, includes cones and conical frustums. The width is used for radius and height for cone height.
 	/// </summary>
-	Cone = 4,
+	Cone = 5,
 
 	/// <summary>
 	///     Conical frustum, which is a cone with the top cut off. The width is the radius of the base, height is the full
 	///     height of the cone, and depth is the height of the frustum.
 	/// </summary>
-	ConicalFrustum = 5,
+	ConicalFrustum = 6,
 
 	/// <summary>
 	///     A regular pyramid
 	/// </summary>
-	Pyramid = 6,
+	Pyramid = 7,
 
 	/// <summary>
 	///     A cube
 	/// </summary>
-	Cube = 7,
+	Cube = 8,
 
 	/// <summary>
 	///     A rectangular prism
 	/// </summary>
-	RectangularPrism = 8
+	RectangularPrism = 9,
 }

@@ -1,18 +1,37 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using UntitledRpgLogic.Core.Interfaces.Data;
 
 namespace UntitledRpgLogic.Core.Models;
 
 /// <summary>
 ///     Represents an applied modifier instance on a specific entity, including stack count and timing.
 /// </summary>
-public record AppliedModifier
+public record AppliedModifier : IDbEntity<Ulid>
 {
 	/// <summary>
-	///     Primary key (ULID) for the applied modifier instance.
+	///     Initializes a new instance of the <see cref="AppliedModifier" /> class.
+	///     This parameterless constructor is required by Entity Framework Core for materialization.
 	/// </summary>
-	[Key]
-	public Ulid Id { get; init; }
+	public AppliedModifier()
+	{
+		this.Id = Ulid.NewUlid();
+		this.ModifierDefinitionId = Ulid.Empty;
+		this.EntityId = Ulid.Empty;
+	}
+
+	/// <summary>
+	///     Initializes a new instance of the <see cref="AppliedModifier" /> class with the specified modifier definition ID
+	///     and entity ID.
+	/// </summary>
+	/// <param name="modifierDefinitionId">The unique identifier of the modifier definition being applied.</param>
+	/// <param name="entityId">The unique identifier of the entity receiving the modifier.</param>
+	public AppliedModifier(Ulid modifierDefinitionId, Ulid entityId)
+	{
+		this.Id = Ulid.NewUlid();
+		this.ModifierDefinitionId = modifierDefinitionId;
+		this.EntityId = entityId;
+	}
 
 	/// <summary>
 	///     FK to the modifier definition being applied.
@@ -50,4 +69,10 @@ public record AppliedModifier
 	/// </summary>
 	[ForeignKey(nameof(EntityId))]
 	public Entity? Entity { get; init; }
+
+	/// <summary>
+	///     Primary key (ULID) for the applied modifier instance.
+	/// </summary>
+	[Key]
+	public Ulid Id { get; init; }
 }

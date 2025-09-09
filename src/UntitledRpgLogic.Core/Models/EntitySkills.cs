@@ -8,6 +8,28 @@ namespace UntitledRpgLogic.Core.Models;
 public class EntitySkills
 {
 	/// <summary>
+	///     Initializes a new instance of the <see cref="EntitySkills" /> class.
+	///     This parameterless constructor is required by Entity Framework Core for materialization.
+	/// </summary>
+	public EntitySkills()
+	{
+		this.EntityId = Ulid.Empty;
+		this.InstancedSkillId = Ulid.Empty;
+	}
+
+	/// <summary>
+	///     Initializes a new instance of the <see cref="EntitySkills" /> class with the specified entity ID
+	///     and item instance ID.
+	/// </summary>
+	/// <param name="entityId">The unique identifier of the entity owning the item instance.</param>
+	/// <param name="instancedSkillId">The unique identifier of the skill belonging by the entity.</param>
+	public EntitySkills(Ulid entityId, Ulid instancedSkillId)
+	{
+		this.EntityId = entityId;
+		this.InstancedSkillId = instancedSkillId;
+	}
+
+	/// <summary>
 	///     An entity's unique identifier. This is used to reference the entity in the game and in the database.
 	/// </summary>
 	public required Ulid EntityId { get; init; }

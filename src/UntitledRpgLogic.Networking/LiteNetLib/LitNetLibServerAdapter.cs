@@ -7,22 +7,19 @@ using UntitledRpgLogic.Core.Interfaces.Networking;
 namespace UntitledRpgLogic.Networking.LiteNetLib;
 
 /// <summary>
-///		An implementation of INetworkService using LiteNetLib for networking.
+///     An implementation of INetworkService using LiteNetLib for networking.
 /// </summary>
 public class LitNetLibServerAdapter : INetworkService
 {
-	private readonly NetManager server;
 	private readonly EventBasedNetListener listener;
 	private readonly IPayloadSerializer serializer;
-	private Thread networkThread;
+	private readonly NetManager server;
 	private CancellationTokenSource cancellationTokenSource;
 	private bool disposedValue;
-
-	/// <inheritdoc />
-	public bool IsRunning { get; private set; }
+	private Thread networkThread;
 
 	/// <summary>
-	///		Creates a new instance of the LitNetLibServerAdapter with a payload serializer (via DI).
+	///     Creates a new instance of the LitNetLibServerAdapter with a payload serializer (via DI).
 	/// </summary>
 	/// <param name="serializer">the serializer we're using</param>
 	public LitNetLibServerAdapter(IPayloadSerializer serializer)
@@ -37,6 +34,9 @@ public class LitNetLibServerAdapter : INetworkService
 		this.listener.PeerDisconnectedEvent += this.OnPeerDisconnected;
 		this.listener.NetworkReceiveEvent += this.OnNetworkReceive;
 	}
+
+	/// <inheritdoc />
+	public bool IsRunning { get; private set; }
 
 	/// <inheritdoc />
 	public event EventHandler<ClientConnectionEventArgs>? ClientConnected;
@@ -78,15 +78,6 @@ public class LitNetLibServerAdapter : INetworkService
 		this.IsRunning = false;
 	}
 
-	private void NetworkLoop(CancellationToken token)
-	{
-		while (!token.IsCancellationRequested)
-		{
-			this.server.PollEvents();
-			Thread.Sleep(15); // Standard poll rate for LiteNetLib
-		}
-	}
-
 	/// <inheritdoc />
 	public Task SendToClientAsync(string clientId, INetworkPayload payload)
 	{
@@ -114,6 +105,23 @@ public class LitNetLibServerAdapter : INetworkService
 		return Task.CompletedTask;
 	}
 
+	/// <inheritdoc />
+	public void Dispose()
+	{
+		// Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+		this.Dispose(true);
+		GC.SuppressFinalize(this);
+	}
+
+	private void NetworkLoop(CancellationToken token)
+	{
+		while (!token.IsCancellationRequested)
+		{
+			this.server.PollEvents();
+			Thread.Sleep(15); // Standard poll rate for LiteNetLib
+		}
+	}
+
 
 	// --- Event Handlers for LiteNetLib ---
 
@@ -124,10 +132,12 @@ public class LitNetLibServerAdapter : INetworkService
 		request.AcceptIfKey("UntitledRpgKey");
 	}
 
-	private void OnPeerConnected(NetPeer peer) => this.ClientConnected?.Invoke(this, new ClientConnectionEventArgs(peer.Id.ToString(CultureInfo.InvariantCulture)));
+	private void OnPeerConnected(NetPeer peer) =>
+		this.ClientConnected?.Invoke(this, new ClientConnectionEventArgs(peer.Id.ToString(CultureInfo.InvariantCulture)));
 
 
-	private void OnPeerDisconnected(NetPeer peer, DisconnectInfo disconnectInfo) => this.ClientDisconnected?.Invoke(this, new ClientConnectionEventArgs(peer.Id.ToString(CultureInfo.InvariantCulture)));
+	private void OnPeerDisconnected(NetPeer peer, DisconnectInfo disconnectInfo) =>
+		this.ClientDisconnected?.Invoke(this, new ClientConnectionEventArgs(peer.Id.ToString(CultureInfo.InvariantCulture)));
 
 	private void OnNetworkReceive(NetPeer fromPeer, NetPacketReader dataReader, byte channel, DeliveryMethod deliveryMethod)
 	{
@@ -153,13 +163,5 @@ public class LitNetLibServerAdapter : INetworkService
 			// NOTE: This class doesn't have unmanaged resources, but this is where they would be cleaned up.
 			this.disposedValue = true;
 		}
-	}
-
-	/// <inheritdoc />
-	public void Dispose()
-	{
-		// Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
-		this.Dispose(disposing: true);
-		GC.SuppressFinalize(this);
 	}
 }

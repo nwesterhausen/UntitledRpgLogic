@@ -10,8 +10,8 @@ namespace UntitledRpgLogic.Extensions.Common;
 public static class MaterialExtensions
 {
 	/// <summary>
-	/// Gets the material's attunement value for a specific magic type.
-	/// A positive value could indicate a weakness or amplification, while a negative value could indicate resistance.
+	///     Gets the material's attunement value for a specific magic type.
+	///     A positive value could indicate a weakness or amplification, while a negative value could indicate resistance.
 	/// </summary>
 	/// <param name="material">The material.</param>
 	/// <param name="magicTypeId">The Ulid of the magic type to check.</param>
@@ -29,7 +29,7 @@ public static class MaterialExtensions
 	}
 
 	/// <summary>
-	/// Calculates the weight of an item based on its volume and material density.
+	///     Calculates the weight of an item based on its volume and material density.
 	/// </summary>
 	/// <param name="item">The item to calculate the weight for.</param>
 	/// <returns>The calculated weight in kilograms. Returns 0 if density is not defined.</returns>

@@ -20,19 +20,16 @@ public class EffectApplicationService : IEffectApplicationService
 	///     Creation of the service with dependency injection.
 	/// </summary>
 	/// <param name="logger"></param>
-	public EffectApplicationService(ILogger<EffectApplicationService> logger)
-	{
-		this.logger = logger;
-		//this.statService = statService;
-	}
+	public EffectApplicationService(ILogger<EffectApplicationService> logger) => this.logger = logger;
 
+	//this.statService = statService;
 	/// <inheritdoc />
 	public void ApplyEffect(IEffect effect, IEntity? caster = null, IEnumerable<IEntity>? targets = null)
 	{
 		ArgumentNullException.ThrowIfNull(effect, nameof(effect));
 
 		this.logger.LogInformation("Applying effect: {EffectName} (ID: {EffectShortGuid})", effect.Name.Singular,
-			effect.Identifier.ToString());
+			effect.Id.ToString());
 
 		foreach (var component in effect.EffectComponents)
 		{

@@ -6,9 +6,14 @@ namespace UntitledRpgLogic.Core.Enums;
 public enum ItemType
 {
 	/// <summary>
+	///     Represents an undefined or unclassified item type.
+	/// </summary>
+	None = 0,
+
+	/// <summary>
 	///     Miscellaneous items with little to no practical use, often sold for a small amount of currency.
 	/// </summary>
-	Junk = 0,
+	Junk = 8,
 
 	/// <summary>
 	///     Items primarily used for combat to inflict damage.

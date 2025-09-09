@@ -1,18 +1,40 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using UntitledRpgLogic.Core.Interfaces.Data;
 
 namespace UntitledRpgLogic.Core.Models;
 
 /// <summary>
 ///     Represents an instanced skill in the RPG logic. This class specifically for storing skill instances in a database.
 /// </summary>
-public class InstancedSkill
+public class InstancedSkill : IDbEntity<Ulid>
 {
 	/// <summary>
-	///     The unique identifier for the instanced skill. This is used to identify the skill instance in the game.
+	///     Initializes a new instance of the <see cref="InstancedSkill" /> class with default values.
+	///     This constructor sets the skill instance ID to a new ULID, the skill definition ID to an empty ULID,
+	///     and initializes experience points and level to 0.
 	/// </summary>
-	[Key]
-	public Ulid Id { get; init; }
+	public InstancedSkill()
+	{
+		this.Id = Ulid.NewUlid();
+		this.SkillDefinitionId = Ulid.Empty;
+		this.ExperiencePoints = 0;
+		this.Level = 0;
+	}
+
+	/// <summary>
+	///     Initializes a new instance of the <see cref="InstancedSkill" /> class with the specified skill definition ID.
+	///     This constructor sets the skill instance ID to a new ULID, initializes experience points and level to 0,
+	///     and links the skill instance to the provided skill definition.
+	/// </summary>
+	/// <param name="skillDefinitionId">The unique identifier of the skill definition this instance is based on.</param>
+	public InstancedSkill(Ulid skillDefinitionId)
+	{
+		this.Id = Ulid.NewUlid();
+		this.SkillDefinitionId = skillDefinitionId;
+		this.ExperiencePoints = 0;
+		this.Level = 0;
+	}
 
 	/// <summary>
 	///     The unique identifier for the skill definition that this instanced skill is based on. This links the instanced
@@ -36,4 +58,10 @@ public class InstancedSkill
 	/// </summary>
 	[ForeignKey(nameof(SkillDefinitionId))]
 	public SkillDefinition? SkillDefinition { get; init; }
+
+	/// <summary>
+	///     The unique identifier for the instanced skill. This is used to identify the skill instance in the game.
+	/// </summary>
+	[Key]
+	public Ulid Id { get; init; }
 }
