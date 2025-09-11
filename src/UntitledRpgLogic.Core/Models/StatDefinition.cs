@@ -1,6 +1,5 @@
 using System.ComponentModel.DataAnnotations;
 using UntitledRpgLogic.Core.Classes;
-using UntitledRpgLogic.Core.Configuration;
 using UntitledRpgLogic.Core.Enums;
 using UntitledRpgLogic.Core.Interfaces.Data;
 
@@ -36,24 +35,6 @@ public record StatDefinition : IDbEntity<Ulid>
 	/// </summary>
 	/// <param name="name">The name of the stat.</param>
 	public StatDefinition(Name name) : this() => this.Name = name;
-
-	/// <summary>
-	///     Initializes a new instance of the <see cref="StatDefinition" /> class using the specified configuration.
-	///     This constructor sets the stat ID and name based on the provided configuration and initializes other
-	///     properties based on the configuration or their default values if not specified.
-	/// </summary>
-	/// <param name="config">The configuration object containing stat data.</param>
-	/// <exception cref="ArgumentNullException">Thrown if the provided configuration is null.</exception>
-	public StatDefinition(StatDataConfig config) : this()
-	{
-		ArgumentNullException.ThrowIfNull(config, nameof(config));
-
-		this.Id = config.Id;
-		this.Name = new Name(config.Name);
-		this.Variation = config.Variation ?? StatVariation.Major;
-		this.MinValue = config.MinValue ?? DefaultValues.StatDefaultMinValue;
-		this.MaxValue = config.MaxValue ?? DefaultValues.StatDefaultMaxValue;
-	}
 
 	/// <summary>
 	///     The name of the stat. This is used to identify the stat in the game and is used in the UI.

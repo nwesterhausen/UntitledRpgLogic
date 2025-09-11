@@ -5,18 +5,18 @@ namespace UntitledRpgLogic.Infrastructure.Configuration.Definitions;
 /// </summary>
 public record AuthorConfig
 {
-  /// <summary>
-  ///     The unique identifier for the author.
-  /// </summary>
-  public required Ulid Id { get; init; }
+	/// <summary>
+	///     The unique identifier for the author.
+	/// </summary>
+	public required Ulid Id { get; init; }
 
-  /// <summary>
-  ///     The name of the author.
-  /// </summary>
-  public required string AuthorName { get; init; }
+	/// <summary>
+	///     The name of the author.
+	/// </summary>
+	public required string AuthorName { get; init; }
 
-  /// <summary>
-  ///     The author's website.
-  /// </summary>
-  public string Website { get; init; } = string.Empty;
+	/// <summary>
+	///     The author's website.
+	/// </summary>
+	public string Website { get; init; } = string.Empty;
 }

@@ -58,5 +58,5 @@ public enum ShapeType
 	/// <summary>
 	///     A rectangular prism
 	/// </summary>
-	RectangularPrism = 9,
+	RectangularPrism = 9
 }

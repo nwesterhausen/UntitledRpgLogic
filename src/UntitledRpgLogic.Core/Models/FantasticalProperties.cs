@@ -1,10 +1,18 @@
-namespace UntitledRpgLogic.Infrastructure.Configuration.Definitions;
+using System.ComponentModel.DataAnnotations;
+
+namespace UntitledRpgLogic.Core.Models;
 
 /// <summary>
 ///     Describes the fantastical properties of a material.
 /// </summary>
-public record FantasticalPropertiesConfig
+public record FantasticalProperties
 {
+	/// <summary>
+	///		Default constructor.
+	/// </summary>
+	public FantasticalProperties()
+	{}
+
 	/// <summary>
 	///     A relative measure of how well the material channels magical energy.
 	/// </summary>
@@ -42,4 +50,10 @@ public record FantasticalPropertiesConfig
 	///     The default value is 0.0, indicating no luminosity. A negative value indicates light absorption.
 	/// </remarks>
 	public float Luminosity { get; init; }
+
+	/// <summary>
+	///		A unique identifier for this record.
+	/// </summary>
+	[Key]
+	public int Id { get; init; }
 }

@@ -1,6 +1,5 @@
 using System.ComponentModel.DataAnnotations;
 using UntitledRpgLogic.Core.Classes;
-using UntitledRpgLogic.Core.Configuration;
 using UntitledRpgLogic.Core.Enums;
 using UntitledRpgLogic.Core.Interfaces.Data;
 
@@ -25,24 +24,6 @@ public record ItemDefinition : IDbEntity<Ulid>
 		this.Stackable = false;
 		this.MaxStack = 1;
 		this.MaxDurability = 0;
-	}
-
-	/// <summary>
-	///     Constructs a new <see cref="ItemDefinition" /> from the provided config data.
-	/// </summary>
-	/// <param name="config"></param>
-	public ItemDefinition(ItemDataConfig config)
-	{
-		ArgumentNullException.ThrowIfNull(config, nameof(config));
-
-		this.Id = config.Id;
-		this.Name = new Name(config.Name, config.PluralName, config.NameAsAdjective);
-		this.Quality = config.ItemQuality ?? Quality.Common;
-		this.ItemType = config.ItemType;
-		this.ItemSubtype = config.ItemSubtype ?? ItemSubtype.None;
-		this.Stackable = config.MaxStack > 1;
-		this.MaxStack = config.MaxStack;
-		this.MaxDurability = config.BaseDurability;
 	}
 
 	/// <summary>

@@ -1,14 +1,22 @@
-namespace UntitledRpgLogic.Infrastructure.Configuration.Definitions;
+using System.ComponentModel.DataAnnotations;
+
+namespace UntitledRpgLogic.Core.Models;
 
 /// <summary>
 ///     Properties related to the mechanical characteristics of a material.
 /// </summary>
-public class MechanicalPropertiesConfig
+public record MechanicalProperties
 {
+	/// <summary>
+	///		Constructs a new default record.
+	/// </summary>
+	public MechanicalProperties()
+	{}
+
 	/// <summary>
 	///     The density of the material in cm/m^3.
 	/// </summary>
-	public float Density { get; init; }
+	public required float Density { get; init; }
 
 	/// <summary>
 	///     For solids:
@@ -16,7 +24,8 @@ public class MechanicalPropertiesConfig
 	///     Affects edge retention and armor penetration.
 	/// </summary>
 	/// <remarks>
-	///     For metals, use the Mohs scale. For wood, use the Janka scale value / 400.
+	///		For metals, use the Mohs scale. For wood, use the Janka scale value / 400.
+	///		The default value is similar to copper or oak wood.
 	/// </remarks>
 	public float? Hardness { get; init; }
 
@@ -25,10 +34,6 @@ public class MechanicalPropertiesConfig
 	///     A relative measure of a material's ability to absorb energy and deform without fracturing.
 	///     Affects durability and resistance to chipping/shattering.
 	/// </summary>
-	/// <remarks>
-	///     For metals, use the area under a stress-strain curve (typically in Joules).
-	///     For wood, use the Janka scale value.
-	/// </remarks>
 	public float? Toughness { get; init; }
 
 	/// <summary>
@@ -47,20 +52,26 @@ public class MechanicalPropertiesConfig
 
 	/// <summary>
 	///     For liquids and gases:
-	///     A measure of a fluid's resistance to flow.
+	///     A measure of a fluid's resistance to flow. Null for solids.
 	/// </summary>
 	public float? Viscosity { get; init; }
 
 	/// <summary>
 	///     For liquids and gases:
-	///     The tendency of a liquid to shrink into the minimum surface area possible.
+	///     The tendency of a liquid to shrink into the minimum surface area possible. Null for solids.
 	///     Affects coating and droplet formation.
 	/// </summary>
 	public float? SurfaceTension { get; init; }
 
 	/// <summary>
 	///     For liquids and gases:
-	///     A relative measure of how well a liquid sticks to other surfaces.
+	///     A relative measure of how well a liquid sticks to other surfaces. Null for solids.
 	/// </summary>
 	public float? Adhesion { get; init; }
+
+	/// <summary>
+	///		A unique identifier for this record.
+	/// </summary>
+	[Key]
+	public int Id { get; init; }
 }
