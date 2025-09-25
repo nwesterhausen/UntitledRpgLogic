@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<!-- Package metadata -->
+		<AssemblyName>UntitledRpgLogic.Infrastructure.Data.PostgreSQL</AssemblyName>
+		<PackageId>UntitledRpgLogic.Infrastructure.Data.PostgreSQL</PackageId>
+		<RootNamespace>UntitledRpgLogic.Infrastructure.Data.PostgreSQL</RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="EFCore.NamingConventions"/>
+		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL"/>
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\UntitledRpgLogic.Core\UntitledRpgLogic.Core.csproj"/>
+		<ProjectReference Include="..\UntitledRpgLogic.Infrastructure.Data\UntitledRpgLogic.Infrastructure.Data.csproj"/>
+	</ItemGroup>
+
+</Project>

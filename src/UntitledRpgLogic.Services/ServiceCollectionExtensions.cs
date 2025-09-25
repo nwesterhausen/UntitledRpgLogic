@@ -25,7 +25,7 @@ public static class ServiceCollectionExtensions
 		// -- These are created the first time they're asked for and never disposed (until program ends)
 		_ = services.AddSingleton<ICultureService, CultureService>();
 		_ = services.AddSingleton<ISkillService, SkillService>();
-		_ = services.AddSingleton<IStatService, StatService>();
+		// _ = services.AddSingleton<IStatService, StatService>();
 		_ = services.AddSingleton<IDamageCalculator, DamageCalculator>();
 
 		return services;

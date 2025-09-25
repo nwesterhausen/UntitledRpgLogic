@@ -1,4 +1,6 @@
 using System.ComponentModel.DataAnnotations;
+using UntitledRpgLogic.Core.Interfaces.Data;
+using UntitledRpgLogic.Core.Options;
 
 namespace UntitledRpgLogic.Core.Models;
 
@@ -6,13 +8,29 @@ namespace UntitledRpgLogic.Core.Models;
 ///     Represents a modification effect that can be applied to stats, such as buffs or debuffs. Consumed by modifiers to
 ///     finally apply the effect to an entity's stats.
 /// </summary>
-public class ModificationEffect
+public class ModificationEffect : IDbEntity<Ulid>
 {
 	/// <summary>
-	///     The unique identifier for the modification effect. This is used to reference the effect in the game.
+	///     Initializes a new instance of the <see cref="ModificationEffect" /> class.
+	///     This parameterless constructor is required by Entity Framework Core for materialization.
 	/// </summary>
-	[Key]
-	public Ulid Id { get; set; }
+	public ModificationEffect()
+	{
+	}
+
+	/// <summary>
+	///     Creates a new modifier effect with the specified options.
+	/// </summary>
+	/// <param name="options"></param>
+	public ModificationEffect(ModifierEffectOptions options)
+	{
+		ArgumentNullException.ThrowIfNull(options, nameof(options));
+
+		this.FlatAmount = options.FlatAmount ?? 0;
+		this.Percentage = options.Percentage ?? 0f;
+		this.PercentageOfMax = options.PercentageOfMax ?? 0f;
+		this.Positive = options.IsPositive ?? true;
+	}
 
 	/// <summary>
 	///     The flat amount of modification that is applied.
@@ -36,4 +54,10 @@ public class ModificationEffect
 	///     Whether the modification effect is positive (buff) or negative (debuff).
 	/// </summary>
 	public bool Positive { get; set; }
+
+	/// <summary>
+	///     The unique identifier for the modification effect. This is used to reference the effect in the game.
+	/// </summary>
+	[Key]
+	public Ulid Id { get; set; }
 }

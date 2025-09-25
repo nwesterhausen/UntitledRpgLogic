@@ -23,9 +23,9 @@ public class ItemStorageService : IItemStorageService
 			return false;
 		}
 
-		this.items.Add(item.Identifier, item);
+		this.items.Add(item.Id, item);
 
-		this.ItemStored?.Invoke(this, new SuccessfulItemStorageEventArgs(item.Name.Singular, 1, item.Identifier, this.items.Count));
+		this.ItemStored?.Invoke(this, new SuccessfulItemStorageEventArgs(item.Name.Singular, 1, item.Id, this.items.Count));
 
 		return true;
 	}
@@ -45,7 +45,7 @@ public class ItemStorageService : IItemStorageService
 
 			_ = this.items.Remove(itemId);
 			this.ItemRetrieved?.Invoke(this,
-				new SuccessfulItemStorageEventArgs(item.Name.Singular, 1, item.Identifier, this.items.Count));
+				new SuccessfulItemStorageEventArgs(item.Name.Singular, 1, item.Id, this.items.Count));
 			return true;
 		}
 
