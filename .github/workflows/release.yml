@@ -31,12 +31,12 @@ jobs:
           dotnet-version: 9.0.x
 
       - name: 🥟 Setup Bun
-        uses: oven-sh/setup-bun@db6bcf6eb8d88a8aa03265b887ec7bd84d64cd68 # v2
+        uses: oven-sh/setup-bun@3d267786b128fe76c2f16a390aa2448b815359f3 # v2
         with:
           bun-version: latest
 
       - name: 📦 Cache DotNet Workloads
-        uses: actions/cache@9255dc7a253b0ccc959486e2bca901246202afeb # v5
+        uses: actions/cache@8b402f58fbc84540c8b491a91e594a4576fec3d7 # v5
         with:
           path: ~/.dotnet # Path to cache for SDKs and Workloads
           key: ${{ runner.os }}-dotnet-workloads-${{ hashFiles('global.json') }}-${{ steps.setup-dotnet.outputs.dotnet-version }}
@@ -44,7 +44,7 @@ jobs:
             ${{ runner.os }}-dotnet-workloads-
 
       - name: 📦 Cache NuGet packages
-        uses: actions/cache@9255dc7a253b0ccc959486e2bca901246202afeb # v5
+        uses: actions/cache@8b402f58fbc84540c8b491a91e594a4576fec3d7 # v5
         with:
           path: ~/.nuget/packages
           key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
@@ -52,7 +52,7 @@ jobs:
             ${{ runner.os }}-nuget-
 
       - name: 📦 Cache DotNet Tools
-        uses: actions/cache@9255dc7a253b0ccc959486e2bca901246202afeb # v5
+        uses: actions/cache@8b402f58fbc84540c8b491a91e594a4576fec3d7 # v5
         with:
           path: ~/.dotnet/tools # Path to cache for global tools
           key: ${{ runner.os }}-dotnet-tools-${{ hashFiles('.config/dotnet-tools.json') }}
