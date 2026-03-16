@@ -58,13 +58,13 @@ jobs:
             ${{ runner.os }}-dotnet-tools-
 
       - name: 🌳 Install GitVersion
-        uses: gittools/actions/gitversion/setup@71a79f7569b981036febd9ce5870f87e069928e7 # v4.3.3
+        uses: gittools/actions/gitversion/setup@63daa16d3d7f45b16ad39d810aa8addf95785067 # v4.4.1
         with:
           versionSpec: '6.x'
 
       - name: 🔢 Determine Version
         id: gitversion
-        uses: gittools/actions/gitversion/execute@71a79f7569b981036febd9ce5870f87e069928e7 # v4.3.3
+        uses: gittools/actions/gitversion/execute@63daa16d3d7f45b16ad39d810aa8addf95785067 # v4.4.1
 
       - name: 💬 Display Version Info
         run: |
