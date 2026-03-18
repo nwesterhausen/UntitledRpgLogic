@@ -43,7 +43,7 @@ jobs:
           bun-version: latest
 
       - name: 📦 Cache DotNet Workloads
-        uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5
+        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
         with:
           path: ~/.dotnet # Path to cache for SDKs and Workloads
           key: ${{ runner.os }}-dotnet-workloads-${{ hashFiles('global.json') }}-${{ steps.setup-dotnet.outputs.dotnet-version }}
@@ -51,7 +51,7 @@ jobs:
             ${{ runner.os }}-dotnet-workloads-
 
       - name: 📦 Cache NuGet packages
-        uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5
+        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
         with:
           path: ~/.nuget/packages
           key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
@@ -59,7 +59,7 @@ jobs:
             ${{ runner.os }}-nuget-
 
       - name: 📦 Cache DotNet Tools
-        uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5
+        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
         with:
           path: ~/.dotnet/tools # Path to cache for global tools
           key: ${{ runner.os }}-dotnet-tools-${{ hashFiles('.config/dotnet-tools.json') }}
