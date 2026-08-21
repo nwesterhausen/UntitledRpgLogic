@@ -5,7 +5,14 @@ namespace UntitledRpgLogic.Core.Classes;
 /// <summary>
 ///     Contains the name of an object. Has a singular, a plural and a form when used as an adjective.
 /// </summary>
-public class Name : IStringSerializable<Name>
+/// <remarks>
+///     Constructs a new PluralName object with the given singular, plural and adjective names. If not supplied, the
+///     singular will be used as the adjective and a best guess will be made for the plural.
+/// </remarks>
+/// <param name="singular"></param>
+/// <param name="plural"></param>
+/// <param name="adjective"></param>
+public class Name(string singular, string? plural = null, string? adjective = null) : IStringSerializable<Name>
 {
 	/// <summary>
 	///     An empty name.
@@ -13,34 +20,19 @@ public class Name : IStringSerializable<Name>
 	public static readonly Name Empty = new(string.Empty);
 
 	/// <summary>
-	///     Constructs a new PluralName object with the given singular, plural and adjective names. If not supplied, the
-	///     singular
-	///     will be used as the adjective and a best guess will be made for the plural.
-	/// </summary>
-	/// <param name="singular"></param>
-	/// <param name="plural"></param>
-	/// <param name="adjective"></param>
-	public Name(string singular, string? plural = null, string? adjective = null)
-	{
-		this.Singular = singular;
-		this.Plural = plural ?? BestGuessPlural(singular);
-		this.Adjective = adjective ?? singular;
-	}
-
-	/// <summary>
 	///     The singular name of the object, e.g. "a Sword".
 	/// </summary>
-	public string Singular { get; init; }
+	public string Singular { get; init; } = singular;
 
 	/// <summary>
 	///     The plural name of the object, e.g. "two Swords".
 	/// </summary>
-	public string Plural { get; init; }
+	public string Plural { get; init; } = plural ?? BestGuessPlural(singular);
 
 	/// <summary>
 	///     The name used as an adjective, e.g. "Sword soup".
 	/// </summary>
-	public string Adjective { get; init; }
+	public string Adjective { get; init; } = adjective ?? singular;
 
 	/// <inheritdoc />
 	public string Serialize()
@@ -81,10 +73,10 @@ public class Name : IStringSerializable<Name>
 		}
 
 		if (singular.EndsWith('y') &&
-		    !singular.EndsWith("ay", StringComparison.InvariantCultureIgnoreCase) &&
-		    !singular.EndsWith("ey", StringComparison.InvariantCultureIgnoreCase) &&
-		    !singular.EndsWith("oy", StringComparison.InvariantCultureIgnoreCase) &&
-		    !singular.EndsWith("uy", StringComparison.InvariantCultureIgnoreCase))
+			!singular.EndsWith("ay", StringComparison.InvariantCultureIgnoreCase) &&
+			!singular.EndsWith("ey", StringComparison.InvariantCultureIgnoreCase) &&
+			!singular.EndsWith("oy", StringComparison.InvariantCultureIgnoreCase) &&
+			!singular.EndsWith("uy", StringComparison.InvariantCultureIgnoreCase))
 		{
 			return string.Concat(singular.AsSpan(0, singular.Length - 1), "ies");
 		}
@@ -95,8 +87,8 @@ public class Name : IStringSerializable<Name>
 		}
 
 		if (singular.EndsWith('s') || singular.EndsWith('x') || singular.EndsWith('z') ||
-		    singular.EndsWith("ch", StringComparison.InvariantCultureIgnoreCase) ||
-		    singular.EndsWith("sh", StringComparison.InvariantCultureIgnoreCase))
+			singular.EndsWith("ch", StringComparison.InvariantCultureIgnoreCase) ||
+			singular.EndsWith("sh", StringComparison.InvariantCultureIgnoreCase))
 		{
 			return singular + "es";
 		}

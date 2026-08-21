@@ -3,28 +3,23 @@ namespace UntitledRpgLogic.Core.Events;
 /// <summary>
 ///     Arguments for the ValueChanged event.
 /// </summary>
-public class ValueChangedEventArgs : EventArgs
+/// <remarks>
+///     The constructor for ValueChangedEventArgs.
+/// </remarks>
+/// <param name="previousValue">The previous value before the change.</param>
+/// <param name="newValue">The new value after the change.</param>
+public class ValueChangedEventArgs(int previousValue, int newValue) : EventArgs
 {
-	/// <summary>
-	///     The constructor for ValueChangedEventArgs.
-	/// </summary>
-	/// <param name="previousValue">The previous value before the change.</param>
-	/// <param name="newValue">The new value after the change.</param>
-	public ValueChangedEventArgs(int previousValue, int newValue)
-	{
-		this.PreviousValue = previousValue;
-		this.NewValue = newValue;
-	}
 
 	/// <summary>
 	///     The previous value before the change.
 	/// </summary>
-	public int PreviousValue { get; }
+	public int PreviousValue { get; } = previousValue;
 
 	/// <summary>
 	///     The new value after the change.
 	/// </summary>
-	public int NewValue { get; }
+	public int NewValue { get; } = newValue;
 
 	/// <summary>
 	///     The difference between the new value and the previous value.
