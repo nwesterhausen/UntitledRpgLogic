@@ -1,15 +1,15 @@
 namespace UntitledRpgLogic.IntegrationTests;
 
-[TestClass]
 /// <summary>
 /// Placeholder tests for UntitledRpgLogic.IntegrationTests.
 /// </summary>
+[TestClass]
 public sealed class PlaceholderTests
 {
-    [TestMethod]
-    /// <summary>
+	/// <summary>
     /// Temporary placeholder test for UntitledRpgLogic.IntegrationTests.
     /// </summary>
+    [TestMethod]
     public void TemporaryPlaceholderTest()
     {
         // This test is a placeholder to ensure the CI passes.
