@@ -12,6 +12,7 @@
 		<DebugType>portable</DebugType>
 		<IncludeSymbols>true</IncludeSymbols>
 		<PublishRepositoryUrl>true</PublishRepositoryUrl>
+		<TestingPlatformDotnetTestSupport>true</TestingPlatformDotnetTestSupport>
 		<!-- Optional (set by default in .NET SDK 8+):
 						Embed source files that are not tracked by the source control manager in the PDB -->
 		<EmbedUntrackedSources>true</EmbedUntrackedSources>
