@@ -9,18 +9,17 @@ namespace UntitledRpgLogic.Infrastructure.Data.Repositories;
 /// </summary>
 /// <typeparam name="TEntity">The type of the entity this repository manages.</typeparam>
 /// <typeparam name="TId">The type of the primary key for the entity.</typeparam>
-public class Repository<TEntity, TId> : IRepository<TEntity, TId> where TEntity : class, IDbEntity<TId> where TId : notnull
+/// <remarks>
+///     Initializes a new instance of the <see cref="Repository{TEntity, TId}" /> class.
+/// </remarks>
+/// <param name="context">The database context.</param>
+public class Repository<TEntity, TId>(DbContext context) : IRepository<TEntity, TId> where TEntity : class, IDbEntity<TId> where TId : notnull
 {
-	/// <summary>
-	///     Initializes a new instance of the <see cref="Repository{TEntity, TId}" /> class.
-	/// </summary>
-	/// <param name="context">The database context.</param>
-	public Repository(DbContext context) => this.Context = context;
 
 	/// <summary>
 	///     Gets the database context.
 	/// </summary>
-	protected DbContext Context { get; }
+	protected DbContext Context { get; } = context;
 
 	/// <inheritdoc />
 	public ValueTask<TEntity?> GetByIdAsync(TId id) => this.Context.Set<TEntity>().FindAsync(id);

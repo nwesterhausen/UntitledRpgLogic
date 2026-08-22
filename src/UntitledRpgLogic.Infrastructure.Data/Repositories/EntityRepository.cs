@@ -7,12 +7,9 @@ namespace UntitledRpgLogic.Infrastructure.Data.Repositories;
 /// <summary>
 ///     Implements a repository specifically for Entity objects, extending the generic repository.
 /// </summary>
-public class EntityRepository : Repository<Entity, Ulid>, IEntityRepository
+/// <inheritdoc />
+public class EntityRepository(DbContext context) : Repository<Entity, Ulid>(context), IEntityRepository
 {
-	/// <inheritdoc />
-	public EntityRepository(DbContext context) : base(context)
-	{
-	}
 
 	/// <summary>
 	///     A private property to access the DbContext as RpgDbContext.

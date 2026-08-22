@@ -762,4 +762,54 @@ public static class EventIds
 	///     An entity has been killed.
 	/// </summary>
 	public static readonly EventId EntityKilled = new(EventIdValues.EntityKilled, "EntityKilled");
+
+	/// <summary>
+	/// An entity had points in a named levelable change
+	/// </summary>
+	public static readonly EventId LevelablePointsChanged = new(EventIdValues.LevelablePointsChanged, "LevelabledPointsChanged");
+
+	/// <summary>
+	/// An entity had points in a levelable change
+	/// </summary>
+	public static readonly EventId LevelablePointsChangedGeneric = new(EventIdValues.LevelablePointsChangedGeneric, "LevelablePointsChangedGeneric");
+	/// <summary>
+	/// An entity had a named levelable change levels
+	/// </summary>
+	public static readonly EventId LevelChanged = new(EventIdValues.LevelChanged, "LevelChanged");
+
+	/// <summary>
+	/// An entity had an unamed levelable change levels
+	/// </summary>
+	public static readonly EventId LevelChangedGeneric = new(EventIdValues.LevelChangedGeneric, "LevelChangedGeneric");
+
+	/// <summary>
+	/// A skill is being set to a specific value.
+	/// </summary>
+	public static readonly EventId SkillValueSet = new(EventIdValues.SkillValueSet, "SkillValueSet");
+
+	/// <summary>
+	/// A skill is being decreased.
+	/// </summary>
+	public static readonly EventId SkillValueDecrease = new(EventIdValues.SkillValueDecrease, "SkillValueDecrease");
+
+	/// <summary>
+	/// A skill is being increased.
+	/// </summary>
+	public static readonly EventId SkillValueIncrease = new(EventIdValues.SkillValueIncrease, "SkillValueIncrease");
+
+	/// <summary>
+	/// A max-level skill was attempted to be increased.
+	/// </summary>
+	public static readonly EventId AttemptedIncreaseSkillAtMaxLevel = new(EventIdValues.AttemptedIncreaseSkillAtMaxLevel, "AttemptedIncreaseSkillAtMaxLevel");
+
+	/// Sub-category: State Machine Events (5700 - 57xx)
+	/// <summary>
+	/// The main menu state machine was initialized.
+	/// </summary>
+	public static readonly EventId MainMenuStateMachineInitialized = new(EventIdValues.MainMenuStateMachineInitialized, "MainMenuStateMachineInitialized");
+
+	/// <summary>
+	/// The main menu state machine transitioned to a new state.
+	/// </summary>
+	public static readonly EventId MainMenuStateMachineTransitioned = new(EventIdValues.MainMenuStateMachineTransitioned, "MainMenuStateMachineTransitioned");
 }

@@ -25,12 +25,13 @@ public static class HasDimensionsExtensions
 			ShapeType.Cylinder or ShapeType.Cone =>
 				$"Radius: {dimensions.Width / 2f}, Height: {dimensions.Height}",
 
-			ShapeType.Pyramid or ShapeType.Cube =>
+			ShapeType.Pyramid or ShapeType.Cube or ShapeType.RectangularPrism =>
 				$"W: {dimensions.Width}, H: {dimensions.Height}, D: {dimensions.Depth}",
 
 			ShapeType.ConicalFrustum =>
 				$"Top Radius: {dimensions.Width / 2f}, Bottom Radius: {dimensions.Depth / 2f}, Height: {dimensions.Height}",
-			ShapeType.RectangularPrism => throw new NotImplementedException(),
+
+			ShapeType.None => "No dimensions",
 
 			// The default arm now throws an exception for unhandled shapes, which is safer.
 			_ => throw new NotSupportedException(
@@ -56,6 +57,8 @@ public static class HasDimensionsExtensions
 			DimensionScale.Mm => value / 1000.0f,
 			DimensionScale.Cm => value / 100.0f,
 			DimensionScale.M => value,
+			DimensionScale.Km => value * 1000.0f,
+			DimensionScale.None => 0f,
 			_ => value // Default to assuming the original unit is meters if unknown
 		};
 
@@ -65,6 +68,8 @@ public static class HasDimensionsExtensions
 			DimensionScale.Mm => valueInMeters * 1000.0f,
 			DimensionScale.Cm => valueInMeters * 100.0f,
 			DimensionScale.M => valueInMeters,
+			DimensionScale.Km => valueInMeters / 1000.0f,
+			DimensionScale.None => 0f,
 			_ => valueInMeters // Default to returning meters if target is unknown
 		};
 	}

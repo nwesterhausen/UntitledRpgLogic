@@ -21,7 +21,7 @@ public class RpgDbContextFactory : IDesignTimeDbContextFactory<RpgDbContext>
 
 		// We can use a simple SQLite connection string here for design-time purposes.
 		// The actual connection string used at runtime will be configured by the consumer application.
-		optionsBuilder.UseSqlite("Data Source=design_time.db")
+		_ = optionsBuilder.UseSqlite("Data Source=design_time.db")
 			.UseSnakeCaseNamingConvention();
 
 		return new RpgDbContext(optionsBuilder.Options);

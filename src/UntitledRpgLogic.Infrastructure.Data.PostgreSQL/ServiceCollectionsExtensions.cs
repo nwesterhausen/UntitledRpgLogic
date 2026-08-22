@@ -19,11 +19,11 @@ public static class ServiceCollectionsExtensions
 	/// <returns>The updated <see cref="IServiceCollection" />.</returns>
 	public static IServiceCollection AddPostgresDataAccess(this IServiceCollection services, string connectionString)
 	{
-		services.AddDbContext<RpgDbContext>(options =>
+		_ = services.AddDbContext<RpgDbContext>(options =>
 			options.UseNpgsql(connectionString)
-				.UseSnakeCaseNamingConvention()); // <-- Only this line changes
+				.UseSnakeCaseNamingConvention());
 
-		services.AddScoped<IUnitOfWork, UnitOfWork>();
+		_ = services.AddScoped<IUnitOfWork, UnitOfWork>();
 		//services.AddScoped<IEntityRepository, EntityRepository>();
 
 		return services;

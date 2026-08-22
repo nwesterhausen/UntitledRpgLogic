@@ -9,15 +9,12 @@ namespace UntitledRpgLogic.Infrastructure.Data;
 /// <summary>
 ///     Represents the database context for the RPG application, providing access to all game data.
 /// </summary>
-public class RpgDbContext : DbContext
+/// <remarks>
+///     Initializes a new instance of the <see cref="RpgDbContext" /> class.
+/// </remarks>
+/// <param name="options">The options to be used by a <see cref="DbContext" />.</param>
+public class RpgDbContext(DbContextOptions<RpgDbContext> options) : DbContext(options)
 {
-	/// <summary>
-	///     Initializes a new instance of the <see cref="RpgDbContext" /> class.
-	/// </summary>
-	/// <param name="options">The options to be used by a <see cref="DbContext" />.</param>
-	public RpgDbContext(DbContextOptions<RpgDbContext> options) : base(options)
-	{
-	}
 
 	// Core Game Data Definitions
 	/// <summary>
@@ -120,50 +117,50 @@ public class RpgDbContext : DbContext
 		ArgumentNullException.ThrowIfNull(modelBuilder, nameof(modelBuilder));
 
 		// Configure composite primary keys for linking tables
-		modelBuilder.Entity<EntityStats>().HasKey(es => new { es.EntityId, es.InstancedStatId });
-		modelBuilder.Entity<EntitySkills>().HasKey(es => new { es.EntityId, es.InstancedSkillId });
-		modelBuilder.Entity<LinkedStats>().HasKey(ls => new { ls.DependentStatId, ls.LinkedStatId });
+		_ = modelBuilder.Entity<EntityStats>().HasKey(es => new { es.EntityId, es.InstancedStatId });
+		_ = modelBuilder.Entity<EntitySkills>().HasKey(es => new { es.EntityId, es.InstancedSkillId });
+		_ = modelBuilder.Entity<LinkedStats>().HasKey(ls => new { ls.DependentStatId, ls.LinkedStatId });
 
 		// Configure relationships
-		modelBuilder.Entity<Entity>()
+		_ = modelBuilder.Entity<Entity>()
 			.HasOne(e => e.Inventory)
 			.WithOne(i => i.Entity)
 			.HasForeignKey<EntityInventory>(i => i.EntityId);
 
-		modelBuilder.Entity<ItemInstance>()
+		_ = modelBuilder.Entity<ItemInstance>()
 			.HasOne(i => i.ItemDefinition)
 			.WithMany()
 			.HasForeignKey(i => i.ItemDefinitionId);
 
-		modelBuilder.Entity<ItemInstance>()
+		_ = modelBuilder.Entity<ItemInstance>()
 			.HasOne(i => i.PrimaryMaterial)
 			.WithMany()
 			.HasForeignKey(i => i.PrimaryMaterialId);
 
-		modelBuilder.Entity<LinkedStats>()
+		_ = modelBuilder.Entity<LinkedStats>()
 			.HasOne(ls => ls.DependentStat)
 			.WithMany() // StatDefinition does not have a collection of LinkedStats, so this is empty.
 			.HasForeignKey(ls => ls.DependentStatId)
 			.OnDelete(DeleteBehavior.Restrict); // Prevent deleting a StatDefinition if it's in use.
 
-		modelBuilder.Entity<LinkedStats>()
+		_ = modelBuilder.Entity<LinkedStats>()
 			.HasOne(ls => ls.LinkedStat)
 			.WithMany()
 			.HasForeignKey(ls => ls.LinkedStatId)
 			.OnDelete(DeleteBehavior.Restrict);
 
-		modelBuilder.Entity<Ability>()
+		_ = modelBuilder.Entity<Ability>()
 			.HasMany(ability => ability.ActiveEffects)
 			.WithMany(effect => effect.AbilitiesUsingAsActive)
 			.UsingEntity("AbilityActiveEffects");
 
-		modelBuilder.Entity<Ability>()
+		_ = modelBuilder.Entity<Ability>()
 			.HasMany(ability => ability.FailureEffects)
 			.WithMany(effect => effect.AbilitiesUsingAsFailure)
 			.UsingEntity("AbilityFailureEffects");
 
 		// Configure the TPH (Table-Per-Hierarchy) for the Effect model ---
-		modelBuilder.Entity<Effect>()
+		_ = modelBuilder.Entity<Effect>()
 			.HasDiscriminator(e => e.EffectType)
 			.HasValue<SummonEffect>(EffectType.Summon)
 			.HasValue<EnchantEffect>(EffectType.Enchant) // Assuming you will create these classes
@@ -184,11 +181,11 @@ public class RpgDbContext : DbContext
 
 		// This is where the value converters are registered.
 		// This convention tells EF Core to use our custom converter for every property of type Ulid.
-		configurationBuilder.Properties<Ulid>()
+		_ = configurationBuilder.Properties<Ulid>()
 			.HaveConversion<UlidToBytesConverter>();
 
 		// This convention tells EF Core to use our custom converter for every property of type Name.
-		configurationBuilder.Properties<Name>()
+		_ = configurationBuilder.Properties<Name>()
 			.HaveConversion<NameToSimpleStringConverter>();
 
 		base.ConfigureConventions(configurationBuilder);

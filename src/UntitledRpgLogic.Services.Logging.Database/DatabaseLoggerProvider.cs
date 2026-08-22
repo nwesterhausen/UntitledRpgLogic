@@ -6,18 +6,16 @@ namespace UntitledRpgLogic.Services.Logging.Database;
 /// <summary>
 ///     A provider that creates instances of the DatabaseLogger.
 /// </summary>
+/// <remarks>
+///     Constructor for the DatabaseLoggerProvider.
+/// </remarks>
+/// <param name="serviceProvider"></param>
 [ProviderAlias("Database")]
-public class DatabaseLoggerProvider : ILoggerProvider
+public class DatabaseLoggerProvider(IServiceProvider serviceProvider) : ILoggerProvider
 {
 	private readonly ConcurrentDictionary<string, DatabaseLogger> loggers = new();
-	private readonly IServiceProvider serviceProvider;
+	private readonly IServiceProvider serviceProvider = serviceProvider;
 	private bool disposed;
-
-	/// <summary>
-	///     Constructor for the DatabaseLoggerProvider.
-	/// </summary>
-	/// <param name="serviceProvider"></param>
-	public DatabaseLoggerProvider(IServiceProvider serviceProvider) => this.serviceProvider = serviceProvider;
 
 	internal IExternalScopeProvider ScopeProvider { get; } = new LoggerExternalScopeProvider();
 

@@ -5,16 +5,14 @@ namespace UntitledRpgLogic.Infrastructure.Data;
 /// <summary>
 ///     An implementation of the Unit of Work pattern using Entity Framework Core.
 /// </summary>
-public class UnitOfWork : IUnitOfWork
+/// <remarks>
+///     Initializes a new instance of the <see cref="UnitOfWork" /> class.
+/// </remarks>
+/// <param name="context">The database context to be used for this unit of work.</param>
+public class UnitOfWork(RpgDbContext context) : IUnitOfWork
 {
-	private readonly RpgDbContext context;
+	private readonly RpgDbContext context = context ?? throw new ArgumentNullException(nameof(context));
 	private bool disposed;
-
-	/// <summary>
-	///     Initializes a new instance of the <see cref="UnitOfWork" /> class.
-	/// </summary>
-	/// <param name="context">The database context to be used for this unit of work.</param>
-	public UnitOfWork(RpgDbContext context) => this.context = context ?? throw new ArgumentNullException(nameof(context));
 
 	/// <inheritdoc />
 	public int Commit() => this.context.SaveChanges();

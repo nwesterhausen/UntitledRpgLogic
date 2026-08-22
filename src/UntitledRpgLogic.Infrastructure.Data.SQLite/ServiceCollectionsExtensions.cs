@@ -20,12 +20,12 @@ public static class ServiceCollectionsExtensions
 	public static IServiceCollection AddSqliteDataAccess(this IServiceCollection services, string connectionString)
 	{
 		// 1. Register the DbContext
-		services.AddDbContext<RpgDbContext>(options =>
+		_ = services.AddDbContext<RpgDbContext>(options =>
 			options.UseSqlite(connectionString)
 				.UseSnakeCaseNamingConvention());
 
 		// 2. Register the Unit of Work and Repositories
-		services.AddScoped<IUnitOfWork, UnitOfWork>();
+		_ = services.AddScoped<IUnitOfWork, UnitOfWork>();
 		//services.AddScoped<IEntityRepository, EntityRepository>();
 
 		return services;

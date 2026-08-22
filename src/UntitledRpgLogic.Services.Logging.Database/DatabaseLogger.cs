@@ -65,7 +65,9 @@ public sealed class DatabaseLogger : ILogger, IDisposable
 		try
 		{
 			// Wait for the processing task to finish handling any remaining items.
-			this.processingTask.Wait(TimeSpan.FromSeconds(5));
+			while (!
+			 this.processingTask.Wait(TimeSpan.FromSeconds(1)))
+			{ }
 		}
 		catch (OperationCanceledException) { }
 
@@ -158,7 +160,7 @@ public sealed class DatabaseLogger : ILogger, IDisposable
 					var dbContext = scope.ServiceProvider.GetRequiredService<RpgDbContext>();
 
 					await dbContext.LogEntries.AddRangeAsync(logEntries, this.cancellationTokenSource.Token).ConfigureAwait(false);
-					await dbContext.SaveChangesAsync(this.cancellationTokenSource.Token).ConfigureAwait(false);
+					_ = await dbContext.SaveChangesAsync(this.cancellationTokenSource.Token).ConfigureAwait(false);
 				}
 			}
 			catch (OperationCanceledException)
