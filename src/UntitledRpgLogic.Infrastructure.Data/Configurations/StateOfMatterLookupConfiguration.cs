@@ -6,17 +6,17 @@ using UntitledRpgLogic.Infrastructure.Data.LookupEntities;
 
 namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
 ///<summary>
-/// Defines the `RequirementType` lookup table
+/// Defines the `StateOfMatter` lookup table
 ///</summary>
-public class RequirementTypeLookupConfiguration : IEntityTypeConfiguration<RequirementTypeLookup>
+public class StateOfMatterLookupConfiguration : IEntityTypeConfiguration<StateOfMatterLookup>
 {
 	///<inheritdoc />
-	public void Configure(EntityTypeBuilder<RequirementTypeLookup> builder)
+	public void Configure(EntityTypeBuilder<StateOfMatterLookup> builder)
 	{
 		ArgumentNullException.ThrowIfNull(builder);
 
 		// Define table
-		_ = builder.ToTable("requirement_type_lookup");
+		_ = builder.ToTable("state_of_matter_lookup");
 		_ = builder.HasKey(x => x.Id);
 		_ = builder.Property(x => x.Id)
 			.HasConversion<int>();
@@ -25,8 +25,8 @@ public class RequirementTypeLookupConfiguration : IEntityTypeConfiguration<Requi
 			.IsRequired();
 
 		// Seed with enum data
-		var seedData = Enum.GetValues<RequirementType>()
-			.Select(e => new RequirementTypeLookup
+		var seedData = Enum.GetValues<StateOfMatter>()
+			.Select(e => new StateOfMatterLookup
 			{
 				Id = e,
 				Name = e.ToString()

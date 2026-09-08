@@ -6,17 +6,17 @@ using UntitledRpgLogic.Infrastructure.Data.LookupEntities;
 
 namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
 ///<summary>
-/// Defines the `RequirementType` lookup table
+/// Defines the `AbilityType` lookup table
 ///</summary>
-public class RequirementTypeLookupConfiguration : IEntityTypeConfiguration<RequirementTypeLookup>
+public class AbilityTypeLookupConfiguration : IEntityTypeConfiguration<AbilityTypeLookup>
 {
 	///<inheritdoc />
-	public void Configure(EntityTypeBuilder<RequirementTypeLookup> builder)
+	public void Configure(EntityTypeBuilder<AbilityTypeLookup> builder)
 	{
 		ArgumentNullException.ThrowIfNull(builder);
 
 		// Define table
-		_ = builder.ToTable("requirement_type_lookup");
+		_ = builder.ToTable("ability_type_lookup");
 		_ = builder.HasKey(x => x.Id);
 		_ = builder.Property(x => x.Id)
 			.HasConversion<int>();
@@ -25,8 +25,8 @@ public class RequirementTypeLookupConfiguration : IEntityTypeConfiguration<Requi
 			.IsRequired();
 
 		// Seed with enum data
-		var seedData = Enum.GetValues<RequirementType>()
-			.Select(e => new RequirementTypeLookup
+		var seedData = Enum.GetValues<AbilityType>()
+			.Select(e => new AbilityTypeLookup
 			{
 				Id = e,
 				Name = e.ToString()

@@ -2945,5 +2945,10 @@ dotnet_diagnostic.MSTEST0040.severity = warning
 # Use 'ConditionBaseAttribute' on test classes
 dotnet_diagnostic.MSTEST0041.severity = warning
 
+# Exclude EF Core migrations from code analysis
+[**/Migrations/**.cs]
+generated_code = true
+dotnet_analyzer_diagnostic.severity = none
+
 ### Sources ###
 # https://github.com/dotnet/roslyn-analyzers/blob/main/src/NetAnalyzers/Microsoft.CodeAnalysis.NetAnalyzers.md

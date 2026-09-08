@@ -6,17 +6,17 @@ using UntitledRpgLogic.Infrastructure.Data.LookupEntities;
 
 namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
 ///<summary>
-/// Defines the `RequirementType` lookup table
+/// Defines the `MessagePriority` lookup table
 ///</summary>
-public class RequirementTypeLookupConfiguration : IEntityTypeConfiguration<RequirementTypeLookup>
+public class MessagePriorityLookupConfiguration : IEntityTypeConfiguration<MessagePriorityLookup>
 {
 	///<inheritdoc />
-	public void Configure(EntityTypeBuilder<RequirementTypeLookup> builder)
+	public void Configure(EntityTypeBuilder<MessagePriorityLookup> builder)
 	{
 		ArgumentNullException.ThrowIfNull(builder);
 
 		// Define table
-		_ = builder.ToTable("requirement_type_lookup");
+		_ = builder.ToTable("message_priority_lookup");
 		_ = builder.HasKey(x => x.Id);
 		_ = builder.Property(x => x.Id)
 			.HasConversion<int>();
@@ -25,8 +25,8 @@ public class RequirementTypeLookupConfiguration : IEntityTypeConfiguration<Requi
 			.IsRequired();
 
 		// Seed with enum data
-		var seedData = Enum.GetValues<RequirementType>()
-			.Select(e => new RequirementTypeLookup
+		var seedData = Enum.GetValues<MessagePriority>()
+			.Select(e => new MessagePriorityLookup
 			{
 				Id = e,
 				Name = e.ToString()
