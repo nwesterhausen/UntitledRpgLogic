@@ -505,3 +505,4 @@ fabric.properties
 # Repository Specific::
 _site/
 api/
+design_time.db*
