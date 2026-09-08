@@ -11,7 +11,7 @@ public record FantasticalProperties
 	///		Default constructor.
 	/// </summary>
 	public FantasticalProperties()
-	{}
+	{ }
 
 	/// <summary>
 	///     A relative measure of how well the material channels magical energy.

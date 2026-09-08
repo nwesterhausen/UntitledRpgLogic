@@ -1,10 +1,10 @@
-namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using UntitledRpgLogic.Core.Enums;
 using UntitledRpgLogic.Infrastructure.Data.LookupEntities;
 
+namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
 ///<summary>
 /// Defines the `RequirementType` lookup table
 ///</summary>
@@ -17,11 +17,11 @@ public class RequirementTypeLookupConfiguration : IEntityTypeConfiguration<Requi
 		ArgumentNullException.ThrowIfNull(builder);
 
 		// Define table
-		builder.ToTable("requirement_type_lookup");
-		builder.HasKey(x => x.Id);
-		builder.Property(x => x.Id)
+		_ = builder.ToTable("requirement_type_lookup");
+		_ = builder.HasKey(x => x.Id);
+		_ = builder.Property(x => x.Id)
 			.HasConversion<int>();
-		builder.Property(x => x.Name)
+		_ = builder.Property(x => x.Name)
 			.HasMaxLength(127)
 			.IsRequired();
 
@@ -32,6 +32,6 @@ public class RequirementTypeLookupConfiguration : IEntityTypeConfiguration<Requi
 				Id = e,
 				Name = e.ToString()
 			});
-		builder.HasData(seedData);
+		_ = builder.HasData(seedData);
 	}
 }

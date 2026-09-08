@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using UntitledRpgLogic.Core.Classes;
-using UntitledRpgLogic.Core.Enums;
 using UntitledRpgLogic.Core.Models;
 using UntitledRpgLogic.Infrastructure.Data.ValueConverters;
 
@@ -119,7 +118,7 @@ public class RpgDbContext(DbContextOptions<RpgDbContext> options) : DbContext(op
 		// Configure lookup tables
 		// Configure advanced table relationships (1 -> M, M -> M, additional FK, composite PK)
 		// (automatically pull table definitions from `Configurations` via `IEntityTypeConfiguration`)
-		modelBuilder.ApplyConfigurationsFromAssembly(typeof(RpgDbContext).Assembly);
+		_ = modelBuilder.ApplyConfigurationsFromAssembly(typeof(RpgDbContext).Assembly);
 	}
 
 	/// <inheritdoc />

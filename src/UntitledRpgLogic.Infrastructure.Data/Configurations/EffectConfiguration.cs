@@ -1,10 +1,10 @@
-namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using UntitledRpgLogic.Core.Enums;
 using UntitledRpgLogic.Core.Models;
 
+namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
 ///<summary>
 /// Defines advanced table configuration for `Effect`
 ///</summary>
@@ -26,7 +26,7 @@ public class EffectConfiguration : IEntityTypeConfiguration<Effect>
 		// `dbContext.Effects.OfType<DamageEffect>().ToListAsync()` would only grab DamageEffects
 		// stored in the table. Without specifying `OfType`, a mixed list of all various effect types
 		// would be returned.
-		builder
+		_ = builder
 			.HasDiscriminator(e => e.EffectType)
 			.HasValue<SummonEffect>(EffectType.Summon)
 			.HasValue<EnchantEffect>(EffectType.Enchant)

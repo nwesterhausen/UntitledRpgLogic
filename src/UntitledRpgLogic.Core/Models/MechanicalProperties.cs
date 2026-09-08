@@ -11,7 +11,7 @@ public record MechanicalProperties
 	///		Constructs a new default record.
 	/// </summary>
 	public MechanicalProperties()
-	{}
+	{ }
 
 	/// <summary>
 	///     The density of the material in cm/m^3.

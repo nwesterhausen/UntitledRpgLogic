@@ -1,9 +1,9 @@
-namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using UntitledRpgLogic.Core.Models;
 
+namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
 ///<summary>
 /// Defines advanced table configuration for `EntityStats`
 ///</summary>
@@ -16,6 +16,6 @@ public class EntityStatsConfiguration : IEntityTypeConfiguration<EntityStats>
 		ArgumentNullException.ThrowIfNull(builder);
 
 		// Composite PK
-		builder.HasKey(es => new { es.EntityId, es.InstancedStatId });
+		_ = builder.HasKey(es => new { es.EntityId, es.InstancedStatId });
 	}
 }

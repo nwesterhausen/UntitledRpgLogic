@@ -1,9 +1,9 @@
-namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using UntitledRpgLogic.Core.Models;
 
+namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
 ///<summary>
 /// Defines advanced table configuration for `Ability`
 ///</summary>
@@ -15,12 +15,12 @@ public class AbilityConfiguration : IEntityTypeConfiguration<Ability>
 		ArgumentNullException.ThrowIfNull(builder);
 
 		// Relationships
-		builder
+		_ = builder
 			 .HasMany(ability => ability.ActiveEffects)
 			 .WithMany(effect => effect.AbilitiesUsingAsActive)
 			 .UsingEntity("AbilityActiveEffects");
 
-		builder
+		_ = builder
 			.HasMany(ability => ability.FailureEffects)
 			.WithMany(effect => effect.AbilitiesUsingAsFailure)
 			.UsingEntity("AbilityFailureEffects");

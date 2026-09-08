@@ -11,7 +11,7 @@ public record ThermalProperties
 	///		A default constructor.
 	/// </summary>
 	public ThermalProperties()
-	{}
+	{ }
 
 	/// <summary>
 	///     The temperature in Celsius at which the material melts.

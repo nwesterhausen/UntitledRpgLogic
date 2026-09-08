@@ -12,7 +12,7 @@ public partial class InitialCreate : Migration
 	{
 		ArgumentNullException.ThrowIfNull(migrationBuilder, nameof(migrationBuilder));
 
-		migrationBuilder.CreateTable(
+		_ = migrationBuilder.CreateTable(
 			name: "effects",
 			columns: table => new
 			{
@@ -26,10 +26,10 @@ public partial class InitialCreate : Migration
 			},
 			constraints: table =>
 			{
-				table.PrimaryKey("pk_effects", x => x.id);
+				_ = table.PrimaryKey("pk_effects", x => x.id);
 			});
 
-		migrationBuilder.CreateTable(
+		_ = migrationBuilder.CreateTable(
 			name: "entities",
 			columns: table => new
 			{
@@ -38,10 +38,10 @@ public partial class InitialCreate : Migration
 			},
 			constraints: table =>
 			{
-				table.PrimaryKey("pk_entities", x => x.id);
+				_ = table.PrimaryKey("pk_entities", x => x.id);
 			});
 
-		migrationBuilder.CreateTable(
+		_ = migrationBuilder.CreateTable(
 			name: "item_definitions",
 			columns: table => new
 			{
@@ -56,10 +56,10 @@ public partial class InitialCreate : Migration
 			},
 			constraints: table =>
 			{
-				table.PrimaryKey("pk_item_definitions", x => x.id);
+				_ = table.PrimaryKey("pk_item_definitions", x => x.id);
 			});
 
-		migrationBuilder.CreateTable(
+		_ = migrationBuilder.CreateTable(
 			name: "log_entries",
 			columns: table => new
 			{
@@ -74,10 +74,10 @@ public partial class InitialCreate : Migration
 			},
 			constraints: table =>
 			{
-				table.PrimaryKey("pk_log_entries", x => x.id);
+				_ = table.PrimaryKey("pk_log_entries", x => x.id);
 			});
 
-		migrationBuilder.CreateTable(
+		_ = migrationBuilder.CreateTable(
 			name: "material_definitions",
 			columns: table => new
 			{
@@ -86,10 +86,10 @@ public partial class InitialCreate : Migration
 			},
 			constraints: table =>
 			{
-				table.PrimaryKey("pk_material_definitions", x => x.id);
+				_ = table.PrimaryKey("pk_material_definitions", x => x.id);
 			});
 
-		migrationBuilder.CreateTable(
+		_ = migrationBuilder.CreateTable(
 			name: "modification_effects",
 			columns: table => new
 			{
@@ -101,10 +101,10 @@ public partial class InitialCreate : Migration
 			},
 			constraints: table =>
 			{
-				table.PrimaryKey("pk_modification_effects", x => x.id);
+				_ = table.PrimaryKey("pk_modification_effects", x => x.id);
 			});
 
-		migrationBuilder.CreateTable(
+		_ = migrationBuilder.CreateTable(
 			name: "skill_definitions",
 			columns: table => new
 			{
@@ -119,10 +119,10 @@ public partial class InitialCreate : Migration
 			},
 			constraints: table =>
 			{
-				table.PrimaryKey("pk_skill_definitions", x => x.id);
+				_ = table.PrimaryKey("pk_skill_definitions", x => x.id);
 			});
 
-		migrationBuilder.CreateTable(
+		_ = migrationBuilder.CreateTable(
 			name: "stat_definitions",
 			columns: table => new
 			{
@@ -135,10 +135,10 @@ public partial class InitialCreate : Migration
 			},
 			constraints: table =>
 			{
-				table.PrimaryKey("pk_stat_definitions", x => x.id);
+				_ = table.PrimaryKey("pk_stat_definitions", x => x.id);
 			});
 
-		migrationBuilder.CreateTable(
+		_ = migrationBuilder.CreateTable(
 			name: "affected_ambient",
 			columns: table => new
 			{
@@ -151,8 +151,8 @@ public partial class InitialCreate : Migration
 			},
 			constraints: table =>
 			{
-				table.PrimaryKey("pk_affected_ambient", x => x.id);
-				table.ForeignKey(
+				_ = table.PrimaryKey("pk_affected_ambient", x => x.id);
+				_ = table.ForeignKey(
 					name: "fk_affected_ambient_effects_effect_id",
 					column: x => x.effect_id,
 					principalTable: "effects",
@@ -160,7 +160,7 @@ public partial class InitialCreate : Migration
 					onDelete: ReferentialAction.Cascade);
 			});
 
-		migrationBuilder.CreateTable(
+		_ = migrationBuilder.CreateTable(
 			name: "affected_stat",
 			columns: table => new
 			{
@@ -173,8 +173,8 @@ public partial class InitialCreate : Migration
 			},
 			constraints: table =>
 			{
-				table.PrimaryKey("pk_affected_stat", x => x.id);
-				table.ForeignKey(
+				_ = table.PrimaryKey("pk_affected_stat", x => x.id);
+				_ = table.ForeignKey(
 					name: "fk_affected_stat_effects_effect_id",
 					column: x => x.effect_id,
 					principalTable: "effects",
@@ -182,7 +182,7 @@ public partial class InitialCreate : Migration
 					onDelete: ReferentialAction.Cascade);
 			});
 
-		migrationBuilder.CreateTable(
+		_ = migrationBuilder.CreateTable(
 			name: "entity_inventories",
 			columns: table => new
 			{
@@ -193,8 +193,8 @@ public partial class InitialCreate : Migration
 			},
 			constraints: table =>
 			{
-				table.PrimaryKey("pk_entity_inventories", x => x.id);
-				table.ForeignKey(
+				_ = table.PrimaryKey("pk_entity_inventories", x => x.id);
+				_ = table.ForeignKey(
 					name: "fk_entity_inventories_entities_entity_id",
 					column: x => x.entity_id,
 					principalTable: "entities",
@@ -202,7 +202,7 @@ public partial class InitialCreate : Migration
 					onDelete: ReferentialAction.Cascade);
 			});
 
-		migrationBuilder.CreateTable(
+		_ = migrationBuilder.CreateTable(
 			name: "modifier_definitions",
 			columns: table => new
 			{
@@ -222,20 +222,20 @@ public partial class InitialCreate : Migration
 			},
 			constraints: table =>
 			{
-				table.PrimaryKey("pk_modifier_definitions", x => x.id);
-				table.ForeignKey(
+				_ = table.PrimaryKey("pk_modifier_definitions", x => x.id);
+				_ = table.ForeignKey(
 					name: "fk_modifier_definitions_modification_effects_modifier_effect_id",
 					column: x => x.modifier_effect_id,
 					principalTable: "modification_effects",
 					principalColumn: "id");
-				table.ForeignKey(
+				_ = table.ForeignKey(
 					name: "fk_modifier_definitions_modification_effects_stack_effect_id",
 					column: x => x.stack_effect_id,
 					principalTable: "modification_effects",
 					principalColumn: "id");
 			});
 
-		migrationBuilder.CreateTable(
+		_ = migrationBuilder.CreateTable(
 			name: "abilities",
 			columns: table => new
 			{
@@ -251,8 +251,8 @@ public partial class InitialCreate : Migration
 			},
 			constraints: table =>
 			{
-				table.PrimaryKey("pk_abilities", x => x.id);
-				table.ForeignKey(
+				_ = table.PrimaryKey("pk_abilities", x => x.id);
+				_ = table.ForeignKey(
 					name: "fk_abilities_skill_definitions_skill_discipline_id",
 					column: x => x.skill_discipline_id,
 					principalTable: "skill_definitions",
@@ -260,7 +260,7 @@ public partial class InitialCreate : Migration
 					onDelete: ReferentialAction.Cascade);
 			});
 
-		migrationBuilder.CreateTable(
+		_ = migrationBuilder.CreateTable(
 			name: "instanced_skills",
 			columns: table => new
 			{
@@ -271,8 +271,8 @@ public partial class InitialCreate : Migration
 			},
 			constraints: table =>
 			{
-				table.PrimaryKey("pk_instanced_skills", x => x.id);
-				table.ForeignKey(
+				_ = table.PrimaryKey("pk_instanced_skills", x => x.id);
+				_ = table.ForeignKey(
 					name: "fk_instanced_skills_skill_definitions_skill_definition_id",
 					column: x => x.skill_definition_id,
 					principalTable: "skill_definitions",
@@ -280,7 +280,7 @@ public partial class InitialCreate : Migration
 					onDelete: ReferentialAction.Cascade);
 			});
 
-		migrationBuilder.CreateTable(
+		_ = migrationBuilder.CreateTable(
 			name: "instanced_stats",
 			columns: table => new
 			{
@@ -291,8 +291,8 @@ public partial class InitialCreate : Migration
 			},
 			constraints: table =>
 			{
-				table.PrimaryKey("pk_instanced_stats", x => x.id);
-				table.ForeignKey(
+				_ = table.PrimaryKey("pk_instanced_stats", x => x.id);
+				_ = table.ForeignKey(
 					name: "fk_instanced_stats_stat_definitions_stat_definition_id",
 					column: x => x.stat_definition_id,
 					principalTable: "stat_definitions",
@@ -300,7 +300,7 @@ public partial class InitialCreate : Migration
 					onDelete: ReferentialAction.Cascade);
 			});
 
-		migrationBuilder.CreateTable(
+		_ = migrationBuilder.CreateTable(
 			name: "linked_stats",
 			columns: table => new
 			{
@@ -311,27 +311,27 @@ public partial class InitialCreate : Migration
 			},
 			constraints: table =>
 			{
-				table.PrimaryKey("pk_linked_stats", x => new { x.dependent_stat_id, x.linked_stat_id });
-				table.ForeignKey(
+				_ = table.PrimaryKey("pk_linked_stats", x => new { x.dependent_stat_id, x.linked_stat_id });
+				_ = table.ForeignKey(
 					name: "fk_linked_stats_stat_definitions_dependent_stat_id",
 					column: x => x.dependent_stat_id,
 					principalTable: "stat_definitions",
 					principalColumn: "id",
 					onDelete: ReferentialAction.Restrict);
-				table.ForeignKey(
+				_ = table.ForeignKey(
 					name: "fk_linked_stats_stat_definitions_linked_stat_id",
 					column: x => x.linked_stat_id,
 					principalTable: "stat_definitions",
 					principalColumn: "id",
 					onDelete: ReferentialAction.Restrict);
-				table.ForeignKey(
+				_ = table.ForeignKey(
 					name: "fk_linked_stats_stat_definitions_stat_definition_id",
 					column: x => x.stat_definition_id,
 					principalTable: "stat_definitions",
 					principalColumn: "id");
 			});
 
-		migrationBuilder.CreateTable(
+		_ = migrationBuilder.CreateTable(
 			name: "item_instances",
 			columns: table => new
 			{
@@ -345,26 +345,26 @@ public partial class InitialCreate : Migration
 			},
 			constraints: table =>
 			{
-				table.PrimaryKey("pk_item_instances", x => x.id);
-				table.ForeignKey(
+				_ = table.PrimaryKey("pk_item_instances", x => x.id);
+				_ = table.ForeignKey(
 					name: "fk_item_instances_entity_inventories_entity_inventory_id",
 					column: x => x.entity_inventory_id,
 					principalTable: "entity_inventories",
 					principalColumn: "id");
-				table.ForeignKey(
+				_ = table.ForeignKey(
 					name: "fk_item_instances_item_definitions_item_definition_id",
 					column: x => x.item_definition_id,
 					principalTable: "item_definitions",
 					principalColumn: "id",
 					onDelete: ReferentialAction.Cascade);
-				table.ForeignKey(
+				_ = table.ForeignKey(
 					name: "fk_item_instances_material_definitions_primary_material_id",
 					column: x => x.primary_material_id,
 					principalTable: "material_definitions",
 					principalColumn: "id");
 			});
 
-		migrationBuilder.CreateTable(
+		_ = migrationBuilder.CreateTable(
 			name: "applied_modifiers",
 			columns: table => new
 			{
@@ -377,14 +377,14 @@ public partial class InitialCreate : Migration
 			},
 			constraints: table =>
 			{
-				table.PrimaryKey("pk_applied_modifiers", x => x.id);
-				table.ForeignKey(
+				_ = table.PrimaryKey("pk_applied_modifiers", x => x.id);
+				_ = table.ForeignKey(
 					name: "fk_applied_modifiers_entities_entity_id",
 					column: x => x.entity_id,
 					principalTable: "entities",
 					principalColumn: "id",
 					onDelete: ReferentialAction.Cascade);
-				table.ForeignKey(
+				_ = table.ForeignKey(
 					name: "fk_applied_modifiers_modifier_definitions_modifier_definition_id",
 					column: x => x.modifier_definition_id,
 					principalTable: "modifier_definitions",
@@ -392,7 +392,7 @@ public partial class InitialCreate : Migration
 					onDelete: ReferentialAction.Cascade);
 			});
 
-		migrationBuilder.CreateTable(
+		_ = migrationBuilder.CreateTable(
 			name: "ability_active_effects",
 			columns: table => new
 			{
@@ -401,14 +401,14 @@ public partial class InitialCreate : Migration
 			},
 			constraints: table =>
 			{
-				table.PrimaryKey("pk_ability_active_effects", x => new { x.abilities_using_as_active_id, x.active_effects_id });
-				table.ForeignKey(
+				_ = table.PrimaryKey("pk_ability_active_effects", x => new { x.abilities_using_as_active_id, x.active_effects_id });
+				_ = table.ForeignKey(
 					name: "fk_ability_active_effects_abilities_abilities_using_as_active_id",
 					column: x => x.abilities_using_as_active_id,
 					principalTable: "abilities",
 					principalColumn: "id",
 					onDelete: ReferentialAction.Cascade);
-				table.ForeignKey(
+				_ = table.ForeignKey(
 					name: "fk_ability_active_effects_effects_active_effects_id",
 					column: x => x.active_effects_id,
 					principalTable: "effects",
@@ -416,7 +416,7 @@ public partial class InitialCreate : Migration
 					onDelete: ReferentialAction.Cascade);
 			});
 
-		migrationBuilder.CreateTable(
+		_ = migrationBuilder.CreateTable(
 			name: "ability_failure_effects",
 			columns: table => new
 			{
@@ -425,14 +425,14 @@ public partial class InitialCreate : Migration
 			},
 			constraints: table =>
 			{
-				table.PrimaryKey("pk_ability_failure_effects", x => new { x.abilities_using_as_failure_id, x.failure_effects_id });
-				table.ForeignKey(
+				_ = table.PrimaryKey("pk_ability_failure_effects", x => new { x.abilities_using_as_failure_id, x.failure_effects_id });
+				_ = table.ForeignKey(
 					name: "fk_ability_failure_effects_abilities_abilities_using_as_failure_id",
 					column: x => x.abilities_using_as_failure_id,
 					principalTable: "abilities",
 					principalColumn: "id",
 					onDelete: ReferentialAction.Cascade);
-				table.ForeignKey(
+				_ = table.ForeignKey(
 					name: "fk_ability_failure_effects_effects_failure_effects_id",
 					column: x => x.failure_effects_id,
 					principalTable: "effects",
@@ -440,7 +440,7 @@ public partial class InitialCreate : Migration
 					onDelete: ReferentialAction.Cascade);
 			});
 
-		migrationBuilder.CreateTable(
+		_ = migrationBuilder.CreateTable(
 			name: "casting_requirement",
 			columns: table => new
 			{
@@ -453,8 +453,8 @@ public partial class InitialCreate : Migration
 			},
 			constraints: table =>
 			{
-				table.PrimaryKey("pk_casting_requirement", x => x.id);
-				table.ForeignKey(
+				_ = table.PrimaryKey("pk_casting_requirement", x => x.id);
+				_ = table.ForeignKey(
 					name: "fk_casting_requirement_abilities_ability_id",
 					column: x => x.ability_id,
 					principalTable: "abilities",
@@ -462,7 +462,7 @@ public partial class InitialCreate : Migration
 					onDelete: ReferentialAction.Cascade);
 			});
 
-		migrationBuilder.CreateTable(
+		_ = migrationBuilder.CreateTable(
 			name: "failure_influence",
 			columns: table => new
 			{
@@ -476,8 +476,8 @@ public partial class InitialCreate : Migration
 			},
 			constraints: table =>
 			{
-				table.PrimaryKey("pk_failure_influence", x => x.id);
-				table.ForeignKey(
+				_ = table.PrimaryKey("pk_failure_influence", x => x.id);
+				_ = table.ForeignKey(
 					name: "fk_failure_influence_abilities_ability_id",
 					column: x => x.ability_id,
 					principalTable: "abilities",
@@ -485,7 +485,7 @@ public partial class InitialCreate : Migration
 					onDelete: ReferentialAction.Cascade);
 			});
 
-		migrationBuilder.CreateTable(
+		_ = migrationBuilder.CreateTable(
 			name: "learning_requirement",
 			columns: table => new
 			{
@@ -498,8 +498,8 @@ public partial class InitialCreate : Migration
 			},
 			constraints: table =>
 			{
-				table.PrimaryKey("pk_learning_requirement", x => x.id);
-				table.ForeignKey(
+				_ = table.PrimaryKey("pk_learning_requirement", x => x.id);
+				_ = table.ForeignKey(
 					name: "fk_learning_requirement_abilities_ability_id",
 					column: x => x.ability_id,
 					principalTable: "abilities",
@@ -507,7 +507,7 @@ public partial class InitialCreate : Migration
 					onDelete: ReferentialAction.Cascade);
 			});
 
-		migrationBuilder.CreateTable(
+		_ = migrationBuilder.CreateTable(
 			name: "stat_cost",
 			columns: table => new
 			{
@@ -519,8 +519,8 @@ public partial class InitialCreate : Migration
 			},
 			constraints: table =>
 			{
-				table.PrimaryKey("pk_stat_cost", x => x.id);
-				table.ForeignKey(
+				_ = table.PrimaryKey("pk_stat_cost", x => x.id);
+				_ = table.ForeignKey(
 					name: "fk_stat_cost_abilities_ability_id",
 					column: x => x.ability_id,
 					principalTable: "abilities",
@@ -528,7 +528,7 @@ public partial class InitialCreate : Migration
 					onDelete: ReferentialAction.Cascade);
 			});
 
-		migrationBuilder.CreateTable(
+		_ = migrationBuilder.CreateTable(
 			name: "entity_skills",
 			columns: table => new
 			{
@@ -537,14 +537,14 @@ public partial class InitialCreate : Migration
 			},
 			constraints: table =>
 			{
-				table.PrimaryKey("pk_entity_skills", x => new { x.entity_id, x.instanced_skill_id });
-				table.ForeignKey(
+				_ = table.PrimaryKey("pk_entity_skills", x => new { x.entity_id, x.instanced_skill_id });
+				_ = table.ForeignKey(
 					name: "fk_entity_skills_entities_entity_id",
 					column: x => x.entity_id,
 					principalTable: "entities",
 					principalColumn: "id",
 					onDelete: ReferentialAction.Cascade);
-				table.ForeignKey(
+				_ = table.ForeignKey(
 					name: "fk_entity_skills_instanced_skills_instanced_skill_id",
 					column: x => x.instanced_skill_id,
 					principalTable: "instanced_skills",
@@ -552,7 +552,7 @@ public partial class InitialCreate : Migration
 					onDelete: ReferentialAction.Cascade);
 			});
 
-		migrationBuilder.CreateTable(
+		_ = migrationBuilder.CreateTable(
 			name: "entity_stats",
 			columns: table => new
 			{
@@ -561,14 +561,14 @@ public partial class InitialCreate : Migration
 			},
 			constraints: table =>
 			{
-				table.PrimaryKey("pk_entity_stats", x => new { x.entity_id, x.instanced_stat_id });
-				table.ForeignKey(
+				_ = table.PrimaryKey("pk_entity_stats", x => new { x.entity_id, x.instanced_stat_id });
+				_ = table.ForeignKey(
 					name: "fk_entity_stats_entities_entity_id",
 					column: x => x.entity_id,
 					principalTable: "entities",
 					principalColumn: "id",
 					onDelete: ReferentialAction.Cascade);
-				table.ForeignKey(
+				_ = table.ForeignKey(
 					name: "fk_entity_stats_instanced_stats_instanced_stat_id",
 					column: x => x.instanced_stat_id,
 					principalTable: "instanced_stats",
@@ -576,130 +576,130 @@ public partial class InitialCreate : Migration
 					onDelete: ReferentialAction.Cascade);
 			});
 
-		migrationBuilder.CreateIndex(
+		_ = migrationBuilder.CreateIndex(
 			name: "ix_abilities_skill_discipline_id",
 			table: "abilities",
 			column: "skill_discipline_id");
 
-		migrationBuilder.CreateIndex(
+		_ = migrationBuilder.CreateIndex(
 			name: "ix_ability_active_effects_active_effects_id",
 			table: "ability_active_effects",
 			column: "active_effects_id");
 
-		migrationBuilder.CreateIndex(
+		_ = migrationBuilder.CreateIndex(
 			name: "ix_ability_failure_effects_failure_effects_id",
 			table: "ability_failure_effects",
 			column: "failure_effects_id");
 
-		migrationBuilder.CreateIndex(
+		_ = migrationBuilder.CreateIndex(
 			name: "ix_affected_ambient_effect_id",
 			table: "affected_ambient",
 			column: "effect_id");
 
-		migrationBuilder.CreateIndex(
+		_ = migrationBuilder.CreateIndex(
 			name: "ix_affected_stat_effect_id",
 			table: "affected_stat",
 			column: "effect_id");
 
-		migrationBuilder.CreateIndex(
+		_ = migrationBuilder.CreateIndex(
 			name: "ix_applied_modifiers_entity_id",
 			table: "applied_modifiers",
 			column: "entity_id");
 
-		migrationBuilder.CreateIndex(
+		_ = migrationBuilder.CreateIndex(
 			name: "ix_applied_modifiers_modifier_definition_id",
 			table: "applied_modifiers",
 			column: "modifier_definition_id");
 
-		migrationBuilder.CreateIndex(
+		_ = migrationBuilder.CreateIndex(
 			name: "ix_casting_requirement_ability_id",
 			table: "casting_requirement",
 			column: "ability_id");
 
-		migrationBuilder.CreateIndex(
+		_ = migrationBuilder.CreateIndex(
 			name: "ix_entity_inventories_entity_id",
 			table: "entity_inventories",
 			column: "entity_id",
 			unique: true);
 
-		migrationBuilder.CreateIndex(
+		_ = migrationBuilder.CreateIndex(
 			name: "ix_entity_skills_entity_id",
 			table: "entity_skills",
 			column: "entity_id",
 			unique: true);
 
-		migrationBuilder.CreateIndex(
+		_ = migrationBuilder.CreateIndex(
 			name: "ix_entity_skills_instanced_skill_id",
 			table: "entity_skills",
 			column: "instanced_skill_id");
 
-		migrationBuilder.CreateIndex(
+		_ = migrationBuilder.CreateIndex(
 			name: "ix_entity_stats_entity_id",
 			table: "entity_stats",
 			column: "entity_id",
 			unique: true);
 
-		migrationBuilder.CreateIndex(
+		_ = migrationBuilder.CreateIndex(
 			name: "ix_entity_stats_instanced_stat_id",
 			table: "entity_stats",
 			column: "instanced_stat_id");
 
-		migrationBuilder.CreateIndex(
+		_ = migrationBuilder.CreateIndex(
 			name: "ix_failure_influence_ability_id",
 			table: "failure_influence",
 			column: "ability_id");
 
-		migrationBuilder.CreateIndex(
+		_ = migrationBuilder.CreateIndex(
 			name: "ix_instanced_skills_skill_definition_id",
 			table: "instanced_skills",
 			column: "skill_definition_id");
 
-		migrationBuilder.CreateIndex(
+		_ = migrationBuilder.CreateIndex(
 			name: "ix_instanced_stats_stat_definition_id",
 			table: "instanced_stats",
 			column: "stat_definition_id");
 
-		migrationBuilder.CreateIndex(
+		_ = migrationBuilder.CreateIndex(
 			name: "ix_item_instances_entity_inventory_id",
 			table: "item_instances",
 			column: "entity_inventory_id");
 
-		migrationBuilder.CreateIndex(
+		_ = migrationBuilder.CreateIndex(
 			name: "ix_item_instances_item_definition_id",
 			table: "item_instances",
 			column: "item_definition_id");
 
-		migrationBuilder.CreateIndex(
+		_ = migrationBuilder.CreateIndex(
 			name: "ix_item_instances_primary_material_id",
 			table: "item_instances",
 			column: "primary_material_id");
 
-		migrationBuilder.CreateIndex(
+		_ = migrationBuilder.CreateIndex(
 			name: "ix_learning_requirement_ability_id",
 			table: "learning_requirement",
 			column: "ability_id");
 
-		migrationBuilder.CreateIndex(
+		_ = migrationBuilder.CreateIndex(
 			name: "ix_linked_stats_linked_stat_id",
 			table: "linked_stats",
 			column: "linked_stat_id");
 
-		migrationBuilder.CreateIndex(
+		_ = migrationBuilder.CreateIndex(
 			name: "ix_linked_stats_stat_definition_id",
 			table: "linked_stats",
 			column: "stat_definition_id");
 
-		migrationBuilder.CreateIndex(
+		_ = migrationBuilder.CreateIndex(
 			name: "ix_modifier_definitions_modifier_effect_id",
 			table: "modifier_definitions",
 			column: "modifier_effect_id");
 
-		migrationBuilder.CreateIndex(
+		_ = migrationBuilder.CreateIndex(
 			name: "ix_modifier_definitions_stack_effect_id",
 			table: "modifier_definitions",
 			column: "stack_effect_id");
 
-		migrationBuilder.CreateIndex(
+		_ = migrationBuilder.CreateIndex(
 			name: "ix_stat_cost_ability_id",
 			table: "stat_cost",
 			column: "ability_id");
@@ -710,82 +710,82 @@ public partial class InitialCreate : Migration
 	{
 		ArgumentNullException.ThrowIfNull(migrationBuilder, nameof(migrationBuilder));
 
-		migrationBuilder.DropTable(
+		_ = migrationBuilder.DropTable(
 			name: "ability_active_effects");
 
-		migrationBuilder.DropTable(
+		_ = migrationBuilder.DropTable(
 			name: "ability_failure_effects");
 
-		migrationBuilder.DropTable(
+		_ = migrationBuilder.DropTable(
 			name: "affected_ambient");
 
-		migrationBuilder.DropTable(
+		_ = migrationBuilder.DropTable(
 			name: "affected_stat");
 
-		migrationBuilder.DropTable(
+		_ = migrationBuilder.DropTable(
 			name: "applied_modifiers");
 
-		migrationBuilder.DropTable(
+		_ = migrationBuilder.DropTable(
 			name: "casting_requirement");
 
-		migrationBuilder.DropTable(
+		_ = migrationBuilder.DropTable(
 			name: "entity_skills");
 
-		migrationBuilder.DropTable(
+		_ = migrationBuilder.DropTable(
 			name: "entity_stats");
 
-		migrationBuilder.DropTable(
+		_ = migrationBuilder.DropTable(
 			name: "failure_influence");
 
-		migrationBuilder.DropTable(
+		_ = migrationBuilder.DropTable(
 			name: "item_instances");
 
-		migrationBuilder.DropTable(
+		_ = migrationBuilder.DropTable(
 			name: "learning_requirement");
 
-		migrationBuilder.DropTable(
+		_ = migrationBuilder.DropTable(
 			name: "linked_stats");
 
-		migrationBuilder.DropTable(
+		_ = migrationBuilder.DropTable(
 			name: "log_entries");
 
-		migrationBuilder.DropTable(
+		_ = migrationBuilder.DropTable(
 			name: "stat_cost");
 
-		migrationBuilder.DropTable(
+		_ = migrationBuilder.DropTable(
 			name: "effects");
 
-		migrationBuilder.DropTable(
+		_ = migrationBuilder.DropTable(
 			name: "modifier_definitions");
 
-		migrationBuilder.DropTable(
+		_ = migrationBuilder.DropTable(
 			name: "instanced_skills");
 
-		migrationBuilder.DropTable(
+		_ = migrationBuilder.DropTable(
 			name: "instanced_stats");
 
-		migrationBuilder.DropTable(
+		_ = migrationBuilder.DropTable(
 			name: "entity_inventories");
 
-		migrationBuilder.DropTable(
+		_ = migrationBuilder.DropTable(
 			name: "item_definitions");
 
-		migrationBuilder.DropTable(
+		_ = migrationBuilder.DropTable(
 			name: "material_definitions");
 
-		migrationBuilder.DropTable(
+		_ = migrationBuilder.DropTable(
 			name: "abilities");
 
-		migrationBuilder.DropTable(
+		_ = migrationBuilder.DropTable(
 			name: "modification_effects");
 
-		migrationBuilder.DropTable(
+		_ = migrationBuilder.DropTable(
 			name: "stat_definitions");
 
-		migrationBuilder.DropTable(
+		_ = migrationBuilder.DropTable(
 			name: "entities");
 
-		migrationBuilder.DropTable(
+		_ = migrationBuilder.DropTable(
 			name: "skill_definitions");
 	}
 }

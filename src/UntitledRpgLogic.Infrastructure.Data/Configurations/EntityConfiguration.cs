@@ -1,9 +1,9 @@
-namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using UntitledRpgLogic.Core.Models;
 
+namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
 ///<summary>
 /// Defines advanced table configuration for `Entity`
 ///</summary>
@@ -16,7 +16,7 @@ public class EntityConfiguration : IEntityTypeConfiguration<Entity>
 		ArgumentNullException.ThrowIfNull(builder);
 
 		// Relationships
-		builder.HasOne(e => e.Inventory)
+		_ = builder.HasOne(e => e.Inventory)
 			.WithOne(i => i.Entity)
 			.HasForeignKey<EntityInventory>(i => i.EntityId);
 	}
