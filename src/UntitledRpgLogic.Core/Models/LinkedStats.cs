@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 
 namespace UntitledRpgLogic.Core.Models;
 
@@ -10,10 +11,11 @@ public class LinkedStats
 	/// <summary>
 	///     Create an empty instance of the LinkedStats class (required by EF Core)
 	/// </summary>
+	[SetsRequiredMembers]
 	public LinkedStats()
 	{
-		this.DependentStatId = Ulid.Empty;
-		this.LinkedStatId = Ulid.Empty;
+		this.StatId = Ulid.Empty;
+		this.DependsOnId = Ulid.Empty;
 		this.Ratio = 0;
 	}
 
@@ -26,20 +28,20 @@ public class LinkedStats
 	/// <param name="ratio">The ratio that defines the percentage of the linked stat's value added to the dependent stat.</param>
 	public LinkedStats(Ulid dependentStatId, Ulid linkedStatId, float ratio)
 	{
-		this.DependentStatId = dependentStatId;
-		this.LinkedStatId = linkedStatId;
+		this.StatId = dependentStatId;
+		this.DependsOnId = linkedStatId;
 		this.Ratio = ratio;
 	}
 
 	/// <summary>
 	///     The unique identifier for the dependent stat. This is used to identify the stat that depends on another stat.
 	/// </summary>
-	public Ulid DependentStatId { get; init; }
+	public Ulid StatId { get; init; }
 
 	/// <summary>
 	///     The unique identifier for the linked stat. This is used to identify the stat that is being depended on.
 	/// </summary>
-	public Ulid LinkedStatId { get; init; }
+	public Ulid DependsOnId { get; init; }
 
 	/// <summary>
 	///     A simple ratio that defines what percentage of the linked stat's value is added to the dependent stat's value.
@@ -49,12 +51,12 @@ public class LinkedStats
 	/// <summary>
 	///     The dependent stat that this link refers to. This is the stat that depends on another stat for its value.
 	/// </summary>
-	[ForeignKey(nameof(DependentStatId))]
-	public StatDefinition? DependentStat { get; init; }
+	[ForeignKey(nameof(StatId))]
+	public StatDefinition? Stat { get; init; }
 
 	/// <summary>
 	///     The linked stat that this link refers to. This is the stat that is being depended on by another stat.
 	/// </summary>
-	[ForeignKey(nameof(LinkedStatId))]
-	public StatDefinition? LinkedStat { get; init; }
+	[ForeignKey(nameof(DependsOnId))]
+	public StatDefinition? DependsOnStat { get; init; }
 }

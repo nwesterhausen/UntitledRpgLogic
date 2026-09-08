@@ -14,6 +14,56 @@ namespace UntitledRpgLogic.Infrastructure.Data;
 /// <param name="options">The options to be used by a <see cref="DbContext" />.</param>
 public class RpgDbContext(DbContextOptions<RpgDbContext> options) : DbContext(options)
 {
+	/// <summary>
+	///     Gets or sets the DbSet for all Ability definitions.
+	/// </summary>
+	public DbSet<Ability> Abilities { get; set; } = null!;
+
+	/// <summary>
+	///     Gets or sets the DbSet for all Ability definitions.
+	/// </summary>
+	public DbSet<Ambient> Ambients { get; set; } = null!;
+
+	/// <summary>
+	/// 	Table for affected ambients of the world
+	/// </summary>
+	public DbSet<AffectedAmbient> AffectedAmbients { get; set; } = null!;
+
+	/// <summary>
+	///     Table for applied modifiers, which represent modifiers that have been applied to stats or skills.
+	/// </summary>
+	public DbSet<AppliedModifier> AppliedModifiers { get; set; } = null!;
+
+	/// <summary>
+	///     Gets or sets the DbSet for all Effects (including derived types like DamageEffect, etc.).
+	///     This single DbSet queries the entire "Effects" table hierarchy.
+	/// </summary>
+	public DbSet<Effect> Effects { get; set; } = null!;
+
+	/// <summary>
+	/// 	Table for fantastical elements
+	/// </summary>
+	public DbSet<Element> Elements { get; set; } = null!;
+
+	/// <summary>
+	///     Table for entities, which represent characters, NPCs, mobs, etc. in the game world.
+	/// </summary>
+	public DbSet<Entity> Entities { get; set; } = null!;
+
+	/// <summary>
+	///     Table for entity inventories, which link entities to the item instances they own.
+	/// </summary>
+	public DbSet<EntityInventory> EntityInventories { get; set; } = null!;
+
+	/// <summary>
+	///     Table for entity skills, which link entities to their instanced skills.
+	/// </summary>
+	public DbSet<EntitySkills> EntitySkills { get; set; } = null!;
+
+	/// <summary>
+	///     Table for entity stats, which link entities to their instanced stats.
+	/// </summary>
+	public DbSet<EntityStats> EntityStats { get; set; } = null!;
 
 	// Core Game Data Definitions
 	/// <summary>
@@ -22,19 +72,35 @@ public class RpgDbContext(DbContextOptions<RpgDbContext> options) : DbContext(op
 	public DbSet<ItemDefinition> ItemDefinitions { get; set; } = null!;
 
 	/// <summary>
+	///     Table for item instances, which are specific instances of item definitions owned by entities.
+	/// </summary>
+	public DbSet<ItemInstance> ItemInstances { get; set; } = null!;
+
+	/// <summary>
+	///     Table for instanced skills, which are specific instances of skill definitions assigned to entities.
+	/// </summary>
+	public DbSet<InstancedSkill> InstancedSkills { get; set; } = null!;
+
+	/// <summary>
+	///     Table for instanced stats, which are specific instances of stat definitions assigned to entities.
+	/// </summary>
+	public DbSet<InstancedStat> InstancedStats { get; set; } = null!;
+
+	// Linking Tables
+	/// <summary>
+	///     Table for linked stats, which define relationships between different stats (e.g., one stat affecting another).
+	/// </summary>
+	public DbSet<LinkedStats> LinkedStats { get; set; } = null!;
+
+	/// <summary>
+	///     Table for log entries, which store application logs for auditing and debugging purposes.
+	/// </summary>
+	public DbSet<LogEntry> LogEntries { get; set; } = null!;
+
+	/// <summary>
 	///     Table for material definitions, which define the materials that items can be made from.
 	/// </summary>
 	public DbSet<MaterialDefinition> MaterialDefinitions { get; set; } = null!;
-
-	/// <summary>
-	///     Table for stat definitions, which define the various stats that entities can have.
-	/// </summary>
-	public DbSet<StatDefinition> StatDefinitions { get; set; } = null!;
-
-	/// <summary>
-	///     Table for skill definitions, which define the skills that entities can possess.
-	/// </summary>
-	public DbSet<SkillDefinition> SkillDefinitions { get; set; } = null!;
 
 	/// <summary>
 	///     Table for modifier definitions, which define how stats and skills can be modified.
@@ -47,67 +113,14 @@ public class RpgDbContext(DbContextOptions<RpgDbContext> options) : DbContext(op
 	public DbSet<ModificationEffect> ModificationEffects { get; set; } = null!;
 
 	/// <summary>
-	///     Table for log entries, which store application logs for auditing and debugging purposes.
+	///     Table for skill definitions, which define the skills that entities can possess.
 	/// </summary>
-	public DbSet<LogEntry> LogEntries { get; set; } = null!;
-
-	// Instanced and World Data
-	/// <summary>
-	///     Table for entities, which represent characters, NPCs, mobs, etc. in the game world.
-	/// </summary>
-	public DbSet<Entity> Entities { get; set; } = null!;
+	public DbSet<SkillDefinition> SkillDefinitions { get; set; } = null!;
 
 	/// <summary>
-	///     Table for item instances, which are specific instances of item definitions owned by entities.
+	///     Table for stat definitions, which define the various stats that entities can have.
 	/// </summary>
-	public DbSet<ItemInstance> ItemInstances { get; set; } = null!;
-
-	/// <summary>
-	///     Table for instanced stats, which are specific instances of stat definitions assigned to entities.
-	/// </summary>
-	public DbSet<InstancedStat> InstancedStats { get; set; } = null!;
-
-	/// <summary>
-	///     Table for instanced skills, which are specific instances of skill definitions assigned to entities.
-	/// </summary>
-	public DbSet<InstancedSkill> InstancedSkills { get; set; } = null!;
-
-	/// <summary>
-	///     Table for applied modifiers, which represent modifiers that have been applied to stats or skills.
-	/// </summary>
-	public DbSet<AppliedModifier> AppliedModifiers { get; set; } = null!;
-
-	// Linking Tables
-	/// <summary>
-	///     Table for linked stats, which define relationships between different stats (e.g., one stat affecting another).
-	/// </summary>
-	public DbSet<LinkedStats> LinkedStats { get; set; } = null!;
-
-	/// <summary>
-	///     Table for entity inventories, which link entities to the item instances they own.
-	/// </summary>
-	public DbSet<EntityInventory> EntityInventories { get; set; } = null!;
-
-	/// <summary>
-	///     Table for entity stats, which link entities to their instanced stats.
-	/// </summary>
-	public DbSet<EntityStats> EntityStats { get; set; } = null!;
-
-	/// <summary>
-	///     Table for entity skills, which link entities to their instanced skills.
-	/// </summary>
-	public DbSet<EntitySkills> EntitySkills { get; set; } = null!;
-
-	/// <summary>
-	///     Gets or sets the DbSet for all Ability definitions.
-	/// </summary>
-	public DbSet<Ability> Abilities { get; set; } = null!;
-
-	/// <summary>
-	///     Gets or sets the DbSet for all Effects (including derived types like DamageEffect, etc.).
-	///     This single DbSet queries the entire "Effects" table hierarchy.
-	/// </summary>
-	public DbSet<Effect> Effects { get; set; } = null!;
+	public DbSet<StatDefinition> StatDefinitions { get; set; } = null!;
 
 	/// <inheritdoc />
 	protected override void OnModelCreating(ModelBuilder modelBuilder)

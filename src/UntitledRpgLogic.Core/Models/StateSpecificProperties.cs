@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using UntitledRpgLogic.Core.Enums;
 
 namespace UntitledRpgLogic.Core.Models;
 
@@ -17,4 +18,27 @@ public record StateSpecificProperties
 	/// </summary>
 	[Key]
 	public int Id { get; init; }
+
+	/// <summary>
+	/// 	The state of matter these properties apply to.
+	/// </summary>
+	public StateOfMatter State { get; init; } = StateOfMatter.None;
+
+
+	/// <summary>
+	/// 	Mechanical properties of the material in this state, if differing from the default
+	/// </summary>
+	public MechanicalProperties? MechanicalProperties { get; set; }
+	/// <summary>
+	/// 	Thermal properties of the material in this state, if differing from the default
+	/// </summary>
+	public ThermalProperties? ThermalProperties { get; set; }
+	/// <summary>
+	/// 	Electrical properties of the material in this state, if differing from the default
+	/// </summary>
+	public ElectricalProperties? ElectricalProperties { get; set; }
+	/// <summary>
+	/// 	Fantastical properties of the material in this state, if differing from the default
+	/// </summary>
+	public FantasticalProperties? FantasticalProperties { get; set; }
 }

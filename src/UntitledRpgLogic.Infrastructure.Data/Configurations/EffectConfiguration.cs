@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using UntitledRpgLogic.Core.Enums;
 using UntitledRpgLogic.Core.Models;
+using UntitledRpgLogic.Infrastructure.Data.LookupEntities;
 
 namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
 ///<summary>
@@ -14,7 +15,6 @@ public class EffectConfiguration : IEntityTypeConfiguration<Effect>
 	public void Configure(EntityTypeBuilder<Effect> builder)
 	{
 		ArgumentNullException.ThrowIfNull(builder);
-
 
 		// Configure TPH (Table-Per-Hierarchy) for the Effect model
 		// ---
@@ -36,5 +36,30 @@ public class EffectConfiguration : IEntityTypeConfiguration<Effect>
 			.HasValue<BuffEffect>(EffectType.Buff)
 			.HasValue<DebuffEffect>(EffectType.Debuff)
 			.HasValue<ElementalEffect>(EffectType.Elemental);
+
+		// FK
+		_ = builder.HasOne<EffectTypeLookup>()
+			.WithMany()
+			.HasForeignKey(x => x.EffectType)
+			.OnDelete(DeleteBehavior.Restrict);
+
+		// Owned Types
+		_ = builder.OwnsMany(e => e.AffectedStats, asb =>
+		{
+			asb.ToTable("effect_affected_stats");
+			asb.HasOne<StatDefinition>()
+				.WithMany()
+				.HasForeignKey(st => st.StatId)
+				.OnDelete(DeleteBehavior.Restrict);
+		});
+		_ = builder.OwnsMany(e => e.AffectedAmbients, aab =>
+		{
+			aab.ToTable("effect_affected_ambients");
+			aab.HasOne<Ambient>()
+				.WithMany()
+				.HasForeignKey(aa => aa.AmbientId)
+				.OnDelete(DeleteBehavior.Restrict);
+		});
+
 	}
 }

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UntitledRpgLogic.Infrastructure.Data;
 
@@ -10,9 +11,11 @@ using UntitledRpgLogic.Infrastructure.Data;
 namespace UntitledRpgLogic.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(RpgDbContext))]
-    partial class RpgDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260908205654_RelationshipConfiguration")]
+    partial class RelationshipConfiguration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "10.0.11");

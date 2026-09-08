@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace UntitledRpgLogic.Core.Models;
 
@@ -15,19 +16,15 @@ public class StatCost
 	public int Id { get; set; }
 
 	/// <summary>
-	///     The (FK) id of the ability that consumes this stat cost.
-	/// </summary>
-	public Ulid AbilityId { get; set; }
-
-	/// <summary>
-	///     A navigation property to the ability that consumes this stat cost.
-	/// </summary>
-	public virtual Ability Ability { get; set; } = null!;
-
-	/// <summary>
 	///     Gets or sets the Stat definition (e.g., Mana, Stamina) being affected (Referenced by <see cref="Ulid" />).
 	/// </summary>
 	public Ulid AffectedStatId { get; set; }
+
+	/// <summary>
+	/// 	The affected stat link
+	/// </summary>
+	[ForeignKey(nameof(AffectedStatId))]
+	public StatDefinition? AffectedStat { get; init; }
 
 	/// <summary>
 	///     Gets or sets the amount consumed.

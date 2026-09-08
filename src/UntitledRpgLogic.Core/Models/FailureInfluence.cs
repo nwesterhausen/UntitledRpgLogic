@@ -16,16 +16,6 @@ public class FailureInfluence
 	public int Id { get; set; }
 
 	/// <summary>
-	///     The (FK) id of the <see cref="Ability" /> that requires this casting requirement.
-	/// </summary>
-	public Ulid AbilityId { get; set; }
-
-	/// <summary>
-	///     A navigation property to the <see cref="Ability" /> that requires this casting requirement.
-	/// </summary>
-	public virtual Ability Ability { get; set; } = null!;
-
-	/// <summary>
 	///     The type of requirement (e.g., "Stat", "Class", "Race").
 	/// </summary>
 	public RequirementType RequirementType { get; set; }

@@ -68,4 +68,9 @@ public record Entity : IEntity
 	/// <inheritdoc />
 	[Key]
 	public Ulid Id { get; init; } = Ulid.NewUlid();
+
+	/// <summary>
+	/// 	Collection of modified stats owned by the Entity
+	/// </summary>
+	public virtual AffectedStat[]? AffectedStats { get; set; }
 }

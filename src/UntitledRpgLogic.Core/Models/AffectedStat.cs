@@ -9,22 +9,6 @@ namespace UntitledRpgLogic.Core.Models;
 public class AffectedStat
 {
 	/// <summary>
-	///     The unique identifier for this record.
-	/// </summary>
-	[Key]
-	public int Id { get; set; }
-
-	/// <summary>
-	///     The (FK) id of the <see cref="Effect" /> that requires this casting requirement.
-	/// </summary>
-	public Ulid EffectId { get; set; }
-
-	/// <summary>
-	///     A navigation property to the <see cref="Effect" /> that requires this casting requirement.
-	/// </summary>
-	public virtual Effect Effect { get; set; } = null!;
-
-	/// <summary>
 	///     Gets or sets the <see cref="Ulid" /> of the Stat definition (e.g., Health, Mana).
 	/// </summary>
 	public Ulid StatId { get; set; }

@@ -15,16 +15,6 @@ public class AffectedAmbient
 	public int Id { get; set; }
 
 	/// <summary>
-	///     The (FK) id of the <see cref="Effect" /> that requires this casting requirement.
-	/// </summary>
-	public Ulid EffectId { get; set; }
-
-	/// <summary>
-	///     A navigation property to the <see cref="Effect" /> that requires this casting requirement.
-	/// </summary>
-	public virtual Effect Effect { get; set; } = null!;
-
-	/// <summary>
 	///     Gets or sets the <see cref="Ulid" /> of the Ambient definition (e.g., LocalTemperature).
 	/// </summary>
 	public Ulid AmbientId { get; set; }

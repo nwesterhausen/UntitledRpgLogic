@@ -19,5 +19,10 @@ public class EntityConfiguration : IEntityTypeConfiguration<Entity>
 		_ = builder.HasOne(e => e.Inventory)
 			.WithOne(i => i.Entity)
 			.HasForeignKey<EntityInventory>(i => i.EntityId);
+
+		_ = builder.OwnsMany(e => e.AffectedStats, sp =>
+		{
+			sp.ToJson();
+		});
 	}
 }
