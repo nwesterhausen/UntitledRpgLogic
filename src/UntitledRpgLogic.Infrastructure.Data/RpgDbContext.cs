@@ -116,62 +116,10 @@ public class RpgDbContext(DbContextOptions<RpgDbContext> options) : DbContext(op
 		base.OnModelCreating(modelBuilder);
 		ArgumentNullException.ThrowIfNull(modelBuilder, nameof(modelBuilder));
 
-		// Configure composite primary keys for linking tables
-		_ = modelBuilder.Entity<EntityStats>().HasKey(es => new { es.EntityId, es.InstancedStatId });
-		_ = modelBuilder.Entity<EntitySkills>().HasKey(es => new { es.EntityId, es.InstancedSkillId });
-		_ = modelBuilder.Entity<LinkedStats>().HasKey(ls => new { ls.DependentStatId, ls.LinkedStatId });
-
-		// Configure relationships
-		_ = modelBuilder.Entity<Entity>()
-			.HasOne(e => e.Inventory)
-			.WithOne(i => i.Entity)
-			.HasForeignKey<EntityInventory>(i => i.EntityId);
-
-		_ = modelBuilder.Entity<ItemInstance>()
-			.HasOne(i => i.ItemDefinition)
-			.WithMany()
-			.HasForeignKey(i => i.ItemDefinitionId);
-
-		_ = modelBuilder.Entity<ItemInstance>()
-			.HasOne(i => i.PrimaryMaterial)
-			.WithMany()
-			.HasForeignKey(i => i.PrimaryMaterialId);
-
-		_ = modelBuilder.Entity<LinkedStats>()
-			.HasOne(ls => ls.DependentStat)
-			.WithMany() // StatDefinition does not have a collection of LinkedStats, so this is empty.
-			.HasForeignKey(ls => ls.DependentStatId)
-			.OnDelete(DeleteBehavior.Restrict); // Prevent deleting a StatDefinition if it's in use.
-
-		_ = modelBuilder.Entity<LinkedStats>()
-			.HasOne(ls => ls.LinkedStat)
-			.WithMany()
-			.HasForeignKey(ls => ls.LinkedStatId)
-			.OnDelete(DeleteBehavior.Restrict);
-
-		_ = modelBuilder.Entity<Ability>()
-			.HasMany(ability => ability.ActiveEffects)
-			.WithMany(effect => effect.AbilitiesUsingAsActive)
-			.UsingEntity("AbilityActiveEffects");
-
-		_ = modelBuilder.Entity<Ability>()
-			.HasMany(ability => ability.FailureEffects)
-			.WithMany(effect => effect.AbilitiesUsingAsFailure)
-			.UsingEntity("AbilityFailureEffects");
-
-		// Configure the TPH (Table-Per-Hierarchy) for the Effect model ---
-		_ = modelBuilder.Entity<Effect>()
-			.HasDiscriminator(e => e.EffectType)
-			.HasValue<SummonEffect>(EffectType.Summon)
-			.HasValue<EnchantEffect>(EffectType.Enchant) // Assuming you will create these classes
-			.HasValue<CharmEffect>(EffectType.Charm)
-			.HasValue<HealEffect>(EffectType.Heal)
-			.HasValue<DamageEffect>(EffectType.Damage)
-			.HasValue<BuffEffect>(EffectType.Buff)
-			.HasValue<DebuffEffect>(EffectType.Debuff)
-			.HasValue<ElementalEffect>(EffectType.Elemental);
-
-		// Note: Additional relationship configurations will be needed here as the system grows.
+		// Configure lookup tables
+		// Configure advanced table relationships (1 -> M, M -> M, additional FK, composite PK)
+		// (automatically pull table definitions from `Configurations` via `IEntityTypeConfiguration`)
+		modelBuilder.ApplyConfigurationsFromAssembly(typeof(RpgDbContext).Assembly);
 	}
 
 	/// <inheritdoc />
