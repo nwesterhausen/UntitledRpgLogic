@@ -16,6 +16,12 @@ public class MaterialDefinitionConfiguration : IEntityTypeConfiguration<Material
 	{
 		ArgumentNullException.ThrowIfNull(builder);
 
+		// FK
+		builder.HasOne<StateOfMatterLookup>()
+			.WithMany()
+			.HasForeignKey(x => x.DefaultState)
+			.OnDelete(DeleteBehavior.Restrict);
+
 		// Owned Types
 		builder.OwnsOne(m => m.MechanicalProperties, mp => mp.ToJson());
 		builder.OwnsOne(m => m.ThermalProperties, tp => tp.ToJson());

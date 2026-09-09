@@ -1,4 +1,3 @@
-
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using UntitledRpgLogic.Core.Enums;
@@ -26,6 +25,7 @@ public class RequirementTypeLookupConfiguration : IEntityTypeConfiguration<Requi
 
 		// Seed with enum data
 		var seedData = Enum.GetValues<RequirementType>()
+			.DistinctBy(e => (int)e)
 			.Select(e => new RequirementTypeLookup
 			{
 				Id = e,

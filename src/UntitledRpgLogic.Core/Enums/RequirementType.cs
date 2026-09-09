@@ -26,22 +26,37 @@ public enum RequirementType
 	PlayerLevel = 3,
 
 	/// <summary>
-	///     Requirement specifying that the player must be of a certain race.
+	///     Requirement specifying that the player must be of a certain race level.
 	/// </summary>
-	Race = 4,
+	RaceLevel = 4,
 
 	/// <summary>
-	///     Requirement specifying that the player must be of a certain class.
+	///     Requirement specifying that the player must be of a certain class level.
 	/// </summary>
-	Class = 5,
+	ClassLevel = 5,
 
 	/// <summary>
 	///     Requirement specifying that the player must be of a certain profession and at least a specific level in that profession.
 	/// </summary>
-	Profession = 6,
+	ProfessionLevel = 6,
 
 	/// <summary>
 	///     Requirement specifying that another specific ability/effect must be active.
 	/// </summary>
-	OngoingSpell = 7
+	OngoingSpell = 7,
+
+	/// <summary>
+	///     Requirement specifying that the player must be of a certain race (implicit RaceLevel >= 1).
+	/// </summary>
+	Race = RaceLevel,
+
+	/// <summary>
+	///     Requirement specifying that the player must be of a certain class (implicit ClassLevel >= 1).
+	/// </summary>
+	Class = ClassLevel,
+
+	/// <summary>
+	///     Requirement specifying that the player must be of a certain profession (implicit Professionlevel >= 1)
+	/// </summary>
+	Profession = ProfessionLevel,
 }

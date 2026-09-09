@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 using UntitledRpgLogic.Core.Classes;
 using UntitledRpgLogic.Core.Enums;
 using UntitledRpgLogic.Core.Interfaces.Data;
@@ -31,6 +32,7 @@ public record StatDefinition : IDbEntity<Ulid>
 	///     Initializes a new instance of the <see cref="StatDefinition" /> class with the specified name.
 	/// </summary>
 	/// <param name="name">The name of the stat.</param>
+	[SetsRequiredMembers]
 	public StatDefinition(Name name) : this() => this.Name = name;
 
 	/// <summary>

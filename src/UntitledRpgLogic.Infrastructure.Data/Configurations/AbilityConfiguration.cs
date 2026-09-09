@@ -65,11 +65,6 @@ internal sealed class AbilityConfiguration : IEntityTypeConfiguration<Ability>
 			   .WithMany()
 			   .HasForeignKey(fi => fi.RequirementType)
 			   .OnDelete(DeleteBehavior.Restrict);
-
-			fib.HasOne<Entity>()
-			   .WithMany()
-			   .HasForeignKey(fi => fi.RequiredEntityId)
-			   .OnDelete(DeleteBehavior.Restrict);
 		});
 
 		// 3. Many-to-Many Relationships to Polymorphic Effect Table

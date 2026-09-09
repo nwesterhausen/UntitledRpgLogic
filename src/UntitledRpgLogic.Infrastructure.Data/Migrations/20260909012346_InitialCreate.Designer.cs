@@ -1719,17 +1719,17 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 4,
-                            Name = "Race"
+                            Name = "RaceLevel"
                         },
                         new
                         {
                             Id = 5,
-                            Name = "Class"
+                            Name = "ClassLevel"
                         },
                         new
                         {
                             Id = 6,
-                            Name = "Profession"
+                            Name = "ProfessionLevel"
                         },
                         new
                         {

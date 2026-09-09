@@ -75,6 +75,12 @@ public record LogEntry : IDbEntity<Ulid>
 	public Ulid? EntityId { get; init; }
 
 	/// <summary>
+	///     Navigation property to the owning entity.
+	/// </summary>
+	[ForeignKey(nameof(EntityId))]
+	public Entity? Entity { get; init; }
+
+	/// <summary>
 	///     The log message template with placeholder tokens.
 	/// </summary>
 	[MaxLength(2048)]

@@ -1161,9 +1161,9 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
                     { 1, null, "Stat" },
                     { 2, null, "SkillLevel" },
                     { 3, null, "PlayerLevel" },
-                    { 4, null, "Race" },
-                    { 5, null, "Class" },
-                    { 6, null, "Profession" },
+                    { 4, null, "RaceLevel" },
+                    { 5, null, "ClassLevel" },
+                    { 6, null, "ProfessionLevel" },
                     { 7, null, "OngoingSpell" }
                 });
 

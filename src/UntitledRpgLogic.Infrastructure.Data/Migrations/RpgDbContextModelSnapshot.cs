@@ -390,6 +390,12 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
                     b.HasKey("Id")
                         .HasName("pk_item_definitions");
 
+                    b.HasIndex("ItemSubtype")
+                        .HasDatabaseName("ix_item_definitions_item_subtype");
+
+                    b.HasIndex("ItemType")
+                        .HasDatabaseName("ix_item_definitions_item_type");
+
                     b.ToTable("item_definitions", (string)null);
                 });
 
@@ -516,6 +522,9 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
                     b.HasKey("Id")
                         .HasName("pk_log_entries");
 
+                    b.HasIndex("EntityId")
+                        .HasDatabaseName("ix_log_entries_entity_id");
+
                     b.ToTable("log_entries", (string)null);
                 });
 
@@ -623,6 +632,9 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
 
                     b.HasKey("Id")
                         .HasName("pk_material_definitions");
+
+                    b.HasIndex("DefaultState")
+                        .HasDatabaseName("ix_material_definitions_default_state");
 
                     b.ToTable("material_definitions", (string)null);
                 });
@@ -760,6 +772,9 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
                     b.HasKey("Id")
                         .HasName("pk_skill_definitions");
 
+                    b.HasIndex("ScalingCurve")
+                        .HasDatabaseName("ix_skill_definitions_scaling_curve");
+
                     b.ToTable("skill_definitions", (string)null);
                 });
 
@@ -797,6 +812,17 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
                         .HasDatabaseName("ix_stat_definitions_variation");
 
                     b.ToTable("stat_definitions", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new byte[] { 1, 160, 135, 52, 154, 28, 237, 148, 44, 15, 243, 169, 111, 68, 183, 169 },
+                            HasChangeableValue = true,
+                            MaxValue = 2147483647,
+                            MinValue = 0,
+                            Name = "Level:Levels",
+                            Variation = 1
+                        });
                 });
 
             modelBuilder.Entity("UntitledRpgLogic.Core.Models.WorldChunk", b =>
@@ -1593,6 +1619,55 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
                         });
                 });
 
+            modelBuilder.Entity("UntitledRpgLogic.Infrastructure.Data.LookupEntities.MaterialSlotLookup", b =>
+                {
+                    b.Property<byte>("Id")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("id");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("description");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("TEXT")
+                        .HasColumnName("name");
+
+                    b.HasKey("Id")
+                        .HasName("pk_material_slot_lookup");
+
+                    b.ToTable("material_slot_lookup", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = (byte)0,
+                            Name = "Primary"
+                        },
+                        new
+                        {
+                            Id = (byte)1,
+                            Name = "Secondary"
+                        },
+                        new
+                        {
+                            Id = (byte)2,
+                            Name = "Tertiary"
+                        },
+                        new
+                        {
+                            Id = (byte)3,
+                            Name = "Gemstone"
+                        },
+                        new
+                        {
+                            Id = (byte)4,
+                            Name = "Coating"
+                        });
+                });
+
             modelBuilder.Entity("UntitledRpgLogic.Infrastructure.Data.LookupEntities.MessagePriorityLookup", b =>
                 {
                     b.Property<int>("Id")
@@ -1885,17 +1960,17 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 4,
-                            Name = "Race"
+                            Name = "RaceLevel"
                         },
                         new
                         {
                             Id = 5,
-                            Name = "Class"
+                            Name = "ClassLevel"
                         },
                         new
                         {
                             Id = 6,
-                            Name = "Profession"
+                            Name = "ProfessionLevel"
                         },
                         new
                         {
@@ -2353,7 +2428,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
 
                             b1.ToTable("ability_casting_requirements", (string)null);
 
-                            b1.WithOwner()
+                            b1.WithOwner("Ability")
                                 .HasForeignKey("AbilityId")
                                 .HasConstraintName("fk_ability_casting_requirements_abilities_ability_id");
 
@@ -2363,6 +2438,8 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
                                 .OnDelete(DeleteBehavior.Restrict)
                                 .IsRequired()
                                 .HasConstraintName("fk_ability_casting_requirements_requirement_type_lookup_requirement_type");
+
+                            b1.Navigation("Ability");
                         });
 
                     b.OwnsMany("UntitledRpgLogic.Core.Models.FailureInfluence", "FailureInfluences", b1 =>
@@ -2380,6 +2457,10 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
                             b1.Property<float>("AmountAlwaysSucceed")
                                 .HasColumnType("REAL")
                                 .HasColumnName("amount_always_succeed");
+
+                            b1.Property<float>("AmountNeeded")
+                                .HasColumnType("REAL")
+                                .HasColumnName("amount_needed");
 
                             b1.Property<float>("InfluenceScale")
                                 .HasColumnType("REAL")
@@ -2399,24 +2480,14 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
                             b1.HasIndex("AbilityId")
                                 .HasDatabaseName("ix_ability_failure_influences_ability_id");
 
-                            b1.HasIndex("RequiredEntityId")
-                                .HasDatabaseName("ix_ability_failure_influences_required_entity_id");
-
                             b1.HasIndex("RequirementType")
                                 .HasDatabaseName("ix_ability_failure_influences_requirement_type");
 
                             b1.ToTable("ability_failure_influences", (string)null);
 
-                            b1.WithOwner()
+                            b1.WithOwner("Ability")
                                 .HasForeignKey("AbilityId")
                                 .HasConstraintName("fk_ability_failure_influences_abilities_ability_id");
-
-                            b1.HasOne("UntitledRpgLogic.Core.Models.Entity", null)
-                                .WithMany()
-                                .HasForeignKey("RequiredEntityId")
-                                .OnDelete(DeleteBehavior.Restrict)
-                                .IsRequired()
-                                .HasConstraintName("fk_ability_failure_influences_entities_required_entity_id");
 
                             b1.HasOne("UntitledRpgLogic.Infrastructure.Data.LookupEntities.RequirementTypeLookup", null)
                                 .WithMany()
@@ -2424,6 +2495,8 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
                                 .OnDelete(DeleteBehavior.Restrict)
                                 .IsRequired()
                                 .HasConstraintName("fk_ability_failure_influences_requirement_type_lookup_requirement_type");
+
+                            b1.Navigation("Ability");
                         });
 
                     b.OwnsMany("UntitledRpgLogic.Core.Models.LearningRequirement", "LearningRequirements", b1 =>
@@ -2732,6 +2805,20 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("UntitledRpgLogic.Core.Models.ItemDefinition", b =>
                 {
+                    b.HasOne("UntitledRpgLogic.Infrastructure.Data.LookupEntities.ItemSubtypeLookup", null)
+                        .WithMany()
+                        .HasForeignKey("ItemSubtype")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_item_definitions_item_subtype_lookup_item_subtype");
+
+                    b.HasOne("UntitledRpgLogic.Infrastructure.Data.LookupEntities.ItemTypeLookup", null)
+                        .WithMany()
+                        .HasForeignKey("ItemType")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_item_definitions_item_type_lookup_item_type");
+
                     b.OwnsMany("UntitledRpgLogic.Core.Models.ItemMaterialComponent", "Materials", b1 =>
                         {
                             b1.Property<byte[]>("ItemDefinitionId")
@@ -2762,6 +2849,9 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
                             b1.HasIndex("MaterialId")
                                 .HasDatabaseName("ix_item_definition_materials_material_id");
 
+                            b1.HasIndex("Slot")
+                                .HasDatabaseName("ix_item_definition_materials_slot");
+
                             b1.ToTable("item_definition_materials", (string)null);
 
                             b1.WithOwner()
@@ -2774,6 +2864,13 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
                                 .OnDelete(DeleteBehavior.Restrict)
                                 .IsRequired()
                                 .HasConstraintName("fk_item_definition_materials_material_definitions_material_id");
+
+                            b1.HasOne("UntitledRpgLogic.Infrastructure.Data.LookupEntities.MaterialSlotLookup", null)
+                                .WithMany()
+                                .HasForeignKey("Slot")
+                                .OnDelete(DeleteBehavior.Restrict)
+                                .IsRequired()
+                                .HasConstraintName("fk_item_definition_materials_material_slot_lookup_slot");
 
                             b1.Navigation("Material");
                         });
@@ -2834,6 +2931,16 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
                     b.Navigation("DependsOnStat");
 
                     b.Navigation("Stat");
+                });
+
+            modelBuilder.Entity("UntitledRpgLogic.Core.Models.LogEntry", b =>
+                {
+                    b.HasOne("UntitledRpgLogic.Core.Models.Entity", "Entity")
+                        .WithMany()
+                        .HasForeignKey("EntityId")
+                        .HasConstraintName("fk_log_entries_entities_entity_id");
+
+                    b.Navigation("Entity");
                 });
 
             modelBuilder.Entity("UntitledRpgLogic.Core.Models.MapDefinition", b =>
@@ -2938,6 +3045,13 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("UntitledRpgLogic.Core.Models.MaterialDefinition", b =>
                 {
+                    b.HasOne("UntitledRpgLogic.Infrastructure.Data.LookupEntities.StateOfMatterLookup", null)
+                        .WithMany()
+                        .HasForeignKey("DefaultState")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_material_definitions_state_of_matter_lookup_default_state");
+
                     b.OwnsOne("UntitledRpgLogic.Core.Models.ElectricalProperties", "ElectricalProperties", b1 =>
                         {
                             b1.Property<byte[]>("MaterialDefinitionId");
@@ -3301,6 +3415,16 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
                     b.Navigation("ModifierEffect");
 
                     b.Navigation("StackEffect");
+                });
+
+            modelBuilder.Entity("UntitledRpgLogic.Core.Models.SkillDefinition", b =>
+                {
+                    b.HasOne("UntitledRpgLogic.Infrastructure.Data.LookupEntities.ScalingCurveTypeLookup", null)
+                        .WithMany()
+                        .HasForeignKey("ScalingCurve")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_skill_definitions_scaling_curve_type_lookup_scaling_curve");
                 });
 
             modelBuilder.Entity("UntitledRpgLogic.Core.Models.StatDefinition", b =>
