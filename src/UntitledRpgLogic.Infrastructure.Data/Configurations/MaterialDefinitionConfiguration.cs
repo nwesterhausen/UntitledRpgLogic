@@ -45,5 +45,10 @@ public class MaterialDefinitionConfiguration : IEntityTypeConfiguration<Material
 		  			.HasConversion<ElementalAttunementConverter>();
 			});
 		});
+
+		builder.OwnsMany(m => m.SmeltYields, yb =>
+		{
+    		yb.ToJson();
+		});
 	}
 }

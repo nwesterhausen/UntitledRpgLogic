@@ -11,52 +11,14 @@ using UntitledRpgLogic.Infrastructure.Data;
 namespace UntitledRpgLogic.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(RpgDbContext))]
-    [Migration("20260908185159_SeedLookupTables")]
-    partial class SeedLookupTables
+    [Migration("20260909012346_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "10.0.11");
-
-            modelBuilder.Entity("AbilityActiveEffects", b =>
-                {
-                    b.Property<byte[]>("AbilitiesUsingAsActiveId")
-                        .HasColumnType("BLOB")
-                        .HasColumnName("abilities_using_as_active_id");
-
-                    b.Property<byte[]>("ActiveEffectsId")
-                        .HasColumnType("BLOB")
-                        .HasColumnName("active_effects_id");
-
-                    b.HasKey("AbilitiesUsingAsActiveId", "ActiveEffectsId")
-                        .HasName("pk_ability_active_effects");
-
-                    b.HasIndex("ActiveEffectsId")
-                        .HasDatabaseName("ix_ability_active_effects_active_effects_id");
-
-                    b.ToTable("ability_active_effects", (string)null);
-                });
-
-            modelBuilder.Entity("AbilityFailureEffects", b =>
-                {
-                    b.Property<byte[]>("AbilitiesUsingAsFailureId")
-                        .HasColumnType("BLOB")
-                        .HasColumnName("abilities_using_as_failure_id");
-
-                    b.Property<byte[]>("FailureEffectsId")
-                        .HasColumnType("BLOB")
-                        .HasColumnName("failure_effects_id");
-
-                    b.HasKey("AbilitiesUsingAsFailureId", "FailureEffectsId")
-                        .HasName("pk_ability_failure_effects");
-
-                    b.HasIndex("FailureEffectsId")
-                        .HasDatabaseName("ix_ability_failure_effects_failure_effects_id");
-
-                    b.ToTable("ability_failure_effects", (string)null);
-                });
 
             modelBuilder.Entity("UntitledRpgLogic.Core.Models.Ability", b =>
                 {
@@ -101,78 +63,41 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
                     b.HasKey("Id")
                         .HasName("pk_abilities");
 
+                    b.HasIndex("AbilityType")
+                        .HasDatabaseName("ix_abilities_ability_type");
+
                     b.HasIndex("SkillDisciplineId")
                         .HasDatabaseName("ix_abilities_skill_discipline_id");
+
+                    b.HasIndex("TargetType")
+                        .HasDatabaseName("ix_abilities_target_type");
 
                     b.ToTable("abilities", (string)null);
                 });
 
-            modelBuilder.Entity("UntitledRpgLogic.Core.Models.AffectedAmbient", b =>
+            modelBuilder.Entity("UntitledRpgLogic.Core.Models.Ambient", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER")
+                    b.Property<byte[]>("Id")
+                        .HasColumnType("BLOB")
                         .HasColumnName("id");
 
-                    b.Property<byte[]>("AmbientId")
-                        .IsRequired()
-                        .HasColumnType("BLOB")
-                        .HasColumnName("ambient_id");
-
-                    b.Property<float>("AmountChange")
-                        .HasColumnType("REAL")
-                        .HasColumnName("amount_change");
-
-                    b.Property<byte[]>("EffectId")
-                        .IsRequired()
-                        .HasColumnType("BLOB")
-                        .HasColumnName("effect_id");
-
-                    b.Property<bool>("IsPercentage")
+                    b.Property<int>("AmbientType")
                         .HasColumnType("INTEGER")
-                        .HasColumnName("is_percentage");
+                        .HasColumnName("ambient_type");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("name");
+
+                    b.Property<float>("Value")
+                        .HasColumnType("REAL")
+                        .HasColumnName("value");
 
                     b.HasKey("Id")
-                        .HasName("pk_affected_ambient");
+                        .HasName("pk_ambients");
 
-                    b.HasIndex("EffectId")
-                        .HasDatabaseName("ix_affected_ambient_effect_id");
-
-                    b.ToTable("affected_ambient", (string)null);
-                });
-
-            modelBuilder.Entity("UntitledRpgLogic.Core.Models.AffectedStat", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("id");
-
-                    b.Property<float>("AmountChange")
-                        .HasColumnType("REAL")
-                        .HasColumnName("amount_change");
-
-                    b.Property<byte[]>("EffectId")
-                        .IsRequired()
-                        .HasColumnType("BLOB")
-                        .HasColumnName("effect_id");
-
-                    b.Property<bool>("IsPercentage")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("is_percentage");
-
-                    b.Property<byte[]>("StatId")
-                        .IsRequired()
-                        .HasColumnType("BLOB")
-                        .HasColumnName("stat_id");
-
-                    b.HasKey("Id")
-                        .HasName("pk_affected_stat");
-
-                    b.HasIndex("EffectId")
-                        .HasDatabaseName("ix_affected_stat_effect_id");
-
-                    b.ToTable("affected_stat", (string)null);
+                    b.ToTable("ambients", (string)null);
                 });
 
             modelBuilder.Entity("UntitledRpgLogic.Core.Models.AppliedModifier", b =>
@@ -215,45 +140,17 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
                     b.ToTable("applied_modifiers", (string)null);
                 });
 
-            modelBuilder.Entity("UntitledRpgLogic.Core.Models.CastingRequirement", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("id");
-
-                    b.Property<byte[]>("AbilityId")
-                        .IsRequired()
-                        .HasColumnType("BLOB")
-                        .HasColumnName("ability_id");
-
-                    b.Property<float>("AmountNeeded")
-                        .HasColumnType("REAL")
-                        .HasColumnName("amount_needed");
-
-                    b.Property<byte[]>("RequiredEntityId")
-                        .IsRequired()
-                        .HasColumnType("BLOB")
-                        .HasColumnName("required_entity_id");
-
-                    b.Property<int>("RequirementType")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("requirement_type");
-
-                    b.HasKey("Id")
-                        .HasName("pk_casting_requirement");
-
-                    b.HasIndex("AbilityId")
-                        .HasDatabaseName("ix_casting_requirement_ability_id");
-
-                    b.ToTable("casting_requirement", (string)null);
-                });
-
             modelBuilder.Entity("UntitledRpgLogic.Core.Models.Effect", b =>
                 {
                     b.Property<byte[]>("Id")
                         .HasColumnType("BLOB")
                         .HasColumnName("id");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(1024)
+                        .HasColumnType("TEXT")
+                        .HasColumnName("description");
 
                     b.Property<float>("Duration")
                         .HasColumnType("REAL")
@@ -263,14 +160,49 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
                         .HasColumnType("INTEGER")
                         .HasColumnName("effect_type");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("name");
+
+                    b.Property<float>("TickInterval")
+                        .HasColumnType("REAL")
+                        .HasColumnName("tick_interval");
+
                     b.HasKey("Id")
                         .HasName("pk_effects");
+
+                    b.HasIndex("EffectType")
+                        .HasDatabaseName("ix_effects_effect_type");
 
                     b.ToTable("effects", (string)null);
 
                     b.HasDiscriminator<int>("EffectType");
 
                     b.UseTphMappingStrategy();
+                });
+
+            modelBuilder.Entity("UntitledRpgLogic.Core.Models.Element", b =>
+                {
+                    b.Property<byte[]>("Id")
+                        .HasColumnType("BLOB")
+                        .HasColumnName("id");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(1024)
+                        .HasColumnType("TEXT")
+                        .HasColumnName("description");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("name");
+
+                    b.HasKey("Id")
+                        .HasName("pk_elements");
+
+                    b.ToTable("elements", (string)null);
                 });
 
             modelBuilder.Entity("UntitledRpgLogic.Core.Models.Entity", b =>
@@ -292,9 +224,8 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("UntitledRpgLogic.Core.Models.EntityInventory", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER")
+                    b.Property<byte[]>("Id")
+                        .HasColumnType("BLOB")
                         .HasColumnName("id");
 
                     b.Property<int>("Capacity")
@@ -329,10 +260,6 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
                     b.HasKey("EntityId", "InstancedSkillId")
                         .HasName("pk_entity_skills");
 
-                    b.HasIndex("EntityId")
-                        .IsUnique()
-                        .HasDatabaseName("ix_entity_skills_entity_id");
-
                     b.HasIndex("InstancedSkillId")
                         .HasDatabaseName("ix_entity_skills_instanced_skill_id");
 
@@ -352,52 +279,10 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
                     b.HasKey("EntityId", "InstancedStatId")
                         .HasName("pk_entity_stats");
 
-                    b.HasIndex("EntityId")
-                        .IsUnique()
-                        .HasDatabaseName("ix_entity_stats_entity_id");
-
                     b.HasIndex("InstancedStatId")
                         .HasDatabaseName("ix_entity_stats_instanced_stat_id");
 
                     b.ToTable("entity_stats", (string)null);
-                });
-
-            modelBuilder.Entity("UntitledRpgLogic.Core.Models.FailureInfluence", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("id");
-
-                    b.Property<byte[]>("AbilityId")
-                        .IsRequired()
-                        .HasColumnType("BLOB")
-                        .HasColumnName("ability_id");
-
-                    b.Property<float>("AmountAlwaysSucceed")
-                        .HasColumnType("REAL")
-                        .HasColumnName("amount_always_succeed");
-
-                    b.Property<float>("InfluenceScale")
-                        .HasColumnType("REAL")
-                        .HasColumnName("influence_scale");
-
-                    b.Property<byte[]>("RequiredEntityId")
-                        .IsRequired()
-                        .HasColumnType("BLOB")
-                        .HasColumnName("required_entity_id");
-
-                    b.Property<int>("RequirementType")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("requirement_type");
-
-                    b.HasKey("Id")
-                        .HasName("pk_failure_influence");
-
-                    b.HasIndex("AbilityId")
-                        .HasDatabaseName("ix_failure_influence_ability_id");
-
-                    b.ToTable("failure_influence", (string)null);
                 });
 
             modelBuilder.Entity("UntitledRpgLogic.Core.Models.InstancedSkill", b =>
@@ -462,6 +347,28 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
                         .HasColumnType("BLOB")
                         .HasColumnName("id");
 
+                    b.Property<float>("BaseDurability")
+                        .HasColumnType("REAL")
+                        .HasColumnName("base_durability");
+
+                    b.Property<int>("BaseQuality")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("base_quality");
+
+                    b.Property<int>("BaseValue")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("base_value");
+
+                    b.Property<byte[]>("CreatorEntityId")
+                        .HasColumnType("BLOB")
+                        .HasColumnName("creator_entity_id");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(1024)
+                        .HasColumnType("TEXT")
+                        .HasColumnName("description");
+
                     b.Property<int>("ItemSubtype")
                         .HasColumnType("INTEGER")
                         .HasColumnName("item_subtype");
@@ -470,26 +377,18 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
                         .HasColumnType("INTEGER")
                         .HasColumnName("item_type");
 
-                    b.Property<int>("MaxDurability")
+                    b.Property<int>("MaxStackSize")
                         .HasColumnType("INTEGER")
-                        .HasColumnName("max_durability");
-
-                    b.Property<int>("MaxStack")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("max_stack");
+                        .HasColumnName("max_stack_size");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("TEXT")
                         .HasColumnName("name");
 
-                    b.Property<int>("Quality")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("quality");
-
-                    b.Property<bool>("Stackable")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("stackable");
+                    b.Property<float>("Weight")
+                        .HasColumnType("REAL")
+                        .HasColumnName("weight");
 
                     b.HasKey("Id")
                         .HasName("pk_item_definitions");
@@ -511,14 +410,18 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
                         .HasColumnType("INTEGER")
                         .HasColumnName("durability");
 
-                    b.Property<int?>("EntityInventoryId")
-                        .HasColumnType("INTEGER")
+                    b.Property<byte[]>("EntityInventoryId")
+                        .HasColumnType("BLOB")
                         .HasColumnName("entity_inventory_id");
 
                     b.Property<byte[]>("ItemDefinitionId")
                         .IsRequired()
                         .HasColumnType("BLOB")
                         .HasColumnName("item_definition_id");
+
+                    b.Property<byte[]>("ItemDefinitionId1")
+                        .HasColumnType("BLOB")
+                        .HasColumnName("item_definition_id1");
 
                     b.Property<byte[]>("PrimaryMaterialId")
                         .HasColumnType("BLOB")
@@ -537,55 +440,24 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
                     b.HasIndex("ItemDefinitionId")
                         .HasDatabaseName("ix_item_instances_item_definition_id");
 
+                    b.HasIndex("ItemDefinitionId1")
+                        .HasDatabaseName("ix_item_instances_item_definition_id1");
+
                     b.HasIndex("PrimaryMaterialId")
                         .HasDatabaseName("ix_item_instances_primary_material_id");
 
                     b.ToTable("item_instances", (string)null);
                 });
 
-            modelBuilder.Entity("UntitledRpgLogic.Core.Models.LearningRequirement", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("id");
-
-                    b.Property<byte[]>("AbilityId")
-                        .IsRequired()
-                        .HasColumnType("BLOB")
-                        .HasColumnName("ability_id");
-
-                    b.Property<float>("AmountNeeded")
-                        .HasColumnType("REAL")
-                        .HasColumnName("amount_needed");
-
-                    b.Property<byte[]>("RequiredEntityId")
-                        .IsRequired()
-                        .HasColumnType("BLOB")
-                        .HasColumnName("required_entity_id");
-
-                    b.Property<int>("RequirementType")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("requirement_type");
-
-                    b.HasKey("Id")
-                        .HasName("pk_learning_requirement");
-
-                    b.HasIndex("AbilityId")
-                        .HasDatabaseName("ix_learning_requirement_ability_id");
-
-                    b.ToTable("learning_requirement", (string)null);
-                });
-
             modelBuilder.Entity("UntitledRpgLogic.Core.Models.LinkedStats", b =>
                 {
-                    b.Property<byte[]>("DependentStatId")
+                    b.Property<byte[]>("StatId")
                         .HasColumnType("BLOB")
-                        .HasColumnName("dependent_stat_id");
+                        .HasColumnName("stat_id");
 
-                    b.Property<byte[]>("LinkedStatId")
+                    b.Property<byte[]>("DependsOnId")
                         .HasColumnType("BLOB")
-                        .HasColumnName("linked_stat_id");
+                        .HasColumnName("depends_on_id");
 
                     b.Property<float>("Ratio")
                         .HasColumnType("REAL")
@@ -595,11 +467,11 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
                         .HasColumnType("BLOB")
                         .HasColumnName("stat_definition_id");
 
-                    b.HasKey("DependentStatId", "LinkedStatId")
+                    b.HasKey("StatId", "DependsOnId")
                         .HasName("pk_linked_stats");
 
-                    b.HasIndex("LinkedStatId")
-                        .HasDatabaseName("ix_linked_stats_linked_stat_id");
+                    b.HasIndex("DependsOnId")
+                        .HasDatabaseName("ix_linked_stats_depends_on_id");
 
                     b.HasIndex("StatDefinitionId")
                         .HasDatabaseName("ix_linked_stats_stat_definition_id");
@@ -614,6 +486,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
                         .HasColumnName("id");
 
                     b.Property<string>("Category")
+                        .HasMaxLength(256)
                         .HasColumnType("TEXT")
                         .HasColumnName("category");
 
@@ -631,6 +504,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
 
                     b.Property<string>("Message")
                         .IsRequired()
+                        .HasMaxLength(2048)
                         .HasColumnType("TEXT")
                         .HasColumnName("message");
 
@@ -653,6 +527,20 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
                     b.Property<byte[]>("Id")
                         .HasColumnType("BLOB")
                         .HasColumnName("id");
+
+                    b.Property<int>("DefaultState")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("default_state");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(1024)
+                        .HasColumnType("TEXT")
+                        .HasColumnName("description");
+
+                    b.Property<int>("Flags")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("flags");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -801,36 +689,6 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
                     b.ToTable("skill_definitions", (string)null);
                 });
 
-            modelBuilder.Entity("UntitledRpgLogic.Core.Models.StatCost", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("id");
-
-                    b.Property<byte[]>("AbilityId")
-                        .IsRequired()
-                        .HasColumnType("BLOB")
-                        .HasColumnName("ability_id");
-
-                    b.Property<byte[]>("AffectedStatId")
-                        .IsRequired()
-                        .HasColumnType("BLOB")
-                        .HasColumnName("affected_stat_id");
-
-                    b.Property<float>("Amount")
-                        .HasColumnType("REAL")
-                        .HasColumnName("amount");
-
-                    b.HasKey("Id")
-                        .HasName("pk_stat_cost");
-
-                    b.HasIndex("AbilityId")
-                        .HasDatabaseName("ix_stat_cost_ability_id");
-
-                    b.ToTable("stat_cost", (string)null);
-                });
-
             modelBuilder.Entity("UntitledRpgLogic.Core.Models.StatDefinition", b =>
                 {
                     b.Property<byte[]>("Id")
@@ -860,6 +718,9 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
 
                     b.HasKey("Id")
                         .HasName("pk_stat_definitions");
+
+                    b.HasIndex("Variation")
+                        .HasDatabaseName("ix_stat_definitions_variation");
 
                     b.ToTable("stat_definitions", (string)null);
                 });
@@ -1514,6 +1375,11 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
                         {
                             Id = 8,
                             Name = "Junk"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Name = "Miscellaneous"
                         });
                 });
 
@@ -2006,6 +1872,11 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
                         {
                             Id = 3,
                             Name = "Gas"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Plasma"
                         });
                 });
 
@@ -2112,6 +1983,44 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
                         });
                 });
 
+            modelBuilder.Entity("ability_active_effects", b =>
+                {
+                    b.Property<byte[]>("AbilityId")
+                        .HasColumnType("BLOB")
+                        .HasColumnName("ability_id");
+
+                    b.Property<byte[]>("EffectId")
+                        .HasColumnType("BLOB")
+                        .HasColumnName("effect_id");
+
+                    b.HasKey("AbilityId", "EffectId")
+                        .HasName("pk_ability_active_effects");
+
+                    b.HasIndex("EffectId")
+                        .HasDatabaseName("ix_ability_active_effects_effect_id");
+
+                    b.ToTable("ability_active_effects", (string)null);
+                });
+
+            modelBuilder.Entity("ability_failure_effects", b =>
+                {
+                    b.Property<byte[]>("AbilityId")
+                        .HasColumnType("BLOB")
+                        .HasColumnName("ability_id");
+
+                    b.Property<byte[]>("EffectId")
+                        .HasColumnType("BLOB")
+                        .HasColumnName("effect_id");
+
+                    b.HasKey("AbilityId", "EffectId")
+                        .HasName("pk_ability_failure_effects");
+
+                    b.HasIndex("EffectId")
+                        .HasDatabaseName("ix_ability_failure_effects_effect_id");
+
+                    b.ToTable("ability_failure_effects", (string)null);
+                });
+
             modelBuilder.Entity("UntitledRpgLogic.Core.Models.BuffEffect", b =>
                 {
                     b.HasBaseType("UntitledRpgLogic.Core.Models.Effect");
@@ -2134,14 +2043,21 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
                 {
                     b.HasBaseType("UntitledRpgLogic.Core.Models.Effect");
 
-                    b.Property<float>("BaseAmount")
+                    b.Property<float>("BaseDamage")
                         .HasColumnType("REAL")
-                        .HasColumnName("base_amount");
+                        .HasColumnName("base_damage");
 
-                    b.Property<byte[]>("DamageTypeId")
-                        .IsRequired()
-                        .HasColumnType("BLOB")
-                        .HasColumnName("damage_type_id");
+                    b.Property<int>("DamageType")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("damage_type");
+
+                    b.Property<TimeSpan?>("Delay")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("delay");
+
+                    b.Property<bool>("IgnoresArmor")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("ignores_armor");
 
                     b.ToTable("effects", (string)null);
 
@@ -2179,6 +2095,14 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
                 {
                     b.HasBaseType("UntitledRpgLogic.Core.Models.Effect");
 
+                    b.Property<float>("BaseHealAmount")
+                        .HasColumnType("REAL")
+                        .HasColumnName("base_heal_amount");
+
+                    b.Property<bool>("CanOverheal")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("can_overheal");
+
                     b.ToTable("effects", (string)null);
 
                     b.HasDiscriminator().HasValue(4);
@@ -2188,56 +2112,32 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
                 {
                     b.HasBaseType("UntitledRpgLogic.Core.Models.Effect");
 
-                    b.Property<byte[]>("EntityToSummonId")
-                        .IsRequired()
-                        .HasColumnType("BLOB")
-                        .HasColumnName("entity_to_summon_id");
-
                     b.Property<int>("Quantity")
                         .HasColumnType("INTEGER")
                         .HasColumnName("quantity");
+
+                    b.Property<byte[]>("SummonEntityTemplateId")
+                        .IsRequired()
+                        .HasColumnType("BLOB")
+                        .HasColumnName("summon_entity_template_id");
+
+                    b.HasIndex("SummonEntityTemplateId")
+                        .HasDatabaseName("ix_effects_summon_entity_template_id");
 
                     b.ToTable("effects", (string)null);
 
                     b.HasDiscriminator().HasValue(1);
                 });
 
-            modelBuilder.Entity("AbilityActiveEffects", b =>
-                {
-                    b.HasOne("UntitledRpgLogic.Core.Models.Ability", null)
-                        .WithMany()
-                        .HasForeignKey("AbilitiesUsingAsActiveId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_ability_active_effects_abilities_abilities_using_as_active_id");
-
-                    b.HasOne("UntitledRpgLogic.Core.Models.Effect", null)
-                        .WithMany()
-                        .HasForeignKey("ActiveEffectsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_ability_active_effects_effects_active_effects_id");
-                });
-
-            modelBuilder.Entity("AbilityFailureEffects", b =>
-                {
-                    b.HasOne("UntitledRpgLogic.Core.Models.Ability", null)
-                        .WithMany()
-                        .HasForeignKey("AbilitiesUsingAsFailureId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_ability_failure_effects_abilities_abilities_using_as_failure_id");
-
-                    b.HasOne("UntitledRpgLogic.Core.Models.Effect", null)
-                        .WithMany()
-                        .HasForeignKey("FailureEffectsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_ability_failure_effects_effects_failure_effects_id");
-                });
-
             modelBuilder.Entity("UntitledRpgLogic.Core.Models.Ability", b =>
                 {
+                    b.HasOne("UntitledRpgLogic.Infrastructure.Data.LookupEntities.AbilityTypeLookup", null)
+                        .WithMany()
+                        .HasForeignKey("AbilityType")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_abilities_ability_type_lookup_ability_type");
+
                     b.HasOne("UntitledRpgLogic.Core.Models.SkillDefinition", "SkillDiscipline")
                         .WithMany("Abilities")
                         .HasForeignKey("SkillDisciplineId")
@@ -2245,37 +2145,230 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
                         .IsRequired()
                         .HasConstraintName("fk_abilities_skill_definitions_skill_discipline_id");
 
+                    b.HasOne("UntitledRpgLogic.Infrastructure.Data.LookupEntities.TargetTypeLookup", null)
+                        .WithMany()
+                        .HasForeignKey("TargetType")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_abilities_target_type_lookup_target_type");
+
+                    b.OwnsMany("UntitledRpgLogic.Core.Models.CastingRequirement", "CastingRequirements", b1 =>
+                        {
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("INTEGER")
+                                .HasColumnName("id");
+
+                            b1.Property<byte[]>("AbilityId")
+                                .IsRequired()
+                                .HasColumnType("BLOB")
+                                .HasColumnName("ability_id");
+
+                            b1.Property<float>("AmountNeeded")
+                                .HasColumnType("REAL")
+                                .HasColumnName("amount_needed");
+
+                            b1.Property<byte[]>("RequiredEntityId")
+                                .IsRequired()
+                                .HasColumnType("BLOB")
+                                .HasColumnName("required_entity_id");
+
+                            b1.Property<int>("RequirementType")
+                                .HasColumnType("INTEGER")
+                                .HasColumnName("requirement_type");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("AbilityId")
+                                .HasDatabaseName("ix_ability_casting_requirements_ability_id");
+
+                            b1.HasIndex("RequirementType")
+                                .HasDatabaseName("ix_ability_casting_requirements_requirement_type");
+
+                            b1.ToTable("ability_casting_requirements", (string)null);
+
+                            b1.WithOwner()
+                                .HasForeignKey("AbilityId")
+                                .HasConstraintName("fk_ability_casting_requirements_abilities_ability_id");
+
+                            b1.HasOne("UntitledRpgLogic.Infrastructure.Data.LookupEntities.RequirementTypeLookup", null)
+                                .WithMany()
+                                .HasForeignKey("RequirementType")
+                                .OnDelete(DeleteBehavior.Restrict)
+                                .IsRequired()
+                                .HasConstraintName("fk_ability_casting_requirements_requirement_type_lookup_requirement_type");
+                        });
+
+                    b.OwnsMany("UntitledRpgLogic.Core.Models.FailureInfluence", "FailureInfluences", b1 =>
+                        {
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("INTEGER")
+                                .HasColumnName("id");
+
+                            b1.Property<byte[]>("AbilityId")
+                                .IsRequired()
+                                .HasColumnType("BLOB")
+                                .HasColumnName("ability_id");
+
+                            b1.Property<float>("AmountAlwaysSucceed")
+                                .HasColumnType("REAL")
+                                .HasColumnName("amount_always_succeed");
+
+                            b1.Property<float>("InfluenceScale")
+                                .HasColumnType("REAL")
+                                .HasColumnName("influence_scale");
+
+                            b1.Property<byte[]>("RequiredEntityId")
+                                .IsRequired()
+                                .HasColumnType("BLOB")
+                                .HasColumnName("required_entity_id");
+
+                            b1.Property<int>("RequirementType")
+                                .HasColumnType("INTEGER")
+                                .HasColumnName("requirement_type");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("AbilityId")
+                                .HasDatabaseName("ix_ability_failure_influences_ability_id");
+
+                            b1.HasIndex("RequiredEntityId")
+                                .HasDatabaseName("ix_ability_failure_influences_required_entity_id");
+
+                            b1.HasIndex("RequirementType")
+                                .HasDatabaseName("ix_ability_failure_influences_requirement_type");
+
+                            b1.ToTable("ability_failure_influences", (string)null);
+
+                            b1.WithOwner()
+                                .HasForeignKey("AbilityId")
+                                .HasConstraintName("fk_ability_failure_influences_abilities_ability_id");
+
+                            b1.HasOne("UntitledRpgLogic.Core.Models.Entity", null)
+                                .WithMany()
+                                .HasForeignKey("RequiredEntityId")
+                                .OnDelete(DeleteBehavior.Restrict)
+                                .IsRequired()
+                                .HasConstraintName("fk_ability_failure_influences_entities_required_entity_id");
+
+                            b1.HasOne("UntitledRpgLogic.Infrastructure.Data.LookupEntities.RequirementTypeLookup", null)
+                                .WithMany()
+                                .HasForeignKey("RequirementType")
+                                .OnDelete(DeleteBehavior.Restrict)
+                                .IsRequired()
+                                .HasConstraintName("fk_ability_failure_influences_requirement_type_lookup_requirement_type");
+                        });
+
+                    b.OwnsMany("UntitledRpgLogic.Core.Models.LearningRequirement", "LearningRequirements", b1 =>
+                        {
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("INTEGER")
+                                .HasColumnName("id");
+
+                            b1.Property<byte[]>("AbilityId")
+                                .IsRequired()
+                                .HasColumnType("BLOB")
+                                .HasColumnName("ability_id");
+
+                            b1.Property<float>("AmountNeeded")
+                                .HasColumnType("REAL")
+                                .HasColumnName("amount_needed");
+
+                            b1.Property<byte[]>("RequiredEntityId")
+                                .IsRequired()
+                                .HasColumnType("BLOB")
+                                .HasColumnName("required_entity_id");
+
+                            b1.Property<int>("RequirementType")
+                                .HasColumnType("INTEGER")
+                                .HasColumnName("requirement_type");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("AbilityId")
+                                .HasDatabaseName("ix_ability_learning_requirements_ability_id");
+
+                            b1.HasIndex("RequirementType")
+                                .HasDatabaseName("ix_ability_learning_requirements_requirement_type");
+
+                            b1.ToTable("ability_learning_requirements", (string)null);
+
+                            b1.WithOwner("Ability")
+                                .HasForeignKey("AbilityId")
+                                .HasConstraintName("fk_ability_learning_requirements_abilities_ability_id");
+
+                            b1.HasOne("UntitledRpgLogic.Infrastructure.Data.LookupEntities.RequirementTypeLookup", null)
+                                .WithMany()
+                                .HasForeignKey("RequirementType")
+                                .OnDelete(DeleteBehavior.Restrict)
+                                .IsRequired()
+                                .HasConstraintName("fk_ability_learning_requirements_requirement_type_lookup_requirement_type");
+
+                            b1.Navigation("Ability");
+                        });
+
+                    b.OwnsMany("UntitledRpgLogic.Core.Models.StatCost", "StatCosts", b1 =>
+                        {
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("INTEGER")
+                                .HasColumnName("id");
+
+                            b1.Property<byte[]>("AbilityId")
+                                .IsRequired()
+                                .HasColumnType("BLOB")
+                                .HasColumnName("ability_id");
+
+                            b1.Property<float>("Amount")
+                                .HasColumnType("REAL")
+                                .HasColumnName("amount");
+
+                            b1.Property<byte[]>("StatId")
+                                .IsRequired()
+                                .HasColumnType("BLOB")
+                                .HasColumnName("stat_id");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("AbilityId")
+                                .HasDatabaseName("ix_ability_stat_costs_ability_id");
+
+                            b1.HasIndex("StatId")
+                                .HasDatabaseName("ix_ability_stat_costs_stat_id");
+
+                            b1.ToTable("ability_stat_costs", (string)null);
+
+                            b1.WithOwner()
+                                .HasForeignKey("AbilityId")
+                                .HasConstraintName("fk_ability_stat_costs_abilities_ability_id");
+
+                            b1.HasOne("UntitledRpgLogic.Core.Models.StatDefinition", "Stat")
+                                .WithMany()
+                                .HasForeignKey("StatId")
+                                .OnDelete(DeleteBehavior.Restrict)
+                                .IsRequired()
+                                .HasConstraintName("fk_ability_stat_costs_stat_definitions_stat_id");
+
+                            b1.Navigation("Stat");
+                        });
+
+                    b.Navigation("CastingRequirements");
+
+                    b.Navigation("FailureInfluences");
+
+                    b.Navigation("LearningRequirements");
+
                     b.Navigation("SkillDiscipline");
-                });
 
-            modelBuilder.Entity("UntitledRpgLogic.Core.Models.AffectedAmbient", b =>
-                {
-                    b.HasOne("UntitledRpgLogic.Core.Models.Effect", "Effect")
-                        .WithMany("AffectedAmbients")
-                        .HasForeignKey("EffectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_affected_ambient_effects_effect_id");
-
-                    b.Navigation("Effect");
-                });
-
-            modelBuilder.Entity("UntitledRpgLogic.Core.Models.AffectedStat", b =>
-                {
-                    b.HasOne("UntitledRpgLogic.Core.Models.Effect", "Effect")
-                        .WithMany("AffectedStats")
-                        .HasForeignKey("EffectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_affected_stat_effects_effect_id");
-
-                    b.Navigation("Effect");
+                    b.Navigation("StatCosts");
                 });
 
             modelBuilder.Entity("UntitledRpgLogic.Core.Models.AppliedModifier", b =>
                 {
                     b.HasOne("UntitledRpgLogic.Core.Models.Entity", "Entity")
-                        .WithMany()
+                        .WithMany("AppliedModifiers")
                         .HasForeignKey("EntityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
@@ -2293,16 +2386,104 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
                     b.Navigation("ModifierDefinition");
                 });
 
-            modelBuilder.Entity("UntitledRpgLogic.Core.Models.CastingRequirement", b =>
+            modelBuilder.Entity("UntitledRpgLogic.Core.Models.Effect", b =>
                 {
-                    b.HasOne("UntitledRpgLogic.Core.Models.Ability", "Ability")
-                        .WithMany("CastingRequirements")
-                        .HasForeignKey("AbilityId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                    b.HasOne("UntitledRpgLogic.Infrastructure.Data.LookupEntities.EffectTypeLookup", null)
+                        .WithMany()
+                        .HasForeignKey("EffectType")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
-                        .HasConstraintName("fk_casting_requirement_abilities_ability_id");
+                        .HasConstraintName("fk_effects_effect_type_lookup_effect_type");
 
-                    b.Navigation("Ability");
+                    b.OwnsMany("UntitledRpgLogic.Core.Models.AffectedAmbient", "AffectedAmbients", b1 =>
+                        {
+                            b1.Property<byte[]>("EffectId");
+
+                            b1.Property<int>("__synthesizedOrdinal")
+                                .ValueGeneratedOnAddOrUpdate();
+
+                            b1.Property<byte[]>("AmbientId")
+                                .IsRequired();
+
+                            b1.Property<float>("AmountChange");
+
+                            b1.Property<bool>("IsPercentage");
+
+                            b1.HasKey("EffectId", "__synthesizedOrdinal");
+
+                            b1.ToTable("effects");
+
+                            b1
+                                .ToJson("affected_ambients")
+                                .HasColumnType("TEXT");
+
+                            b1.WithOwner()
+                                .HasForeignKey("EffectId")
+                                .HasConstraintName("fk_effects_effects_effect_id");
+                        });
+
+                    b.OwnsMany("UntitledRpgLogic.Core.Models.AffectedStat", "AffectedStats", b1 =>
+                        {
+                            b1.Property<byte[]>("EffectId");
+
+                            b1.Property<int>("__synthesizedOrdinal")
+                                .ValueGeneratedOnAddOrUpdate();
+
+                            b1.Property<float>("AmountChange");
+
+                            b1.Property<bool>("IsPercentage");
+
+                            b1.Property<byte[]>("StatId")
+                                .IsRequired();
+
+                            b1.HasKey("EffectId", "__synthesizedOrdinal");
+
+                            b1.ToTable("effects");
+
+                            b1
+                                .ToJson("affected_stats")
+                                .HasColumnType("TEXT");
+
+                            b1.WithOwner()
+                                .HasForeignKey("EffectId")
+                                .HasConstraintName("fk_effects_effects_effect_id");
+                        });
+
+                    b.Navigation("AffectedAmbients");
+
+                    b.Navigation("AffectedStats");
+                });
+
+            modelBuilder.Entity("UntitledRpgLogic.Core.Models.Entity", b =>
+                {
+                    b.OwnsMany("UntitledRpgLogic.Core.Models.AffectedStat", "AffectedStats", b1 =>
+                        {
+                            b1.Property<byte[]>("EntityId");
+
+                            b1.Property<int>("__synthesizedOrdinal")
+                                .ValueGeneratedOnAddOrUpdate();
+
+                            b1.Property<float>("AmountChange");
+
+                            b1.Property<bool>("IsPercentage");
+
+                            b1.Property<byte[]>("StatId")
+                                .IsRequired();
+
+                            b1.HasKey("EntityId", "__synthesizedOrdinal");
+
+                            b1.ToTable("entities");
+
+                            b1
+                                .ToJson("affected_stats")
+                                .HasColumnType("TEXT");
+
+                            b1.WithOwner()
+                                .HasForeignKey("EntityId")
+                                .HasConstraintName("fk_entities_entities_entity_id");
+                        });
+
+                    b.Navigation("AffectedStats");
                 });
 
             modelBuilder.Entity("UntitledRpgLogic.Core.Models.EntityInventory", b =>
@@ -2320,8 +2501,8 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
             modelBuilder.Entity("UntitledRpgLogic.Core.Models.EntitySkills", b =>
                 {
                     b.HasOne("UntitledRpgLogic.Core.Models.Entity", "Entity")
-                        .WithOne("Skills")
-                        .HasForeignKey("UntitledRpgLogic.Core.Models.EntitySkills", "EntityId")
+                        .WithMany("Skills")
+                        .HasForeignKey("EntityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_entity_skills_entities_entity_id");
@@ -2341,8 +2522,8 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
             modelBuilder.Entity("UntitledRpgLogic.Core.Models.EntityStats", b =>
                 {
                     b.HasOne("UntitledRpgLogic.Core.Models.Entity", "Entity")
-                        .WithOne("Stats")
-                        .HasForeignKey("UntitledRpgLogic.Core.Models.EntityStats", "EntityId")
+                        .WithMany("Stats")
+                        .HasForeignKey("EntityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_entity_stats_entities_entity_id");
@@ -2357,18 +2538,6 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
                     b.Navigation("Entity");
 
                     b.Navigation("InstancedStat");
-                });
-
-            modelBuilder.Entity("UntitledRpgLogic.Core.Models.FailureInfluence", b =>
-                {
-                    b.HasOne("UntitledRpgLogic.Core.Models.Ability", "Ability")
-                        .WithMany("FailureInfluences")
-                        .HasForeignKey("AbilityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_failure_influence_abilities_ability_id");
-
-                    b.Navigation("Ability");
                 });
 
             modelBuilder.Entity("UntitledRpgLogic.Core.Models.InstancedSkill", b =>
@@ -2395,6 +2564,57 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
                     b.Navigation("StatDefinition");
                 });
 
+            modelBuilder.Entity("UntitledRpgLogic.Core.Models.ItemDefinition", b =>
+                {
+                    b.OwnsMany("UntitledRpgLogic.Core.Models.ItemMaterialComponent", "Materials", b1 =>
+                        {
+                            b1.Property<byte[]>("ItemDefinitionId")
+                                .HasColumnType("BLOB")
+                                .HasColumnName("item_definition_id");
+
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("INTEGER")
+                                .HasColumnName("id");
+
+                            b1.Property<byte[]>("MaterialId")
+                                .IsRequired()
+                                .HasColumnType("BLOB")
+                                .HasColumnName("material_id");
+
+                            b1.Property<float>("Proportion")
+                                .HasColumnType("REAL")
+                                .HasColumnName("proportion");
+
+                            b1.Property<byte>("Slot")
+                                .HasColumnType("INTEGER")
+                                .HasColumnName("slot");
+
+                            b1.HasKey("ItemDefinitionId", "Id")
+                                .HasName("pk_item_definition_materials");
+
+                            b1.HasIndex("MaterialId")
+                                .HasDatabaseName("ix_item_definition_materials_material_id");
+
+                            b1.ToTable("item_definition_materials", (string)null);
+
+                            b1.WithOwner()
+                                .HasForeignKey("ItemDefinitionId")
+                                .HasConstraintName("fk_item_definition_materials_item_definitions_item_definition_id");
+
+                            b1.HasOne("UntitledRpgLogic.Core.Models.MaterialDefinition", "Material")
+                                .WithMany()
+                                .HasForeignKey("MaterialId")
+                                .OnDelete(DeleteBehavior.Restrict)
+                                .IsRequired()
+                                .HasConstraintName("fk_item_definition_materials_material_definitions_material_id");
+
+                            b1.Navigation("Material");
+                        });
+
+                    b.Navigation("Materials");
+                });
+
             modelBuilder.Entity("UntitledRpgLogic.Core.Models.ItemInstance", b =>
                 {
                     b.HasOne("UntitledRpgLogic.Core.Models.EntityInventory", null)
@@ -2409,6 +2629,11 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
                         .IsRequired()
                         .HasConstraintName("fk_item_instances_item_definitions_item_definition_id");
 
+                    b.HasOne("UntitledRpgLogic.Core.Models.ItemDefinition", null)
+                        .WithMany("Instances")
+                        .HasForeignKey("ItemDefinitionId1")
+                        .HasConstraintName("fk_item_instances_item_definitions_item_definition_id1");
+
                     b.HasOne("UntitledRpgLogic.Core.Models.MaterialDefinition", "PrimaryMaterial")
                         .WithMany()
                         .HasForeignKey("PrimaryMaterialId")
@@ -2419,42 +2644,380 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
                     b.Navigation("PrimaryMaterial");
                 });
 
-            modelBuilder.Entity("UntitledRpgLogic.Core.Models.LearningRequirement", b =>
-                {
-                    b.HasOne("UntitledRpgLogic.Core.Models.Ability", "Ability")
-                        .WithMany("LearningRequirements")
-                        .HasForeignKey("AbilityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_learning_requirement_abilities_ability_id");
-
-                    b.Navigation("Ability");
-                });
-
             modelBuilder.Entity("UntitledRpgLogic.Core.Models.LinkedStats", b =>
                 {
-                    b.HasOne("UntitledRpgLogic.Core.Models.StatDefinition", "DependentStat")
+                    b.HasOne("UntitledRpgLogic.Core.Models.StatDefinition", "DependsOnStat")
                         .WithMany()
-                        .HasForeignKey("DependentStatId")
+                        .HasForeignKey("DependsOnId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
-                        .HasConstraintName("fk_linked_stats_stat_definitions_dependent_stat_id");
-
-                    b.HasOne("UntitledRpgLogic.Core.Models.StatDefinition", "LinkedStat")
-                        .WithMany()
-                        .HasForeignKey("LinkedStatId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired()
-                        .HasConstraintName("fk_linked_stats_stat_definitions_linked_stat_id");
+                        .HasConstraintName("fk_linked_stats_stat_definitions_depends_on_id");
 
                     b.HasOne("UntitledRpgLogic.Core.Models.StatDefinition", null)
                         .WithMany("LinkedStats")
                         .HasForeignKey("StatDefinitionId")
                         .HasConstraintName("fk_linked_stats_stat_definitions_stat_definition_id");
 
-                    b.Navigation("DependentStat");
+                    b.HasOne("UntitledRpgLogic.Core.Models.StatDefinition", "Stat")
+                        .WithMany()
+                        .HasForeignKey("StatId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_linked_stats_stat_definitions_stat_id");
 
-                    b.Navigation("LinkedStat");
+                    b.Navigation("DependsOnStat");
+
+                    b.Navigation("Stat");
+                });
+
+            modelBuilder.Entity("UntitledRpgLogic.Core.Models.MaterialDefinition", b =>
+                {
+                    b.OwnsOne("UntitledRpgLogic.Core.Models.ElectricalProperties", "ElectricalProperties", b1 =>
+                        {
+                            b1.Property<byte[]>("MaterialDefinitionId");
+
+                            b1.Property<float>("Conductivity");
+
+                            b1.HasKey("MaterialDefinitionId")
+                                .HasName("pk_material_definitions");
+
+                            b1.ToTable("material_definitions");
+
+                            b1
+                                .ToJson("electrical_properties")
+                                .HasColumnType("TEXT");
+
+                            b1.WithOwner()
+                                .HasForeignKey("MaterialDefinitionId")
+                                .HasConstraintName("fk_material_definitions_material_definitions_material_definition_id");
+                        });
+
+                    b.OwnsOne("UntitledRpgLogic.Core.Models.FantasticalProperties", "FantasticalProperties", b1 =>
+                        {
+                            b1.Property<byte[]>("MaterialDefinitionId");
+
+                            b1.Property<float>("AetherialConductivity");
+
+                            b1.Property<string>("ElementalAttunement")
+                                .IsRequired();
+
+                            b1.Property<float>("Luminosity");
+
+                            b1.Property<float>("ManaCapacity");
+
+                            b1.Property<float>("Purity");
+
+                            b1.HasKey("MaterialDefinitionId")
+                                .HasName("pk_material_definitions");
+
+                            b1.ToTable("material_definitions");
+
+                            b1
+                                .ToJson("fantastical_properties")
+                                .HasColumnType("TEXT");
+
+                            b1.WithOwner()
+                                .HasForeignKey("MaterialDefinitionId")
+                                .HasConstraintName("fk_material_definitions_material_definitions_material_definition_id");
+                        });
+
+                    b.OwnsOne("UntitledRpgLogic.Core.Models.MechanicalProperties", "MechanicalProperties", b1 =>
+                        {
+                            b1.Property<byte[]>("MaterialDefinitionId");
+
+                            b1.Property<float?>("Adhesion");
+
+                            b1.Property<float>("Density");
+
+                            b1.Property<float?>("Hardness");
+
+                            b1.Property<float?>("Malleability");
+
+                            b1.Property<float?>("Stiffness");
+
+                            b1.Property<float?>("SurfaceTension");
+
+                            b1.Property<float?>("Toughness");
+
+                            b1.Property<float?>("Viscosity");
+
+                            b1.HasKey("MaterialDefinitionId")
+                                .HasName("pk_material_definitions");
+
+                            b1.ToTable("material_definitions");
+
+                            b1
+                                .ToJson("mechanical_properties")
+                                .HasColumnType("TEXT");
+
+                            b1.WithOwner()
+                                .HasForeignKey("MaterialDefinitionId")
+                                .HasConstraintName("fk_material_definitions_material_definitions_material_definition_id");
+                        });
+
+                    b.OwnsOne("UntitledRpgLogic.Core.Models.ThermalProperties", "ThermalProperties", b1 =>
+                        {
+                            b1.Property<byte[]>("MaterialDefinitionId");
+
+                            b1.Property<float>("BoilingPoint");
+
+                            b1.Property<float>("IgnitionTemperature");
+
+                            b1.Property<float>("MeltingPoint");
+
+                            b1.Property<float>("ThermalConductivity");
+
+                            b1.HasKey("MaterialDefinitionId")
+                                .HasName("pk_material_definitions");
+
+                            b1.ToTable("material_definitions");
+
+                            b1
+                                .ToJson("thermal_properties")
+                                .HasColumnType("TEXT");
+
+                            b1.WithOwner()
+                                .HasForeignKey("MaterialDefinitionId")
+                                .HasConstraintName("fk_material_definitions_material_definitions_material_definition_id");
+                        });
+
+                    b.OwnsMany("UntitledRpgLogic.Core.Models.OreYield", "SmeltYields", b1 =>
+                        {
+                            b1.Property<byte[]>("MaterialDefinitionId");
+
+                            b1.Property<int>("__synthesizedOrdinal")
+                                .ValueGeneratedOnAddOrUpdate();
+
+                            b1.Property<float>("Chance");
+
+                            b1.Property<float>("Efficiency");
+
+                            b1.Property<byte[]>("MaterialId")
+                                .IsRequired();
+
+                            b1.Property<float>("MinimumSmeltTemperature");
+
+                            b1.HasKey("MaterialDefinitionId", "__synthesizedOrdinal");
+
+                            b1.ToTable("material_definitions");
+
+                            b1
+                                .ToJson("smelt_yields")
+                                .HasColumnType("TEXT");
+
+                            b1.WithOwner()
+                                .HasForeignKey("MaterialDefinitionId")
+                                .HasConstraintName("fk_material_definitions_material_definitions_material_definition_id");
+                        });
+
+                    b.OwnsMany("UntitledRpgLogic.Core.Models.StateSpecificProperties", "StateProperties", b1 =>
+                        {
+                            b1.Property<byte[]>("MaterialDefinitionId")
+                                .HasColumnType("BLOB")
+                                .HasColumnName("material_definition_id");
+
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("INTEGER")
+                                .HasColumnName("id");
+
+                            b1.Property<string>("Color")
+                                .IsRequired()
+                                .HasColumnType("TEXT")
+                                .HasColumnName("color");
+
+                            b1.Property<int>("State")
+                                .HasColumnType("INTEGER")
+                                .HasColumnName("state");
+
+                            b1.HasKey("MaterialDefinitionId", "Id")
+                                .HasName("pk_material_state_properties");
+
+                            b1.HasIndex("State")
+                                .HasDatabaseName("ix_material_state_properties_state");
+
+                            b1.ToTable("material_state_properties", (string)null);
+
+                            b1.WithOwner()
+                                .HasForeignKey("MaterialDefinitionId")
+                                .HasConstraintName("fk_material_state_properties_material_definitions_material_definition_id");
+
+                            b1.HasOne("UntitledRpgLogic.Infrastructure.Data.LookupEntities.StateOfMatterLookup", null)
+                                .WithMany()
+                                .HasForeignKey("State")
+                                .OnDelete(DeleteBehavior.Restrict)
+                                .IsRequired()
+                                .HasConstraintName("fk_material_state_properties_state_of_matter_lookup_state");
+
+                            b1.OwnsOne("UntitledRpgLogic.Core.Models.ElectricalProperties", "ElectricalProperties", b2 =>
+                                {
+                                    b2.Property<byte[]>("StateSpecificPropertiesMaterialDefinitionId")
+                                        .HasColumnType("BLOB")
+                                        .HasColumnName("material_definition_id");
+
+                                    b2.Property<int>("StateSpecificPropertiesId")
+                                        .HasColumnType("INTEGER")
+                                        .HasColumnName("id");
+
+                                    b2.Property<float>("Conductivity")
+                                        .HasColumnType("REAL")
+                                        .HasColumnName("electrical_properties_conductivity");
+
+                                    b2.HasKey("StateSpecificPropertiesMaterialDefinitionId", "StateSpecificPropertiesId");
+
+                                    b2.ToTable("material_state_properties");
+
+                                    b2.WithOwner()
+                                        .HasForeignKey("StateSpecificPropertiesMaterialDefinitionId", "StateSpecificPropertiesId")
+                                        .HasConstraintName("fk_material_state_properties_material_state_properties_material_definition_id_id");
+                                });
+
+                            b1.OwnsOne("UntitledRpgLogic.Core.Models.FantasticalProperties", "FantasticalProperties", b2 =>
+                                {
+                                    b2.Property<byte[]>("StateSpecificPropertiesMaterialDefinitionId")
+                                        .HasColumnType("BLOB")
+                                        .HasColumnName("material_definition_id");
+
+                                    b2.Property<int>("StateSpecificPropertiesId")
+                                        .HasColumnType("INTEGER")
+                                        .HasColumnName("id");
+
+                                    b2.Property<float>("AetherialConductivity")
+                                        .HasColumnType("REAL")
+                                        .HasColumnName("fantastical_properties_aetherial_conductivity");
+
+                                    b2.Property<string>("ElementalAttunement")
+                                        .IsRequired()
+                                        .HasColumnType("TEXT")
+                                        .HasColumnName("fantastical_properties_elemental_attunement");
+
+                                    b2.Property<float>("Luminosity")
+                                        .HasColumnType("REAL")
+                                        .HasColumnName("fantastical_properties_luminosity");
+
+                                    b2.Property<float>("ManaCapacity")
+                                        .HasColumnType("REAL")
+                                        .HasColumnName("fantastical_properties_mana_capacity");
+
+                                    b2.Property<float>("Purity")
+                                        .HasColumnType("REAL")
+                                        .HasColumnName("fantastical_properties_purity");
+
+                                    b2.HasKey("StateSpecificPropertiesMaterialDefinitionId", "StateSpecificPropertiesId");
+
+                                    b2.ToTable("material_state_properties");
+
+                                    b2.WithOwner()
+                                        .HasForeignKey("StateSpecificPropertiesMaterialDefinitionId", "StateSpecificPropertiesId")
+                                        .HasConstraintName("fk_material_state_properties_material_state_properties_material_definition_id_id");
+                                });
+
+                            b1.OwnsOne("UntitledRpgLogic.Core.Models.MechanicalProperties", "MechanicalProperties", b2 =>
+                                {
+                                    b2.Property<byte[]>("StateSpecificPropertiesMaterialDefinitionId")
+                                        .HasColumnType("BLOB")
+                                        .HasColumnName("material_definition_id");
+
+                                    b2.Property<int>("StateSpecificPropertiesId")
+                                        .HasColumnType("INTEGER")
+                                        .HasColumnName("id");
+
+                                    b2.Property<float?>("Adhesion")
+                                        .HasColumnType("REAL")
+                                        .HasColumnName("mechanical_properties_adhesion");
+
+                                    b2.Property<float>("Density")
+                                        .HasColumnType("REAL")
+                                        .HasColumnName("mechanical_properties_density");
+
+                                    b2.Property<float?>("Hardness")
+                                        .HasColumnType("REAL")
+                                        .HasColumnName("mechanical_properties_hardness");
+
+                                    b2.Property<float?>("Malleability")
+                                        .HasColumnType("REAL")
+                                        .HasColumnName("mechanical_properties_malleability");
+
+                                    b2.Property<float?>("Stiffness")
+                                        .HasColumnType("REAL")
+                                        .HasColumnName("mechanical_properties_stiffness");
+
+                                    b2.Property<float?>("SurfaceTension")
+                                        .HasColumnType("REAL")
+                                        .HasColumnName("mechanical_properties_surface_tension");
+
+                                    b2.Property<float?>("Toughness")
+                                        .HasColumnType("REAL")
+                                        .HasColumnName("mechanical_properties_toughness");
+
+                                    b2.Property<float?>("Viscosity")
+                                        .HasColumnType("REAL")
+                                        .HasColumnName("mechanical_properties_viscosity");
+
+                                    b2.HasKey("StateSpecificPropertiesMaterialDefinitionId", "StateSpecificPropertiesId");
+
+                                    b2.ToTable("material_state_properties");
+
+                                    b2.WithOwner()
+                                        .HasForeignKey("StateSpecificPropertiesMaterialDefinitionId", "StateSpecificPropertiesId")
+                                        .HasConstraintName("fk_material_state_properties_material_state_properties_material_definition_id_id");
+                                });
+
+                            b1.OwnsOne("UntitledRpgLogic.Core.Models.ThermalProperties", "ThermalProperties", b2 =>
+                                {
+                                    b2.Property<byte[]>("StateSpecificPropertiesMaterialDefinitionId")
+                                        .HasColumnType("BLOB")
+                                        .HasColumnName("material_definition_id");
+
+                                    b2.Property<int>("StateSpecificPropertiesId")
+                                        .HasColumnType("INTEGER")
+                                        .HasColumnName("id");
+
+                                    b2.Property<float>("BoilingPoint")
+                                        .HasColumnType("REAL")
+                                        .HasColumnName("thermal_properties_boiling_point");
+
+                                    b2.Property<float>("IgnitionTemperature")
+                                        .HasColumnType("REAL")
+                                        .HasColumnName("thermal_properties_ignition_temperature");
+
+                                    b2.Property<float>("MeltingPoint")
+                                        .HasColumnType("REAL")
+                                        .HasColumnName("thermal_properties_melting_point");
+
+                                    b2.Property<float>("ThermalConductivity")
+                                        .HasColumnType("REAL")
+                                        .HasColumnName("thermal_properties_thermal_conductivity");
+
+                                    b2.HasKey("StateSpecificPropertiesMaterialDefinitionId", "StateSpecificPropertiesId");
+
+                                    b2.ToTable("material_state_properties");
+
+                                    b2.WithOwner()
+                                        .HasForeignKey("StateSpecificPropertiesMaterialDefinitionId", "StateSpecificPropertiesId")
+                                        .HasConstraintName("fk_material_state_properties_material_state_properties_material_definition_id_id");
+                                });
+
+                            b1.Navigation("ElectricalProperties");
+
+                            b1.Navigation("FantasticalProperties");
+
+                            b1.Navigation("MechanicalProperties");
+
+                            b1.Navigation("ThermalProperties");
+                        });
+
+                    b.Navigation("ElectricalProperties");
+
+                    b.Navigation("FantasticalProperties");
+
+                    b.Navigation("MechanicalProperties");
+
+                    b.Navigation("SmeltYields");
+
+                    b.Navigation("StateProperties");
+
+                    b.Navigation("ThermalProperties");
                 });
 
             modelBuilder.Entity("UntitledRpgLogic.Core.Models.ModifierDefinition", b =>
@@ -2474,38 +3037,66 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
                     b.Navigation("StackEffect");
                 });
 
-            modelBuilder.Entity("UntitledRpgLogic.Core.Models.StatCost", b =>
+            modelBuilder.Entity("UntitledRpgLogic.Core.Models.StatDefinition", b =>
                 {
-                    b.HasOne("UntitledRpgLogic.Core.Models.Ability", "Ability")
-                        .WithMany("StatCosts")
+                    b.HasOne("UntitledRpgLogic.Infrastructure.Data.LookupEntities.StatVariationLookup", null)
+                        .WithMany()
+                        .HasForeignKey("Variation")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_stat_definitions_stat_variation_lookup_variation");
+                });
+
+            modelBuilder.Entity("ability_active_effects", b =>
+                {
+                    b.HasOne("UntitledRpgLogic.Core.Models.Ability", null)
+                        .WithMany()
                         .HasForeignKey("AbilityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_stat_cost_abilities_ability_id");
+                        .HasConstraintName("fk_ability_active_effects_abilities_ability_id");
 
-                    b.Navigation("Ability");
+                    b.HasOne("UntitledRpgLogic.Core.Models.Effect", null)
+                        .WithMany()
+                        .HasForeignKey("EffectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_ability_active_effects_effects_effect_id");
                 });
 
-            modelBuilder.Entity("UntitledRpgLogic.Core.Models.Ability", b =>
+            modelBuilder.Entity("ability_failure_effects", b =>
                 {
-                    b.Navigation("CastingRequirements");
+                    b.HasOne("UntitledRpgLogic.Core.Models.Ability", null)
+                        .WithMany()
+                        .HasForeignKey("AbilityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_ability_failure_effects_abilities_ability_id");
 
-                    b.Navigation("FailureInfluences");
-
-                    b.Navigation("LearningRequirements");
-
-                    b.Navigation("StatCosts");
+                    b.HasOne("UntitledRpgLogic.Core.Models.Effect", null)
+                        .WithMany()
+                        .HasForeignKey("EffectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_ability_failure_effects_effects_effect_id");
                 });
 
-            modelBuilder.Entity("UntitledRpgLogic.Core.Models.Effect", b =>
+            modelBuilder.Entity("UntitledRpgLogic.Core.Models.SummonEffect", b =>
                 {
-                    b.Navigation("AffectedAmbients");
+                    b.HasOne("UntitledRpgLogic.Core.Models.Entity", "SummonTemplate")
+                        .WithMany()
+                        .HasForeignKey("SummonEntityTemplateId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_effects_entities_summon_entity_template_id");
 
-                    b.Navigation("AffectedStats");
+                    b.Navigation("SummonTemplate");
                 });
 
             modelBuilder.Entity("UntitledRpgLogic.Core.Models.Entity", b =>
                 {
+                    b.Navigation("AppliedModifiers");
+
                     b.Navigation("Inventory");
 
                     b.Navigation("Skills");
@@ -2516,6 +3107,11 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
             modelBuilder.Entity("UntitledRpgLogic.Core.Models.EntityInventory", b =>
                 {
                     b.Navigation("Items");
+                });
+
+            modelBuilder.Entity("UntitledRpgLogic.Core.Models.ItemDefinition", b =>
+                {
+                    b.Navigation("Instances");
                 });
 
             modelBuilder.Entity("UntitledRpgLogic.Core.Models.SkillDefinition", b =>
