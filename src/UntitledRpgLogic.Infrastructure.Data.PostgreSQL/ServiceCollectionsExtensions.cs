@@ -1,33 +1,48 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using UntitledRpgLogic.Core.Interfaces.Data;
+using UntitledRpgLogic.Core.Options;
 
 namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL;
+
+/// <inheritdoc />
+public record PostgreSqlPersistenceOptions : PersistenceOptions;
 
 /// <summary>
 ///     Contains extension methods for IServiceCollection to add PostgreSQL data access services.
 /// </summary>
-public static class ServiceCollectionsExtensions
+public static class PostgreSqlServiceCollectionsExtensions
 {
+
 	/// <summary>
-	///     Adds PostgreSQL data access services to the <see cref="IServiceCollection" />.
-	///     Registers the <see cref="RpgDbContext" />, <see cref="IUnitOfWork" />, and repositories.
-	///     Call this method in your application's Startup or Program file.
+	///     Registers the PostgreSQL persistence provider and related database services into the service collection.
 	/// </summary>
-	/// <param name="services">The service collection to add services to.</param>
-	/// <param name="connectionString">The PostgreSQL connection string.</param>
-	/// <returns>The updated <see cref="IServiceCollection" />.</returns>
-	public static IServiceCollection AddPostgresDataAccess(this IServiceCollection services, string connectionString)
+	/// <param name="services">The <see cref="IServiceCollection" /> to which persistence services will be registered.</param>
+	/// <param name="configure">
+	///     An optional delegate used to configure <see cref="PostgreSqlPersistenceOptions" /> such as the connection string and migration behavior.
+	///     If <see langword="null" />, default PostgreSQL options are used.
+	/// </param>
+	/// <returns>The same <see cref="IServiceCollection" /> instance so that additional calls can be chained.</returns>
+	public static IServiceCollection AddPostgresDataAccess(
+		this IServiceCollection services,
+		Action<PostgreSqlPersistenceOptions>? configure = null)
 	{
-		_ = services.AddDbContext<RpgDbContext>(options =>
-			options.UseNpgsql(connectionString, npgsqlOptions =>
-				{
-					npgsqlOptions.MigrationsAssembly(typeof(PostgreSqlDesignTimeDbContextFactory).Assembly.FullName);
-				})
+		var options = new PostgreSqlPersistenceOptions();
+		configure?.Invoke(options);
+
+		// Register the DbContext
+		_ = services.AddDbContext<RpgDbContext>(dbOptions =>
+			dbOptions.UseNpgsql(options.ConnectionString, b =>
+				b.MigrationsAssembly(typeof(PostgreSqlServiceCollectionsExtensions).Assembly.FullName))
 				.UseSnakeCaseNamingConvention());
 
-		_ = services.AddScoped<IUnitOfWork, UnitOfWork>();
-		//services.AddScoped<IEntityRepository, EntityRepository>();
+		// Register the Unit of Work and Repositories
+		_ = services.AddRpgCommonPersistence();
+
+		services.AddScoped<IDatabaseInitializer>(sp =>
+			new DatabaseInitializer(
+				sp.GetRequiredService<RpgDbContext>(),
+				options.AutoMigrate));
 
 		return services;
 	}

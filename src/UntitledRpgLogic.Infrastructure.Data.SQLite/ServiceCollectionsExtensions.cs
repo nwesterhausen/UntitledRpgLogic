@@ -10,24 +10,35 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite;
 public static class ServiceCollectionsExtensions
 {
 	/// <summary>
-	///     Adds SQLite data access services to the <see cref="IServiceCollection" />.
-	///     Registers the <see cref="RpgDbContext" />, <see cref="IUnitOfWork" />, and repositories.
-	///     Call this method in your application's Startup or Program file.
+	///     Registers the SQLite persistence provider and related database services into the service collection.
 	/// </summary>
-	/// <param name="services">The service collection to add services to.</param>
-	/// <param name="connectionString">The SQLite connection string.</param>
-	/// <returns>The updated <see cref="IServiceCollection" />.</returns>
-	public static IServiceCollection AddSqliteDataAccess(this IServiceCollection services, string connectionString)
+	/// <param name="services">The <see cref="IServiceCollection" /> to which persistence services will be registered.</param>
+	/// <param name="configure">
+	///     An optional delegate used to configure <see cref="SqlitePersistenceOptions" /> such as the connection string and migration behavior.
+	///     If <see langword="null" />, default SQLite options are used.
+	/// </param>
+	/// <returns>The same <see cref="IServiceCollection" /> instance so that additional calls can be chained.</returns>
+	public static IServiceCollection AddSqliteDataAccess(
+		this IServiceCollection services,
+		Action<SqlitePersistenceOptions>? configure = null)
 	{
-		// 1. Register the DbContext
-		_ = services.AddDbContext<RpgDbContext>(options =>
-				options.UseSqlite(connectionString, b =>
-					b.MigrationsAssembly(typeof(SqliteDesignTimeDbContextFactory).Assembly.FullName))
-				.UseSnakeCaseNamingConvention());
+		var options = new SqlitePersistenceOptions();
+		configure?.Invoke(options);
 
-		// 2. Register the Unit of Work and Repositories
-		_ = services.AddScoped<IUnitOfWork, UnitOfWork>();
-		//services.AddScoped<IEntityRepository, EntityRepository>();
+		// Register the DbContext
+		_ = services.AddDbContext<RpgDbContext>(dbOptions =>
+			dbOptions.UseSqlite(options.ConnectionString, b =>
+				b.MigrationsAssembly(typeof(SqliteServiceCollectionExtensions).Assembly.FullName))
+			.UseSnakeCaseNamingConvention());
+
+		// Register the Unit of Work and Repositories
+		_ = services.AddRpgCommonPersistence();
+
+		// Register the initializer with the AutoMigrate flag evaluated
+		services.AddScoped<IDatabaseInitializer>(sp =>
+			new DatabaseInitializer(
+				sp.GetRequiredService<RpgDbContext>(),
+				options.AutoMigrate));
 
 		return services;
 	}
