@@ -1,43 +1,45 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using UntitledRpgLogic.Core.Enums;
 
 namespace UntitledRpgLogic.Core.Models;
 
 /// <summary>
-///     Defines a requirement to learn an ability.
+///     Defines a prerequisite condition that must be met to permanently learn an ability.
 /// </summary>
-/// <remarks>(Owned by <see cref="Ability" />).</remarks>
-public class LearningRequirement
+/// <remarks>Owned by <see cref="Ability" />.</remarks>
+[Table("ability_learning_requirements")]
+public record LearningRequirement
 {
 	/// <summary>
-	///     The unique identifier for this record.
+	///     The unique database row identifier for this requirement entry.
 	/// </summary>
 	[Key]
-	public int Id { get; set; }
+	public int Id { get; init; }
 
 	/// <summary>
-	///     The (FK) id of the <see cref="Ability" /> that requires this casting requirement.
+	///     Foreign key of the owning <see cref="Ability" />.
 	/// </summary>
-	public Ulid AbilityId { get; set; }
+	public Ulid AbilityId { get; init; }
 
 	/// <summary>
-	///     A navigation property to the <see cref="Ability" /> that requires this casting requirement.
+	///     Navigation property back to the owning ability.
 	/// </summary>
-	public virtual Ability Ability { get; set; } = null!;
+	[ForeignKey(nameof(AbilityId))]
+	public Ability? Ability { get; init; }
 
 	/// <summary>
-	///     The type of requirement (e.g., "Level", "Stat", "Class", "Race").
+	///     The category of requirement (e.g., Level, Stat, Class, Race).
 	/// </summary>
-	public RequirementType RequirementType { get; set; }
+	public RequirementType RequirementType { get; init; } = RequirementType.None;
 
 	/// <summary>
-	///     Gets or sets the <see cref="Ulid" /> of the specific requirement (e.g., the <see cref="Ulid" /> for the Stat "Intellect",
-	///     the <see cref="Ulid" /> for the "Mage" Class, or the <see cref="Ulid" /> for the "Elf" Race).
+	///     The identifier of the required entity or definition (e.g., Stat ID, Class ID, or Race ID).
 	/// </summary>
-	public Ulid RequiredEntityId { get; set; }
+	public Ulid RequiredEntityId { get; init; }
 
 	/// <summary>
-	///     Gets or sets the value needed (e.g., Stat amount 50, Level 10).
+	///     The numerical threshold or minimum level required to satisfy this condition.
 	/// </summary>
 	public float AmountNeeded { get; set; }
 }

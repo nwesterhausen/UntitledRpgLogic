@@ -1,44 +1,49 @@
-using System.ComponentModel.DataAnnotations;
 using UntitledRpgLogic.Core.Enums;
 
 namespace UntitledRpgLogic.Core.Models;
 
 /// <summary>
-///     Properties specific to a material's state of matter.
+///     Defines state-specific property overrides for a material when shifting between phases (Solid, Liquid, Gas).
 /// </summary>
+/// <remarks>Owned by <see cref="MaterialDefinition" />.</remarks>
 public record StateSpecificProperties
 {
 	/// <summary>
-	///     The color of the material in this state, represented as a hex string (e.g., "#FF0000").
+	///     Initializes a new instance of the <see cref="StateSpecificProperties" /> record with default values.
 	/// </summary>
-	public string Color { get; init; } = "#FFFFFF";
+	public StateSpecificProperties()
+	{
+		this.Color = "#FFFFFF";
+		this.State = StateOfMatter.None;
+	}
 
 	/// <summary>
-	///		A unique identifier for this record.
+	///     Hexadecimal color representation of the material in this physical state.
 	/// </summary>
-	[Key]
-	public int Id { get; init; }
+	public string Color { get; init; }
 
 	/// <summary>
-	/// 	The state of matter these properties apply to.
+	///     The specific phase of matter these overrides apply to.
 	/// </summary>
-	public StateOfMatter State { get; init; } = StateOfMatter.None;
+	public StateOfMatter State { get; init; }
 
+	/// <summary>
+	///     Mechanical property overrides for this state (null if using default material baseline).
+	/// </summary>
+	public MechanicalProperties? MechanicalProperties { get; init; }
 
 	/// <summary>
-	/// 	Mechanical properties of the material in this state, if differing from the default
+	///     Thermal property overrides for this state (null if using default material baseline).
 	/// </summary>
-	public MechanicalProperties? MechanicalProperties { get; set; }
+	public ThermalProperties? ThermalProperties { get; init; }
+
 	/// <summary>
-	/// 	Thermal properties of the material in this state, if differing from the default
+	///     Electrical property overrides for this state (null if using default material baseline).
 	/// </summary>
-	public ThermalProperties? ThermalProperties { get; set; }
+	public ElectricalProperties? ElectricalProperties { get; init; }
+
 	/// <summary>
-	/// 	Electrical properties of the material in this state, if differing from the default
+	///     Mystical property overrides for this state (null if using default material baseline).
 	/// </summary>
-	public ElectricalProperties? ElectricalProperties { get; set; }
-	/// <summary>
-	/// 	Fantastical properties of the material in this state, if differing from the default
-	/// </summary>
-	public FantasticalProperties? FantasticalProperties { get; set; }
+	public FantasticalProperties? FantasticalProperties { get; init; }
 }

@@ -1,85 +1,90 @@
-
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using UntitledRpgLogic.Core.Models;
 using UntitledRpgLogic.Infrastructure.Data.LookupEntities;
 
 namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
-///<summary>
-/// Defines advanced table configuration for `Ability`
-///</summary>
-public class AbilityConfiguration : IEntityTypeConfiguration<Ability>
+
+/// <summary>
+///     Entity Framework Core configuration for <see cref="Ability" />.
+/// </summary>
+internal sealed class AbilityConfiguration : IEntityTypeConfiguration<Ability>
 {
-	///<inheritdoc />
 	public void Configure(EntityTypeBuilder<Ability> builder)
 	{
 		ArgumentNullException.ThrowIfNull(builder);
 
-		// Relationships
-		_ = builder
-			 .HasMany(ability => ability.ActiveEffects)
-			 .WithMany(effect => effect.AbilitiesUsingAsActive)
-			 .UsingEntity("AbilityActiveEffects");
+		// 1. Enum Foreign Key Constraints to Lookup Tables
+		builder.HasOne<AbilityTypeLookup>()
+			   .WithMany()
+			   .HasForeignKey(a => a.AbilityType)
+			   .OnDelete(DeleteBehavior.Restrict);
 
-		_ = builder
-			.HasMany(ability => ability.FailureEffects)
-			.WithMany(effect => effect.AbilitiesUsingAsFailure)
-			.UsingEntity("AbilityFailureEffects");
+		builder.HasOne<TargetTypeLookup>()
+			   .WithMany()
+			   .HasForeignKey(a => a.TargetType)
+			   .OnDelete(DeleteBehavior.Restrict);
 
-		_ = builder.HasOne<AbilityTypeLookup>()
-			.WithMany()
-			.HasForeignKey(x => x.AbilityType)
-			.OnDelete(DeleteBehavior.Restrict);
-
-		_ = builder.HasOne<TargetTypeLookup>()
-			.WithMany()
-			.HasForeignKey(x => x.TargetType)
-			.OnDelete(DeleteBehavior.Restrict);
-
-		_ = builder.OwnsMany(a => a.FailureInfluences, fib =>
-		{
-			fib.ToTable("ability_failure_influences");
-			fib.HasOne<RequirementTypeLookup>()
-				.WithMany()
-				.HasForeignKey(fi => fi.RequirementType)
-				.OnDelete(DeleteBehavior.Restrict);
-			fib.HasOne<Entity>()
-				.WithMany()
-				.HasForeignKey(fi => fi.RequiredEntityId)
-				.OnDelete(DeleteBehavior.Restrict);
-		});
-		_ = builder.OwnsMany(a => a.CastingRequirements, crb =>
-		{
-			crb.ToTable("ability_casting_requirements");
-			crb.HasOne<RequirementTypeLookup>()
-				.WithMany()
-				.HasForeignKey(cr => cr.RequirementType)
-				.OnDelete(DeleteBehavior.Restrict);
-			crb.HasOne<Entity>()
-				.WithMany()
-				.HasForeignKey(cr => cr.RequiredEntityId)
-				.OnDelete(DeleteBehavior.Restrict);
-		});
-		_ = builder.OwnsMany(a => a.LearningRequirements, lrb =>
-		{
-			lrb.ToTable("ability_learning_requirements");
-			lrb.HasOne<RequirementTypeLookup>()
-				.WithMany()
-				.HasForeignKey(lr => lr.RequirementType)
-				.OnDelete(DeleteBehavior.Restrict);
-			lrb.HasOne<Entity>()
-				.WithMany()
-				.HasForeignKey(lr => lr.RequiredEntityId)
-				.OnDelete(DeleteBehavior.Restrict);
-		});
-		_ = builder.OwnsMany(a => a.StatCosts, scb =>
+		// 2. Owned Collections (Dependent Relational Tables)
+		builder.OwnsMany(a => a.StatCosts, scb =>
 		{
 			scb.ToTable("ability_stat_costs");
-			scb.HasOne<StatDefinition>()
-				.WithMany()
-				.HasForeignKey(sd => sd.AffectedStatId)
-				.OnDelete(DeleteBehavior.Restrict);
+
+			// Enforces that StatId references the stat_definitions catalog table
+			scb.HasOne(sc => sc.Stat)
+			   .WithMany()
+			   .HasForeignKey(sc => sc.StatId)
+			   .OnDelete(DeleteBehavior.Restrict);
 		});
 
+		builder.OwnsMany(a => a.LearningRequirements, lrb =>
+		{
+			lrb.ToTable("ability_learning_requirements");
+
+			lrb.HasOne<RequirementTypeLookup>()
+			   .WithMany()
+			   .HasForeignKey(lr => lr.RequirementType)
+			   .OnDelete(DeleteBehavior.Restrict);
+		});
+
+		builder.OwnsMany(a => a.CastingRequirements, crb =>
+		{
+			crb.ToTable("ability_casting_requirements");
+
+			crb.HasOne<RequirementTypeLookup>()
+			   .WithMany()
+			   .HasForeignKey(cr => cr.RequirementType)
+			   .OnDelete(DeleteBehavior.Restrict);
+		});
+
+		builder.OwnsMany(a => a.FailureInfluences, fib =>
+		{
+			fib.ToTable("ability_failure_influences");
+
+			fib.HasOne<RequirementTypeLookup>()
+			   .WithMany()
+			   .HasForeignKey(fi => fi.RequirementType)
+			   .OnDelete(DeleteBehavior.Restrict);
+
+			fib.HasOne<Entity>()
+			   .WithMany()
+			   .HasForeignKey(fi => fi.RequiredEntityId)
+			   .OnDelete(DeleteBehavior.Restrict);
+		});
+
+		// 3. Many-to-Many Relationships to Polymorphic Effect Table
+		builder.HasMany(a => a.ActiveEffects)
+			   .WithMany(e => e.TriggeringAbilities)
+			   .UsingEntity(
+				   "ability_active_effects",
+				   r => r.HasOne(typeof(Effect)).WithMany().HasForeignKey("EffectId").OnDelete(DeleteBehavior.Cascade),
+				   l => l.HasOne(typeof(Ability)).WithMany().HasForeignKey("AbilityId").OnDelete(DeleteBehavior.Cascade));
+
+		builder.HasMany(a => a.FailureEffects)
+			   .WithMany()
+			   .UsingEntity(
+				   "ability_failure_effects",
+				   r => r.HasOne(typeof(Effect)).WithMany().HasForeignKey("EffectId").OnDelete(DeleteBehavior.Cascade),
+				   l => l.HasOne(typeof(Ability)).WithMany().HasForeignKey("AbilityId").OnDelete(DeleteBehavior.Cascade));
 	}
 }

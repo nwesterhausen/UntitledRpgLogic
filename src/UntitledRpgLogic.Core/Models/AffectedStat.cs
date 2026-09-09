@@ -1,26 +1,31 @@
-using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace UntitledRpgLogic.Core.Models;
 
 /// <summary>
-///     Defines a modification to a character stat (e.g., HP, Strength).
+///     Defines an owned modification delta applied to a character stat (e.g., HP, Mana, Strength).
 /// </summary>
-/// <remarks>(Owned by <see cref="Effect" />).</remarks>
-public class AffectedStat
+/// <remarks>Owned by <see cref="Effect" />.</remarks>
+public record AffectedStat
 {
 	/// <summary>
-	///     Gets or sets the <see cref="Ulid" /> of the Stat definition (e.g., Health, Mana).
+	///     Foreign key of the target <see cref="StatDefinition" /> being modified.
 	/// </summary>
-	public Ulid StatId { get; set; }
+	public Ulid StatId { get; init; }
 
 	/// <summary>
-	///     Gets or sets the amount of the change (can be positive or negative).
+	///     Navigation property to the affected stat definition.
 	/// </summary>
-	public float AmountChange { get; set; }
+	[ForeignKey(nameof(StatId))]
+	public StatDefinition? Stat { get; init; }
 
 	/// <summary>
-	///     Gets or sets a value indicating whether AmountChange is a percentage modifier (true)
-	///     or a flat value (false).
+	///     The magnitude of the change (positive for buffs/restoration, negative for damage/drain).
 	/// </summary>
-	public bool IsPercentage { get; set; }
+	public float AmountChange { get; init; }
+
+	/// <summary>
+	///     Indicates whether <see cref="AmountChange" /> is a percentage multiplier (true) or a flat offset (false).
+	/// </summary>
+	public bool IsPercentage { get; init; }
 }

@@ -1,24 +1,45 @@
+using UntitledRpgLogic.Core.Classes;
 using UntitledRpgLogic.Core.Enums;
 
 namespace UntitledRpgLogic.Core.Models;
 
 /// <summary>
-///     An effect that inflicts damage.
+///     Concrete effect subtype that deals immediate or periodic health/armor damage.
 /// </summary>
-public class DamageEffect : Effect
+public record DamageEffect : Effect
 {
 	/// <summary>
-	///     An effect that inflicts damage.
+	/// 	Initializes default base values.
 	/// </summary>
-	public DamageEffect() => this.EffectType = EffectType.Damage;
+	public DamageEffect()
+	{
+		this.EffectType = EffectType.Damage;
+	}
 
 	/// <summary>
-	///     Gets or sets the specific type of damage (e.g., Fire, Frost, Shadow). Referenced by ULID.
+	/// 	Initializes a new <see cref="Effect" /> with <see cref="EffectType.Damage" />.
 	/// </summary>
-	public Ulid DamageTypeId { get; set; }
+	public DamageEffect(Name name) : base(name, EffectType.Damage)
+	{
+	}
 
 	/// <summary>
-	///     Gets or sets the base amount of damage dealt.
+	/// 	The base amount of damage dealt by this effect.
 	/// </summary>
-	public float BaseAmount { get; set; }
+	public float BaseDamage { get; init; }
+
+	/// <summary>
+	/// 	The type of damage dealt by this effect.
+	/// </summary>
+	public DamageType DamageType { get; init; }
+
+	/// <summary>
+	/// 	Whether this damage ignores any armor or defense.
+	/// </summary>
+	public bool IgnoresArmor { get; init; }
+
+	/// <summary>
+	/// 	The delay before the damage is applied.
+	/// </summary>
+	public TimeSpan? Delay { get; init; }
 }

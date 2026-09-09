@@ -1,24 +1,42 @@
+using System.ComponentModel.DataAnnotations.Schema;
+using UntitledRpgLogic.Core.Classes;
 using UntitledRpgLogic.Core.Enums;
 
 namespace UntitledRpgLogic.Core.Models;
 
 /// <summary>
-///     An effect that summons a creature or object.
+///     Concrete effect subtype that conjures an entity or minion into the world.
 /// </summary>
-public class SummonEffect : Effect
+public record SummonEffect : Effect
 {
 	/// <summary>
-	///     An effect that summons a creature or object.
+	/// 	Initializes default base values.
 	/// </summary>
-	public SummonEffect() => this.EffectType = EffectType.Summon;
+	public SummonEffect()
+	{
+		this.EffectType = EffectType.Summon;
+	}
 
 	/// <summary>
-	///     Gets or sets the ULID of the Mob or Object definition to summon.
+	/// 	Initializes a new <see cref="Effect" /> with <see cref="EffectType.Summon" />.
 	/// </summary>
-	public Ulid EntityToSummonId { get; set; }
+	public SummonEffect(Name name) : base(name, EffectType.Summon)
+	{
+	}
 
 	/// <summary>
-	///     Gets or sets the number of entities to summon.
+	///     Foreign key of the template entity to spawn.
 	/// </summary>
-	public int Quantity { get; set; } = 1;
+	public Ulid SummonEntityTemplateId { get; init; }
+
+	/// <summary>
+	/// 	Link to the <see cref="Entity"/> to summon.
+	/// </summary>
+	[ForeignKey(nameof(SummonEntityTemplateId))]
+	public Entity? SummonTemplate { get; init; }
+
+	/// <summary>
+	/// 	The amount of entities summoned.
+	/// </summary>
+	public int Quantity { get; init; } = 1;
 }

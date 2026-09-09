@@ -2,104 +2,120 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using UntitledRpgLogic.Core.Classes;
 using UntitledRpgLogic.Core.Enums;
+using UntitledRpgLogic.Core.Interfaces.Data;
 
 namespace UntitledRpgLogic.Core.Models;
 
 /// <summary>
-///     Defines the core data structure for an ability (Spell, Active, or Passive).
+///     Database catalog model defining an ability (Spell, Active Skill, or Passive Perk).
 /// </summary>
-public class Ability
+[Table("abilities")]
+public record Ability : IDbEntity<Ulid>
 {
 	/// <summary>
-	///     Gets or sets the unique identifier (PK).
+	///     Initializes a new instance of the <see cref="Ability" /> record with default values for EF Core.
+	/// </summary>
+	public Ability()
+	{
+		this.Id = Ulid.NewUlid();
+		this.Name = Name.Empty;
+		this.AbilityType = AbilityType.PassiveAbility;
+		this.TargetType = TargetType.Self;
+		this.NumberOfTargets = 1;
+		this.CastTime = 0f;
+	}
+
+	/// <summary>
+	///     Initializes a new instance of the <see cref="Ability" /> record with a designated name.
+	/// </summary>
+	/// <param name="name">The display name of the ability.</param>
+	public Ability(Name name) : this() => this.Name = name;
+
+	/// <summary>
+	///     The unique identifier for the ability (can be supplied from external TOML config).
 	/// </summary>
 	[Key]
-	public Ulid Id { get; set; }
+	[DatabaseGenerated(DatabaseGeneratedOption.None)]
+	public Ulid Id { get; init; }
 
 	/// <summary>
-	///     Gets or sets the display name.
+	///     The display name of the ability.
 	/// </summary>
-	public required Name Name { get; set; } = Name.Empty;
+	public required Name Name { get; init; }
 
 	/// <summary>
-	///     Gets or sets the broad classification of this ability.
+	///     The broad classification (Active, Passive, Spell, Channel).
 	/// </summary>
-	public AbilityType AbilityType { get; set; }
+	public AbilityType AbilityType { get; init; }
 
 	/// <summary>
-	///     Gets or sets how the ability is delivered or targeted.
+	///     How the ability is targeted or delivered (Self, SingleTarget, AreaOfEffect, Projectile).
 	/// </summary>
-	public TargetType TargetType { get; set; }
+	public TargetType TargetType { get; init; }
 
 	/// <summary>
-	///     Gets or sets a value indicating whether this ability can target the caster.
-	///     If TargetType is 'Self', this is implicitly true.
+	///     Indicates whether this ability can affect the caster.
 	/// </summary>
-	public bool AffectsCaster { get; set; }
+	public bool AffectsCaster { get; init; }
 
 	/// <summary>
-	///     Gets or sets a value indicating whether this ability can target allies.
+	///     Indicates whether this ability can affect friendly targets.
 	/// </summary>
-	public bool AffectsAllies { get; set; }
+	public bool AffectsAllies { get; init; }
 
 	/// <summary>
-	///     Gets or sets the number of targets this ability can affect.
-	///     Per the design, this defaults to 1 unless overridden (usually by Projectiles).
+	///     The number of targets this ability can simultaneously strike or select.
 	/// </summary>
-	public int NumberOfTargets { get; set; } = 1;
+	[Range(1, int.MaxValue)]
+	public int NumberOfTargets { get; init; }
 
 	/// <summary>
-	///     Gets or sets the base time (in seconds) required to activate the ability. 0 is instant.
-	///     (Note: This field will be ignored by logic processing PassiveAbility types).
+	///     The activation/invocation time in seconds (0 for instant cast).
 	/// </summary>
-	public float CastTime { get; set; }
+	public float CastTime { get; init; }
 
 	/// <summary>
-	///     Gets or sets the Foreign Key (FK) for the SkillDiscipline.
+	///     Foreign key referencing the skill discipline this ability belongs to.
 	/// </summary>
-	public Ulid SkillDisciplineId { get; set; }
+	public Ulid SkillDisciplineId { get; init; }
 
 	/// <summary>
-	///     Navigation property to the discipline this ability belongs to.
+	///     Navigation property to the skill discipline template.
 	/// </summary>
-	[Required]
 	[ForeignKey(nameof(SkillDisciplineId))]
-	public virtual SkillDefinition SkillDiscipline { get; set; } = null!;
+	public SkillDefinition? SkillDiscipline { get; init; }
 
-	// --- 1-to-Many Relationships (Owned complex types or separate tables) ---
+	// --- 1-to-Many Collections (Owned or Dependent Tables) ---
 
 	/// <summary>
-	///     Gets or sets the list of stat costs required to activate the ability.
+	///     Stat costs (Mana, Stamina, Health) required to cast this ability.
 	/// </summary>
-	public virtual ICollection<StatCost> StatCosts { get; } = new List<StatCost>();
+	public ICollection<StatCost> StatCosts { get; init; } = [];
 
 	/// <summary>
-	///     Gets or sets requirements needed to permanently learn the ability.
+	///     Prerequisites required to permanently learn or unlock this ability.
 	/// </summary>
-	public virtual ICollection<LearningRequirement> LearningRequirements { get; } = new List<LearningRequirement>();
+	public ICollection<LearningRequirement> LearningRequirements { get; init; } = [];
 
 	/// <summary>
-	///     Gets or sets requirements checked just before activation.
-	///     (Note: Ignored by PassiveAbility logic).
+	///     Preconditions verified immediately prior to activation.
 	/// </summary>
-	public virtual ICollection<CastingRequirement> CastingRequirements { get; } = new List<CastingRequirement>();
+	public ICollection<CastingRequirement> CastingRequirements { get; init; } = [];
 
 	/// <summary>
-	///     Gets or sets the list of influences that contribute to the chance of activation failure.
-	///     (Note: Ignored by PassiveAbility logic).
+	///     Environmental or state influences contributing to activation failure chance.
 	/// </summary>
-	public virtual ICollection<FailureInfluence> FailureInfluences { get; } = new List<FailureInfluence>();
+	public ICollection<FailureInfluence> FailureInfluences { get; init; } = [];
 
-	// --- Many-to-Many Relationships (Require configuration in DbContext) ---
+	// --- Many-to-Many Relationships (Configured in AbilityConfiguration) ---
 
 	/// <summary>
-	///     Navigation property defining the effects activated on a successful activation (or applied passively).
+	///     Effects applied upon successful activation.
 	/// </summary>
 	public virtual ICollection<Effect> ActiveEffects { get; } = new List<Effect>();
 
 	/// <summary>
-	///     Navigation property defining the effects activated only if activation fails.
-	///     (Note: Ignored by PassiveAbility logic).
+	///     Effects applied when activation fails or backfires.
 	/// </summary>
 	public virtual ICollection<Effect> FailureEffects { get; } = new List<Effect>();
 }

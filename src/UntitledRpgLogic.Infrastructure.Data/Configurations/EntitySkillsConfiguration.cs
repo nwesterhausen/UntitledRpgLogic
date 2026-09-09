@@ -12,7 +12,6 @@ public class EntitySkillsConfiguration : IEntityTypeConfiguration<EntitySkills>
 	///<inheritdoc />
 	public void Configure(EntityTypeBuilder<EntitySkills> builder)
 	{
-
 		ArgumentNullException.ThrowIfNull(builder);
 
 		// Composite PK

@@ -1,59 +1,40 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace UntitledRpgLogic.Core.Models;
 
 /// <summary>
-///     Describes the fantastical properties of a material.
+///     Value object describing mystical, mana, and elemental conductivity characteristics of a material.
 /// </summary>
+/// <remarks>Owned by <see cref="MaterialDefinition" />.</remarks>
 public record FantasticalProperties
 {
 	/// <summary>
-	///		Default constructor.
+	///     Initializes a new default instance of the <see cref="FantasticalProperties" /> record.
 	/// </summary>
 	public FantasticalProperties()
-	{ }
+	{
+	}
 
 	/// <summary>
-	///     A relative measure of how well the material channels magical energy.
+	///     Relative measure of how efficiently the material channels raw magical energy (0.0 = mana insulator).
 	/// </summary>
-	/// <remarks>
-	///     The default value is 0.0, indicating no magical conductivity.
-	/// </remarks>
 	public float AetherialConductivity { get; init; }
 
 	/// <summary>
-	///     A material's natural affinity for one or more elemental types, referenced by the Element's Guid.
+	///     Natural resonance or affinity for elemental forces, keyed by the <see cref="Element.Id" />.
 	/// </summary>
 	public Dictionary<Ulid, float> ElementalAttunement { get; init; } = new();
 
 	/// <summary>
-	///     A relative measure of how much magical energy a material can store.
+	///     Total reservoir capacity of unspent magical energy this material can hold before releasing or burning out.
 	/// </summary>
-	/// <remarks>
-	///     The default value is 0.0, indicating no mana capacity.
-	/// </remarks>
 	public float ManaCapacity { get; init; }
 
 	/// <summary>
-	///     A scale representing a material's alignment.
-	///     Negative values indicate corruption, positive values indicate purity.
+	///     Metaphysical alignment scale (-1.0 to 1.0; negative indicates corruption/decay, positive indicates sacred/pure).
 	/// </summary>
-	/// <remarks>
-	///     The default value is 0.0, indicating neutrality.
-	/// </remarks>
 	public float Purity { get; init; }
 
 	/// <summary>
-	///     A relative measure of a material's natural light emission.
+	///     Natural phosphorescence or light emission rate (negative values represent light absorption / darkness).
 	/// </summary>
-	/// <remarks>
-	///     The default value is 0.0, indicating no luminosity. A negative value indicates light absorption.
-	/// </remarks>
 	public float Luminosity { get; init; }
-
-	/// <summary>
-	///		A unique identifier for this record.
-	/// </summary>
-	[Key]
-	public int Id { get; init; }
 }

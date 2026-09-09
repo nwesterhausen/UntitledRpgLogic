@@ -44,22 +44,8 @@ public class EffectConfiguration : IEntityTypeConfiguration<Effect>
 			.OnDelete(DeleteBehavior.Restrict);
 
 		// Owned Types
-		_ = builder.OwnsMany(e => e.AffectedStats, asb =>
-		{
-			asb.ToTable("effect_affected_stats");
-			asb.HasOne<StatDefinition>()
-				.WithMany()
-				.HasForeignKey(st => st.StatId)
-				.OnDelete(DeleteBehavior.Restrict);
-		});
-		_ = builder.OwnsMany(e => e.AffectedAmbients, aab =>
-		{
-			aab.ToTable("effect_affected_ambients");
-			aab.HasOne<Ambient>()
-				.WithMany()
-				.HasForeignKey(aa => aa.AmbientId)
-				.OnDelete(DeleteBehavior.Restrict);
-		});
+		_ = builder.OwnsMany(e => e.AffectedStats, asb => asb.ToJson());
+		_ = builder.OwnsMany(e => e.AffectedAmbients, aab => aab.ToJson());
 
 	}
 }

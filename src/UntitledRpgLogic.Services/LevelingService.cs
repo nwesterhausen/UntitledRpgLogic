@@ -112,7 +112,7 @@ public class LevelingService<T>(ILogger<LevelingService<T>> logger) : ILevelingS
 			return;
 		}
 
-		target.InvokeValueChanged(new ValueChangedEventArgs(oldValue, target.Value));
+		target.InvokeValueChanged(new ValueChangedEventArgs<int>(oldValue, target.Value));
 		var pointsChanged = target.Value - oldValue;
 		var action = pointsChanged > 0 ? "gained" : "lost";
 
@@ -133,7 +133,7 @@ public class LevelingService<T>(ILogger<LevelingService<T>> logger) : ILevelingS
 		if (newLevel != oldLevel)
 		{
 			target.Level = newLevel;
-			target.InvokeLevelChanged(new ValueChangedEventArgs(oldLevel, newLevel));
+			target.InvokeLevelChanged(new ValueChangedEventArgs<int>(oldLevel, newLevel));
 
 			var action = oldLevel < newLevel ? "gained" : "lost";
 			var diff = Math.Abs(newLevel - oldLevel);

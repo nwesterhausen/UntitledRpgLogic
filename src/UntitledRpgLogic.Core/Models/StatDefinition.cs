@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using UntitledRpgLogic.Core.Classes;
 using UntitledRpgLogic.Core.Enums;
 using UntitledRpgLogic.Core.Interfaces.Data;
@@ -8,15 +9,13 @@ namespace UntitledRpgLogic.Core.Models;
 /// <summary>
 ///     Database model for a definition of a stat. This is used to define properties of a stat like name, value range
 ///     and (if its dependent) which stat it depends on. This is not used when a stat belongs to an entity, but rather
-///     defines
-///     how those stats would behave.
+///     defines how those stats would behave.
 /// </summary>
+[Table("stat_definitions")]
 public record StatDefinition : IDbEntity<Ulid>
 {
 	/// <summary>
 	///     Initializes a new instance of the <see cref="StatDefinition" /> class with default values.
-	///     This constructor sets the stat ID to a new ULID, the name to an empty value, the variation to "Major",
-	///     and initializes the minimum and maximum values to their default values.
 	/// </summary>
 	public StatDefinition()
 	{
@@ -30,11 +29,16 @@ public record StatDefinition : IDbEntity<Ulid>
 
 	/// <summary>
 	///     Initializes a new instance of the <see cref="StatDefinition" /> class with the specified name.
-	///     This constructor sets the stat ID to a new ULID, assigns the provided name, and initializes other
-	///     properties to their default values.
 	/// </summary>
 	/// <param name="name">The name of the stat.</param>
 	public StatDefinition(Name name) : this() => this.Name = name;
+
+	/// <summary>
+	///     The ULID for the stat. Any instances of this stat refer to this definition via this ID.
+	/// </summary>
+	[Key]
+	[DatabaseGenerated(DatabaseGeneratedOption.None)]
+	public Ulid Id { get; init; }
 
 	/// <summary>
 	///     The name of the stat. This is used to identify the stat in the game and is used in the UI.
@@ -65,10 +69,4 @@ public record StatDefinition : IDbEntity<Ulid>
 	///     Stats that this stat depends on (if any).
 	/// </summary>
 	public ICollection<LinkedStats> LinkedStats { get; init; } = [];
-
-	/// <summary>
-	///     The ULID for the stat. Any instances of this stat refer to this definition via this ID.
-	/// </summary>
-	[Key]
-	public Ulid Id { get; init; }
 }

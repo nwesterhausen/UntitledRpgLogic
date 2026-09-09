@@ -13,12 +13,12 @@ public interface IStat : IHasName, IHasMutableValue, IHasIdentifier
 	/// <summary>
 	///     Event raised when the base value of the stat changes. Should trigger recalculation of the apparent value.
 	/// </summary>
-	public event EventHandler<ValueChangedEventArgs>? BaseValueChanged;
+	public event EventHandler<ValueChangedEventArgs<int>>? BaseValueChanged;
 
 	/// <summary>
 	///     A method for the owning service to invoke the BaseValueChanged event.
 	/// </summary>
-	public void InvokeBaseValueChanged(ValueChangedEventArgs args);
+	public void InvokeBaseValueChanged(ValueChangedEventArgs<int> args);
 
 	// note: inherited ValueChanged event handler from IHasValue
 

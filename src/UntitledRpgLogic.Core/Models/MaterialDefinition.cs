@@ -1,78 +1,92 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using UntitledRpgLogic.Core.Classes;
+using UntitledRpgLogic.Core.Enums;
 using UntitledRpgLogic.Core.Interfaces.Data;
 
 namespace UntitledRpgLogic.Core.Models;
 
 /// <summary>
 ///     Minimal material definition for persistence. Instances of items can reference materials by this ULID.
-///     Additional physical properties can be modeled later as separate tables or owned types.
+///     Additional physical properties are attached by owned property classes.
 /// </summary>
+[Table("material_definitions")]
 public record MaterialDefinition : IDbEntity<Ulid>
 {
 	/// <summary>
-	///     Constructs a new <see cref="MaterialDefinition" /> with an empty name and default values. (for EF use)
+	///     Initializes a new instance of the <see cref="MaterialDefinition" /> record with default values.
 	/// </summary>
 	public MaterialDefinition()
 	{
 		this.Id = Ulid.NewUlid();
 		this.Name = Name.Empty;
-		this.StateProperties = new List<StateSpecificProperties>();
+		this.Description = string.Empty;
+		this.Flags = MaterialTraits.None;
+		this.DefaultState = StateOfMatter.Solid;
 	}
 
 	/// <summary>
-	///     Constructs a new <see cref="MaterialDefinition" /> with the specified name.
+	///     Initializes a new instance of the <see cref="MaterialDefinition" /> record with the specified name.
 	/// </summary>
-	/// <param name="name">The display name for the material.</param>
-	public MaterialDefinition(Name name)
-	{
-		this.Id = Ulid.NewUlid();
-		this.Name = name;
-		this.StateProperties = new List<StateSpecificProperties>();
-	}
+	/// <param name="name">The name of the material.</param>
+	public MaterialDefinition(Name name) : this() => this.Name = name;
 
 	/// <summary>
-	///     Constructs a new <see cref="MaterialDefinition" /> with the specified name.
+	///     The unique identifier for the material definition.
 	/// </summary>
-	/// <param name="name">The display name for the material.</param>
-	/// <param name="stateProperties">The properties of the material at various states of matter</param>
-	public MaterialDefinition(Name name, ICollection<StateSpecificProperties> stateProperties)
-	{
-
-		this.Id = Ulid.NewUlid();
-		this.Name = name;
-		this.StateProperties = stateProperties;
-	}
+	[Key]
+	[DatabaseGenerated(DatabaseGeneratedOption.None)]
+	public Ulid Id { get; init; }
 
 	/// <summary>
-	///     Display name for the material.
+	///     The display name of the material.
 	/// </summary>
 	public required Name Name { get; init; }
 
 	/// <summary>
-	///     Primary key for the material definition.
+	///     A descriptive overview of the material's appearance, lore, and traits.
 	/// </summary>
-	[Key]
-	public Ulid Id { get; init; }
+	[MaxLength(1024)]
+	public string Description { get; init; }
 
 	/// <summary>
-	/// 	Mechanical properties of the material in all states
+	///     Bitwise classification flags (e.g., NaturalOre, Combustible, Fluid).
 	/// </summary>
-	public MechanicalProperties? MechanicalProperties { get; set; }
+	public MaterialTraits Flags { get; init; }
+
 	/// <summary>
-	/// 	Thermal properties of the material in all states
+	///     The default phase of matter for this material under standard room temperature conditions.
 	/// </summary>
-	public ThermalProperties? ThermalProperties { get; set; }
+	public StateOfMatter DefaultState { get; init; }
+
 	/// <summary>
-	/// 	Electrical properties of the material in all states
+	///     Compositional breakdown and metal extraction yields produced when smelting this material.
+	///     Empty for pure elements or non-ores.
 	/// </summary>
-	public ElectricalProperties? ElectricalProperties { get; set; }
+	public ICollection<OreYield> SmeltYields { get; init; } = [];
+
 	/// <summary>
-	/// 	Fantastical properties of the material in all states
+	///     Baseline mechanical characteristics (density, hardness, elasticity).
 	/// </summary>
-	public FantasticalProperties? FantasticalProperties { get; set; }
+	public MechanicalProperties? MechanicalProperties { get; init; }
+
 	/// <summary>
-	/// 	Properties dependent on the material being in a specific state of matter
+	///     Baseline thermal properties (melting point, boiling point, specific heat).
 	/// </summary>
-	public ICollection<StateSpecificProperties> StateProperties { get; init; }
+	public ThermalProperties? ThermalProperties { get; init; }
+
+	/// <summary>
+	///     Baseline electrical and magnetic characteristics.
+	/// </summary>
+	public ElectricalProperties? ElectricalProperties { get; init; }
+
+	/// <summary>
+	///     Baseline mystical traits, mana conductivity, and planar elemental attunements.
+	/// </summary>
+	public FantasticalProperties? FantasticalProperties { get; init; }
+
+	/// <summary>
+	///     Phase transition deviations when the material shifts state (Solid, Liquid, Gas).
+	/// </summary>
+	public ICollection<StateSpecificProperties> StateProperties { get; init; } = [];
 }

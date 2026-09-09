@@ -4,59 +4,57 @@ using System.Diagnostics.CodeAnalysis;
 namespace UntitledRpgLogic.Core.Models;
 
 /// <summary>
-///     Represents a link between two stats, where one stat is dependent on another. Provides a one-to-many relationship
+///     Represents a dependency relationship where one stat's value influences another.
 /// </summary>
-public class LinkedStats
+[Table("linked_stats")]
+public record LinkedStats
 {
 	/// <summary>
-	///     Create an empty instance of the LinkedStats class (required by EF Core)
+	///     Initializes an empty instance of the <see cref="LinkedStats" /> record for EF Core.
 	/// </summary>
 	[SetsRequiredMembers]
 	public LinkedStats()
 	{
 		this.StatId = Ulid.Empty;
 		this.DependsOnId = Ulid.Empty;
-		this.Ratio = 0;
+		this.Ratio = 0f;
 	}
 
 	/// <summary>
-	///     Initializes a new instance of the <see cref="LinkedStats" /> class with the specified dependent stat ID,
-	///     linked stat ID, and ratio.
+	///     Initializes a new instance of the <see cref="LinkedStats" /> record with defined dependencies.
 	/// </summary>
-	/// <param name="dependentStatId">The unique identifier of the dependent stat.</param>
-	/// <param name="linkedStatId">The unique identifier of the linked stat.</param>
-	/// <param name="ratio">The ratio that defines the percentage of the linked stat's value added to the dependent stat.</param>
-	public LinkedStats(Ulid dependentStatId, Ulid linkedStatId, float ratio)
+	[SetsRequiredMembers]
+	public LinkedStats(Ulid statId, Ulid dependsOnId, float ratio)
 	{
-		this.StatId = dependentStatId;
-		this.DependsOnId = linkedStatId;
+		this.StatId = statId;
+		this.DependsOnId = dependsOnId;
 		this.Ratio = ratio;
 	}
 
 	/// <summary>
-	///     The unique identifier for the dependent stat. This is used to identify the stat that depends on another stat.
+	///     Foreign key for the target dependent stat (Composite PK Part 1).
 	/// </summary>
 	public Ulid StatId { get; init; }
 
 	/// <summary>
-	///     The unique identifier for the linked stat. This is used to identify the stat that is being depended on.
-	/// </summary>
-	public Ulid DependsOnId { get; init; }
-
-	/// <summary>
-	///     A simple ratio that defines what percentage of the linked stat's value is added to the dependent stat's value.
-	/// </summary>
-	public required float Ratio { get; init; }
-
-	/// <summary>
-	///     The dependent stat that this link refers to. This is the stat that depends on another stat for its value.
+	///     Navigation property to the dependent stat definition.
 	/// </summary>
 	[ForeignKey(nameof(StatId))]
 	public StatDefinition? Stat { get; init; }
 
 	/// <summary>
-	///     The linked stat that this link refers to. This is the stat that is being depended on by another stat.
+	///     Foreign key for the prerequisite source stat (Composite PK Part 2).
+	/// </summary>
+	public Ulid DependsOnId { get; init; }
+
+	/// <summary>
+	///     Navigation property to the source stat definition being depended upon.
 	/// </summary>
 	[ForeignKey(nameof(DependsOnId))]
 	public StatDefinition? DependsOnStat { get; init; }
+
+	/// <summary>
+	///     The percentage ratio of the source stat transferred into the dependent stat.
+	/// </summary>
+	public required float Ratio { get; set; }
 }

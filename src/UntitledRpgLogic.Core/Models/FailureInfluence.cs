@@ -1,37 +1,39 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using UntitledRpgLogic.Core.Enums;
 
 namespace UntitledRpgLogic.Core.Models;
 
 /// <summary>
-///     Defines a factor that influences the chance of activation failure.
+///     Defines an environmental, attribute, or situational factor that influences the chance of ability activation failure.
 /// </summary>
-/// <remarks>(Owned by <see cref="Ability" />).</remarks>
-public class FailureInfluence
+/// <remarks>Owned by <see cref="Ability" />.</remarks>
+[Table("ability_failure_influences")]
+public record FailureInfluence
 {
 	/// <summary>
-	///     The unique identifier for this record.
+	///     The unique database row identifier for this influence entry.
 	/// </summary>
 	[Key]
-	public int Id { get; set; }
+	public int Id { get; init; }
 
 	/// <summary>
-	///     The type of requirement (e.g., "Stat", "Class", "Race").
+	///     The category of prerequisite or environmental check (e.g., Stat, Class, Race, Ambient).
 	/// </summary>
-	public RequirementType RequirementType { get; set; }
+	public RequirementType RequirementType { get; init; } = RequirementType.None;
 
 	/// <summary>
-	///     Gets or sets the <see cref="Ulid" /> of the specific influence (e.g., the "Intellect" Stat <see cref="Ulid" />).
+	///     The identifier of the required entity or definition (e.g., the "Intellect" Stat ID).
 	/// </summary>
-	public Ulid RequiredEntityId { get; set; }
+	public Ulid RequiredEntityId { get; init; }
 
 	/// <summary>
-	///     Gets or sets the amount of the requirement needed to guarantee success (zero failure chance).
+	///     The numerical threshold needed to guarantee success (zero failure chance from this influence).
 	/// </summary>
 	public float AmountAlwaysSucceed { get; set; }
 
 	/// <summary>
-	///     Gets or sets the scaling modifier applied if the requirement is not met, influencing the failure chance.
+	///     The scaling multiplier applied to calculate failure probability when the threshold is unmet.
 	/// </summary>
 	public float InfluenceScale { get; set; }
 }

@@ -1,41 +1,35 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace UntitledRpgLogic.Core.Models;
 
 /// <summary>
-///     Properties related to the thermal characteristics of a material.
+///     Value object describing thermodynamic characteristics and phase change thresholds for a material.
 /// </summary>
+/// <remarks>Owned by <see cref="MaterialDefinition" />.</remarks>
 public record ThermalProperties
 {
 	/// <summary>
-	///		A default constructor.
+	///     Initializes a new default instance of the <see cref="ThermalProperties" /> record.
 	/// </summary>
 	public ThermalProperties()
-	{ }
+	{
+	}
 
 	/// <summary>
-	///     The temperature in Celsius at which the material melts.
+	///     Temperature in Celsius at which the material shifts from solid to liquid.
 	/// </summary>
 	public float MeltingPoint { get; init; }
 
 	/// <summary>
-	///     The temperature in Celsius at which the material boils.
+	///     Temperature in Celsius at which the material boils into vapor.
 	/// </summary>
 	public float BoilingPoint { get; init; }
 
 	/// <summary>
-	///     The lowest temperature in Celsius at which a combustible material can ignite in air.
+	///     Flashpoint or spontaneous autoignition temperature in Celsius for combustible materials.
 	/// </summary>
 	public float IgnitionTemperature { get; init; }
 
 	/// <summary>
-	///     A relative measure of how well the material conducts heat.
+	///     Relative rate of thermal conductivity (heat transfer efficiency).
 	/// </summary>
 	public float ThermalConductivity { get; init; }
-
-	/// <summary>
-	///		A unique identifier for this record.
-	/// </summary>
-	[Key]
-	public int Id { get; init; }
 }

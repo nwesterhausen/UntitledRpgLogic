@@ -1,40 +1,55 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using UntitledRpgLogic.Core.Classes;
+using UntitledRpgLogic.Core.Interfaces.Data;
 
 namespace UntitledRpgLogic.Core.Models;
 
 /// <summary>
-///		An element in the game (e.g., "Fire", "Time", "Summoning").
+///     Root database catalog model representing an elemental discipline or force in the RPG logic
+///     (e.g., Fire, Cold, Lightning, Aether).
 /// </summary>
-public record Element
+[Table("elements")]
+public record Element : IDbEntity<Ulid>
 {
 	/// <summary>
-	///		A default constructor for the record.
+	///     Initializes a new instance of the <see cref="Element" /> record with default values for EF Core.
 	/// </summary>
-	public Element() { }
+	public Element()
+	{
+		this.Id = Ulid.NewUlid();
+		this.Name = Name.Empty;
+		this.Description = string.Empty;
+	}
 
 	/// <summary>
-	/// Constructs an element with specified name.
+	///     Initializes a new instance of the <see cref="Element" /> record with a designated name.
 	/// </summary>
-	public Element(string name) => this.Name = name;
+	/// <param name="name">The name of the element.</param>
+	public Element(Name name) : this() => this.Name = name;
 
 	/// <summary>
-	/// Constructs an element with specified name and description.
+	///     Initializes a new instance of the <see cref="Element" /> record with a designated name and description.
 	/// </summary>
-	public Element(string name, string description) : this(name) => this.Description = description;
+	/// <param name="name">The name of the element.</param>
+	/// <param name="description">Flavor text detailing the element's planar origin or behavior.</param>
+	public Element(Name name, string description) : this(name) => this.Description = description;
 
 	/// <summary>
-	///     The name of the element (e.g., "Fire", "Time", "Summoning"). This is required.
-	/// </summary>
-	public required string Name { get; init; } = string.Empty;
-
-	/// <summary>
-	///     A brief description of the element and its characteristics.
-	/// </summary>
-	public string Description { get; init; } = string.Empty;
-
-	/// <summary>
-	///     The unique identifier for the element. If not provided, a new one will be generated.
+	///     The unique catalog identifier for the element. Can be assigned explicitly when loading from config archives.
 	/// </summary>
 	[Key]
-	public Ulid Id { get; init; } = Ulid.NewUlid();
+	[DatabaseGenerated(DatabaseGeneratedOption.None)]
+	public Ulid Id { get; init; }
+
+	/// <summary>
+	///     The display name of the element.
+	/// </summary>
+	public required Name Name { get; init; }
+
+	/// <summary>
+	///     A brief description or lore snippet regarding the element.
+	/// </summary>
+	[MaxLength(1024)]
+	public string Description { get; init; }
 }

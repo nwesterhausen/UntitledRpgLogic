@@ -1,37 +1,27 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace UntitledRpgLogic.Core.Models;
 
 /// <summary>
-///     Properties related to the electrical characteristics of a material.
+///     Value object detailing electrical and magnetic conductivity traits for materials.
 /// </summary>
+/// <remarks>Owned by <see cref="MaterialDefinition" /> and serialized as JSON.</remarks>
 public record ElectricalProperties
 {
 	/// <summary>
-	///		Constructs a new default record.
+	///     Initializes a new instance of the <see cref="ElectricalProperties" /> record with baseline defaults.
 	/// </summary>
 	public ElectricalProperties()
 	{
 	}
 
 	/// <summary>
-	///		Constructs a new record with the specified conductivity.
+	///     Initializes a new instance of the <see cref="ElectricalProperties" /> record with a specific conductivity measure.
 	/// </summary>
-	/// <param name="conductivity">measure of conductivity for the material</param>
+	/// <param name="conductivity">Relative conductivity of the material (0.0 = perfect insulator, 1.0+ = high conductor).</param>
 	public ElectricalProperties(float conductivity) => this.Conductivity = conductivity;
 
 	/// <summary>
-	///     A relative measure of how well the material conducts electricity.
-	///     0 indicates a perfect insulator.
+	///     A relative measure of how well the material conducts electrical current.
+	///     0 indicates an absolute insulator; values above 1.0 represent high-efficiency conductors.
 	/// </summary>
-	/// <remarks>
-	///     The default value is 0.25, indicating some conductivity.
-	/// </remarks>
 	public float Conductivity { get; init; } = 0.25f;
-
-	/// <summary>
-	///		A unique identifier for this record.
-	/// </summary>
-	[Key]
-	public int Id { get; init; }
 }

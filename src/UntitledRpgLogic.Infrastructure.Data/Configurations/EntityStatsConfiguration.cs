@@ -12,7 +12,6 @@ public class EntityStatsConfiguration : IEntityTypeConfiguration<EntityStats>
 	///<inheritdoc />
 	public void Configure(EntityTypeBuilder<EntityStats> builder)
 	{
-
 		ArgumentNullException.ThrowIfNull(builder);
 
 		// Composite PK

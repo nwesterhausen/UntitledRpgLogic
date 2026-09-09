@@ -1,32 +1,32 @@
-using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using UntitledRpgLogic.Core.Enums;
 
 namespace UntitledRpgLogic.Core.Models;
 
 /// <summary>
-///     Defines a modification to a world Ambient Index (e.g., Temperature, Gravity).
+///     Defines an owned modification to an environmental ambient condition (e.g., Temperature, Gravity).
 /// </summary>
-/// <remarks>(Owned by <see cref="Effect" />).</remarks>
-public class AffectedAmbient
+/// <remarks>Owned by <see cref="Effect" />.</remarks>
+public record AffectedAmbient
 {
 	/// <summary>
-	///     The unique identifier for this record.
+	///     Foreign key of the Ambient definition (e.g., LocalTemperature) being influenced.
 	/// </summary>
-	[Key]
-	public int Id { get; set; }
+	public Ulid AmbientId { get; init; }
 
 	/// <summary>
-	///     Gets or sets the <see cref="Ulid" /> of the Ambient definition (e.g., LocalTemperature).
+	///     Navigation property to the target ambient definition.
 	/// </summary>
-	public Ulid AmbientId { get; set; }
+	[ForeignKey(nameof(AmbientId))]
+	public Ambient? Ambient { get; init; }
 
 	/// <summary>
-	///     Gets or sets the amount of the change.
+	///     The magnitude of the change.
 	/// </summary>
-	public float AmountChange { get; set; }
+	public float AmountChange { get; init; }
 
 	/// <summary>
-	///     Gets or sets a value indicating whether AmountChange is a percentage modifier (true)
-	///     or a flat value (false).
+	///     Indicates whether AmountChange is a percentage modifier (true) or a flat offset (false).
 	/// </summary>
-	public bool IsPercentage { get; set; }
+	public bool IsPercentage { get; init; }
 }

@@ -1,3 +1,4 @@
+using UntitledRpgLogic.Core.Classes;
 using UntitledRpgLogic.Core.Enums;
 
 namespace UntitledRpgLogic.Core.Models;
@@ -5,10 +6,20 @@ namespace UntitledRpgLogic.Core.Models;
 /// <summary>
 ///     An effect that affects an Ambient Index or "ambient", i.e. a measurable property of the world (e.g., Temperature, Gravity, Weather).
 /// </summary>
-public class ElementalEffect : Effect
+public record ElementalEffect : Effect
 {
 	/// <summary>
-	///     An effect that affects an ambient.
+	/// 	Initializes default base values.
 	/// </summary>
-	public ElementalEffect() => this.EffectType = EffectType.Elemental;
+	public ElementalEffect()
+	{
+		this.EffectType = EffectType.Elemental;
+	}
+
+	/// <summary>
+	/// 	Initializes a new <see cref="Effect" /> with <see cref="EffectType.Elemental" />.
+	/// </summary>
+	public ElementalEffect(Name name) : base(name, EffectType.Elemental)
+	{
+	}
 }

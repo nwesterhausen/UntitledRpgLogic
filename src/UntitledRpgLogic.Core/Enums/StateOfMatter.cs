@@ -23,5 +23,10 @@ public enum StateOfMatter
 	/// <summary>
 	///     The gaseous state of matter.
 	/// </summary>
-	Gas = 3
+	Gas = 3,
+
+	/// <summary>
+	/// 	The plasma state of matter.
+	/// </summary>
+	Plasma = 4
 }

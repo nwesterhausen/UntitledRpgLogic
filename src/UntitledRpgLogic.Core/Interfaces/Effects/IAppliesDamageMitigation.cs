@@ -1,3 +1,5 @@
+using UntitledRpgLogic.Core.Events;
+
 namespace UntitledRpgLogic.Core.Interfaces.Effects;
 
 /// <summary>
@@ -41,5 +43,5 @@ public interface IAppliesDamageMitigation
 	///     Event that is raised when the mitigation is applied to a damage amount. The event should notify of the total
 	///     amount mitigated.
 	/// </summary>
-	public event EventHandler<int> MitigationApplied;
+	public event EventHandler<ValueChangedEventArgs<int>> MitigationApplied;
 }

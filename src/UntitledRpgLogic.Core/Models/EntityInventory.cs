@@ -1,6 +1,5 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Diagnostics.CodeAnalysis;
 using UntitledRpgLogic.Core.Events;
 using UntitledRpgLogic.Core.Interfaces.Data;
 using UntitledRpgLogic.Core.Interfaces.Inventory;
@@ -8,41 +7,56 @@ using UntitledRpgLogic.Core.Interfaces.Inventory;
 namespace UntitledRpgLogic.Core.Models;
 
 /// <summary>
-///     Link table relating an Entity to the ItemInstances it owns/holds.
+///     Database model and container representing an inventory owned by an <see cref="Entity" />.
 /// </summary>
-[SuppressMessage("ReSharper", "ClassWithVirtualMembersNeverInherited.Global")]
-public class EntityInventory : IInventory, IDbEntity<int>
+[Table("entity_inventories")]
+public record EntityInventory : IInventory, IDbEntity<Ulid>
 {
+	/// <summary>
+	///     Initializes a new instance of the <see cref="EntityInventory" /> record for EF Core.
+	/// </summary>
+	public EntityInventory()
+	{
+		this.Id = Ulid.NewUlid();
+		this.EntityId = Ulid.Empty;
+		this.Capacity = 20;
+	}
+
+	/// <summary>
+	///     Initializes a new instance of the <see cref="EntityInventory" /> record for a specific entity.
+	/// </summary>
+	/// <param name="entityId">The identifier of the owning entity.</param>
+	public EntityInventory(Ulid entityId) : this() => this.EntityId = entityId;
+
 	#region Persisted State
 
 	/// <summary>
-	///     The unique primary key for this inventory.
+	///     The unique primary key for this inventory instance.
 	/// </summary>
 	[Key]
-	public int Id { get; set; }
+	[DatabaseGenerated(DatabaseGeneratedOption.None)]
+	public Ulid Id { get; init; }
 
 	/// <summary>
-	///     The maximum number of unique items this inventory can hold.
-	///     This is part of the inventory's essential, persisted state.
+	///     Foreign key linking this inventory back to its owning entity.
+	/// </summary>
+	public Ulid EntityId { get; init; }
+
+	/// <summary>
+	///     Navigation property to the owning entity.
+	/// </summary>
+	[ForeignKey(nameof(EntityId))]
+	public virtual Entity? Entity { get; init; }
+
+	/// <summary>
+	///     The maximum number of item slots this inventory can hold.
 	/// </summary>
 	public int Capacity { get; set; }
 
 	/// <summary>
-	///     The foreign key linking this inventory back to its owning Entity.
-	/// </summary>
-	public Ulid EntityId { get; set; }
-
-	/// <summary>
-	///     Navigation property to the owning Entity.
-	/// </summary>
-	[ForeignKey(nameof(EntityId))]
-	public virtual Entity Entity { get; set; } = null!;
-
-	/// <summary>
 	///     The collection of item instances held within this inventory.
-	///     EF Core will manage this one-to-many relationship.
 	/// </summary>
-	public virtual IReadOnlyCollection<ItemInstance> Items { get; set; } = new List<ItemInstance>();
+	public virtual ICollection<ItemInstance> Items { get; init; } = [];
 
 	#endregion
 
@@ -64,48 +78,9 @@ public class EntityInventory : IInventory, IDbEntity<int>
 	[NotMapped]
 	public bool IsFull => this.HasLimitedStorage && this.UniqueItemCount >= this.Capacity;
 
-	// --- Other IInventory properties are implemented here as calculated properties ---
 	/// <inheritdoc />
 	[NotMapped]
-	public float Usage => this.HasLimitedStorage ? (float)this.UniqueItemCount / this.Capacity : 0;
-
-	#endregion
-
-	#region Behavior (Not Mapped to Database)
-
-	/// <inheritdoc />
-	public bool StoreItem(IStorable item) => throw new NotImplementedException();
-
-	/// <inheritdoc />
-	public bool TryRetrieveItem(Guid itemId, out IStorable? item) => throw new NotImplementedException();
-
-	/// <inheritdoc />
-	public bool TryRetrieveItem(string itemName, out IStorable? item) => throw new NotImplementedException();
-
-	/// <inheritdoc />
-	public ICurrency? DepositCurrency(ICurrency currency, int? amount = null) => throw new NotImplementedException();
-
-	/// <inheritdoc />
-	public ICurrency? WithdrawCurrency(ICurrency currency, int amount = 1) => throw new NotImplementedException();
-
-	// Events are not mapped to the database by default.
-	/// <inheritdoc />
-	public event EventHandler<SuccessfulItemStorageEventArgs>? ItemStored;
-
-	/// <inheritdoc />
-	public event EventHandler<CancelableItemActionEventArgs>? StoringItem;
-
-	/// <inheritdoc />
-	public event EventHandler<SuccessfulItemStorageEventArgs>? ItemRetrieved;
-
-	/// <inheritdoc />
-	public event EventHandler<CancelableItemActionEventArgs>? RetrievingItem;
-
-	/// <inheritdoc />
-	public event EventHandler<CurrencyMovedEventArgs>? CurrencyDeposited;
-
-	/// <inheritdoc />
-	public event EventHandler<CurrencyMovedEventArgs>? CurrencyWithdrawn;
+	public float Usage => this.HasLimitedStorage ? (float)this.UniqueItemCount / this.Capacity : 0f;
 
 	/// <inheritdoc />
 	[NotMapped]
@@ -126,6 +101,43 @@ public class EntityInventory : IInventory, IDbEntity<int>
 	/// <inheritdoc />
 	[NotMapped]
 	public bool AllowsStacking => throw new NotImplementedException();
+
+	#endregion
+
+	#region Behavior (Not Mapped to Database)
+
+	/// <inheritdoc />
+	public bool StoreItem(IStorable item) => throw new NotImplementedException();
+
+	/// <inheritdoc />
+	public bool TryRetrieveItem(Guid itemId, out IStorable? item) => throw new NotImplementedException();
+
+	/// <inheritdoc />
+	public bool TryRetrieveItem(string itemName, out IStorable? item) => throw new NotImplementedException();
+
+	/// <inheritdoc />
+	public ICurrency? DepositCurrency(ICurrency currency, int? amount = null) => throw new NotImplementedException();
+
+	/// <inheritdoc />
+	public ICurrency? WithdrawCurrency(ICurrency currency, int amount = 1) => throw new NotImplementedException();
+
+	/// <inheritdoc />
+	public event EventHandler<SuccessfulItemStorageEventArgs>? ItemStored;
+
+	/// <inheritdoc />
+	public event EventHandler<CancelableItemActionEventArgs>? StoringItem;
+
+	/// <inheritdoc />
+	public event EventHandler<SuccessfulItemStorageEventArgs>? ItemRetrieved;
+
+	/// <inheritdoc />
+	public event EventHandler<CancelableItemActionEventArgs>? RetrievingItem;
+
+	/// <inheritdoc />
+	public event EventHandler<CurrencyMovedEventArgs>? CurrencyDeposited;
+
+	/// <inheritdoc />
+	public event EventHandler<CurrencyMovedEventArgs>? CurrencyWithdrawn;
 
 	#endregion
 }

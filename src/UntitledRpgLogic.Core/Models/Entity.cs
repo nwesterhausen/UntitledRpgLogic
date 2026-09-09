@@ -1,76 +1,72 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using UntitledRpgLogic.Core.Classes;
+using UntitledRpgLogic.Core.Interfaces.Data;
 using UntitledRpgLogic.Core.Interfaces.Entities;
 
 namespace UntitledRpgLogic.Core.Models;
 
 /// <summary>
-///     Represents an entity in the game world.
+///     Root database model representing a living actor, player, NPC, or creature in the game world.
 /// </summary>
-public record Entity : IEntity
+[Table("entities")]
+public record Entity : IEntity, IDbEntity<Ulid>
 {
 	/// <summary>
-	///     Creates an instance of <see cref="Entity" /> using the provided <see cref="Id" />.
-	/// </summary>
-	/// <param name="identifier"></param>
-	public Entity(Ulid identifier)
-	{
-		// assign primary first
-		this.Id = identifier;
-
-		// assign name
-		this.Name = Name.Empty;
-	}
-
-	/// <summary>
-	///     Creates an instance of <see cref="Entity" /> using the provided <see cref="Name" />.
-	/// </summary>
-	/// <param name="name"></param>
-	public Entity(Name name)
-	{
-		// assign primary first
-		this.Id = Ulid.NewUlid();
-
-		// assign name
-		this.Name = name;
-	}
-
-	/// <summary>
-	///     Creates an instance of <see cref="Entity" /> with a new <see cref="Id" /> and an empty <see cref="Name" />.
+	///     Initializes a new instance of the <see cref="Entity" /> record for EF Core materialization.
 	/// </summary>
 	public Entity()
 	{
-		// assign primary first
 		this.Id = Ulid.NewUlid();
-
-		// assign name
 		this.Name = Name.Empty;
 	}
 
 	/// <summary>
-	///     Gets or sets the entity's inventory.
+	///     Initializes a new instance of the <see cref="Entity" /> record with an explicit identifier.
+	/// </summary>
+	/// <param name="id">The unique identifier of the entity.</param>
+	public Entity(Ulid id) : this() => this.Id = id;
+
+	/// <summary>
+	///     Initializes a new instance of the <see cref="Entity" /> record with a designated name.
+	/// </summary>
+	/// <param name="name">The display name of the entity.</param>
+	public Entity(Name name) : this() => this.Name = name;
+
+	/// <summary>
+	///     The unique primary key for the entity. Can be loaded statically from config archives or generated.
+	/// </summary>
+	[Key]
+	[DatabaseGenerated(DatabaseGeneratedOption.None)]
+	public Ulid Id { get; init; }
+
+	/// <summary>
+	///     The display name of the entity.
+	/// </summary>
+	public required Name Name { get; init; }
+
+	/// <summary>
+	///     Navigation property to the entity's inventory container.
 	/// </summary>
 	public virtual EntityInventory? Inventory { get; set; }
 
 	/// <summary>
-	///     Gets or sets the entity's collection of skills.
+	///     Join navigations linking the entity to its learned skill instances.
 	/// </summary>
-	public virtual EntitySkills? Skills { get; set; }
+	public virtual ICollection<EntitySkills> Skills { get; init; } = [];
 
 	/// <summary>
-	///     Gets or sets the entity's collection of stats.
+	///     Join navigations linking the entity to its active stat instances.
 	/// </summary>
-	public virtual EntityStats? Stats { get; set; }
-
-	/// <inheritdoc />
-	public Name Name { get; init; }
-
-	/// <inheritdoc />
-	[Key]
-	public Ulid Id { get; init; } = Ulid.NewUlid();
+	public virtual ICollection<EntityStats> Stats { get; init; } = [];
 
 	/// <summary>
-	/// 	Collection of modified stats owned by the Entity
+	///     Collection of ongoing status modifiers actively attached to this entity.
 	/// </summary>
-	public virtual AffectedStat[]? AffectedStats { get; set; }
+	public virtual ICollection<AppliedModifier> AppliedModifiers { get; init; } = [];
+
+	/// <summary>
+	///     Owned collection of stat adjustments applied to this entity (serialized as JSON).
+	/// </summary>
+	public virtual ICollection<AffectedStat> AffectedStats { get; init; } = [];
 }

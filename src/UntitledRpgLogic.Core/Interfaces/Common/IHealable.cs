@@ -1,3 +1,5 @@
+using UntitledRpgLogic.Core.Events;
+
 namespace UntitledRpgLogic.Core.Interfaces.Common;
 
 /// <summary>
@@ -14,5 +16,5 @@ public interface IHealable : IDamageable
 	/// <summary>
 	///     Event raised when haling is applied to the stat. The event should notify of the total amount of healing.
 	/// </summary>
-	public event EventHandler<int> Healed;
+	public event EventHandler<ValueChangedEventArgs<int>> Healed;
 }

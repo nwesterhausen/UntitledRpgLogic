@@ -1,77 +1,59 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace UntitledRpgLogic.Core.Models;
 
 /// <summary>
-///     Properties related to the mechanical characteristics of a material.
+///     Value object describing the physical and structural characteristics of a material.
 /// </summary>
+/// <remarks>Owned by <see cref="MaterialDefinition" />.</remarks>
 public record MechanicalProperties
 {
 	/// <summary>
-	///		Constructs a new default record.
+	///     Initializes a new default instance of the <see cref="MechanicalProperties" /> record.
 	/// </summary>
 	public MechanicalProperties()
-	{ }
+	{
+	}
 
 	/// <summary>
-	///     The density of the material in cm/m^3.
+	///     The density of the material in g/cm³ (or kg/m³).
 	/// </summary>
 	public required float Density { get; init; }
 
 	/// <summary>
-	///     For solids:
-	///     A relative measure of resistance to scratching and indentation.
-	///     Affects edge retention and armor penetration.
+	///     Resistance to scratching and surface indentation (Mohs or Janka scale).
+	///     Affects edge retention and penetration resistance. Null for fluids.
 	/// </summary>
-	/// <remarks>
-	///		For metals, use the Mohs scale. For wood, use the Janka scale value / 400.
-	///		The default value is similar to copper or oak wood.
-	/// </remarks>
 	public float? Hardness { get; init; }
 
 	/// <summary>
-	///     For solids:
-	///     A relative measure of a material's ability to absorb energy and deform without fracturing.
-	///     Affects durability and resistance to chipping/shattering.
+	///     Ability to absorb mechanical energy and deform without fracturing.
+	///     Affects weapon/armor durability and shatter resistance. Null for fluids.
 	/// </summary>
 	public float? Toughness { get; init; }
 
 	/// <summary>
-	///     For solids:
-	///     A relative measure of a material's resistance to elastic deformation (bending).
-	///     A high value means the material is very rigid.
+	///     Resistance to elastic bending deformation (stiffness / Young's modulus).
+	///     Null for fluids.
 	/// </summary>
 	public float? Stiffness { get; init; }
 
 	/// <summary>
-	///     For solids:
-	///     A relative measure of a material's ability to be hammered or pressed into shape without breaking.
-	///     Primarily affects crafting possibilities.
+	///     Ability to be hammered, rolled, or pressed without breaking.
+	///     Affects forging and smithing recipes. Null for fluids.
 	/// </summary>
 	public float? Malleability { get; init; }
 
 	/// <summary>
-	///     For liquids and gases:
-	///     A measure of a fluid's resistance to flow. Null for solids.
+	///     Fluid resistance to flow. Null for solid matter.
 	/// </summary>
 	public float? Viscosity { get; init; }
 
 	/// <summary>
-	///     For liquids and gases:
-	///     The tendency of a liquid to shrink into the minimum surface area possible. Null for solids.
-	///     Affects coating and droplet formation.
+	///     Fluid tendency to minimize surface area (droplet formation and capillary action). Null for solids.
 	/// </summary>
 	public float? SurfaceTension { get; init; }
 
 	/// <summary>
-	///     For liquids and gases:
-	///     A relative measure of how well a liquid sticks to other surfaces. Null for solids.
+	///     Tendency of a fluid to adhere to external solid surfaces (coatings, wetness). Null for solids.
 	/// </summary>
 	public float? Adhesion { get; init; }
-
-	/// <summary>
-	///		A unique identifier for this record.
-	/// </summary>
-	[Key]
-	public int Id { get; init; }
 }

@@ -4,30 +4,31 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace UntitledRpgLogic.Core.Models;
 
 /// <summary>
-///     Defines a specific cost applied to a caster stat when the ability is used.
+///     Defines a resource cost (e.g., Mana, Stamina, Health) deducted when invoking an ability.
 /// </summary>
-/// <remarks>(Owned by <see cref="Ability" />).</remarks>
-public class StatCost
+/// <remarks>Owned by <see cref="Ability" />.</remarks>
+[Table("ability_stat_costs")]
+public record StatCost
 {
 	/// <summary>
-	///     The unique identifier for this record.
+	///     The unique database row identifier for the cost entry.
 	/// </summary>
 	[Key]
-	public int Id { get; set; }
+	public int Id { get; init; }
 
 	/// <summary>
-	///     Gets or sets the Stat definition (e.g., Mana, Stamina) being affected (Referenced by <see cref="Ulid" />).
+	///     Foreign key referencing the target <see cref="StatDefinition" /> consumed by the cost.
 	/// </summary>
-	public Ulid AffectedStatId { get; set; }
+	public Ulid StatId { get; init; }
 
 	/// <summary>
-	/// 	The affected stat link
+	///     Navigation property to the consumed stat definition.
 	/// </summary>
-	[ForeignKey(nameof(AffectedStatId))]
-	public StatDefinition? AffectedStat { get; init; }
+	[ForeignKey(nameof(StatId))]
+	public StatDefinition? Stat { get; init; }
 
 	/// <summary>
-	///     Gets or sets the amount consumed.
+	///     The resource quantity required and consumed upon activation.
 	/// </summary>
 	public float Amount { get; set; }
 }

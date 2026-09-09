@@ -55,10 +55,10 @@ public interface IHasLeveling : IHasMutableValue
 	/// <summary>
 	///     Event that is triggered when the level changes.
 	/// </summary>
-	public event EventHandler<ValueChangedEventArgs>? LevelChanged;
+	public event EventHandler<ValueChangedEventArgs<int>>? LevelChanged;
 
 	/// <summary>
 	///     A method for the owning service to invoke the LevelChanged event.
 	/// </summary>
-	public void InvokeLevelChanged(ValueChangedEventArgs args);
+	public void InvokeLevelChanged(ValueChangedEventArgs<int> args);
 }

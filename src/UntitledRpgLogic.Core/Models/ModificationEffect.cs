@@ -1,30 +1,33 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using UntitledRpgLogic.Core.Interfaces.Data;
 using UntitledRpgLogic.Core.Options;
 
 namespace UntitledRpgLogic.Core.Models;
 
 /// <summary>
-///     Represents a modification effect that can be applied to stats, such as buffs or debuffs. Consumed by modifiers to
-///     finally apply the effect to an entity's stats.
+///     Database catalog model defining numerical stat adjustments (buffs or debuffs)
+///     applied by a modifier template.
 /// </summary>
-public class ModificationEffect : IDbEntity<Ulid>
+[Table("modification_effects")]
+public record ModificationEffect : IDbEntity<Ulid>
 {
 	/// <summary>
-	///     Initializes a new instance of the <see cref="ModificationEffect" /> class.
-	///     This parameterless constructor is required by Entity Framework Core for materialization.
+	///     Initializes a new instance of the <see cref="ModificationEffect" /> record for EF Core.
 	/// </summary>
 	public ModificationEffect()
 	{
+		this.Id = Ulid.NewUlid();
+		this.Positive = true;
 	}
 
 	/// <summary>
-	///     Creates a new modifier effect with the specified options.
+	///     Creates a new modification effect record populated from specified options.
 	/// </summary>
-	/// <param name="options"></param>
-	public ModificationEffect(ModifierEffectOptions options)
+	/// <param name="options">Configuration options providing modification values.</param>
+	public ModificationEffect(ModifierEffectOptions options) : this()
 	{
-		ArgumentNullException.ThrowIfNull(options, nameof(options));
+		ArgumentNullException.ThrowIfNull(options);
 
 		this.FlatAmount = options.FlatAmount ?? 0;
 		this.Percentage = options.Percentage ?? 0f;
@@ -33,31 +36,29 @@ public class ModificationEffect : IDbEntity<Ulid>
 	}
 
 	/// <summary>
-	///     The flat amount of modification that is applied.
-	/// </summary>
-	public int FlatAmount { get; set; }
-
-	/// <summary>
-	///     The percentage amount of modification that is applied. This is a value between 0 and 1, where 1 represents 100%
-	///     modification.
-	/// </summary>
-	public float Percentage { get; set; }
-
-	/// <summary>
-	///     The percentage of the maximum value that this modification effect represents. This is used to determine how much of
-	///     the stat's maximum value is modified.
-	///     This is a value between 0 and 1, where 1 represents 100% of the maximum value.
-	/// </summary>
-	public float PercentageOfMax { get; set; }
-
-	/// <summary>
-	///     Whether the modification effect is positive (buff) or negative (debuff).
-	/// </summary>
-	public bool Positive { get; set; }
-
-	/// <summary>
-	///     The unique identifier for the modification effect. This is used to reference the effect in the game.
+	///     The unique identifier for this modification effect definition.
 	/// </summary>
 	[Key]
-	public Ulid Id { get; set; }
+	[DatabaseGenerated(DatabaseGeneratedOption.None)]
+	public Ulid Id { get; init; }
+
+	/// <summary>
+	///     A flat numerical value added to or subtracted from the target stat.
+	/// </summary>
+	public int FlatAmount { get; init; }
+
+	/// <summary>
+	///     A fractional percentage multiplier (0.0 to 1.0) applied to the stat value.
+	/// </summary>
+	public float Percentage { get; init; }
+
+	/// <summary>
+	///     A fractional percentage multiplier (0.0 to 1.0) calculated from the stat's maximum ceiling.
+	/// </summary>
+	public float PercentageOfMax { get; init; }
+
+	/// <summary>
+	///     Indicates whether this effect is beneficial (buff) or detrimental (debuff).
+	/// </summary>
+	public bool Positive { get; init; }
 }
