@@ -53,9 +53,9 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
                         .HasColumnType("BLOB")
                         .HasColumnName("skill_discipline_id");
 
-                    b.Property<int>("TargetType")
+                    b.Property<int>("TargetingType")
                         .HasColumnType("INTEGER")
-                        .HasColumnName("target_type");
+                        .HasColumnName("targeting_type");
 
                     b.HasKey("Id")
                         .HasName("pk_abilities");
@@ -66,35 +66,10 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
                     b.HasIndex("SkillDisciplineId")
                         .HasDatabaseName("ix_abilities_skill_discipline_id");
 
-                    b.HasIndex("TargetType")
-                        .HasDatabaseName("ix_abilities_target_type");
+                    b.HasIndex("TargetingType")
+                        .HasDatabaseName("ix_abilities_targeting_type");
 
                     b.ToTable("abilities", (string)null);
-                });
-
-            modelBuilder.Entity("UntitledRpgLogic.Core.Models.Ambient", b =>
-                {
-                    b.Property<byte[]>("Id")
-                        .HasColumnType("BLOB")
-                        .HasColumnName("id");
-
-                    b.Property<int>("AmbientType")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("ambient_type");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasColumnName("name");
-
-                    b.Property<float>("Value")
-                        .HasColumnType("REAL")
-                        .HasColumnName("value");
-
-                    b.HasKey("Id")
-                        .HasName("pk_ambients");
-
-                    b.ToTable("ambients", (string)null);
                 });
 
             modelBuilder.Entity("UntitledRpgLogic.Core.Models.AppliedModifier", b =>
@@ -390,6 +365,12 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
                     b.HasKey("Id")
                         .HasName("pk_item_definitions");
 
+                    b.HasIndex("BaseQuality")
+                        .HasDatabaseName("ix_item_definitions_base_quality");
+
+                    b.HasIndex("CreatorEntityId")
+                        .HasDatabaseName("ix_item_definitions_creator_entity_id");
+
                     b.HasIndex("ItemSubtype")
                         .HasDatabaseName("ix_item_definitions_item_subtype");
 
@@ -422,10 +403,6 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
                         .HasColumnType("BLOB")
                         .HasColumnName("item_definition_id");
 
-                    b.Property<byte[]>("ItemDefinitionId1")
-                        .HasColumnType("BLOB")
-                        .HasColumnName("item_definition_id1");
-
                     b.Property<byte[]>("PrimaryMaterialId")
                         .HasColumnType("BLOB")
                         .HasColumnName("primary_material_id");
@@ -442,9 +419,6 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
 
                     b.HasIndex("ItemDefinitionId")
                         .HasDatabaseName("ix_item_instances_item_definition_id");
-
-                    b.HasIndex("ItemDefinitionId1")
-                        .HasDatabaseName("ix_item_instances_item_definition_id1");
 
                     b.HasIndex("PrimaryMaterialId")
                         .HasDatabaseName("ix_item_instances_primary_material_id");
@@ -545,12 +519,15 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
                         .HasColumnType("TEXT")
                         .HasColumnName("name");
 
-                    b.Property<byte>("Type")
+                    b.Property<int>("Type")
                         .HasColumnType("INTEGER")
                         .HasColumnName("type");
 
                     b.HasKey("Id")
                         .HasName("pk_map_definitions");
+
+                    b.HasIndex("Type")
+                        .HasDatabaseName("ix_map_definitions_type");
 
                     b.ToTable("map_definitions", (string)null);
                 });
@@ -909,6 +886,100 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
                         {
                             Id = 3,
                             Name = "PassiveAbility"
+                        });
+                });
+
+            modelBuilder.Entity("UntitledRpgLogic.Infrastructure.Data.LookupEntities.AmbientTypeLookup", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("id");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("description");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(127)
+                        .HasColumnType("TEXT")
+                        .HasColumnName("name");
+
+                    b.HasKey("Id")
+                        .HasName("pk_ambient_type_lookup");
+
+                    b.ToTable("ambient_type_lookup", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 0,
+                            Name = "None"
+                        },
+                        new
+                        {
+                            Id = 1,
+                            Name = "Humidity"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Precipitation"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Drainage"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Temperature"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Name = "Gravity"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Name = "WindSpeed"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Name = "WindDirection"
+                        },
+                        new
+                        {
+                            Id = 20,
+                            Name = "SunlightExposure"
+                        },
+                        new
+                        {
+                            Id = 21,
+                            Name = "AmbientLightLevel"
+                        },
+                        new
+                        {
+                            Id = 22,
+                            Name = "AcousticNoise"
+                        },
+                        new
+                        {
+                            Id = 23,
+                            Name = "Vibration"
+                        },
+                        new
+                        {
+                            Id = 30,
+                            Name = "ManaDensity"
+                        },
+                        new
+                        {
+                            Id = 31,
+                            Name = "ElementalAttunement"
                         });
                 });
 
@@ -2121,55 +2192,6 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("UntitledRpgLogic.Infrastructure.Data.LookupEntities.TargetTypeLookup", b =>
-                {
-                    b.Property<int>("Id")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("id");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("TEXT")
-                        .HasColumnName("description");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(127)
-                        .HasColumnType("TEXT")
-                        .HasColumnName("name");
-
-                    b.HasKey("Id")
-                        .HasName("pk_target_type_lookup");
-
-                    b.ToTable("target_type_lookup", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 0,
-                            Name = "None"
-                        },
-                        new
-                        {
-                            Id = 1,
-                            Name = "Aoe"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Projectile"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Touch"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Self"
-                        });
-                });
-
             modelBuilder.Entity("UntitledRpgLogic.Infrastructure.Data.LookupEntities.TargetingTypeLookup", b =>
                 {
                     b.Property<int>("Id")
@@ -2386,12 +2408,12 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
                         .IsRequired()
                         .HasConstraintName("fk_abilities_skill_definitions_skill_discipline_id");
 
-                    b.HasOne("UntitledRpgLogic.Infrastructure.Data.LookupEntities.TargetTypeLookup", null)
+                    b.HasOne("UntitledRpgLogic.Infrastructure.Data.LookupEntities.TargetingTypeLookup", null)
                         .WithMany()
-                        .HasForeignKey("TargetType")
+                        .HasForeignKey("TargetingType")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
-                        .HasConstraintName("fk_abilities_target_type_lookup_target_type");
+                        .HasConstraintName("fk_abilities_targeting_type_lookup_targeting_type");
 
                     b.OwnsMany("UntitledRpgLogic.Core.Models.CastingRequirement", "CastingRequirements", b1 =>
                         {
@@ -2641,8 +2663,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
                             b1.Property<int>("__synthesizedOrdinal")
                                 .ValueGeneratedOnAddOrUpdate();
 
-                            b1.Property<byte[]>("AmbientId")
-                                .IsRequired();
+                            b1.Property<int>("AmbientType");
 
                             b1.Property<float>("AmountChange");
 
@@ -2805,6 +2826,19 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("UntitledRpgLogic.Core.Models.ItemDefinition", b =>
                 {
+                    b.HasOne("UntitledRpgLogic.Infrastructure.Data.LookupEntities.QualityLookup", null)
+                        .WithMany()
+                        .HasForeignKey("BaseQuality")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_item_definitions_quality_lookup_base_quality");
+
+                    b.HasOne("UntitledRpgLogic.Core.Models.Entity", null)
+                        .WithMany()
+                        .HasForeignKey("CreatorEntityId")
+                        .OnDelete(DeleteBehavior.SetNull)
+                        .HasConstraintName("fk_item_definitions_entities_creator_entity_id");
+
                     b.HasOne("UntitledRpgLogic.Infrastructure.Data.LookupEntities.ItemSubtypeLookup", null)
                         .WithMany()
                         .HasForeignKey("ItemSubtype")
@@ -2886,16 +2920,11 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
                         .HasConstraintName("fk_item_instances_entity_inventories_entity_inventory_id");
 
                     b.HasOne("UntitledRpgLogic.Core.Models.ItemDefinition", "ItemDefinition")
-                        .WithMany()
+                        .WithMany("Instances")
                         .HasForeignKey("ItemDefinitionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_item_instances_item_definitions_item_definition_id");
-
-                    b.HasOne("UntitledRpgLogic.Core.Models.ItemDefinition", null)
-                        .WithMany("Instances")
-                        .HasForeignKey("ItemDefinitionId1")
-                        .HasConstraintName("fk_item_instances_item_definitions_item_definition_id1");
 
                     b.HasOne("UntitledRpgLogic.Core.Models.MaterialDefinition", "PrimaryMaterial")
                         .WithMany()
@@ -2945,6 +2974,13 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("UntitledRpgLogic.Core.Models.MapDefinition", b =>
                 {
+                    b.HasOne("UntitledRpgLogic.Infrastructure.Data.LookupEntities.MapTypeLookup", null)
+                        .WithMany()
+                        .HasForeignKey("Type")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_map_definitions_map_type_lookup_type");
+
                     b.OwnsOne("UntitledRpgLogic.Core.Models.AtmosphereProfile", "Atmosphere", b1 =>
                         {
                             b1.Property<byte[]>("MapDefinitionId");

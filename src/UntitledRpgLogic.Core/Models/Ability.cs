@@ -20,7 +20,7 @@ public record Ability : IDbEntity<Ulid>
 		this.Id = Ulid.NewUlid();
 		this.Name = Name.Empty;
 		this.AbilityType = AbilityType.PassiveAbility;
-		this.TargetType = TargetType.Self;
+		this.TargetingType = TargetingType.Self;
 		this.NumberOfTargets = 1;
 		this.CastTime = 0f;
 	}
@@ -51,7 +51,7 @@ public record Ability : IDbEntity<Ulid>
 	/// <summary>
 	///     How the ability is targeted or delivered (Self, SingleTarget, AreaOfEffect, Projectile).
 	/// </summary>
-	public TargetType TargetType { get; init; }
+	public TargetingType TargetingType { get; init; }
 
 	/// <summary>
 	///     Indicates whether this ability can affect the caster.

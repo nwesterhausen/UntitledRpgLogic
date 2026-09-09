@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using UntitledRpgLogic.Core.Models;
+using UntitledRpgLogic.Infrastructure.Data.LookupEntities;
 using UntitledRpgLogic.Infrastructure.Data.ValueConverters;
 
 namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
@@ -15,13 +16,10 @@ public sealed class MapDefinitionConfiguration : IEntityTypeConfiguration<MapDef
 	{
 		ArgumentNullException.ThrowIfNull(builder);
 
-		_ = builder.Property(m => m.Id)
-			.HasConversion<UlidToBytesConverter>()
-			.IsRequired();
-
-		_ = builder.Property(m => m.Type)
-			.HasConversion<byte>()
-			.IsRequired();
+		builder.HasOne<MapTypeLookup>()
+	       .WithMany()
+	       .HasForeignKey(m => m.Type)
+	       .OnDelete(DeleteBehavior.Restrict);
 
 		_ = builder.OwnsOne(m => m.Atmosphere, ab =>
 				{

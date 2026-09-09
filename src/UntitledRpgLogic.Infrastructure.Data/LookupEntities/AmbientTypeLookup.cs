@@ -3,13 +3,13 @@ using UntitledRpgLogic.Core.Enums;
 
 namespace UntitledRpgLogic.Infrastructure.Data.LookupEntities;
 /// <summary>
-/// Provides a reference table in the databse for the <see cref="TargetType" /> enum.
+/// Provides a reference table in the databse for the <see cref="AmbientType" /> enum.
 /// </summary>
-public class TargetTypeLookup
+public class AmbientTypeLookup
 {
 
 	///<summary>The specific enum for this entry</summary>
-	public TargetType Id { get; set; }
+	public AmbientType Id { get; set; }
 
 	///<summary>The name of the enum</summary>
 	public string Name { get; set; } = string.Empty;

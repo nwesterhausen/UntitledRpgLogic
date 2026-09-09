@@ -1,3 +1,5 @@
+using UntitledRpgLogic.Core.Enums;
+
 namespace UntitledRpgLogic.Core.Models;
 
 /// <summary>
@@ -7,9 +9,9 @@ namespace UntitledRpgLogic.Core.Models;
 public record AffectedAmbient
 {
 	/// <summary>
-	///     Identifier of the <see cref="Ambient" /> definition (e.g., LocalTemperature) being influenced.
-	/// </summary>
-	public Ulid AmbientId { get; init; }
+    ///     The type of ambient condition being influenced (Temperature, Gravity, Humidity, etc.).
+    /// </summary>
+    public AmbientType AmbientType { get; init; }
 
 	/// <summary>
 	///     The magnitude of the change.

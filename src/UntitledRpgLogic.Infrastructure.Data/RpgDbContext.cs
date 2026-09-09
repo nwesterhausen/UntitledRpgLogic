@@ -20,11 +20,6 @@ public class RpgDbContext(DbContextOptions<RpgDbContext> options) : DbContext(op
 	public DbSet<Ability> Abilities { get; set; } = null!;
 
 	/// <summary>
-	///     Gets or sets the DbSet for all Ability definitions.
-	/// </summary>
-	public DbSet<Ambient> Ambients { get; set; } = null!;
-
-	/// <summary>
 	/// 	Table for affected ambients of the world
 	/// </summary>
 	public DbSet<AffectedAmbient> AffectedAmbients { get; set; } = null!;

@@ -28,7 +28,7 @@ public record AbilityConfig
 	/// <summary>
 	///     The targeting type of the ability, e.g. "Aoe", "Self"
 	/// </summary>
-	public TargetType TargetType { get; init; } = TargetType.None;
+	public TargetingType TargetingType { get; init; } = TargetingType.None;
 
 	/// <summary>
 	///     Whether the ability can affect the caster themselves.

@@ -15,6 +15,12 @@ public class ItemDefinitionConfiguration : IEntityTypeConfiguration<ItemDefiniti
 	{
 		ArgumentNullException.ThrowIfNull(builder);
 
+		// Instances relationships
+		builder.HasMany(i => i.Instances)
+			.WithOne(ii => ii.ItemDefinition)
+			.HasForeignKey(ii => ii.ItemDefinitionId)
+			.OnDelete(DeleteBehavior.Cascade);
+
 		// Map lookup tables for enums
 		builder.HasOne<ItemTypeLookup>()
 			.WithMany()
@@ -24,6 +30,14 @@ public class ItemDefinitionConfiguration : IEntityTypeConfiguration<ItemDefiniti
 			.WithMany()
 			.HasForeignKey(x => x.ItemSubtype)
 			.OnDelete(DeleteBehavior.Restrict);
+		builder.HasOne<QualityLookup>()
+	       .WithMany()
+	       .HasForeignKey(i => i.BaseQuality)
+	       .OnDelete(DeleteBehavior.Restrict);
+		builder.HasOne<Entity>()
+	       .WithMany()
+	       .HasForeignKey(i => i.CreatorEntityId)
+	       .OnDelete(DeleteBehavior.SetNull);
 
 		// Configure the owned collection into a dedicated relational child table
 		builder.OwnsMany(i => i.Materials, mb =>

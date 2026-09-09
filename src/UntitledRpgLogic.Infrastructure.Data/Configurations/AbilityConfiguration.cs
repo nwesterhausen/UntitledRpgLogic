@@ -20,9 +20,9 @@ internal sealed class AbilityConfiguration : IEntityTypeConfiguration<Ability>
 			   .HasForeignKey(a => a.AbilityType)
 			   .OnDelete(DeleteBehavior.Restrict);
 
-		builder.HasOne<TargetTypeLookup>()
+		builder.HasOne<TargetingTypeLookup>()
 			   .WithMany()
-			   .HasForeignKey(a => a.TargetType)
+			   .HasForeignKey(a => a.TargetingType)
 			   .OnDelete(DeleteBehavior.Restrict);
 
 		// 2. Owned Collections (Dependent Relational Tables)

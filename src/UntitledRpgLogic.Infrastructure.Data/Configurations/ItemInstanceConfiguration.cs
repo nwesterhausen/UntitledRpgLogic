@@ -16,10 +16,7 @@ public class ItemInstanceConfiguration : IEntityTypeConfiguration<ItemInstance>
 		ArgumentNullException.ThrowIfNull(builder);
 
 		// Relationships
-		_ = builder
-			 .HasOne(i => i.ItemDefinition)
-			 .WithMany()
-			 .HasForeignKey(i => i.ItemDefinitionId);
+		// link to ItemDefinition is set in ItemDefinitionConfiguration
 
 		_ = builder
 			.HasOne(i => i.PrimaryMaterial)
