@@ -869,7 +869,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                             HasChangeableValue = true,
                             MaxValue = 2147483647,
                             MinValue = 0,
-                            Name = "Level:Levels",
+                            Name = "Level;Levels",
                             Variation = 1
                         });
                 });

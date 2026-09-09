@@ -14,6 +14,8 @@ namespace UntitledRpgLogic.Core.Classes;
 /// <param name="adjective"></param>
 public class Name(string singular, string? plural = null, string? adjective = null) : IStringSerializable<Name>
 {
+	private const char DELIM = ';';
+
 	/// <summary>
 	///     An empty name.
 	/// </summary>
@@ -39,10 +41,10 @@ public class Name(string singular, string? plural = null, string? adjective = nu
 	{
 		if (this.Singular.Equals(this.Adjective, StringComparison.Ordinal))
 		{
-			return $"{this.Singular}:{this.Plural}";
+			return $"{this.Singular}{DELIM}{this.Plural}";
 		}
 
-		return $"{this.Singular};{this.Plural};{this.Adjective}";
+		return $"{this.Singular}{DELIM}{this.Plural}{DELIM}{this.Adjective}";
 	}
 
 	/// <inheritdoc />
@@ -50,7 +52,7 @@ public class Name(string singular, string? plural = null, string? adjective = nu
 	{
 		ArgumentNullException.ThrowIfNull(serialized, nameof(serialized));
 
-		var parts = serialized.Split(';');
+		var parts = serialized.Split(DELIM);
 		return parts.Length switch
 		{
 			0 => throw new ArgumentException("Invalid serialized name format."),
@@ -86,7 +88,7 @@ public class Name(string singular, string? plural = null, string? adjective = nu
 			return singular + "zes";
 		}
 
-		if (singular.EndsWith('s') || singular.EndsWith('x') || singular.EndsWith('z') ||
+		if (singular.EndsWith('o') || singular.EndsWith('s') || singular.EndsWith('x') || singular.EndsWith('z') ||
 			singular.EndsWith("ch", StringComparison.InvariantCultureIgnoreCase) ||
 			singular.EndsWith("sh", StringComparison.InvariantCultureIgnoreCase))
 		{

@@ -1399,7 +1399,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
             migrationBuilder.InsertData(
                 table: "stat_definitions",
                 columns: new[] { "id", "has_changeable_value", "max_value", "min_value", "name", "variation" },
-                values: new object[] { new byte[] { 1, 160, 135, 52, 154, 28, 237, 148, 44, 15, 243, 169, 111, 68, 183, 169 }, true, 2147483647, 0, "Level:Levels", 1 });
+                values: new object[] { new byte[] { 1, 160, 135, 52, 154, 28, 237, 148, 44, 15, 243, 169, 111, 68, 183, 169 }, true, 2147483647, 0, "Level;Levels", 1 });
 
             migrationBuilder.CreateIndex(
                 name: "ix_abilities_ability_type",
