@@ -43,21 +43,21 @@ public class UlidCollectionToBytesConverter : ValueConverter<ICollection<Ulid>, 
 
 	private static List<Ulid> UnpackUlids(byte[] bytes)
 	{
-    if (bytes == null || bytes.Length == 0)
-    {
-        return new List<Ulid>();
-    }
+		if (bytes == null || bytes.Length == 0)
+		{
+			return new List<Ulid>();
+		}
 
-    var count = bytes.Length / 16;
-    var result = new List<Ulid>(count);
-    var slice = new byte[16];
+		var count = bytes.Length / 16;
+		var result = new List<Ulid>(count);
+		var slice = new byte[16];
 
-    for (var i = 0; i < count; i++)
-    {
-        Buffer.BlockCopy(bytes, i * 16, slice, 0, 16);
-        result.Add((Ulid)SingleConverter.ConvertFromProvider(slice)!);
-    }
+		for (var i = 0; i < count; i++)
+		{
+			Buffer.BlockCopy(bytes, i * 16, slice, 0, 16);
+			result.Add((Ulid)SingleConverter.ConvertFromProvider(slice)!);
+		}
 
-    return result;
+		return result;
 	}
 }

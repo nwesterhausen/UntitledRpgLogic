@@ -14,11 +14,11 @@ public sealed class EntityDefinitionConfiguration : IEntityTypeConfiguration<Ent
 	{
 		ArgumentNullException.ThrowIfNull(builder);
 
-        builder.OwnsOne(ed => ed.RespiratoryProfile, rb =>
-        {
-            rb.ToJson();
-            rb.OwnsMany(r => r.ToxicSubstances);
-        });
-        builder.OwnsMany(ed => ed.StartingStats, sb => sb.ToJson());
+		builder.OwnsOne(ed => ed.RespiratoryProfile, rb =>
+		{
+			rb.ToJson();
+			rb.OwnsMany(r => r.ToxicSubstances);
+		});
+		builder.OwnsMany(ed => ed.StartingStats, sb => sb.ToJson());
 	}
 }
