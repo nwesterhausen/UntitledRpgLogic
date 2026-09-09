@@ -14,6 +14,21 @@ env:
 
 jobs:
   build:
+    services:
+      postgres:
+        image: postgres:18-alpine
+        env:
+          POSTGRES_USER: urpg_user
+          POSTGRES_PASSWORD: urpg_password
+          POSTGRES_DB: urpg_dev
+        ports:
+          - 5432:5432
+        # Health check ensures PostgreSQL is ready before the job steps execute
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     name: Build and Test
     runs-on: ubuntu-latest
     steps:
@@ -84,6 +99,8 @@ jobs:
           dotnet build --no-restore
 
       - name: 🚀 Test
+        env:
+           URPG_PG_CONNECTION_STRING: "Host=localhost;Port=5432;Database=urpg_dev;Username=urpg_user;Password=urpg_password"
         run: |
           cd ${{ github.workspace }}
           dotnet test --no-build --verbosity normal
