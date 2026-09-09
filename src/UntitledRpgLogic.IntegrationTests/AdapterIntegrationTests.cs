@@ -36,13 +36,10 @@ public class AdapterVerificationTests
 			Assert.IsTrue(canConnect);
 		}
 	}
-
 	[TestMethod]
 	public async Task CanConnectAndMigratePostgreSql()
 	{
 		var connectionString = GetPostgreSqlConnectionString();
-
-		// Skip gracefully if the machine has no PG connection string configured
 		if (string.IsNullOrWhiteSpace(connectionString))
 		{
 			Assert.Inconclusive("Skipping PostgreSQL test: 'URPG_PG_CONNECTION_STRING' is not set.");
@@ -55,6 +52,10 @@ public class AdapterVerificationTests
 		var context = new RpgDbContext(options);
 		await using (context.ConfigureAwait(false))
 		{
+			// Reset the schema cleanly without dropping the database
+			await context.Database.ExecuteSqlRawAsync("DROP SCHEMA public CASCADE; CREATE SCHEMA public;").ConfigureAwait(false);
+
+			// Apply fresh migrations
 			await context.Database.MigrateAsync().ConfigureAwait(false);
 
 			var canConnect = await context.Database.CanConnectAsync().ConfigureAwait(false);
