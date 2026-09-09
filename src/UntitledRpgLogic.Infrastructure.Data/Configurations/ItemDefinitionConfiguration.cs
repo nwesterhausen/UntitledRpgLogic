@@ -31,13 +31,13 @@ public class ItemDefinitionConfiguration : IEntityTypeConfiguration<ItemDefiniti
 			.HasForeignKey(x => x.ItemSubtype)
 			.OnDelete(DeleteBehavior.Restrict);
 		builder.HasOne<QualityLookup>()
-	       .WithMany()
-	       .HasForeignKey(i => i.BaseQuality)
-	       .OnDelete(DeleteBehavior.Restrict);
+		   .WithMany()
+		   .HasForeignKey(i => i.BaseQuality)
+		   .OnDelete(DeleteBehavior.Restrict);
 		builder.HasOne<Entity>()
-	       .WithMany()
-	       .HasForeignKey(i => i.CreatorEntityId)
-	       .OnDelete(DeleteBehavior.SetNull);
+		   .WithMany()
+		   .HasForeignKey(i => i.CreatorEntityId)
+		   .OnDelete(DeleteBehavior.SetNull);
 
 		// Configure the owned collection into a dedicated relational child table
 		builder.OwnsMany(i => i.Materials, mb =>

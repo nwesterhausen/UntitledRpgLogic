@@ -17,9 +17,9 @@ public sealed class MapDefinitionConfiguration : IEntityTypeConfiguration<MapDef
 		ArgumentNullException.ThrowIfNull(builder);
 
 		builder.HasOne<MapTypeLookup>()
-	       .WithMany()
-	       .HasForeignKey(m => m.Type)
-	       .OnDelete(DeleteBehavior.Restrict);
+		   .WithMany()
+		   .HasForeignKey(m => m.Type)
+		   .OnDelete(DeleteBehavior.Restrict);
 
 		_ = builder.OwnsOne(m => m.Atmosphere, ab =>
 				{

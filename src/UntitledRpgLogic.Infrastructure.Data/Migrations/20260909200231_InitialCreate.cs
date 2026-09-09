@@ -53,19 +53,6 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "effect_component_type_lookup",
-                columns: table => new
-                {
-                    id = table.Column<int>(type: "INTEGER", nullable: false),
-                    name = table.Column<string>(type: "TEXT", maxLength: 127, nullable: false),
-                    description = table.Column<string>(type: "TEXT", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("pk_effect_component_type_lookup", x => x.id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "effect_type_lookup",
                 columns: table => new
                 {
@@ -92,16 +79,25 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "entities",
+                name: "entity_definitions",
                 columns: table => new
                 {
                     id = table.Column<byte[]>(type: "BLOB", nullable: false),
                     name = table.Column<string>(type: "TEXT", nullable: false),
-                    affected_stats = table.Column<string>(type: "TEXT", nullable: true)
+                    description = table.Column<string>(type: "TEXT", maxLength: 512, nullable: false),
+                    classification = table.Column<int>(type: "INTEGER", nullable: false),
+                    base_level = table.Column<int>(type: "INTEGER", nullable: false),
+                    base_health = table.Column<float>(type: "REAL", nullable: false),
+                    base_mana = table.Column<float>(type: "REAL", nullable: false),
+                    base_stamina = table.Column<float>(type: "REAL", nullable: false),
+                    innate_skill_definition_ids = table.Column<byte[]>(type: "BLOB", nullable: false),
+                    starting_item_definition_ids = table.Column<byte[]>(type: "BLOB", nullable: false),
+                    respiratory_profile = table.Column<string>(type: "TEXT", nullable: true),
+                    starting_stats = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("pk_entities", x => x.id);
+                    table.PrimaryKey("pk_entity_definitions", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
@@ -302,86 +298,6 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "effects",
-                columns: table => new
-                {
-                    id = table.Column<byte[]>(type: "BLOB", nullable: false),
-                    name = table.Column<string>(type: "TEXT", nullable: false),
-                    description = table.Column<string>(type: "TEXT", maxLength: 1024, nullable: false),
-                    effect_type = table.Column<int>(type: "INTEGER", nullable: false),
-                    duration = table.Column<float>(type: "REAL", nullable: false),
-                    tick_interval = table.Column<float>(type: "REAL", nullable: false),
-                    base_damage = table.Column<float>(type: "REAL", nullable: true),
-                    damage_type = table.Column<int>(type: "INTEGER", nullable: true),
-                    ignores_armor = table.Column<bool>(type: "INTEGER", nullable: true),
-                    delay = table.Column<TimeSpan>(type: "TEXT", nullable: true),
-                    base_heal_amount = table.Column<float>(type: "REAL", nullable: true),
-                    can_overheal = table.Column<bool>(type: "INTEGER", nullable: true),
-                    summon_entity_template_id = table.Column<byte[]>(type: "BLOB", nullable: true),
-                    quantity = table.Column<int>(type: "INTEGER", nullable: true),
-                    affected_ambients = table.Column<string>(type: "TEXT", nullable: true),
-                    affected_stats = table.Column<string>(type: "TEXT", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("pk_effects", x => x.id);
-                    table.ForeignKey(
-                        name: "fk_effects_effect_type_lookup_effect_type",
-                        column: x => x.effect_type,
-                        principalTable: "effect_type_lookup",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "fk_effects_entities_summon_entity_template_id",
-                        column: x => x.summon_entity_template_id,
-                        principalTable: "entities",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "entity_inventories",
-                columns: table => new
-                {
-                    id = table.Column<byte[]>(type: "BLOB", nullable: false),
-                    entity_id = table.Column<byte[]>(type: "BLOB", nullable: false),
-                    capacity = table.Column<int>(type: "INTEGER", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("pk_entity_inventories", x => x.id);
-                    table.ForeignKey(
-                        name: "fk_entity_inventories_entities_entity_id",
-                        column: x => x.entity_id,
-                        principalTable: "entities",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "log_entries",
-                columns: table => new
-                {
-                    id = table.Column<byte[]>(type: "BLOB", nullable: false),
-                    timestamp = table.Column<DateTimeOffset>(type: "TEXT", nullable: false),
-                    level = table.Column<int>(type: "INTEGER", nullable: false),
-                    event_id = table.Column<int>(type: "INTEGER", nullable: false),
-                    entity_id = table.Column<byte[]>(type: "BLOB", nullable: true),
-                    message = table.Column<string>(type: "TEXT", maxLength: 2048, nullable: false),
-                    parameters = table.Column<string>(type: "TEXT", nullable: true),
-                    category = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("pk_log_entries", x => x.id);
-                    table.ForeignKey(
-                        name: "fk_log_entries_entities_entity_id",
-                        column: x => x.entity_id,
-                        principalTable: "entities",
-                        principalColumn: "id");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "map_definitions",
                 columns: table => new
                 {
@@ -434,51 +350,6 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
                         column: x => x.stack_effect_id,
                         principalTable: "modification_effects",
                         principalColumn: "id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "item_definitions",
-                columns: table => new
-                {
-                    id = table.Column<byte[]>(type: "BLOB", nullable: false),
-                    name = table.Column<string>(type: "TEXT", nullable: false),
-                    description = table.Column<string>(type: "TEXT", maxLength: 1024, nullable: false),
-                    item_type = table.Column<int>(type: "INTEGER", nullable: false),
-                    item_subtype = table.Column<int>(type: "INTEGER", nullable: false),
-                    base_quality = table.Column<int>(type: "INTEGER", nullable: false),
-                    max_stack_size = table.Column<int>(type: "INTEGER", nullable: false),
-                    base_durability = table.Column<float>(type: "REAL", nullable: false),
-                    weight = table.Column<float>(type: "REAL", nullable: false),
-                    base_value = table.Column<int>(type: "INTEGER", nullable: false),
-                    creator_entity_id = table.Column<byte[]>(type: "BLOB", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("pk_item_definitions", x => x.id);
-                    table.ForeignKey(
-                        name: "fk_item_definitions_entities_creator_entity_id",
-                        column: x => x.creator_entity_id,
-                        principalTable: "entities",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.SetNull);
-                    table.ForeignKey(
-                        name: "fk_item_definitions_item_subtype_lookup_item_subtype",
-                        column: x => x.item_subtype,
-                        principalTable: "item_subtype_lookup",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "fk_item_definitions_item_type_lookup_item_type",
-                        column: x => x.item_type,
-                        principalTable: "item_type_lookup",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "fk_item_definitions_quality_lookup_base_quality",
-                        column: x => x.base_quality,
-                        principalTable: "quality_lookup",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -554,6 +425,36 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "entities",
+                columns: table => new
+                {
+                    id = table.Column<byte[]>(type: "BLOB", nullable: false),
+                    name = table.Column<string>(type: "TEXT", nullable: false),
+                    definition_id = table.Column<byte[]>(type: "BLOB", nullable: true),
+                    map_id = table.Column<byte[]>(type: "BLOB", nullable: true),
+                    position_x = table.Column<float>(type: "REAL", nullable: true),
+                    position_y = table.Column<float>(type: "REAL", nullable: true),
+                    rotation_yaw = table.Column<float>(type: "REAL", nullable: true),
+                    position_map_id = table.Column<byte[]>(type: "BLOB", nullable: true),
+                    affected_stats = table.Column<string>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_entities", x => x.id);
+                    table.ForeignKey(
+                        name: "fk_entities_entity_definitions_definition_id",
+                        column: x => x.definition_id,
+                        principalTable: "entity_definitions",
+                        principalColumn: "id");
+                    table.ForeignKey(
+                        name: "fk_entities_map_definitions_position_map_id",
+                        column: x => x.position_map_id,
+                        principalTable: "map_definitions",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.SetNull);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "map_transitions",
                 columns: table => new
                 {
@@ -604,34 +505,6 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
                         name: "fk_world_chunks_map_definitions_map_id",
                         column: x => x.map_id,
                         principalTable: "map_definitions",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "applied_modifiers",
-                columns: table => new
-                {
-                    id = table.Column<byte[]>(type: "BLOB", nullable: false),
-                    modifier_definition_id = table.Column<byte[]>(type: "BLOB", nullable: false),
-                    entity_id = table.Column<byte[]>(type: "BLOB", nullable: false),
-                    stacks = table.Column<int>(type: "INTEGER", nullable: false),
-                    applied_at = table.Column<DateTimeOffset>(type: "TEXT", nullable: false),
-                    expires_at = table.Column<DateTimeOffset>(type: "TEXT", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("pk_applied_modifiers", x => x.id);
-                    table.ForeignKey(
-                        name: "fk_applied_modifiers_entities_entity_id",
-                        column: x => x.entity_id,
-                        principalTable: "entities",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "fk_applied_modifiers_modifier_definitions_modifier_definition_id",
-                        column: x => x.modifier_definition_id,
-                        principalTable: "modifier_definitions",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -745,72 +618,6 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "item_definition_materials",
-                columns: table => new
-                {
-                    item_definition_id = table.Column<byte[]>(type: "BLOB", nullable: false),
-                    id = table.Column<int>(type: "INTEGER", nullable: false),
-                    slot = table.Column<byte>(type: "INTEGER", nullable: false),
-                    material_id = table.Column<byte[]>(type: "BLOB", nullable: false),
-                    proportion = table.Column<float>(type: "REAL", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("pk_item_definition_materials", x => new { x.item_definition_id, x.id });
-                    table.ForeignKey(
-                        name: "fk_item_definition_materials_item_definitions_item_definition_id",
-                        column: x => x.item_definition_id,
-                        principalTable: "item_definitions",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "fk_item_definition_materials_material_definitions_material_id",
-                        column: x => x.material_id,
-                        principalTable: "material_definitions",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "fk_item_definition_materials_material_slot_lookup_slot",
-                        column: x => x.slot,
-                        principalTable: "material_slot_lookup",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "item_instances",
-                columns: table => new
-                {
-                    id = table.Column<byte[]>(type: "BLOB", nullable: false),
-                    item_definition_id = table.Column<byte[]>(type: "BLOB", nullable: false),
-                    quantity = table.Column<int>(type: "INTEGER", nullable: false),
-                    durability = table.Column<int>(type: "INTEGER", nullable: false),
-                    primary_material_id = table.Column<byte[]>(type: "BLOB", nullable: true),
-                    crafted_by_id = table.Column<byte[]>(type: "BLOB", nullable: true),
-                    entity_inventory_id = table.Column<byte[]>(type: "BLOB", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("pk_item_instances", x => x.id);
-                    table.ForeignKey(
-                        name: "fk_item_instances_entity_inventories_entity_inventory_id",
-                        column: x => x.entity_inventory_id,
-                        principalTable: "entity_inventories",
-                        principalColumn: "id");
-                    table.ForeignKey(
-                        name: "fk_item_instances_item_definitions_item_definition_id",
-                        column: x => x.item_definition_id,
-                        principalTable: "item_definitions",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "fk_item_instances_material_definitions_primary_material_id",
-                        column: x => x.primary_material_id,
-                        principalTable: "material_definitions",
-                        principalColumn: "id");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "material_state_properties",
                 columns: table => new
                 {
@@ -855,27 +662,156 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ability_active_effects",
+                name: "applied_modifiers",
                 columns: table => new
                 {
-                    ability_id = table.Column<byte[]>(type: "BLOB", nullable: false),
-                    effect_id = table.Column<byte[]>(type: "BLOB", nullable: false)
+                    id = table.Column<byte[]>(type: "BLOB", nullable: false),
+                    modifier_definition_id = table.Column<byte[]>(type: "BLOB", nullable: false),
+                    entity_id = table.Column<byte[]>(type: "BLOB", nullable: false),
+                    stacks = table.Column<int>(type: "INTEGER", nullable: false),
+                    applied_at = table.Column<DateTimeOffset>(type: "TEXT", nullable: false),
+                    expires_at = table.Column<DateTimeOffset>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("pk_ability_active_effects", x => new { x.ability_id, x.effect_id });
+                    table.PrimaryKey("pk_applied_modifiers", x => x.id);
                     table.ForeignKey(
-                        name: "fk_ability_active_effects_abilities_ability_id",
-                        column: x => x.ability_id,
-                        principalTable: "abilities",
+                        name: "fk_applied_modifiers_entities_entity_id",
+                        column: x => x.entity_id,
+                        principalTable: "entities",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "fk_ability_active_effects_effects_effect_id",
-                        column: x => x.effect_id,
-                        principalTable: "effects",
+                        name: "fk_applied_modifiers_modifier_definitions_modifier_definition_id",
+                        column: x => x.modifier_definition_id,
+                        principalTable: "modifier_definitions",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "effects",
+                columns: table => new
+                {
+                    id = table.Column<byte[]>(type: "BLOB", nullable: false),
+                    name = table.Column<string>(type: "TEXT", nullable: false),
+                    description = table.Column<string>(type: "TEXT", maxLength: 1024, nullable: false),
+                    effect_type = table.Column<int>(type: "INTEGER", nullable: false),
+                    duration = table.Column<float>(type: "REAL", nullable: false),
+                    tick_interval = table.Column<float>(type: "REAL", nullable: false),
+                    base_damage = table.Column<float>(type: "REAL", nullable: true),
+                    damage_type = table.Column<int>(type: "INTEGER", nullable: true),
+                    ignores_armor = table.Column<bool>(type: "INTEGER", nullable: true),
+                    delay = table.Column<TimeSpan>(type: "TEXT", nullable: true),
+                    base_heal_amount = table.Column<float>(type: "REAL", nullable: true),
+                    can_overheal = table.Column<bool>(type: "INTEGER", nullable: true),
+                    summon_entity_template_id = table.Column<byte[]>(type: "BLOB", nullable: true),
+                    quantity = table.Column<int>(type: "INTEGER", nullable: true),
+                    affected_ambients = table.Column<string>(type: "TEXT", nullable: true),
+                    affected_stats = table.Column<string>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_effects", x => x.id);
+                    table.ForeignKey(
+                        name: "fk_effects_effect_type_lookup_effect_type",
+                        column: x => x.effect_type,
+                        principalTable: "effect_type_lookup",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "fk_effects_entities_summon_entity_template_id",
+                        column: x => x.summon_entity_template_id,
+                        principalTable: "entities",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "entity_inventories",
+                columns: table => new
+                {
+                    id = table.Column<byte[]>(type: "BLOB", nullable: false),
+                    entity_id = table.Column<byte[]>(type: "BLOB", nullable: false),
+                    capacity = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_entity_inventories", x => x.id);
+                    table.ForeignKey(
+                        name: "fk_entity_inventories_entities_entity_id",
+                        column: x => x.entity_id,
+                        principalTable: "entities",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "item_definitions",
+                columns: table => new
+                {
+                    id = table.Column<byte[]>(type: "BLOB", nullable: false),
+                    name = table.Column<string>(type: "TEXT", nullable: false),
+                    description = table.Column<string>(type: "TEXT", maxLength: 1024, nullable: false),
+                    item_type = table.Column<int>(type: "INTEGER", nullable: false),
+                    item_subtype = table.Column<int>(type: "INTEGER", nullable: false),
+                    base_quality = table.Column<int>(type: "INTEGER", nullable: false),
+                    max_stack_size = table.Column<int>(type: "INTEGER", nullable: false),
+                    base_durability = table.Column<float>(type: "REAL", nullable: false),
+                    weight = table.Column<float>(type: "REAL", nullable: false),
+                    base_value = table.Column<int>(type: "INTEGER", nullable: false),
+                    creator_entity_id = table.Column<byte[]>(type: "BLOB", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_item_definitions", x => x.id);
+                    table.ForeignKey(
+                        name: "fk_item_definitions_entities_creator_entity_id",
+                        column: x => x.creator_entity_id,
+                        principalTable: "entities",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.SetNull);
+                    table.ForeignKey(
+                        name: "fk_item_definitions_item_subtype_lookup_item_subtype",
+                        column: x => x.item_subtype,
+                        principalTable: "item_subtype_lookup",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "fk_item_definitions_item_type_lookup_item_type",
+                        column: x => x.item_type,
+                        principalTable: "item_type_lookup",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "fk_item_definitions_quality_lookup_base_quality",
+                        column: x => x.base_quality,
+                        principalTable: "quality_lookup",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "log_entries",
+                columns: table => new
+                {
+                    id = table.Column<byte[]>(type: "BLOB", nullable: false),
+                    timestamp = table.Column<DateTimeOffset>(type: "TEXT", nullable: false),
+                    level = table.Column<int>(type: "INTEGER", nullable: false),
+                    event_id = table.Column<int>(type: "INTEGER", nullable: false),
+                    entity_id = table.Column<byte[]>(type: "BLOB", nullable: true),
+                    message = table.Column<string>(type: "TEXT", maxLength: 2048, nullable: false),
+                    parameters = table.Column<string>(type: "TEXT", nullable: true),
+                    category = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_log_entries", x => x.id);
+                    table.ForeignKey(
+                        name: "fk_log_entries_entities_entity_id",
+                        column: x => x.entity_id,
+                        principalTable: "entities",
+                        principalColumn: "id");
                 });
 
             migrationBuilder.CreateTable(
@@ -904,30 +840,6 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
                         principalTable: "requirement_type_lookup",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ability_failure_effects",
-                columns: table => new
-                {
-                    ability_id = table.Column<byte[]>(type: "BLOB", nullable: false),
-                    effect_id = table.Column<byte[]>(type: "BLOB", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("pk_ability_failure_effects", x => new { x.ability_id, x.effect_id });
-                    table.ForeignKey(
-                        name: "fk_ability_failure_effects_abilities_ability_id",
-                        column: x => x.ability_id,
-                        principalTable: "abilities",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "fk_ability_failure_effects_effects_effect_id",
-                        column: x => x.effect_id,
-                        principalTable: "effects",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -1063,6 +975,120 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "ability_active_effects",
+                columns: table => new
+                {
+                    ability_id = table.Column<byte[]>(type: "BLOB", nullable: false),
+                    effect_id = table.Column<byte[]>(type: "BLOB", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_ability_active_effects", x => new { x.ability_id, x.effect_id });
+                    table.ForeignKey(
+                        name: "fk_ability_active_effects_abilities_ability_id",
+                        column: x => x.ability_id,
+                        principalTable: "abilities",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "fk_ability_active_effects_effects_effect_id",
+                        column: x => x.effect_id,
+                        principalTable: "effects",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ability_failure_effects",
+                columns: table => new
+                {
+                    ability_id = table.Column<byte[]>(type: "BLOB", nullable: false),
+                    effect_id = table.Column<byte[]>(type: "BLOB", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_ability_failure_effects", x => new { x.ability_id, x.effect_id });
+                    table.ForeignKey(
+                        name: "fk_ability_failure_effects_abilities_ability_id",
+                        column: x => x.ability_id,
+                        principalTable: "abilities",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "fk_ability_failure_effects_effects_effect_id",
+                        column: x => x.effect_id,
+                        principalTable: "effects",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "item_definition_materials",
+                columns: table => new
+                {
+                    item_definition_id = table.Column<byte[]>(type: "BLOB", nullable: false),
+                    id = table.Column<int>(type: "INTEGER", nullable: false),
+                    slot = table.Column<byte>(type: "INTEGER", nullable: false),
+                    material_id = table.Column<byte[]>(type: "BLOB", nullable: false),
+                    proportion = table.Column<float>(type: "REAL", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_item_definition_materials", x => new { x.item_definition_id, x.id });
+                    table.ForeignKey(
+                        name: "fk_item_definition_materials_item_definitions_item_definition_id",
+                        column: x => x.item_definition_id,
+                        principalTable: "item_definitions",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "fk_item_definition_materials_material_definitions_material_id",
+                        column: x => x.material_id,
+                        principalTable: "material_definitions",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "fk_item_definition_materials_material_slot_lookup_slot",
+                        column: x => x.slot,
+                        principalTable: "material_slot_lookup",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "item_instances",
+                columns: table => new
+                {
+                    id = table.Column<byte[]>(type: "BLOB", nullable: false),
+                    item_definition_id = table.Column<byte[]>(type: "BLOB", nullable: false),
+                    quantity = table.Column<int>(type: "INTEGER", nullable: false),
+                    durability = table.Column<int>(type: "INTEGER", nullable: false),
+                    primary_material_id = table.Column<byte[]>(type: "BLOB", nullable: true),
+                    crafted_by_id = table.Column<byte[]>(type: "BLOB", nullable: true),
+                    entity_inventory_id = table.Column<byte[]>(type: "BLOB", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_item_instances", x => x.id);
+                    table.ForeignKey(
+                        name: "fk_item_instances_entity_inventories_entity_inventory_id",
+                        column: x => x.entity_inventory_id,
+                        principalTable: "entity_inventories",
+                        principalColumn: "id");
+                    table.ForeignKey(
+                        name: "fk_item_instances_item_definitions_item_definition_id",
+                        column: x => x.item_definition_id,
+                        principalTable: "item_definitions",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "fk_item_instances_material_definitions_primary_material_id",
+                        column: x => x.primary_material_id,
+                        principalTable: "material_definitions",
+                        principalColumn: "id");
+                });
+
             migrationBuilder.InsertData(
                 table: "ability_type_lookup",
                 columns: new[] { "id", "description", "name" },
@@ -1105,21 +1131,6 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
                     { 6, null, "Cm" },
                     { 7, null, "M" },
                     { 8, null, "Km" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "effect_component_type_lookup",
-                columns: new[] { "id", "description", "name" },
-                values: new object[,]
-                {
-                    { 0, null, "None" },
-                    { 1, null, "Dimensions" },
-                    { 2, null, "Physics" },
-                    { 3, null, "Elemental" },
-                    { 4, null, "Duration" },
-                    { 5, null, "Targeting" },
-                    { 6, null, "StatModification" },
-                    { 7, null, "Summoning" }
                 });
 
             migrationBuilder.InsertData(
@@ -1476,6 +1487,21 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
                 column: "summon_entity_template_id");
 
             migrationBuilder.CreateIndex(
+                name: "ix_entities_definition_id",
+                table: "entities",
+                column: "definition_id");
+
+            migrationBuilder.CreateIndex(
+                name: "ix_entities_map_id",
+                table: "entities",
+                column: "map_id");
+
+            migrationBuilder.CreateIndex(
+                name: "ix_entities_position_map_id",
+                table: "entities",
+                column: "position_map_id");
+
+            migrationBuilder.CreateIndex(
                 name: "ix_entity_inventories_entity_id",
                 table: "entity_inventories",
                 column: "entity_id",
@@ -1644,9 +1670,6 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
                 name: "dimension_scale_lookup");
 
             migrationBuilder.DropTable(
-                name: "effect_component_type_lookup");
-
-            migrationBuilder.DropTable(
                 name: "elements");
 
             migrationBuilder.DropTable(
@@ -1719,9 +1742,6 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
                 name: "material_definitions");
 
             migrationBuilder.DropTable(
-                name: "map_definitions");
-
-            migrationBuilder.DropTable(
                 name: "effect_type_lookup");
 
             migrationBuilder.DropTable(
@@ -1755,13 +1775,19 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
                 name: "state_of_matter_lookup");
 
             migrationBuilder.DropTable(
-                name: "map_type_lookup");
-
-            migrationBuilder.DropTable(
                 name: "scaling_curve_type_lookup");
 
             migrationBuilder.DropTable(
                 name: "stat_variation_lookup");
+
+            migrationBuilder.DropTable(
+                name: "entity_definitions");
+
+            migrationBuilder.DropTable(
+                name: "map_definitions");
+
+            migrationBuilder.DropTable(
+                name: "map_type_lookup");
         }
     }
 }

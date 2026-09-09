@@ -31,5 +31,5 @@ public class CurrencyOptions
 	/// <summary>
 	///     Specify a unique identifier for the currency type, used for serialization and identification purposes.
 	/// </summary>
-	public Guid? ExplicitId { get; set; }
+	public Ulid? ExplicitId { get; set; }
 }

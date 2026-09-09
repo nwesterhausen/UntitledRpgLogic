@@ -23,5 +23,5 @@ public class DamageOptions
 	/// <summary>
 	///     The identifier for the source of the damage, used for tracking and logging purposes.
 	/// </summary>
-	public Guid? SourceId { get; init; }
+	public Ulid? SourceId { get; init; }
 }

@@ -48,7 +48,7 @@ public record ItemDataConfig
 	public string Description { get; init; } = string.Empty;
 
 	/// <summary>
-	///     An optional GUID representing the creator of the item. This can be used to track who crafted the item.
+	///     An optional Ulid representing the creator of the item. This can be used to track who crafted the item.
 	/// </summary>
 	public Ulid CraftedBy { get; init; } = WellKnownIdentifiers.GameSystem;
 

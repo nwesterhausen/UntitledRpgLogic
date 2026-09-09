@@ -14,7 +14,7 @@ public record FantasticalPropertiesConfig
 	public float AetherialConductivity { get; init; }
 
 	/// <summary>
-	///     A material's natural affinity for one or more elemental types, referenced by the Element's Guid.
+	///     A material's natural affinity for one or more elemental types, referenced by the Element's Ulid.
 	/// </summary>
 	public Dictionary<Ulid, float> ElementalAttunement { get; init; } = new();
 

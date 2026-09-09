@@ -1,7 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using UntitledRpgLogic.Core.Classes;
-using UntitledRpgLogic.Core.Interfaces.Data;
 using UntitledRpgLogic.Core.Interfaces.Entities;
 
 namespace UntitledRpgLogic.Core.Models;
@@ -10,7 +9,7 @@ namespace UntitledRpgLogic.Core.Models;
 ///     Root database model representing a living actor, player, NPC, or creature in the game world.
 /// </summary>
 [Table("entities")]
-public record Entity : IEntity, IDbEntity<Ulid>
+public record Entity : IEntity, IHasInventory, IHasStats, IHasSkills, IHasModifiers
 {
 	/// <summary>
 	///     Initializes a new instance of the <see cref="Entity" /> record for EF Core materialization.
@@ -44,6 +43,30 @@ public record Entity : IEntity, IDbEntity<Ulid>
 	///     The display name of the entity.
 	/// </summary>
 	public required Name Name { get; init; }
+
+	/// <summary>
+	///     Optional foreign key to the governing template archetype.
+	///     Null for unique players or bespoke procedural actors without a base template.
+	/// </summary>
+	public Ulid? DefinitionId { get; init; }
+
+	/// <summary>
+	///     Navigation property to the archetype definition.
+	/// </summary>
+	[ForeignKey(nameof(DefinitionId))]
+	public virtual EntityDefinition? Definition { get; init; }
+
+	/// <summary>
+	///     The map and world coordinates where this entity is actively spawned.
+	///     Null indicates the entity is currently despawned or not placed in the world.
+	/// </summary>
+	public WorldPosition? Position { get; set; }
+
+	/// <summary>
+	///     Navigation property to the map where the entity is located.
+	/// </summary>
+	[ForeignKey("Position_MapId")]
+	public virtual MapDefinition? CurrentMap { get; init; }
 
 	/// <summary>
 	///     Navigation property to the entity's inventory container.

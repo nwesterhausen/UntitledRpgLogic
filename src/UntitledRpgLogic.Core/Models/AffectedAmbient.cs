@@ -9,9 +9,9 @@ namespace UntitledRpgLogic.Core.Models;
 public record AffectedAmbient
 {
 	/// <summary>
-    ///     The type of ambient condition being influenced (Temperature, Gravity, Humidity, etc.).
-    /// </summary>
-    public AmbientType AmbientType { get; init; }
+	///     The type of ambient condition being influenced (Temperature, Gravity, Humidity, etc.).
+	/// </summary>
+	public AmbientType AmbientType { get; init; }
 
 	/// <summary>
 	///     The magnitude of the change.

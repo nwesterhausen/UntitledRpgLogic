@@ -26,12 +26,12 @@ public class StatDefinitionConfiguration : IEntityTypeConfiguration<StatDefiniti
 		// seed well-known universal stats
 		builder.HasData(new StatDefinition
 		{
-		    Id = WellKnownIdentifiers.PlayerLevel,
+			Id = WellKnownIdentifiers.PlayerLevel,
 			Name = new Name("Level"),
-		    Variation = StatVariation.Pseudo,
-		    MinValue = 0,
-		    MaxValue = int.MaxValue,
-		    HasChangeableValue = true
+			Variation = StatVariation.Pseudo,
+			MinValue = 0,
+			MaxValue = int.MaxValue,
+			HasChangeableValue = true
 		});
 	}
 }

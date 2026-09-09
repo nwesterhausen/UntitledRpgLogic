@@ -110,7 +110,7 @@ public record EntityInventory : IInventory, IDbEntity<Ulid>
 	public bool StoreItem(IStorable item) => throw new NotImplementedException();
 
 	/// <inheritdoc />
-	public bool TryRetrieveItem(Guid itemId, out IStorable? item) => throw new NotImplementedException();
+	public bool TryRetrieveItem(Ulid itemId, out IStorable? item) => throw new NotImplementedException();
 
 	/// <inheritdoc />
 	public bool TryRetrieveItem(string itemName, out IStorable? item) => throw new NotImplementedException();
