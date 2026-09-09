@@ -5,9 +5,6 @@
     "allowPrerelease": true
   },
   "msbuild-sdks": {
-    "MSTest.Sdk": "4.3.3"
-  },
-  "test": {
-      "runner": "Microsoft.Testing.Platform"
+    "MSTest.Sdk": "4.4.0"
   }
 }
