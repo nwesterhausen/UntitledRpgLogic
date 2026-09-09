@@ -20,6 +20,7 @@
 	<ItemGroup>
 		<!-- Project References to your adapters and domain layers -->
 		<ProjectReference Include="..\UntitledRpgLogic.Core\UntitledRpgLogic.Core.csproj" />
+		<ProjectReference Include="..\UntitledRpgLogic.Extensions.Common\UntitledRpgLogic.Extensions.Common.csproj" />
 		<ProjectReference Include="..\UntitledRpgLogic.Infrastructure.Data\UntitledRpgLogic.Infrastructure.Data.csproj" />
 		<ProjectReference Include="..\UntitledRpgLogic.Infrastructure.Data.SQLite\UntitledRpgLogic.Infrastructure.Data.Sqlite.csproj" />
 		<ProjectReference Include="..\UntitledRpgLogic.Infrastructure.Data.PostgreSQL\UntitledRpgLogic.Infrastructure.Data.PostgreSQL.csproj" />

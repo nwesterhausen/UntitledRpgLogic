@@ -1,5 +1,9 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using UntitledRpgLogic.Core.Interfaces.Data;
 using UntitledRpgLogic.Infrastructure.Data;
+using UntitledRpgLogic.Infrastructure.Data.PostgreSQL;
+using UntitledRpgLogic.Infrastructure.Data.SQLite;
 
 namespace UntitledRpgLogic.IntegrationTests;
 
@@ -22,18 +26,30 @@ public class AdapterVerificationTests
 	[TestMethod]
 	public async Task CanConnectAndMigrateSqlite()
 	{
-		var options = new DbContextOptionsBuilder<RpgDbContext>()
-			.UseSqlite("Data Source=test_verification.db")
-			.Options;
+		var services = new ServiceCollection();
 
-		var context = new RpgDbContext(options);
-		await using (context.ConfigureAwait(false))
+		// Uses your extension method — migrations assembly is already configured!
+		services.AddSqliteDataAccess(opts =>
 		{
+			opts.ConnectionString = "Data Source=test_verification.db";
+			opts.AutoMigrate = true;
+		});
+
+		var provider = services.BuildServiceProvider();
+		await using (provider.ConfigureAwait(false))
+		{
+			var context = provider.GetRequiredService<RpgDbContext>();
 			await context.Database.EnsureDeletedAsync().ConfigureAwait(false);
-			await context.Database.MigrateAsync().ConfigureAwait(false);
+
+			// Uses IDatabaseInitializer or context.Database.MigrateAsync directly
+			var initializer = provider.GetRequiredService<IDatabaseInitializer>();
+			await initializer.InitializeAsync().ConfigureAwait(false);
 
 			var canConnect = await context.Database.CanConnectAsync().ConfigureAwait(false);
 			Assert.IsTrue(canConnect);
+
+			// Verifies the schema actually created tables
+			Assert.IsFalse(await context.Entities.AnyAsync().ConfigureAwait(false));
 		}
 	}
 	[TestMethod]
@@ -45,21 +61,32 @@ public class AdapterVerificationTests
 			Assert.Inconclusive("Skipping PostgreSQL test: 'URPG_PG_CONNECTION_STRING' is not set.");
 		}
 
-		var options = new DbContextOptionsBuilder<RpgDbContext>()
-			.UseNpgsql(connectionString, b => b.MigrationsAssembly("UntitledRpgLogic.Infrastructure.Data.PostgreSQL"))
-			.Options;
+		var services = new ServiceCollection();
 
-		var context = new RpgDbContext(options);
-		await using (context.ConfigureAwait(false))
+		// The extension method defines the migrations assembly — no re-specification required!
+		services.AddPostgreSqlDataAccess(opts =>
 		{
+			opts.ConnectionString = connectionString;
+			opts.AutoMigrate = true;
+		});
+
+		var provider = services.BuildServiceProvider();
+		await using (provider.ConfigureAwait(false))
+		{
+			var context = provider.GetRequiredService<RpgDbContext>();
+
 			// Reset the schema cleanly without dropping the database
 			await context.Database.ExecuteSqlRawAsync("DROP SCHEMA public CASCADE; CREATE SCHEMA public;").ConfigureAwait(false);
 
-			// Apply fresh migrations
-			await context.Database.MigrateAsync().ConfigureAwait(false);
+			// Run migrations via IDatabaseInitializer or context.Database.MigrateAsync directly
+			var initializer = provider.GetRequiredService<IDatabaseInitializer>();
+			await initializer.InitializeAsync().ConfigureAwait(false);
 
 			var canConnect = await context.Database.CanConnectAsync().ConfigureAwait(false);
 			Assert.IsTrue(canConnect);
+
+			// Verify that the tables actually migrated
+			Assert.IsFalse(await context.Entities.AnyAsync().ConfigureAwait(false));
 		}
 	}
 }

@@ -13,8 +13,9 @@ public sealed class SqliteDesignTimeDbContextFactory : IDesignTimeDbContextFacto
 	{
 		var optionsBuilder = new DbContextOptionsBuilder<RpgDbContext>();
 		optionsBuilder.UseSqlite(
-			"Data Source=design_time.db",
-			b => b.MigrationsAssembly(typeof(SqliteDesignTimeDbContextFactory).Assembly.FullName));
+			"Data Source=design_time.db", b =>
+				b.MigrationsAssembly("UntitledRpgLogic.Infrastructure.Data.SQLite"))
+			.UseSnakeCaseNamingConvention();
 
 		return new RpgDbContext(optionsBuilder.Options);
 	}

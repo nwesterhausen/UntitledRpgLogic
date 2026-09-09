@@ -33,7 +33,24 @@ public record StatDefinition : IDbEntity<Ulid>
 	/// </summary>
 	/// <param name="name">The name of the stat.</param>
 	[SetsRequiredMembers]
-	public StatDefinition(Name name) : this() => this.Name = name;
+	public StatDefinition(Name name) : this()
+	{
+		this.Name = name;
+		this.Variation = StatVariation.Pseudo;
+	}
+
+	/// <summary>
+	///     Initializes a new instance of the <see cref="StatDefinition" /> class with the specified name.
+	/// </summary>
+	/// <param name="id">The ULID to identify this stat definition.</param>
+	/// <param name="name">The name of the stat.</param>
+	[SetsRequiredMembers]
+	public StatDefinition(Ulid id, Name name) : this()
+	{
+		this.Id = id;
+		this.Name = name;
+		this.Variation = StatVariation.Pseudo;
+	}
 
 	/// <summary>
 	///     The ULID for the stat. Any instances of this stat refer to this definition via this ID.

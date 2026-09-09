@@ -32,5 +32,18 @@ public sealed class DatabaseInitializer : IDatabaseInitializer
 		{
 			await _context.Database.MigrateAsync(cancellationToken).ConfigureAwait(false);
 		}
+
+		var migrations = _context.Database.GetMigrations();
+
+		if (migrations.Any())
+		{
+			// Apply migrations if migration history is present
+			await _context.Database.MigrateAsync(cancellationToken).ConfigureAwait(false);
+		}
+		else
+		{
+			// Fall back to direct schema creation if no migrations are scaffolded for this provider
+			await _context.Database.EnsureCreatedAsync(cancellationToken).ConfigureAwait(false);
+		}
 	}
 }

@@ -8,10 +8,10 @@ public record PersistenceOptions
 	/// <summary>
 	/// 	The connection string for the database connection.
 	/// </summary>
-	public string ConnectionString { get; init; } = string.Empty;
+	public string ConnectionString { get; set; } = string.Empty;
 
 	/// <summary>
 	/// 	Whether to perform the migration to setup the database.
 	/// </summary>
-	public bool AutoMigrate { get; init; } = true;
+	public bool AutoMigrate { get; set; } = true;
 }

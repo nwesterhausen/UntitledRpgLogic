@@ -6,11 +6,20 @@ namespace UntitledRpgLogic.Infrastructure.Data.Repositories;
 
 public class Repository<T> : IRepository<T> where T : class
 {
-	protected readonly RpgDbContext Context;
-	protected readonly DbSet<T> DbSet;
+	/// <summary>
+	///     Gets the underlying <see cref="RpgDbContext" />.
+	/// </summary>
+	protected RpgDbContext Context { get; }
+
+	/// <summary>
+	///     Gets the entity <see cref="Microsoft.EntityFrameworkCore.DbSet{T}" />.
+	/// </summary>
+	protected DbSet<T> DbSet { get; }
 
 	public Repository(RpgDbContext context)
 	{
+		ArgumentNullException.ThrowIfNull(context);
+
 		this.Context = context ?? throw new ArgumentNullException(nameof(context));
 		this.DbSet = context.Set<T>();
 	}

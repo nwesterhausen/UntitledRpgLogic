@@ -1,46 +1,95 @@
+using Microsoft.EntityFrameworkCore.Storage;
 using UntitledRpgLogic.Core.Interfaces.Data;
 
 namespace UntitledRpgLogic.Infrastructure.Data;
 
-/// <summary>
-///     An implementation of the Unit of Work pattern using Entity Framework Core.
-/// </summary>
-/// <remarks>
-///     Initializes a new instance of the <see cref="UnitOfWork" /> class.
-/// </remarks>
-/// <param name="context">The database context to be used for this unit of work.</param>
-public class UnitOfWork(RpgDbContext context) : IUnitOfWork
+public sealed class UnitOfWork : IUnitOfWork
 {
-	private readonly RpgDbContext context = context ?? throw new ArgumentNullException(nameof(context));
-	private bool disposed;
+	private readonly RpgDbContext _context;
+	private IDbContextTransaction? _currentTransaction;
 
-	/// <inheritdoc />
-	public int Commit() => this.context.SaveChanges();
+	public UnitOfWork(RpgDbContext context)
+	{
+		_context = context ?? throw new ArgumentNullException(nameof(context));
+	}
 
-	/// <inheritdoc />
-	public Task<int> CommitAsync(CancellationToken cancellationToken = default) => this.context.SaveChangesAsync(cancellationToken);
+	public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+	{
+		return await _context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+	}
 
-	/// <inheritdoc />
+	public async Task BeginTransactionAsync(CancellationToken cancellationToken = default)
+	{
+		if (_currentTransaction is not null)
+		{
+			return;
+		}
+
+		_currentTransaction = await _context.Database.BeginTransactionAsync(cancellationToken).ConfigureAwait(false);
+	}
+
+	public async Task CommitTransactionAsync(CancellationToken cancellationToken = default)
+	{
+		try
+		{
+			await _context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+
+			if (_currentTransaction is not null)
+			{
+				await _currentTransaction.CommitAsync(cancellationToken).ConfigureAwait(false);
+			}
+		}
+		catch
+		{
+			await RollbackTransactionAsync(cancellationToken).ConfigureAwait(false);
+			throw;
+		}
+		finally
+		{
+			if (_currentTransaction is not null)
+			{
+				await _currentTransaction.DisposeAsync().ConfigureAwait(false);
+				_currentTransaction = null;
+			}
+		}
+	}
+
+	public async Task RollbackTransactionAsync(CancellationToken cancellationToken = default)
+	{
+		try
+		{
+			if (_currentTransaction is not null)
+			{
+				await _currentTransaction.RollbackAsync(cancellationToken).ConfigureAwait(false);
+			}
+		}
+		finally
+		{
+			if (_currentTransaction is not null)
+			{
+				await _currentTransaction.DisposeAsync().ConfigureAwait(false);
+				_currentTransaction = null;
+			}
+		}
+	}
+
 	public void Dispose()
 	{
-		this.Dispose(true);
+		_currentTransaction?.Dispose();
+		_context.Dispose();
+
 		GC.SuppressFinalize(this);
 	}
 
-	/// <summary>
-	///     Disposes the underlying DbContext.
-	/// </summary>
-	/// <param name="disposing">True to release both managed and unmanaged resources; false to release only unmanaged resources.</param>
-	protected virtual void Dispose(bool disposing)
+	public async ValueTask DisposeAsync()
 	{
-		if (!this.disposed)
+		if (_currentTransaction is not null)
 		{
-			if (disposing)
-			{
-				this.context.Dispose();
-			}
+			await _currentTransaction.DisposeAsync().ConfigureAwait(false);
 		}
 
-		this.disposed = true;
+		await _context.DisposeAsync().ConfigureAwait(false);
+
+		GC.SuppressFinalize(this);
 	}
 }

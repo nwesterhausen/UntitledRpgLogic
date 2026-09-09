@@ -23,7 +23,7 @@ public static class PostgreSqlServiceCollectionsExtensions
 	///     If <see langword="null" />, default PostgreSQL options are used.
 	/// </param>
 	/// <returns>The same <see cref="IServiceCollection" /> instance so that additional calls can be chained.</returns>
-	public static IServiceCollection AddPostgresDataAccess(
+	public static IServiceCollection AddPostgreSqlDataAccess(
 		this IServiceCollection services,
 		Action<PostgreSqlPersistenceOptions>? configure = null)
 	{
@@ -33,7 +33,7 @@ public static class PostgreSqlServiceCollectionsExtensions
 		// Register the DbContext
 		_ = services.AddDbContext<RpgDbContext>(dbOptions =>
 			dbOptions.UseNpgsql(options.ConnectionString, b =>
-				b.MigrationsAssembly(typeof(PostgreSqlServiceCollectionsExtensions).Assembly.FullName))
+				b.MigrationsAssembly("UntitledRpgLogic.Infrastructure.Data.PostgreSQL"))
 				.UseSnakeCaseNamingConvention());
 
 		// Register the Unit of Work and Repositories

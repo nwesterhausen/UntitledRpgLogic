@@ -7,7 +7,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite;
 /// <summary>
 ///     Contains extension methods for IServiceCollection to add SQLite data access services.
 /// </summary>
-public static class ServiceCollectionsExtensions
+public static class SqliteServiceCollectionsExtensions
 {
 	/// <summary>
 	///     Registers the SQLite persistence provider and related database services into the service collection.
@@ -28,7 +28,7 @@ public static class ServiceCollectionsExtensions
 		// Register the DbContext
 		_ = services.AddDbContext<RpgDbContext>(dbOptions =>
 			dbOptions.UseSqlite(options.ConnectionString, b =>
-				b.MigrationsAssembly(typeof(SqliteServiceCollectionExtensions).Assembly.FullName))
+				b.MigrationsAssembly("UntitledRpgLogic.Infrastructure.Data.SQLite"))
 			.UseSnakeCaseNamingConvention());
 
 		// Register the Unit of Work and Repositories
