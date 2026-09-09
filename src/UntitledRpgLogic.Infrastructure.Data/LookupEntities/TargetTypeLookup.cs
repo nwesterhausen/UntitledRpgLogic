@@ -3,7 +3,7 @@ using UntitledRpgLogic.Core.Enums;
 
 namespace UntitledRpgLogic.Infrastructure.Data.LookupEntities;
 /// <summary>
-/// Provides a reference table in the databse for the `TargetType` enum.
+/// Provides a reference table in the databse for the <see cref="TargetType" /> enum.
 /// </summary>
 public class TargetTypeLookup
 {

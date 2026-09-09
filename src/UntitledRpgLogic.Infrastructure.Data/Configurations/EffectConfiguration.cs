@@ -7,7 +7,7 @@ using UntitledRpgLogic.Infrastructure.Data.LookupEntities;
 
 namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
 ///<summary>
-/// Defines advanced table configuration for `Effect`
+/// Defines advanced table configuration for <see cref="Effect" />
 ///</summary>
 public class EffectConfiguration : IEntityTypeConfiguration<Effect>
 {

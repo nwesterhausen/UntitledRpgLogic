@@ -6,7 +6,7 @@ using UntitledRpgLogic.Infrastructure.Data.LookupEntities;
 
 namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
 ///<summary>
-/// Defines the `MessageType` lookup table
+/// Defines the <see cref="MessageType" /> lookup table
 ///</summary>
 public class MessageTypeLookupConfiguration : IEntityTypeConfiguration<MessageTypeLookup>
 {

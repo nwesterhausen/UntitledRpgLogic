@@ -6,7 +6,7 @@ using UntitledRpgLogic.Infrastructure.Data.LookupEntities;
 
 namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
 ///<summary>
-/// Defines the `Quality` lookup table
+/// Defines the <see cref="Quality" /> lookup table
 ///</summary>
 public class QualityLookupConfiguration : IEntityTypeConfiguration<QualityLookup>
 {

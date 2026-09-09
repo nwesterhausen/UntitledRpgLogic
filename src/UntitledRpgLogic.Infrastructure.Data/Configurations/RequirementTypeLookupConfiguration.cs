@@ -6,7 +6,7 @@ using UntitledRpgLogic.Infrastructure.Data.LookupEntities;
 
 namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
 ///<summary>
-/// Defines the `RequirementType` lookup table
+/// Defines the <see cref="RequirementType" /> lookup table
 ///</summary>
 public class RequirementTypeLookupConfiguration : IEntityTypeConfiguration<RequirementTypeLookup>
 {

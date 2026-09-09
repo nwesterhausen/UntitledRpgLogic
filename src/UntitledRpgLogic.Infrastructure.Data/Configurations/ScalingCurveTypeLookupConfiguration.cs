@@ -6,7 +6,7 @@ using UntitledRpgLogic.Infrastructure.Data.LookupEntities;
 
 namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
 ///<summary>
-/// Defines the `ScalingCurveType` lookup table
+/// Defines the <see cref="ScalingCurveType" /> lookup table
 ///</summary>
 public class ScalingCurveTypeLookupConfiguration : IEntityTypeConfiguration<ScalingCurveTypeLookup>
 {

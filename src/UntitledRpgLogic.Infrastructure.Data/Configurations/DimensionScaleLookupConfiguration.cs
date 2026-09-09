@@ -6,7 +6,7 @@ using UntitledRpgLogic.Infrastructure.Data.LookupEntities;
 
 namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
 ///<summary>
-/// Defines the `DimensionScale` lookup table
+/// Defines the <see cref="DimensionScale" /> lookup table
 ///</summary>
 public class DimensionScaleLookupConfiguration : IEntityTypeConfiguration<DimensionScaleLookup>
 {

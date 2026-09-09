@@ -5,7 +5,7 @@ using UntitledRpgLogic.Core.Models;
 
 namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
 ///<summary>
-/// Defines relationship in the `EntityStats` table
+/// Defines relationship in the <see cref="EntitySkills" /> table
 ///</summary>
 public class EntitySkillsConfiguration : IEntityTypeConfiguration<EntitySkills>
 {

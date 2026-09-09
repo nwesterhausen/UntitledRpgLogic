@@ -6,7 +6,7 @@ using UntitledRpgLogic.Infrastructure.Data.LookupEntities;
 
 namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
 ///<summary>
-/// Defines the `MessagePriority` lookup table
+/// Defines the <see cref="MessagePriority" /> lookup table
 ///</summary>
 public class MessagePriorityLookupConfiguration : IEntityTypeConfiguration<MessagePriorityLookup>
 {

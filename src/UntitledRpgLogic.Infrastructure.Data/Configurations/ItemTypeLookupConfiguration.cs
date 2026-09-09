@@ -6,7 +6,7 @@ using UntitledRpgLogic.Infrastructure.Data.LookupEntities;
 
 namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
 ///<summary>
-/// Defines the `ItemType` lookup table
+/// Defines the <see cref="ItemType" /> lookup table
 ///</summary>
 public class ItemTypeLookupConfiguration : IEntityTypeConfiguration<ItemTypeLookup>
 {

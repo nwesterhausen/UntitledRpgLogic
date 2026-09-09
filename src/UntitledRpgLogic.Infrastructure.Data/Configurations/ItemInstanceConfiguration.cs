@@ -5,7 +5,7 @@ using UntitledRpgLogic.Core.Models;
 
 namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
 ///<summary>
-/// Defines relationship in the `Entity` table
+/// Defines relationship in the <see cref="ItemInstance" /> table
 ///</summary>
 public class ItemInstanceConfiguration : IEntityTypeConfiguration<ItemInstance>
 {

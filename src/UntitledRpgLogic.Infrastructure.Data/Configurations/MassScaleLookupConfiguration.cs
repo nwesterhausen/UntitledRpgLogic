@@ -6,7 +6,7 @@ using UntitledRpgLogic.Infrastructure.Data.LookupEntities;
 
 namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
 ///<summary>
-/// Defines the `MassScale` lookup table
+/// Defines the <see cref="MassScale" /> lookup table
 ///</summary>
 public class MassScaleLookupConfiguration : IEntityTypeConfiguration<MassScaleLookup>
 {

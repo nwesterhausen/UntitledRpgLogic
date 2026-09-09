@@ -519,6 +519,83 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
                     b.ToTable("log_entries", (string)null);
                 });
 
+            modelBuilder.Entity("UntitledRpgLogic.Core.Models.MapDefinition", b =>
+                {
+                    b.Property<byte[]>("Id")
+                        .HasColumnType("BLOB")
+                        .HasColumnName("id");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(512)
+                        .HasColumnType("TEXT")
+                        .HasColumnName("description");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("name");
+
+                    b.Property<byte>("Type")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("type");
+
+                    b.HasKey("Id")
+                        .HasName("pk_map_definitions");
+
+                    b.ToTable("map_definitions", (string)null);
+                });
+
+            modelBuilder.Entity("UntitledRpgLogic.Core.Models.MapTransition", b =>
+                {
+                    b.Property<byte[]>("Id")
+                        .HasColumnType("BLOB")
+                        .HasColumnName("id");
+
+                    b.Property<byte[]>("SourceMapId")
+                        .IsRequired()
+                        .HasColumnType("BLOB")
+                        .HasColumnName("source_map_id");
+
+                    b.Property<float>("SourceX")
+                        .HasColumnType("REAL")
+                        .HasColumnName("source_x");
+
+                    b.Property<float>("SourceY")
+                        .HasColumnType("REAL")
+                        .HasColumnName("source_y");
+
+                    b.Property<byte[]>("TargetMapId")
+                        .IsRequired()
+                        .HasColumnType("BLOB")
+                        .HasColumnName("target_map_id");
+
+                    b.Property<float>("TargetX")
+                        .HasColumnType("REAL")
+                        .HasColumnName("target_x");
+
+                    b.Property<float>("TargetY")
+                        .HasColumnType("REAL")
+                        .HasColumnName("target_y");
+
+                    b.Property<string>("TransitionTag")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("TEXT")
+                        .HasColumnName("transition_tag");
+
+                    b.HasKey("Id")
+                        .HasName("pk_map_transitions");
+
+                    b.HasIndex("TargetMapId")
+                        .HasDatabaseName("ix_map_transitions_target_map_id");
+
+                    b.HasIndex("SourceMapId", "SourceX", "SourceY")
+                        .HasDatabaseName("ix_map_transitions_source_map_id_source_x_source_y");
+
+                    b.ToTable("map_transitions", (string)null);
+                });
+
             modelBuilder.Entity("UntitledRpgLogic.Core.Models.MaterialDefinition", b =>
                 {
                     b.Property<byte[]>("Id")
@@ -720,6 +797,49 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
                         .HasDatabaseName("ix_stat_definitions_variation");
 
                     b.ToTable("stat_definitions", (string)null);
+                });
+
+            modelBuilder.Entity("UntitledRpgLogic.Core.Models.WorldChunk", b =>
+                {
+                    b.Property<byte[]>("Id")
+                        .HasColumnType("BLOB")
+                        .HasColumnName("id");
+
+                    b.Property<int>("ChunkX")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("chunk_x");
+
+                    b.Property<int>("ChunkY")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("chunk_y");
+
+                    b.Property<byte[]>("CompressedTileBlob")
+                        .IsRequired()
+                        .HasColumnType("BLOB")
+                        .HasColumnName("compressed_tile_blob");
+
+                    b.Property<byte[]>("MapId")
+                        .IsRequired()
+                        .HasColumnType("BLOB")
+                        .HasColumnName("map_id");
+
+                    b.Property<byte[]>("MaterialPalette")
+                        .IsRequired()
+                        .HasColumnType("BLOB")
+                        .HasColumnName("material_palette");
+
+                    b.Property<uint>("Version")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("version");
+
+                    b.HasKey("Id")
+                        .HasName("pk_world_chunks");
+
+                    b.HasIndex("MapId", "ChunkX", "ChunkY")
+                        .IsUnique()
+                        .HasDatabaseName("ix_world_chunks_map_id_chunk_x_chunk_y");
+
+                    b.ToTable("world_chunks", (string)null);
                 });
 
             modelBuilder.Entity("UntitledRpgLogic.Infrastructure.Data.LookupEntities.AbilityTypeLookup", b =>
@@ -1377,6 +1497,55 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
                         {
                             Id = 9,
                             Name = "Miscellaneous"
+                        });
+                });
+
+            modelBuilder.Entity("UntitledRpgLogic.Infrastructure.Data.LookupEntities.MapTypeLookup", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("id");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("description");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(127)
+                        .HasColumnType("TEXT")
+                        .HasColumnName("name");
+
+                    b.HasKey("Id")
+                        .HasName("pk_map_type_lookup");
+
+                    b.ToTable("map_type_lookup", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 0,
+                            Name = "Overworld"
+                        },
+                        new
+                        {
+                            Id = 1,
+                            Name = "Dungeon"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Cave"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "BuildingInterior"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "PocketDimension"
                         });
                 });
 
@@ -2667,6 +2836,106 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
                     b.Navigation("Stat");
                 });
 
+            modelBuilder.Entity("UntitledRpgLogic.Core.Models.MapDefinition", b =>
+                {
+                    b.OwnsOne("UntitledRpgLogic.Core.Models.AtmosphereProfile", "Atmosphere", b1 =>
+                        {
+                            b1.Property<byte[]>("MapDefinitionId");
+
+                            b1.Property<float>("ParticulateDensity");
+
+                            b1.Property<float>("TotalPressureAtm");
+
+                            b1.HasKey("MapDefinitionId")
+                                .HasName("pk_map_definitions");
+
+                            b1.ToTable("map_definitions");
+
+                            b1
+                                .ToJson("atmosphere")
+                                .HasColumnType("TEXT");
+
+                            b1.WithOwner()
+                                .HasForeignKey("MapDefinitionId")
+                                .HasConstraintName("fk_map_definitions_map_definitions_map_definition_id");
+
+                            b1.OwnsMany("UntitledRpgLogic.Core.Models.AtmosphericGasFraction", "GasFractions", b2 =>
+                                {
+                                    b2.Property<byte[]>("AtmosphereProfileMapDefinitionId");
+
+                                    b2.Property<int>("__synthesizedOrdinal")
+                                        .ValueGeneratedOnAddOrUpdate();
+
+                                    b2.Property<byte[]>("MaterialId")
+                                        .IsRequired();
+
+                                    b2.Property<float>("Ratio");
+
+                                    b2.HasKey("AtmosphereProfileMapDefinitionId", "__synthesizedOrdinal")
+                                        .HasName("pk_map_definitions");
+
+                                    b2.ToTable("map_definitions");
+
+                                    b2.WithOwner()
+                                        .HasForeignKey("AtmosphereProfileMapDefinitionId")
+                                        .HasConstraintName("fk_map_definitions_map_definitions_atmosphere_profile_map_definition_id");
+                                });
+
+                            b1.Navigation("GasFractions");
+                        });
+
+                    b.OwnsMany("UntitledRpgLogic.Core.Models.AmbientValue", "BaselineAmbients", b1 =>
+                        {
+                            b1.Property<byte[]>("MapDefinitionId");
+
+                            b1.Property<int>("__synthesizedOrdinal")
+                                .ValueGeneratedOnAddOrUpdate();
+
+                            b1.Property<int>("Type");
+
+                            b1.Property<float>("Value");
+
+                            b1.HasKey("MapDefinitionId", "__synthesizedOrdinal")
+                                .HasName("pk_map_definitions");
+
+                            b1.ToTable("map_definitions");
+
+                            b1
+                                .ToJson("baseline_ambients")
+                                .HasColumnType("TEXT");
+
+                            b1.WithOwner()
+                                .HasForeignKey("MapDefinitionId")
+                                .HasConstraintName("fk_map_definitions_map_definitions_map_definition_id");
+                        });
+
+                    b.Navigation("Atmosphere")
+                        .IsRequired();
+
+                    b.Navigation("BaselineAmbients");
+                });
+
+            modelBuilder.Entity("UntitledRpgLogic.Core.Models.MapTransition", b =>
+                {
+                    b.HasOne("UntitledRpgLogic.Core.Models.MapDefinition", "SourceMap")
+                        .WithMany("Transitions")
+                        .HasForeignKey("SourceMapId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_map_transitions_map_definitions_source_map_id");
+
+                    b.HasOne("UntitledRpgLogic.Core.Models.MapDefinition", "TargetMap")
+                        .WithMany()
+                        .HasForeignKey("TargetMapId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_map_transitions_map_definitions_target_map_id");
+
+                    b.Navigation("SourceMap");
+
+                    b.Navigation("TargetMap");
+                });
+
             modelBuilder.Entity("UntitledRpgLogic.Core.Models.MaterialDefinition", b =>
                 {
                     b.OwnsOne("UntitledRpgLogic.Core.Models.ElectricalProperties", "ElectricalProperties", b1 =>
@@ -3044,6 +3313,90 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
                         .HasConstraintName("fk_stat_definitions_stat_variation_lookup_variation");
                 });
 
+            modelBuilder.Entity("UntitledRpgLogic.Core.Models.WorldChunk", b =>
+                {
+                    b.HasOne("UntitledRpgLogic.Core.Models.MapDefinition", "Map")
+                        .WithMany("Chunks")
+                        .HasForeignKey("MapId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_world_chunks_map_definitions_map_id");
+
+                    b.OwnsMany("UntitledRpgLogic.Core.Models.AmbientValue", "AmbientOverrides", b1 =>
+                        {
+                            b1.Property<byte[]>("WorldChunkId");
+
+                            b1.Property<int>("__synthesizedOrdinal")
+                                .ValueGeneratedOnAddOrUpdate();
+
+                            b1.Property<int>("Type");
+
+                            b1.Property<float>("Value");
+
+                            b1.HasKey("WorldChunkId", "__synthesizedOrdinal");
+
+                            b1.ToTable("world_chunks");
+
+                            b1
+                                .ToJson("ambient_overrides")
+                                .HasColumnType("TEXT");
+
+                            b1.WithOwner()
+                                .HasForeignKey("WorldChunkId")
+                                .HasConstraintName("fk_world_chunks_world_chunks_world_chunk_id");
+                        });
+
+                    b.OwnsOne("UntitledRpgLogic.Core.Models.AtmosphereProfile", "AtmosphereOverride", b1 =>
+                        {
+                            b1.Property<byte[]>("WorldChunkId");
+
+                            b1.Property<float>("ParticulateDensity");
+
+                            b1.Property<float>("TotalPressureAtm");
+
+                            b1.HasKey("WorldChunkId");
+
+                            b1.ToTable("world_chunks");
+
+                            b1
+                                .ToJson("atmosphere_override")
+                                .HasColumnType("TEXT");
+
+                            b1.WithOwner()
+                                .HasForeignKey("WorldChunkId")
+                                .HasConstraintName("fk_world_chunks_world_chunks_id");
+
+                            b1.OwnsMany("UntitledRpgLogic.Core.Models.AtmosphericGasFraction", "GasFractions", b2 =>
+                                {
+                                    b2.Property<byte[]>("AtmosphereProfileWorldChunkId");
+
+                                    b2.Property<int>("__synthesizedOrdinal")
+                                        .ValueGeneratedOnAddOrUpdate();
+
+                                    b2.Property<byte[]>("MaterialId")
+                                        .IsRequired();
+
+                                    b2.Property<float>("Ratio");
+
+                                    b2.HasKey("AtmosphereProfileWorldChunkId", "__synthesizedOrdinal");
+
+                                    b2.ToTable("world_chunks");
+
+                                    b2.WithOwner()
+                                        .HasForeignKey("AtmosphereProfileWorldChunkId")
+                                        .HasConstraintName("fk_world_chunks_world_chunks_atmosphere_profile_world_chunk_id");
+                                });
+
+                            b1.Navigation("GasFractions");
+                        });
+
+                    b.Navigation("AmbientOverrides");
+
+                    b.Navigation("AtmosphereOverride");
+
+                    b.Navigation("Map");
+                });
+
             modelBuilder.Entity("ability_active_effects", b =>
                 {
                     b.HasOne("UntitledRpgLogic.Core.Models.Ability", null)
@@ -3109,6 +3462,13 @@ namespace UntitledRpgLogic.Infrastructure.Data.Migrations
             modelBuilder.Entity("UntitledRpgLogic.Core.Models.ItemDefinition", b =>
                 {
                     b.Navigation("Instances");
+                });
+
+            modelBuilder.Entity("UntitledRpgLogic.Core.Models.MapDefinition", b =>
+                {
+                    b.Navigation("Chunks");
+
+                    b.Navigation("Transitions");
                 });
 
             modelBuilder.Entity("UntitledRpgLogic.Core.Models.SkillDefinition", b =>

@@ -2,3 +2,5 @@
   href: ./creating-configs.md
 - name: RPG Config Tooling
   href: ./tooling.md
+- name: "Library Usage: Interfaces"
+  href: ./usage/interfaces.md

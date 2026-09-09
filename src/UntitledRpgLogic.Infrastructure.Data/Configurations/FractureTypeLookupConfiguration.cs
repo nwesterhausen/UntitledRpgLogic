@@ -6,7 +6,7 @@ using UntitledRpgLogic.Infrastructure.Data.LookupEntities;
 
 namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
 ///<summary>
-/// Defines the `FractureType` lookup table
+/// Defines the <see cref="FractureType" /> lookup table
 ///</summary>
 public class FractureTypeLookupConfiguration : IEntityTypeConfiguration<FractureTypeLookup>
 {

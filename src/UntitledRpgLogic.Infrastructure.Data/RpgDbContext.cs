@@ -140,11 +140,14 @@ public class RpgDbContext(DbContextOptions<RpgDbContext> options) : DbContext(op
 		ArgumentNullException.ThrowIfNull(configurationBuilder, nameof(configurationBuilder));
 
 		// This is where the value converters are registered.
-		// This convention tells EF Core to use our custom converter for every property of type Ulid.
+		// Tell EF Core to use our custom converter for every property of type Ulid.
 		_ = configurationBuilder.Properties<Ulid>()
 			.HaveConversion<UlidToBytesConverter>();
+		// Tell EF Core to use our custom converter for every property of type ICollection<Ulid>.
+		_ = configurationBuilder.Properties<ICollection<Ulid>>()
+			.HaveConversion<UlidCollectionToBytesConverter>();
 
-		// This convention tells EF Core to use our custom converter for every property of type Name.
+		// Tell EF Core to use our custom converter for every property of type Name.
 		_ = configurationBuilder.Properties<Name>()
 			.HaveConversion<NameToSimpleStringConverter>();
 

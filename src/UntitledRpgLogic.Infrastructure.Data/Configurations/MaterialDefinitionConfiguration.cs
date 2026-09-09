@@ -7,7 +7,7 @@ using UntitledRpgLogic.Infrastructure.Data.ValueConverters;
 
 namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
 ///<summary>
-/// Defines advanced table configuration for `MaterialDefinition`
+/// Defines advanced table configuration for <see cref="MaterialDefinition" />
 ///</summary>
 public class MaterialDefinitionConfiguration : IEntityTypeConfiguration<MaterialDefinition>
 {
@@ -48,7 +48,7 @@ public class MaterialDefinitionConfiguration : IEntityTypeConfiguration<Material
 
 		builder.OwnsMany(m => m.SmeltYields, yb =>
 		{
-    		yb.ToJson();
+			yb.ToJson();
 		});
 	}
 }

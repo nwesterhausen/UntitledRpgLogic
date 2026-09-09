@@ -6,7 +6,7 @@ using UntitledRpgLogic.Infrastructure.Data.LookupEntities;
 
 namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
 ///<summary>
-/// Defines the `StatVariation` lookup table
+/// Defines the <see cref="StatVariation" /> lookup table
 ///</summary>
 public class StatVariationLookupConfiguration : IEntityTypeConfiguration<StatVariationLookup>
 {

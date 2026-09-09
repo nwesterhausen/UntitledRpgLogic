@@ -14,7 +14,7 @@ namespace UntitledRpgLogic.Services.Logging.Database;
 public sealed class DatabaseLogger : ILogger, IDisposable
 {
 	/// <summary>
-	///     A `CancellationTokenSource` used to signal cancellation to the background processing task.
+	///     A <see cref="CancellationTokenSource" /> used to signal cancellation to the background processing task.
 	/// </summary>
 	private readonly CancellationTokenSource cancellationTokenSource = new();
 
@@ -39,7 +39,7 @@ public sealed class DatabaseLogger : ILogger, IDisposable
 	private readonly IExternalScopeProvider scopeProvider;
 
 	/// <summary>
-	///     The `IServiceProvider` used to resolve dependencies, such as the `RpgDbContext`, for database operations.
+	///     The <see cref="IServiceProvider" /> used to resolve dependencies, such as the <see cref="RpgDbContext" />, for database operations.
 	/// </summary>
 	private readonly IServiceProvider serviceProvider;
 

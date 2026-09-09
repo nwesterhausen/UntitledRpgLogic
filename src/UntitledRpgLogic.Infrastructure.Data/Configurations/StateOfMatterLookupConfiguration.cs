@@ -6,7 +6,7 @@ using UntitledRpgLogic.Infrastructure.Data.LookupEntities;
 
 namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
 ///<summary>
-/// Defines the `StateOfMatter` lookup table
+/// Defines the <see cref="StateOfMatter" /> lookup table
 ///</summary>
 public class StateOfMatterLookupConfiguration : IEntityTypeConfiguration<StateOfMatterLookup>
 {

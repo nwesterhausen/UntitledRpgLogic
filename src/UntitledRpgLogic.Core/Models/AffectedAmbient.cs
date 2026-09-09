@@ -6,18 +6,18 @@ namespace UntitledRpgLogic.Core.Models;
 /// <remarks>Owned by <see cref="Effect" /> and serialized as JSON.</remarks>
 public record AffectedAmbient
 {
-    /// <summary>
-    ///     Identifier of the <see cref="Ambient" /> definition (e.g., LocalTemperature) being influenced.
-    /// </summary>
-    public Ulid AmbientId { get; init; }
+	/// <summary>
+	///     Identifier of the <see cref="Ambient" /> definition (e.g., LocalTemperature) being influenced.
+	/// </summary>
+	public Ulid AmbientId { get; init; }
 
-    /// <summary>
-    ///     The magnitude of the change.
-    /// </summary>
-    public float AmountChange { get; init; }
+	/// <summary>
+	///     The magnitude of the change.
+	/// </summary>
+	public float AmountChange { get; init; }
 
-    /// <summary>
-    ///     Indicates whether AmountChange is a percentage modifier (true) or a flat offset (false).
-    /// </summary>
-    public bool IsPercentage { get; init; }
+	/// <summary>
+	///     Indicates whether AmountChange is a percentage modifier (true) or a flat offset (false).
+	/// </summary>
+	public bool IsPercentage { get; init; }
 }

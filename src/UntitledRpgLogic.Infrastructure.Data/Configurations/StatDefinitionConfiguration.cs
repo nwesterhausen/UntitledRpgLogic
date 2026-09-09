@@ -6,7 +6,7 @@ using UntitledRpgLogic.Infrastructure.Data.LookupEntities;
 
 namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
 ///<summary>
-/// Defines advanced table configuration for `StatDefinition`
+/// Defines advanced table configuration for <see cref="StatDefinition" />
 ///</summary>
 public class StatDefinitionConfiguration : IEntityTypeConfiguration<StatDefinition>
 {

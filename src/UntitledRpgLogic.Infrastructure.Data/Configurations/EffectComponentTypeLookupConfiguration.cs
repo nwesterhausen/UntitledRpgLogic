@@ -6,7 +6,7 @@ using UntitledRpgLogic.Infrastructure.Data.LookupEntities;
 
 namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
 ///<summary>
-/// Defines the `EffectComponentType` lookup table
+/// Defines the <see cref="EffectComponentType" /> lookup table
 ///</summary>
 public class EffectComponentTypeLookupConfiguration : IEntityTypeConfiguration<EffectComponentTypeLookup>
 {

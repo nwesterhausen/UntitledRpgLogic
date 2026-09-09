@@ -5,7 +5,7 @@ using UntitledRpgLogic.Core.Models;
 
 namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
 ///<summary>
-/// Defines advanced table configuration for `EntityStats`
+/// Defines advanced table configuration for <see cref="EntityStats" />
 ///</summary>
 public class EntityStatsConfiguration : IEntityTypeConfiguration<EntityStats>
 {

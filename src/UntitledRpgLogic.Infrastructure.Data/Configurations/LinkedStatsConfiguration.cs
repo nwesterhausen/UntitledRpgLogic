@@ -5,7 +5,7 @@ using UntitledRpgLogic.Core.Models;
 
 namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
 ///<summary>
-/// Advanced table configuration for `LinkedStats`
+/// Advanced table configuration for <see cref="LinkedStats" />
 ///</summary>
 public class LinkedStatsConfiguration : IEntityTypeConfiguration<LinkedStats>
 {

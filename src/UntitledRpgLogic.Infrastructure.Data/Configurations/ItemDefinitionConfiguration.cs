@@ -4,8 +4,12 @@ using UntitledRpgLogic.Core.Models;
 
 namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
 
-internal sealed class ItemDefinitionConfiguration : IEntityTypeConfiguration<ItemDefinition>
+///<summary>
+/// Defines advanced table configuration for <see cref="ItemDefinition"/>
+///</summary>
+public class ItemDefinitionConfiguration : IEntityTypeConfiguration<ItemDefinition>
 {
+	/// <inheritdoc  />
 	public void Configure(EntityTypeBuilder<ItemDefinition> builder)
 	{
 		ArgumentNullException.ThrowIfNull(builder);
