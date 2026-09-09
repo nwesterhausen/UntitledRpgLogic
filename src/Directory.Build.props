@@ -45,7 +45,6 @@
 	<ItemGroup Condition="'$(CI)' != 'true'">
 		<PackageReference Include="Nerdbank.GitVersioning" Condition="!Exists('packages.config')">
 			<PrivateAssets>all</PrivateAssets>
-			<Version>3.10.94</Version>
 		</PackageReference>
 	</ItemGroup>
 </Project>
