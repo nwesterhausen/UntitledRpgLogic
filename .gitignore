@@ -506,3 +506,4 @@ fabric.properties
 _site/
 api/
 design_time.db*
+*.runsettings

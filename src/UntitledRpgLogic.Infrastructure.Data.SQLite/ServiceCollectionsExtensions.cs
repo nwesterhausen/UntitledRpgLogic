@@ -21,7 +21,8 @@ public static class ServiceCollectionsExtensions
 	{
 		// 1. Register the DbContext
 		_ = services.AddDbContext<RpgDbContext>(options =>
-			options.UseSqlite(connectionString)
+				options.UseSqlite(connectionString, b =>
+					b.MigrationsAssembly(typeof(SqliteDesignTimeDbContextFactory).Assembly.FullName))
 				.UseSnakeCaseNamingConvention());
 
 		// 2. Register the Unit of Work and Repositories

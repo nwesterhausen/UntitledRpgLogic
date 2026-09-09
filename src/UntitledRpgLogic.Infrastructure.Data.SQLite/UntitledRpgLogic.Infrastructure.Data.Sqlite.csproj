@@ -1,5 +1,4 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
 	<PropertyGroup>
 		<!-- Package metadata -->
 		<AssemblyName>UntitledRpgLogic.Infrastructure.Data.SQLite</AssemblyName>
@@ -8,13 +7,16 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="EFCore.NamingConventions"/>
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite"/>
+		<PackageReference Include="EFCore.NamingConventions" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\UntitledRpgLogic.Core\UntitledRpgLogic.Core.csproj"/>
-		<ProjectReference Include="..\UntitledRpgLogic.Infrastructure.Data\UntitledRpgLogic.Infrastructure.Data.csproj"/>
+		<ProjectReference Include="..\UntitledRpgLogic.Core\UntitledRpgLogic.Core.csproj" />
+		<ProjectReference Include="..\UntitledRpgLogic.Infrastructure.Data\UntitledRpgLogic.Infrastructure.Data.csproj" />
 	</ItemGroup>
-
 </Project>

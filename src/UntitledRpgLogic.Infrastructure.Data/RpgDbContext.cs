@@ -19,10 +19,6 @@ public class RpgDbContext(DbContextOptions<RpgDbContext> options) : DbContext(op
 	/// </summary>
 	public DbSet<Ability> Abilities { get; set; } = null!;
 
-	/// <summary>
-	/// 	Table for affected ambients of the world
-	/// </summary>
-	public DbSet<AffectedAmbient> AffectedAmbients { get; set; } = null!;
 
 	/// <summary>
 	///     Table for applied modifiers, which represent modifiers that have been applied to stats or skills.
