@@ -5,8 +5,12 @@ using UntitledRpgLogic.Infrastructure.Data.LookupEntities;
 
 namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
 
-internal sealed class MaterialSlotLookupConfiguration : IEntityTypeConfiguration<MaterialSlotLookup>
+/// <summary>
+/// 	Lookup table for <see cref="MaterialSlot" />
+/// </summary>
+public sealed class MaterialSlotLookupConfiguration : IEntityTypeConfiguration<MaterialSlotLookup>
 {
+	/// <inheritdoc />
 	public void Configure(EntityTypeBuilder<MaterialSlotLookup> builder)
 	{
 		ArgumentNullException.ThrowIfNull(builder);

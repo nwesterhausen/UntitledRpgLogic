@@ -8,7 +8,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
 ///<summary>
 /// Defines the <see cref="StatVariation" /> lookup table
 ///</summary>
-public class StatVariationLookupConfiguration : IEntityTypeConfiguration<StatVariationLookup>
+public sealed class StatVariationLookupConfiguration : IEntityTypeConfiguration<StatVariationLookup>
 {
 	///<inheritdoc />
 	public void Configure(EntityTypeBuilder<StatVariationLookup> builder)

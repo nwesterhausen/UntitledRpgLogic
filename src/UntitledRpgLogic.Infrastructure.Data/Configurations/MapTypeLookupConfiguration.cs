@@ -8,7 +8,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
 ///<summary>
 /// Defines the <see cref="MapType" /> lookup table
 ///</summary>
-public class MapTypeLookupConfiguration : IEntityTypeConfiguration<MapTypeLookup>
+public sealed class MapTypeLookupConfiguration : IEntityTypeConfiguration<MapTypeLookup>
 {
 	///<inheritdoc />
 	public void Configure(EntityTypeBuilder<MapTypeLookup> builder)

@@ -9,7 +9,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
 ///<summary>
 /// Defines advanced table configuration for <see cref="Effect" />
 ///</summary>
-public class EffectConfiguration : IEntityTypeConfiguration<Effect>
+public sealed class EffectConfiguration : IEntityTypeConfiguration<Effect>
 {
 	///<inheritdoc />
 	public void Configure(EntityTypeBuilder<Effect> builder)

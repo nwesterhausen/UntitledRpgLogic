@@ -8,7 +8,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
 ///<summary>
 /// Defines the <see cref="Quality" /> lookup table
 ///</summary>
-public class QualityLookupConfiguration : IEntityTypeConfiguration<QualityLookup>
+public sealed class QualityLookupConfiguration : IEntityTypeConfiguration<QualityLookup>
 {
 	///<inheritdoc />
 	public void Configure(EntityTypeBuilder<QualityLookup> builder)

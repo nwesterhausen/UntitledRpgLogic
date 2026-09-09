@@ -1,5 +1,3 @@
-using UntitledRpgLogic.Core.Models;
-
 namespace UntitledRpgLogic.WorldGen.Models;
 
 /// <summary>
@@ -7,9 +5,9 @@ namespace UntitledRpgLogic.WorldGen.Models;
 /// </summary>
 public class TerrainHydrology
 {
-	private readonly bool[,] _isRiver;
-	private readonly ushort[,] _liquidDepth;
-	private readonly Ulid?[,] _liquidMaterial;
+	private readonly bool[] _isRiver;
+	private readonly ushort[] _liquidDepth;
+	private readonly Ulid?[] _liquidMaterial;
 
 	/// <summary>
 	///     Initializes a new instance of the <see cref="TerrainHydrology" /> class with specified grid dimensions.
@@ -18,11 +16,49 @@ public class TerrainHydrology
 	/// <param name="heightTiles">The total height of the hydrological grid in tiles.</param>
 	public TerrainHydrology(int widthTiles, int heightTiles)
 	{
+		ArgumentOutOfRangeException.ThrowIfNegativeOrZero(widthTiles);
+		ArgumentOutOfRangeException.ThrowIfNegativeOrZero(heightTiles);
+
+		var totalSize = widthTiles * heightTiles;
 		this.WidthTiles = widthTiles;
 		this.HeightTiles = heightTiles;
-		this._liquidDepth = new ushort[widthTiles, heightTiles];
-		this._liquidMaterial = new Ulid?[widthTiles, heightTiles];
-		this._isRiver = new bool[widthTiles, heightTiles];
+		this._liquidDepth = new ushort[totalSize];
+		this._liquidMaterial = new Ulid?[totalSize];
+		this._isRiver = new bool[totalSize];
+	}
+
+	/// <summary>
+	///     Initializes a new instance of the <see cref="TerrainHydrology" /> class using existing flat arrays.
+	/// </summary>
+	/// <param name="widthTiles">The total width of the hydrological grid in tiles.</param>
+	/// <param name="heightTiles">The total height of the hydrological grid in tiles.</param>
+	/// <param name="liquidDepth">The flattened surface liquid depth array of length <c>widthTiles * heightTiles</c>.</param>
+	/// <param name="liquidMaterial">The flattened liquid material ULID array of length <c>widthTiles * heightTiles</c>.</param>
+	/// <param name="isRiver">The flattened river flag array of length <c>widthTiles * heightTiles</c>.</param>
+	public TerrainHydrology(
+		int widthTiles,
+		int heightTiles,
+		ushort[] liquidDepth,
+		Ulid?[] liquidMaterial,
+		bool[] isRiver)
+	{
+		ArgumentOutOfRangeException.ThrowIfNegativeOrZero(widthTiles);
+		ArgumentOutOfRangeException.ThrowIfNegativeOrZero(heightTiles);
+		ArgumentNullException.ThrowIfNull(liquidDepth);
+		ArgumentNullException.ThrowIfNull(liquidMaterial);
+		ArgumentNullException.ThrowIfNull(isRiver);
+
+		var expectedSize = widthTiles * heightTiles;
+		if (liquidDepth.Length != expectedSize || liquidMaterial.Length != expectedSize || isRiver.Length != expectedSize)
+		{
+			throw new ArgumentException($"All input arrays must have length equal to width * height ({expectedSize}).");
+		}
+
+		this.WidthTiles = widthTiles;
+		this.HeightTiles = heightTiles;
+		this._liquidDepth = liquidDepth;
+		this._liquidMaterial = liquidMaterial;
+		this._isRiver = isRiver;
 	}
 
 	/// <summary>
@@ -48,11 +84,11 @@ public class TerrainHydrology
 			return 0;
 		}
 
-		return this._liquidDepth[tileX, tileY];
+		return this._liquidDepth[(tileY * this.WidthTiles) + tileX];
 	}
 
 	/// <summary>
-	///     Retrieves the <see cref="MaterialDefinition" /> identifier for the liquid at the specified tile coordinate.
+	///     Retrieves the material identifier for the liquid at the specified tile coordinate.
 	/// </summary>
 	/// <param name="tileX">The horizontal tile index.</param>
 	/// <param name="tileY">The vertical tile index.</param>
@@ -64,7 +100,7 @@ public class TerrainHydrology
 			return null;
 		}
 
-		return this._liquidMaterial[tileX, tileY];
+		return this._liquidMaterial[(tileY * this.WidthTiles) + tileX];
 	}
 
 	/// <summary>
@@ -79,9 +115,10 @@ public class TerrainHydrology
 	{
 		if (tileX >= 0 && tileX < this.WidthTiles && tileY >= 0 && tileY < this.HeightTiles)
 		{
-			this._liquidDepth[tileX, tileY] = depth;
-			this._liquidMaterial[tileX, tileY] = materialId;
-			this._isRiver[tileX, tileY] = isRiverChannel;
+			var index = (tileY * this.WidthTiles) + tileX;
+			this._liquidDepth[index] = depth;
+			this._liquidMaterial[index] = materialId;
+			this._isRiver[index] = isRiverChannel;
 		}
 	}
 
@@ -99,11 +136,12 @@ public class TerrainHydrology
 		var startY = Math.Max(0, originY - maxDistanceTiles);
 		var endY = Math.Min(this.HeightTiles - 1, originY + maxDistanceTiles);
 
-		for (var x = startX; x <= endX; x++)
+		for (var y = startY; y <= endY; y++)
 		{
-			for (var y = startY; y <= endY; y++)
+			var rowOffset = y * this.WidthTiles;
+			for (var x = startX; x <= endX; x++)
 			{
-				if (this._isRiver[x, y])
+				if (this._isRiver[rowOffset + x])
 				{
 					return true;
 				}

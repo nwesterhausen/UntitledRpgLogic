@@ -8,7 +8,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
 ///<summary>
 /// Defines the <see cref="MessagePriority" /> lookup table
 ///</summary>
-public class MessagePriorityLookupConfiguration : IEntityTypeConfiguration<MessagePriorityLookup>
+public sealed class MessagePriorityLookupConfiguration : IEntityTypeConfiguration<MessagePriorityLookup>
 {
 	///<inheritdoc />
 	public void Configure(EntityTypeBuilder<MessagePriorityLookup> builder)

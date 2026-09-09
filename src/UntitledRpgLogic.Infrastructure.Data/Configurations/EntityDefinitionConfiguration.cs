@@ -7,7 +7,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
 ///<summary>
 /// Defines relationship in the <see cref="EntityDefinition" /> table
 ///</summary>
-public class EntityDefinitionConfiguration : IEntityTypeConfiguration<EntityDefinition>
+public sealed class EntityDefinitionConfiguration : IEntityTypeConfiguration<EntityDefinition>
 {
 	///<inheritdoc />
 	public void Configure(EntityTypeBuilder<EntityDefinition> builder)

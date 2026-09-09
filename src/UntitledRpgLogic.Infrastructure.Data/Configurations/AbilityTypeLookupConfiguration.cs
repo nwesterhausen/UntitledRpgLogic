@@ -8,7 +8,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
 ///<summary>
 /// Defines the <see cref="AbilityType" /> lookup table
 ///</summary>
-public class AbilityTypeLookupConfiguration : IEntityTypeConfiguration<AbilityTypeLookup>
+public sealed class AbilityTypeLookupConfiguration : IEntityTypeConfiguration<AbilityTypeLookup>
 {
 	///<inheritdoc />
 	public void Configure(EntityTypeBuilder<AbilityTypeLookup> builder)

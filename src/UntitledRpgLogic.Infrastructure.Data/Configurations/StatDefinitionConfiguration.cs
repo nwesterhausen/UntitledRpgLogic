@@ -11,7 +11,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
 ///<summary>
 /// Defines advanced table configuration for <see cref="StatDefinition" />
 ///</summary>
-public class StatDefinitionConfiguration : IEntityTypeConfiguration<StatDefinition>
+public sealed class StatDefinitionConfiguration : IEntityTypeConfiguration<StatDefinition>
 {
 	///<inheritdoc />
 	public void Configure(EntityTypeBuilder<StatDefinition> builder)

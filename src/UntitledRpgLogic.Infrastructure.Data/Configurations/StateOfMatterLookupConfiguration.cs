@@ -8,7 +8,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
 ///<summary>
 /// Defines the <see cref="StateOfMatter" /> lookup table
 ///</summary>
-public class StateOfMatterLookupConfiguration : IEntityTypeConfiguration<StateOfMatterLookup>
+public sealed class StateOfMatterLookupConfiguration : IEntityTypeConfiguration<StateOfMatterLookup>
 {
 	///<inheritdoc />
 	public void Configure(EntityTypeBuilder<StateOfMatterLookup> builder)

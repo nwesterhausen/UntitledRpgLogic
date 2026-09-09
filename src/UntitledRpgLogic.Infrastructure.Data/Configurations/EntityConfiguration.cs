@@ -7,7 +7,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
 ///<summary>
 /// Defines advanced table configuration for <see cref="Entity" />
 ///</summary>
-public class EntityConfiguration : IEntityTypeConfiguration<Entity>
+public sealed class EntityConfiguration : IEntityTypeConfiguration<Entity>
 {
 	///<inheritdoc />
 	public void Configure(EntityTypeBuilder<Entity> builder)

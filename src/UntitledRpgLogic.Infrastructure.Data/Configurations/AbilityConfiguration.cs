@@ -8,8 +8,9 @@ namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
 /// <summary>
 ///     Entity Framework Core configuration for <see cref="Ability" />.
 /// </summary>
-internal sealed class AbilityConfiguration : IEntityTypeConfiguration<Ability>
+public sealed class AbilityConfiguration : IEntityTypeConfiguration<Ability>
 {
+	/// <inheritdoc />
 	public void Configure(EntityTypeBuilder<Ability> builder)
 	{
 		ArgumentNullException.ThrowIfNull(builder);

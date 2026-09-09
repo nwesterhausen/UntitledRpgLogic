@@ -8,7 +8,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
 ///<summary>
 /// Defines the <see cref="ScalingCurveType" /> lookup table
 ///</summary>
-public class ScalingCurveTypeLookupConfiguration : IEntityTypeConfiguration<ScalingCurveTypeLookup>
+public sealed class ScalingCurveTypeLookupConfiguration : IEntityTypeConfiguration<ScalingCurveTypeLookup>
 {
 	///<inheritdoc />
 	public void Configure(EntityTypeBuilder<ScalingCurveTypeLookup> builder)

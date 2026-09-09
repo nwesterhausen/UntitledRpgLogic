@@ -8,7 +8,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
 ///<summary>
 /// Defines the <see cref="EffectType" /> lookup table
 ///</summary>
-public class EffectTypeLookupConfiguration : IEntityTypeConfiguration<EffectTypeLookup>
+public sealed class EffectTypeLookupConfiguration : IEntityTypeConfiguration<EffectTypeLookup>
 {
 	///<inheritdoc />
 	public void Configure(EntityTypeBuilder<EffectTypeLookup> builder)

@@ -6,7 +6,7 @@ namespace UntitledRpgLogic.WorldGen.Services;
 /// <summary>
 ///     Evaluates prospective locations on procedural terrain grids to find valid sites for handcrafted stamps.
 /// </summary>
-public class TemplatePlacementService
+public static class TemplatePlacementService
 {
 	/// <summary>
 	///     Standard side length of a chunk in tiles.
@@ -24,7 +24,7 @@ public class TemplatePlacementService
 	/// <param name="templateHeightChunks">The height of the stamp in chunks.</param>
 	/// <param name="criteria">The terrain and moisture constraints required by the stamp.</param>
 	/// <returns>A positive fitness score where higher values represent flatter/better matches, or 0.0f if rejected.</returns>
-	public float EvaluateCandidateScore(
+	public static float EvaluateCandidateScore(
 		TerrainHeightmap heightmap,
 		TerrainHydrology hydrology,
 		int targetChunkX,

@@ -9,7 +9,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
 ///<summary>
 /// Defines advanced table configuration for <see cref="MaterialDefinition" />
 ///</summary>
-public class MaterialDefinitionConfiguration : IEntityTypeConfiguration<MaterialDefinition>
+public sealed class MaterialDefinitionConfiguration : IEntityTypeConfiguration<MaterialDefinition>
 {
 	///<inheritdoc />
 	public void Configure(EntityTypeBuilder<MaterialDefinition> builder)

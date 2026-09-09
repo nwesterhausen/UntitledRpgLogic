@@ -8,7 +8,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
 ///<summary>
 /// Defines the <see cref="MassScale" /> lookup table
 ///</summary>
-public class MassScaleLookupConfiguration : IEntityTypeConfiguration<MassScaleLookup>
+public sealed class MassScaleLookupConfiguration : IEntityTypeConfiguration<MassScaleLookup>
 {
 	///<inheritdoc />
 	public void Configure(EntityTypeBuilder<MassScaleLookup> builder)

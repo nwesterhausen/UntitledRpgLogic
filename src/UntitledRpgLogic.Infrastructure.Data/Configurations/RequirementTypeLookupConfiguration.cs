@@ -7,7 +7,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
 ///<summary>
 /// Defines the <see cref="RequirementType" /> lookup table
 ///</summary>
-public class RequirementTypeLookupConfiguration : IEntityTypeConfiguration<RequirementTypeLookup>
+public sealed class RequirementTypeLookupConfiguration : IEntityTypeConfiguration<RequirementTypeLookup>
 {
 	///<inheritdoc />
 	public void Configure(EntityTypeBuilder<RequirementTypeLookup> builder)

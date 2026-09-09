@@ -8,7 +8,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
 ///<summary>
 /// Defines the <see cref="MessageType" /> lookup table
 ///</summary>
-public class MessageTypeLookupConfiguration : IEntityTypeConfiguration<MessageTypeLookup>
+public sealed class MessageTypeLookupConfiguration : IEntityTypeConfiguration<MessageTypeLookup>
 {
 	///<inheritdoc />
 	public void Configure(EntityTypeBuilder<MessageTypeLookup> builder)

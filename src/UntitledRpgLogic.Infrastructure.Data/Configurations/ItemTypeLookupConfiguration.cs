@@ -8,7 +8,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
 ///<summary>
 /// Defines the <see cref="ItemType" /> lookup table
 ///</summary>
-public class ItemTypeLookupConfiguration : IEntityTypeConfiguration<ItemTypeLookup>
+public sealed class ItemTypeLookupConfiguration : IEntityTypeConfiguration<ItemTypeLookup>
 {
 	///<inheritdoc />
 	public void Configure(EntityTypeBuilder<ItemTypeLookup> builder)

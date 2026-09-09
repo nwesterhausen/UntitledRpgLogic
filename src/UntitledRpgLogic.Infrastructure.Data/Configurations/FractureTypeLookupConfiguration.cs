@@ -8,7 +8,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
 ///<summary>
 /// Defines the <see cref="FractureType" /> lookup table
 ///</summary>
-public class FractureTypeLookupConfiguration : IEntityTypeConfiguration<FractureTypeLookup>
+public sealed class FractureTypeLookupConfiguration : IEntityTypeConfiguration<FractureTypeLookup>
 {
 	///<inheritdoc />
 	public void Configure(EntityTypeBuilder<FractureTypeLookup> builder)

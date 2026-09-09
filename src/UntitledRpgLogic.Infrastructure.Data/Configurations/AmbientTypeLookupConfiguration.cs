@@ -8,7 +8,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
 ///<summary>
 /// Defines the <see cref="AmbientType" /> lookup table
 ///</summary>
-public class AmbientTypeLookupConfiguration : IEntityTypeConfiguration<AmbientTypeLookup>
+public sealed class AmbientTypeLookupConfiguration : IEntityTypeConfiguration<AmbientTypeLookup>
 {
 	///<inheritdoc />
 	public void Configure(EntityTypeBuilder<AmbientTypeLookup> builder)

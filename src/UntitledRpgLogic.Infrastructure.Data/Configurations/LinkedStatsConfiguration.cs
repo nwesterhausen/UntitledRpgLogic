@@ -7,7 +7,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
 ///<summary>
 /// Advanced table configuration for <see cref="LinkedStats" />
 ///</summary>
-public class LinkedStatsConfiguration : IEntityTypeConfiguration<LinkedStats>
+public sealed class LinkedStatsConfiguration : IEntityTypeConfiguration<LinkedStats>
 {
 	///<inheritdoc />
 	public void Configure(EntityTypeBuilder<LinkedStats> builder)

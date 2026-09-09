@@ -5,7 +5,7 @@ namespace UntitledRpgLogic.WorldGen.Models;
 /// </summary>
 public class TerrainHeightmap
 {
-	private readonly short[,] _elevations;
+	private readonly short[] _elevations;
 
 	/// <summary>
 	///     Initializes a new instance of the <see cref="TerrainHeightmap" /> class with specified grid dimensions.
@@ -14,9 +14,36 @@ public class TerrainHeightmap
 	/// <param name="heightTiles">The total height of the heightmap in tiles.</param>
 	public TerrainHeightmap(int widthTiles, int heightTiles)
 	{
+		ArgumentOutOfRangeException.ThrowIfNegativeOrZero(widthTiles);
+		ArgumentOutOfRangeException.ThrowIfNegativeOrZero(heightTiles);
+
 		this.WidthTiles = widthTiles;
 		this.HeightTiles = heightTiles;
-		this._elevations = new short[widthTiles, heightTiles];
+		this._elevations = new short[widthTiles * heightTiles];
+	}
+
+	/// <summary>
+	///     Initializes a new instance of the <see cref="TerrainHeightmap" /> class using an existing flat elevations array.
+	/// </summary>
+	/// <param name="widthTiles">The total width of the heightmap in tiles.</param>
+	/// <param name="heightTiles">The total height of the heightmap in tiles.</param>
+	/// <param name="elevations">The flattened bedrock elevations array of length <c>widthTiles * heightTiles</c>.</param>
+	public TerrainHeightmap(int widthTiles, int heightTiles, short[] elevations)
+	{
+		ArgumentOutOfRangeException.ThrowIfNegativeOrZero(widthTiles);
+		ArgumentOutOfRangeException.ThrowIfNegativeOrZero(heightTiles);
+		ArgumentNullException.ThrowIfNull(elevations);
+
+		if (elevations.Length != widthTiles * heightTiles)
+		{
+			throw new ArgumentException(
+				$"Elevations array length ({elevations.Length}) must equal width * height ({widthTiles * heightTiles}).",
+				nameof(elevations));
+		}
+
+		this.WidthTiles = widthTiles;
+		this.HeightTiles = heightTiles;
+		this._elevations = elevations;
 	}
 
 	/// <summary>
@@ -39,7 +66,7 @@ public class TerrainHeightmap
 	{
 		var clampedX = Math.Clamp(tileX, 0, this.WidthTiles - 1);
 		var clampedY = Math.Clamp(tileY, 0, this.HeightTiles - 1);
-		return this._elevations[clampedX, clampedY];
+		return this._elevations[(clampedY * this.WidthTiles) + clampedX];
 	}
 
 	/// <summary>
@@ -52,7 +79,7 @@ public class TerrainHeightmap
 	{
 		if (tileX >= 0 && tileX < this.WidthTiles && tileY >= 0 && tileY < this.HeightTiles)
 		{
-			this._elevations[tileX, tileY] = elevation;
+			this._elevations[(tileY * this.WidthTiles) + tileX] = elevation;
 		}
 	}
 }

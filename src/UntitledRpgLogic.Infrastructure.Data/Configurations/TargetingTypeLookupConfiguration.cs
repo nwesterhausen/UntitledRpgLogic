@@ -8,7 +8,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
 ///<summary>
 /// Defines the <see cref="TargetingType" /> lookup table
 ///</summary>
-public class TargetingTypeLookupConfiguration : IEntityTypeConfiguration<TargetingTypeLookup>
+public sealed class TargetingTypeLookupConfiguration : IEntityTypeConfiguration<TargetingTypeLookup>
 {
 	///<inheritdoc />
 	public void Configure(EntityTypeBuilder<TargetingTypeLookup> builder)

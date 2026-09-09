@@ -8,7 +8,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
 ///<summary>
 /// Defines the <see cref="DimensionScale" /> lookup table
 ///</summary>
-public class DimensionScaleLookupConfiguration : IEntityTypeConfiguration<DimensionScaleLookup>
+public sealed class DimensionScaleLookupConfiguration : IEntityTypeConfiguration<DimensionScaleLookup>
 {
 	///<inheritdoc />
 	public void Configure(EntityTypeBuilder<DimensionScaleLookup> builder)

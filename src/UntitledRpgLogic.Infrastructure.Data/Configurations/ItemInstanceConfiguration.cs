@@ -7,7 +7,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
 ///<summary>
 /// Defines relationship in the <see cref="ItemInstance" /> table
 ///</summary>
-public class ItemInstanceConfiguration : IEntityTypeConfiguration<ItemInstance>
+public sealed class ItemInstanceConfiguration : IEntityTypeConfiguration<ItemInstance>
 {
 	///<inheritdoc />
 	public void Configure(EntityTypeBuilder<ItemInstance> builder)
