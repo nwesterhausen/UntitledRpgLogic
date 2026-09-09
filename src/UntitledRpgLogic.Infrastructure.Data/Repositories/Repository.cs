@@ -4,51 +4,116 @@ using UntitledRpgLogic.Core.Interfaces.Data;
 
 namespace UntitledRpgLogic.Infrastructure.Data.Repositories;
 
-/// <summary>
-///     Provides a generic, type-safe implementation of the IRepository interface using Entity Framework Core.
-/// </summary>
-/// <typeparam name="TEntity">The type of the entity this repository manages.</typeparam>
-/// <typeparam name="TId">The type of the primary key for the entity.</typeparam>
-/// <remarks>
-///     Initializes a new instance of the <see cref="Repository{TEntity, TId}" /> class.
-/// </remarks>
-/// <param name="context">The database context.</param>
-public class Repository<TEntity, TId>(DbContext context) : IRepository<TEntity, TId> where TEntity : class, IDbEntity<TId> where TId : notnull
+public class Repository<T> : IRepository<T> where T : class
 {
+	protected readonly RpgDbContext Context;
+	protected readonly DbSet<T> DbSet;
 
-	/// <summary>
-	///     Gets the database context.
-	/// </summary>
-	protected DbContext Context { get; } = context;
+	public Repository(RpgDbContext context)
+	{
+		this.Context = context ?? throw new ArgumentNullException(nameof(context));
+		this.DbSet = context.Set<T>();
+	}
 
-	/// <inheritdoc />
-	public ValueTask<TEntity?> GetByIdAsync(TId id) => this.Context.Set<TEntity>().FindAsync(id);
+	public virtual async Task<T?> FirstOrDefaultAsync(
+		Expression<Func<T, bool>> predicate,
+		CancellationToken cancellationToken = default,
+		params Expression<Func<T, object?>>[] includes)
+	{
+		ArgumentNullException.ThrowIfNull(predicate);
 
-	/// <inheritdoc />
-	public async Task<IEnumerable<TEntity>> GetAllAsync() => await this.Context.Set<TEntity>().ToListAsync().ConfigureAwait(false);
+		IQueryable<T> query = this.DbSet;
+		query = ApplyIncludes(query, includes);
 
-	/// <inheritdoc />
-	public async Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate) =>
-		await this.Context.Set<TEntity>().Where(predicate).ToListAsync().ConfigureAwait(false);
+		return await query.FirstOrDefaultAsync(predicate, cancellationToken).ConfigureAwait(false);
+	}
 
-	/// <inheritdoc />
-	public async Task<TEntity?> SingleOrDefaultAsync(Expression<Func<TEntity, bool>> predicate) =>
-		await this.Context.Set<TEntity>().SingleOrDefaultAsync(predicate).ConfigureAwait(false);
+	public virtual async Task<IReadOnlyList<T>> GetAsync(
+		Expression<Func<T, bool>>? predicate = null,
+		Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,
+		int? skip = null,
+		int? take = null,
+		CancellationToken cancellationToken = default,
+		params Expression<Func<T, object?>>[] includes)
+	{
+		IQueryable<T> query = this.DbSet;
 
-	/// <inheritdoc />
-	public async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate) =>
-		await this.Context.Set<TEntity>().AnyAsync(predicate).ConfigureAwait(false);
+		if (predicate is not null)
+		{
+			query = query.Where(predicate);
+		}
 
-	/// <inheritdoc />
-	public async Task AddAsync(TEntity entity) => await this.Context.Set<TEntity>().AddAsync(entity).ConfigureAwait(false);
+		query = ApplyIncludes(query, includes);
 
-	/// <inheritdoc />
-	public async Task AddRangeAsync(IEnumerable<TEntity> entities) =>
-		await this.Context.Set<TEntity>().AddRangeAsync(entities).ConfigureAwait(false);
+		if (orderBy is not null)
+		{
+			query = orderBy(query);
+		}
 
-	/// <inheritdoc />
-	public void Remove(TEntity entity) => this.Context.Set<TEntity>().Remove(entity);
+		if (skip.HasValue)
+		{
+			query = query.Skip(skip.Value);
+		}
 
-	/// <inheritdoc />
-	public void RemoveRange(IEnumerable<TEntity> entities) => this.Context.Set<TEntity>().RemoveRange(entities);
+		if (take.HasValue)
+		{
+			query = query.Take(take.Value);
+		}
+
+		return await query.ToListAsync(cancellationToken).ConfigureAwait(false);
+	}
+
+	public virtual async Task<bool> AnyAsync(
+		Expression<Func<T, bool>> predicate,
+		CancellationToken cancellationToken = default)
+	{
+		ArgumentNullException.ThrowIfNull(predicate);
+		return await this.DbSet.AnyAsync(predicate, cancellationToken).ConfigureAwait(false);
+	}
+
+	public virtual async Task<int> CountAsync(
+		Expression<Func<T, bool>>? predicate = null,
+		CancellationToken cancellationToken = default)
+	{
+		return predicate is null
+			? await this.DbSet.CountAsync(cancellationToken).ConfigureAwait(false)
+			: await this.DbSet.CountAsync(predicate, cancellationToken).ConfigureAwait(false);
+	}
+
+	public virtual async Task AddAsync(T entity, CancellationToken cancellationToken = default)
+	{
+		ArgumentNullException.ThrowIfNull(entity);
+		await this.DbSet.AddAsync(entity, cancellationToken).ConfigureAwait(false);
+	}
+
+	public virtual async Task AddRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default)
+	{
+		ArgumentNullException.ThrowIfNull(entities);
+		await this.DbSet.AddRangeAsync(entities, cancellationToken).ConfigureAwait(false);
+	}
+
+	public virtual void Update(T entity)
+	{
+		ArgumentNullException.ThrowIfNull(entity);
+		this.DbSet.Update(entity);
+	}
+
+	public virtual void Remove(T entity)
+	{
+		ArgumentNullException.ThrowIfNull(entity);
+		this.DbSet.Remove(entity);
+	}
+
+	public virtual void RemoveRange(IEnumerable<T> entities)
+	{
+		ArgumentNullException.ThrowIfNull(entities);
+		this.DbSet.RemoveRange(entities);
+	}
+
+	protected static IQueryable<T> ApplyIncludes(
+		IQueryable<T> query,
+		IEnumerable<Expression<Func<T, object?>>> includes)
+	{
+		return includes.Aggregate(query, (current, include) => current.Include(include));
+	}
 }

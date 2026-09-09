@@ -16,7 +16,8 @@ public static class CommonServiceCollectionExtensions
 	public static IServiceCollection AddRpgCommonPersistence(this IServiceCollection services)
 	{
 		services.AddScoped<IUnitOfWork, UnitOfWork>();
-		services.AddScoped(typeof(IEntityRepository), typeof(EntityRepository));
+		services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+		services.AddScoped(typeof(IEntityRepository<,>), typeof(EntityRepository<,>));
 		services.AddScoped<IDatabaseInitializer, DatabaseInitializer>();
 
 		return services;

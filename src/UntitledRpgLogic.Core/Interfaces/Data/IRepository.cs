@@ -3,70 +3,66 @@ using System.Linq.Expressions;
 namespace UntitledRpgLogic.Core.Interfaces.Data;
 
 /// <summary>
-///     The generic repository interface for performing basic data access operations on entities of type TEntity.
+///     Generic repository interface supporting LINQ expression-based queries and change tracking.
 /// </summary>
-/// <typeparam name="TEntity">The class or object that is stored in this table</typeparam>
-/// <typeparam name="TId">The type of the entity's primary key.</typeparam>
-public interface IRepository<TEntity, in TId>
-	where TEntity : class, IDbEntity<TId>
-	where TId : notnull
+/// <typeparam name="T">The entity type managed by this repository.</typeparam>
+public interface IRepository<T> where T : class
 {
 	/// <summary>
-	///     Gets an entity of type TEntity by its unique identifier asynchronously.
+	///     Retrieves an entity matching the given predicate, or null if not found.
 	/// </summary>
-	/// <param name="id">The identifier of the entity.</param>
-	/// <returns>matching entity or nothing</returns>
-	public ValueTask<TEntity?> GetByIdAsync(TId id);
+	Task<T?> FirstOrDefaultAsync(
+		Expression<Func<T, bool>> predicate,
+		CancellationToken cancellationToken = default,
+		params Expression<Func<T, object?>>[] includes);
 
 	/// <summary>
-	///     Gets all entities of type TEntity from the data source asynchronously.
+	///     Retrieves all entities matching the given predicate.
 	/// </summary>
-	/// <returns>A list of all the entities of type TEntity</returns>
-	public Task<IEnumerable<TEntity>> GetAllAsync();
+	Task<IReadOnlyList<T>> GetAsync(
+		Expression<Func<T, bool>>? predicate = null,
+		Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,
+		int? skip = null,
+		int? take = null,
+		CancellationToken cancellationToken = default,
+		params Expression<Func<T, object?>>[] includes);
 
 	/// <summary>
-	///     Finds entities of type TEntity that match the specified predicate asynchronously.
+	///     Checks if any entity satisfies the specified predicate.
 	/// </summary>
-	/// <param name="predicate">The condition to filter the entities.</param>
-	/// <returns>A collection of entities that satisfy the predicate.</returns>
-	public Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate);
+	Task<bool> AnyAsync(
+		Expression<Func<T, bool>> predicate,
+		CancellationToken cancellationToken = default);
 
 	/// <summary>
-	///     Retrieves a single entity of type TEntity that matches the specified predicate asynchronously.
+	///     Returns the count of entities satisfying the specified predicate.
 	/// </summary>
-	/// <param name="predicate">The condition to filter the entity.</param>
-	/// <returns>The single matching entity, or null if no match is found.</returns>
-	public Task<TEntity?> SingleOrDefaultAsync(Expression<Func<TEntity, bool>> predicate);
+	Task<int> CountAsync(
+		Expression<Func<T, bool>>? predicate = null,
+		CancellationToken cancellationToken = default);
 
 	/// <summary>
-	///     Checks if any entities of type TEntity match the specified predicate asynchronously.
+	///     Marks a new entity for insertion.
 	/// </summary>
-	/// <param name="predicate">The condition to evaluate.</param>
-	/// <returns>True if any entities match the predicate; otherwise, false.</returns>
-	public Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate);
+	Task AddAsync(T entity, CancellationToken cancellationToken = default);
 
 	/// <summary>
-	///     Adds a new entity of type TEntity to the data source asynchronously.
+	///     Marks a collection of entities for insertion.
 	/// </summary>
-	/// <param name="entity">The entity to add.</param>
-	/// <returns>A task representing the asynchronous operation.</returns>
-	public Task AddAsync(TEntity entity);
+	Task AddRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default);
 
 	/// <summary>
-	///     Adds multiple entities of type TEntity to the data source asynchronously.
+	///     Marks an existing entity as modified.
 	/// </summary>
-	/// <param name="entities">The collection of entities to add.</param>
-	public Task AddRangeAsync(IEnumerable<TEntity> entities);
+	void Update(T entity);
 
 	/// <summary>
-	///     Removes an entity of type TEntity from the data source.
+	///     Marks an entity for deletion.
 	/// </summary>
-	/// <param name="entity">The entity to remove.</param>
-	public void Remove(TEntity entity);
+	void Remove(T entity);
 
 	/// <summary>
-	///     Removes multiple entities of type TEntity from the data source.
+	///     Marks a collection of entities for deletion.
 	/// </summary>
-	/// <param name="entities">The collection of entities to remove.</param>
-	public void RemoveRange(IEnumerable<TEntity> entities);
+	void RemoveRange(IEnumerable<T> entities);
 }

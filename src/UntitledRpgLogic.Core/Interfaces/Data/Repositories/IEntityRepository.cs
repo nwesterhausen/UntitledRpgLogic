@@ -1,23 +1,28 @@
-using UntitledRpgLogic.Core.Models;
+using System.Linq.Expressions;
 
 namespace UntitledRpgLogic.Core.Interfaces.Data.Repositories;
 
 /// <summary>
-///     Represents a repository specifically for Entity objects, extending the generic repository.
+///     Specialized repository contract for root entities exposing a standard <see cref="IDbEntity{TId}"/> key.
 /// </summary>
-public interface IEntityRepository : IRepository<Entity, Ulid>
+/// <typeparam name="TEntity">The concrete entity type.</typeparam>
+/// <typeparam name="TId">The identifier type (e.g., <see cref="Ulid"/>).</typeparam>
+public interface IEntityRepository<TEntity, TId> : IRepository<TEntity>
+	where TEntity : class, IDbEntity<TId>
 {
 	/// <summary>
-	///     Retrieves an entity along with its associated inventory and item definitions.
+	///     Retrieves an entity by its primary key identifier, optionally including related navigation paths.
 	/// </summary>
-	/// <param name="id">The unique identifier of the entity.</param>
-	/// <returns>The task result contains the entity if found; otherwise, null.</returns>
-	public Task<Entity?> GetEntityWithInventoryAsync(Ulid id);
+	Task<TEntity?> GetByIdAsync(
+		TId id,
+		CancellationToken cancellationToken = default,
+		params Expression<Func<TEntity, object?>>[] includes);
 
 	/// <summary>
-	///     Retrieves an entity along with its associated equipment and item definitions.
+	///     Retrieves multiple entities by their primary key identifiers.
 	/// </summary>
-	/// <param name="id">The unique identifier of the entity.</param>
-	/// <returns>The task result contains the entity if found; otherwise, null.</returns>
-	public Task<Entity?> GetEntityWithEquipmentAsync(Ulid id);
+	Task<IReadOnlyList<TEntity>> GetByIdsAsync(
+		IEnumerable<TId> ids,
+		CancellationToken cancellationToken = default,
+		params Expression<Func<TEntity, object?>>[] includes);
 }

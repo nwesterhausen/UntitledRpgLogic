@@ -1,30 +1,43 @@
+using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
+using UntitledRpgLogic.Core.Interfaces.Data;
 using UntitledRpgLogic.Core.Interfaces.Data.Repositories;
-using UntitledRpgLogic.Core.Models;
 
 namespace UntitledRpgLogic.Infrastructure.Data.Repositories;
 
-/// <summary>
-///     Implements a repository specifically for Entity objects, extending the generic repository.
-/// </summary>
-/// <inheritdoc />
-public class EntityRepository(DbContext context) : Repository<Entity, Ulid>(context), IEntityRepository
+public class EntityRepository<TEntity, TId> : Repository<TEntity>, IEntityRepository<TEntity, TId>
+	where TEntity : class, IDbEntity<TId>
+	where TId : notnull
 {
+	public EntityRepository(RpgDbContext context) : base(context)
+	{
+	}
 
-	/// <summary>
-	///     A private property to access the DbContext as RpgDbContext.
-	/// </summary>
-	private RpgDbContext RpgDbContext => (RpgDbContext)this.Context;
+	public virtual async Task<TEntity?> GetByIdAsync(
+		TId id,
+		CancellationToken cancellationToken = default,
+		params Expression<Func<TEntity, object?>>[] includes)
+	{
+		IQueryable<TEntity> query = this.DbSet;
+		query = ApplyIncludes(query, includes);
 
-	/// <inheritdoc />
-	public async Task<Entity?> GetEntityWithInventoryAsync(Ulid id) =>
-		await this.RpgDbContext.Entities
-			.Include(e => e.Inventory) // 1. Load the Entity's Inventory
-			.ThenInclude(i => i!.Items) // 2. Then, load the ItemInstances within that Inventory
-			.ThenInclude(ii => ii.ItemDefinition) // 3. Then, for each ItemInstance, load its ItemDefinition
-			.SingleOrDefaultAsync(e => e.Id == id)
+		return await query.FirstOrDefaultAsync(e => e.Id.Equals(id), cancellationToken).ConfigureAwait(false);
+	}
+
+	public virtual async Task<IReadOnlyList<TEntity>> GetByIdsAsync(
+		IEnumerable<TId> ids,
+		CancellationToken cancellationToken = default,
+		params Expression<Func<TEntity, object?>>[] includes)
+	{
+		ArgumentNullException.ThrowIfNull(ids);
+		var idList = ids.ToList();
+
+		IQueryable<TEntity> query = this.DbSet;
+		query = ApplyIncludes(query, includes);
+
+		return await query
+			.Where(e => idList.Contains(e.Id))
+			.ToListAsync(cancellationToken)
 			.ConfigureAwait(false);
-
-	/// <inheritdoc />
-	public Task<Entity?> GetEntityWithEquipmentAsync(Ulid id) => throw new NotImplementedException();
+	}
 }
