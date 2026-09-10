@@ -14,5 +14,6 @@
 
 	<ItemGroup>
 		<PackageReference Include="Ulid"/>
+		<PackageReference Include="UntitledRpg.LibraryFile" />
 	</ItemGroup>
 </Project>

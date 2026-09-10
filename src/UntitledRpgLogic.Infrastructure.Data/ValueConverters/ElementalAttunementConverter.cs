@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Text.Json;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
@@ -19,7 +20,7 @@ public class ElementalAttunementConverter : ValueConverter<Dictionary<Ulid, floa
 		json => string.IsNullOrEmpty(json)
 			? new Dictionary<Ulid, float>()
 			: JsonSerializer.Deserialize<Dictionary<string, float>>(json, (JsonSerializerOptions?)null)!
-				.ToDictionary(k => Ulid.Parse(k.Key), v => v.Value)
+				.ToDictionary(k => Ulid.Parse(k.Key, CultureInfo.InvariantCulture), v => v.Value)
 	)
 	{
 	}
