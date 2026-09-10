@@ -132,14 +132,6 @@ public class NameTests
 	[TestMethod]
 	public void Deserialize_NullInput_ThrowsArgumentNullException()
 	{
-		try
-		{
-			Name.Deserialize(null!);
-			Assert.Fail("Expected ArgumentNullException was not thrown.");
-		}
-		catch (ArgumentNullException)
-		{
-			// Passed
-		}
+		Assert.Throws<ArgumentNullException>(() => Name.Deserialize(null!));
 	}
 }
