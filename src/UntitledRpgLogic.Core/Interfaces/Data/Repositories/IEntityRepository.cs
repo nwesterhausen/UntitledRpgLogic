@@ -13,10 +13,6 @@ public interface IEntityRepository<TEntity, in TId> where TEntity : class, IDbEn
 	/// <summary>
 	///     Retrieves an entity by its identifier with optional single-level property includes.
 	/// </summary>
-	/// <param name="id">The entity identifier.</param>
-	/// <param name="includes">A function to configure eager-loading includes and then-includes.</param>
-	/// <param name="cancellationToken">Cancellation token.</param>
-	/// <returns>The hydrated entity if found; otherwise, null.</returns>
 	Task<TEntity?> GetByIdAsync(
 		TId id,
 		CancellationToken cancellationToken = default,
@@ -25,10 +21,18 @@ public interface IEntityRepository<TEntity, in TId> where TEntity : class, IDbEn
 	/// <summary>
 	///     Retrieves an entity by its identifier using a composable query builder to support deep navigation includes (ThenInclude).
 	/// </summary>
-	/// <param name="ids">The entity identifiers.</param>
-	/// <param name="includes">A function to configure eager-loading includes and then-includes.</param>
+	/// <param name="id">The entity identifier.</param>
+	/// <param name="include">A function to configure eager-loading includes and then-includes.</param>
 	/// <param name="cancellationToken">Cancellation token.</param>
 	/// <returns>The hydrated entity if found; otherwise, null.</returns>
+	Task<TEntity?> GetByIdAsync(
+		TId id,
+		Func<IQueryable<TEntity>, IQueryable<TEntity>> include,
+		CancellationToken cancellationToken = default);
+
+	/// <summary>
+	///     Retrieves multiple entities by their unique identifiers.
+	/// </summary>
 	Task<IReadOnlyList<TEntity>> GetByIdsAsync(
 		IEnumerable<TId> ids,
 		CancellationToken cancellationToken = default,

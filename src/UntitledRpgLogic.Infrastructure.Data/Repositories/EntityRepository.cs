@@ -10,7 +10,6 @@ public class EntityRepository<TEntity, TId> : Repository<TEntity>, IEntityReposi
 	where TEntity : class, IDbEntity<TId>
 	where TId : notnull
 {
-
 	/// <inheritdoc />
 	public EntityRepository(RpgDbContext context) : base(context)
 	{
@@ -22,10 +21,22 @@ public class EntityRepository<TEntity, TId> : Repository<TEntity>, IEntityReposi
 		CancellationToken cancellationToken = default,
 		params Expression<Func<TEntity, object?>>[] includes)
 	{
-		IQueryable<TEntity> query = this.DbSet;
-		query = ApplyIncludes(query, includes);
+		var query = ApplyIncludes(this.DbSet, includes);
 
-		return await query.FirstOrDefaultAsync(e => e.Id.Equals(id), cancellationToken).ConfigureAwait(false);
+		return await query.FirstOrDefaultAsync(e => e.Id!.Equals(id), cancellationToken).ConfigureAwait(false);
+	}
+
+	/// <inheritdoc />
+	public virtual async Task<TEntity?> GetByIdAsync(
+		TId id,
+		Func<IQueryable<TEntity>, IQueryable<TEntity>> include,
+		CancellationToken cancellationToken = default)
+	{
+		ArgumentNullException.ThrowIfNull(include);
+
+		var query = include(this.DbSet.AsQueryable());
+
+		return await query.FirstOrDefaultAsync(e => e.Id!.Equals(id), cancellationToken).ConfigureAwait(false);
 	}
 
 	/// <inheritdoc />
@@ -35,10 +46,14 @@ public class EntityRepository<TEntity, TId> : Repository<TEntity>, IEntityReposi
 		params Expression<Func<TEntity, object?>>[] includes)
 	{
 		ArgumentNullException.ThrowIfNull(ids);
-		var idList = ids.ToList();
 
-		IQueryable<TEntity> query = this.DbSet;
-		query = ApplyIncludes(query, includes);
+		var idList = ids as IReadOnlyCollection<TId> ?? ids.ToList();
+		if (idList.Count == 0)
+		{
+			return Array.Empty<TEntity>();
+		}
+
+		var query = ApplyIncludes(this.DbSet, includes);
 
 		return await query
 			.Where(e => idList.Contains(e.Id))

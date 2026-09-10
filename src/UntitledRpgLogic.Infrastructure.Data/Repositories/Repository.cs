@@ -27,10 +27,9 @@ public class Repository<T> : IRepository<T> where T : class
 	{
 		ArgumentNullException.ThrowIfNull(context);
 
-		this.Context = context ?? throw new ArgumentNullException(nameof(context));
+		this.Context = context;
 		this.DbSet = context.Set<T>();
 	}
-
 	/// <inheritdoc />
 	public virtual async Task<T?> FirstOrDefaultAsync(
 		Expression<Func<T, bool>> predicate,
@@ -39,9 +38,7 @@ public class Repository<T> : IRepository<T> where T : class
 	{
 		ArgumentNullException.ThrowIfNull(predicate);
 
-		IQueryable<T> query = this.DbSet;
-		query = ApplyIncludes(query, includes);
-
+		var query = ApplyIncludes(this.DbSet, includes);
 		return await query.FirstOrDefaultAsync(predicate, cancellationToken).ConfigureAwait(false);
 	}
 
@@ -54,14 +51,12 @@ public class Repository<T> : IRepository<T> where T : class
 		CancellationToken cancellationToken = default,
 		params Expression<Func<T, object?>>[] includes)
 	{
-		IQueryable<T> query = this.DbSet;
+		var query = ApplyIncludes(this.DbSet, includes);
 
 		if (predicate is not null)
 		{
 			query = query.Where(predicate);
 		}
-
-		query = ApplyIncludes(query, includes);
 
 		if (orderBy is not null)
 		{
@@ -135,11 +130,18 @@ public class Repository<T> : IRepository<T> where T : class
 		this.DbSet.RemoveRange(entities);
 	}
 
-	/// <inheritdoc />
+	/// <summary>
+	///     Safely applies optional include expressions to an EF Core query.
+	/// </summary>
 	protected static IQueryable<T> ApplyIncludes(
 		IQueryable<T> query,
-		IEnumerable<Expression<Func<T, object?>>> includes)
+		IEnumerable<Expression<Func<T, object?>>>? includes)
 	{
+		if (includes is null)
+		{
+			return query;
+		}
+
 		return includes.Aggregate(query, (current, include) => current.Include(include));
 	}
 }

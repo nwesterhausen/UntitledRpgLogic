@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using UntitledRpgLogic.Core.Classes;
 using UntitledRpgLogic.Core.Interfaces.Data;
@@ -66,32 +67,27 @@ public class AggregatePersistenceTests
 				await uow.CommitTransactionAsync().ConfigureAwait(false);
 			}
 
-			// 2. Read back in a separate scope to ensure no local DbContext caching
+			// Read back in a separate scope to ensure no local DbContext caching
 			var readScope = provider.CreateAsyncScope();
 			await using (readScope.ConfigureAwait(false))
 			{
 				var entityRepo = readScope.ServiceProvider.GetRequiredService<IEntityRepository<Entity, Ulid>>();
-				var instancedSkillRepo = readScope.ServiceProvider.GetRequiredService<IEntityRepository<InstancedSkill, Ulid>>();
 
-				// Load entity and its join table links
+				// Eagerly load the join table and its downstream InstancedSkill using the new include builder
 				var loadedEntity = await entityRepo.GetByIdAsync(
 					entityId,
-					cancellationToken: default,
-					e => e.Skills).ConfigureAwait(false);
+					include: q => q.Include(e => e.Skills)
+								   .ThenInclude(s => s.InstancedSkill),
+					cancellationToken: default).ConfigureAwait(false);
 
-				// Assert Name converter preserved all 3 distinct fields
 				Assert.IsNotNull(loadedEntity);
 				Assert.AreEqual("Wolf", loadedEntity.Name.Singular);
 				Assert.AreEqual("Wolves", loadedEntity.Name.Plural);
 				Assert.AreEqual("Lupine", loadedEntity.Name.Adjective);
 
-				// Assert join records hydrated
+				// Assert child join and nested entity are both hydrated
 				Assert.HasCount(1, loadedEntity.Skills);
-				var joinRecord = loadedEntity.Skills.First();
-				Assert.AreEqual(entityId, joinRecord.EntityId);
-
-				// Assert the instanced skill entity was persisted to its own table
-				var learnedSkill = await instancedSkillRepo.GetByIdAsync(joinRecord.InstancedSkillId).ConfigureAwait(false);
+				var learnedSkill = loadedEntity.Skills.First().InstancedSkill;
 				Assert.IsNotNull(learnedSkill);
 				Assert.AreEqual(5, learnedSkill.Level);
 				Assert.AreEqual(skillDefId, learnedSkill.SkillDefinitionId);
