@@ -1,0 +1,3 @@
+# Migrations directory is machine-generated code
+[Migrations/**.cs]
+generated_code = true
