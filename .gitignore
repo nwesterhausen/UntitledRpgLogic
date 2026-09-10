@@ -507,3 +507,4 @@ _site/
 api/
 design_time.db*
 *.runsettings
+tasks.md
