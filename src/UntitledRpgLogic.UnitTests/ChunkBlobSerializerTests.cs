@@ -36,7 +36,7 @@ public class ChunkBlobSerializerTests
 
 		var compressed = ChunkBlobSerializer.SerializeAndCompress(source);
 
-		Assert.IsTrue(compressed.Length < ChunkBlobSerializer.RawByteSize / 4, "Brotli should compress uniform tiles to a fraction of raw size.");
+		Assert.IsLessThan(ChunkBlobSerializer.RawByteSize / 4, compressed.Length, "Brotli should compress uniform tiles to a fraction of raw size.");
 
 		var destination = new Tile2D[ChunkBlobSerializer.TileCount];
 		ChunkBlobSerializer.DecompressInto(compressed, destination);
