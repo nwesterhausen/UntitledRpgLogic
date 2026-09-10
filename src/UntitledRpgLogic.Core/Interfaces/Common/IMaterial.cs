@@ -1,5 +1,5 @@
-using UntitledRpgLogic.Core.Classes;
 using UntitledRpgLogic.Core.Enums;
+using UntitledRpgLogic.Core.Models;
 
 namespace UntitledRpgLogic.Core.Interfaces.Common;
 

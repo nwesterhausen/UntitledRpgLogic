@@ -5,13 +5,12 @@ namespace UntitledRpgLogic.Core.Events;
 /// <summary>
 ///     Event arguments for item actions that can be canceled.
 /// </summary>
-public class CancelableItemActionEventArgs : EventArgs
+/// <remarks>
+///     Create a new instance of <see cref="CancelableItemActionEventArgs" /> with the specified item.
+/// </remarks>
+/// <param name="item">Item that the action is being performed on</param>
+public class CancelableItemActionEventArgs(IStorable item) : EventArgs
 {
-	/// <summary>
-	///     Create a new instance of <see cref="CancelableItemActionEventArgs" /> with the specified item.
-	/// </summary>
-	/// <param name="item"></param>
-	public CancelableItemActionEventArgs(IStorable item) => this.Item = item;
 
 	/// <summary>
 	///     Whether the action should be canceled.
@@ -21,5 +20,5 @@ public class CancelableItemActionEventArgs : EventArgs
 	/// <summary>
 	///     Item that the action is being performed on.
 	/// </summary>
-	public IStorable Item { get; init; }
+	public IStorable Item { get; init; } = item;
 }

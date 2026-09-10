@@ -1,43 +1,35 @@
 namespace UntitledRpgLogic.Core.Events;
 
 /// <summary>
-///     Arguments for the ValueChanged event.
+///     Provides data for events signaling a change in a generic value.
 /// </summary>
-public class ValueChangedEventArgs : EventArgs
+/// <typeparam name="T">The type of value being monitored.</typeparam>
+public class ValueChangedEventArgs<T> : EventArgs
 {
 	/// <summary>
-	///     The constructor for ValueChangedEventArgs.
+	/// 	A value changed event where only the new/current value is specified.
 	/// </summary>
-	/// <param name="previousValue">The previous value before the change.</param>
-	/// <param name="newValue">The new value after the change.</param>
-	public ValueChangedEventArgs(int previousValue, int newValue)
+	/// <param name="value">The new/current value</param>
+	public ValueChangedEventArgs(T value) => this.Value = value;
+
+	/// <summary>
+	/// 	A value changed event where old and new values are specified.
+	/// </summary>
+	/// <param name="newValue">The new/current value</param>
+	/// <param name="oldValue">The previous value</param>
+	public ValueChangedEventArgs(T oldValue, T newValue)
 	{
-		this.PreviousValue = previousValue;
-		this.NewValue = newValue;
+		this.OldValue = oldValue;
+		this.Value = newValue;
 	}
 
 	/// <summary>
-	///     The previous value before the change.
+	/// 	the previous value
 	/// </summary>
-	public int PreviousValue { get; }
+	public T? OldValue { get; }
 
 	/// <summary>
-	///     The new value after the change.
+	/// 	the new/current value
 	/// </summary>
-	public int NewValue { get; }
-
-	/// <summary>
-	///     The difference between the new value and the previous value.
-	/// </summary>
-	public int Delta => this.NewValue - this.PreviousValue;
-
-	/// <summary>
-	///     A string representation of the change, indicating whether it is an increase or decrease.
-	/// </summary>
-	public string Modifier => this.Delta switch
-	{
-		> 0 => "+",
-		< 0 => "-",
-		_ => string.Empty
-	};
+	public T Value { get; }
 }

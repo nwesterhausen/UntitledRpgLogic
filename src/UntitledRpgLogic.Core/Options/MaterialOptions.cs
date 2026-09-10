@@ -3,7 +3,7 @@ using UntitledRpgLogic.Core.Classes;
 namespace UntitledRpgLogic.Core.Options;
 
 /// <summary>
-///     Options for configuring <see cref="Material" />-derived objects.
+///     Options for configuring <see cref="Models.MaterialDefinition" />-derived objects.
 /// </summary>
 public class MaterialOptions
 {

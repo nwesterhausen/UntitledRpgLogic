@@ -3,30 +3,48 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace UntitledRpgLogic.Core.Models;
 
 /// <summary>
-///     Used to track the stats of an entity, such as a player or NPC.
+///     Join record linking an <see cref="Entity" /> to its owned collection of <see cref="InstancedStat" /> records.
 /// </summary>
-public class EntityStats
+[Table("entity_stats")]
+public record EntityStats
 {
 	/// <summary>
-	///     An entity's unique identifier. This is used to reference the entity in the game and in the database.
+	///     Initializes a new instance of the <see cref="EntityStats" /> record for EF Core.
 	/// </summary>
-	public required Ulid EntityId { get; set; }
+	public EntityStats()
+	{
+		this.EntityId = Ulid.Empty;
+		this.InstancedStatId = Ulid.Empty;
+	}
 
 	/// <summary>
-	///     A unique identifier for a stat that has been instanced for an entity.
+	///     Initializes a new instance of the <see cref="EntityStats" /> record with explicit keys.
 	/// </summary>
-	public required Ulid InstancedStatId { get; set; }
+	public EntityStats(Ulid entityId, Ulid instancedStatId)
+	{
+		this.EntityId = entityId;
+		this.InstancedStatId = instancedStatId;
+	}
 
 	/// <summary>
-	///     The entity that this stat belongs to. This is used to link the stat the entity it belongs to, such as a player or
-	///     NPC.
+	///     Foreign key of the owning entity.
+	/// </summary>
+	public Ulid EntityId { get; init; }
+
+	/// <summary>
+	///     Navigation property to the owning entity.
 	/// </summary>
 	[ForeignKey(nameof(EntityId))]
-	public required Entity Entity { get; set; }
+	public Entity? Entity { get; init; }
 
 	/// <summary>
-	///     The instanced stat that this entity has.
+	///     Foreign key of the associated instanced stat.
+	/// </summary>
+	public Ulid InstancedStatId { get; init; }
+
+	/// <summary>
+	///     Navigation property to the instanced stat.
 	/// </summary>
 	[ForeignKey(nameof(InstancedStatId))]
-	public required InstancedStat InstancedStat { get; set; }
+	public InstancedStat? InstancedStat { get; init; }
 }

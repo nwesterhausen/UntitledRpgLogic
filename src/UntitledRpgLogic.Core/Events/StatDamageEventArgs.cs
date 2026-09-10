@@ -8,13 +8,13 @@ public class StatDamageEventArgs : EventArgs
 	/// <summary>
 	///     Gets the unique identifier of the source that caused the damage, if available.
 	/// </summary>
-	public Guid? SourceId { get; init; }
+	public Ulid? SourceId { get; init; }
 
 	/// <summary>
-	///     The Guid of the MagicTypeDataConfig that defines the type of damage.
+	///     The Ulid of the MagicTypeDataConfig that defines the type of damage.
 	///     Can be null for physical damage.
 	/// </summary>
-	public Guid? MagicType { get; }
+	public Ulid? MagicType { get; }
 
 	/// <summary>
 	///     Gets the amount of damage before any mitigation is applied.

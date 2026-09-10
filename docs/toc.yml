@@ -1,6 +1,6 @@
-- name: Docs
+- name: Usage Documentation
   href: docs/
+- name: Developer Documentation
+  href: dev/
 - name: API
   href: api/
-- name: Dev Tooling
-  href: https://tooling.rpglogic.games.nwest.one

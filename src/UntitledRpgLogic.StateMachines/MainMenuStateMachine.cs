@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Stateless;
+using UntitledRpgLogic.Extensions.Logging;
 
 namespace UntitledRpgLogic.StateMachines;
 
@@ -71,6 +72,8 @@ public class MainMenuStateMachine
 
 	private State state = State.MainMenu;
 
+#pragma warning disable CA1873 // We check for logger being null before expensive operations.
+
 	/// <summary>
 	///     Initializes a new instance of the <see cref="MainMenuStateMachine" /> class.
 	/// </summary>
@@ -88,7 +91,10 @@ public class MainMenuStateMachine
 
 		this.machine.OnTransitioned(this.Transition);
 
-		this.logger.LogDebug("MainMenu state machine initialized with initial state: {InitialState}", this.state);
+		if (this.logger is not NullLogger<MainMenuStateMachine>)
+		{
+			this.logger.MainMenuStateMachineInitialized(this.state.ToString());
+		}
 	}
 
 	/// <summary>
@@ -102,14 +108,17 @@ public class MainMenuStateMachine
 	/// <param name="t">The transition that occurred.</param>
 	private void Transition(StateMachine<State, Trigger>.Transition t)
 	{
-		this.logger.LogDebug(
-			"MainMenu transition {Source} -> {Destination} via {Trigger}",
-			t.Source, t.Destination, t.Trigger);
-		this.StateChanged?.Invoke(t.Destination);
+		if (this.logger is not NullLogger<MainMenuStateMachine>)
+		{
+			this.logger.MainMenuStateMachineTransitioned(
+				t.Source.ToString(), t.Destination.ToString(), t.Trigger.ToString());
+		}
+		this.StateChanged?.Invoke(this, new MainMenuStateChangedEventArgs(t.Destination));
 	}
 
 	/// <summary>
 	///     Event that is triggered when the state of the main menu changes.
 	/// </summary>
-	public event Action<State>? StateChanged;
+	public event EventHandler<MainMenuStateChangedEventArgs>? StateChanged;
+#pragma warning restore CA1873 // Allow check for expensive operations again
 }

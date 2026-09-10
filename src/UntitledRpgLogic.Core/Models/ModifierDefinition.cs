@@ -1,96 +1,110 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using UntitledRpgLogic.Core.Classes;
+using UntitledRpgLogic.Core.Interfaces.Data;
 
 namespace UntitledRpgLogic.Core.Models;
 
 /// <summary>
-///     Defines a modifier that can be applied to stats, such as buffs or debuffs.
+///     Database catalog model defining an ongoing modifier (buff or debuff) that can be applied to entities.
 /// </summary>
-public class ModifierDefinition
+[Table("modifier_definitions")]
+public record ModifierDefinition : IDbEntity<Ulid>
 {
 	/// <summary>
-	///     The unique identifier for the modifier. This is used to reference the modifier in the game.
+	///     Initializes a new instance of the <see cref="ModifierDefinition" /> record with default values for EF Core.
+	/// </summary>
+	public ModifierDefinition()
+	{
+		this.Id = Ulid.NewUlid();
+		this.Name = Name.Empty;
+		this.MaxStacks = 1;
+		this.LoseAllStacksOnExpiration = true;
+	}
+
+	/// <summary>
+	///     Initializes a new instance of the <see cref="ModifierDefinition" /> record with a designated name.
+	/// </summary>
+	/// <param name="name">The display name of the modifier.</param>
+	public ModifierDefinition(Name name) : this() => this.Name = name;
+
+	/// <summary>
+	///     The unique identifier for the modifier definition.
 	/// </summary>
 	[Key]
-	public Ulid Id { get; set; }
+	[DatabaseGenerated(DatabaseGeneratedOption.None)]
+	public Ulid Id { get; init; }
 
 	/// <summary>
-	///     The name of the modifier. This is used to identify the modifier in the game and is used in the UI.
+	///     The display name of the modifier.
 	/// </summary>
-	public required string Name { get; set; }
+	public required Name Name { get; init; }
 
 	/// <summary>
-	///     Whether the modifier is permanent or not. Permanent modifiers do not expire and remain active until removed.
+	///     Indicates whether the modifier persists indefinitely until explicitly dispelled.
 	/// </summary>
-	public bool IsPermanent { get; set; }
+	public bool IsPermanent { get; init; }
 
 	/// <summary>
-	///     Whether the modifier is positive or negative. Positive modifiers increase stats, while negative modifiers decrease
-	///     them.
+	///     Indicates whether the modifier is beneficial (true) or detrimental (false).
 	/// </summary>
-	public bool IsPositive { get; set; }
+	public bool IsPositive { get; init; }
 
 	/// <summary>
-	///     Whether the modifier is additive or multiplicative. Additive modifiers add to the stat value, while multiplicative
-	///     modifiers multiply the stat value.
+	///     Indicates whether the modifier calculates via flat addition.
 	/// </summary>
-	public bool IsAdditive { get; set; }
+	public bool IsAdditive { get; init; }
 
 	/// <summary>
-	///     Whether the modifier is a percentage or a flat value. Percentage modifiers apply a percentage change to the stat,
-	///     while flat value modifiers apply a fixed amount.
+	///     Indicates whether the modifier scales multiplicatively.
 	/// </summary>
-	public bool IsMultiplicative { get; set; }
+	public bool IsMultiplicative { get; init; }
 
 	/// <summary>
-	///     Whether the modifier scales with the base value of the stat or the current value. If true, the modifier scales with
-	///     the base value; if false, it scales with the current value.
+	///     Indicates whether scaling operates against the stat's base value (true) or current apparent value (false).
 	/// </summary>
-	public bool ScalesOnBaseValue { get; set; }
+	public bool ScalesOnBaseValue { get; init; }
 
 	/// <summary>
-	///     The maximum number of stacks this modifier can have. Stacking allows the same modifier to be applied multiple
-	///     times, increasing its effect.
+	///     The maximum number of concurrent stacks an entity can hold.
 	/// </summary>
-	public int MaxStacks { get; set; }
+	[Range(1, int.MaxValue)]
+	public int MaxStacks { get; init; }
 
 	/// <summary>
-	///     The duration in seconds for which the modifier is active. If the modifier is permanent, this value is ignored.
+	///     The active duration in seconds (ignored if <see cref="IsPermanent" /> is true).
 	/// </summary>
-	public float Duration { get; set; }
+	public float Duration { get; init; }
 
 	/// <summary>
-	///     Whether the modifier loses all stacks when it expires. If true, all stacks are removed when the duration ends; if
-	///     false, remaining stacks persist.
+	///     Indicates whether all stacks clear simultaneously upon expiration or decrement individually.
 	/// </summary>
-	public bool LoseAllStacksOnExpiration { get; set; }
+	public bool LoseAllStacksOnExpiration { get; init; }
 
 	/// <summary>
-	///     The priority of the modifier. This determines the order in which modifiers are applied when multiple modifiers
-	///     affect the same stat.
+	///     Priority order used when evaluating multiple stacked modifiers on the same stat.
 	/// </summary>
-	public int Priority { get; set; }
+	public int Priority { get; init; }
 
 	/// <summary>
-	///     The ULID for the effect that this modifier applies to the stat when it is active, for 0 or no stacks.
+	///     Foreign key to the baseline <see cref="ModificationEffect" /> active at 0 or base stacks.
 	/// </summary>
-	public Ulid? ModifierEffectId { get; set; }
+	public Ulid? ModifierEffectId { get; init; }
 
 	/// <summary>
-	///     The ULID for the effect that each stack of this modifier has on the stat. This is used when the modifier can stack,
-	///     allowing it to apply additional effects per stack.
-	/// </summary>
-	public Ulid? StackEffectId { get; set; }
-
-	/// <summary>
-	///     The effects this modifier applies to the stat when it is active, for 0 or no stacks.
+	///     Navigation property to the baseline modification effect.
 	/// </summary>
 	[ForeignKey(nameof(ModifierEffectId))]
-	public ModificationEffect? ModifierEffect { get; set; }
+	public ModificationEffect? ModifierEffect { get; init; }
 
 	/// <summary>
-	///     The effect(s) that each stack of this modifier has on the stat.
+	///     Foreign key to the supplemental <see cref="ModificationEffect" /> applied per additional stack.
+	/// </summary>
+	public Ulid? StackEffectId { get; init; }
+
+	/// <summary>
+	///     Navigation property to the per-stack modification effect.
 	/// </summary>
 	[ForeignKey(nameof(StackEffectId))]
-	public ModificationEffect? StackEffect { get; set; }
+	public ModificationEffect? StackEffect { get; init; }
 }

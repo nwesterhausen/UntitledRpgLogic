@@ -10,15 +10,13 @@ namespace UntitledRpgLogic.Services;
 /// <summary>
 ///     A generic service that provides leveling logic for any object implementing IHasLeveling.
 /// </summary>
-public class LevelingService<T> : ILevelingService<T> where T : IHasLeveling
+/// <remarks>
+///     Constructs a new instance of the LevelingService.
+/// </remarks>
+/// <param name="logger"></param>
+public class LevelingService<T>(ILogger<LevelingService<T>> logger) : ILevelingService<T> where T : IHasLeveling
 {
-	private readonly ILogger<LevelingService<T>> logger;
-
-	/// <summary>
-	///     Constructs a new instance of the LevelingService.
-	/// </summary>
-	/// <param name="logger"></param>
-	public LevelingService(ILogger<LevelingService<T>> logger) => this.logger = logger;
+	private readonly ILogger<LevelingService<T>> logger = logger;
 
 	/// <inheritdoc />
 	public void AddPoints(T target, int points)
@@ -114,19 +112,17 @@ public class LevelingService<T> : ILevelingService<T> where T : IHasLeveling
 			return;
 		}
 
-		target.InvokeValueChanged(new ValueChangedEventArgs(oldValue, target.Value));
+		target.InvokeValueChanged(new ValueChangedEventArgs<int>(oldValue, target.Value));
 		var pointsChanged = target.Value - oldValue;
+		var action = pointsChanged > 0 ? "gained" : "lost";
 
 		if (target is IHasName namedTarget)
 		{
 			// Use the new generic helper
-			// this.logger.LogLevelablePointsChanged(typeof(T).Name, namedTarget.Name.Singular, pointsChanged, target.Value);
+			this.logger.LevelablePointsChanged(typeof(T).Name, namedTarget.Name.Singular, pointsChanged, target.Value, action);
 		}
-		else
-		{
-			// Fallback for unnamed items
-			// this.logger.LogLevelablePointsChangedGeneric(typeof(T).Name, pointsChanged, target.Value);
-		}
+		// Fallback for unnamed items
+		this.logger.LevelablePointsChangedGeneric(typeof(T).Name, pointsChanged, target.Value, action);
 	}
 
 	private void CheckForLevelChange(T target)
@@ -137,18 +133,19 @@ public class LevelingService<T> : ILevelingService<T> where T : IHasLeveling
 		if (newLevel != oldLevel)
 		{
 			target.Level = newLevel;
-			target.InvokeLevelChanged(new ValueChangedEventArgs(oldLevel, newLevel));
+			target.InvokeLevelChanged(new ValueChangedEventArgs<int>(oldLevel, newLevel));
+
+			var action = oldLevel < newLevel ? "gained" : "lost";
+			var diff = Math.Abs(newLevel - oldLevel);
+			var plural = diff > 1 ? "s" : "";
 
 			if (target is IHasName namedTarget)
 			{
 				// Use the new generic helper
-				// this.logger.LogLevelableChanged(typeof(T).Name, namedTarget.Name.Singular, oldLevel, newLevel);
+				this.logger.LevelChanged(typeof(T).Name, namedTarget.Name.Singular, diff, newLevel, action, plural);
 			}
-			else
-			{
-				// Fallback for unnamed items
-				// this.logger.LogLevelableChangedGeneric(typeof(T).Name, oldLevel, newLevel);
-			}
+			// Fallback for unnamed items
+			this.logger.LevelChangedGeneric(typeof(T).Name, diff, newLevel, action, plural);
 		}
 	}
 

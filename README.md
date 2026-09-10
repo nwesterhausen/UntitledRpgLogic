@@ -10,7 +10,8 @@ Game logic and data management layer for UntitledRpg, a moddable RPG framework w
 	* *Status: The TomlConfigHandler and associated configuration models in .Core and .Infrastructure.Configuration are complete.*
 * [ ] **Dependency Injection:** Finalize service registration and lifetime management for all core services.
 	* *Status: Service collection extensions exist, but this will be an ongoing task as new services are added.*
-* [ ] **Logging Framework:** Fully integrate the structured logging library from UntitledRpgLogic.Extensions.Logging across all services to capture engine events and errors.
+* [ ] **Logging Framework:** Fully integrate the structured logging library from UntitledRpgLogic.Extensions.Logging across all services to
+  capture engine events and errors.
 	* *Status: The framework is in place; widespread implementation is the next step.*
 * [ ] **Data Persistence System:**
 	* [ ] Design the database schema and corresponding data models to represent the full game state (entities, inventory, world data, etc.).
@@ -78,7 +79,8 @@ Game logic and data management layer for UntitledRpg, a moddable RPG framework w
 	* [ ] Design and implement AI behaviors (e.g., using Behavior Trees or Finite State Machines).
 	* [ ] Create combat-specific AI for target selection and ability usage.
 * [ ] **Player Controller:**
-	* [ ] Create the central service for processing player commands (e.g., Move, UseAbility, Interact). This will act as a primary entry point from the Godot front-end into the logic layer.
+	* [ ] Create the central service for processing player commands (e.g., Move, UseAbility, Interact). This will act as a primary entry point
+	  from the Godot front-end into the logic layer.
 
 ### **Phase 5: Tooling & Documentation**
 

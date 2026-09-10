@@ -1,39 +1,57 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using UntitledRpgLogic.Core.Interfaces.Data;
 
 namespace UntitledRpgLogic.Core.Models;
 
 /// <summary>
-///     Represents an instanced skill in the RPG logic. This class specifically for storing skill instances in a database.
+///     Represents an active, trained skill instance bound to an entity, tracking progression and proficiency.
 /// </summary>
-public class InstancedSkill
+[Table("instanced_skills")]
+public record InstancedSkill : IDbEntity<Ulid>
 {
 	/// <summary>
-	///     The unique identifier for the instanced skill. This is used to identify the skill instance in the game.
+	///     Initializes a new instance of the <see cref="InstancedSkill" /> record for EF Core.
+	/// </summary>
+	public InstancedSkill()
+	{
+		this.Id = Ulid.NewUlid();
+		this.SkillDefinitionId = Ulid.Empty;
+		this.ExperiencePoints = 0;
+		this.Level = 0;
+	}
+
+	/// <summary>
+	///     Initializes a new instance of the <see cref="InstancedSkill" /> record based on a skill discipline.
+	/// </summary>
+	/// <param name="skillDefinitionId">The identifier of the template skill definition.</param>
+	public InstancedSkill(Ulid skillDefinitionId) : this() => this.SkillDefinitionId = skillDefinitionId;
+
+	/// <summary>
+	///     The unique identifier for this active skill instance.
 	/// </summary>
 	[Key]
+	[DatabaseGenerated(DatabaseGeneratedOption.None)]
 	public Ulid Id { get; init; }
 
 	/// <summary>
-	///     The unique identifier for the skill definition that this instanced skill is based on. This links the instanced
-	///     skill to its definition.
+	///     Foreign key referencing the template <see cref="SkillDefinition" />.
 	/// </summary>
 	public required Ulid SkillDefinitionId { get; init; }
 
 	/// <summary>
-	///     The total amount of experience points accumulated for this skill instance. This is used to track progress towards
-	///     leveling up the skill.
-	/// </summary>
-	public int ExperiencePoints { get; init; }
-
-	/// <summary>
-	///     The current level of the skill instance. This represents the skill's proficiency and is used to determine its
-	///     effectiveness in the game.
-	/// </summary>
-	public int Level { get; init; }
-
-	/// <summary>
+	///     Navigation property to the governing skill template.
 	/// </summary>
 	[ForeignKey(nameof(SkillDefinitionId))]
 	public SkillDefinition? SkillDefinition { get; init; }
+
+	/// <summary>
+	///     The total accumulated experience points within this skill discipline.
+	/// </summary>
+	public int ExperiencePoints { get; set; }
+
+	/// <summary>
+	///     The active proficiency level of this skill instance.
+	/// </summary>
+	public int Level { get; set; }
 }

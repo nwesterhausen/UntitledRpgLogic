@@ -5,52 +5,46 @@ namespace UntitledRpgLogic.Core.Classes;
 /// <summary>
 ///     Contains the name of an object. Has a singular, a plural and a form when used as an adjective.
 /// </summary>
-public class Name : IStringSerializable<Name>
+/// <remarks>
+///     Constructs a new PluralName object with the given singular, plural and adjective names. If not supplied, the
+///     singular will be used as the adjective and a best guess will be made for the plural.
+/// </remarks>
+/// <param name="singular"></param>
+/// <param name="plural"></param>
+/// <param name="adjective"></param>
+public class Name(string singular, string? plural = null, string? adjective = null) : IStringSerializable<Name>
 {
+	private const char DELIM = ';';
+
 	/// <summary>
 	///     An empty name.
 	/// </summary>
 	public static readonly Name Empty = new(string.Empty);
 
 	/// <summary>
-	///     Constructs a new PluralName object with the given singular, plural and adjective names. If not supplied, the
-	///     singular
-	///     will be used as the adjective and a best guess will be made for the plural.
-	/// </summary>
-	/// <param name="singular"></param>
-	/// <param name="plural"></param>
-	/// <param name="adjective"></param>
-	public Name(string singular, string? plural = null, string? adjective = null)
-	{
-		this.Singular = singular;
-		this.Plural = plural ?? BestGuessPlural(singular);
-		this.Adjective = adjective ?? singular;
-	}
-
-	/// <summary>
 	///     The singular name of the object, e.g. "a Sword".
 	/// </summary>
-	public string Singular { get; init; }
+	public string Singular { get; init; } = singular;
 
 	/// <summary>
 	///     The plural name of the object, e.g. "two Swords".
 	/// </summary>
-	public string Plural { get; init; }
+	public string Plural { get; init; } = plural ?? BestGuessPlural(singular);
 
 	/// <summary>
 	///     The name used as an adjective, e.g. "Sword soup".
 	/// </summary>
-	public string Adjective { get; init; }
+	public string Adjective { get; init; } = adjective ?? singular;
 
 	/// <inheritdoc />
 	public string Serialize()
 	{
 		if (this.Singular.Equals(this.Adjective, StringComparison.Ordinal))
 		{
-			return $"{this.Singular}:{this.Plural}";
+			return $"{this.Singular}{DELIM}{this.Plural}";
 		}
 
-		return $"{this.Singular};{this.Plural};{this.Adjective}";
+		return $"{this.Singular}{DELIM}{this.Plural}{DELIM}{this.Adjective}";
 	}
 
 	/// <inheritdoc />
@@ -58,7 +52,7 @@ public class Name : IStringSerializable<Name>
 	{
 		ArgumentNullException.ThrowIfNull(serialized, nameof(serialized));
 
-		var parts = serialized.Split(';');
+		var parts = serialized.Split(DELIM);
 		return parts.Length switch
 		{
 			0 => throw new ArgumentException("Invalid serialized name format."),
@@ -94,7 +88,7 @@ public class Name : IStringSerializable<Name>
 			return singular + "zes";
 		}
 
-		if (singular.EndsWith('s') || singular.EndsWith('x') || singular.EndsWith('z') ||
+		if (singular.EndsWith('o') || singular.EndsWith('s') || singular.EndsWith('x') || singular.EndsWith('z') ||
 			singular.EndsWith("ch", StringComparison.InvariantCultureIgnoreCase) ||
 			singular.EndsWith("sh", StringComparison.InvariantCultureIgnoreCase))
 		{

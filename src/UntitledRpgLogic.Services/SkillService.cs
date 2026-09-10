@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Logging;
 using UntitledRpgLogic.Core.Interfaces.Common;
 using UntitledRpgLogic.Core.Interfaces.Services;
+using UntitledRpgLogic.Extensions.Logging;
 
 // Assuming you might add more specific logs here
 
@@ -10,20 +11,14 @@ namespace UntitledRpgLogic.Services;
 
 /// <summary>
 /// </summary>
-public class SkillService : ISkillService
+/// <remarks>
+/// </remarks>
+/// <param name="levelingService"></param>
+/// <param name="logger"></param>
+public class SkillService(ILevelingService<ISkill> levelingService, ILogger<SkillService> logger) : ISkillService
 {
-	private readonly ILevelingService<ISkill> levelingService;
-	private readonly ILogger<SkillService> logger;
-
-	/// <summary>
-	/// </summary>
-	/// <param name="levelingService"></param>
-	/// <param name="logger"></param>
-	public SkillService(ILevelingService<ISkill> levelingService, ILogger<SkillService> logger)
-	{
-		this.levelingService = levelingService;
-		this.logger = logger;
-	}
+	private readonly ILevelingService<ISkill> levelingService = levelingService;
+	private readonly ILogger<SkillService> logger = logger;
 
 	/// <inheritdoc />
 	public void AddPoints(ISkill skill, int points)
@@ -34,13 +29,11 @@ public class SkillService : ISkillService
 		// --- Contextual Logging ---
 		if (skill.Level >= skill.MaxLevel)
 		{
-			this.logger.LogWarning("Attempted to add {Points} points to max-level skill {SkillName}.", points,
-				skill.Name.Singular);
+			this.logger.AttemptedIncreaseSkillAtMaxLevel(skill.Name.Singular, points);
+			return;
 		}
 
-		// You might choose to return here if you don't want to add points to a max-level skill
-		// return;
-		this.logger.LogDebug("Adding {Points} points to skill {SkillName}", points, skill.Name.Singular);
+		this.logger.SkillValueIncrease(skill.Name.Singular, points);
 		this.levelingService.AddPoints(skill, points);
 	}
 
@@ -50,7 +43,8 @@ public class SkillService : ISkillService
 		// --- Guard Clause ---
 		ArgumentNullException.ThrowIfNull(skill);
 
-		this.logger.LogDebug("Removing {Points} points from skill {SkillName}", points, skill.Name.Singular);
+
+		this.logger.SkillValueDecrease(skill.Name.Singular, points);
 		this.levelingService.RemovePoints(skill, points);
 	}
 
@@ -60,7 +54,7 @@ public class SkillService : ISkillService
 		// --- Guard Clause ---
 		ArgumentNullException.ThrowIfNull(skill);
 
-		this.logger.LogDebug("Setting points for skill {SkillName} to {Points}", skill.Name.Singular, points);
+		this.logger.SkillValueSet(skill.Name.Singular, points);
 		this.levelingService.SetPoints(skill, points);
 	}
 

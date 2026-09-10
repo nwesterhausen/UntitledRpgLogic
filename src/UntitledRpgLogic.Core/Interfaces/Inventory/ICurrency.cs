@@ -21,7 +21,7 @@ public interface ICurrency : IHasName, ITradable, IHasTooltipString
 	/// <summary>
 	///     A unique identifier for the currency type, used for serialization and identification purposes.
 	/// </summary>
-	public Guid CurrencyId { get; }
+	public Ulid CurrencyId { get; }
 
 	/// <summary>
 	///     Add an amount of <see cref="ITradable.Value" /> to this currency. Any value which cannot be wholly added is

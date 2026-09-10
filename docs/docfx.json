@@ -31,7 +31,8 @@
           "**/*.{md,yml}"
         ],
         "exclude": [
-          "_site/**"
+          "_site/**",
+          "namespaces/**"
         ]
       }
     ],

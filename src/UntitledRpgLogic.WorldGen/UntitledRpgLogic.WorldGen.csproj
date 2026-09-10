@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+<PropertyGroup>
+		<!-- Package metadata -->
+		<AssemblyName>UntitledRpgLogic.WorldGen</AssemblyName>
+		<PackageId>UntitledRpgLogic.WorldGen</PackageId>
+		<RootNamespace>UntitledRpgLogic.WorldGen</RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\UntitledRpgLogic.Core\UntitledRpgLogic.Core.csproj"/>
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Ulid"/>
+	</ItemGroup>
+</Project>

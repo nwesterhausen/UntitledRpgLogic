@@ -14,6 +14,21 @@ env:
 
 jobs:
   build:
+    services:
+      postgres:
+        image: postgres:18-alpine
+        env:
+          POSTGRES_USER: urpg_user
+          POSTGRES_PASSWORD: urpg_password
+          POSTGRES_DB: urpg_dev
+        ports:
+          - 5432:5432
+        # Health check ensures PostgreSQL is ready before the job steps execute
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     name: Build and Test
     runs-on: ubuntu-latest
     steps:
@@ -22,11 +37,11 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: ⚙️ Setup .NET 9
+      - name: ⚙️ Setup .NET 10
         uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6
         id: setup-dotnet
         with:
-          dotnet-version: 9.0.x
+          dotnet-version: 10.0.x
 
       - name: 🥟 Setup Bun
         uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
@@ -84,6 +99,8 @@ jobs:
           dotnet build --no-restore
 
       - name: 🚀 Test
+        env:
+           URPG_PG_CONNECTION_STRING: "Host=localhost;Port=5432;Database=urpg_dev;Username=urpg_user;Password=urpg_password"
         run: |
           cd ${{ github.workspace }}
           dotnet test --no-build --verbosity normal

@@ -3,26 +3,25 @@ namespace UntitledRpgLogic.Core.Events;
 /// <summary>
 ///     Event arguments for when currency is moved to or from an inventory.
 /// </summary>
-public class CurrencyMovedEventArgs : EventArgs
+/// <remarks>
+///     Create a new instance of <see cref="CurrencyMovedEventArgs" />.
+/// </remarks>
+/// <param name="description">
+/// 	A description of the amount of currency moved, such as "100 gold coins"
+/// </param>
+/// <param name="totalInInventory">
+/// 	The total amount of currency remaining in the inventory after the movement.
+/// </param>
+public class CurrencyMovedEventArgs(string description, string totalInInventory) : EventArgs
 {
-	/// <summary>
-	///     Create a new instance of <see cref="CurrencyMovedEventArgs" />.
-	/// </summary>
-	/// <param name="description"></param>
-	/// <param name="totalInInventory"></param>
-	public CurrencyMovedEventArgs(string description, string totalInInventory)
-	{
-		this.Description = description;
-		this.TotalInInventory = totalInInventory;
-	}
 
 	/// <summary>
 	///     A description of the amount of currency moved, such as "100 gold coins"
 	/// </summary>
-	public string Description { get; }
+	public string Description { get; } = description;
 
 	/// <summary>
 	///     The total amount of currency remaining in the inventory after the movement.
 	/// </summary>
-	public string TotalInInventory { get; }
+	public string TotalInInventory { get; } = totalInInventory;
 }

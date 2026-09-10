@@ -3,29 +3,49 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace UntitledRpgLogic.Core.Models;
 
 /// <summary>
-///     Used to track the skills of an entity, such as a player or NPC.
+///     Join record linking an <see cref="Entity" /> to its learned <see cref="InstancedSkill" /> instances.
 /// </summary>
-public class EntitySkills
+[Table("entity_skills")]
+public record EntitySkills
 {
 	/// <summary>
-	///     An entity's unique identifier. This is used to reference the entity in the game and in the database.
+	///     Initializes a new instance of the <see cref="EntitySkills" /> record for EF Core.
 	/// </summary>
-	public required Ulid EntityId { get; init; }
+	public EntitySkills()
+	{
+		this.EntityId = Ulid.Empty;
+		this.InstancedSkillId = Ulid.Empty;
+	}
 
 	/// <summary>
-	///     A unique identifier for a skill that has been instanced for an entity.
+	///     Initializes a new instance of the <see cref="EntitySkills" /> record with explicit keys.
 	/// </summary>
-	public required Ulid InstancedSkillId { get; init; }
+	/// <param name="entityId">The identifier of the entity owning the skill.</param>
+	/// <param name="instancedSkillId">The identifier of the instanced skill.</param>
+	public EntitySkills(Ulid entityId, Ulid instancedSkillId)
+	{
+		this.EntityId = entityId;
+		this.InstancedSkillId = instancedSkillId;
+	}
 
 	/// <summary>
-	///     The entity that this skill belongs to. This is used to link the skill to the entity it belongs to, such as a player
-	///     or NPC.
+	///     Foreign key of the owning entity (Composite PK Part 1).
+	/// </summary>
+	public Ulid EntityId { get; init; }
+
+	/// <summary>
+	///     Navigation property to the owning entity.
 	/// </summary>
 	[ForeignKey(nameof(EntityId))]
 	public Entity? Entity { get; init; }
 
 	/// <summary>
-	///     The instanced skill that this entity has.
+	///     Foreign key of the associated instanced skill (Composite PK Part 2).
+	/// </summary>
+	public Ulid InstancedSkillId { get; init; }
+
+	/// <summary>
+	///     Navigation property to the instanced skill.
 	/// </summary>
 	[ForeignKey(nameof(InstancedSkillId))]
 	public InstancedSkill? InstancedSkill { get; init; }

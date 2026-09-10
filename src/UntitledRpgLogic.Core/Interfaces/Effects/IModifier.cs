@@ -1,3 +1,4 @@
+using UntitledRpgLogic.Core.Events;
 using UntitledRpgLogic.Core.Interfaces.Common;
 
 namespace UntitledRpgLogic.Core.Interfaces.Effects;
@@ -99,16 +100,16 @@ public interface IModifier : IHasName
 	/// <summary>
 	///     Occurs when the number of stacks for this modification changes.
 	/// </summary>
-	public event EventHandler<int> StacksChanged;
+	public event EventHandler<ValueChangedEventArgs<int>> StacksChanged;
 
 	/// <summary>
 	///     Occurs when the duration of this modification changes.
 	/// </summary>
-	public event EventHandler<float> DurationChanged;
+	public event EventHandler<ValueChangedEventArgs<float>> DurationChanged;
 
 	/// <summary>
 	///     Occurs when the modification is applied to a stat.
 	///     The event argument is the resulting value after application.
 	/// </summary>
-	public event EventHandler<int> ModificationApplied;
+	public event EventHandler<ValueChangedEventArgs<int>> ModificationApplied;
 }
