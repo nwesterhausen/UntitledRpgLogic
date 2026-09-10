@@ -4,6 +4,9 @@ using UntitledRpgLogic.Core.Interfaces.Data;
 
 namespace UntitledRpgLogic.Infrastructure.Data.Repositories;
 
+/// <summary>
+/// 	Implementation of <see cref="IRepository{T}"/>. Interacts with the <see cref="DbSet" /> declared on the <see cref="RpgDbContext" />.
+/// </summary>
 public class Repository<T> : IRepository<T> where T : class
 {
 	/// <summary>
@@ -16,6 +19,10 @@ public class Repository<T> : IRepository<T> where T : class
 	/// </summary>
 	protected DbSet<T> DbSet { get; }
 
+	/// <summary>
+	/// 	Creates a repository for the supplied database context.
+	/// </summary>
+	/// <param name="context">Database context to create a respository within</param>
 	public Repository(RpgDbContext context)
 	{
 		ArgumentNullException.ThrowIfNull(context);
@@ -24,6 +31,7 @@ public class Repository<T> : IRepository<T> where T : class
 		this.DbSet = context.Set<T>();
 	}
 
+	/// <inheritdoc />
 	public virtual async Task<T?> FirstOrDefaultAsync(
 		Expression<Func<T, bool>> predicate,
 		CancellationToken cancellationToken = default,
@@ -37,6 +45,7 @@ public class Repository<T> : IRepository<T> where T : class
 		return await query.FirstOrDefaultAsync(predicate, cancellationToken).ConfigureAwait(false);
 	}
 
+	/// <inheritdoc />
 	public virtual async Task<IReadOnlyList<T>> GetAsync(
 		Expression<Func<T, bool>>? predicate = null,
 		Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,
@@ -72,6 +81,7 @@ public class Repository<T> : IRepository<T> where T : class
 		return await query.ToListAsync(cancellationToken).ConfigureAwait(false);
 	}
 
+	/// <inheritdoc />
 	public virtual async Task<bool> AnyAsync(
 		Expression<Func<T, bool>> predicate,
 		CancellationToken cancellationToken = default)
@@ -80,6 +90,7 @@ public class Repository<T> : IRepository<T> where T : class
 		return await this.DbSet.AnyAsync(predicate, cancellationToken).ConfigureAwait(false);
 	}
 
+	/// <inheritdoc />
 	public virtual async Task<int> CountAsync(
 		Expression<Func<T, bool>>? predicate = null,
 		CancellationToken cancellationToken = default)
@@ -89,36 +100,42 @@ public class Repository<T> : IRepository<T> where T : class
 			: await this.DbSet.CountAsync(predicate, cancellationToken).ConfigureAwait(false);
 	}
 
+	/// <inheritdoc />
 	public virtual async Task AddAsync(T entity, CancellationToken cancellationToken = default)
 	{
 		ArgumentNullException.ThrowIfNull(entity);
 		await this.DbSet.AddAsync(entity, cancellationToken).ConfigureAwait(false);
 	}
 
+	/// <inheritdoc />
 	public virtual async Task AddRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default)
 	{
 		ArgumentNullException.ThrowIfNull(entities);
 		await this.DbSet.AddRangeAsync(entities, cancellationToken).ConfigureAwait(false);
 	}
 
+	/// <inheritdoc />
 	public virtual void Update(T entity)
 	{
 		ArgumentNullException.ThrowIfNull(entity);
 		this.DbSet.Update(entity);
 	}
 
+	/// <inheritdoc />
 	public virtual void Remove(T entity)
 	{
 		ArgumentNullException.ThrowIfNull(entity);
 		this.DbSet.Remove(entity);
 	}
 
+	/// <inheritdoc />
 	public virtual void RemoveRange(IEnumerable<T> entities)
 	{
 		ArgumentNullException.ThrowIfNull(entities);
 		this.DbSet.RemoveRange(entities);
 	}
 
+	/// <inheritdoc />
 	protected static IQueryable<T> ApplyIncludes(
 		IQueryable<T> query,
 		IEnumerable<Expression<Func<T, object?>>> includes)

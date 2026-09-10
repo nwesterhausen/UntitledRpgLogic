@@ -3,21 +3,28 @@ using UntitledRpgLogic.Core.Interfaces.Data;
 
 namespace UntitledRpgLogic.Infrastructure.Data;
 
+/// <summary>
+/// 	The implementation of <see cref="IUnitOfWork" /> that allows for modifying/connecting with a database provider.
+/// </summary>
 public sealed class UnitOfWork : IUnitOfWork
 {
 	private readonly RpgDbContext _context;
 	private IDbContextTransaction? _currentTransaction;
 
+	/// <summary> Create the unit of work machine for supplied context </summary>
+	/// <param name="context">the database context</param>
 	public UnitOfWork(RpgDbContext context)
 	{
 		_context = context ?? throw new ArgumentNullException(nameof(context));
 	}
 
+	/// <inheritdoc />
 	public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
 	{
 		return await _context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
 	}
 
+	/// <inheritdoc />
 	public async Task BeginTransactionAsync(CancellationToken cancellationToken = default)
 	{
 		if (_currentTransaction is not null)
@@ -28,6 +35,7 @@ public sealed class UnitOfWork : IUnitOfWork
 		_currentTransaction = await _context.Database.BeginTransactionAsync(cancellationToken).ConfigureAwait(false);
 	}
 
+	/// <inheritdoc />
 	public async Task CommitTransactionAsync(CancellationToken cancellationToken = default)
 	{
 		try
@@ -54,6 +62,7 @@ public sealed class UnitOfWork : IUnitOfWork
 		}
 	}
 
+	/// <inheritdoc />
 	public async Task RollbackTransactionAsync(CancellationToken cancellationToken = default)
 	{
 		try
@@ -73,6 +82,7 @@ public sealed class UnitOfWork : IUnitOfWork
 		}
 	}
 
+	/// <inheritdoc />
 	public void Dispose()
 	{
 		_currentTransaction?.Dispose();
@@ -81,6 +91,7 @@ public sealed class UnitOfWork : IUnitOfWork
 		GC.SuppressFinalize(this);
 	}
 
+	/// <inheritdoc />
 	public async ValueTask DisposeAsync()
 	{
 		if (_currentTransaction is not null)
