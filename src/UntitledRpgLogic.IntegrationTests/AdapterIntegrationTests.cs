@@ -28,7 +28,6 @@ public class AdapterVerificationTests
 	{
 		var services = new ServiceCollection();
 
-		// Uses your extension method — migrations assembly is already configured!
 		services.AddSqliteDataAccess(opts =>
 		{
 			opts.ConnectionString = "Data Source=test_verification.db";
@@ -63,7 +62,6 @@ public class AdapterVerificationTests
 
 		var services = new ServiceCollection();
 
-		// The extension method defines the migrations assembly — no re-specification required!
 		services.AddPostgreSqlDataAccess(opts =>
 		{
 			opts.ConnectionString = connectionString;
