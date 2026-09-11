@@ -7,7 +7,7 @@ namespace UntitledRpgLogic.Core.Stats;
 /// <summary>
 ///     Represents an active stat instance bound to an entity, derived from a <see cref="Definition" />.
 /// </summary>
-[Table("instanced_stats")]
+[Table("stats")]
 public record Stat : IDbEntity<Ulid>
 {
 	/// <summary>

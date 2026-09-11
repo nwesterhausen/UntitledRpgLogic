@@ -9,7 +9,7 @@ namespace UntitledRpgLogic.Extensions.Common;
 public static class EntitySkillExtensions
 {
 	/// <summary>
-	///     Attaches or updates a skill on an entity, initializing the underlying <see cref="InstancedSkill" /> and <see cref="EntitySkills" /> join record.
+	///     Attaches or updates a skill on an entity, initializing the underlying <see cref="Skill" /> and <see cref="EntitySkills" /> join record.
 	/// 	New skill defaults to level 0 and 0 experience points.
 	/// </summary>
 	/// <param name="entity">The target entity.</param>
@@ -33,7 +33,7 @@ public static class EntitySkillExtensions
 			return existing;
 		}
 
-		var instancedStat = new InstancedSkill
+		var instancedStat = new Skill
 		{
 			Level = initialLevel,
 			ExperiencePoints = initialExperience,

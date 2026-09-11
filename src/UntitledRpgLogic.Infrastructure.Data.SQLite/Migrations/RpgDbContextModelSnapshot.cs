@@ -440,13 +440,13 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                         .HasColumnName("entity_id");
 
                     b.HasKey("Id")
-                        .HasName("pk_instanced_inventories");
+                        .HasName("pk_inventories");
 
                     b.HasIndex("EntityId")
                         .IsUnique()
-                        .HasDatabaseName("ix_instanced_inventories_entity_id");
+                        .HasDatabaseName("ix_inventories_entity_id");
 
-                    b.ToTable("instanced_inventories", (string)null);
+                    b.ToTable("inventories", (string)null);
                 });
 
             modelBuilder.Entity("UntitledRpgLogic.Core.Items.Item", b =>
@@ -481,18 +481,18 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                         .HasColumnName("quantity");
 
                     b.HasKey("Id")
-                        .HasName("pk_item_instances");
+                        .HasName("pk_items");
 
                     b.HasIndex("DefinitionId")
-                        .HasDatabaseName("ix_item_instances_definition_id");
+                        .HasDatabaseName("ix_items_definition_id");
 
                     b.HasIndex("InventoryId")
-                        .HasDatabaseName("ix_item_instances_inventory_id");
+                        .HasDatabaseName("ix_items_inventory_id");
 
                     b.HasIndex("PrimaryMaterialId")
-                        .HasDatabaseName("ix_item_instances_primary_material_id");
+                        .HasDatabaseName("ix_items_primary_material_id");
 
-                    b.ToTable("item_instances", (string)null);
+                    b.ToTable("items", (string)null);
                 });
 
             modelBuilder.Entity("UntitledRpgLogic.Core.Items.ItemDefinition", b =>
@@ -639,7 +639,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                     b.ToTable("leveling_definitions", (string)null);
                 });
 
-            modelBuilder.Entity("UntitledRpgLogic.Core.Skills.InstancedSkill", b =>
+            modelBuilder.Entity("UntitledRpgLogic.Core.Skills.Skill", b =>
                 {
                     b.Property<byte[]>("Id")
                         .HasColumnType("BLOB")
@@ -659,12 +659,12 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                         .HasColumnName("level");
 
                     b.HasKey("Id")
-                        .HasName("pk_instanced_skills");
+                        .HasName("pk_skills");
 
                     b.HasIndex("DefinitionId")
-                        .HasDatabaseName("ix_instanced_skills_definition_id");
+                        .HasDatabaseName("ix_skills_definition_id");
 
-                    b.ToTable("instanced_skills", (string)null);
+                    b.ToTable("skills", (string)null);
                 });
 
             modelBuilder.Entity("UntitledRpgLogic.Core.Skills.SkillDefinition", b =>
@@ -781,12 +781,12 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                         .HasColumnName("definition_id");
 
                     b.HasKey("Id")
-                        .HasName("pk_instanced_stats");
+                        .HasName("pk_stats");
 
                     b.HasIndex("DefinitionId")
-                        .HasDatabaseName("ix_instanced_stats_definition_id");
+                        .HasDatabaseName("ix_stats_definition_id");
 
-                    b.ToTable("instanced_stats", (string)null);
+                    b.ToTable("stats", (string)null);
                 });
 
             modelBuilder.Entity("UntitledRpgLogic.Core.Stats.StatDefinition", b =>
@@ -3278,12 +3278,12 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                         .IsRequired()
                         .HasConstraintName("fk_entity_skills_entities_entity_id");
 
-                    b.HasOne("UntitledRpgLogic.Core.Skills.InstancedSkill", "InstancedSkill")
+                    b.HasOne("UntitledRpgLogic.Core.Skills.Skill", "InstancedSkill")
                         .WithMany()
                         .HasForeignKey("InstancedSkillId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_entity_skills_instanced_skills_instanced_skill_id");
+                        .HasConstraintName("fk_entity_skills_skills_instanced_skill_id");
 
                     b.Navigation("Entity");
 
@@ -3304,7 +3304,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                         .HasForeignKey("InstancedStatId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_entity_stats_instanced_stats_instanced_stat_id");
+                        .HasConstraintName("fk_entity_stats_stats_instanced_stat_id");
 
                     b.Navigation("Entity");
 
@@ -3318,7 +3318,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                         .HasForeignKey("UntitledRpgLogic.Core.Items.Inventory", "EntityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_instanced_inventories_entities_entity_id");
+                        .HasConstraintName("fk_inventories_entities_entity_id");
 
                     b.OwnsOne("UntitledRpgLogic.Core.Items.InventoryFilter", "Filter", b1 =>
                         {
@@ -3334,7 +3334,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
 
                             b1.HasKey("InventoryId");
 
-                            b1.ToTable("instanced_inventories");
+                            b1.ToTable("inventories");
 
                             b1
                                 .ToJson("filter")
@@ -3342,7 +3342,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
 
                             b1.WithOwner()
                                 .HasForeignKey("InventoryId")
-                                .HasConstraintName("fk_instanced_inventories_instanced_inventories_id");
+                                .HasConstraintName("fk_inventories_inventories_id");
                         });
 
                     b.Navigation("Entity");
@@ -3357,17 +3357,17 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                         .HasForeignKey("DefinitionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_item_instances_item_definitions_definition_id");
+                        .HasConstraintName("fk_items_item_definitions_definition_id");
 
                     b.HasOne("UntitledRpgLogic.Core.Items.Inventory", null)
                         .WithMany("Items")
                         .HasForeignKey("InventoryId")
-                        .HasConstraintName("fk_item_instances_instanced_inventories_inventory_id");
+                        .HasConstraintName("fk_items_inventories_inventory_id");
 
                     b.HasOne("UntitledRpgLogic.Core.Materials.MaterialDefinition", "PrimaryMaterial")
                         .WithMany()
                         .HasForeignKey("PrimaryMaterialId")
-                        .HasConstraintName("fk_item_instances_material_definitions_primary_material_id");
+                        .HasConstraintName("fk_items_material_definitions_primary_material_id");
 
                     b.Navigation("Definition");
 
@@ -3829,14 +3829,14 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                         .HasConstraintName("fk_leveling_definitions_scaling_curve_type_lookup_scaling_curve");
                 });
 
-            modelBuilder.Entity("UntitledRpgLogic.Core.Skills.InstancedSkill", b =>
+            modelBuilder.Entity("UntitledRpgLogic.Core.Skills.Skill", b =>
                 {
                     b.HasOne("UntitledRpgLogic.Core.Skills.SkillDefinition", "Definition")
                         .WithMany()
                         .HasForeignKey("DefinitionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_instanced_skills_skill_definitions_definition_id");
+                        .HasConstraintName("fk_skills_skill_definitions_definition_id");
 
                     b.Navigation("Definition");
                 });
@@ -3905,7 +3905,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                         .HasForeignKey("DefinitionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_instanced_stats_stat_definitions_definition_id");
+                        .HasConstraintName("fk_stats_stat_definitions_definition_id");
 
                     b.Navigation("Definition");
                 });

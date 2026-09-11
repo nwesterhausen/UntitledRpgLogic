@@ -36,6 +36,23 @@ public record ItemDefinition : IDbEntity<Ulid>
 	public ItemDefinition(Name name) : this() => this.Name = name;
 
 	/// <summary>
+	///     Initializes a new instance of the <see cref="ItemDefinition" /> record with a designated name.
+	/// </summary>
+	/// <param name="id">The unique identifier to use for this item definition.</param>
+	public ItemDefinition(Ulid id) : this() => this.Id = id;
+
+	/// <summary>
+	///     Initializes a new instance of the <see cref="ItemDefinition" /> record with a designated name.
+	/// </summary>
+	/// <param name="id">The unique identifier to use for this item definition.</param>
+	/// <param name="name">The display name of the item template.</param>
+	public ItemDefinition(Ulid id, Name name) : this()
+	{
+		this.Id = id;
+		this.Name = name;
+	}
+
+	/// <summary>
 	///     The unique catalog identifier for the item template. Can be loaded from external config definitions.
 	/// </summary>
 	[Key]
@@ -103,5 +120,5 @@ public record ItemDefinition : IDbEntity<Ulid>
 	/// <summary>
 	///     All instances of this item actively existing in player inventories, containers, or the world.
 	/// </summary>
-	public virtual ICollection<Item> Instances { get; } = new List<Item>();
+	public ICollection<Item> Instances { get; } = new List<Item>();
 }

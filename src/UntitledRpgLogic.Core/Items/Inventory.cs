@@ -8,15 +8,30 @@ namespace UntitledRpgLogic.Core.Items;
 /// <summary>
 ///     Database model and container representing an inventory owned by an <see cref="Entity" />.
 /// </summary>
-[Table("instanced_inventories")]
+[Table("inventories")]
 public record Inventory : IDbEntity<Ulid>
 {
+	/// <summary>
+	///     Initializes a new instance of the <see cref="Inventory" /> record for EF Core materialization.
+	/// </summary>
+	public Inventory()
+	{
+		this.Id = Ulid.NewUlid();
+		this.Capacity = 20;
+	}
+
+	/// <summary>
+	///     Initializes a new instance of the <see cref="Inventory" /> record with an explicit identifier.
+	/// </summary>
+	/// <param name="id">The unique primary key identifier for the inventory.</param>
+	public Inventory(Ulid id) : this() => this.Id = id;
+
 	/// <summary>
 	///     The unique primary key for this inventory instance.
 	/// </summary>
 	[Key]
 	[DatabaseGenerated(DatabaseGeneratedOption.None)]
-	public Ulid Id { get; init; }
+	public Ulid Id { get; init; } = Ulid.NewUlid();
 
 	/// <summary>
 	///     Foreign key linking this inventory back to its owning entity.

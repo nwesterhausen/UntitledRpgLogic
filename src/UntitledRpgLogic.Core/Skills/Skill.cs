@@ -7,13 +7,13 @@ namespace UntitledRpgLogic.Core.Skills;
 /// <summary>
 ///     Represents an active, trained skill instance bound to an entity, tracking progression and proficiency.
 /// </summary>
-[Table("instanced_skills")]
-public record InstancedSkill : IDbEntity<Ulid>
+[Table("skills")]
+public record Skill : IDbEntity<Ulid>
 {
 	/// <summary>
-	///     Initializes a new instance of the <see cref="InstancedSkill" /> record for EF Core.
+	///     Initializes a new instance of the <see cref="Skill" /> record for EF Core.
 	/// </summary>
-	public InstancedSkill()
+	public Skill()
 	{
 		this.Id = Ulid.NewUlid();
 		this.DefinitionId = Ulid.Empty;
@@ -22,10 +22,10 @@ public record InstancedSkill : IDbEntity<Ulid>
 	}
 
 	/// <summary>
-	///     Initializes a new instance of the <see cref="InstancedSkill" /> record based on a skill discipline.
+	///     Initializes a new instance of the <see cref="Skill" /> record based on a skill discipline.
 	/// </summary>
 	/// <param name="definitionId">The identifier of the template skill definition.</param>
-	public InstancedSkill(Ulid definitionId) : this() => this.DefinitionId = definitionId;
+	public Skill(Ulid definitionId) : this() => this.DefinitionId = definitionId;
 
 	/// <summary>
 	///     The unique identifier for this active skill instance.

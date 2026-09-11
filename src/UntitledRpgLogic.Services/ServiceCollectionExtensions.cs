@@ -28,6 +28,7 @@ public static class ServiceCollectionExtensions
 
 		// Application coordination services (Depend on IUnitOfWork & IEntityRepository)
 		services.AddScoped<IItemCatalogService, ItemCatalogService>();
+		services.AddScoped<IInventoryCoordinatorService, InventoryCoordinatorService>();
 
 		return services;
 	}

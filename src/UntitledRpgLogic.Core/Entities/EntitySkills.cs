@@ -49,5 +49,5 @@ public record EntitySkills
 	///     Navigation property to the instanced skill.
 	/// </summary>
 	[ForeignKey(nameof(InstancedSkillId))]
-	public InstancedSkill? InstancedSkill { get; init; }
+	public Skill? InstancedSkill { get; init; }
 }

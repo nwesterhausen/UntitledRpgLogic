@@ -565,26 +565,6 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "instanced_stats",
-                columns: table => new
-                {
-                    id = table.Column<byte[]>(type: "bytea", nullable: false),
-                    definition_id = table.Column<byte[]>(type: "bytea", nullable: false),
-                    base_value = table.Column<int>(type: "integer", nullable: false),
-                    apparent_value = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("pk_instanced_stats", x => x.id);
-                    table.ForeignKey(
-                        name: "fk_instanced_stats_stat_definitions_definition_id",
-                        column: x => x.definition_id,
-                        principalTable: "stat_definitions",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "linked_stats",
                 columns: table => new
                 {
@@ -613,6 +593,26 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                         principalTable: "stat_definitions",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "stats",
+                columns: table => new
+                {
+                    id = table.Column<byte[]>(type: "bytea", nullable: false),
+                    definition_id = table.Column<byte[]>(type: "bytea", nullable: false),
+                    base_value = table.Column<int>(type: "integer", nullable: false),
+                    apparent_value = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_stats", x => x.id);
+                    table.ForeignKey(
+                        name: "fk_stats_stat_definitions_definition_id",
+                        column: x => x.definition_id,
+                        principalTable: "stat_definitions",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -727,7 +727,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "instanced_inventories",
+                name: "inventories",
                 columns: table => new
                 {
                     id = table.Column<byte[]>(type: "bytea", nullable: false),
@@ -737,9 +737,9 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("pk_instanced_inventories", x => x.id);
+                    table.PrimaryKey("pk_inventories", x => x.id);
                     table.ForeignKey(
-                        name: "fk_instanced_inventories_entities_entity_id",
+                        name: "fk_inventories_entities_entity_id",
                         column: x => x.entity_id,
                         principalTable: "entities",
                         principalColumn: "id",
@@ -852,7 +852,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "instanced_skills",
+                name: "skills",
                 columns: table => new
                 {
                     id = table.Column<byte[]>(type: "bytea", nullable: false),
@@ -862,9 +862,9 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("pk_instanced_skills", x => x.id);
+                    table.PrimaryKey("pk_skills", x => x.id);
                     table.ForeignKey(
-                        name: "fk_instanced_skills_skill_definitions_definition_id",
+                        name: "fk_skills_skill_definitions_definition_id",
                         column: x => x.definition_id,
                         principalTable: "skill_definitions",
                         principalColumn: "id",
@@ -888,9 +888,9 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "fk_entity_stats_instanced_stats_instanced_stat_id",
+                        name: "fk_entity_stats_stats_instanced_stat_id",
                         column: x => x.instanced_stat_id,
-                        principalTable: "instanced_stats",
+                        principalTable: "stats",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -930,7 +930,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "item_instances",
+                name: "items",
                 columns: table => new
                 {
                     id = table.Column<byte[]>(type: "bytea", nullable: false),
@@ -943,20 +943,20 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("pk_item_instances", x => x.id);
+                    table.PrimaryKey("pk_items", x => x.id);
                     table.ForeignKey(
-                        name: "fk_item_instances_instanced_inventories_inventory_id",
+                        name: "fk_items_inventories_inventory_id",
                         column: x => x.inventory_id,
-                        principalTable: "instanced_inventories",
+                        principalTable: "inventories",
                         principalColumn: "id");
                     table.ForeignKey(
-                        name: "fk_item_instances_item_definitions_definition_id",
+                        name: "fk_items_item_definitions_definition_id",
                         column: x => x.definition_id,
                         principalTable: "item_definitions",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "fk_item_instances_material_definitions_primary_material_id",
+                        name: "fk_items_material_definitions_primary_material_id",
                         column: x => x.primary_material_id,
                         principalTable: "material_definitions",
                         principalColumn: "id");
@@ -1140,9 +1140,9 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "fk_entity_skills_instanced_skills_instanced_skill_id",
+                        name: "fk_entity_skills_skills_instanced_skill_id",
                         column: x => x.instanced_skill_id,
-                        principalTable: "instanced_skills",
+                        principalTable: "skills",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -1632,20 +1632,10 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                 column: "instanced_stat_id");
 
             migrationBuilder.CreateIndex(
-                name: "ix_instanced_inventories_entity_id",
-                table: "instanced_inventories",
+                name: "ix_inventories_entity_id",
+                table: "inventories",
                 column: "entity_id",
                 unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "ix_instanced_skills_definition_id",
-                table: "instanced_skills",
-                column: "definition_id");
-
-            migrationBuilder.CreateIndex(
-                name: "ix_instanced_stats_definition_id",
-                table: "instanced_stats",
-                column: "definition_id");
 
             migrationBuilder.CreateIndex(
                 name: "ix_item_definition_materials_material_id",
@@ -1678,18 +1668,18 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                 column: "item_type");
 
             migrationBuilder.CreateIndex(
-                name: "ix_item_instances_definition_id",
-                table: "item_instances",
+                name: "ix_items_definition_id",
+                table: "items",
                 column: "definition_id");
 
             migrationBuilder.CreateIndex(
-                name: "ix_item_instances_inventory_id",
-                table: "item_instances",
+                name: "ix_items_inventory_id",
+                table: "items",
                 column: "inventory_id");
 
             migrationBuilder.CreateIndex(
-                name: "ix_item_instances_primary_material_id",
-                table: "item_instances",
+                name: "ix_items_primary_material_id",
+                table: "items",
                 column: "primary_material_id");
 
             migrationBuilder.CreateIndex(
@@ -1753,9 +1743,19 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                 column: "leveling_definition_id");
 
             migrationBuilder.CreateIndex(
+                name: "ix_skills_definition_id",
+                table: "skills",
+                column: "definition_id");
+
+            migrationBuilder.CreateIndex(
                 name: "ix_stat_definitions_variation",
                 table: "stat_definitions",
                 column: "variation");
+
+            migrationBuilder.CreateIndex(
+                name: "ix_stats_definition_id",
+                table: "stats",
+                column: "definition_id");
 
             migrationBuilder.CreateIndex(
                 name: "ix_world_chunks_map_id_chunk_x_chunk_y",
@@ -1810,7 +1810,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                 name: "item_definition_materials");
 
             migrationBuilder.DropTable(
-                name: "item_instances");
+                name: "items");
 
             migrationBuilder.DropTable(
                 name: "linked_stats");
@@ -1852,16 +1852,16 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                 name: "abilities");
 
             migrationBuilder.DropTable(
-                name: "instanced_skills");
+                name: "skills");
 
             migrationBuilder.DropTable(
-                name: "instanced_stats");
+                name: "stats");
 
             migrationBuilder.DropTable(
                 name: "material_slot_lookup");
 
             migrationBuilder.DropTable(
-                name: "instanced_inventories");
+                name: "inventories");
 
             migrationBuilder.DropTable(
                 name: "item_definitions");

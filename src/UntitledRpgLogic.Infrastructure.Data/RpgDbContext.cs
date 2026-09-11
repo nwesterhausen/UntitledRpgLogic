@@ -79,7 +79,7 @@ public class RpgDbContext(DbContextOptions<RpgDbContext> options) : DbContext(op
 	/// <summary>
 	///     Table for instanced skills, which are specific instances of skill definitions assigned to entities.
 	/// </summary>
-	public DbSet<InstancedSkill> InstancedSkills { get; set; } = null!;
+	public DbSet<Skill> InstancedSkills { get; set; } = null!;
 
 	/// <summary>
 	///     Table for instanced stats, which are specific instances of stat definitions assigned to entities.

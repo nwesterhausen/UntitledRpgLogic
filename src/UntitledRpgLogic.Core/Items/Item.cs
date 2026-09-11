@@ -9,7 +9,7 @@ namespace UntitledRpgLogic.Core.Items;
 ///     Represents a concrete item instance in the world or inventory.
 ///     Holds its own ULID and current state, and references the item definition by ULID.
 /// </summary>
-[Table("item_instances")]
+[Table("items")]
 public record Item : IDbEntity<Ulid>
 {
 	/// <summary>
