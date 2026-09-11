@@ -15,9 +15,9 @@ public static class StatExtensions
 	public static string IntoString(this Stat stat)
 	{
 		ArgumentNullException.ThrowIfNull(stat);
-		ArgumentNullException.ThrowIfNull(stat.StatDefinition);
+		ArgumentNullException.ThrowIfNull(stat.Definition);
 
-		var definition = stat.StatDefinition;
+		var definition = stat.Definition;
 
 		if (definition.MinValue == DefaultValues.StatDefaultMinValue)
 		{

@@ -20,7 +20,7 @@ public static class LevelProgressionHelper
 		}
 
 		return entity.Stats
-			.FirstOrDefault(s => s.InstancedStat?.StatDefinitionId == WellKnownIdentifiers.PlayerLevel)
+			.FirstOrDefault(s => s.InstancedStat?.DefinitionId == WellKnownIdentifiers.PlayerLevel)
 			?.InstancedStat?.ApparentValue ?? 0;
 	}
 
@@ -53,7 +53,7 @@ public static class LevelProgressionHelper
 		ArgumentNullException.ThrowIfNull(entity);
 
 		var instancedStat = entity.Stats?
-			.FirstOrDefault(s => s.InstancedStat?.StatDefinitionId == WellKnownIdentifiers.PlayerLevel)
+			.FirstOrDefault(s => s.InstancedStat?.DefinitionId == WellKnownIdentifiers.PlayerLevel)
 			?.InstancedStat;
 
 		if (instancedStat is null)

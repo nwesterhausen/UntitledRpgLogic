@@ -35,6 +35,12 @@ public record Inventory : IDbEntity<Ulid>
 	public int Capacity { get; init; }
 
 	/// <summary>
+	///     Optional filter restricting which items can be placed in this inventory.
+	///     A null filter permits all item types.
+	/// </summary>
+	public InventoryFilter? Filter { get; init; }
+
+	/// <summary>
 	///     The collection of item instances held within this inventory.
 	/// </summary>
 	public virtual ICollection<Item> Items { get; init; } = [];

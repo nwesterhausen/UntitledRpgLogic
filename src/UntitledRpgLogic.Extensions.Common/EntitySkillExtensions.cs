@@ -22,7 +22,7 @@ public static class EntitySkillExtensions
 		ArgumentNullException.ThrowIfNull(entity);
 		ArgumentNullException.ThrowIfNull(definition);
 
-		var existing = entity.Skills.FirstOrDefault(s => s.InstancedSkill?.SkillDefinitionId == definition.Id);
+		var existing = entity.Skills.FirstOrDefault(s => s.InstancedSkill?.DefinitionId == definition.Id);
 		if (existing is not null)
 		{
 			if (existing.InstancedSkill is not null)
@@ -37,7 +37,7 @@ public static class EntitySkillExtensions
 		{
 			Level = initialLevel,
 			ExperiencePoints = initialExperience,
-			SkillDefinitionId = definition.Id
+			DefinitionId = definition.Id
 		};
 
 		var join = new EntitySkills(entity.Id, instancedStat.Id)

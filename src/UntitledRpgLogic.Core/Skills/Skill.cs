@@ -16,7 +16,7 @@ public record InstancedSkill : IDbEntity<Ulid>
 	public InstancedSkill()
 	{
 		this.Id = Ulid.NewUlid();
-		this.SkillDefinitionId = Ulid.Empty;
+		this.DefinitionId = Ulid.Empty;
 		this.ExperiencePoints = 0;
 		this.Level = 0;
 	}
@@ -24,8 +24,8 @@ public record InstancedSkill : IDbEntity<Ulid>
 	/// <summary>
 	///     Initializes a new instance of the <see cref="InstancedSkill" /> record based on a skill discipline.
 	/// </summary>
-	/// <param name="skillDefinitionId">The identifier of the template skill definition.</param>
-	public InstancedSkill(Ulid skillDefinitionId) : this() => this.SkillDefinitionId = skillDefinitionId;
+	/// <param name="definitionId">The identifier of the template skill definition.</param>
+	public InstancedSkill(Ulid definitionId) : this() => this.DefinitionId = definitionId;
 
 	/// <summary>
 	///     The unique identifier for this active skill instance.
@@ -35,15 +35,15 @@ public record InstancedSkill : IDbEntity<Ulid>
 	public Ulid Id { get; init; }
 
 	/// <summary>
-	///     Foreign key referencing the template <see cref="SkillDefinition" />.
+	///     Foreign key referencing the template <see cref="Definition" />.
 	/// </summary>
-	public required Ulid SkillDefinitionId { get; init; }
+	public required Ulid DefinitionId { get; init; }
 
 	/// <summary>
 	///     Navigation property to the governing skill template.
 	/// </summary>
-	[ForeignKey(nameof(SkillDefinitionId))]
-	public SkillDefinition? SkillDefinition { get; init; }
+	[ForeignKey(nameof(DefinitionId))]
+	public SkillDefinition? Definition { get; init; }
 
 	/// <summary>
 	///     The total accumulated experience points within this skill discipline.

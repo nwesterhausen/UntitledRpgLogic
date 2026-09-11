@@ -19,9 +19,4 @@ public class DamageOptions
 	///     A percentage of the stat's maximum value to apply as damage.
 	/// </summary>
 	public float? PercentageDamageOfMax { get; init; }
-
-	/// <summary>
-	///     The identifier for the source of the damage, used for tracking and logging purposes.
-	/// </summary>
-	public Ulid? SourceId { get; init; }
 }

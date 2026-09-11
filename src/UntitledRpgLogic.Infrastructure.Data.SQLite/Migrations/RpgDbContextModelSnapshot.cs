@@ -459,6 +459,11 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                         .HasColumnType("BLOB")
                         .HasColumnName("crafted_by_id");
 
+                    b.Property<byte[]>("DefinitionId")
+                        .IsRequired()
+                        .HasColumnType("BLOB")
+                        .HasColumnName("definition_id");
+
                     b.Property<int>("Durability")
                         .HasColumnType("INTEGER")
                         .HasColumnName("durability");
@@ -466,11 +471,6 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                     b.Property<byte[]>("InventoryId")
                         .HasColumnType("BLOB")
                         .HasColumnName("inventory_id");
-
-                    b.Property<byte[]>("ItemDefinitionId")
-                        .IsRequired()
-                        .HasColumnType("BLOB")
-                        .HasColumnName("item_definition_id");
 
                     b.Property<byte[]>("PrimaryMaterialId")
                         .HasColumnType("BLOB")
@@ -483,11 +483,11 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                     b.HasKey("Id")
                         .HasName("pk_item_instances");
 
+                    b.HasIndex("DefinitionId")
+                        .HasDatabaseName("ix_item_instances_definition_id");
+
                     b.HasIndex("InventoryId")
                         .HasDatabaseName("ix_item_instances_inventory_id");
-
-                    b.HasIndex("ItemDefinitionId")
-                        .HasDatabaseName("ix_item_instances_item_definition_id");
 
                     b.HasIndex("PrimaryMaterialId")
                         .HasDatabaseName("ix_item_instances_primary_material_id");
@@ -645,6 +645,11 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                         .HasColumnType("BLOB")
                         .HasColumnName("id");
 
+                    b.Property<byte[]>("DefinitionId")
+                        .IsRequired()
+                        .HasColumnType("BLOB")
+                        .HasColumnName("definition_id");
+
                     b.Property<int>("ExperiencePoints")
                         .HasColumnType("INTEGER")
                         .HasColumnName("experience_points");
@@ -653,16 +658,11 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                         .HasColumnType("INTEGER")
                         .HasColumnName("level");
 
-                    b.Property<byte[]>("SkillDefinitionId")
-                        .IsRequired()
-                        .HasColumnType("BLOB")
-                        .HasColumnName("skill_definition_id");
-
                     b.HasKey("Id")
                         .HasName("pk_instanced_skills");
 
-                    b.HasIndex("SkillDefinitionId")
-                        .HasDatabaseName("ix_instanced_skills_skill_definition_id");
+                    b.HasIndex("DefinitionId")
+                        .HasDatabaseName("ix_instanced_skills_definition_id");
 
                     b.ToTable("instanced_skills", (string)null);
                 });
@@ -775,16 +775,16 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                         .HasColumnType("INTEGER")
                         .HasColumnName("base_value");
 
-                    b.Property<byte[]>("StatDefinitionId")
+                    b.Property<byte[]>("DefinitionId")
                         .IsRequired()
                         .HasColumnType("BLOB")
-                        .HasColumnName("stat_definition_id");
+                        .HasColumnName("definition_id");
 
                     b.HasKey("Id")
                         .HasName("pk_instanced_stats");
 
-                    b.HasIndex("StatDefinitionId")
-                        .HasDatabaseName("ix_instanced_stats_stat_definition_id");
+                    b.HasIndex("DefinitionId")
+                        .HasDatabaseName("ix_instanced_stats_definition_id");
 
                     b.ToTable("instanced_stats", (string)null);
                 });
@@ -1313,263 +1313,568 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                         },
                         new
                         {
-                            Id = 1,
-                            Name = "ShortSword"
-                        },
-                        new
-                        {
-                            Id = 2,
+                            Id = 1000,
                             Name = "Dagger"
                         },
                         new
                         {
-                            Id = 3,
-                            Name = "HandAxe"
+                            Id = 1001,
+                            Name = "Stiletto"
                         },
                         new
                         {
-                            Id = 4,
-                            Name = "RecurveBow"
+                            Id = 1002,
+                            Name = "Kukri"
                         },
                         new
                         {
-                            Id = 5,
-                            Name = "Staff"
+                            Id = 1003,
+                            Name = "Kris"
                         },
                         new
                         {
-                            Id = 6,
-                            Name = "Helmet"
+                            Id = 1004,
+                            Name = "MainGauche"
                         },
                         new
                         {
-                            Id = 7,
-                            Name = "Chest"
+                            Id = 1020,
+                            Name = "ShortSword"
                         },
                         new
                         {
-                            Id = 8,
-                            Name = "Legs"
+                            Id = 1021,
+                            Name = "Gladius"
                         },
                         new
                         {
-                            Id = 9,
-                            Name = "Boots"
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Name = "Gloves"
-                        },
-                        new
-                        {
-                            Id = 11,
-                            Name = "Ring"
-                        },
-                        new
-                        {
-                            Id = 12,
-                            Name = "Amulet"
-                        },
-                        new
-                        {
-                            Id = 13,
-                            Name = "Potion"
-                        },
-                        new
-                        {
-                            Id = 14,
-                            Name = "Scroll"
-                        },
-                        new
-                        {
-                            Id = 15,
-                            Name = "Arrow"
-                        },
-                        new
-                        {
-                            Id = 16,
-                            Name = "Bullet"
-                        },
-                        new
-                        {
-                            Id = 17,
-                            Name = "Quiver"
-                        },
-                        new
-                        {
-                            Id = 18,
-                            Name = "Wand"
-                        },
-                        new
-                        {
-                            Id = 19,
-                            Name = "Mace"
-                        },
-                        new
-                        {
-                            Id = 20,
-                            Name = "Spear"
-                        },
-                        new
-                        {
-                            Id = 21,
-                            Name = "Crossbow"
-                        },
-                        new
-                        {
-                            Id = 22,
-                            Name = "Longbow"
-                        },
-                        new
-                        {
-                            Id = 23,
-                            Name = "Shortbow"
-                        },
-                        new
-                        {
-                            Id = 24,
-                            Name = "WarAxe"
-                        },
-                        new
-                        {
-                            Id = 25,
-                            Name = "LongSword"
-                        },
-                        new
-                        {
-                            Id = 26,
-                            Name = "GreatSword"
-                        },
-                        new
-                        {
-                            Id = 27,
-                            Name = "BastardSword"
-                        },
-                        new
-                        {
-                            Id = 28,
+                            Id = 1022,
                             Name = "Rapier"
                         },
                         new
                         {
-                            Id = 29,
-                            Name = "Katana"
+                            Id = 1023,
+                            Name = "Estoc"
                         },
                         new
                         {
-                            Id = 30,
-                            Name = "Scimitar"
+                            Id = 1024,
+                            Name = "Saber"
                         },
                         new
                         {
-                            Id = 31,
+                            Id = 1025,
                             Name = "Cutlass"
                         },
                         new
                         {
-                            Id = 32,
+                            Id = 1026,
+                            Name = "Falchion"
+                        },
+                        new
+                        {
+                            Id = 1027,
+                            Name = "Broadsword"
+                        },
+                        new
+                        {
+                            Id = 1040,
+                            Name = "Scimitar"
+                        },
+                        new
+                        {
+                            Id = 1041,
+                            Name = "Katana"
+                        },
+                        new
+                        {
+                            Id = 1042,
+                            Name = "Wakizashi"
+                        },
+                        new
+                        {
+                            Id = 1043,
+                            Name = "Jian"
+                        },
+                        new
+                        {
+                            Id = 1044,
+                            Name = "Kopis"
+                        },
+                        new
+                        {
+                            Id = 1060,
+                            Name = "LongSword"
+                        },
+                        new
+                        {
+                            Id = 1061,
+                            Name = "BastardSword"
+                        },
+                        new
+                        {
+                            Id = 1062,
+                            Name = "GreatSword"
+                        },
+                        new
+                        {
+                            Id = 1063,
+                            Name = "Claymore"
+                        },
+                        new
+                        {
+                            Id = 1064,
+                            Name = "Zweihander"
+                        },
+                        new
+                        {
+                            Id = 1065,
+                            Name = "Odachi"
+                        },
+                        new
+                        {
+                            Id = 1080,
+                            Name = "HandAxe"
+                        },
+                        new
+                        {
+                            Id = 1081,
+                            Name = "WarAxe"
+                        },
+                        new
+                        {
+                            Id = 1082,
                             Name = "BattleAxe"
                         },
                         new
                         {
-                            Id = 33,
+                            Id = 1083,
                             Name = "GreatAxe"
                         },
                         new
                         {
-                            Id = 34,
+                            Id = 1084,
+                            Name = "Mace"
+                        },
+                        new
+                        {
+                            Id = 1085,
+                            Name = "Morningstar"
+                        },
+                        new
+                        {
+                            Id = 1086,
+                            Name = "Flail"
+                        },
+                        new
+                        {
+                            Id = 1087,
+                            Name = "Warhammer"
+                        },
+                        new
+                        {
+                            Id = 1088,
                             Name = "GreatHammer"
                         },
                         new
                         {
-                            Id = 35,
-                            Name = "GreatStaff"
+                            Id = 1100,
+                            Name = "Spear"
                         },
                         new
                         {
-                            Id = 36,
-                            Name = "Lance"
-                        },
-                        new
-                        {
-                            Id = 37,
+                            Id = 1101,
                             Name = "Pike"
                         },
                         new
                         {
-                            Id = 38,
+                            Id = 1102,
+                            Name = "Lance"
+                        },
+                        new
+                        {
+                            Id = 1103,
                             Name = "Javelin"
                         },
                         new
                         {
-                            Id = 39,
+                            Id = 1104,
                             Name = "Halberd"
                         },
                         new
                         {
-                            Id = 40,
+                            Id = 1105,
                             Name = "Glaive"
                         },
                         new
                         {
-                            Id = 41,
+                            Id = 1106,
                             Name = "Trident"
                         },
                         new
                         {
-                            Id = 42,
-                            Name = "Bolt"
+                            Id = 1120,
+                            Name = "Wand"
                         },
                         new
                         {
-                            Id = 43,
-                            Name = "Circlet"
+                            Id = 1121,
+                            Name = "Staff"
                         },
                         new
                         {
-                            Id = 44,
-                            Name = "Sling"
+                            Id = 1122,
+                            Name = "GreatStaff"
                         },
                         new
                         {
-                            Id = 45,
+                            Id = 1140,
+                            Name = "Shortbow"
+                        },
+                        new
+                        {
+                            Id = 1141,
+                            Name = "Longbow"
+                        },
+                        new
+                        {
+                            Id = 1142,
+                            Name = "RecurveBow"
+                        },
+                        new
+                        {
+                            Id = 1143,
                             Name = "CompositeBow"
                         },
                         new
                         {
-                            Id = 46,
-                            Name = "Arquebus"
+                            Id = 1144,
+                            Name = "Crossbow"
                         },
                         new
                         {
-                            Id = 47,
-                            Name = "HandCannon"
-                        },
-                        new
-                        {
-                            Id = 48,
-                            Name = "Pistol"
-                        },
-                        new
-                        {
-                            Id = 49,
-                            Name = "Revolver"
-                        },
-                        new
-                        {
-                            Id = 50,
-                            Name = "Blunderbuss"
-                        },
-                        new
-                        {
-                            Id = 51,
+                            Id = 1145,
                             Name = "ClockworkCrossbow"
                         },
                         new
                         {
-                            Id = 52,
+                            Id = 1146,
+                            Name = "Sling"
+                        },
+                        new
+                        {
+                            Id = 1160,
+                            Name = "HandCannon"
+                        },
+                        new
+                        {
+                            Id = 1161,
+                            Name = "Arquebus"
+                        },
+                        new
+                        {
+                            Id = 1162,
+                            Name = "Blunderbuss"
+                        },
+                        new
+                        {
+                            Id = 1163,
+                            Name = "Pistol"
+                        },
+                        new
+                        {
+                            Id = 1164,
+                            Name = "Revolver"
+                        },
+                        new
+                        {
+                            Id = 1165,
                             Name = "Rifle"
+                        },
+                        new
+                        {
+                            Id = 2000,
+                            Name = "Helmet"
+                        },
+                        new
+                        {
+                            Id = 2010,
+                            Name = "Circlet"
+                        },
+                        new
+                        {
+                            Id = 2020,
+                            Name = "Hood"
+                        },
+                        new
+                        {
+                            Id = 2030,
+                            Name = "Chest"
+                        },
+                        new
+                        {
+                            Id = 2040,
+                            Name = "Shoulders"
+                        },
+                        new
+                        {
+                            Id = 2050,
+                            Name = "Bracers"
+                        },
+                        new
+                        {
+                            Id = 2060,
+                            Name = "Gloves"
+                        },
+                        new
+                        {
+                            Id = 2070,
+                            Name = "Belt"
+                        },
+                        new
+                        {
+                            Id = 2080,
+                            Name = "Legs"
+                        },
+                        new
+                        {
+                            Id = 2090,
+                            Name = "Boots"
+                        },
+                        new
+                        {
+                            Id = 3000,
+                            Name = "Buckler"
+                        },
+                        new
+                        {
+                            Id = 3010,
+                            Name = "RoundShield"
+                        },
+                        new
+                        {
+                            Id = 3020,
+                            Name = "HeaterShield"
+                        },
+                        new
+                        {
+                            Id = 3030,
+                            Name = "KiteShield"
+                        },
+                        new
+                        {
+                            Id = 3040,
+                            Name = "TowerShield"
+                        },
+                        new
+                        {
+                            Id = 4000,
+                            Name = "Robe"
+                        },
+                        new
+                        {
+                            Id = 4010,
+                            Name = "Cloak"
+                        },
+                        new
+                        {
+                            Id = 4020,
+                            Name = "Ring"
+                        },
+                        new
+                        {
+                            Id = 4030,
+                            Name = "Amulet"
+                        },
+                        new
+                        {
+                            Id = 4040,
+                            Name = "Talisman"
+                        },
+                        new
+                        {
+                            Id = 5000,
+                            Name = "Potion"
+                        },
+                        new
+                        {
+                            Id = 5010,
+                            Name = "Elixir"
+                        },
+                        new
+                        {
+                            Id = 5020,
+                            Name = "Scroll"
+                        },
+                        new
+                        {
+                            Id = 5030,
+                            Name = "Food"
+                        },
+                        new
+                        {
+                            Id = 5040,
+                            Name = "Drink"
+                        },
+                        new
+                        {
+                            Id = 5050,
+                            Name = "Herb"
+                        },
+                        new
+                        {
+                            Id = 5060,
+                            Name = "Poison"
+                        },
+                        new
+                        {
+                            Id = 5070,
+                            Name = "Ore"
+                        },
+                        new
+                        {
+                            Id = 5071,
+                            Name = "RawGemstone"
+                        },
+                        new
+                        {
+                            Id = 5072,
+                            Name = "CutGemstone"
+                        },
+                        new
+                        {
+                            Id = 6000,
+                            Name = "Arrow"
+                        },
+                        new
+                        {
+                            Id = 6010,
+                            Name = "Bolt"
+                        },
+                        new
+                        {
+                            Id = 6020,
+                            Name = "Bullet"
+                        },
+                        new
+                        {
+                            Id = 6030,
+                            Name = "SlingBullet"
+                        },
+                        new
+                        {
+                            Id = 6040,
+                            Name = "Quiver"
+                        },
+                        new
+                        {
+                            Id = 7000,
+                            Name = "MiningPick"
+                        },
+                        new
+                        {
+                            Id = 7010,
+                            Name = "WoodcuttingAxe"
+                        },
+                        new
+                        {
+                            Id = 7020,
+                            Name = "FishingRod"
+                        },
+                        new
+                        {
+                            Id = 7030,
+                            Name = "BlacksmithHammer"
+                        },
+                        new
+                        {
+                            Id = 7040,
+                            Name = "AlchemyKit"
+                        },
+                        new
+                        {
+                            Id = 7050,
+                            Name = "Lockpick"
+                        },
+                        new
+                        {
+                            Id = 7060,
+                            Name = "Torch"
+                        },
+                        new
+                        {
+                            Id = 8000,
+                            Name = "BrokenPottery"
+                        },
+                        new
+                        {
+                            Id = 8010,
+                            Name = "GlassShard"
+                        },
+                        new
+                        {
+                            Id = 8020,
+                            Name = "Rock"
+                        },
+                        new
+                        {
+                            Id = 8030,
+                            Name = "TatteredCloth"
+                        },
+                        new
+                        {
+                            Id = 8040,
+                            Name = "RottenRemains"
+                        },
+                        new
+                        {
+                            Id = 8050,
+                            Name = "RustedScrap"
+                        },
+                        new
+                        {
+                            Id = 9000,
+                            Name = "Key"
+                        },
+                        new
+                        {
+                            Id = 9010,
+                            Name = "Document"
+                        },
+                        new
+                        {
+                            Id = 9020,
+                            Name = "QuestItem"
+                        },
+                        new
+                        {
+                            Id = 9030,
+                            Name = "MonsterPart"
+                        },
+                        new
+                        {
+                            Id = 9050,
+                            Name = "Curio"
+                        },
+                        new
+                        {
+                            Id = 9900,
+                            Name = "Coin"
+                        },
+                        new
+                        {
+                            Id = 9901,
+                            Name = "Bullion"
+                        },
+                        new
+                        {
+                            Id = 9902,
+                            Name = "Banknote"
+                        },
+                        new
+                        {
+                            Id = 9903,
+                            Name = "TradeToken"
                         });
                 });
 
@@ -1644,6 +1949,11 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                         {
                             Id = 9,
                             Name = "Miscellaneous"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Name = "Currency"
                         });
                 });
 
@@ -3010,29 +3320,56 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                         .IsRequired()
                         .HasConstraintName("fk_instanced_inventories_entities_entity_id");
 
+                    b.OwnsOne("UntitledRpgLogic.Core.Items.InventoryFilter", "Filter", b1 =>
+                        {
+                            b1.Property<byte[]>("InventoryId");
+
+                            b1.Property<bool>("IsAllowList");
+
+                            b1.PrimitiveCollection<string>("ItemSubtypes")
+                                .IsRequired();
+
+                            b1.PrimitiveCollection<string>("ItemTypes")
+                                .IsRequired();
+
+                            b1.HasKey("InventoryId");
+
+                            b1.ToTable("instanced_inventories");
+
+                            b1
+                                .ToJson("filter")
+                                .HasColumnType("TEXT");
+
+                            b1.WithOwner()
+                                .HasForeignKey("InventoryId")
+                                .HasConstraintName("fk_instanced_inventories_instanced_inventories_id");
+                        });
+
                     b.Navigation("Entity");
+
+                    b.Navigation("Filter");
                 });
 
             modelBuilder.Entity("UntitledRpgLogic.Core.Items.Item", b =>
                 {
+                    b.HasOne("UntitledRpgLogic.Core.Items.ItemDefinition", "Definition")
+                        .WithMany("Instances")
+                        .HasForeignKey("DefinitionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_item_instances_item_definitions_definition_id");
+
                     b.HasOne("UntitledRpgLogic.Core.Items.Inventory", null)
                         .WithMany("Items")
                         .HasForeignKey("InventoryId")
                         .HasConstraintName("fk_item_instances_instanced_inventories_inventory_id");
-
-                    b.HasOne("UntitledRpgLogic.Core.Items.ItemDefinition", "ItemDefinition")
-                        .WithMany("Instances")
-                        .HasForeignKey("ItemDefinitionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_item_instances_item_definitions_item_definition_id");
 
                     b.HasOne("UntitledRpgLogic.Core.Materials.MaterialDefinition", "PrimaryMaterial")
                         .WithMany()
                         .HasForeignKey("PrimaryMaterialId")
                         .HasConstraintName("fk_item_instances_material_definitions_primary_material_id");
 
-                    b.Navigation("ItemDefinition");
+                    b.Navigation("Definition");
 
                     b.Navigation("PrimaryMaterial");
                 });
@@ -3494,14 +3831,14 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
 
             modelBuilder.Entity("UntitledRpgLogic.Core.Skills.InstancedSkill", b =>
                 {
-                    b.HasOne("UntitledRpgLogic.Core.Skills.SkillDefinition", "SkillDefinition")
+                    b.HasOne("UntitledRpgLogic.Core.Skills.SkillDefinition", "Definition")
                         .WithMany()
-                        .HasForeignKey("SkillDefinitionId")
+                        .HasForeignKey("DefinitionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_instanced_skills_skill_definitions_skill_definition_id");
+                        .HasConstraintName("fk_instanced_skills_skill_definitions_definition_id");
 
-                    b.Navigation("SkillDefinition");
+                    b.Navigation("Definition");
                 });
 
             modelBuilder.Entity("UntitledRpgLogic.Core.Skills.SkillDefinition", b =>
@@ -3563,14 +3900,14 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
 
             modelBuilder.Entity("UntitledRpgLogic.Core.Stats.Stat", b =>
                 {
-                    b.HasOne("UntitledRpgLogic.Core.Stats.StatDefinition", "StatDefinition")
+                    b.HasOne("UntitledRpgLogic.Core.Stats.StatDefinition", "Definition")
                         .WithMany()
-                        .HasForeignKey("StatDefinitionId")
+                        .HasForeignKey("DefinitionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_instanced_stats_stat_definitions_stat_definition_id");
+                        .HasConstraintName("fk_instanced_stats_stat_definitions_definition_id");
 
-                    b.Navigation("StatDefinition");
+                    b.Navigation("Definition");
                 });
 
             modelBuilder.Entity("UntitledRpgLogic.Core.Stats.StatDefinition", b =>

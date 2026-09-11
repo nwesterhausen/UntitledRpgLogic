@@ -1,21 +1,23 @@
 namespace UntitledRpgLogic.Core.Stats;
 
 /// <summary>
-///     Interface for the damage calculator service.
+///     Calculates final mitigated damage applied to target stats.
 /// </summary>
 public interface IDamageCalculator
 {
 	/// <summary>
-	///     Actual calculation of the final damage after applying mitigations.
+	///     Calculates the raw damage value to subtract from a health or armor stat.
 	/// </summary>
-	/// <param name="damageAmount">point amount of damage to apply</param>
-	public int CalculateFinalDamage(int damageAmount);
+	/// <param name="options">The incoming damage parameters and scaling.</param>
+	/// <param name="targetStat">The concrete stat instance being damaged.</param>
+	/// <returns>The total point damage to inflict.</returns>
+	public int CalculatePointDamage(DamageOptions options, Stat targetStat);
 
 	/// <summary>
-	///     Get the point damage attempted to be applied to a stat based on the provided damage options.
+	///     Calculates effective damage after applying resistance percentage and flat reduction.
 	/// </summary>
-	/// <param name="damageOptions">the damage options</param>
-	/// <param name="stat">the stat damage will be applied to</param>
-	/// <returns>the damage amount in points</returns>
-	public int GetPointDamageFromOptions(DamageOptions damageOptions, Stat stat);
+	/// <param name="rawDamage">The raw point damage that is being applied.</param>
+	/// <param name="resistancePercent">The percentage mitigation to apply to the incoming damage.</param>
+	/// <param name="flatMitigation">A flat damage mitigation to apply.</param>
+	public int CalculateMitigatedDamage(int rawDamage, float resistancePercent, int flatMitigation);
 }

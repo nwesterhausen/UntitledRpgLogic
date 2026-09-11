@@ -20,7 +20,7 @@ public static class EntityStatExtensions
 		ArgumentNullException.ThrowIfNull(entity);
 		ArgumentNullException.ThrowIfNull(definition);
 
-		var existing = entity.Stats.FirstOrDefault(s => s.InstancedStat?.StatDefinitionId == definition.Id);
+		var existing = entity.Stats.FirstOrDefault(s => s.InstancedStat?.DefinitionId == definition.Id);
 		if (existing is not null)
 		{
 			if (existing.InstancedStat is not null)

@@ -14,6 +14,7 @@
 		<PackageReference Include="Microsoft.EntityFrameworkCore" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk" />
 		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" />
 	</ItemGroup>
 
@@ -24,5 +25,6 @@
 		<ProjectReference Include="..\UntitledRpgLogic.Infrastructure.Data\UntitledRpgLogic.Infrastructure.Data.csproj" />
 		<ProjectReference Include="..\UntitledRpgLogic.Infrastructure.Data.SQLite\UntitledRpgLogic.Infrastructure.Data.Sqlite.csproj" />
 		<ProjectReference Include="..\UntitledRpgLogic.Infrastructure.Data.PostgreSQL\UntitledRpgLogic.Infrastructure.Data.PostgreSQL.csproj" />
+		<ProjectReference Include="..\UntitledRpgLogic.Services\UntitledRpgLogic.Services.csproj" />
 	</ItemGroup>
 </Project>

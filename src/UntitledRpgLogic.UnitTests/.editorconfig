@@ -3,3 +3,6 @@
 dotnet_diagnostic.CA1515.severity = none
 dotnet_diagnostic.CA1591.severity = none
 dotnet_diagnostic.CA1707.severity = none
+
+# Don't worry about expression body for test functions
+dotnet_diagnostic.IDE0061.severity = none

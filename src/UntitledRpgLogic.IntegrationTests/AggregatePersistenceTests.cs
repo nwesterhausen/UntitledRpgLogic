@@ -90,7 +90,7 @@ public class AggregatePersistenceTests
 				var learnedSkill = loadedEntity.Skills.First().InstancedSkill;
 				Assert.IsNotNull(learnedSkill);
 				Assert.AreEqual(5, learnedSkill.Level);
-				Assert.AreEqual(skillDefId, learnedSkill.SkillDefinitionId);
+				Assert.AreEqual(skillDefId, learnedSkill.DefinitionId);
 			}
 		}
 	}

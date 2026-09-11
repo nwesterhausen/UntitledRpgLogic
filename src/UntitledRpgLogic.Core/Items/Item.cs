@@ -18,7 +18,7 @@ public record Item : IDbEntity<Ulid>
 	public Item()
 	{
 		this.Id = Ulid.NewUlid();
-		this.ItemDefinitionId = Ulid.Empty;
+		this.DefinitionId = Ulid.Empty;
 		this.Quantity = 1;
 		this.Durability = 0;
 	}
@@ -26,15 +26,15 @@ public record Item : IDbEntity<Ulid>
 	/// <summary>
 	///     Initializes a new instance of the <see cref="Item" /> record referencing an item definition.
 	/// </summary>
-	/// <param name="itemDefinitionId">The unique identifier of the item definition this instance is based on.</param>
-	public Item(Ulid itemDefinitionId) : this() => this.ItemDefinitionId = itemDefinitionId;
+	/// <param name="definitionId">The unique identifier of the item definition this instance is based on.</param>
+	public Item(Ulid definitionId) : this() => this.DefinitionId = definitionId;
 
 	/// <summary>
 	///     Initializes a new instance of the <see cref="Item" /> record with definition and crafter details.
 	/// </summary>
-	/// <param name="itemDefinitionId">The unique identifier of the item definition this instance is based on.</param>
+	/// <param name="definitionId">The unique identifier of the item definition this instance is based on.</param>
 	/// <param name="craftedById">The unique identifier of the entity or process that crafted this item.</param>
-	public Item(Ulid itemDefinitionId, Ulid craftedById) : this(itemDefinitionId) => this.CraftedById = craftedById;
+	public Item(Ulid definitionId, Ulid craftedById) : this(definitionId) => this.CraftedById = craftedById;
 
 	/// <summary>
 	///     The unique primary key for the item instance.
@@ -44,15 +44,15 @@ public record Item : IDbEntity<Ulid>
 	public Ulid Id { get; init; }
 
 	/// <summary>
-	///     Foreign key referencing the parent <see cref="ItemDefinition" /> template.
+	///     Foreign key referencing the parent <see cref="Definition" /> template.
 	/// </summary>
-	public required Ulid ItemDefinitionId { get; init; }
+	public required Ulid DefinitionId { get; init; }
 
 	/// <summary>
 	///     Navigation property to the item definition.
 	/// </summary>
-	[ForeignKey(nameof(ItemDefinitionId))]
-	public ItemDefinition? ItemDefinition { get; init; }
+	[ForeignKey(nameof(DefinitionId))]
+	public ItemDefinition? Definition { get; init; }
 
 	/// <summary>
 	///     Current quantity in this item stack (1 for non-stackable items).

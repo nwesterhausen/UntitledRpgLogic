@@ -1,31 +1,29 @@
+using UntitledRpgLogic.Core.Items;
+
 namespace UntitledRpgLogic.Core.Economy;
 
 /// <summary>
-///     Service for a currency storage system that allows depositing and withdrawing currency.
+///     Domain service managing currency balances, coin-stacking, valuation, and withdrawals inside inventories.
 /// </summary>
 public interface ICurrencyStorageService
 {
 	/// <summary>
-	///     Deposits a specified amount of currency into the inventory.
+	///     Calculates the total aggregate currency value of all currency items stored in the inventory.
 	/// </summary>
-	/// <param name="currencyBundle">The currency to deposit.</param>
-	/// <returns>The remaining currency that could not be deposited, possibly in alternate denominations.</returns>
-	public IReadOnlyCollection<CurrencyBundle> DepositCurrency(CurrencyBundle currencyBundle);
+	long GetTotalValue(Inventory inventory);
 
 	/// <summary>
-	///     Withdraws a specified amount of currency from the inventory.
+	///     Gets the total count of a specific currency denomination held in the inventory.
 	/// </summary>
-	/// <param name="currencyBundle">The currency to withdraw.</param>
-	/// <returns>The withdrawn currency, or null if not enough currency was available.</returns>
-	public CurrencyBundle? WithdrawCurrency(CurrencyBundle currencyBundle);
+	int GetQuantity(Inventory inventory, Ulid currencyItemDefinitionId);
 
 	/// <summary>
-	///     Occurs when currency is deposited into the inventory.
+	///     Deposits a designated quantity of currency into the inventory using an item definition template.
 	/// </summary>
-	public event EventHandler<CurrencyMovedEventArgs>? CurrencyDeposited;
+	bool TryDeposit(Inventory inventory, ItemDefinition currencyDef, int quantity);
 
 	/// <summary>
-	///     Occurs when currency is withdrawn from the inventory.
+	///     Withdraws a specified quantity of a currency denomination, returning the detached item stack.
 	/// </summary>
-	public event EventHandler<CurrencyMovedEventArgs>? CurrencyWithdrawn;
+	bool TryWithdraw(Inventory inventory, Ulid currencyItemDefinitionId, int quantity, out Item? withdrawnItem);
 }

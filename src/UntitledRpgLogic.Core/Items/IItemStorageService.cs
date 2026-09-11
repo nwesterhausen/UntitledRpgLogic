@@ -1,42 +1,30 @@
 namespace UntitledRpgLogic.Core.Items;
 
 /// <summary>
-///     Service for an item storage system that allows storing and retrieving items.
+///     Domain service managing item containment, stacking, capacity, and retrieval in inventories.
 /// </summary>
 public interface IItemStorageService
 {
 	/// <summary>
-	///     Stores an item in the inventory.
+	///		Evaluates whether the specified item instance can be stored within the target inventory.
 	/// </summary>
-	/// <param name="item">The item to store.</param>
-	/// <returns>True if the item was successfully stored; otherwise, false.</returns>
-	public bool StoreItem(Item item);
+	/// <param name="inventory">Inventory to check if we can store into.</param>
+	/// <param name="item">Item to check if it can be stored in the inventory.</param>
+	/// <returns>True if item can be stored.</returns>
+	public bool CanStoreItem(Inventory inventory, Item item);
 
 	/// <summary>
-	///     Attempts to retrieve an item from the inventory by its unique identifier.
+	///     Attempts to store an item instance into the target inventory, merging stacks when permissible.
 	/// </summary>
-	/// <param name="itemId">The unique identifier of the item to retrieve.</param>
-	/// <param name="item">The retrieved item, or null if not found.</param>
-	/// <returns>True if the item was found and retrieved; otherwise, false.</returns>
-	public bool TryRetrieveItem(Ulid itemId, out Item item);
+	public bool TryStoreItem(Inventory inventory, Item item);
 
 	/// <summary>
-	///     Occurs when an item is stored in the inventory.
+	///     Attempts to split or remove a specific quantity of an item from the target inventory.
 	/// </summary>
-	public event EventHandler<SuccessfulItemStorageEventArgs> ItemStored;
+	public bool TryRemoveItem(Inventory inventory, Ulid itemInstanceId, int quantity, out Item? removedItem);
 
 	/// <summary>
-	///     Event that is raised before an item is stored in the inventory.
+	///     Transfers a designated quantity of an item from a source inventory to a destination inventory.
 	/// </summary>
-	public event EventHandler<CancelableItemActionEventArgs> StoringItem;
-
-	/// <summary>
-	///     Occurs when an item is retrieved from the inventory.
-	/// </summary>
-	public event EventHandler<SuccessfulItemStorageEventArgs> ItemRetrieved;
-
-	/// <summary>
-	///     Event raised before an item is retrieved from the inventory.
-	/// </summary>
-	public event EventHandler<CancelableItemActionEventArgs> RetrievingItem;
+	public bool TryTransferItem(Inventory source, Inventory destination, Ulid itemInstanceId, int quantity);
 }

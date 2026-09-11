@@ -73,7 +73,7 @@ public static class RequirementCheck
 		}
 
 		return caster.Stats
-			.FirstOrDefault(s => s.InstancedStat?.StatDefinitionId == statDefinitionId)
+			.FirstOrDefault(s => s.InstancedStat?.DefinitionId == statDefinitionId)
 			?.InstancedStat?.ApparentValue ?? 0f;
 	}
 
@@ -85,7 +85,7 @@ public static class RequirementCheck
 		}
 
 		return caster.Skills
-			.FirstOrDefault(s => s.InstancedSkill?.SkillDefinitionId == skillDefinitionId)
+			.FirstOrDefault(s => s.InstancedSkill?.DefinitionId == skillDefinitionId)
 			?.InstancedSkill?.Level ?? 0f;
 	}
 
@@ -97,7 +97,7 @@ public static class RequirementCheck
 		}
 
 		return caster.Stats
-			.FirstOrDefault(s => s.InstancedStat?.StatDefinition?.Name.Singular == "Level")
+			.FirstOrDefault(s => s.InstancedStat?.Definition?.Name.Singular == "Level")
 			?.InstancedStat?.ApparentValue ?? 0f;
 	}
 }

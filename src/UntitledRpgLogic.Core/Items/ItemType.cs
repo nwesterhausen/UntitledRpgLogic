@@ -54,4 +54,9 @@ public enum ItemType
 	/// 	Miscellaneous items, likely used for decoration but perhaps not obtainable.
 	/// </summary>
 	Miscellaneous = 9,
+
+	/// <summary>
+	///		Items used as currency as used to trade for goods and services.
+	/// </summary>
+	Currency = 10,
 }

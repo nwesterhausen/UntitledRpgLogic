@@ -18,8 +18,8 @@ public sealed class ItemDefinitionConfiguration : IEntityTypeConfiguration<ItemD
 
 		// Instances relationships
 		builder.HasMany(i => i.Instances)
-			.WithOne(ii => ii.ItemDefinition)
-			.HasForeignKey(ii => ii.ItemDefinitionId)
+			.WithOne(ii => ii.Definition)
+			.HasForeignKey(ii => ii.DefinitionId)
 			.OnDelete(DeleteBehavior.Cascade);
 
 		// Map lookup tables for enums

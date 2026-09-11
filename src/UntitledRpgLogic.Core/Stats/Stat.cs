@@ -5,7 +5,7 @@ using UntitledRpgLogic.Core.Data;
 namespace UntitledRpgLogic.Core.Stats;
 
 /// <summary>
-///     Represents an active stat instance bound to an entity, derived from a <see cref="StatDefinition" />.
+///     Represents an active stat instance bound to an entity, derived from a <see cref="Definition" />.
 /// </summary>
 [Table("instanced_stats")]
 public record Stat : IDbEntity<Ulid>
@@ -16,7 +16,7 @@ public record Stat : IDbEntity<Ulid>
 	public Stat()
 	{
 		this.Id = Ulid.NewUlid();
-		this.StatDefinitionId = Ulid.Empty;
+		this.DefinitionId = Ulid.Empty;
 		this.BaseValue = 0;
 		this.ApparentValue = 0;
 	}
@@ -24,8 +24,8 @@ public record Stat : IDbEntity<Ulid>
 	/// <summary>
 	///     Initializes a new instance of the <see cref="Stat" /> record referencing a definition.
 	/// </summary>
-	/// <param name="statDefinitionId">The identifier of the governing stat template.</param>
-	public Stat(Ulid statDefinitionId) : this() => this.StatDefinitionId = statDefinitionId;
+	/// <param name="definitionId">The identifier of the governing stat template.</param>
+	public Stat(Ulid definitionId) : this() => this.DefinitionId = definitionId;
 
 	/// <summary>
 	///     The unique identifier for this active stat instance.
@@ -35,15 +35,15 @@ public record Stat : IDbEntity<Ulid>
 	public Ulid Id { get; init; }
 
 	/// <summary>
-	///     Foreign key referencing the template <see cref="StatDefinition" />.
+	///     Foreign key referencing the template <see cref="Definition" />.
 	/// </summary>
-	public Ulid StatDefinitionId { get; init; }
+	public Ulid DefinitionId { get; init; }
 
 	/// <summary>
 	///     Navigation property to the underlying stat definition.
 	/// </summary>
-	[ForeignKey(nameof(StatDefinitionId))]
-	public StatDefinition? StatDefinition { get; init; }
+	[ForeignKey(nameof(DefinitionId))]
+	public StatDefinition? Definition { get; init; }
 
 	/// <summary>
 	///     The raw base value before temporary status modifiers or equipment multipliers.
@@ -58,5 +58,5 @@ public record Stat : IDbEntity<Ulid>
 	/// <summary>
 	///		The "effective" value, i.e. the value transposed above its minium.
 	/// </summary>
-	public int EffectiveValue => this.ApparentValue - this.StatDefinition?.MinValue ?? 0;
+	public int EffectiveValue => this.ApparentValue - this.Definition?.MinValue ?? 0;
 }

@@ -8,44 +8,39 @@ namespace UntitledRpgLogic.Services;
 public class DamageCalculator : IDamageCalculator
 {
 	/// <inheritdoc />
-	public int CalculateFinalDamage(int damageAmount)
+	public int CalculatePointDamage(DamageOptions options, Stat targetStat)
 	{
-		var modifiedDamage = damageAmount;
+		ArgumentNullException.ThrowIfNull(options);
+		ArgumentNullException.ThrowIfNull(targetStat);
 
-		// Sort and apply mitigation effects in order.
-		// foreach (var mitigation in mitigations.OrderBy(m => m.MitigationPriority))
-		// {
-		// 	modifiedDamage = mitigation.ApplyMitigation(modifiedDamage);
-		// }
+		var total = options.FlatDamage ?? 0;
 
-		return modifiedDamage;
+		if (options.PercentageDamage > 0f)
+		{
+			total += (int)MathF.Round(targetStat.BaseValue * options.PercentageDamage ?? 0f);
+		}
+
+		if (options.PercentageDamageOfMax > 0f)
+		{
+			total += (int)MathF.Round(targetStat.BaseValue * options.PercentageDamageOfMax ?? 0f);
+		}
+
+		return Math.Max(0, total);
 	}
 
 	/// <inheritdoc />
-	public int GetPointDamageFromOptions(DamageOptions damageOptions, Stat stat)
+	public int CalculateMitigatedDamage(int rawDamage, float resistancePercent, int flatMitigation)
 	{
-		ArgumentNullException.ThrowIfNull(damageOptions, nameof(damageOptions));
-		ArgumentNullException.ThrowIfNull(stat, nameof(stat));
-		ArgumentNullException.ThrowIfNull(stat.StatDefinition, nameof(StatDefinition));
-
-		var statDefinition = stat.StatDefinition;
-
-		if (damageOptions.FlatDamage.HasValue)
+		if (rawDamage <= 0)
 		{
-			return damageOptions.FlatDamage.Value;
+			return 0;
 		}
 
-		if (damageOptions.PercentageDamage.HasValue)
-		{
-			return (int)(stat.ApparentValue * (damageOptions.PercentageDamage / 100f));
-		}
+		// Clamp resistance between 0% and 100%
+		var clampedResistance = Math.Clamp(resistancePercent, 0f, 1.0f);
+		var postResistance = rawDamage * (1.0f - clampedResistance);
+		var finalDamage = (int)MathF.Round(postResistance) - flatMitigation;
 
-		if (damageOptions.PercentageDamageOfMax.HasValue)
-		{
-			return (int)(statDefinition.MaxValue * (damageOptions.PercentageDamageOfMax / 100f));
-		}
-
-		// If no damage options are provided, return 0.
-		return 0;
+		return Math.Max(0, finalDamage);
 	}
 }
