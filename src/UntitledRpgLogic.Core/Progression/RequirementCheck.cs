@@ -27,9 +27,6 @@ public static class RequirementCheck
 			RequirementType.SkillLevel =>
 				GetSkillLevel(caster, req.RequiredEntityId) >= req.AmountNeeded,
 
-			RequirementType.PlayerLevel =>
-				GetPlayerLevel(caster) >= req.AmountNeeded,
-
 			RequirementType.None => true,
 
 			_ => true
@@ -48,7 +45,6 @@ public static class RequirementCheck
 		{
 			RequirementType.Stat => GetStatValue(caster, influence.RequiredEntityId),
 			RequirementType.SkillLevel => GetSkillLevel(caster, influence.RequiredEntityId),
-			RequirementType.PlayerLevel => GetPlayerLevel(caster),
 			_ => influence.AmountAlwaysSucceed
 		};
 

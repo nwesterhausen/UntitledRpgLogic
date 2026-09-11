@@ -47,6 +47,11 @@ public record WorldPosition
 	public float RotationYaw { get; set; }
 
 	/// <summary>
+	///     Elevation relative to world datum (-32,768 to +32,767).
+	/// </summary>
+	public short Elevation { get; set; }
+
+	/// <summary>
 	///     Calculates the horizontal chunk index containing this position.
 	/// </summary>
 	[NotMapped]

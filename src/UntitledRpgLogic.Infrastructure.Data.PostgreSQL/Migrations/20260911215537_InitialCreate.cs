@@ -1,11 +1,12 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
-namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
+namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
 {
     /// <inheritdoc />
     public partial class InitialCreate : Migration
@@ -17,9 +18,9 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                 name: "ability_type_lookup",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "INTEGER", nullable: false),
-                    name = table.Column<string>(type: "TEXT", maxLength: 127, nullable: false),
-                    description = table.Column<string>(type: "TEXT", nullable: true)
+                    id = table.Column<int>(type: "integer", nullable: false),
+                    name = table.Column<string>(type: "character varying(127)", maxLength: 127, nullable: false),
+                    description = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -30,9 +31,9 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                 name: "ambient_type_lookup",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "INTEGER", nullable: false),
-                    name = table.Column<string>(type: "TEXT", maxLength: 127, nullable: false),
-                    description = table.Column<string>(type: "TEXT", nullable: true)
+                    id = table.Column<int>(type: "integer", nullable: false),
+                    name = table.Column<string>(type: "character varying(127)", maxLength: 127, nullable: false),
+                    description = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -43,9 +44,9 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                 name: "dimension_scale_lookup",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "INTEGER", nullable: false),
-                    name = table.Column<string>(type: "TEXT", maxLength: 127, nullable: false),
-                    description = table.Column<string>(type: "TEXT", nullable: true)
+                    id = table.Column<int>(type: "integer", nullable: false),
+                    name = table.Column<string>(type: "character varying(127)", maxLength: 127, nullable: false),
+                    description = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -56,9 +57,9 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                 name: "effect_type_lookup",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "INTEGER", nullable: false),
-                    name = table.Column<string>(type: "TEXT", maxLength: 127, nullable: false),
-                    description = table.Column<string>(type: "TEXT", nullable: true)
+                    id = table.Column<int>(type: "integer", nullable: false),
+                    name = table.Column<string>(type: "character varying(127)", maxLength: 127, nullable: false),
+                    description = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -69,9 +70,9 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                 name: "elements",
                 columns: table => new
                 {
-                    id = table.Column<byte[]>(type: "BLOB", nullable: false),
-                    name = table.Column<string>(type: "TEXT", nullable: false),
-                    description = table.Column<string>(type: "TEXT", maxLength: 1024, nullable: false)
+                    id = table.Column<byte[]>(type: "bytea", nullable: false),
+                    name = table.Column<string>(type: "text", nullable: false),
+                    description = table.Column<string>(type: "character varying(1024)", maxLength: 1024, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -82,14 +83,14 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                 name: "entity_definitions",
                 columns: table => new
                 {
-                    id = table.Column<byte[]>(type: "BLOB", nullable: false),
-                    name = table.Column<string>(type: "TEXT", nullable: false),
-                    description = table.Column<string>(type: "TEXT", maxLength: 1024, nullable: false),
-                    classification = table.Column<int>(type: "INTEGER", nullable: false),
-                    innate_skill_definition_ids = table.Column<byte[]>(type: "BLOB", nullable: false),
-                    starting_item_definition_ids = table.Column<byte[]>(type: "BLOB", nullable: false),
-                    respiratory_profile = table.Column<string>(type: "TEXT", nullable: true),
-                    starting_stats = table.Column<string>(type: "TEXT", nullable: true)
+                    id = table.Column<byte[]>(type: "bytea", nullable: false),
+                    name = table.Column<string>(type: "text", nullable: false),
+                    description = table.Column<string>(type: "character varying(1024)", maxLength: 1024, nullable: false),
+                    classification = table.Column<int>(type: "integer", nullable: false),
+                    innate_skill_definition_ids = table.Column<byte[]>(type: "bytea", nullable: false),
+                    starting_item_definition_ids = table.Column<byte[]>(type: "bytea", nullable: false),
+                    respiratory_profile = table.Column<string>(type: "jsonb", nullable: true),
+                    starting_stats = table.Column<string>(type: "jsonb", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -100,9 +101,9 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                 name: "fracture_type_lookup",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "INTEGER", nullable: false),
-                    name = table.Column<string>(type: "TEXT", maxLength: 127, nullable: false),
-                    description = table.Column<string>(type: "TEXT", nullable: true)
+                    id = table.Column<int>(type: "integer", nullable: false),
+                    name = table.Column<string>(type: "character varying(127)", maxLength: 127, nullable: false),
+                    description = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -113,9 +114,9 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                 name: "item_subtype_lookup",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "INTEGER", nullable: false),
-                    name = table.Column<string>(type: "TEXT", maxLength: 127, nullable: false),
-                    description = table.Column<string>(type: "TEXT", nullable: true)
+                    id = table.Column<int>(type: "integer", nullable: false),
+                    name = table.Column<string>(type: "character varying(127)", maxLength: 127, nullable: false),
+                    description = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -126,9 +127,9 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                 name: "item_type_lookup",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "INTEGER", nullable: false),
-                    name = table.Column<string>(type: "TEXT", maxLength: 127, nullable: false),
-                    description = table.Column<string>(type: "TEXT", nullable: true)
+                    id = table.Column<int>(type: "integer", nullable: false),
+                    name = table.Column<string>(type: "character varying(127)", maxLength: 127, nullable: false),
+                    description = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -139,9 +140,9 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                 name: "map_type_lookup",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "INTEGER", nullable: false),
-                    name = table.Column<string>(type: "TEXT", maxLength: 127, nullable: false),
-                    description = table.Column<string>(type: "TEXT", nullable: true)
+                    id = table.Column<int>(type: "integer", nullable: false),
+                    name = table.Column<string>(type: "character varying(127)", maxLength: 127, nullable: false),
+                    description = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -152,9 +153,9 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                 name: "mass_scale_lookup",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "INTEGER", nullable: false),
-                    name = table.Column<string>(type: "TEXT", maxLength: 127, nullable: false),
-                    description = table.Column<string>(type: "TEXT", nullable: true)
+                    id = table.Column<int>(type: "integer", nullable: false),
+                    name = table.Column<string>(type: "character varying(127)", maxLength: 127, nullable: false),
+                    description = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -165,9 +166,9 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                 name: "material_slot_lookup",
                 columns: table => new
                 {
-                    id = table.Column<byte>(type: "INTEGER", nullable: false),
-                    name = table.Column<string>(type: "TEXT", maxLength: 64, nullable: false),
-                    description = table.Column<string>(type: "TEXT", nullable: true)
+                    id = table.Column<byte>(type: "smallint", nullable: false),
+                    name = table.Column<string>(type: "character varying(64)", maxLength: 64, nullable: false),
+                    description = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -178,9 +179,9 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                 name: "message_priority_lookup",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "INTEGER", nullable: false),
-                    name = table.Column<string>(type: "TEXT", maxLength: 127, nullable: false),
-                    description = table.Column<string>(type: "TEXT", nullable: true)
+                    id = table.Column<int>(type: "integer", nullable: false),
+                    name = table.Column<string>(type: "character varying(127)", maxLength: 127, nullable: false),
+                    description = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -191,9 +192,9 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                 name: "message_type_lookup",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "INTEGER", nullable: false),
-                    name = table.Column<string>(type: "TEXT", maxLength: 127, nullable: false),
-                    description = table.Column<string>(type: "TEXT", nullable: true)
+                    id = table.Column<int>(type: "integer", nullable: false),
+                    name = table.Column<string>(type: "character varying(127)", maxLength: 127, nullable: false),
+                    description = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -204,15 +205,15 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                 name: "modification_effects",
                 columns: table => new
                 {
-                    id = table.Column<byte[]>(type: "BLOB", nullable: false),
-                    flat_amount = table.Column<int>(type: "INTEGER", nullable: false),
-                    percentage = table.Column<float>(type: "REAL", nullable: false),
-                    percentage_of_max = table.Column<float>(type: "REAL", nullable: false),
-                    is_positive = table.Column<bool>(type: "INTEGER", nullable: false),
-                    is_additive = table.Column<bool>(type: "INTEGER", nullable: false),
-                    scales_on_base_value = table.Column<bool>(type: "INTEGER", nullable: false),
-                    scaling_factor = table.Column<float>(type: "REAL", nullable: false),
-                    priority = table.Column<int>(type: "INTEGER", nullable: false)
+                    id = table.Column<byte[]>(type: "bytea", nullable: false),
+                    flat_amount = table.Column<int>(type: "integer", nullable: false),
+                    percentage = table.Column<float>(type: "real", nullable: false),
+                    percentage_of_max = table.Column<float>(type: "real", nullable: false),
+                    is_positive = table.Column<bool>(type: "boolean", nullable: false),
+                    is_additive = table.Column<bool>(type: "boolean", nullable: false),
+                    scales_on_base_value = table.Column<bool>(type: "boolean", nullable: false),
+                    scaling_factor = table.Column<float>(type: "real", nullable: false),
+                    priority = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -223,17 +224,17 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                 name: "modifier_definitions",
                 columns: table => new
                 {
-                    id = table.Column<byte[]>(type: "BLOB", nullable: false),
-                    name = table.Column<string>(type: "TEXT", nullable: false),
-                    is_permanent = table.Column<bool>(type: "INTEGER", nullable: false),
-                    is_positive = table.Column<bool>(type: "INTEGER", nullable: false),
-                    is_additive = table.Column<bool>(type: "INTEGER", nullable: false),
-                    is_multiplicative = table.Column<bool>(type: "INTEGER", nullable: false),
-                    scales_on_base_value = table.Column<bool>(type: "INTEGER", nullable: false),
-                    max_stacks = table.Column<int>(type: "INTEGER", nullable: false),
-                    duration = table.Column<float>(type: "REAL", nullable: false),
-                    lose_all_stacks_on_expiration = table.Column<bool>(type: "INTEGER", nullable: false),
-                    priority = table.Column<int>(type: "INTEGER", nullable: false)
+                    id = table.Column<byte[]>(type: "bytea", nullable: false),
+                    name = table.Column<string>(type: "text", nullable: false),
+                    is_permanent = table.Column<bool>(type: "boolean", nullable: false),
+                    is_positive = table.Column<bool>(type: "boolean", nullable: false),
+                    is_additive = table.Column<bool>(type: "boolean", nullable: false),
+                    is_multiplicative = table.Column<bool>(type: "boolean", nullable: false),
+                    scales_on_base_value = table.Column<bool>(type: "boolean", nullable: false),
+                    max_stacks = table.Column<int>(type: "integer", nullable: false),
+                    duration = table.Column<float>(type: "real", nullable: false),
+                    lose_all_stacks_on_expiration = table.Column<bool>(type: "boolean", nullable: false),
+                    priority = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -244,9 +245,9 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                 name: "quality_lookup",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "INTEGER", nullable: false),
-                    name = table.Column<string>(type: "TEXT", maxLength: 127, nullable: false),
-                    description = table.Column<string>(type: "TEXT", nullable: true)
+                    id = table.Column<int>(type: "integer", nullable: false),
+                    name = table.Column<string>(type: "character varying(127)", maxLength: 127, nullable: false),
+                    description = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -257,9 +258,9 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                 name: "requirement_type_lookup",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "INTEGER", nullable: false),
-                    name = table.Column<string>(type: "TEXT", maxLength: 127, nullable: false),
-                    description = table.Column<string>(type: "TEXT", nullable: true)
+                    id = table.Column<int>(type: "integer", nullable: false),
+                    name = table.Column<string>(type: "character varying(127)", maxLength: 127, nullable: false),
+                    description = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -270,9 +271,9 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                 name: "scaling_curve_type_lookup",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "INTEGER", nullable: false),
-                    name = table.Column<string>(type: "TEXT", maxLength: 127, nullable: false),
-                    description = table.Column<string>(type: "TEXT", nullable: true)
+                    id = table.Column<int>(type: "integer", nullable: false),
+                    name = table.Column<string>(type: "character varying(127)", maxLength: 127, nullable: false),
+                    description = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -283,9 +284,9 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                 name: "stat_variation_lookup",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "INTEGER", nullable: false),
-                    name = table.Column<string>(type: "TEXT", maxLength: 127, nullable: false),
-                    description = table.Column<string>(type: "TEXT", nullable: true)
+                    id = table.Column<int>(type: "integer", nullable: false),
+                    name = table.Column<string>(type: "character varying(127)", maxLength: 127, nullable: false),
+                    description = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -296,9 +297,9 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                 name: "state_of_matter_lookup",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "INTEGER", nullable: false),
-                    name = table.Column<string>(type: "TEXT", maxLength: 127, nullable: false),
-                    description = table.Column<string>(type: "TEXT", nullable: true)
+                    id = table.Column<int>(type: "integer", nullable: false),
+                    name = table.Column<string>(type: "character varying(127)", maxLength: 127, nullable: false),
+                    description = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -309,9 +310,9 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                 name: "targeting_type_lookup",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "INTEGER", nullable: false),
-                    name = table.Column<string>(type: "TEXT", maxLength: 127, nullable: false),
-                    description = table.Column<string>(type: "TEXT", nullable: true)
+                    id = table.Column<int>(type: "integer", nullable: false),
+                    name = table.Column<string>(type: "character varying(127)", maxLength: 127, nullable: false),
+                    description = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -322,12 +323,12 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                 name: "map_definitions",
                 columns: table => new
                 {
-                    id = table.Column<byte[]>(type: "BLOB", nullable: false),
-                    name = table.Column<string>(type: "TEXT", nullable: false),
-                    description = table.Column<string>(type: "TEXT", maxLength: 512, nullable: false),
-                    type = table.Column<int>(type: "INTEGER", nullable: false),
-                    atmosphere = table.Column<string>(type: "TEXT", nullable: false),
-                    baseline_ambients = table.Column<string>(type: "TEXT", nullable: true)
+                    id = table.Column<byte[]>(type: "bytea", nullable: false),
+                    name = table.Column<string>(type: "text", nullable: false),
+                    description = table.Column<string>(type: "character varying(512)", maxLength: 512, nullable: false),
+                    type = table.Column<int>(type: "integer", nullable: false),
+                    atmosphere = table.Column<string>(type: "jsonb", nullable: false),
+                    baseline_ambients = table.Column<string>(type: "jsonb", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -344,20 +345,20 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                 name: "modification_base_effects",
                 columns: table => new
                 {
-                    modification_effects_id = table.Column<byte[]>(type: "BLOB", nullable: false),
-                    modifier_definition_id = table.Column<byte[]>(type: "BLOB", nullable: false)
+                    modification_effects_id = table.Column<byte[]>(type: "bytea", nullable: false),
+                    modifier_definition_id = table.Column<byte[]>(type: "bytea", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("pk_modification_base_effects", x => new { x.modification_effects_id, x.modifier_definition_id });
                     table.ForeignKey(
-                        name: "fk_modification_base_effects_modification_effects_modification_effects_id",
+                        name: "fk_modification_base_effects_modification_effects_modification",
                         column: x => x.modification_effects_id,
                         principalTable: "modification_effects",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "fk_modification_base_effects_modifier_definitions_modifier_definition_id",
+                        name: "fk_modification_base_effects_modifier_definitions_modifier_def",
                         column: x => x.modifier_definition_id,
                         principalTable: "modifier_definitions",
                         principalColumn: "id",
@@ -368,20 +369,20 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                 name: "modification_stack_effects",
                 columns: table => new
                 {
-                    modifier_definition1id = table.Column<byte[]>(type: "BLOB", nullable: false),
-                    stack_effects_id = table.Column<byte[]>(type: "BLOB", nullable: false)
+                    modifier_definition1id = table.Column<byte[]>(type: "bytea", nullable: false),
+                    stack_effects_id = table.Column<byte[]>(type: "bytea", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("pk_modification_stack_effects", x => new { x.modifier_definition1id, x.stack_effects_id });
                     table.ForeignKey(
-                        name: "fk_modification_stack_effects_modification_effects_stack_effects_id",
+                        name: "fk_modification_stack_effects_modification_effects_stack_effec",
                         column: x => x.stack_effects_id,
                         principalTable: "modification_effects",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "fk_modification_stack_effects_modifier_definitions_modifier_definition1id",
+                        name: "fk_modification_stack_effects_modifier_definitions_modifier_de",
                         column: x => x.modifier_definition1id,
                         principalTable: "modifier_definitions",
                         principalColumn: "id",
@@ -392,14 +393,14 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                 name: "leveling_definitions",
                 columns: table => new
                 {
-                    id = table.Column<byte[]>(type: "BLOB", nullable: false),
-                    starting_level = table.Column<int>(type: "INTEGER", nullable: false),
-                    max_level = table.Column<int>(type: "INTEGER", nullable: false),
-                    scaling_factor_a = table.Column<float>(type: "REAL", nullable: false),
-                    scaling_factor_b = table.Column<float>(type: "REAL", nullable: false),
-                    scaling_factor_c = table.Column<float>(type: "REAL", nullable: false),
-                    scaling_curve = table.Column<int>(type: "INTEGER", nullable: false),
-                    points_for_first_level = table.Column<int>(type: "INTEGER", nullable: false)
+                    id = table.Column<byte[]>(type: "bytea", nullable: false),
+                    starting_level = table.Column<int>(type: "integer", nullable: false),
+                    max_level = table.Column<int>(type: "integer", nullable: false),
+                    scaling_factor_a = table.Column<float>(type: "real", nullable: false),
+                    scaling_factor_b = table.Column<float>(type: "real", nullable: false),
+                    scaling_factor_c = table.Column<float>(type: "real", nullable: false),
+                    scaling_curve = table.Column<int>(type: "integer", nullable: false),
+                    points_for_first_level = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -416,12 +417,12 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                 name: "stat_definitions",
                 columns: table => new
                 {
-                    id = table.Column<byte[]>(type: "BLOB", nullable: false),
-                    name = table.Column<string>(type: "TEXT", nullable: false),
-                    has_changeable_value = table.Column<bool>(type: "INTEGER", nullable: false),
-                    min_value = table.Column<int>(type: "INTEGER", nullable: false),
-                    max_value = table.Column<int>(type: "INTEGER", nullable: false),
-                    variation = table.Column<int>(type: "INTEGER", nullable: false)
+                    id = table.Column<byte[]>(type: "bytea", nullable: false),
+                    name = table.Column<string>(type: "text", nullable: false),
+                    has_changeable_value = table.Column<bool>(type: "boolean", nullable: false),
+                    min_value = table.Column<int>(type: "integer", nullable: false),
+                    max_value = table.Column<int>(type: "integer", nullable: false),
+                    variation = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -438,16 +439,16 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                 name: "material_definitions",
                 columns: table => new
                 {
-                    id = table.Column<byte[]>(type: "BLOB", nullable: false),
-                    name = table.Column<string>(type: "TEXT", nullable: false),
-                    description = table.Column<string>(type: "TEXT", maxLength: 1024, nullable: false),
-                    flags = table.Column<int>(type: "INTEGER", nullable: false),
-                    default_state = table.Column<int>(type: "INTEGER", nullable: false),
-                    electrical_properties = table.Column<string>(type: "TEXT", nullable: true),
-                    fantastical_properties = table.Column<string>(type: "TEXT", nullable: true),
-                    mechanical_properties = table.Column<string>(type: "TEXT", nullable: true),
-                    smelt_yields = table.Column<string>(type: "TEXT", nullable: true),
-                    thermal_properties = table.Column<string>(type: "TEXT", nullable: true)
+                    id = table.Column<byte[]>(type: "bytea", nullable: false),
+                    name = table.Column<string>(type: "text", nullable: false),
+                    description = table.Column<string>(type: "character varying(1024)", maxLength: 1024, nullable: false),
+                    flags = table.Column<int>(type: "integer", nullable: false),
+                    default_state = table.Column<int>(type: "integer", nullable: false),
+                    electrical_properties = table.Column<string>(type: "jsonb", nullable: true),
+                    fantastical_properties = table.Column<string>(type: "jsonb", nullable: true),
+                    mechanical_properties = table.Column<string>(type: "jsonb", nullable: true),
+                    smelt_yields = table.Column<string>(type: "jsonb", nullable: true),
+                    thermal_properties = table.Column<string>(type: "jsonb", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -464,15 +465,16 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                 name: "entities",
                 columns: table => new
                 {
-                    id = table.Column<byte[]>(type: "BLOB", nullable: false),
-                    name = table.Column<string>(type: "TEXT", nullable: false),
-                    definition_id = table.Column<byte[]>(type: "BLOB", nullable: true),
-                    map_id = table.Column<byte[]>(type: "BLOB", nullable: true),
-                    position_x = table.Column<float>(type: "REAL", nullable: true),
-                    position_y = table.Column<float>(type: "REAL", nullable: true),
-                    rotation_yaw = table.Column<float>(type: "REAL", nullable: true),
-                    position_map_id = table.Column<byte[]>(type: "BLOB", nullable: true),
-                    affected_stats = table.Column<string>(type: "TEXT", nullable: true)
+                    id = table.Column<byte[]>(type: "bytea", nullable: false),
+                    name = table.Column<string>(type: "text", nullable: false),
+                    definition_id = table.Column<byte[]>(type: "bytea", nullable: true),
+                    map_id = table.Column<byte[]>(type: "bytea", nullable: true),
+                    position_x = table.Column<float>(type: "real", nullable: true),
+                    position_y = table.Column<float>(type: "real", nullable: true),
+                    rotation_yaw = table.Column<float>(type: "real", nullable: true),
+                    position_elevation = table.Column<short>(type: "smallint", nullable: true),
+                    position_map_id = table.Column<byte[]>(type: "bytea", nullable: true),
+                    affected_stats = table.Column<string>(type: "jsonb", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -494,14 +496,14 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                 name: "map_transitions",
                 columns: table => new
                 {
-                    id = table.Column<byte[]>(type: "BLOB", nullable: false),
-                    source_map_id = table.Column<byte[]>(type: "BLOB", nullable: false),
-                    source_x = table.Column<float>(type: "REAL", nullable: false),
-                    source_y = table.Column<float>(type: "REAL", nullable: false),
-                    target_map_id = table.Column<byte[]>(type: "BLOB", nullable: false),
-                    target_x = table.Column<float>(type: "REAL", nullable: false),
-                    target_y = table.Column<float>(type: "REAL", nullable: false),
-                    transition_tag = table.Column<string>(type: "TEXT", maxLength: 128, nullable: false)
+                    id = table.Column<byte[]>(type: "bytea", nullable: false),
+                    source_map_id = table.Column<byte[]>(type: "bytea", nullable: false),
+                    source_x = table.Column<float>(type: "real", nullable: false),
+                    source_y = table.Column<float>(type: "real", nullable: false),
+                    target_map_id = table.Column<byte[]>(type: "bytea", nullable: false),
+                    target_x = table.Column<float>(type: "real", nullable: false),
+                    target_y = table.Column<float>(type: "real", nullable: false),
+                    transition_tag = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -524,15 +526,15 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                 name: "world_chunks",
                 columns: table => new
                 {
-                    id = table.Column<byte[]>(type: "BLOB", nullable: false),
-                    map_id = table.Column<byte[]>(type: "BLOB", nullable: false),
-                    chunk_x = table.Column<int>(type: "INTEGER", nullable: false),
-                    chunk_y = table.Column<int>(type: "INTEGER", nullable: false),
-                    material_palette = table.Column<byte[]>(type: "BLOB", nullable: false),
-                    compressed_tile_blob = table.Column<byte[]>(type: "BLOB", nullable: false),
-                    version = table.Column<uint>(type: "INTEGER", nullable: false),
-                    ambient_overrides = table.Column<string>(type: "TEXT", nullable: true),
-                    atmosphere_override = table.Column<string>(type: "TEXT", nullable: true)
+                    id = table.Column<byte[]>(type: "bytea", nullable: false),
+                    map_id = table.Column<byte[]>(type: "bytea", nullable: false),
+                    chunk_x = table.Column<int>(type: "integer", nullable: false),
+                    chunk_y = table.Column<int>(type: "integer", nullable: false),
+                    material_palette = table.Column<byte[]>(type: "bytea", nullable: false),
+                    compressed_tile_blob = table.Column<byte[]>(type: "bytea", nullable: false),
+                    version = table.Column<long>(type: "bigint", nullable: false),
+                    ambient_overrides = table.Column<string>(type: "jsonb", nullable: true),
+                    atmosphere_override = table.Column<string>(type: "jsonb", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -549,15 +551,15 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                 name: "skill_definitions",
                 columns: table => new
                 {
-                    id = table.Column<byte[]>(type: "BLOB", nullable: false),
-                    name = table.Column<string>(type: "TEXT", nullable: false),
-                    leveling_definition_id = table.Column<byte[]>(type: "BLOB", nullable: true)
+                    id = table.Column<byte[]>(type: "bytea", nullable: false),
+                    name = table.Column<string>(type: "text", nullable: false),
+                    leveling_definition_id = table.Column<byte[]>(type: "bytea", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("pk_skill_definitions", x => x.id);
                     table.ForeignKey(
-                        name: "fk_skill_definitions_leveling_definitions_leveling_definition_id",
+                        name: "fk_skill_definitions_leveling_definitions_leveling_definition_",
                         column: x => x.leveling_definition_id,
                         principalTable: "leveling_definitions",
                         principalColumn: "id");
@@ -567,10 +569,10 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                 name: "linked_stats",
                 columns: table => new
                 {
-                    stat_id = table.Column<byte[]>(type: "BLOB", nullable: false),
-                    depends_on_id = table.Column<byte[]>(type: "BLOB", nullable: false),
-                    ratio = table.Column<float>(type: "REAL", nullable: false),
-                    stat_definition_id = table.Column<byte[]>(type: "BLOB", nullable: true)
+                    stat_id = table.Column<byte[]>(type: "bytea", nullable: false),
+                    depends_on_id = table.Column<byte[]>(type: "bytea", nullable: false),
+                    ratio = table.Column<float>(type: "real", nullable: false),
+                    stat_definition_id = table.Column<byte[]>(type: "bytea", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -598,10 +600,10 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                 name: "stats",
                 columns: table => new
                 {
-                    id = table.Column<byte[]>(type: "BLOB", nullable: false),
-                    definition_id = table.Column<byte[]>(type: "BLOB", nullable: false),
-                    base_value = table.Column<int>(type: "INTEGER", nullable: false),
-                    apparent_value = table.Column<int>(type: "INTEGER", nullable: false)
+                    id = table.Column<byte[]>(type: "bytea", nullable: false),
+                    definition_id = table.Column<byte[]>(type: "bytea", nullable: false),
+                    base_value = table.Column<int>(type: "integer", nullable: false),
+                    apparent_value = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -618,34 +620,35 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                 name: "material_state_properties",
                 columns: table => new
                 {
-                    material_definition_id = table.Column<byte[]>(type: "BLOB", nullable: false),
-                    id = table.Column<int>(type: "INTEGER", nullable: false),
-                    color = table.Column<string>(type: "TEXT", nullable: false),
-                    state = table.Column<int>(type: "INTEGER", nullable: false),
-                    mechanical_properties_density = table.Column<float>(type: "REAL", nullable: true),
-                    mechanical_properties_hardness = table.Column<float>(type: "REAL", nullable: true),
-                    mechanical_properties_toughness = table.Column<float>(type: "REAL", nullable: true),
-                    mechanical_properties_stiffness = table.Column<float>(type: "REAL", nullable: true),
-                    mechanical_properties_malleability = table.Column<float>(type: "REAL", nullable: true),
-                    mechanical_properties_viscosity = table.Column<float>(type: "REAL", nullable: true),
-                    mechanical_properties_surface_tension = table.Column<float>(type: "REAL", nullable: true),
-                    mechanical_properties_adhesion = table.Column<float>(type: "REAL", nullable: true),
-                    thermal_properties_melting_point = table.Column<float>(type: "REAL", nullable: true),
-                    thermal_properties_boiling_point = table.Column<float>(type: "REAL", nullable: true),
-                    thermal_properties_ignition_temperature = table.Column<float>(type: "REAL", nullable: true),
-                    thermal_properties_thermal_conductivity = table.Column<float>(type: "REAL", nullable: true),
-                    electrical_properties_conductivity = table.Column<float>(type: "REAL", nullable: true),
-                    fantastical_properties_aetherial_conductivity = table.Column<float>(type: "REAL", nullable: true),
-                    fantastical_properties_elemental_attunement = table.Column<string>(type: "TEXT", nullable: true),
-                    fantastical_properties_mana_capacity = table.Column<float>(type: "REAL", nullable: true),
-                    fantastical_properties_purity = table.Column<float>(type: "REAL", nullable: true),
-                    fantastical_properties_luminosity = table.Column<float>(type: "REAL", nullable: true)
+                    material_definition_id = table.Column<byte[]>(type: "bytea", nullable: false),
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    color = table.Column<string>(type: "text", nullable: false),
+                    state = table.Column<int>(type: "integer", nullable: false),
+                    mechanical_properties_density = table.Column<float>(type: "real", nullable: true),
+                    mechanical_properties_hardness = table.Column<float>(type: "real", nullable: true),
+                    mechanical_properties_toughness = table.Column<float>(type: "real", nullable: true),
+                    mechanical_properties_stiffness = table.Column<float>(type: "real", nullable: true),
+                    mechanical_properties_malleability = table.Column<float>(type: "real", nullable: true),
+                    mechanical_properties_viscosity = table.Column<float>(type: "real", nullable: true),
+                    mechanical_properties_surface_tension = table.Column<float>(type: "real", nullable: true),
+                    mechanical_properties_adhesion = table.Column<float>(type: "real", nullable: true),
+                    thermal_properties_melting_point = table.Column<float>(type: "real", nullable: true),
+                    thermal_properties_boiling_point = table.Column<float>(type: "real", nullable: true),
+                    thermal_properties_ignition_temperature = table.Column<float>(type: "real", nullable: true),
+                    thermal_properties_thermal_conductivity = table.Column<float>(type: "real", nullable: true),
+                    electrical_properties_conductivity = table.Column<float>(type: "real", nullable: true),
+                    fantastical_properties_aetherial_conductivity = table.Column<float>(type: "real", nullable: true),
+                    fantastical_properties_elemental_attunement = table.Column<string>(type: "text", nullable: true),
+                    fantastical_properties_mana_capacity = table.Column<float>(type: "real", nullable: true),
+                    fantastical_properties_purity = table.Column<float>(type: "real", nullable: true),
+                    fantastical_properties_luminosity = table.Column<float>(type: "real", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("pk_material_state_properties", x => new { x.material_definition_id, x.id });
                     table.ForeignKey(
-                        name: "fk_material_state_properties_material_definitions_material_definition_id",
+                        name: "fk_material_state_properties_material_definitions_material_def",
                         column: x => x.material_definition_id,
                         principalTable: "material_definitions",
                         principalColumn: "id",
@@ -662,12 +665,12 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                 name: "applied_modifiers",
                 columns: table => new
                 {
-                    id = table.Column<byte[]>(type: "BLOB", nullable: false),
-                    modifier_definition_id = table.Column<byte[]>(type: "BLOB", nullable: false),
-                    entity_id = table.Column<byte[]>(type: "BLOB", nullable: false),
-                    stacks = table.Column<int>(type: "INTEGER", nullable: false),
-                    applied_at = table.Column<DateTimeOffset>(type: "TEXT", nullable: false),
-                    expires_at = table.Column<DateTimeOffset>(type: "TEXT", nullable: true)
+                    id = table.Column<byte[]>(type: "bytea", nullable: false),
+                    modifier_definition_id = table.Column<byte[]>(type: "bytea", nullable: false),
+                    entity_id = table.Column<byte[]>(type: "bytea", nullable: false),
+                    stacks = table.Column<int>(type: "integer", nullable: false),
+                    applied_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    expires_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -679,7 +682,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "fk_applied_modifiers_modifier_definitions_modifier_definition_id",
+                        name: "fk_applied_modifiers_modifier_definitions_modifier_definition_",
                         column: x => x.modifier_definition_id,
                         principalTable: "modifier_definitions",
                         principalColumn: "id",
@@ -690,22 +693,22 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                 name: "effects",
                 columns: table => new
                 {
-                    id = table.Column<byte[]>(type: "BLOB", nullable: false),
-                    name = table.Column<string>(type: "TEXT", nullable: false),
-                    description = table.Column<string>(type: "TEXT", maxLength: 1024, nullable: false),
-                    effect_type = table.Column<int>(type: "INTEGER", nullable: false),
-                    duration = table.Column<float>(type: "REAL", nullable: false),
-                    tick_interval = table.Column<float>(type: "REAL", nullable: false),
-                    base_damage = table.Column<float>(type: "REAL", nullable: true),
-                    damage_type = table.Column<int>(type: "INTEGER", nullable: true),
-                    ignores_armor = table.Column<bool>(type: "INTEGER", nullable: true),
-                    delay = table.Column<TimeSpan>(type: "TEXT", nullable: true),
-                    base_heal_amount = table.Column<float>(type: "REAL", nullable: true),
-                    can_overheal = table.Column<bool>(type: "INTEGER", nullable: true),
-                    summon_entity_template_id = table.Column<byte[]>(type: "BLOB", nullable: true),
-                    quantity = table.Column<int>(type: "INTEGER", nullable: true),
-                    affected_ambients = table.Column<string>(type: "TEXT", nullable: true),
-                    affected_stats = table.Column<string>(type: "TEXT", nullable: true)
+                    id = table.Column<byte[]>(type: "bytea", nullable: false),
+                    name = table.Column<string>(type: "text", nullable: false),
+                    description = table.Column<string>(type: "character varying(1024)", maxLength: 1024, nullable: false),
+                    effect_type = table.Column<int>(type: "integer", nullable: false),
+                    duration = table.Column<float>(type: "real", nullable: false),
+                    tick_interval = table.Column<float>(type: "real", nullable: false),
+                    base_damage = table.Column<float>(type: "real", nullable: true),
+                    damage_type = table.Column<int>(type: "integer", nullable: true),
+                    ignores_armor = table.Column<bool>(type: "boolean", nullable: true),
+                    delay = table.Column<TimeSpan>(type: "interval", nullable: true),
+                    base_heal_amount = table.Column<float>(type: "real", nullable: true),
+                    can_overheal = table.Column<bool>(type: "boolean", nullable: true),
+                    summon_entity_template_id = table.Column<byte[]>(type: "bytea", nullable: true),
+                    quantity = table.Column<int>(type: "integer", nullable: true),
+                    affected_ambients = table.Column<string>(type: "jsonb", nullable: true),
+                    affected_stats = table.Column<string>(type: "jsonb", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -728,10 +731,10 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                 name: "inventories",
                 columns: table => new
                 {
-                    id = table.Column<byte[]>(type: "BLOB", nullable: false),
-                    entity_id = table.Column<byte[]>(type: "BLOB", nullable: false),
-                    capacity = table.Column<int>(type: "INTEGER", nullable: false),
-                    filter = table.Column<string>(type: "TEXT", nullable: true)
+                    id = table.Column<byte[]>(type: "bytea", nullable: false),
+                    entity_id = table.Column<byte[]>(type: "bytea", nullable: false),
+                    capacity = table.Column<int>(type: "integer", nullable: false),
+                    filter = table.Column<string>(type: "jsonb", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -748,17 +751,17 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                 name: "item_definitions",
                 columns: table => new
                 {
-                    id = table.Column<byte[]>(type: "BLOB", nullable: false),
-                    name = table.Column<string>(type: "TEXT", nullable: false),
-                    description = table.Column<string>(type: "TEXT", maxLength: 1024, nullable: false),
-                    item_type = table.Column<int>(type: "INTEGER", nullable: false),
-                    item_subtype = table.Column<int>(type: "INTEGER", nullable: false),
-                    base_quality = table.Column<int>(type: "INTEGER", nullable: false),
-                    max_stack_size = table.Column<int>(type: "INTEGER", nullable: false),
-                    base_durability = table.Column<float>(type: "REAL", nullable: false),
-                    weight = table.Column<float>(type: "REAL", nullable: false),
-                    base_value = table.Column<int>(type: "INTEGER", nullable: false),
-                    creator_entity_id = table.Column<byte[]>(type: "BLOB", nullable: true)
+                    id = table.Column<byte[]>(type: "bytea", nullable: false),
+                    name = table.Column<string>(type: "text", nullable: false),
+                    description = table.Column<string>(type: "character varying(1024)", maxLength: 1024, nullable: false),
+                    item_type = table.Column<int>(type: "integer", nullable: false),
+                    item_subtype = table.Column<int>(type: "integer", nullable: false),
+                    base_quality = table.Column<int>(type: "integer", nullable: false),
+                    max_stack_size = table.Column<int>(type: "integer", nullable: false),
+                    base_durability = table.Column<float>(type: "real", nullable: false),
+                    weight = table.Column<float>(type: "real", nullable: false),
+                    base_value = table.Column<int>(type: "integer", nullable: false),
+                    creator_entity_id = table.Column<byte[]>(type: "bytea", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -793,14 +796,14 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                 name: "log_entries",
                 columns: table => new
                 {
-                    id = table.Column<byte[]>(type: "BLOB", nullable: false),
-                    timestamp = table.Column<DateTimeOffset>(type: "TEXT", nullable: false),
-                    level = table.Column<int>(type: "INTEGER", nullable: false),
-                    event_id = table.Column<int>(type: "INTEGER", nullable: false),
-                    entity_id = table.Column<byte[]>(type: "BLOB", nullable: true),
-                    message = table.Column<string>(type: "TEXT", maxLength: 2048, nullable: false),
-                    parameters = table.Column<string>(type: "TEXT", nullable: true),
-                    category = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true)
+                    id = table.Column<byte[]>(type: "bytea", nullable: false),
+                    timestamp = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    level = table.Column<int>(type: "integer", nullable: false),
+                    event_id = table.Column<int>(type: "integer", nullable: false),
+                    entity_id = table.Column<byte[]>(type: "bytea", nullable: true),
+                    message = table.Column<string>(type: "character varying(2048)", maxLength: 2048, nullable: false),
+                    parameters = table.Column<string>(type: "text", nullable: true),
+                    category = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -816,15 +819,15 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                 name: "abilities",
                 columns: table => new
                 {
-                    id = table.Column<byte[]>(type: "BLOB", nullable: false),
-                    name = table.Column<string>(type: "TEXT", nullable: false),
-                    ability_type = table.Column<int>(type: "INTEGER", nullable: false),
-                    targeting_type = table.Column<int>(type: "INTEGER", nullable: false),
-                    affects_caster = table.Column<bool>(type: "INTEGER", nullable: false),
-                    affects_allies = table.Column<bool>(type: "INTEGER", nullable: false),
-                    number_of_targets = table.Column<int>(type: "INTEGER", nullable: false),
-                    cast_time = table.Column<float>(type: "REAL", nullable: false),
-                    skill_discipline_id = table.Column<byte[]>(type: "BLOB", nullable: false)
+                    id = table.Column<byte[]>(type: "bytea", nullable: false),
+                    name = table.Column<string>(type: "text", nullable: false),
+                    ability_type = table.Column<int>(type: "integer", nullable: false),
+                    targeting_type = table.Column<int>(type: "integer", nullable: false),
+                    affects_caster = table.Column<bool>(type: "boolean", nullable: false),
+                    affects_allies = table.Column<bool>(type: "boolean", nullable: false),
+                    number_of_targets = table.Column<int>(type: "integer", nullable: false),
+                    cast_time = table.Column<float>(type: "real", nullable: false),
+                    skill_discipline_id = table.Column<byte[]>(type: "bytea", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -853,10 +856,10 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                 name: "skills",
                 columns: table => new
                 {
-                    id = table.Column<byte[]>(type: "BLOB", nullable: false),
-                    definition_id = table.Column<byte[]>(type: "BLOB", nullable: false),
-                    experience_points = table.Column<int>(type: "INTEGER", nullable: false),
-                    level = table.Column<int>(type: "INTEGER", nullable: false)
+                    id = table.Column<byte[]>(type: "bytea", nullable: false),
+                    definition_id = table.Column<byte[]>(type: "bytea", nullable: false),
+                    experience_points = table.Column<int>(type: "integer", nullable: false),
+                    level = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -873,8 +876,8 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                 name: "entity_stats",
                 columns: table => new
                 {
-                    entity_id = table.Column<byte[]>(type: "BLOB", nullable: false),
-                    instanced_stat_id = table.Column<byte[]>(type: "BLOB", nullable: false)
+                    entity_id = table.Column<byte[]>(type: "bytea", nullable: false),
+                    instanced_stat_id = table.Column<byte[]>(type: "bytea", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -897,17 +900,18 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                 name: "item_definition_materials",
                 columns: table => new
                 {
-                    item_definition_id = table.Column<byte[]>(type: "BLOB", nullable: false),
-                    id = table.Column<int>(type: "INTEGER", nullable: false),
-                    slot = table.Column<byte>(type: "INTEGER", nullable: false),
-                    material_id = table.Column<byte[]>(type: "BLOB", nullable: false),
-                    proportion = table.Column<float>(type: "REAL", nullable: false)
+                    item_definition_id = table.Column<byte[]>(type: "bytea", nullable: false),
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    slot = table.Column<byte>(type: "smallint", nullable: false),
+                    material_id = table.Column<byte[]>(type: "bytea", nullable: false),
+                    proportion = table.Column<float>(type: "real", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("pk_item_definition_materials", x => new { x.item_definition_id, x.id });
                     table.ForeignKey(
-                        name: "fk_item_definition_materials_item_definitions_item_definition_id",
+                        name: "fk_item_definition_materials_item_definitions_item_definition_",
                         column: x => x.item_definition_id,
                         principalTable: "item_definitions",
                         principalColumn: "id",
@@ -930,13 +934,13 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                 name: "items",
                 columns: table => new
                 {
-                    id = table.Column<byte[]>(type: "BLOB", nullable: false),
-                    definition_id = table.Column<byte[]>(type: "BLOB", nullable: false),
-                    quantity = table.Column<int>(type: "INTEGER", nullable: false),
-                    durability = table.Column<int>(type: "INTEGER", nullable: false),
-                    primary_material_id = table.Column<byte[]>(type: "BLOB", nullable: true),
-                    crafted_by_id = table.Column<byte[]>(type: "BLOB", nullable: true),
-                    inventory_id = table.Column<byte[]>(type: "BLOB", nullable: true)
+                    id = table.Column<byte[]>(type: "bytea", nullable: false),
+                    definition_id = table.Column<byte[]>(type: "bytea", nullable: false),
+                    quantity = table.Column<int>(type: "integer", nullable: false),
+                    durability = table.Column<int>(type: "integer", nullable: false),
+                    primary_material_id = table.Column<byte[]>(type: "bytea", nullable: true),
+                    crafted_by_id = table.Column<byte[]>(type: "bytea", nullable: true),
+                    inventory_id = table.Column<byte[]>(type: "bytea", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -963,8 +967,8 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                 name: "ability_active_effects",
                 columns: table => new
                 {
-                    ability_id = table.Column<byte[]>(type: "BLOB", nullable: false),
-                    effect_id = table.Column<byte[]>(type: "BLOB", nullable: false)
+                    ability_id = table.Column<byte[]>(type: "bytea", nullable: false),
+                    effect_id = table.Column<byte[]>(type: "bytea", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -987,12 +991,12 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                 name: "ability_casting_requirements",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    ability_id = table.Column<byte[]>(type: "BLOB", nullable: false),
-                    requirement_type = table.Column<int>(type: "INTEGER", nullable: false),
-                    required_entity_id = table.Column<byte[]>(type: "BLOB", nullable: false),
-                    amount_needed = table.Column<float>(type: "REAL", nullable: false)
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    ability_id = table.Column<byte[]>(type: "bytea", nullable: false),
+                    requirement_type = table.Column<int>(type: "integer", nullable: false),
+                    required_entity_id = table.Column<byte[]>(type: "bytea", nullable: false),
+                    amount_needed = table.Column<float>(type: "real", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -1004,7 +1008,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "fk_ability_casting_requirements_requirement_type_lookup_requirement_type",
+                        name: "fk_ability_casting_requirements_requirement_type_lookup_requir",
                         column: x => x.requirement_type,
                         principalTable: "requirement_type_lookup",
                         principalColumn: "id",
@@ -1015,8 +1019,8 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                 name: "ability_failure_effects",
                 columns: table => new
                 {
-                    ability_id = table.Column<byte[]>(type: "BLOB", nullable: false),
-                    effect_id = table.Column<byte[]>(type: "BLOB", nullable: false)
+                    ability_id = table.Column<byte[]>(type: "bytea", nullable: false),
+                    effect_id = table.Column<byte[]>(type: "bytea", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -1039,14 +1043,14 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                 name: "ability_failure_influences",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    amount_always_succeed = table.Column<float>(type: "REAL", nullable: false),
-                    influence_scale = table.Column<float>(type: "REAL", nullable: false),
-                    ability_id = table.Column<byte[]>(type: "BLOB", nullable: false),
-                    requirement_type = table.Column<int>(type: "INTEGER", nullable: false),
-                    required_entity_id = table.Column<byte[]>(type: "BLOB", nullable: false),
-                    amount_needed = table.Column<float>(type: "REAL", nullable: false)
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    amount_always_succeed = table.Column<float>(type: "real", nullable: false),
+                    influence_scale = table.Column<float>(type: "real", nullable: false),
+                    ability_id = table.Column<byte[]>(type: "bytea", nullable: false),
+                    requirement_type = table.Column<int>(type: "integer", nullable: false),
+                    required_entity_id = table.Column<byte[]>(type: "bytea", nullable: false),
+                    amount_needed = table.Column<float>(type: "real", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -1058,7 +1062,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "fk_ability_failure_influences_requirement_type_lookup_requirement_type",
+                        name: "fk_ability_failure_influences_requirement_type_lookup_requirem",
                         column: x => x.requirement_type,
                         principalTable: "requirement_type_lookup",
                         principalColumn: "id",
@@ -1069,12 +1073,12 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                 name: "ability_learning_requirements",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    ability_id = table.Column<byte[]>(type: "BLOB", nullable: false),
-                    requirement_type = table.Column<int>(type: "INTEGER", nullable: false),
-                    required_entity_id = table.Column<byte[]>(type: "BLOB", nullable: false),
-                    amount_needed = table.Column<float>(type: "REAL", nullable: false)
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    ability_id = table.Column<byte[]>(type: "bytea", nullable: false),
+                    requirement_type = table.Column<int>(type: "integer", nullable: false),
+                    required_entity_id = table.Column<byte[]>(type: "bytea", nullable: false),
+                    amount_needed = table.Column<float>(type: "real", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -1086,7 +1090,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "fk_ability_learning_requirements_requirement_type_lookup_requirement_type",
+                        name: "fk_ability_learning_requirements_requirement_type_lookup_requi",
                         column: x => x.requirement_type,
                         principalTable: "requirement_type_lookup",
                         principalColumn: "id",
@@ -1097,11 +1101,11 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                 name: "ability_stat_costs",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    stat_id = table.Column<byte[]>(type: "BLOB", nullable: false),
-                    amount = table.Column<float>(type: "REAL", nullable: false),
-                    ability_id = table.Column<byte[]>(type: "BLOB", nullable: false)
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    stat_id = table.Column<byte[]>(type: "bytea", nullable: false),
+                    amount = table.Column<float>(type: "real", nullable: false),
+                    ability_id = table.Column<byte[]>(type: "bytea", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -1124,8 +1128,8 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                 name: "entity_skills",
                 columns: table => new
                 {
-                    entity_id = table.Column<byte[]>(type: "BLOB", nullable: false),
-                    instanced_skill_id = table.Column<byte[]>(type: "BLOB", nullable: false)
+                    entity_id = table.Column<byte[]>(type: "bytea", nullable: false),
+                    instanced_skill_id = table.Column<byte[]>(type: "bytea", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -1457,12 +1461,13 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                 {
                     { 0, null, "None" },
                     { 1, null, "Stat" },
-                    { 2, null, "SkillLevel" },
-                    { 3, null, "PlayerLevel" },
-                    { 4, null, "RaceLevel" },
-                    { 5, null, "ClassLevel" },
-                    { 6, null, "ProfessionLevel" },
-                    { 7, null, "OngoingSpell" }
+                    { 2, null, "OwnedItem" },
+                    { 3, null, "OwnedItemSet" },
+                    { 4, null, "SkillLevel" },
+                    { 5, null, "RaceLevel" },
+                    { 6, null, "ClassLevel" },
+                    { 7, null, "ProfessionLevel" },
+                    { 8, null, "OngoingSpell" }
                 });
 
             migrationBuilder.InsertData(
@@ -1512,11 +1517,6 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                     { 4, null, "Self" },
                     { 5, null, "Touch" }
                 });
-
-            migrationBuilder.InsertData(
-                table: "stat_definitions",
-                columns: new[] { "id", "has_changeable_value", "max_value", "min_value", "name", "variation" },
-                values: new object[] { new byte[] { 1, 160, 135, 52, 154, 28, 237, 148, 44, 15, 243, 169, 111, 68, 183, 169 }, true, 2147483647, 0, "Level;Levels", 1 });
 
             migrationBuilder.CreateIndex(
                 name: "ix_abilities_ability_type",

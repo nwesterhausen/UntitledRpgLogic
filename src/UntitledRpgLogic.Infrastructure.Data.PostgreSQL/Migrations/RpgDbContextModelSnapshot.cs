@@ -828,17 +828,6 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                         .HasDatabaseName("ix_stat_definitions_variation");
 
                     b.ToTable("stat_definitions", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new byte[] { 1, 160, 135, 52, 154, 28, 237, 148, 44, 15, 243, 169, 111, 68, 183, 169 },
-                            HasChangeableValue = true,
-                            MaxValue = 2147483647,
-                            MinValue = 0,
-                            Name = "Level;Levels",
-                            Variation = 1
-                        });
                 });
 
             modelBuilder.Entity("UntitledRpgLogic.Core.World.MapDefinition", b =>
@@ -2386,31 +2375,36 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                         new
                         {
                             Id = 2,
-                            Name = "SkillLevel"
+                            Name = "OwnedItem"
                         },
                         new
                         {
                             Id = 3,
-                            Name = "PlayerLevel"
+                            Name = "OwnedItemSet"
                         },
                         new
                         {
                             Id = 4,
-                            Name = "RaceLevel"
+                            Name = "SkillLevel"
                         },
                         new
                         {
                             Id = 5,
-                            Name = "ClassLevel"
+                            Name = "RaceLevel"
                         },
                         new
                         {
                             Id = 6,
-                            Name = "ProfessionLevel"
+                            Name = "ClassLevel"
                         },
                         new
                         {
                             Id = 7,
+                            Name = "ProfessionLevel"
+                        },
+                        new
+                        {
+                            Id = 8,
                             Name = "OngoingSpell"
                         });
                 });
@@ -3155,6 +3149,10 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                             b1.Property<byte[]>("EntityId")
                                 .HasColumnType("bytea")
                                 .HasColumnName("id");
+
+                            b1.Property<short>("Elevation")
+                                .HasColumnType("smallint")
+                                .HasColumnName("position_elevation");
 
                             b1.Property<byte[]>("MapId")
                                 .IsRequired()

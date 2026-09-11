@@ -16,34 +16,39 @@ public enum RequirementType
 	Stat = 1,
 
 	/// <summary>
-	///     Requirement specifying that a specific skill must be at or above a certain level.
+	///     Requirement specifying that the actor must have a specific item
 	/// </summary>
-	SkillLevel = 2,
+	OwnedItem = 2,
 
 	/// <summary>
-	///     Requirement specifying that the player must be at or above a certain level.
+	///     Requirement specifying that the actor must have a specific set/collection of items
 	/// </summary>
-	PlayerLevel = 3,
+	OwnedItemSet = 3,
+
+	/// <summary>
+	///     Requirement specifying that a specific skill must be at or above a certain level.
+	/// </summary>
+	SkillLevel = 4,
 
 	/// <summary>
 	///     Requirement specifying that the player must be of a certain race level.
 	/// </summary>
-	RaceLevel = 4,
+	RaceLevel = 5,
 
 	/// <summary>
 	///     Requirement specifying that the player must be of a certain class level.
 	/// </summary>
-	ClassLevel = 5,
+	ClassLevel = 6,
 
 	/// <summary>
 	///     Requirement specifying that the player must be of a certain profession and at least a specific level in that profession.
 	/// </summary>
-	ProfessionLevel = 6,
+	ProfessionLevel = 7,
 
 	/// <summary>
 	///     Requirement specifying that another specific ability/effect must be active.
 	/// </summary>
-	OngoingSpell = 7,
+	OngoingSpell = 8,
 
 	/// <summary>
 	///     Requirement specifying that the player must be of a certain race (implicit RaceLevel >= 1).

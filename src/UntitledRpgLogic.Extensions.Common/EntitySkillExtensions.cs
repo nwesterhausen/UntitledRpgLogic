@@ -49,4 +49,22 @@ public static class EntitySkillExtensions
 		entity.Skills.Add(join);
 		return join;
 	}
+
+	/// <summary>
+	///		Get the level of a particular skill on this entity.
+	/// </summary>
+	/// <param name="entity">target entity</param>
+	/// <param name="skillDefinitionId">The ID of the skill to find</param>
+	/// <returns>The skill level or `0` if the entity doesn't know the skill</returns>
+	/// <exception cref="ArgumentNullException">Throws if <paramref name="entity"/> is `null`</exception>
+	public static int GetSkillLevel(this Entity entity, Ulid skillDefinitionId)
+	{
+		ArgumentNullException.ThrowIfNull(entity);
+
+		var skill = entity.Skills?
+			.FirstOrDefault(s => s.InstancedSkillId == skillDefinitionId)?
+			.InstancedSkill;
+
+		return skill?.Level ?? 0;
+	}
 }

@@ -1,16 +1,36 @@
+using UntitledRpgLogic.Core.Entities;
 using UntitledRpgLogic.Core.Environment;
 
-namespace UntitledRpgLogic.Core.Entities;
+namespace UntitledRpgLogic.Extensions.Common;
 
 /// <summary>
-///     Calculates an entity's respiratory state based on atmospheric and hydrostatic fluid pressures.
+///     Calculation extensions for determining entity submersion and respiration states.
 /// </summary>
-public static class RespirationCalculator
+public static class RespirationExtensions
 {
 	/// <summary>
-	///     Conversion constant: meters of fluid depth equivalent to 1 atmosphere of hydrostatic pressure.
+	///     Calculates whether an entity is submerged in liquid based on position and tile depth.
 	/// </summary>
-	public const float DepthPerAtmosphere = 10.0f;
+	public static bool IsSubmerged(this WorldPosition position, float tileElevation, float liquidDepth)
+	{
+		ArgumentNullException.ThrowIfNull(position);
+
+		var liquidSurface = tileElevation + liquidDepth;
+		return liquidDepth > 0f && position.Elevation < liquidSurface;
+	}
+
+	/// <summary>
+	///     Calculates the fraction of gas available in the surrounding atmosphere.
+	/// </summary>
+	public static float GetEffectiveGasFraction(this AtmosphereProfile atmosphere, Ulid gasMaterialId)
+	{
+		ArgumentNullException.ThrowIfNull(atmosphere);
+
+		return atmosphere.GasFractions
+			.FirstOrDefault(g => g.MaterialId == gasMaterialId)
+			?.Ratio ?? 0f;
+	}
+
 
 	/// <summary>
 	///     Evaluates respiration state based on whether the entity is breathing open air or submerged in liquid.
@@ -19,11 +39,13 @@ public static class RespirationCalculator
 	/// <param name="atmosphere">The local atmosphere profile of the chunk or map.</param>
 	/// <param name="submergedLiquidMaterialId">The ULID of the fluid the entity is currently submerged in (null if surfaced/dry).</param>
 	/// <param name="submergedDepthUnits">Depth in world units (meters) of the liquid above the entity's breathing apparatus.</param>
+	/// <param name="depthPerAtmosphere">How deep in <paramref name="submergedLiquidMaterialId"/> to accumulate 1atm of pressure</param>
 	public static RespirationState Evaluate(
-		RespiratoryProfile profile,
+		this RespiratoryProfile profile,
 		AtmosphereProfile atmosphere,
 		Ulid? submergedLiquidMaterialId,
-		ushort submergedDepthUnits)
+		ushort submergedDepthUnits,
+		float depthPerAtmosphere = 10f)
 	{
 		ArgumentNullException.ThrowIfNull(profile);
 		ArgumentNullException.ThrowIfNull(atmosphere);
@@ -37,7 +59,7 @@ public static class RespirationCalculator
 		if (submergedLiquidMaterialId.HasValue && submergedDepthUnits > 0)
 		{
 			var liquidId = submergedLiquidMaterialId.Value;
-			var liquidHydrostaticPressure = atmosphere.TotalPressureAtm + (submergedDepthUnits / DepthPerAtmosphere);
+			var liquidHydrostaticPressure = atmosphere.TotalPressureAtm + (submergedDepthUnits / depthPerAtmosphere);
 
 			// 1. Check for toxic liquids (Acid, Magma, Poison Sludge)
 			var toxic = profile.ToxicSubstances.FirstOrDefault(t => t.MaterialId == liquidId);

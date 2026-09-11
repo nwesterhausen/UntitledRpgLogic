@@ -46,4 +46,20 @@ public static class EntityStatExtensions
 		entity.Stats.Add(join);
 		return join;
 	}
+
+	/// <summary>
+	///		Get the level of a particular skill on this entity.
+	/// </summary>
+	/// <param name="entity">target entity</param>
+	/// <param name="statDefinitionId">The ID of the skill to find</param>
+	/// <returns>The skill level or `0` if the entity doesn't know the skill</returns>
+	/// <exception cref="ArgumentNullException">Throws if <paramref name="entity"/> is `null`</exception>
+	public static int GetStatApparentValue(this Entity entity, Ulid statDefinitionId)
+	{
+		ArgumentNullException.ThrowIfNull(entity);
+
+		var stat = entity.Stats.FirstOrDefault(s => s.InstancedStat?.DefinitionId == statDefinitionId);
+
+		return stat?.InstancedStat?.ApparentValue ?? 0;
+	}
 }
