@@ -1,9 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using UntitledRpgLogic.Core.Classes;
-using UntitledRpgLogic.Core.Interfaces.Data;
-using UntitledRpgLogic.Core.Interfaces.Data.Repositories;
-using UntitledRpgLogic.Core.Models;
+using UntitledRpgLogic.Core.Common;
+using UntitledRpgLogic.Core.Data;
+using UntitledRpgLogic.Core.Entities;
+using UntitledRpgLogic.Core.Skills;
 using UntitledRpgLogic.Extensions.Common;
 using UntitledRpgLogic.Infrastructure.Data.SQLite;
 

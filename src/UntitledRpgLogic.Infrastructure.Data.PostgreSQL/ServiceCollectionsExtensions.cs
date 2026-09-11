@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using UntitledRpgLogic.Core.Interfaces.Data;
-using UntitledRpgLogic.Core.Options;
+using UntitledRpgLogic.Core.Data;
 
 namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL;
 

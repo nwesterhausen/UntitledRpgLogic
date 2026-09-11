@@ -1,4 +1,5 @@
-using UntitledRpgLogic.Core.Models;
+using UntitledRpgLogic.Core.Entities;
+using UntitledRpgLogic.Core.Stats;
 
 namespace UntitledRpgLogic.Extensions.Common;
 
@@ -8,7 +9,7 @@ namespace UntitledRpgLogic.Extensions.Common;
 public static class EntityStatExtensions
 {
 	/// <summary>
-	///     Attaches or updates a stat on an entity, initializing the underlying <see cref="InstancedStat" /> and <see cref="EntityStats" /> join record.
+	///     Attaches or updates a stat on an entity, initializing the underlying <see cref="Stat" /> and <see cref="EntityStats" /> join record.
 	/// </summary>
 	/// <param name="entity">The target entity.</param>
 	/// <param name="definition">The stat template definition.</param>
@@ -30,7 +31,7 @@ public static class EntityStatExtensions
 			return existing;
 		}
 
-		var instancedStat = new InstancedStat(definition.Id)
+		var instancedStat = new Stat(definition.Id)
 		{
 			BaseValue = initialValue,
 			ApparentValue = initialValue

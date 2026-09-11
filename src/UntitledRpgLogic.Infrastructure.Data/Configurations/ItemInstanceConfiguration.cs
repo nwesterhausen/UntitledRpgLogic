@@ -1,16 +1,16 @@
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using UntitledRpgLogic.Core.Models;
+using UntitledRpgLogic.Core.Items;
 
 namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
 ///<summary>
-/// Defines relationship in the <see cref="ItemInstance" /> table
+/// Defines relationship in the <see cref="Item" /> table
 ///</summary>
-public sealed class ItemInstanceConfiguration : IEntityTypeConfiguration<ItemInstance>
+public sealed class ItemInstanceConfiguration : IEntityTypeConfiguration<Item>
 {
 	///<inheritdoc />
-	public void Configure(EntityTypeBuilder<ItemInstance> builder)
+	public void Configure(EntityTypeBuilder<Item> builder)
 	{
 
 		ArgumentNullException.ThrowIfNull(builder);

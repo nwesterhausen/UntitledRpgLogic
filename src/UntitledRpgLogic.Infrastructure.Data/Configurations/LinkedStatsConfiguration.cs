@@ -1,7 +1,7 @@
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using UntitledRpgLogic.Core.Models;
+using UntitledRpgLogic.Core.Stats;
 
 namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
 ///<summary>

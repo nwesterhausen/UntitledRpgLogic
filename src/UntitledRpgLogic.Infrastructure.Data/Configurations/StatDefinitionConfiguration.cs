@@ -2,9 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using UntitledRpgLogic.Core;
-using UntitledRpgLogic.Core.Classes;
-using UntitledRpgLogic.Core.Enums;
-using UntitledRpgLogic.Core.Models;
+using UntitledRpgLogic.Core.Common;
+using UntitledRpgLogic.Core.Stats;
 using UntitledRpgLogic.Infrastructure.Data.LookupEntities;
 
 namespace UntitledRpgLogic.Infrastructure.Data.Configurations;

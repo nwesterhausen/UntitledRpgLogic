@@ -1,4 +1,4 @@
-using UntitledRpgLogic.Core.Interfaces.Services;
+using UntitledRpgLogic.Core.Localization;
 
 namespace UntitledRpgLogic.Services;
 

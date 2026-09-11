@@ -1,6 +1,6 @@
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
-using UntitledRpgLogic.Core.Interfaces.Data;
+using UntitledRpgLogic.Core.Data;
 
 namespace UntitledRpgLogic.Infrastructure.Data.Repositories;
 

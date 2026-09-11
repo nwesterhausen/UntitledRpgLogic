@@ -2,7 +2,7 @@ using System.Collections.Concurrent;
 using System.Text.Json;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using UntitledRpgLogic.Core.Models;
+using UntitledRpgLogic.Core.Data;
 using UntitledRpgLogic.Infrastructure.Data;
 
 namespace UntitledRpgLogic.Services.Logging.Database;

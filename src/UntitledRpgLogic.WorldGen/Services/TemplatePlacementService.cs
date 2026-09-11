@@ -1,4 +1,4 @@
-using UntitledRpgLogic.Core.Models;
+using UntitledRpgLogic.Core.World;
 using UntitledRpgLogic.WorldGen.Models;
 
 namespace UntitledRpgLogic.WorldGen.Services;

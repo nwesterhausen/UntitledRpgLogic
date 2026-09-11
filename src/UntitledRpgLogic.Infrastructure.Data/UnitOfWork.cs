@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore.Storage;
-using UntitledRpgLogic.Core.Interfaces.Data;
+using UntitledRpgLogic.Core.Data;
 
 namespace UntitledRpgLogic.Infrastructure.Data;
 

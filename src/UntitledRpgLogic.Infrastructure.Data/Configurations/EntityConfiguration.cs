@@ -1,7 +1,8 @@
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using UntitledRpgLogic.Core.Models;
+using UntitledRpgLogic.Core.Entities;
+using UntitledRpgLogic.Core.Items;
 
 namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
 ///<summary>
@@ -18,7 +19,7 @@ public sealed class EntityConfiguration : IEntityTypeConfiguration<Entity>
 		// Relationships
 		_ = builder.HasOne(e => e.Inventory)
 			.WithOne(i => i.Entity)
-			.HasForeignKey<EntityInventory>(i => i.EntityId);
+			.HasForeignKey<Inventory>(i => i.EntityId);
 
 		_ = builder.OwnsMany(e => e.AffectedStats, sp =>
 		{

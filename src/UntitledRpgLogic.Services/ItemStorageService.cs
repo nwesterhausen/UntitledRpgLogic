@@ -1,6 +1,4 @@
-using UntitledRpgLogic.Core.Events;
-using UntitledRpgLogic.Core.Interfaces.Inventory;
-using UntitledRpgLogic.Core.Interfaces.Services;
+using UntitledRpgLogic.Core.Items;
 
 namespace UntitledRpgLogic.Services;
 
@@ -9,47 +7,34 @@ namespace UntitledRpgLogic.Services;
 /// </summary>
 public class ItemStorageService : IItemStorageService
 {
-	private readonly Dictionary<Ulid, IStorable> items = [];
+	private readonly Dictionary<Ulid, Item> items = [];
 
 	/// <inheritdoc />
-	public bool StoreItem(IStorable item)
+	public bool StoreItem(Item item)
 	{
 		ArgumentNullException.ThrowIfNull(item, nameof(item));
 
-		CancelableItemActionEventArgs cancelableEventArgs = new(item);
+		CancelableItemActionEventArgs cancelableEventArgs = new(item.Id);
 		this.StoringItem?.Invoke(this, cancelableEventArgs);
 		if (cancelableEventArgs.Cancel)
 		{
 			return false;
 		}
 
+		ArgumentNullException.ThrowIfNull(item.ItemDefinition);
+		var itemDefinition = item.ItemDefinition;
+
 		this.items.Add(item.Id, item);
 
-		this.ItemStored?.Invoke(this, new SuccessfulItemStorageEventArgs(item.Name.Singular, 1, item.Id, this.items.Count));
+		this.ItemStored?.Invoke(this, new SuccessfulItemStorageEventArgs(itemDefinition.Name.Singular, 1, item.Id, this.items.Count));
 
 		return true;
 	}
 
 	/// <inheritdoc />
-	public bool TryRetrieveItem(Ulid itemId, out IStorable? item)
+	public bool TryRetrieveItem(Ulid itemId, out Item item)
 	{
-		if (this.items.TryGetValue(itemId, out item))
-		{
-			CancelableItemActionEventArgs cancelableEventArgs = new(item);
-			this.RetrievingItem?.Invoke(this, cancelableEventArgs);
-			if (cancelableEventArgs.Cancel)
-			{
-				item = null;
-				return false;
-			}
-
-			_ = this.items.Remove(itemId);
-			this.ItemRetrieved?.Invoke(this,
-				new SuccessfulItemStorageEventArgs(item.Name.Singular, 1, item.Id, this.items.Count));
-			return true;
-		}
-
-		item = null;
+		item = this.items[itemId];
 		return false;
 	}
 

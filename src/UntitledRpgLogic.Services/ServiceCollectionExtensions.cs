@@ -1,5 +1,8 @@
 using Microsoft.Extensions.DependencyInjection;
-using UntitledRpgLogic.Core.Interfaces.Services;
+using UntitledRpgLogic.Core.Economy;
+using UntitledRpgLogic.Core.Items;
+using UntitledRpgLogic.Core.Localization;
+using UntitledRpgLogic.Core.Stats;
 
 namespace UntitledRpgLogic.Services;
 
@@ -17,14 +20,14 @@ public static class ServiceCollectionExtensions
 	{
 		// SCOPED SERVICES
 		// -- These are created each time they are asked for and disposed of with the creator.
-		_ = services.AddScoped(typeof(ILevelingService<>), typeof(LevelingService<>));
+		// _ = services.AddScoped(typeof(ILevelingService<>), typeof(LevelingService<>));
 		_ = services.AddScoped<IItemStorageService, ItemStorageService>();
 		_ = services.AddScoped<ICurrencyStorageService, CurrencyStorageService>();
 
 		// SINGLETON SERVICES
 		// -- These are created the first time they're asked for and never disposed (until program ends)
 		_ = services.AddSingleton<ICultureService, CultureService>();
-		_ = services.AddSingleton<ISkillService, SkillService>();
+		// _ = services.AddSingleton<ISkillService, SkillService>();
 		// _ = services.AddSingleton<IStatService, StatService>();
 		_ = services.AddSingleton<IDamageCalculator, DamageCalculator>();
 

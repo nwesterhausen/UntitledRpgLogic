@@ -1,7 +1,5 @@
 using System.Runtime.InteropServices;
-using UntitledRpgLogic.Core.Enums;
-using UntitledRpgLogic.Core.Helpers;
-using UntitledRpgLogic.Core.Models;
+using UntitledRpgLogic.Core.World;
 
 namespace UntitledRpgLogic.UnitTests.Core;
 

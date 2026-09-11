@@ -1,7 +1,6 @@
 using System.Globalization;
 using LiteNetLib;
-using UntitledRpgLogic.Core.Events;
-using UntitledRpgLogic.Core.Interfaces.Networking;
+using UntitledRpgLogic.Core.Networking;
 
 namespace UntitledRpgLogic.Networking.LiteNetLib;
 

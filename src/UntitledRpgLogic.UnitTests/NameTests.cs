@@ -1,4 +1,4 @@
-using UntitledRpgLogic.Core.Classes;
+using UntitledRpgLogic.Core.Common;
 
 namespace UntitledRpgLogic.UnitTests.Core;
 

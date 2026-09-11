@@ -1,6 +1,15 @@
 using Microsoft.EntityFrameworkCore;
-using UntitledRpgLogic.Core.Classes;
-using UntitledRpgLogic.Core.Models;
+using UntitledRpgLogic.Core.Abilities;
+using UntitledRpgLogic.Core.Abilities.Effects;
+using UntitledRpgLogic.Core.Common;
+using UntitledRpgLogic.Core.Data;
+using UntitledRpgLogic.Core.Elements;
+using UntitledRpgLogic.Core.Entities;
+using UntitledRpgLogic.Core.Items;
+using UntitledRpgLogic.Core.Materials;
+using UntitledRpgLogic.Core.Progression;
+using UntitledRpgLogic.Core.Skills;
+using UntitledRpgLogic.Core.Stats;
 using UntitledRpgLogic.Infrastructure.Data.ValueConverters;
 
 namespace UntitledRpgLogic.Infrastructure.Data;
@@ -44,7 +53,7 @@ public class RpgDbContext(DbContextOptions<RpgDbContext> options) : DbContext(op
 	/// <summary>
 	///     Table for entity inventories, which link entities to the item instances they own.
 	/// </summary>
-	public DbSet<EntityInventory> EntityInventories { get; set; } = null!;
+	public DbSet<Inventory> Inventories { get; set; } = null!;
 
 	/// <summary>
 	///     Table for entity skills, which link entities to their instanced skills.
@@ -65,7 +74,7 @@ public class RpgDbContext(DbContextOptions<RpgDbContext> options) : DbContext(op
 	/// <summary>
 	///     Table for item instances, which are specific instances of item definitions owned by entities.
 	/// </summary>
-	public DbSet<ItemInstance> ItemInstances { get; set; } = null!;
+	public DbSet<Item> ItemInstances { get; set; } = null!;
 
 	/// <summary>
 	///     Table for instanced skills, which are specific instances of skill definitions assigned to entities.
@@ -75,7 +84,7 @@ public class RpgDbContext(DbContextOptions<RpgDbContext> options) : DbContext(op
 	/// <summary>
 	///     Table for instanced stats, which are specific instances of stat definitions assigned to entities.
 	/// </summary>
-	public DbSet<InstancedStat> InstancedStats { get; set; } = null!;
+	public DbSet<Stat> InstancedStats { get; set; } = null!;
 
 	// Linking Tables
 	/// <summary>
@@ -87,6 +96,11 @@ public class RpgDbContext(DbContextOptions<RpgDbContext> options) : DbContext(op
 	///     Table for log entries, which store application logs for auditing and debugging purposes.
 	/// </summary>
 	public DbSet<LogEntry> LogEntries { get; set; } = null!;
+
+	/// <summary>
+	///     Table for leveling definitions, which define how leveling is applied.
+	/// </summary>
+	public DbSet<LevelingDefinition> LevelingDefinitions { get; set; } = null!;
 
 	/// <summary>
 	///     Table for material definitions, which define the materials that items can be made from.

@@ -1,4 +1,4 @@
-using UntitledRpgLogic.Core.Options;
+using UntitledRpgLogic.Core.Data;
 
 namespace UntitledRpgLogic.Infrastructure.Data.SQLite;
 

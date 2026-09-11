@@ -1,6 +1,4 @@
-using UntitledRpgLogic.Core.Events;
-using UntitledRpgLogic.Core.Interfaces.Inventory;
-using UntitledRpgLogic.Core.Interfaces.Services;
+using UntitledRpgLogic.Core.Economy;
 
 namespace UntitledRpgLogic.Services;
 
@@ -9,15 +7,12 @@ namespace UntitledRpgLogic.Services;
 /// </summary>
 public class CurrencyStorageService : ICurrencyStorageService
 {
-	/// <inheritdoc />
-	public ICurrency? DepositCurrency(ICurrency currency, int? amount = null) =>
-		// Logic from CurrencyStorageBehavior will go here
-		throw new NotImplementedException();
 
 	/// <inheritdoc />
-	public ICurrency? WithdrawCurrency(ICurrency currency, int amount = 1) =>
-		// Logic from CurrencyStorageBehavior will go here
-		throw new NotImplementedException();
+	public IReadOnlyCollection<CurrencyBundle> DepositCurrency(CurrencyBundle currencyBundle) => throw new NotImplementedException();
+
+	/// <inheritdoc />
+	public CurrencyBundle? WithdrawCurrency(CurrencyBundle currencyBundle) => throw new NotImplementedException();
 
 	/// <inheritdoc />
 	public event EventHandler<CurrencyMovedEventArgs>? CurrencyDeposited;

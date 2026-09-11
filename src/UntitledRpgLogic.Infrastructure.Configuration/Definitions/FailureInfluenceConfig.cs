@@ -1,5 +1,5 @@
-using UntitledRpgLogic.Core.Enums;
-using UntitledRpgLogic.Core.Models;
+using UntitledRpgLogic.Core.Abilities;
+using UntitledRpgLogic.Core.Progression;
 
 namespace UntitledRpgLogic.Infrastructure.Configuration.Definitions;
 

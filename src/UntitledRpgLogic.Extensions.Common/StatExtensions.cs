@@ -1,5 +1,5 @@
 using UntitledRpgLogic.Core;
-using UntitledRpgLogic.Core.Interfaces.Common;
+using UntitledRpgLogic.Core.Stats;
 
 namespace UntitledRpgLogic.Extensions.Common;
 
@@ -12,16 +12,20 @@ public static class StatExtensions
 	///     Explicitly converts a stat to its string representation.
 	/// </summary>
 	/// <param name="stat">The stat to convert.</param>
-	public static string IntoString(this IStat stat)
+	public static string IntoString(this Stat stat)
 	{
 		ArgumentNullException.ThrowIfNull(stat);
-		if (stat.MinValue == DefaultValues.StatDefaultMinValue)
+		ArgumentNullException.ThrowIfNull(stat.StatDefinition);
+
+		var definition = stat.StatDefinition;
+
+		if (definition.MinValue == DefaultValues.StatDefaultMinValue)
 		{
 			return
-				$"{stat.Variation} {stat.Name}: {stat.Value} / {stat.MaxValue} ({stat.Value / (float)stat.MaxValue:F2 * 100}";
+				$"{definition.Variation} {definition.Name}: {stat.ApparentValue} / {definition.MaxValue} ({stat.ApparentValue / (float)definition.MaxValue:F2 * 100}";
 		}
 
 		return
-			$"{stat.Variation} {stat.Name}: {stat.Value} / {stat.MaxValue} with {stat.MinValue} minimum ({stat.EffectiveValue:F2})%";
+			$"{definition.Variation} {definition.Name}: {stat.ApparentValue} / {definition.MaxValue} with {definition.MinValue} minimum ({stat.EffectiveValue / (float)(definition.MaxValue - definition.MinValue):F2})%";
 	}
 }

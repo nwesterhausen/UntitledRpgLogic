@@ -1,10 +1,9 @@
-using UntitledRpgLogic.Core.Enums;
-using UntitledRpgLogic.Core.Interfaces.Common;
+using UntitledRpgLogic.Core.Common;
 
 namespace UntitledRpgLogic.Extensions.Common;
 
 /// <summary>
-///     Extension methods for types implementing <see cref="IHasDimensions" />.
+///     Extension methods for <see cref="Dimensions" />.
 /// </summary>
 public static class HasDimensionsExtensions
 {
@@ -13,7 +12,7 @@ public static class HasDimensionsExtensions
 	/// </summary>
 	/// <param name="dimensions">The object to format.</param>
 	/// <returns>A formatted string describing the dimensions.</returns>
-	public static string ToDimensionsString(this IHasDimensions dimensions)
+	public static string ToDimensionsString(this Dimensions dimensions)
 	{
 		ArgumentNullException.ThrowIfNull(dimensions, nameof(dimensions));
 		// Using a switch expression is cleaner and more concise.
@@ -80,7 +79,7 @@ public static class HasDimensionsExtensions
 	/// <param name="dimensions">The object with dimensions.</param>
 	/// <param name="targetScale">The desired scale for the resulting volume.</param>
 	/// <returns>The total volume, expressed in the target scale.</returns>
-	public static float CalculateVolumeIn(this IHasDimensions dimensions, DimensionScale targetScale)
+	public static float CalculateVolumeIn(Dimensions dimensions, DimensionScale targetScale)
 	{
 		ArgumentNullException.ThrowIfNull(dimensions, nameof(dimensions));
 

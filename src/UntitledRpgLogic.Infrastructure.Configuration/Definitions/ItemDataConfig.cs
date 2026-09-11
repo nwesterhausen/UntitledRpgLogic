@@ -1,5 +1,6 @@
 using UntitledRpgLogic.Core;
-using UntitledRpgLogic.Core.Enums;
+using UntitledRpgLogic.Core.Common;
+using UntitledRpgLogic.Core.Items;
 
 namespace UntitledRpgLogic.Infrastructure.Configuration.Definitions;
 

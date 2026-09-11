@@ -1,5 +1,5 @@
 
-using UntitledRpgLogic.Core.Enums;
+using UntitledRpgLogic.Core.Networking;
 
 namespace UntitledRpgLogic.Infrastructure.Data.LookupEntities;
 /// <summary>

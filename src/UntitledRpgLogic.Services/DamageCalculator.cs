@@ -1,7 +1,4 @@
-using UntitledRpgLogic.Core.Interfaces.Common;
-using UntitledRpgLogic.Core.Interfaces.Effects;
-using UntitledRpgLogic.Core.Interfaces.Services;
-using UntitledRpgLogic.Core.Options;
+using UntitledRpgLogic.Core.Stats;
 
 namespace UntitledRpgLogic.Services;
 
@@ -11,24 +8,27 @@ namespace UntitledRpgLogic.Services;
 public class DamageCalculator : IDamageCalculator
 {
 	/// <inheritdoc />
-	public int CalculateFinalDamage(int damageAmount, IEnumerable<IAppliesDamageMitigation> mitigations)
+	public int CalculateFinalDamage(int damageAmount)
 	{
 		var modifiedDamage = damageAmount;
 
 		// Sort and apply mitigation effects in order.
-		foreach (var mitigation in mitigations.OrderBy(m => m.MitigationPriority))
-		{
-			modifiedDamage = mitigation.ApplyMitigation(modifiedDamage);
-		}
+		// foreach (var mitigation in mitigations.OrderBy(m => m.MitigationPriority))
+		// {
+		// 	modifiedDamage = mitigation.ApplyMitigation(modifiedDamage);
+		// }
 
 		return modifiedDamage;
 	}
 
 	/// <inheritdoc />
-	public int GetPointDamageFromOptions(DamageOptions damageOptions, IStat stat)
+	public int GetPointDamageFromOptions(DamageOptions damageOptions, Stat stat)
 	{
 		ArgumentNullException.ThrowIfNull(damageOptions, nameof(damageOptions));
 		ArgumentNullException.ThrowIfNull(stat, nameof(stat));
+		ArgumentNullException.ThrowIfNull(stat.StatDefinition, nameof(StatDefinition));
+
+		var statDefinition = stat.StatDefinition;
 
 		if (damageOptions.FlatDamage.HasValue)
 		{
@@ -37,12 +37,12 @@ public class DamageCalculator : IDamageCalculator
 
 		if (damageOptions.PercentageDamage.HasValue)
 		{
-			return (int)(stat.Value * (damageOptions.PercentageDamage / 100f));
+			return (int)(stat.ApparentValue * (damageOptions.PercentageDamage / 100f));
 		}
 
 		if (damageOptions.PercentageDamageOfMax.HasValue)
 		{
-			return (int)(stat.MaxValue * (damageOptions.PercentageDamageOfMax / 100f));
+			return (int)(statDefinition.MaxValue * (damageOptions.PercentageDamageOfMax / 100f));
 		}
 
 		// If no damage options are provided, return 0.

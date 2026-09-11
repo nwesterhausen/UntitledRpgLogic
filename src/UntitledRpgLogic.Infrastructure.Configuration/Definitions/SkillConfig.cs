@@ -1,4 +1,4 @@
-using UntitledRpgLogic.Core.Options;
+using UntitledRpgLogic.Core.Progression;
 
 namespace UntitledRpgLogic.Infrastructure.Configuration.Definitions;
 
@@ -20,10 +20,10 @@ public record SkillConfig
 	/// <summary>
 	///	 Options for the leveling behavior of the skill. If not provided, the default leveling options will be used.
 	/// </summary>
-	public LevelingOptions LevelingOptions { get; init; } = new();
+	public LevelingDefinition LevelingDefinition { get; init; } = new();
 
 	/// <summary>
-	///	 The ULID identifier for this skill configuration. This is required.
+	///	 The <see cref="Ulid"/> identifier for this skill configuration. This is required.
 	/// </summary>
 	public Ulid Id { get; init; } = Ulid.NewUlid();
 }

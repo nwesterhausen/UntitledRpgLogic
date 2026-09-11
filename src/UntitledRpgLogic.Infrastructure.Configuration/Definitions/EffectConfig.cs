@@ -1,4 +1,4 @@
-using UntitledRpgLogic.Core.Enums;
+using UntitledRpgLogic.Core.Abilities.Effects;
 
 namespace UntitledRpgLogic.Infrastructure.Configuration.Definitions;
 

@@ -1,7 +1,7 @@
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using UntitledRpgLogic.Core.Models;
+using UntitledRpgLogic.Core.Skills;
 using UntitledRpgLogic.Infrastructure.Data.LookupEntities;
 
 namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
@@ -15,10 +15,5 @@ public sealed class SkillDefinitionConfiguration : IEntityTypeConfiguration<Skil
 	{
 		ArgumentNullException.ThrowIfNull(builder);
 
-		// FK in lookup table
-		builder.HasOne<ScalingCurveTypeLookup>()
-			.WithMany()
-			.HasForeignKey(x => x.ScalingCurve)
-			.OnDelete(DeleteBehavior.Restrict);
 	}
 }

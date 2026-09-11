@@ -1,10 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using UntitledRpgLogic.Core.Classes;
-using UntitledRpgLogic.Core.Interfaces.Data;
-using UntitledRpgLogic.Core.Interfaces.Data.Repositories;
-using UntitledRpgLogic.Core.Models;
+using UntitledRpgLogic.Core.Common;
+using UntitledRpgLogic.Core.Data;
+using UntitledRpgLogic.Core.Entities;
+using UntitledRpgLogic.Core.Stats;
 using UntitledRpgLogic.Extensions.Common;
 using UntitledRpgLogic.Infrastructure.Data;
 using UntitledRpgLogic.Infrastructure.Data.SQLite;

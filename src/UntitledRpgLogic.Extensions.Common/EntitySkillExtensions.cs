@@ -1,4 +1,5 @@
-using UntitledRpgLogic.Core.Models;
+using UntitledRpgLogic.Core.Entities;
+using UntitledRpgLogic.Core.Skills;
 
 namespace UntitledRpgLogic.Extensions.Common;
 

@@ -1,7 +1,7 @@
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using UntitledRpgLogic.Core.Models;
+using UntitledRpgLogic.Core.Materials;
 using UntitledRpgLogic.Infrastructure.Data.LookupEntities;
 using UntitledRpgLogic.Infrastructure.Data.ValueConverters;
 

@@ -1,6 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
-using UntitledRpgLogic.Core.Interfaces.Data;
-using UntitledRpgLogic.Core.Interfaces.Data.Repositories;
+using UntitledRpgLogic.Core.Data;
 using UntitledRpgLogic.Infrastructure.Data.Repositories;
 
 namespace UntitledRpgLogic.Infrastructure.Data;
