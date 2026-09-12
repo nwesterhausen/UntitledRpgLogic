@@ -26,7 +26,7 @@ public class RpgDbContext(DbContextOptions<RpgDbContext> options) : DbContext(op
 	/// <summary>
 	///     Gets or sets the DbSet for all Ability definitions.
 	/// </summary>
-	public DbSet<Ability> Abilities { get; set; } = null!;
+	public DbSet<AbilityDefinition> Abilities { get; set; } = null!;
 
 
 	/// <summary>

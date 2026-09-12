@@ -12,12 +12,12 @@ namespace UntitledRpgLogic.Core.Abilities;
 ///     Database catalog model defining an ability (Spell, Active Skill, or Passive Perk).
 /// </summary>
 [Table("abilities")]
-public record Ability : IDbEntity<Ulid>
+public record AbilityDefinition : IDbEntity<Ulid>
 {
 	/// <summary>
-	///     Initializes a new instance of the <see cref="Ability" /> record with default values for EF Core.
+	///     Initializes a new instance of the <see cref="AbilityDefinition" /> record with default values for EF Core.
 	/// </summary>
-	public Ability()
+	public AbilityDefinition()
 	{
 		this.Id = Ulid.NewUlid();
 		this.Name = Name.Empty;
@@ -28,10 +28,10 @@ public record Ability : IDbEntity<Ulid>
 	}
 
 	/// <summary>
-	///     Initializes a new instance of the <see cref="Ability" /> record with a designated name.
+	///     Initializes a new instance of the <see cref="AbilityDefinition" /> record with a designated name.
 	/// </summary>
 	/// <param name="name">The display name of the ability.</param>
-	public Ability(Name name) : this() => this.Name = name;
+	public AbilityDefinition(Name name) : this() => this.Name = name;
 
 	/// <summary>
 	///     The unique identifier for the ability (can be supplied from external TOML config).

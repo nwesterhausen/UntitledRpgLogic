@@ -7,12 +7,12 @@ using UntitledRpgLogic.Infrastructure.Data.LookupEntities;
 namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
 
 /// <summary>
-///     Entity Framework Core configuration for <see cref="Ability" />.
+///     Entity Framework Core configuration for <see cref="AbilityDefinition" />.
 /// </summary>
-public sealed class AbilityConfiguration : IEntityTypeConfiguration<Ability>
+public sealed class AbilityConfiguration : IEntityTypeConfiguration<AbilityDefinition>
 {
 	/// <inheritdoc />
-	public void Configure(EntityTypeBuilder<Ability> builder)
+	public void Configure(EntityTypeBuilder<AbilityDefinition> builder)
 	{
 		ArgumentNullException.ThrowIfNull(builder);
 
@@ -75,13 +75,13 @@ public sealed class AbilityConfiguration : IEntityTypeConfiguration<Ability>
 			   .UsingEntity(
 				   "ability_active_effects",
 				   r => r.HasOne(typeof(Effect)).WithMany().HasForeignKey("EffectId").OnDelete(DeleteBehavior.Cascade),
-				   l => l.HasOne(typeof(Ability)).WithMany().HasForeignKey("AbilityId").OnDelete(DeleteBehavior.Cascade));
+				   l => l.HasOne(typeof(AbilityDefinition)).WithMany().HasForeignKey("AbilityId").OnDelete(DeleteBehavior.Cascade));
 
 		builder.HasMany(a => a.FailureEffects)
 			   .WithMany()
 			   .UsingEntity(
 				   "ability_failure_effects",
 				   r => r.HasOne(typeof(Effect)).WithMany().HasForeignKey("EffectId").OnDelete(DeleteBehavior.Cascade),
-				   l => l.HasOne(typeof(Ability)).WithMany().HasForeignKey("AbilityId").OnDelete(DeleteBehavior.Cascade));
+				   l => l.HasOne(typeof(AbilityDefinition)).WithMany().HasForeignKey("AbilityId").OnDelete(DeleteBehavior.Cascade));
 	}
 }

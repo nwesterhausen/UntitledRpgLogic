@@ -14,8 +14,8 @@ public interface IConfigWriterService
 	/// <summary>
 	///     Persists a new Ability definition.
 	/// </summary>
-	/// <param name="ability">The pure Ability domain entity to save.</param>
-	public Task SaveAbilityAsync(Ability ability);
+	/// <param name="abilityDefinition">The pure Ability domain entity to save.</param>
+	public Task SaveAbilityAsync(AbilityDefinition abilityDefinition);
 
 	/// <summary>
 	///     Persists a new Effect definition.

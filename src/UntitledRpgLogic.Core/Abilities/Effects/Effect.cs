@@ -79,5 +79,5 @@ public abstract record Effect : IDbEntity<Ulid>
 	/// <summary>
 	///     Abilities that trigger this effect on successful activation.
 	/// </summary>
-	public virtual ICollection<Ability> TriggeringAbilities { get; } = new List<Ability>();
+	public virtual ICollection<AbilityDefinition> TriggeringAbilities { get; } = new List<AbilityDefinition>();
 }

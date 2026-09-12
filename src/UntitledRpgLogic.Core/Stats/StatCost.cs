@@ -7,7 +7,7 @@ namespace UntitledRpgLogic.Core.Stats;
 /// <summary>
 ///     Defines a resource cost (e.g., Mana, Stamina, Health) deducted when invoking an ability.
 /// </summary>
-/// <remarks>Owned by <see cref="Ability" />.</remarks>
+/// <remarks>Owned by <see cref="AbilityDefinition" />.</remarks>
 [Table("ability_stat_costs")]
 public record StatCost
 {

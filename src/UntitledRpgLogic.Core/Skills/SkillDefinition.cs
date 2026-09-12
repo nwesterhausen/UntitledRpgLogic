@@ -50,10 +50,10 @@ public record SkillDefinition : IDbEntity<Ulid>
 	/// 	The definition of how leveling is calculated for this skill.
 	/// </summary>
 	[ForeignKey(nameof(LevelingDefinitionId))]
-	public LevelingDefinition? LevelingDefinition { get;init; }
+	public LevelingDefinition? LevelingDefinition { get; init; }
 
 	/// <summary>
 	///     Navigation property for all abilities that belong to this skill discipline.
 	/// </summary>
-	public virtual ICollection<Ability> Abilities { get; } = new List<Ability>();
+	public virtual ICollection<AbilityDefinition> Abilities { get; } = new List<AbilityDefinition>();
 }

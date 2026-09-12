@@ -14,5 +14,5 @@ public record CastingRequirement : RequirementBase
 	///     Navigation property back to the owning ability.
 	/// </summary>
 	[ForeignKey(nameof(AbilityId))]
-	public Ability? Ability { get; init; }
+	public AbilityDefinition? Ability { get; init; }
 }

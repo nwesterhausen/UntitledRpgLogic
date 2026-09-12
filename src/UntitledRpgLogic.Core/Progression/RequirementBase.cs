@@ -16,7 +16,7 @@ public abstract record RequirementBase
 	public int Id { get; init; }
 
 	/// <summary>
-	///     Foreign key of the owning <see cref="Ability" />.
+	///     Foreign key of the owning <see cref="AbilityDefinition" />.
 	/// </summary>
 	public Ulid AbilityId { get; init; }
 
