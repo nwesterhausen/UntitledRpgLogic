@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using UntitledRpgLogic.Core.Common;
 
 namespace UntitledRpgLogic.Core.Abilities.Effects;
@@ -10,11 +11,13 @@ public record BuffEffect : Effect
 	/// <summary>
 	///     Initializes default base values.
 	/// </summary>
+	[SetsRequiredMembers]
 	public BuffEffect() => this.EffectType = EffectType.Buff;
 
 	/// <summary>
 	///     Initializes a new <see cref="Effect" /> with <see cref="EffectType.Buff" />.
 	/// </summary>
+	[SetsRequiredMembers]
 	public BuffEffect(Name name) : base(name, EffectType.Buff)
 	{
 	}

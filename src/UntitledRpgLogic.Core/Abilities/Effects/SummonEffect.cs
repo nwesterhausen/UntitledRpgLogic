@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 using UntitledRpgLogic.Core.Common;
 using UntitledRpgLogic.Core.Entities;
 
@@ -12,11 +13,13 @@ public record SummonEffect : Effect
 	/// <summary>
 	///     Initializes default base values.
 	/// </summary>
+	[SetsRequiredMembers]
 	public SummonEffect() => this.EffectType = EffectType.Summon;
 
 	/// <summary>
 	///     Initializes a new <see cref="Effect" /> with <see cref="EffectType.Summon" />.
 	/// </summary>
+	[SetsRequiredMembers]
 	public SummonEffect(Name name) : base(name, EffectType.Summon)
 	{
 	}

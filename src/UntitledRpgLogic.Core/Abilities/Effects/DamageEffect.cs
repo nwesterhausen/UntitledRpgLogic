@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using UntitledRpgLogic.Core.Common;
 using UntitledRpgLogic.Core.Stats;
 
@@ -11,11 +12,13 @@ public record DamageEffect : Effect
 	/// <summary>
 	///     Initializes default base values.
 	/// </summary>
+	[SetsRequiredMembers]
 	public DamageEffect() => this.EffectType = EffectType.Damage;
 
 	/// <summary>
 	///     Initializes a new <see cref="Effect" /> with <see cref="EffectType.Damage" />.
 	/// </summary>
+	[SetsRequiredMembers]
 	public DamageEffect(Name name) : base(name, EffectType.Damage)
 	{
 	}

@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 using UntitledRpgLogic.Core.Common;
 using UntitledRpgLogic.Core.Data;
 using UntitledRpgLogic.Core.Environment;
@@ -16,17 +17,15 @@ public abstract record Effect : IDbEntity<Ulid>
 	/// <summary>
 	///     Initializes default base values for EF Core materialization.
 	/// </summary>
+	[SetsRequiredMembers]
 	protected Effect()
 	{
-		this.Id = Ulid.NewUlid();
-		this.Name = Name.Empty;
-		this.Description = string.Empty;
-		this.EffectType = EffectType.None;
 	}
 
 	/// <summary>
 	///     Initializes a new instance of the <see cref="Effect" /> record with a designated name and type.
 	/// </summary>
+	[SetsRequiredMembers]
 	protected Effect(Name name, EffectType effectType) : this()
 	{
 		this.Name = name;
@@ -36,18 +35,18 @@ public abstract record Effect : IDbEntity<Ulid>
 	/// <summary>
 	///     The display name of the effect.
 	/// </summary>
-	public required Name Name { get; init; }
+	public required Name Name { get; init; } = Name.Empty;
 
 	/// <summary>
 	///     Descriptive flavor text detailing the effect's mechanics.
 	/// </summary>
 	[MaxLength(1024)]
-	public string Description { get; init; }
+	public string Description { get; init; } = string.Empty;
 
 	/// <summary>
 	///     The classification of this effect, serving as the EF Core TPH discriminator.
 	/// </summary>
-	public EffectType EffectType { get; init; }
+	public EffectType EffectType { get; init; } = EffectType.None;
 
 	/// <summary>
 	///     How long the effect persists in seconds (0 for instantaneous effects).
@@ -79,5 +78,5 @@ public abstract record Effect : IDbEntity<Ulid>
 	/// </summary>
 	[Key]
 	[DatabaseGenerated(DatabaseGeneratedOption.None)]
-	public Ulid Id { get; init; }
+	public Ulid Id { get; init; } = Ulid.NewUlid();
 }

@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 using UntitledRpgLogic.Core.Common;
 using UntitledRpgLogic.Core.Data;
 
@@ -15,6 +16,7 @@ public record ItemDefinition : IDbEntity<Ulid>
 	/// <summary>
 	///     Initializes a new instance of the <see cref="ItemDefinition" /> record with default values (for EF Core).
 	/// </summary>
+	[SetsRequiredMembers]
 	public ItemDefinition()
 	{
 		this.Id = Ulid.NewUlid();
@@ -33,12 +35,14 @@ public record ItemDefinition : IDbEntity<Ulid>
 	///     Initializes a new instance of the <see cref="ItemDefinition" /> record with a designated name.
 	/// </summary>
 	/// <param name="name">The display name of the item template.</param>
+	[SetsRequiredMembers]
 	public ItemDefinition(Name name) : this() => this.Name = name;
 
 	/// <summary>
 	///     Initializes a new instance of the <see cref="ItemDefinition" /> record with a designated name.
 	/// </summary>
 	/// <param name="id">The unique identifier to use for this item definition.</param>
+	[SetsRequiredMembers]
 	public ItemDefinition(Ulid id) : this() => this.Id = id;
 
 	/// <summary>
@@ -46,6 +50,7 @@ public record ItemDefinition : IDbEntity<Ulid>
 	/// </summary>
 	/// <param name="id">The unique identifier to use for this item definition.</param>
 	/// <param name="name">The display name of the item template.</param>
+	[SetsRequiredMembers]
 	public ItemDefinition(Ulid id, Name name) : this()
 	{
 		this.Id = id;

@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 using UntitledRpgLogic.Core.Abilities.Effects;
 using UntitledRpgLogic.Core.Common;
 using UntitledRpgLogic.Core.Data;
@@ -17,15 +18,7 @@ public record AbilityDefinition : IDbEntity<Ulid>
 	/// <summary>
 	///     Initializes a new instance of the <see cref="AbilityDefinition" /> record with default values for EF Core.
 	/// </summary>
-	public AbilityDefinition()
-	{
-		this.Id = Ulid.NewUlid();
-		this.Name = Name.Empty;
-		this.AbilityType = AbilityType.PassiveAbility;
-		this.TargetingType = TargetingType.Self;
-		this.NumberOfTargets = 1;
-		this.CastTime = 0f;
-	}
+	public AbilityDefinition() { }
 
 	/// <summary>
 	///     Initializes a new instance of the <see cref="AbilityDefinition" /> record with a designated name.
@@ -34,19 +27,32 @@ public record AbilityDefinition : IDbEntity<Ulid>
 	public AbilityDefinition(Name name) : this() => this.Name = name;
 
 	/// <summary>
+	///     Initializes a new instance of the <see cref="AbilityDefinition" /> record with a designated name and skill
+	///     discipline.
+	/// </summary>
+	/// <param name="name">The display name of the ability.</param>
+	/// <param name="skillDisciplineId">The Id of the skill (by definition) that this ability belongs to.</param>
+	[SetsRequiredMembers]
+	public AbilityDefinition(Name name, Ulid skillDisciplineId) : this()
+	{
+		this.Name = name;
+		this.SkillDisciplineId = skillDisciplineId;
+	}
+
+	/// <summary>
 	///     The display name of the ability.
 	/// </summary>
-	public required Name Name { get; init; }
+	public required Name Name { get; init; } = Name.Empty;
 
 	/// <summary>
 	///     The broad classification (Active, Passive, Spell, Channel).
 	/// </summary>
-	public AbilityType AbilityType { get; init; }
+	public AbilityType AbilityType { get; init; } = AbilityType.None;
 
 	/// <summary>
 	///     How the ability is targeted or delivered (Self, SingleTarget, AreaOfEffect, Projectile).
 	/// </summary>
-	public TargetingType TargetingType { get; init; }
+	public TargetingType TargetingType { get; init; } = TargetingType.None;
 
 	/// <summary>
 	///     Indicates whether this ability can affect the caster.
@@ -62,7 +68,7 @@ public record AbilityDefinition : IDbEntity<Ulid>
 	///     The number of targets this ability can simultaneously strike or select.
 	/// </summary>
 	[Range(1, int.MaxValue)]
-	public int NumberOfTargets { get; init; }
+	public int NumberOfTargets { get; init; } = 1;
 
 	/// <summary>
 	///     The activation/invocation time in seconds (0 for instant cast).
@@ -107,17 +113,17 @@ public record AbilityDefinition : IDbEntity<Ulid>
 	/// <summary>
 	///     Effects applied upon successful activation.
 	/// </summary>
-	public virtual ICollection<Effect> ActiveEffects { get; } = new List<Effect>();
+	public ICollection<Effect> ActiveEffects { get; } = new List<Effect>();
 
 	/// <summary>
 	///     Effects applied when activation fails or backfires.
 	/// </summary>
-	public virtual ICollection<Effect> FailureEffects { get; } = new List<Effect>();
+	public ICollection<Effect> FailureEffects { get; } = new List<Effect>();
 
 	/// <summary>
 	///     The unique identifier for the ability (can be supplied from external TOML config).
 	/// </summary>
 	[Key]
 	[DatabaseGenerated(DatabaseGeneratedOption.None)]
-	public Ulid Id { get; init; }
+	public Ulid Id { get; init; } = Ulid.NewUlid();
 }

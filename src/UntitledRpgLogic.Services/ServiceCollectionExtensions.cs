@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using UntitledRpgLogic.Core.Abilities.Effects;
 using UntitledRpgLogic.Core.Economy;
 using UntitledRpgLogic.Core.Items;
 using UntitledRpgLogic.Core.Stats;
@@ -20,6 +21,7 @@ public static class ServiceCollectionExtensions
 		// Pure domain services (Stateless, can be Singleton or Transient)
 		services.AddSingleton<IDamageCalculator, DamageCalculator>();
 		services.AddSingleton<IItemFactoryService, ItemFactoryService>();
+		services.AddSingleton<IEffectApplicationService, EffectApplicationService>();
 
 		// Domain storage services (Operate directly on hydrated records)
 		services.AddScoped<IItemStorageService, ItemStorageService>();

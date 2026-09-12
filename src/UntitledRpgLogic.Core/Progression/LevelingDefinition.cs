@@ -57,5 +57,5 @@ public record LevelingDefinition : IDbEntity<Ulid>
 	/// </summary>
 	[Key]
 	[DatabaseGenerated(DatabaseGeneratedOption.None)]
-	public Ulid Id { get; init; }
+	public Ulid Id { get; init; } = Ulid.NewUlid();
 }

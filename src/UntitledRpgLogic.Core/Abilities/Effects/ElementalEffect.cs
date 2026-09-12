@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using UntitledRpgLogic.Core.Common;
 
 namespace UntitledRpgLogic.Core.Abilities.Effects;
@@ -11,11 +12,13 @@ public record ElementalEffect : Effect
 	/// <summary>
 	///     Initializes default base values.
 	/// </summary>
+	[SetsRequiredMembers]
 	public ElementalEffect() => this.EffectType = EffectType.Elemental;
 
 	/// <summary>
 	///     Initializes a new <see cref="Effect" /> with <see cref="EffectType.Elemental" />.
 	/// </summary>
+	[SetsRequiredMembers]
 	public ElementalEffect(Name name) : base(name, EffectType.Elemental)
 	{
 	}

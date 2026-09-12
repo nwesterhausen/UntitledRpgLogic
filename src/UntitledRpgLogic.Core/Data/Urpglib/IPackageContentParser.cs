@@ -1,16 +1,18 @@
+using System.Formats.Tar;
+
 namespace UntitledRpgLogic.Core.Data.Urpglib;
 
 /// <summary>
-///     Contract for service which parses the payload of a `.urpglib` file for its content.
+///     Contract for service which parses the payload of a `.urpglib` package for its content definitions.
 /// </summary>
 public interface IPackageContentParser
 {
 	/// <summary>
-	///     Parses the payload stream of a `.urpglib` file.
+	///     Parses the TAR payload of a `.urpglib` package.
 	/// </summary>
-	/// <param name="payloadStream">Readable stream containing the raw .urpglib payload.</param>
+	/// <param name="tarReader">Active TarReader positioned over the package payload.</param>
 	/// <param name="cancellationToken">A token to monitor for cancellation requests.</param>
-	/// <returns>Parsed content of the payload</returns>
-	public Task<ExtractedPackageContent> ParsePayloadAsync(Stream payloadStream,
+	/// <returns>Extracted definition collections ready for persistence.</returns>
+	public Task<ExtractedPackageContent> ParsePayloadAsync(TarReader tarReader,
 		CancellationToken cancellationToken = default);
 }

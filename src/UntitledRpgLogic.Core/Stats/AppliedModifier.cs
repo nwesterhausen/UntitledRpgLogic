@@ -17,7 +17,6 @@ public record AppliedModifier : IDbEntity<Ulid>
 	/// </summary>
 	public AppliedModifier()
 	{
-		this.Id = Ulid.NewUlid();
 		this.ModifierDefinitionId = Ulid.Empty;
 		this.EntityId = Ulid.Empty;
 		this.Stacks = 1;
@@ -78,5 +77,5 @@ public record AppliedModifier : IDbEntity<Ulid>
 	/// </summary>
 	[Key]
 	[DatabaseGenerated(DatabaseGeneratedOption.None)]
-	public Ulid Id { get; init; }
+	public Ulid Id { get; init; } = Ulid.NewUlid();
 }

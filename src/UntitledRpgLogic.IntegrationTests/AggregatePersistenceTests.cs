@@ -51,7 +51,8 @@ public class AggregatePersistenceTests
 
 				var skillDef = new SkillDefinition
 				{
-					Id = skillDefId, Name = new Name("Pyromancy", "Pyromancies", "Pyromantic")
+					Id = skillDefId,
+					Name = new Name("Pyromancy", "Pyromancies", "Pyromantic")
 				};
 				await skillRepo.AddAsync(skillDef).ConfigureAwait(false);
 
@@ -74,8 +75,7 @@ public class AggregatePersistenceTests
 				var loadedEntity = await entityRepo.GetByIdAsync(
 					entityId,
 					q => q.Include(e => e.Skills)
-						.ThenInclude(s => s.InstancedSkill),
-					default).ConfigureAwait(false);
+						.ThenInclude(s => s.InstancedSkill)).ConfigureAwait(false);
 
 				Assert.IsNotNull(loadedEntity);
 				Assert.AreEqual("Wolf", loadedEntity.Name.Singular);

@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 using UntitledRpgLogic.Core.Common;
 using UntitledRpgLogic.Core.Data;
 using UntitledRpgLogic.Core.Stats;
@@ -16,6 +17,7 @@ public record EntityDefinition : IDbEntity<Ulid>
 	/// <summary>
 	///     Initializes a new instance of the <see cref="EntityDefinition" /> record with default values for EF Core.
 	/// </summary>
+	[SetsRequiredMembers]
 	public EntityDefinition()
 	{
 		this.Id = Ulid.NewUlid();
@@ -28,6 +30,7 @@ public record EntityDefinition : IDbEntity<Ulid>
 	///     Initializes a new instance of the <see cref="EntityDefinition" /> record with a designated name.
 	/// </summary>
 	/// <param name="name">The display name of the entity archetype.</param>
+	[SetsRequiredMembers]
 	public EntityDefinition(Name name) : this() => this.Name = name;
 
 	/// <summary>

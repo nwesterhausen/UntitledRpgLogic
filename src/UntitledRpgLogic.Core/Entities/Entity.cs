@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 using UntitledRpgLogic.Core.Common;
 using UntitledRpgLogic.Core.Data;
 using UntitledRpgLogic.Core.Items;
@@ -17,6 +18,7 @@ public record Entity : IDbEntity<Ulid>
 	/// <summary>
 	///     Initializes a new instance of the <see cref="Entity" /> record for EF Core materialization.
 	/// </summary>
+	[SetsRequiredMembers]
 	public Entity()
 	{
 		this.Id = Ulid.NewUlid();
@@ -27,12 +29,14 @@ public record Entity : IDbEntity<Ulid>
 	///     Initializes a new instance of the <see cref="Entity" /> record with an explicit identifier.
 	/// </summary>
 	/// <param name="id">The unique identifier of the entity.</param>
+	[SetsRequiredMembers]
 	public Entity(Ulid id) : this() => this.Id = id;
 
 	/// <summary>
 	///     Initializes a new instance of the <see cref="Entity" /> record with a designated name.
 	/// </summary>
 	/// <param name="name">The display name of the entity.</param>
+	[SetsRequiredMembers]
 	public Entity(Name name) : this() => this.Name = name;
 
 	/// <summary>
@@ -50,7 +54,7 @@ public record Entity : IDbEntity<Ulid>
 	///     Navigation property to the archetype definition.
 	/// </summary>
 	[ForeignKey(nameof(DefinitionId))]
-	public virtual EntityDefinition? Definition { get; init; }
+	public EntityDefinition? Definition { get; init; }
 
 	/// <summary>
 	///     The map and world coordinates where this entity is actively spawned.
@@ -62,32 +66,32 @@ public record Entity : IDbEntity<Ulid>
 	///     Navigation property to the map where the entity is located.
 	/// </summary>
 	[ForeignKey("Position_MapId")]
-	public virtual MapDefinition? CurrentMap { get; init; }
+	public MapDefinition? CurrentMap { get; init; }
 
 	/// <summary>
 	///     Navigation property to the entity's inventory container.
 	/// </summary>
-	public virtual Inventory? Inventory { get; set; }
+	public Inventory? Inventory { get; set; }
 
 	/// <summary>
 	///     Join navigations linking the entity to its learned skill instances.
 	/// </summary>
-	public virtual ICollection<EntitySkills> Skills { get; init; } = [];
+	public ICollection<EntitySkills> Skills { get; init; } = [];
 
 	/// <summary>
 	///     Join navigations linking the entity to its active stat instances.
 	/// </summary>
-	public virtual ICollection<EntityStats> Stats { get; init; } = [];
+	public ICollection<EntityStats> Stats { get; init; } = [];
 
 	/// <summary>
 	///     Collection of ongoing status modifiers actively attached to this entity.
 	/// </summary>
-	public virtual ICollection<AppliedModifier> AppliedModifiers { get; init; } = [];
+	public ICollection<AppliedModifier> AppliedModifiers { get; init; } = [];
 
 	/// <summary>
 	///     Owned collection of stat adjustments applied to this entity.
 	/// </summary>
-	public virtual ICollection<AffectedStat> AffectedStats { get; init; } = [];
+	public ICollection<AffectedStat> AffectedStats { get; init; } = [];
 
 	/// <summary>
 	///     The unique primary key for the entity. Can be loaded statically from config archives or generated.

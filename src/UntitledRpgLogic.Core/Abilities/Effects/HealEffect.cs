@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using UntitledRpgLogic.Core.Common;
 
 namespace UntitledRpgLogic.Core.Abilities.Effects;
@@ -10,11 +11,13 @@ public record HealEffect : Effect
 	/// <summary>
 	///     Initializes default base values.
 	/// </summary>
+	[SetsRequiredMembers]
 	public HealEffect() => this.EffectType = EffectType.Heal;
 
 	/// <summary>
 	///     Initializes a new <see cref="Effect" /> with <see cref="EffectType.Heal" />.
 	/// </summary>
+	[SetsRequiredMembers]
 	public HealEffect(Name name) : base(name, EffectType.Heal)
 	{
 	}

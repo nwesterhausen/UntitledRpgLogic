@@ -1,6 +1,6 @@
-namespace UntitledRpgLogic.Core.World;
-
 using UntitledRpgLogic.Core.Entities;
+
+namespace UntitledRpgLogic.Core.World;
 
 /// <summary>
 ///     Pure calculation service converting continuous world coordinates into chunk indices and local tile coordinates.

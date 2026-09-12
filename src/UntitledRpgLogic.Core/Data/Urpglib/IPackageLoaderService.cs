@@ -1,5 +1,3 @@
-using UntitledRpgLogic.LibraryFile;
-
 namespace UntitledRpgLogic.Core.Data.Urpglib;
 
 /// <summary>
@@ -15,7 +13,8 @@ public interface IPackageLoaderService
 	/// <param name="filePath">Absolute or relative path to the .urpglib archive.</param>
 	/// <param name="cancellationToken">A token to monitor for cancellation requests.</param>
 	/// <returns>A summary of the definitions loaded and persisted.</returns>
-	public Task<PackageManifest> IngestPackageAsync(string filePath, CancellationToken cancellationToken = default);
+	public Task<PackageIngestionResult> IngestPackageAsync(string filePath,
+		CancellationToken cancellationToken = default);
 
 	/// <summary>
 	///     Streams and ingests a .urpglib package from an arbitrary binary stream.
@@ -23,6 +22,6 @@ public interface IPackageLoaderService
 	/// <param name="packageStream">Readable stream containing the raw .urpglib data.</param>
 	/// <param name="cancellationToken">A token to monitor for cancellation requests.</param>
 	/// <returns>A summary of the definitions loaded and persisted.</returns>
-	public Task<PackageManifest>
-		IngestPackageAsync(Stream packageStream, CancellationToken cancellationToken = default);
+	public Task<PackageIngestionResult> IngestPackageAsync(Stream packageStream,
+		CancellationToken cancellationToken = default);
 }

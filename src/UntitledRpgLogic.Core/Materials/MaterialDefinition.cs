@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 using UntitledRpgLogic.Core.Common;
 using UntitledRpgLogic.Core.Data;
 
@@ -15,6 +16,7 @@ public record MaterialDefinition : IDbEntity<Ulid>
 	/// <summary>
 	///     Initializes a new instance of the <see cref="MaterialDefinition" /> record with default values.
 	/// </summary>
+	[SetsRequiredMembers]
 	public MaterialDefinition()
 	{
 		this.Id = Ulid.NewUlid();
@@ -28,6 +30,7 @@ public record MaterialDefinition : IDbEntity<Ulid>
 	///     Initializes a new instance of the <see cref="MaterialDefinition" /> record with the specified name.
 	/// </summary>
 	/// <param name="name">The name of the material.</param>
+	[SetsRequiredMembers]
 	public MaterialDefinition(Name name) : this() => this.Name = name;
 
 	/// <summary>

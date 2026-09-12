@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 using UntitledRpgLogic.Core.Common;
 using UntitledRpgLogic.Core.Data;
 
@@ -15,6 +16,7 @@ public record Element : IDbEntity<Ulid>
 	/// <summary>
 	///     Initializes a new instance of the <see cref="Element" /> record with default values for EF Core.
 	/// </summary>
+	[SetsRequiredMembers]
 	public Element()
 	{
 		this.Id = Ulid.NewUlid();
@@ -26,6 +28,7 @@ public record Element : IDbEntity<Ulid>
 	///     Initializes a new instance of the <see cref="Element" /> record with a designated name.
 	/// </summary>
 	/// <param name="name">The name of the element.</param>
+	[SetsRequiredMembers]
 	public Element(Name name) : this() => this.Name = name;
 
 	/// <summary>
@@ -33,6 +36,7 @@ public record Element : IDbEntity<Ulid>
 	/// </summary>
 	/// <param name="name">The name of the element.</param>
 	/// <param name="description">Flavor text detailing the element's planar origin or behavior.</param>
+	[SetsRequiredMembers]
 	public Element(Name name, string description) : this(name) => this.Description = description;
 
 	/// <summary>

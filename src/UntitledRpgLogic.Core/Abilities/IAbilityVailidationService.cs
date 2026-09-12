@@ -1,8 +1,6 @@
-using System;
+using UntitledRpgLogic.Core.Entities;
 
 namespace UntitledRpgLogic.Core.Abilities;
-
-using UntitledRpgLogic.Core.Entities;
 
 /// <summary>
 ///     Pure domain service verifying stat resources, learning prerequisites, and casting eligibility.
