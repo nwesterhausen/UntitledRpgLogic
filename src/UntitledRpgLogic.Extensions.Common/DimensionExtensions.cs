@@ -83,9 +83,85 @@ public static class HasDimensionsExtensions
 	{
 		ArgumentNullException.ThrowIfNull(dimensions, nameof(dimensions));
 
-		var length = dimensions.Depth.Convert(dimensions.DimensionScale, targetScale);
-		var width = dimensions.Width.Convert(dimensions.DimensionScale, targetScale);
-		var height = dimensions.Height.Convert(dimensions.DimensionScale, targetScale);
-		return length * width * height;
+		var clonedDimensions = dimensions with { };
+		clonedDimensions.ChangeScale(targetScale);
+
+		return clonedDimensions.CalculateVolume();
 	}
+
+	/// <summary>
+	///     Calculates the volume of the object based on its shape and dimensions.
+	/// </summary>
+	/// <returns>Volume in cubic units of the current <see cref="DimensionScale" />, or 0f if shape is unknown.</returns>
+	public static float CalculateVolume(this Dimensions dimensions)
+	{
+		ArgumentNullException.ThrowIfNull(dimensions, nameof(dimensions));
+
+		return dimensions.ShapeType switch
+		{
+			// Volume of a general ellipsoid is (1/6) * pi * W * H * D
+			ShapeType.Sphere or ShapeType.Spheroid or ShapeType.Ellipsoid =>
+				1f / 6f * MathF.PI * dimensions.Width * dimensions.Height * dimensions.Depth,
+
+			ShapeType.Cylinder => MathF.PI * MathF.Pow(dimensions.Width / 2f, 2) * dimensions.Height,
+
+			ShapeType.Cone => 1f / 3f * MathF.PI * MathF.Pow(dimensions.Width / 2f, 2) * dimensions.Height,
+
+			// Volume of a pyramid: (1/3) * base_area * h. Assuming rectangular base.
+			ShapeType.Pyramid => 1f / 3f * (dimensions.Width * dimensions.Depth) * dimensions.Height,
+
+			// Assuming Cube means a rectangular prism. If it's a literal cube, use MathF.Pow(dimensions.Width, 3).
+			ShapeType.Cube or ShapeType.RectangularPrism => dimensions.Width * dimensions.Height * dimensions.Depth,
+
+			// Assuming Width is diameter of base 1 and Depth is diameter of base 2.
+			ShapeType.ConicalFrustum => 1f / 3f * MathF.PI * dimensions.Height *
+										(MathF.Pow(dimensions.Width / 2f, 2) +
+										 (dimensions.Width / 2f * (dimensions.Depth / 2f)) +
+										 MathF.Pow(dimensions.Depth / 2f, 2)),
+
+			_ => 0f // A discard pattern handles any unlisted enum members.
+		};
+	}
+
+	/// <summary>
+	///     Converts the dimensions from its current scale to the specified target scale.
+	/// </summary>
+	/// <param name="dimensions">The dimensions to change the scale of.</param>
+	/// <param name="targetScale">The dimension scale to convert to.</param>
+	public static void ChangeScale(this Dimensions dimensions, DimensionScale targetScale)
+	{
+		ArgumentNullException.ThrowIfNull(dimensions, nameof(dimensions));
+
+		if (dimensions.DimensionScale == targetScale)
+		{
+			return;
+		}
+
+		var factorFromCurrentToMeters = dimensions.DimensionScale.GetMetersPerUnit();
+		var factorFromMetersToTarget = 1f / targetScale.GetMetersPerUnit();
+		var conversionFactor = factorFromCurrentToMeters * factorFromMetersToTarget;
+
+		dimensions.Width *= conversionFactor;
+		dimensions.Height *= conversionFactor;
+		dimensions.Depth *= conversionFactor;
+
+		// IMPORTANT: Update the scale property to reflect the new unit.
+		dimensions.DimensionScale = targetScale;
+	}
+
+	/// <summary>
+	///     Helper to get the conversion factor from a given unit to a canonical unit (meters).
+	/// </summary>
+	private static float GetMetersPerUnit(this DimensionScale scale) => scale switch
+	{
+		DimensionScale.Mm => 0.001f,
+		DimensionScale.Cm => 0.01f,
+		DimensionScale.M => 1f,
+		DimensionScale.Km => 1000f,
+		// By omitting the `_` discard pattern, the compiler will produce a warning (CS8509)
+		// if a new member is added to DimensionScale and not handled here.
+		// This provides the compile-time safety you were asking about.
+		// For absolute runtime safety against invalid casted enum values, you can add:
+		_ => throw new ArgumentOutOfRangeException(nameof(scale), $"Unsupported dimension scale: {scale}")
+	};
 }

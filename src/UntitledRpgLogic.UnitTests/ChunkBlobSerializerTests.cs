@@ -1,7 +1,8 @@
 using System.Runtime.InteropServices;
 using UntitledRpgLogic.Core.World;
+using UntitledRpgLogic.Extensions.Common;
 
-namespace UntitledRpgLogic.UnitTests.Core;
+namespace UntitledRpgLogic.UnitTests;
 
 [TestClass]
 public class ChunkBlobSerializerTests
@@ -12,13 +13,13 @@ public class ChunkBlobSerializerTests
 		var structSize = Marshal.SizeOf<Tile2D>();
 
 		Assert.AreEqual(8, structSize, "Tile2D must be packed to exactly 8 bytes.");
-		Assert.AreEqual(2048, ChunkBlobSerializer.RawByteSize, "16x16 chunk raw byte footprint must equal 2,048 bytes.");
+		Assert.AreEqual(2048, ChunkBlobExtensions.RawByteSize, "16x16 chunk raw byte footprint must equal 2,048 bytes.");
 	}
 
 	[TestMethod]
 	public void SerializeAndDecompress_UniformChunk_RestoresIdenticalData()
 	{
-		var source = new Tile2D[ChunkBlobSerializer.TileCount];
+		var source = new Tile2D[ChunkBlobExtensions.TileCount];
 		for (var i = 0; i < source.Length; i++)
 		{
 			source[i] = new Tile2D
@@ -32,12 +33,12 @@ public class ChunkBlobSerializerTests
 			};
 		}
 
-		var compressed = ChunkBlobSerializer.SerializeAndCompress(source);
+		var compressed = source.CompressTiles();
 
-		Assert.IsLessThan(ChunkBlobSerializer.RawByteSize / 4, compressed.Length, "Brotli should compress uniform tiles to a fraction of raw size.");
+		Assert.IsLessThan(ChunkBlobExtensions.RawByteSize / 4, compressed.Length, "Brotli should compress uniform tiles to a fraction of raw size.");
 
-		var destination = new Tile2D[ChunkBlobSerializer.TileCount];
-		ChunkBlobSerializer.DecompressInto(compressed, destination);
+		var destination = new Tile2D[ChunkBlobExtensions.TileCount];
+		compressed.DecompressTilesInto(destination);
 
 		for (var i = 0; i < source.Length; i++)
 		{
@@ -53,7 +54,7 @@ public class ChunkBlobSerializerTests
 	[TestMethod]
 	public void SerializeAndDecompress_HighEntropyHeterogeneousGrid_PreservesAllTileFields()
 	{
-		var source = new Tile2D[ChunkBlobSerializer.TileCount];
+		var source = new Tile2D[ChunkBlobExtensions.TileCount];
 		for (var i = 0; i < source.Length; i++)
 		{
 			source[i] = new Tile2D
@@ -67,12 +68,12 @@ public class ChunkBlobSerializerTests
 			};
 		}
 
-		var compressed = ChunkBlobSerializer.SerializeAndCompress(source);
-		var destination = new Tile2D[ChunkBlobSerializer.TileCount];
+		var compressed = source.CompressTiles();
+		var destination = new Tile2D[ChunkBlobExtensions.TileCount];
 
-		ChunkBlobSerializer.DecompressInto(compressed, destination);
+		compressed.DecompressTilesInto(destination);
 
-		CollectionAssert.AreEqual(source, destination);
+		Assert.AreSequenceEqual(source, destination);
 	}
 
 	[TestMethod]
@@ -81,31 +82,31 @@ public class ChunkBlobSerializerTests
 		var invalidSpan = new Tile2D[128];
 
 		Assert.Throws<ArgumentException>(() =>
-			ChunkBlobSerializer.SerializeAndCompress(invalidSpan));
+			invalidSpan.CompressTiles());
 	}
 
 	[TestMethod]
 	public void Decompress_MismatchedDestinationLength_ThrowsArgumentException()
 	{
-		var validTiles = new Tile2D[ChunkBlobSerializer.TileCount];
-		var compressed = ChunkBlobSerializer.SerializeAndCompress(validTiles);
+		var validTiles = new Tile2D[ChunkBlobExtensions.TileCount];
+		var compressed = validTiles.CompressTiles();
 
 		var invalidDestination = new Tile2D[100];
 
 		Assert.Throws<ArgumentException>(() =>
-			ChunkBlobSerializer.DecompressInto(compressed, invalidDestination));
+			compressed.DecompressTilesInto(invalidDestination));
 	}
 
 	[TestMethod]
 	public void Decompress_TruncatedStream_ThrowsInvalidDataException()
 	{
-		var validTiles = new Tile2D[ChunkBlobSerializer.TileCount];
-		var compressed = ChunkBlobSerializer.SerializeAndCompress(validTiles);
+		var validTiles = new Tile2D[ChunkBlobExtensions.TileCount];
+		var compressed = validTiles.CompressTiles();
 
 		var truncated = compressed.AsSpan(0, compressed.Length / 2).ToArray();
-		var destination = new Tile2D[ChunkBlobSerializer.TileCount];
+		var destination = new Tile2D[ChunkBlobExtensions.TileCount];
 
 		Assert.Throws<InvalidDataException>(() =>
-			ChunkBlobSerializer.DecompressInto(truncated, destination));
+			truncated.DecompressTilesInto(destination));
 	}
 }
