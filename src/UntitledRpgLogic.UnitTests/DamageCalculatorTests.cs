@@ -24,7 +24,7 @@ public class DamageCalculatorTests
 	public void CalculateMitigatedDamage_WithResistanceAndMitigation_ReducesCorrectly()
 	{
 		// 100 raw, 25% resist (75), minus 10 flat = 65
-		var damage = this._calculator.CalculateMitigatedDamage(rawDamage: 100, resistancePercent: 0.25f, flatMitigation: 10);
+		var damage = this._calculator.CalculateMitigatedDamage(100, 0.25f, 10);
 
 		Assert.AreEqual(65, damage);
 	}
@@ -32,7 +32,7 @@ public class DamageCalculatorTests
 	[TestMethod]
 	public void CalculateMitigatedDamage_MitigationExceedsDamage_FloorsAtZero()
 	{
-		var damage = this._calculator.CalculateMitigatedDamage(rawDamage: 10, resistancePercent: 0.50f, flatMitigation: 20);
+		var damage = this._calculator.CalculateMitigatedDamage(10, 0.50f, 20);
 
 		Assert.AreEqual(0, damage);
 	}
@@ -40,12 +40,11 @@ public class DamageCalculatorTests
 	[TestMethod]
 	public void CalculatePointDamage_NullArguments_ThrowsArgumentNullException()
 	{
-		Assert.Throws<ArgumentNullException>(
-			() => this._calculator.CalculatePointDamage(null!, new Stat()));
+		Assert.Throws<ArgumentNullException>(() => this._calculator.CalculatePointDamage(null!, new Stat()));
 		Assert.Throws<ArgumentNullException>(() => this._calculator.CalculatePointDamage(new DamageOptions(), null!));
 	}
-	[
 
+	[
 		TestMethod]
 	public void CalculatePointDamage_FlatDamageOnly_ReturnsExactAmount()
 	{
@@ -73,16 +72,10 @@ public class DamageCalculatorTests
 	{
 		var statDef = new StatDefinition(new Name("Health"))
 		{
-			MinValue = 0,
-			MaxValue = 500,
-			Variation = StatVariation.Major
+			MinValue = 0, MaxValue = 500, Variation = StatVariation.Major
 		};
 
-		var stat = new Stat
-		{
-			Definition = statDef,
-			ApparentValue = 150
-		};
+		var stat = new Stat { Definition = statDef, ApparentValue = 150 };
 
 		var options = new DamageOptions { PercentageDamageOfMax = 0.10f }; // 10% of 500 = 50
 
@@ -96,22 +89,16 @@ public class DamageCalculatorTests
 	{
 		var statDef = new StatDefinition(new Name("Health"))
 		{
-			MinValue = 0,
-			MaxValue = 1000,
-			Variation = StatVariation.Major
+			MinValue = 0, MaxValue = 1000, Variation = StatVariation.Major
 		};
 
-		var stat = new Stat
-		{
-			Definition = statDef,
-			ApparentValue = 500
-		};
+		var stat = new Stat { Definition = statDef, ApparentValue = 500 };
 
 		var options = new DamageOptions
 		{
-			FlatDamage = 50,                  // 50
-			PercentageDamage = 0.10f,         // 10% of 500 = 50
-			PercentageDamageOfMax = 0.05f     // 5% of 1000 = 50
+			FlatDamage = 50, // 50
+			PercentageDamage = 0.10f, // 10% of 500 = 50
+			PercentageDamageOfMax = 0.05f // 5% of 1000 = 50
 		};
 
 		var damage = this._calculator.CalculatePointDamage(options, stat);
@@ -122,7 +109,7 @@ public class DamageCalculatorTests
 	[TestMethod]
 	public void CalculateMitigatedDamage_TotalImmunity_ReturnsZero()
 	{
-		var finalDamage = this._calculator.CalculateMitigatedDamage(250, resistancePercent: 1.0f, flatMitigation: 0);
+		var finalDamage = this._calculator.CalculateMitigatedDamage(250, 1.0f, 0);
 
 		Assert.AreEqual(0, finalDamage);
 	}
@@ -130,7 +117,7 @@ public class DamageCalculatorTests
 	[TestMethod]
 	public void CalculateMitigatedDamage_NegativeRawDamage_ReturnsZero()
 	{
-		var finalDamage = this._calculator.CalculateMitigatedDamage(-50, resistancePercent: 0.2f, flatMitigation: 5);
+		var finalDamage = this._calculator.CalculateMitigatedDamage(-50, 0.2f, 5);
 
 		Assert.AreEqual(0, finalDamage);
 	}

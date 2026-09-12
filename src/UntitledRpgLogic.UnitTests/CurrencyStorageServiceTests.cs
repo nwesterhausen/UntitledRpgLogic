@@ -7,8 +7,9 @@ namespace UntitledRpgLogic.UnitTests;
 [TestClass]
 public class CurrencyStorageServiceTests
 {
-	private readonly CurrencyStorageService currencyService = new CurrencyStorageService(new ItemStorageService());
-	private readonly ItemDefinition goldCoinDef = new ItemDefinition
+	private readonly CurrencyStorageService currencyService = new(new ItemStorageService());
+
+	private readonly ItemDefinition goldCoinDef = new()
 	{
 		Id = Ulid.NewUlid(),
 		Name = new Name("Gold Coin"),
@@ -17,7 +18,8 @@ public class CurrencyStorageServiceTests
 		BaseValue = 100,
 		MaxStackSize = 50
 	};
-	private readonly ItemDefinition silverCoinDef = new ItemDefinition
+
+	private readonly ItemDefinition silverCoinDef = new()
 	{
 		Id = Ulid.NewUlid(),
 		Name = new Name("Silver Coin"),
@@ -60,8 +62,7 @@ public class CurrencyStorageServiceTests
 			Capacity = 5,
 			Filter = new InventoryFilter
 			{
-				IsAllowList = true,
-				ItemSubtypes = [ItemSubtype.CutGemstone, ItemSubtype.RawGemstone]
+				IsAllowList = true, ItemSubtypes = [ItemSubtype.CutGemstone, ItemSubtype.RawGemstone]
 			}
 		};
 
@@ -76,7 +77,7 @@ public class CurrencyStorageServiceTests
 	{
 		var pouch = new Inventory { Capacity = 5 };
 
-		this.currencyService.TryDeposit(pouch, this.goldCoinDef, 2);   // 2 * 100 = 200
+		this.currencyService.TryDeposit(pouch, this.goldCoinDef, 2); // 2 * 100 = 200
 		this.currencyService.TryDeposit(pouch, this.silverCoinDef, 5); // 5 * 10  = 50
 
 		var total = this.currencyService.GetTotalValue(pouch);

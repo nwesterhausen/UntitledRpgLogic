@@ -1,13 +1,12 @@
-
 using UntitledRpgLogic.Core.Items;
 
 namespace UntitledRpgLogic.Infrastructure.Data.LookupEntities;
+
 /// <summary>
-/// Provides a reference table in the databse for the <see cref="ItemSubtype" /> enum.
+///     Provides a reference table in the databse for the <see cref="ItemSubtype" /> enum.
 /// </summary>
 public class ItemSubtypeLookup
 {
-
 	///<summary>The specific enum for this entry</summary>
 	public ItemSubtype Id { get; set; }
 

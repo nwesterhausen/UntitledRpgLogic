@@ -1,13 +1,13 @@
-
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using UntitledRpgLogic.Core.Materials;
 using UntitledRpgLogic.Infrastructure.Data.LookupEntities;
 
 namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
-///<summary>
-/// Defines the <see cref="FractureType" /> lookup table
-///</summary>
+
+/// <summary>
+///     Defines the <see cref="FractureType" /> lookup table
+/// </summary>
 public sealed class FractureTypeLookupConfiguration : IEntityTypeConfiguration<FractureTypeLookup>
 {
 	///<inheritdoc />
@@ -26,11 +26,7 @@ public sealed class FractureTypeLookupConfiguration : IEntityTypeConfiguration<F
 
 		// Seed with enum data
 		var seedData = Enum.GetValues<FractureType>()
-			.Select(e => new FractureTypeLookup
-			{
-				Id = e,
-				Name = e.ToString()
-			});
+			.Select(e => new FractureTypeLookup { Id = e, Name = e.ToString() });
 		_ = builder.HasData(seedData);
 	}
 }

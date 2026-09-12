@@ -7,22 +7,24 @@ namespace UntitledRpgLogic.UnitTests;
 [TestClass]
 public class ItemStorageServiceTests
 {
-	private readonly ItemStorageService service = new();
-	private readonly ItemDefinition stackableHerb = new()
-	{
-		Id = Ulid.NewUlid(),
-		Name = new Name("Kingsbloom"),
-		MaxStackSize = 10,
-		ItemType = ItemType.Consumable,
-		ItemSubtype = ItemSubtype.Herb,
-	};
 	private readonly ItemDefinition nonStackableSword = new()
 	{
 		Id = Ulid.NewUlid(),
 		Name = new Name("Broadsword"),
 		MaxStackSize = 1,
 		ItemType = ItemType.Weapon,
-		ItemSubtype = ItemSubtype.Broadsword,
+		ItemSubtype = ItemSubtype.Broadsword
+	};
+
+	private readonly ItemStorageService service = new();
+
+	private readonly ItemDefinition stackableHerb = new()
+	{
+		Id = Ulid.NewUlid(),
+		Name = new Name("Kingsbloom"),
+		MaxStackSize = 10,
+		ItemType = ItemType.Consumable,
+		ItemSubtype = ItemSubtype.Herb
 	};
 
 	[TestMethod]
@@ -50,17 +52,11 @@ public class ItemStorageServiceTests
 		var inventory = new Inventory { Capacity = 2 };
 		var herb1 = new Item
 		{
-			Id = Ulid.NewUlid(),
-			DefinitionId = this.stackableHerb.Id,
-			Definition = this.stackableHerb,
-			Quantity = 3
+			Id = Ulid.NewUlid(), DefinitionId = this.stackableHerb.Id, Definition = this.stackableHerb, Quantity = 3
 		};
 		var herb2 = new Item
 		{
-			Id = Ulid.NewUlid(),
-			DefinitionId = this.stackableHerb.Id,
-			Definition = this.stackableHerb,
-			Quantity = 4
+			Id = Ulid.NewUlid(), DefinitionId = this.stackableHerb.Id, Definition = this.stackableHerb, Quantity = 4
 		};
 
 		this.service.TryStoreItem(inventory, herb1);
@@ -104,10 +100,7 @@ public class ItemStorageServiceTests
 		var originalId = Ulid.NewUlid();
 		var herbStack = new Item
 		{
-			Id = originalId,
-			DefinitionId = this.stackableHerb.Id,
-			Definition = this.stackableHerb,
-			Quantity = 8
+			Id = originalId, DefinitionId = this.stackableHerb.Id, Definition = this.stackableHerb, Quantity = 8
 		};
 		inventory.Items.Add(herbStack);
 
@@ -151,10 +144,7 @@ public class ItemStorageServiceTests
 
 		source.Items.Add(new Item
 		{
-			Id = herbId,
-			DefinitionId = this.stackableHerb.Id,
-			Definition = this.stackableHerb,
-			Quantity = 5
+			Id = herbId, DefinitionId = this.stackableHerb.Id, Definition = this.stackableHerb, Quantity = 5
 		});
 
 		var transferred = this.service.TryTransferItem(source, dest, herbId, 2);
@@ -164,25 +154,18 @@ public class ItemStorageServiceTests
 		Assert.HasCount(1, dest.Items);
 		Assert.AreEqual(2, dest.Items.First().Quantity);
 	}
+
 	[TestMethod]
 	public void TryStoreItem_AllowListFilter_AcceptsAllowedType()
 	{
 		var herbPouch = new Inventory
 		{
-			Capacity = 5,
-			Filter = new InventoryFilter
-			{
-				IsAllowList = true,
-				ItemSubtypes = [ItemSubtype.Herb]
-			}
+			Capacity = 5, Filter = new InventoryFilter { IsAllowList = true, ItemSubtypes = [ItemSubtype.Herb] }
 		};
 
 		var herbInstance = new Item
 		{
-			Id = Ulid.NewUlid(),
-			DefinitionId = this.stackableHerb.Id,
-			Definition = this.stackableHerb,
-			Quantity = 1
+			Id = Ulid.NewUlid(), DefinitionId = this.stackableHerb.Id, Definition = this.stackableHerb, Quantity = 1
 		};
 
 		var stored = this.service.TryStoreItem(herbPouch, herbInstance);
@@ -204,21 +187,10 @@ public class ItemStorageServiceTests
 
 		var herbPouch = new Inventory
 		{
-			Capacity = 5,
-			Filter = new InventoryFilter
-			{
-				IsAllowList = true,
-				ItemSubtypes = [ItemSubtype.Herb]
-			}
+			Capacity = 5, Filter = new InventoryFilter { IsAllowList = true, ItemSubtypes = [ItemSubtype.Herb] }
 		};
 
-		var oreInstance = new Item()
-		{
-			Id = Ulid.NewUlid(),
-			DefinitionId = oreDef.Id,
-			Definition = oreDef,
-			Quantity = 1
-		};
+		var oreInstance = new Item { Id = Ulid.NewUlid(), DefinitionId = oreDef.Id, Definition = oreDef, Quantity = 1 };
 
 		var stored = this.service.TryStoreItem(herbPouch, oreInstance);
 
@@ -239,20 +211,12 @@ public class ItemStorageServiceTests
 
 		var tidyBag = new Inventory
 		{
-			Capacity = 10,
-			Filter = new InventoryFilter
-			{
-				IsAllowList = false,
-				ItemTypes = [ItemType.Junk]
-			}
+			Capacity = 10, Filter = new InventoryFilter { IsAllowList = false, ItemTypes = [ItemType.Junk] }
 		};
 
 		var junkInstance = new Item
 		{
-			Id = Ulid.NewUlid(),
-			DefinitionId = junkDef.Id,
-			Definition = junkDef,
-			Quantity = 1
+			Id = Ulid.NewUlid(), DefinitionId = junkDef.Id, Definition = junkDef, Quantity = 1
 		};
 
 		var stored = this.service.TryStoreItem(tidyBag, junkInstance);

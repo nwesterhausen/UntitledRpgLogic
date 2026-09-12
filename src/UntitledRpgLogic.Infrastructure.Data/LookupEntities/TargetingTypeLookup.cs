@@ -1,13 +1,12 @@
-
 using UntitledRpgLogic.Core.Abilities;
 
 namespace UntitledRpgLogic.Infrastructure.Data.LookupEntities;
+
 /// <summary>
-/// Provides a reference table in the databse for the <see cref="TargetingType" /> enum.
+///     Provides a reference table in the databse for the <see cref="TargetingType" /> enum.
 /// </summary>
 public class TargetingTypeLookup
 {
-
 	///<summary>The specific enum for this entry</summary>
 	public TargetingType Id { get; set; }
 

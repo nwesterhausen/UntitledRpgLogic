@@ -1,18 +1,17 @@
-
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using UntitledRpgLogic.Core.Stats;
 
 namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
-///<summary>
-/// Advanced table configuration for <see cref="LinkedStats" />
-///</summary>
+
+/// <summary>
+///     Advanced table configuration for <see cref="LinkedStats" />
+/// </summary>
 public sealed class LinkedStatsConfiguration : IEntityTypeConfiguration<LinkedStats>
 {
 	///<inheritdoc />
 	public void Configure(EntityTypeBuilder<LinkedStats> builder)
 	{
-
 		ArgumentNullException.ThrowIfNull(builder);
 
 		// Composite PK
@@ -20,10 +19,10 @@ public sealed class LinkedStatsConfiguration : IEntityTypeConfiguration<LinkedSt
 
 		// Relationships
 		_ = builder
-			 .HasOne(ls => ls.Stat)
-			 .WithMany() // StatDefinition does not have a collection of LinkedStats, so this is empty.
-			 .HasForeignKey(ls => ls.StatId)
-			 .OnDelete(DeleteBehavior.Restrict); // Prevent deleting a StatDefinition if it's in use.
+			.HasOne(ls => ls.Stat)
+			.WithMany() // StatDefinition does not have a collection of LinkedStats, so this is empty.
+			.HasForeignKey(ls => ls.StatId)
+			.OnDelete(DeleteBehavior.Restrict); // Prevent deleting a StatDefinition if it's in use.
 
 		_ = builder
 			.HasOne(ls => ls.DependsOnStat)

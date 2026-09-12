@@ -1,7 +1,7 @@
 namespace UntitledRpgLogic.Core.Common;
 
 /// <summary>
-/// 	Record which represents the dimensions of a object in physical space.
+///     Record which represents the dimensions of a object in physical space.
 /// </summary>
 public record Dimensions
 {

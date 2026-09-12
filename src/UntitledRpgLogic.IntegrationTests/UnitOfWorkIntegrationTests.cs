@@ -1,12 +1,9 @@
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using UntitledRpgLogic.Core.Common;
 using UntitledRpgLogic.Core.Data;
 using UntitledRpgLogic.Core.Entities;
 using UntitledRpgLogic.Core.Stats;
 using UntitledRpgLogic.Extensions.Common;
-using UntitledRpgLogic.Infrastructure.Data;
 using UntitledRpgLogic.Infrastructure.Data.SQLite;
 
 namespace UntitledRpgLogic.IntegrationTests;
@@ -46,10 +43,8 @@ public class UnitOfWorkInteractionTests
 
 				await uow.BeginTransactionAsync().ConfigureAwait(false);
 
-				await entityRepo.AddAsync(new Entity(entityId)
-				{
-					Name = new Name("Uncommitted Actor")
-				}).ConfigureAwait(false);
+				await entityRepo.AddAsync(new Entity(entityId) { Name = new Name("Uncommitted Actor") })
+					.ConfigureAwait(false);
 
 				await uow.SaveChangesAsync().ConfigureAwait(false);
 				await uow.RollbackTransactionAsync().ConfigureAwait(false);
@@ -92,11 +87,8 @@ public class UnitOfWorkInteractionTests
 				var statDef = new StatDefinition(statDefId, new Name("Strength"));
 				await statRepo.AddAsync(statDef).ConfigureAwait(false);
 
-				var entity = new Entity(entityId)
-				{
-					Name = new Name("Hero")
-				};
-				entity.SetStat(statDef, initialValue: 15);
+				var entity = new Entity(entityId) { Name = new Name("Hero") };
+				entity.SetStat(statDef, 15);
 				await entityRepo.AddAsync(entity).ConfigureAwait(false);
 
 				await uow.CommitTransactionAsync().ConfigureAwait(false);
@@ -109,7 +101,7 @@ public class UnitOfWorkInteractionTests
 				var entityRepo = verifyScope.ServiceProvider.GetRequiredService<IEntityRepository<Entity, Ulid>>();
 				var hero = await entityRepo.GetByIdAsync(
 					entityId,
-					cancellationToken: default,
+					default,
 					e => e.Stats).ConfigureAwait(false);
 
 				Assert.IsNotNull(hero);

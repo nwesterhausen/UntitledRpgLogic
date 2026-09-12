@@ -4,7 +4,7 @@ using UntitledRpgLogic.Core.Items;
 namespace UntitledRpgLogic.Services;
 
 /// <summary>
-///		A service for handling the process of moving currency around.
+///     A service for handling the process of moving currency around.
 /// </summary>
 public class CurrencyStorageService : ICurrencyStorageService
 {
@@ -12,7 +12,7 @@ public class CurrencyStorageService : ICurrencyStorageService
 
 
 	/// <summary>
-	///		Creates a new instance of the currency service, using DI if possible for the ItemStorage service.
+	///     Creates a new instance of the currency service, using DI if possible for the ItemStorage service.
 	/// </summary>
 	/// <param name="itemStorageService"></param>
 	/// <exception cref="ArgumentNullException"></exception>
@@ -77,10 +77,7 @@ public class CurrencyStorageService : ICurrencyStorageService
 			var stackQty = Math.Min(remaining, maxStack);
 			var newItem = new Item
 			{
-				Id = Ulid.NewUlid(),
-				DefinitionId = currencyDef.Id,
-				Definition = currencyDef,
-				Quantity = stackQty
+				Id = Ulid.NewUlid(), DefinitionId = currencyDef.Id, Definition = currencyDef, Quantity = stackQty
 			};
 
 			if (!this.itemStorageService.CanStoreItem(inventory, newItem))
@@ -136,10 +133,7 @@ public class CurrencyStorageService : ICurrencyStorageService
 
 		withdrawnItem = new Item
 		{
-			Id = Ulid.NewUlid(),
-			DefinitionId = currencyItemDefinitionId,
-			Definition = def,
-			Quantity = quantity
+			Id = Ulid.NewUlid(), DefinitionId = currencyItemDefinitionId, Definition = def, Quantity = quantity
 		};
 
 		return true;

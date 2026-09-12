@@ -19,7 +19,7 @@ public record ItemMaterialComponent
 	public Ulid MaterialId { get; init; }
 
 	/// <summary>
-	/// 	The material used in this slot.
+	///     The material used in this slot.
 	/// </summary>
 	[ForeignKey(nameof(MaterialId))]
 	public MaterialDefinition? Material { get; init; }

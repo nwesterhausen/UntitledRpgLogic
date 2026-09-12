@@ -8,15 +8,12 @@ namespace UntitledRpgLogic.Core.Abilities.Effects;
 public record TransformationEffect : Effect
 {
 	/// <summary>
-	/// 	Initializes default base values.
+	///     Initializes default base values.
 	/// </summary>
-	public TransformationEffect()
-	{
-		this.EffectType = EffectType.Transformation;
-	}
+	public TransformationEffect() => this.EffectType = EffectType.Transformation;
 
 	/// <summary>
-	/// 	Initializes a new <see cref="Effect" /> with <see cref="EffectType.Transformation" />.
+	///     Initializes a new <see cref="Effect" /> with <see cref="EffectType.Transformation" />.
 	/// </summary>
 	public TransformationEffect(Name name) : base(name, EffectType.Transformation)
 	{

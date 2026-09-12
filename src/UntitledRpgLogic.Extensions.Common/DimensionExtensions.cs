@@ -14,7 +14,7 @@ public static class HasDimensionsExtensions
 	/// <returns>A formatted string describing the dimensions.</returns>
 	public static string ToDimensionsString(this Dimensions dimensions)
 	{
-		ArgumentNullException.ThrowIfNull(dimensions, nameof(dimensions));
+		ArgumentNullException.ThrowIfNull(dimensions);
 		// Using a switch expression is cleaner and more concise.
 		var details = dimensions.ShapeType switch
 		{
@@ -81,7 +81,7 @@ public static class HasDimensionsExtensions
 	/// <returns>The total volume, expressed in the target scale.</returns>
 	public static float CalculateVolumeIn(Dimensions dimensions, DimensionScale targetScale)
 	{
-		ArgumentNullException.ThrowIfNull(dimensions, nameof(dimensions));
+		ArgumentNullException.ThrowIfNull(dimensions);
 
 		var clonedDimensions = dimensions with { };
 		clonedDimensions.ChangeScale(targetScale);
@@ -95,7 +95,7 @@ public static class HasDimensionsExtensions
 	/// <returns>Volume in cubic units of the current <see cref="DimensionScale" />, or 0f if shape is unknown.</returns>
 	public static float CalculateVolume(this Dimensions dimensions)
 	{
-		ArgumentNullException.ThrowIfNull(dimensions, nameof(dimensions));
+		ArgumentNullException.ThrowIfNull(dimensions);
 
 		return dimensions.ShapeType switch
 		{
@@ -115,9 +115,9 @@ public static class HasDimensionsExtensions
 
 			// Assuming Width is diameter of base 1 and Depth is diameter of base 2.
 			ShapeType.ConicalFrustum => 1f / 3f * MathF.PI * dimensions.Height *
-										(MathF.Pow(dimensions.Width / 2f, 2) +
-										 (dimensions.Width / 2f * (dimensions.Depth / 2f)) +
-										 MathF.Pow(dimensions.Depth / 2f, 2)),
+			                            (MathF.Pow(dimensions.Width / 2f, 2) +
+			                             (dimensions.Width / 2f * (dimensions.Depth / 2f)) +
+			                             MathF.Pow(dimensions.Depth / 2f, 2)),
 
 			_ => 0f // A discard pattern handles any unlisted enum members.
 		};
@@ -130,7 +130,7 @@ public static class HasDimensionsExtensions
 	/// <param name="targetScale">The dimension scale to convert to.</param>
 	public static void ChangeScale(this Dimensions dimensions, DimensionScale targetScale)
 	{
-		ArgumentNullException.ThrowIfNull(dimensions, nameof(dimensions));
+		ArgumentNullException.ThrowIfNull(dimensions);
 
 		if (dimensions.DimensionScale == targetScale)
 		{

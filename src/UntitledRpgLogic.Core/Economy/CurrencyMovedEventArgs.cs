@@ -7,14 +7,13 @@ namespace UntitledRpgLogic.Core.Economy;
 ///     Create a new instance of <see cref="CurrencyMovedEventArgs" />.
 /// </remarks>
 /// <param name="description">
-/// 	A description of the amount of currency moved, such as "100 gold coins"
+///     A description of the amount of currency moved, such as "100 gold coins"
 /// </param>
 /// <param name="totalInInventory">
-/// 	The total amount of currency remaining in the inventory after the movement.
+///     The total amount of currency remaining in the inventory after the movement.
 /// </param>
 public class CurrencyMovedEventArgs(string description, string totalInInventory) : EventArgs
 {
-
 	/// <summary>
 	///     A description of the amount of currency moved, such as "100 gold coins"
 	/// </summary>

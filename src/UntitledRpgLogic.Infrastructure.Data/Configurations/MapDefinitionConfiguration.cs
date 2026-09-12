@@ -2,13 +2,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using UntitledRpgLogic.Core.World;
 using UntitledRpgLogic.Infrastructure.Data.LookupEntities;
-using UntitledRpgLogic.Infrastructure.Data.ValueConverters;
 
 namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
 
-///<summary>
-/// Defines advanced table configuration for <see cref="MapDefinition"/>
-///</summary>
+/// <summary>
+///     Defines advanced table configuration for <see cref="MapDefinition" />
+/// </summary>
 public sealed class MapDefinitionConfiguration : IEntityTypeConfiguration<MapDefinition>
 {
 	/// <inheritdoc />
@@ -17,15 +16,15 @@ public sealed class MapDefinitionConfiguration : IEntityTypeConfiguration<MapDef
 		ArgumentNullException.ThrowIfNull(builder);
 
 		builder.HasOne<MapTypeLookup>()
-		   .WithMany()
-		   .HasForeignKey(m => m.Type)
-		   .OnDelete(DeleteBehavior.Restrict);
+			.WithMany()
+			.HasForeignKey(m => m.Type)
+			.OnDelete(DeleteBehavior.Restrict);
 
 		_ = builder.OwnsOne(m => m.Atmosphere, ab =>
-				{
-					ab.ToJson();
-					ab.OwnsMany(a => a.GasFractions);
-				});
+		{
+			ab.ToJson();
+			ab.OwnsMany(a => a.GasFractions);
+		});
 		_ = builder.OwnsMany(m => m.BaselineAmbients, bb => bb.ToJson());
 
 		_ = builder.HasMany(m => m.Chunks)

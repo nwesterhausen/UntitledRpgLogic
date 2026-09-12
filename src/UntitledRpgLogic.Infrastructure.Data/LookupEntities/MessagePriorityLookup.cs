@@ -1,13 +1,12 @@
-
 using UntitledRpgLogic.Core.Networking;
 
 namespace UntitledRpgLogic.Infrastructure.Data.LookupEntities;
+
 /// <summary>
-/// Provides a reference table in the databse for the <see cref="MessagePriority" /> enum.
+///     Provides a reference table in the databse for the <see cref="MessagePriority" /> enum.
 /// </summary>
 public class MessagePriorityLookup
 {
-
 	///<summary>The specific enum for this entry</summary>
 	public MessagePriority Id { get; set; }
 

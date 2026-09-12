@@ -7,14 +7,14 @@ namespace UntitledRpgLogic.Core.Common;
 /// </summary>
 /// <remarks>
 ///     Constructs a new PluralName object with the given singular, plural and adjective names. If not supplied, the
-///     singular will be used as the adjective and a best guess will be made for the plural.
+///     singular will be used as the adjective and the best guess will be made for the plural.
 /// </remarks>
 /// <param name="singular"></param>
 /// <param name="plural"></param>
 /// <param name="adjective"></param>
 public class Name(string singular, string? plural = null, string? adjective = null) : IStringSerializable<Name>
 {
-	private const char DELIM = ';';
+	private const char Delim = ';';
 
 	/// <summary>
 	///     An empty name.
@@ -41,18 +41,18 @@ public class Name(string singular, string? plural = null, string? adjective = nu
 	{
 		if (this.Singular.Equals(this.Adjective, StringComparison.Ordinal))
 		{
-			return $"{this.Singular}{DELIM}{this.Plural}";
+			return $"{this.Singular}{Delim}{this.Plural}";
 		}
 
-		return $"{this.Singular}{DELIM}{this.Plural}{DELIM}{this.Adjective}";
+		return $"{this.Singular}{Delim}{this.Plural}{Delim}{this.Adjective}";
 	}
 
 	/// <inheritdoc />
 	public static Name Deserialize(string serialized)
 	{
-		ArgumentNullException.ThrowIfNull(serialized, nameof(serialized));
+		ArgumentNullException.ThrowIfNull(serialized);
 
-		var parts = serialized.Split(DELIM);
+		var parts = serialized.Split(Delim);
 		return parts.Length switch
 		{
 			0 => throw new ArgumentException("Invalid serialized name format."),
@@ -75,10 +75,10 @@ public class Name(string singular, string? plural = null, string? adjective = nu
 		}
 
 		if (singular.EndsWith('y') &&
-			!singular.EndsWith("ay", StringComparison.InvariantCultureIgnoreCase) &&
-			!singular.EndsWith("ey", StringComparison.InvariantCultureIgnoreCase) &&
-			!singular.EndsWith("oy", StringComparison.InvariantCultureIgnoreCase) &&
-			!singular.EndsWith("uy", StringComparison.InvariantCultureIgnoreCase))
+		    !singular.EndsWith("ay", StringComparison.InvariantCultureIgnoreCase) &&
+		    !singular.EndsWith("ey", StringComparison.InvariantCultureIgnoreCase) &&
+		    !singular.EndsWith("oy", StringComparison.InvariantCultureIgnoreCase) &&
+		    !singular.EndsWith("uy", StringComparison.InvariantCultureIgnoreCase))
 		{
 			return string.Concat(singular.AsSpan(0, singular.Length - 1), "ies");
 		}
@@ -89,8 +89,8 @@ public class Name(string singular, string? plural = null, string? adjective = nu
 		}
 
 		if (singular.EndsWith('o') || singular.EndsWith('s') || singular.EndsWith('x') || singular.EndsWith('z') ||
-			singular.EndsWith("ch", StringComparison.InvariantCultureIgnoreCase) ||
-			singular.EndsWith("sh", StringComparison.InvariantCultureIgnoreCase))
+		    singular.EndsWith("ch", StringComparison.InvariantCultureIgnoreCase) ||
+		    singular.EndsWith("sh", StringComparison.InvariantCultureIgnoreCase))
 		{
 			return singular + "es";
 		}

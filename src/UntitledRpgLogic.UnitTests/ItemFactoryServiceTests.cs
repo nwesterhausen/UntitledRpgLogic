@@ -1,4 +1,3 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using UntitledRpgLogic.Core.Common;
 using UntitledRpgLogic.Core.Items;
 using UntitledRpgLogic.Services;
@@ -8,7 +7,7 @@ namespace UntitledRpgLogic.UnitTests;
 [TestClass]
 public class ItemFactoryServiceTests
 {
-	private readonly ItemFactoryService factory = new ItemFactoryService();
+	private readonly ItemFactoryService factory = new();
 
 	[TestMethod]
 	public void CreateDefinition_ValidParameters_InstantiatesDefinitionCorrectly()
@@ -18,9 +17,8 @@ public class ItemFactoryServiceTests
 			name,
 			ItemType.Weapon,
 			ItemSubtype.None,
-			baseValue: 150,
-			weight: 3.5f,
-			maxStackSize: 1);
+			150,
+			3.5f);
 
 		Assert.AreNotEqual(Ulid.Empty, def.Id);
 		Assert.AreEqual("Iron Broadsword", def.Name.Singular);
@@ -31,17 +29,16 @@ public class ItemFactoryServiceTests
 	}
 
 	[TestMethod]
-	public void CreateDefinition_InvalidStackSize_ThrowsArgumentOutOfRangeException()
-	{
+	public void CreateDefinition_InvalidStackSize_ThrowsArgumentOutOfRangeException() =>
 		Assert.Throws<ArgumentOutOfRangeException>(() =>
 			this.factory.CreateDefinition(new Name("Rock"), ItemType.Consumable, ItemSubtype.None, maxStackSize: 0));
-	}
 
 	[TestMethod]
 	public void CreateItem_FromDefinition_BindsIdAndPreservesDefinitionReference()
 	{
-		var def = this.factory.CreateDefinition(new Name("Health Potion"), ItemType.Consumable, ItemSubtype.None, maxStackSize: 5);
-		var item = this.factory.CreateItem(def, quantity: 3);
+		var def = this.factory.CreateDefinition(new Name("Health Potion"), ItemType.Consumable, ItemSubtype.None,
+			maxStackSize: 5);
+		var item = this.factory.CreateItem(def, 3);
 
 		Assert.AreNotEqual(Ulid.Empty, item.Id);
 		Assert.AreEqual(def.Id, item.DefinitionId);
@@ -54,6 +51,6 @@ public class ItemFactoryServiceTests
 	{
 		var def = this.factory.CreateDefinition(new Name("Health Potion"), ItemType.Consumable, ItemSubtype.None);
 
-		Assert.Throws<ArgumentOutOfRangeException>(() => this.factory.CreateItem(def, quantity: 0));
+		Assert.Throws<ArgumentOutOfRangeException>(() => this.factory.CreateItem(def, 0));
 	}
 }

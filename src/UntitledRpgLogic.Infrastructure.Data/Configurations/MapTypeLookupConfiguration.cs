@@ -1,13 +1,13 @@
-
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using UntitledRpgLogic.Core.World;
 using UntitledRpgLogic.Infrastructure.Data.LookupEntities;
 
 namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
-///<summary>
-/// Defines the <see cref="MapType" /> lookup table
-///</summary>
+
+/// <summary>
+///     Defines the <see cref="MapType" /> lookup table
+/// </summary>
 public sealed class MapTypeLookupConfiguration : IEntityTypeConfiguration<MapTypeLookup>
 {
 	///<inheritdoc />
@@ -26,11 +26,7 @@ public sealed class MapTypeLookupConfiguration : IEntityTypeConfiguration<MapTyp
 
 		// Seed with enum data
 		var seedData = Enum.GetValues<MapType>()
-			.Select(e => new MapTypeLookup
-			{
-				Id = e,
-				Name = e.ToString()
-			});
+			.Select(e => new MapTypeLookup { Id = e, Name = e.ToString() });
 		_ = builder.HasData(seedData);
 	}
 }

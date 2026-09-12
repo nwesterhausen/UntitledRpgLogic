@@ -42,17 +42,8 @@ public record LogEntry : IDbEntity<Ulid>
 	/// </summary>
 	[SetsRequiredMembers]
 	public LogEntry(int level, int eventId, string message, string? category, Ulid? entityId, string? parameters = null)
-		: this(level, eventId, message, category, parameters)
-	{
+		: this(level, eventId, message, category, parameters) =>
 		this.EntityId = entityId;
-	}
-
-	/// <summary>
-	///     The unique identifier for the log entry.
-	/// </summary>
-	[Key]
-	[DatabaseGenerated(DatabaseGeneratedOption.None)]
-	public Ulid Id { get; init; }
 
 	/// <summary>
 	///     The UTC timestamp when the log entry was created.
@@ -96,4 +87,11 @@ public record LogEntry : IDbEntity<Ulid>
 	/// </summary>
 	[MaxLength(256)]
 	public string? Category { get; init; }
+
+	/// <summary>
+	///     The unique identifier for the log entry.
+	/// </summary>
+	[Key]
+	[DatabaseGenerated(DatabaseGeneratedOption.None)]
+	public Ulid Id { get; init; }
 }

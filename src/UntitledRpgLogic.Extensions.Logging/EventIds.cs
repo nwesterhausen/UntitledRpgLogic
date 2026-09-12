@@ -26,7 +26,8 @@ public static class EventIds
 	/// <summary>
 	///     An operation was attempted that is not supported in the current context.
 	/// </summary>
-	public static readonly EventId OperationNotSupported = new(EventIdValues.OperationNotSupported, "OperationNotSupported");
+	public static readonly EventId OperationNotSupported =
+		new(EventIdValues.OperationNotSupported, "OperationNotSupported");
 
 	// Player-Driven Events (1000-4999)
 	// Sub-category: Game Session (1000-10xx)
@@ -105,12 +106,14 @@ public static class EventIds
 	/// <summary>
 	///     A status effect has been applied to a player.
 	/// </summary>
-	public static readonly EventId PlayerStatusEffectApplied = new(EventIdValues.PlayerStatusEffectApplied, "PlayerStatusEffectApplied");
+	public static readonly EventId PlayerStatusEffectApplied =
+		new(EventIdValues.PlayerStatusEffectApplied, "PlayerStatusEffectApplied");
 
 	/// <summary>
 	///     A status effect has been removed from a player.
 	/// </summary>
-	public static readonly EventId PlayerStatusEffectRemoved = new(EventIdValues.PlayerStatusEffectRemoved, "PlayerStatusEffectRemoved");
+	public static readonly EventId PlayerStatusEffectRemoved =
+		new(EventIdValues.PlayerStatusEffectRemoved, "PlayerStatusEffectRemoved");
 
 	/// <summary>
 	///     A player has leveled up.
@@ -120,12 +123,14 @@ public static class EventIds
 	/// <summary>
 	///     A player's skill has increased.
 	/// </summary>
-	public static readonly EventId PlayerSkillIncreased = new(EventIdValues.PlayerSkillIncreased, "PlayerSkillIncreased");
+	public static readonly EventId PlayerSkillIncreased =
+		new(EventIdValues.PlayerSkillIncreased, "PlayerSkillIncreased");
 
 	/// <summary>
 	///     A player's attribute has increased.
 	/// </summary>
-	public static readonly EventId PlayerAttributeIncreased = new(EventIdValues.PlayerAttributeIncreased, "PlayerAttributeIncreased");
+	public static readonly EventId PlayerAttributeIncreased =
+		new(EventIdValues.PlayerAttributeIncreased, "PlayerAttributeIncreased");
 
 	/// <summary>
 	///     A player has blocked an attack.
@@ -146,22 +151,26 @@ public static class EventIds
 	/// <summary>
 	///     A player has sent a chat message.
 	/// </summary>
-	public static readonly EventId PlayerChatMessageSent = new(EventIdValues.PlayerChatMessageSent, "PlayerChatMessageSent");
+	public static readonly EventId PlayerChatMessageSent =
+		new(EventIdValues.PlayerChatMessageSent, "PlayerChatMessageSent");
 
 	/// <summary>
 	///     A player has received a chat message.
 	/// </summary>
-	public static readonly EventId PlayerChatMessageReceived = new(EventIdValues.PlayerChatMessageReceived, "PlayerChatMessageReceived");
+	public static readonly EventId PlayerChatMessageReceived =
+		new(EventIdValues.PlayerChatMessageReceived, "PlayerChatMessageReceived");
 
 	/// <summary>
 	///     A player's chat message failed to send.
 	/// </summary>
-	public static readonly EventId PlayerChatMessageFailed = new(EventIdValues.PlayerChatMessageFailed, "PlayerChatMessageFailed");
+	public static readonly EventId PlayerChatMessageFailed =
+		new(EventIdValues.PlayerChatMessageFailed, "PlayerChatMessageFailed");
 
 	/// <summary>
 	///     A player has sent a private message.
 	/// </summary>
-	public static readonly EventId PlayerPrivateMessageSent = new(EventIdValues.PlayerPrivateMessageSent, "PlayerPrivateMessageSent");
+	public static readonly EventId PlayerPrivateMessageSent =
+		new(EventIdValues.PlayerPrivateMessageSent, "PlayerPrivateMessageSent");
 
 	/// <summary>
 	///     A player has received a private message.
@@ -172,32 +181,38 @@ public static class EventIds
 	/// <summary>
 	///     A player's private message failed to send.
 	/// </summary>
-	public static readonly EventId PlayerPrivateMessageFailed = new(EventIdValues.PlayerPrivateMessageFailed, "PlayerPrivateMessageFailed");
+	public static readonly EventId PlayerPrivateMessageFailed =
+		new(EventIdValues.PlayerPrivateMessageFailed, "PlayerPrivateMessageFailed");
 
 	/// <summary>
 	///     A player has performed an emote.
 	/// </summary>
-	public static readonly EventId PlayerEmotePerformed = new(EventIdValues.PlayerEmotePerformed, "PlayerEmotePerformed");
+	public static readonly EventId PlayerEmotePerformed =
+		new(EventIdValues.PlayerEmotePerformed, "PlayerEmotePerformed");
 
 	/// <summary>
 	///     A player has sent a friend request.
 	/// </summary>
-	public static readonly EventId PlayerFriendRequestSent = new(EventIdValues.PlayerFriendRequestSent, "PlayerFriendRequestSent");
+	public static readonly EventId PlayerFriendRequestSent =
+		new(EventIdValues.PlayerFriendRequestSent, "PlayerFriendRequestSent");
 
 	/// <summary>
 	///     A player has received a friend request.
 	/// </summary>
-	public static readonly EventId PlayerFriendRequestReceived = new(EventIdValues.PlayerFriendRequestReceived, "PlayerFriendRequestReceived");
+	public static readonly EventId PlayerFriendRequestReceived =
+		new(EventIdValues.PlayerFriendRequestReceived, "PlayerFriendRequestReceived");
 
 	/// <summary>
 	///     A player has accepted a friend request.
 	/// </summary>
-	public static readonly EventId PlayerFriendRequestAccepted = new(EventIdValues.PlayerFriendRequestAccepted, "PlayerFriendRequestAccepted");
+	public static readonly EventId PlayerFriendRequestAccepted =
+		new(EventIdValues.PlayerFriendRequestAccepted, "PlayerFriendRequestAccepted");
 
 	/// <summary>
 	///     A player has declined a friend request.
 	/// </summary>
-	public static readonly EventId PlayerFriendRequestDeclined = new(EventIdValues.PlayerFriendRequestDeclined, "PlayerFriendRequestDeclined");
+	public static readonly EventId PlayerFriendRequestDeclined =
+		new(EventIdValues.PlayerFriendRequestDeclined, "PlayerFriendRequestDeclined");
 
 	/// <summary>
 	///     A player has blocked another user.
@@ -218,7 +233,8 @@ public static class EventIds
 	/// <summary>
 	///     A player has completed a quest.
 	/// </summary>
-	public static readonly EventId PlayerQuestCompleted = new(EventIdValues.PlayerQuestCompleted, "PlayerQuestCompleted");
+	public static readonly EventId PlayerQuestCompleted =
+		new(EventIdValues.PlayerQuestCompleted, "PlayerQuestCompleted");
 
 	/// <summary>
 	///     A player has failed a quest.
@@ -228,12 +244,14 @@ public static class EventIds
 	/// <summary>
 	///     A player has abandoned a quest.
 	/// </summary>
-	public static readonly EventId PlayerQuestAbandoned = new(EventIdValues.PlayerQuestAbandoned, "PlayerQuestAbandoned");
+	public static readonly EventId PlayerQuestAbandoned =
+		new(EventIdValues.PlayerQuestAbandoned, "PlayerQuestAbandoned");
 
 	/// <summary>
 	///     A player has unlocked an achievement.
 	/// </summary>
-	public static readonly EventId PlayerAchievementUnlocked = new(EventIdValues.PlayerAchievementUnlocked, "PlayerAchievementUnlocked");
+	public static readonly EventId PlayerAchievementUnlocked =
+		new(EventIdValues.PlayerAchievementUnlocked, "PlayerAchievementUnlocked");
 
 	// System-Driven Events (5000-6999)
 	// Sub-category: Application Lifecycle (5000-50xx)
@@ -271,12 +289,14 @@ public static class EventIds
 	/// <summary>
 	///     A library file failed to load.
 	/// </summary>
-	public static readonly EventId LibraryFileLoadFailed = new(EventIdValues.LibraryFileLoadFailed, "LibraryFileLoadFailed");
+	public static readonly EventId LibraryFileLoadFailed =
+		new(EventIdValues.LibraryFileLoadFailed, "LibraryFileLoadFailed");
 
 	/// <summary>
 	///     A library header mismatch was detected.
 	/// </summary>
-	public static readonly EventId LibraryHeaderMismatch = new(EventIdValues.LibraryHeaderMismatch, "LibraryHeaderMismatch");
+	public static readonly EventId LibraryHeaderMismatch =
+		new(EventIdValues.LibraryHeaderMismatch, "LibraryHeaderMismatch");
 
 	/// <summary>
 	///     A library file is being saved.
@@ -291,12 +311,14 @@ public static class EventIds
 	/// <summary>
 	///     A library file failed to save.
 	/// </summary>
-	public static readonly EventId LibraryFileSaveFailed = new(EventIdValues.LibraryFileSaveFailed, "LibraryFileSaveFailed");
+	public static readonly EventId LibraryFileSaveFailed =
+		new(EventIdValues.LibraryFileSaveFailed, "LibraryFileSaveFailed");
 
 	/// <summary>
 	///     A library file header has been parsed.
 	/// </summary>
-	public static readonly EventId LibraryFileHeaderParsed = new(EventIdValues.LibraryFileHeaderParsed, "LibraryFileHeaderParsed");
+	public static readonly EventId LibraryFileHeaderParsed =
+		new(EventIdValues.LibraryFileHeaderParsed, "LibraryFileHeaderParsed");
 
 	/// <summary>
 	///     A library file header failed to parse.
@@ -307,12 +329,14 @@ public static class EventIds
 	/// <summary>
 	///     Library file data has been parsed.
 	/// </summary>
-	public static readonly EventId LibraryFileDataParsed = new(EventIdValues.LibraryFileDataParsed, "LibraryFileDataParsed");
+	public static readonly EventId LibraryFileDataParsed =
+		new(EventIdValues.LibraryFileDataParsed, "LibraryFileDataParsed");
 
 	/// <summary>
 	///     Library file data failed to parse.
 	/// </summary>
-	public static readonly EventId LibraryFileDataParseFailed = new(EventIdValues.LibraryFileDataParseFailed, "LibraryFileDataParseFailed");
+	public static readonly EventId LibraryFileDataParseFailed =
+		new(EventIdValues.LibraryFileDataParseFailed, "LibraryFileDataParseFailed");
 
 	/// <summary>
 	///     Configuration files have been enumerated.
@@ -323,22 +347,26 @@ public static class EventIds
 	/// <summary>
 	///     A configuration file has been loaded.
 	/// </summary>
-	public static readonly EventId ConfigurationFileLoaded = new(EventIdValues.ConfigurationFileLoaded, "ConfigurationFileLoaded");
+	public static readonly EventId ConfigurationFileLoaded =
+		new(EventIdValues.ConfigurationFileLoaded, "ConfigurationFileLoaded");
 
 	/// <summary>
 	///     A configuration file failed to load.
 	/// </summary>
-	public static readonly EventId ConfigurationFileLoadFailed = new(EventIdValues.ConfigurationFileLoadFailed, "ConfigurationFileLoadFailed");
+	public static readonly EventId ConfigurationFileLoadFailed =
+		new(EventIdValues.ConfigurationFileLoadFailed, "ConfigurationFileLoadFailed");
 
 	/// <summary>
 	///     A configuration file has been saved.
 	/// </summary>
-	public static readonly EventId ConfigurationFileSaved = new(EventIdValues.ConfigurationFileSaved, "ConfigurationFileSaved");
+	public static readonly EventId ConfigurationFileSaved =
+		new(EventIdValues.ConfigurationFileSaved, "ConfigurationFileSaved");
 
 	/// <summary>
 	///     A configuration file failed to save.
 	/// </summary>
-	public static readonly EventId ConfigurationFileSaveFailed = new(EventIdValues.ConfigurationFileSaveFailed, "ConfigurationFileSaveFailed");
+	public static readonly EventId ConfigurationFileSaveFailed =
+		new(EventIdValues.ConfigurationFileSaveFailed, "ConfigurationFileSaveFailed");
 
 	/// <summary>
 	///     Configuration file compression failed.
@@ -356,37 +384,44 @@ public static class EventIds
 	/// <summary>
 	///     A network listener is starting.
 	/// </summary>
-	public static readonly EventId NetworkListenerStarting = new(EventIdValues.NetworkListenerStarting, "NetworkListenerStarting");
+	public static readonly EventId NetworkListenerStarting =
+		new(EventIdValues.NetworkListenerStarting, "NetworkListenerStarting");
 
 	/// <summary>
 	///     A network listener has started.
 	/// </summary>
-	public static readonly EventId NetworkListenerStarted = new(EventIdValues.NetworkListenerStarted, "NetworkListenerStarted");
+	public static readonly EventId NetworkListenerStarted =
+		new(EventIdValues.NetworkListenerStarted, "NetworkListenerStarted");
 
 	/// <summary>
 	///     A network listener is stopping.
 	/// </summary>
-	public static readonly EventId NetworkListenerStopping = new(EventIdValues.NetworkListenerStopping, "NetworkListenerStopping");
+	public static readonly EventId NetworkListenerStopping =
+		new(EventIdValues.NetworkListenerStopping, "NetworkListenerStopping");
 
 	/// <summary>
 	///     A network listener has stopped.
 	/// </summary>
-	public static readonly EventId NetworkListenerStopped = new(EventIdValues.NetworkListenerStopped, "NetworkListenerStopped");
+	public static readonly EventId NetworkListenerStopped =
+		new(EventIdValues.NetworkListenerStopped, "NetworkListenerStopped");
 
 	/// <summary>
 	///     A network listener encountered an error.
 	/// </summary>
-	public static readonly EventId NetworkListenerError = new(EventIdValues.NetworkListenerError, "NetworkListenerError");
+	public static readonly EventId NetworkListenerError =
+		new(EventIdValues.NetworkListenerError, "NetworkListenerError");
 
 	/// <summary>
 	///     A network packet has been received.
 	/// </summary>
-	public static readonly EventId NetworkPacketReceived = new(EventIdValues.NetworkPacketReceived, "NetworkPacketReceived");
+	public static readonly EventId NetworkPacketReceived =
+		new(EventIdValues.NetworkPacketReceived, "NetworkPacketReceived");
 
 	/// <summary>
 	///     A network packet has been processed.
 	/// </summary>
-	public static readonly EventId NetworkPacketProcessed = new(EventIdValues.NetworkPacketProcessed, "NetworkPacketProcessed");
+	public static readonly EventId NetworkPacketProcessed =
+		new(EventIdValues.NetworkPacketProcessed, "NetworkPacketProcessed");
 
 	/// <summary>
 	///     Network packet processing failed.
@@ -402,7 +437,8 @@ public static class EventIds
 	/// <summary>
 	///     A network packet failed to send.
 	/// </summary>
-	public static readonly EventId NetworkPacketSendFailed = new(EventIdValues.NetworkPacketSendFailed, "NetworkPacketSendFailed");
+	public static readonly EventId NetworkPacketSendFailed =
+		new(EventIdValues.NetworkPacketSendFailed, "NetworkPacketSendFailed");
 
 	/// <summary>
 	///     A network connection has been established.
@@ -413,27 +449,32 @@ public static class EventIds
 	/// <summary>
 	///     A network connection has been closed.
 	/// </summary>
-	public static readonly EventId NetworkConnectionClosed = new(EventIdValues.NetworkConnectionClosed, "NetworkConnectionClosed");
+	public static readonly EventId NetworkConnectionClosed =
+		new(EventIdValues.NetworkConnectionClosed, "NetworkConnectionClosed");
 
 	/// <summary>
 	///     A network connection encountered an error.
 	/// </summary>
-	public static readonly EventId NetworkConnectionError = new(EventIdValues.NetworkConnectionError, "NetworkConnectionError");
+	public static readonly EventId NetworkConnectionError =
+		new(EventIdValues.NetworkConnectionError, "NetworkConnectionError");
 
 	/// <summary>
 	///     Network latency has been detected.
 	/// </summary>
-	public static readonly EventId NetworkLatencyDetected = new(EventIdValues.NetworkLatencyDetected, "NetworkLatencyDetected");
+	public static readonly EventId NetworkLatencyDetected =
+		new(EventIdValues.NetworkLatencyDetected, "NetworkLatencyDetected");
 
 	/// <summary>
 	///     Network throughput has been measured.
 	/// </summary>
-	public static readonly EventId NetworkThroughputMeasured = new(EventIdValues.NetworkThroughputMeasured, "NetworkThroughputMeasured");
+	public static readonly EventId NetworkThroughputMeasured =
+		new(EventIdValues.NetworkThroughputMeasured, "NetworkThroughputMeasured");
 
 	/// <summary>
 	///     Network configuration has been loaded.
 	/// </summary>
-	public static readonly EventId NetworkConfigurationLoaded = new(EventIdValues.NetworkConfigurationLoaded, "NetworkConfigurationLoaded");
+	public static readonly EventId NetworkConfigurationLoaded =
+		new(EventIdValues.NetworkConfigurationLoaded, "NetworkConfigurationLoaded");
 
 	/// <summary>
 	///     Network configuration failed to load.
@@ -444,7 +485,8 @@ public static class EventIds
 	/// <summary>
 	///     Network configuration has been saved.
 	/// </summary>
-	public static readonly EventId NetworkConfigurationSaved = new(EventIdValues.NetworkConfigurationSaved, "NetworkConfigurationSaved");
+	public static readonly EventId NetworkConfigurationSaved =
+		new(EventIdValues.NetworkConfigurationSaved, "NetworkConfigurationSaved");
 
 	/// <summary>
 	///     Network configuration failed to save.
@@ -455,32 +497,38 @@ public static class EventIds
 	/// <summary>
 	///     A client handshake has been received.
 	/// </summary>
-	public static readonly EventId ClientHandshakeReceived = new(EventIdValues.ClientHandshakeReceived, "ClientHandshakeReceived");
+	public static readonly EventId ClientHandshakeReceived =
+		new(EventIdValues.ClientHandshakeReceived, "ClientHandshakeReceived");
 
 	/// <summary>
 	///     A client handshake was successful.
 	/// </summary>
-	public static readonly EventId ClientHandshakeSuccessful = new(EventIdValues.ClientHandshakeSuccessful, "ClientHandshakeSuccessful");
+	public static readonly EventId ClientHandshakeSuccessful =
+		new(EventIdValues.ClientHandshakeSuccessful, "ClientHandshakeSuccessful");
 
 	/// <summary>
 	///     A client handshake failed.
 	/// </summary>
-	public static readonly EventId ClientHandshakeFailed = new(EventIdValues.ClientHandshakeFailed, "ClientHandshakeFailed");
+	public static readonly EventId ClientHandshakeFailed =
+		new(EventIdValues.ClientHandshakeFailed, "ClientHandshakeFailed");
 
 	/// <summary>
 	///     A client connection has been established.
 	/// </summary>
-	public static readonly EventId ClientConnectionEstablished = new(EventIdValues.ClientConnectionEstablished, "ClientConnectionEstablished");
+	public static readonly EventId ClientConnectionEstablished =
+		new(EventIdValues.ClientConnectionEstablished, "ClientConnectionEstablished");
 
 	/// <summary>
 	///     A client connection has been terminated.
 	/// </summary>
-	public static readonly EventId ClientConnectionTerminated = new(EventIdValues.ClientConnectionTerminated, "ClientConnectionTerminated");
+	public static readonly EventId ClientConnectionTerminated =
+		new(EventIdValues.ClientConnectionTerminated, "ClientConnectionTerminated");
 
 	/// <summary>
 	///     A client connection encountered an error.
 	/// </summary>
-	public static readonly EventId ClientConnectionError = new(EventIdValues.ClientConnectionError, "ClientConnectionError");
+	public static readonly EventId ClientConnectionError =
+		new(EventIdValues.ClientConnectionError, "ClientConnectionError");
 
 	/// <summary>
 	///     A message has been received.
@@ -490,7 +538,8 @@ public static class EventIds
 	/// <summary>
 	///     An invalid message has been received.
 	/// </summary>
-	public static readonly EventId InvalidMessageReceived = new(EventIdValues.InvalidMessageReceived, "InvalidMessageReceived");
+	public static readonly EventId InvalidMessageReceived =
+		new(EventIdValues.InvalidMessageReceived, "InvalidMessageReceived");
 
 	/// <summary>
 	///     A message has been processed.
@@ -500,7 +549,8 @@ public static class EventIds
 	/// <summary>
 	///     Message processing failed.
 	/// </summary>
-	public static readonly EventId MessageProcessingFailed = new(EventIdValues.MessageProcessingFailed, "MessageProcessingFailed");
+	public static readonly EventId MessageProcessingFailed =
+		new(EventIdValues.MessageProcessingFailed, "MessageProcessingFailed");
 
 	/// <summary>
 	///     A message has been sent.
@@ -515,7 +565,8 @@ public static class EventIds
 	/// <summary>
 	///     Client authentication has started.
 	/// </summary>
-	public static readonly EventId ClientAuthenticationStarted = new(EventIdValues.ClientAuthenticationStarted, "ClientAuthenticationStarted");
+	public static readonly EventId ClientAuthenticationStarted =
+		new(EventIdValues.ClientAuthenticationStarted, "ClientAuthenticationStarted");
 
 	/// <summary>
 	///     User authentication was successful.
@@ -526,7 +577,8 @@ public static class EventIds
 	/// <summary>
 	///     User authentication failed due to invalid credentials or other authentication issues.
 	/// </summary>
-	public static readonly EventId ClientAuthenticationFailed = new(EventIdValues.ClientAuthenticationFailed, "ClientAuthenticationFailed");
+	public static readonly EventId ClientAuthenticationFailed =
+		new(EventIdValues.ClientAuthenticationFailed, "ClientAuthenticationFailed");
 
 	// Sub-category: Database Operations (5300-53xx)
 	/// <summary>
@@ -542,7 +594,8 @@ public static class EventIds
 	/// <summary>
 	///     Failed to connect to the database.
 	/// </summary>
-	public static readonly EventId DatabaseConnectionFailed = new(EventIdValues.DatabaseConnectionFailed, "DatabaseConnectionFailed");
+	public static readonly EventId DatabaseConnectionFailed =
+		new(EventIdValues.DatabaseConnectionFailed, "DatabaseConnectionFailed");
 
 	/// <summary>
 	///     A database migration has started.
@@ -562,7 +615,8 @@ public static class EventIds
 	/// <summary>
 	///     A database query has been executed.
 	/// </summary>
-	public static readonly EventId DatabaseQueryExecuted = new(EventIdValues.DatabaseQueryExecuted, "DatabaseQueryExecuted");
+	public static readonly EventId DatabaseQueryExecuted =
+		new(EventIdValues.DatabaseQueryExecuted, "DatabaseQueryExecuted");
 
 	/// <summary>
 	///     A database query has failed.
@@ -572,7 +626,8 @@ public static class EventIds
 	/// <summary>
 	///     A database transaction has started.
 	/// </summary>
-	public static readonly EventId DatabaseTransactionStarted = new(EventIdValues.DatabaseTransactionStarted, "DatabaseTransactionStarted");
+	public static readonly EventId DatabaseTransactionStarted =
+		new(EventIdValues.DatabaseTransactionStarted, "DatabaseTransactionStarted");
 
 	/// <summary>
 	///     A database transaction has been committed.
@@ -589,22 +644,26 @@ public static class EventIds
 	/// <summary>
 	///     Disconnecting from the database.
 	/// </summary>
-	public static readonly EventId DatabaseDisconnecting = new(EventIdValues.DatabaseDisconnecting, "DatabaseDisconnecting");
+	public static readonly EventId DatabaseDisconnecting =
+		new(EventIdValues.DatabaseDisconnecting, "DatabaseDisconnecting");
 
 	/// <summary>
 	///     Successfully disconnected from the database.
 	/// </summary>
-	public static readonly EventId DatabaseDisconnected = new(EventIdValues.DatabaseDisconnected, "DatabaseDisconnected");
+	public static readonly EventId DatabaseDisconnected =
+		new(EventIdValues.DatabaseDisconnected, "DatabaseDisconnected");
 
 	/// <summary>
 	///     Failed to disconnect from the database.
 	/// </summary>
-	public static readonly EventId DatabaseDisconnectionFailed = new(EventIdValues.DatabaseDisconnectionFailed, "DatabaseDisconnectionFailed");
+	public static readonly EventId DatabaseDisconnectionFailed =
+		new(EventIdValues.DatabaseDisconnectionFailed, "DatabaseDisconnectionFailed");
 
 	/// <summary>
 	///     Database configuration has been loaded.
 	/// </summary>
-	public static readonly EventId DatabaseConfigurationLoaded = new(EventIdValues.DatabaseConfigurationLoaded, "DatabaseConfigurationLoaded");
+	public static readonly EventId DatabaseConfigurationLoaded =
+		new(EventIdValues.DatabaseConfigurationLoaded, "DatabaseConfigurationLoaded");
 
 	/// <summary>
 	///     Database configuration failed to load.
@@ -615,7 +674,8 @@ public static class EventIds
 	/// <summary>
 	///     Database configuration has been saved.
 	/// </summary>
-	public static readonly EventId DatabaseConfigurationSaved = new(EventIdValues.DatabaseConfigurationSaved, "DatabaseConfigurationSaved");
+	public static readonly EventId DatabaseConfigurationSaved =
+		new(EventIdValues.DatabaseConfigurationSaved, "DatabaseConfigurationSaved");
 
 	/// <summary>
 	///     Database configuration failed to save.
@@ -650,7 +710,8 @@ public static class EventIds
 	/// <summary>
 	///     A managed database server encountered an error.
 	/// </summary>
-	public static readonly EventId ManagedDatabaseServerError = new(EventIdValues.ManagedDatabaseServerError, "ManagedDatabaseServerError");
+	public static readonly EventId ManagedDatabaseServerError =
+		new(EventIdValues.ManagedDatabaseServerError, "ManagedDatabaseServerError");
 
 	/// <summary>
 	///     A managed database server backup has started.
@@ -684,7 +745,8 @@ public static class EventIds
 	/// <summary>
 	///     Player state failed to save.
 	/// </summary>
-	public static readonly EventId PlayerStateSaveFailed = new(EventIdValues.PlayerStateSaveFailed, "PlayerStateSaveFailed");
+	public static readonly EventId PlayerStateSaveFailed =
+		new(EventIdValues.PlayerStateSaveFailed, "PlayerStateSaveFailed");
 
 	/// <summary>
 	///     Player state is being loaded.
@@ -699,7 +761,8 @@ public static class EventIds
 	/// <summary>
 	///     Player state failed to load.
 	/// </summary>
-	public static readonly EventId PlayerStateLoadFailed = new(EventIdValues.PlayerStateLoadFailed, "PlayerStateLoadFailed");
+	public static readonly EventId PlayerStateLoadFailed =
+		new(EventIdValues.PlayerStateLoadFailed, "PlayerStateLoadFailed");
 
 	// Sub-category: World Events (5500-55xx)
 	/// <summary>
@@ -725,7 +788,8 @@ public static class EventIds
 	/// <summary>
 	///     Loot generation has failed.
 	/// </summary>
-	public static readonly EventId LootGenerationFailed = new(EventIdValues.LootGenerationFailed, "LootGenerationFailed");
+	public static readonly EventId LootGenerationFailed =
+		new(EventIdValues.LootGenerationFailed, "LootGenerationFailed");
 
 	// Sub-category: Entity Events (5600-56xx)
 	/// <summary>
@@ -764,52 +828,58 @@ public static class EventIds
 	public static readonly EventId EntityKilled = new(EventIdValues.EntityKilled, "EntityKilled");
 
 	/// <summary>
-	/// An entity had points in a named levelable change
+	///     An entity had points in a named levelable change
 	/// </summary>
-	public static readonly EventId LevelablePointsChanged = new(EventIdValues.LevelablePointsChanged, "LevelabledPointsChanged");
+	public static readonly EventId LevelablePointsChanged =
+		new(EventIdValues.LevelablePointsChanged, "LevelabledPointsChanged");
 
 	/// <summary>
-	/// An entity had points in a levelable change
+	///     An entity had points in a levelable change
 	/// </summary>
-	public static readonly EventId LevelablePointsChangedGeneric = new(EventIdValues.LevelablePointsChangedGeneric, "LevelablePointsChangedGeneric");
+	public static readonly EventId LevelablePointsChangedGeneric =
+		new(EventIdValues.LevelablePointsChangedGeneric, "LevelablePointsChangedGeneric");
+
 	/// <summary>
-	/// An entity had a named levelable change levels
+	///     An entity had a named levelable change levels
 	/// </summary>
 	public static readonly EventId LevelChanged = new(EventIdValues.LevelChanged, "LevelChanged");
 
 	/// <summary>
-	/// An entity had an unamed levelable change levels
+	///     An entity had an unamed levelable change levels
 	/// </summary>
 	public static readonly EventId LevelChangedGeneric = new(EventIdValues.LevelChangedGeneric, "LevelChangedGeneric");
 
 	/// <summary>
-	/// A skill is being set to a specific value.
+	///     A skill is being set to a specific value.
 	/// </summary>
 	public static readonly EventId SkillValueSet = new(EventIdValues.SkillValueSet, "SkillValueSet");
 
 	/// <summary>
-	/// A skill is being decreased.
+	///     A skill is being decreased.
 	/// </summary>
 	public static readonly EventId SkillValueDecrease = new(EventIdValues.SkillValueDecrease, "SkillValueDecrease");
 
 	/// <summary>
-	/// A skill is being increased.
+	///     A skill is being increased.
 	/// </summary>
 	public static readonly EventId SkillValueIncrease = new(EventIdValues.SkillValueIncrease, "SkillValueIncrease");
 
 	/// <summary>
-	/// A max-level skill was attempted to be increased.
+	///     A max-level skill was attempted to be increased.
 	/// </summary>
-	public static readonly EventId AttemptedIncreaseSkillAtMaxLevel = new(EventIdValues.AttemptedIncreaseSkillAtMaxLevel, "AttemptedIncreaseSkillAtMaxLevel");
+	public static readonly EventId AttemptedIncreaseSkillAtMaxLevel =
+		new(EventIdValues.AttemptedIncreaseSkillAtMaxLevel, "AttemptedIncreaseSkillAtMaxLevel");
 
 	/// Sub-category: State Machine Events (5700 - 57xx)
 	/// <summary>
-	/// The main menu state machine was initialized.
+	///     The main menu state machine was initialized.
 	/// </summary>
-	public static readonly EventId MainMenuStateMachineInitialized = new(EventIdValues.MainMenuStateMachineInitialized, "MainMenuStateMachineInitialized");
+	public static readonly EventId MainMenuStateMachineInitialized =
+		new(EventIdValues.MainMenuStateMachineInitialized, "MainMenuStateMachineInitialized");
 
 	/// <summary>
-	/// The main menu state machine transitioned to a new state.
+	///     The main menu state machine transitioned to a new state.
 	/// </summary>
-	public static readonly EventId MainMenuStateMachineTransitioned = new(EventIdValues.MainMenuStateMachineTransitioned, "MainMenuStateMachineTransitioned");
+	public static readonly EventId MainMenuStateMachineTransitioned =
+		new(EventIdValues.MainMenuStateMachineTransitioned, "MainMenuStateMachineTransitioned");
 }

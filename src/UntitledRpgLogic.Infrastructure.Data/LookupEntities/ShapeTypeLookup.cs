@@ -1,13 +1,12 @@
-
 using UntitledRpgLogic.Core.Common;
 
 namespace UntitledRpgLogic.Infrastructure.Data.LookupEntities;
+
 /// <summary>
-/// Provides a reference table in the databse for the <see cref="ShapeType" /> enum.
+///     Provides a reference table in the databse for the <see cref="ShapeType" /> enum.
 /// </summary>
 public class ShapeTypeLookup
 {
-
 	///<summary>The specific enum for this entry</summary>
 	public ShapeType Id { get; set; }
 

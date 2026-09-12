@@ -34,13 +34,6 @@ public record AbilityDefinition : IDbEntity<Ulid>
 	public AbilityDefinition(Name name) : this() => this.Name = name;
 
 	/// <summary>
-	///     The unique identifier for the ability (can be supplied from external TOML config).
-	/// </summary>
-	[Key]
-	[DatabaseGenerated(DatabaseGeneratedOption.None)]
-	public Ulid Id { get; init; }
-
-	/// <summary>
 	///     The display name of the ability.
 	/// </summary>
 	public required Name Name { get; init; }
@@ -120,4 +113,11 @@ public record AbilityDefinition : IDbEntity<Ulid>
 	///     Effects applied when activation fails or backfires.
 	/// </summary>
 	public virtual ICollection<Effect> FailureEffects { get; } = new List<Effect>();
+
+	/// <summary>
+	///     The unique identifier for the ability (can be supplied from external TOML config).
+	/// </summary>
+	[Key]
+	[DatabaseGenerated(DatabaseGeneratedOption.None)]
+	public Ulid Id { get; init; }
 }

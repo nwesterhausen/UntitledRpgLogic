@@ -1,13 +1,13 @@
-
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using UntitledRpgLogic.Core.Materials;
 using UntitledRpgLogic.Infrastructure.Data.LookupEntities;
 
 namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
-///<summary>
-/// Defines the <see cref="StateOfMatter" /> lookup table
-///</summary>
+
+/// <summary>
+///     Defines the <see cref="StateOfMatter" /> lookup table
+/// </summary>
 public sealed class StateOfMatterLookupConfiguration : IEntityTypeConfiguration<StateOfMatterLookup>
 {
 	///<inheritdoc />
@@ -26,11 +26,7 @@ public sealed class StateOfMatterLookupConfiguration : IEntityTypeConfiguration<
 
 		// Seed with enum data
 		var seedData = Enum.GetValues<StateOfMatter>()
-			.Select(e => new StateOfMatterLookup
-			{
-				Id = e,
-				Name = e.ToString()
-			});
+			.Select(e => new StateOfMatterLookup { Id = e, Name = e.ToString() });
 		_ = builder.HasData(seedData);
 	}
 }

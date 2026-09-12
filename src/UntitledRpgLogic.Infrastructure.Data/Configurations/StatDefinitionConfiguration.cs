@@ -1,15 +1,13 @@
-
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using UntitledRpgLogic.Core;
-using UntitledRpgLogic.Core.Common;
 using UntitledRpgLogic.Core.Stats;
 using UntitledRpgLogic.Infrastructure.Data.LookupEntities;
 
 namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
-///<summary>
-/// Defines advanced table configuration for <see cref="StatDefinition" />
-///</summary>
+
+/// <summary>
+///     Defines advanced table configuration for <see cref="StatDefinition" />
+/// </summary>
 public sealed class StatDefinitionConfiguration : IEntityTypeConfiguration<StatDefinition>
 {
 	///<inheritdoc />

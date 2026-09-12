@@ -10,5 +10,5 @@ public interface IDatabaseInitializer
 	/// </summary>
 	/// <param name="cancellationToken">A token to observe while waiting for the initialization task to complete.</param>
 	/// <returns>A <see cref="Task" /> representing the asynchronous initialization operation.</returns>
-	Task InitializeAsync(CancellationToken cancellationToken = default);
+	public Task InitializeAsync(CancellationToken cancellationToken = default);
 }

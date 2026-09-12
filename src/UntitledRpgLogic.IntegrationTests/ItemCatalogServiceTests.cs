@@ -1,5 +1,4 @@
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using UntitledRpgLogic.Core.Common;
 using UntitledRpgLogic.Core.Data;
 using UntitledRpgLogic.Core.Items;
@@ -40,9 +39,9 @@ public class ItemCatalogServiceTests
 					new Name("Mythril Ore"),
 					ItemType.Consumable,
 					ItemSubtype.Ore,
-					baseValue: 500,
-					weight: 2.0f,
-					maxStackSize: 99).ConfigureAwait(false);
+					500,
+					2.0f,
+					99).ConfigureAwait(false);
 
 				definitionId = def.Id;
 			}
@@ -52,7 +51,7 @@ public class ItemCatalogServiceTests
 			await using (scope2.ConfigureAwait(false))
 			{
 				var catalog = scope2.ServiceProvider.GetRequiredService<IItemCatalogService>();
-				var item = await catalog.SpawnItemFromCatalogAsync(definitionId, quantity: 5).ConfigureAwait(false);
+				var item = await catalog.SpawnItemFromCatalogAsync(definitionId, 5).ConfigureAwait(false);
 
 				Assert.IsNotNull(item);
 				Assert.AreEqual(definitionId, item.DefinitionId);

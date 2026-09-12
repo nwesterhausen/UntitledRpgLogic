@@ -17,13 +17,6 @@ public record ModificationEffect : IDbEntity<Ulid>
 	public ModificationEffect() => this.Id = Ulid.NewUlid();
 
 	/// <summary>
-	///     The unique identifier for this modification effect definition.
-	/// </summary>
-	[Key]
-	[DatabaseGenerated(DatabaseGeneratedOption.None)]
-	public Ulid Id { get; init; }
-
-	/// <summary>
 	///     A flat amount that affects the stat.
 	/// </summary>
 	public int FlatAmount { get; set; }
@@ -62,4 +55,11 @@ public record ModificationEffect : IDbEntity<Ulid>
 	///     The priority of the modification effect. Useful if multiple types of effects are applied at the same time.
 	/// </summary>
 	public int Priority { get; set; }
+
+	/// <summary>
+	///     The unique identifier for this modification effect definition.
+	/// </summary>
+	[Key]
+	[DatabaseGenerated(DatabaseGeneratedOption.None)]
+	public Ulid Id { get; init; }
 }

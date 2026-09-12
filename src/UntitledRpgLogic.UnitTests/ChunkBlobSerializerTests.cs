@@ -13,7 +13,8 @@ public class ChunkBlobSerializerTests
 		var structSize = Marshal.SizeOf<Tile2D>();
 
 		Assert.AreEqual(8, structSize, "Tile2D must be packed to exactly 8 bytes.");
-		Assert.AreEqual(2048, ChunkBlobExtensions.RawByteSize, "16x16 chunk raw byte footprint must equal 2,048 bytes.");
+		Assert.AreEqual(2048, ChunkBlobExtensions.RawByteSize,
+			"16x16 chunk raw byte footprint must equal 2,048 bytes.");
 	}
 
 	[TestMethod]
@@ -35,7 +36,8 @@ public class ChunkBlobSerializerTests
 
 		var compressed = source.CompressTiles();
 
-		Assert.IsLessThan(ChunkBlobExtensions.RawByteSize / 4, compressed.Length, "Brotli should compress uniform tiles to a fraction of raw size.");
+		Assert.IsLessThan(ChunkBlobExtensions.RawByteSize / 4, compressed.Length,
+			"Brotli should compress uniform tiles to a fraction of raw size.");
 
 		var destination = new Tile2D[ChunkBlobExtensions.TileCount];
 		compressed.DecompressTilesInto(destination);
@@ -62,9 +64,9 @@ public class ChunkBlobSerializerTests
 				Elevation = (short)(short.MinValue + (i * 250)),
 				LiquidDepth = (ushort)(i * 128),
 				GroundPaletteIndex = (byte)(i % 256),
-				LiquidPaletteIndex = (byte)((i * 3) % 256),
+				LiquidPaletteIndex = (byte)(i * 3 % 256),
 				TemperatureOffset = (sbyte)((i % 255) - 128),
-				Flags = i % 2 == 0 ? (TileTraits.Impassable | TileTraits.IsConstructed) : TileTraits.IsBurning
+				Flags = i % 2 == 0 ? TileTraits.Impassable | TileTraits.IsConstructed : TileTraits.IsBurning
 			};
 		}
 

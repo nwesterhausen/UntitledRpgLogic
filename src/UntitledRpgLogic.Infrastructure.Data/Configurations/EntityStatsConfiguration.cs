@@ -1,12 +1,12 @@
-
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using UntitledRpgLogic.Core.Entities;
 
 namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
-///<summary>
-/// Defines advanced table configuration for <see cref="EntityStats" />
-///</summary>
+
+/// <summary>
+///     Defines advanced table configuration for <see cref="EntityStats" />
+/// </summary>
 public sealed class EntityStatsConfiguration : IEntityTypeConfiguration<EntityStats>
 {
 	///<inheritdoc />

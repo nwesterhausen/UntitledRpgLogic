@@ -3,9 +3,10 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using UntitledRpgLogic.Core.Items;
 
 namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
-///<summary>
-/// Defines advanced table configuration for <see cref="Inventory" />
-///</summary>
+
+/// <summary>
+///     Defines advanced table configuration for <see cref="Inventory" />
+/// </summary>
 public sealed class InventoryConfiguration : IEntityTypeConfiguration<Inventory>
 {
 	///<inheritdoc />

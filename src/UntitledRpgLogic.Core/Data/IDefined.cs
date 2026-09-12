@@ -11,10 +11,10 @@ public interface IDefined : IDbEntity<Ulid>
 	/// <summary>
 	///     The localized display name of the definition.
 	/// </summary>
-	Name Name { get; }
+	public Name Name { get; }
 
 	/// <summary>
 	///     A descriptive summary or lore overview of this content definition.
 	/// </summary>
-	string Description { get; }
+	public string Description { get; }
 }

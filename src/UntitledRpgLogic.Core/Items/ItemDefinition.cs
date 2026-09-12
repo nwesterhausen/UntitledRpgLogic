@@ -53,13 +53,6 @@ public record ItemDefinition : IDbEntity<Ulid>
 	}
 
 	/// <summary>
-	///     The unique catalog identifier for the item template. Can be loaded from external config definitions.
-	/// </summary>
-	[Key]
-	[DatabaseGenerated(DatabaseGeneratedOption.None)]
-	public Ulid Id { get; init; }
-
-	/// <summary>
 	///     The name of the item template.
 	/// </summary>
 	public required Name Name { get; init; }
@@ -121,4 +114,11 @@ public record ItemDefinition : IDbEntity<Ulid>
 	///     All instances of this item actively existing in player inventories, containers, or the world.
 	/// </summary>
 	public ICollection<Item> Instances { get; } = new List<Item>();
+
+	/// <summary>
+	///     The unique catalog identifier for the item template. Can be loaded from external config definitions.
+	/// </summary>
+	[Key]
+	[DatabaseGenerated(DatabaseGeneratedOption.None)]
+	public Ulid Id { get; init; }
 }

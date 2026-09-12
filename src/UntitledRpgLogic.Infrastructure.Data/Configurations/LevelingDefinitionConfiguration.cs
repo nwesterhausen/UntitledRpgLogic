@@ -1,7 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using UntitledRpgLogic.Core.Abilities;
-using UntitledRpgLogic.Core.Abilities.Effects;
 using UntitledRpgLogic.Core.Progression;
 using UntitledRpgLogic.Infrastructure.Data.LookupEntities;
 

@@ -19,7 +19,7 @@ public record AbilityExecutionResult
 	public AbilityCastStatus Status { get; init; } = AbilityCastStatus.Success;
 
 	/// <summary>
-	///     Descriptive explanation or localized failure reason if <see cref="IsSuccess"/> is false.
+	///     Descriptive explanation or localized failure reason if <see cref="IsSuccess" /> is false.
 	/// </summary>
 	public string Message { get; init; } = string.Empty;
 
@@ -41,8 +41,6 @@ public record AbilityExecutionResult
 	/// <returns></returns>
 	public static AbilityExecutionResult Failed(AbilityCastStatus status, string message) => new()
 	{
-		IsSuccess = false,
-		Status = status,
-		Message = message
+		IsSuccess = false, Status = status, Message = message
 	};
 }

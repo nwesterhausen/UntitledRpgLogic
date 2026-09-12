@@ -30,13 +30,6 @@ public record ModifierDefinition : IDbEntity<Ulid>
 	public ModifierDefinition(Name name) : this() => this.Name = name;
 
 	/// <summary>
-	///     The unique identifier for the modifier definition.
-	/// </summary>
-	[Key]
-	[DatabaseGenerated(DatabaseGeneratedOption.None)]
-	public Ulid Id { get; init; }
-
-	/// <summary>
 	///     The display name of the modifier.
 	/// </summary>
 	public required Name Name { get; init; }
@@ -96,4 +89,11 @@ public record ModifierDefinition : IDbEntity<Ulid>
 	///     Navigation property to the per-stack modification effect.
 	/// </summary>
 	public IReadOnlyCollection<ModificationEffect>? StackEffects { get; init; }
+
+	/// <summary>
+	///     The unique identifier for the modifier definition.
+	/// </summary>
+	[Key]
+	[DatabaseGenerated(DatabaseGeneratedOption.None)]
+	public Ulid Id { get; init; }
 }

@@ -5,7 +5,7 @@ using UntitledRpgLogic.Core.Networking;
 namespace UntitledRpgLogic.Networking.LiteNetLib;
 
 /// <summary>
-///	 An implementation of INetworkService using LiteNetLib for networking.
+///     An implementation of INetworkService using LiteNetLib for networking.
 /// </summary>
 public class LitNetLibServerAdapter : INetworkService
 {
@@ -17,7 +17,7 @@ public class LitNetLibServerAdapter : INetworkService
 	private Thread? networkThread;
 
 	/// <summary>
-	///	 Creates a new instance of the LitNetLibServerAdapter with a payload serializer (via DI).
+	///     Creates a new instance of the LitNetLibServerAdapter with a payload serializer (via DI).
 	/// </summary>
 	/// <param name="serializer">the serializer we're using</param>
 	public LitNetLibServerAdapter(IPayloadSerializer serializer)
@@ -137,17 +137,21 @@ public class LitNetLibServerAdapter : INetworkService
 	}
 
 	private void OnPeerConnected(NetPeer peer) =>
-		this.ClientConnected?.Invoke(this, new ClientConnectionEventArgs(peer.Id.ToString(CultureInfo.InvariantCulture)));
+		this.ClientConnected?.Invoke(this,
+			new ClientConnectionEventArgs(peer.Id.ToString(CultureInfo.InvariantCulture)));
 
 
 	private void OnPeerDisconnected(NetPeer peer, DisconnectInfo disconnectInfo) =>
-		this.ClientDisconnected?.Invoke(this, new ClientConnectionEventArgs(peer.Id.ToString(CultureInfo.InvariantCulture)));
+		this.ClientDisconnected?.Invoke(this,
+			new ClientConnectionEventArgs(peer.Id.ToString(CultureInfo.InvariantCulture)));
 
-	private void OnNetworkReceive(NetPeer fromPeer, NetPacketReader dataReader, byte channel, DeliveryMethod deliveryMethod)
+	private void OnNetworkReceive(NetPeer fromPeer, NetPacketReader dataReader, byte channel,
+		DeliveryMethod deliveryMethod)
 	{
 		// The dataReader contains the raw bytes of the message
 		var data = dataReader.GetRemainingBytes();
-		this.MessageReceived?.Invoke(this, new MessageReceivedEventArgs(data, fromPeer.Id.ToString(CultureInfo.InvariantCulture)));
+		this.MessageReceived?.Invoke(this,
+			new MessageReceivedEventArgs(data, fromPeer.Id.ToString(CultureInfo.InvariantCulture)));
 		dataReader.Recycle(); // IMPORTANT: Recycle the reader to avoid GC pressure
 	}
 

@@ -5,12 +5,12 @@ using UntitledRpgLogic.Infrastructure.Data.Repositories;
 namespace UntitledRpgLogic.Infrastructure.Data;
 
 /// <summary>
-/// 	Defines the shared service collection extensions used by data adapters.
+///     Defines the shared service collection extensions used by data adapters.
 /// </summary>
 public static class CommonServiceCollectionExtensions
 {
 	/// <summary>
-	/// 	Register <see cref="IUnitOfWork" /> and all respositories with an existing <see cref="RpgDbContext" />
+	///     Register <see cref="IUnitOfWork" /> and all respositories with an existing <see cref="RpgDbContext" />
 	/// </summary>
 	public static IServiceCollection AddRpgCommonPersistence(this IServiceCollection services)
 	{

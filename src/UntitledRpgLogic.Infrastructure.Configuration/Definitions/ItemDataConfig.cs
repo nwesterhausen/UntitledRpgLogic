@@ -55,7 +55,7 @@ public record ItemDataConfig
 
 	/// <summary>
 	///     Optionally specify a specific dimension scale for the item's width, height, and depth. If not provided, they
-	///     will be interpreted as being in the default scale of <see cref="DimensionScale.Cm" />.
+	///     will be interpreted as being in the default scale of <see cref="Core.Common.DimensionScale.Cm" />.
 	/// </summary>
 	public DimensionScale DimensionScale { get; init; } = DimensionScale.Cm;
 
@@ -87,14 +87,16 @@ public record ItemDataConfig
 	public Ulid MaterialId { get; init; } = Ulid.Empty;
 
 	/// <summary>
-	///     The maximum number of this item that can be stacked in a single inventory slot. If this is greater than 1, the item is considered
+	///     The maximum number of this item that can be stacked in a single inventory slot. If this is greater than 1, the item
+	///     is considered
 	///     stackable.
 	///     If not provided, defaults to 1 (not stackable).
 	/// </summary>
 	public int MaxStack { get; init; } = 1;
 
 	/// <summary>
-	///     The base durability of the item. This represents how much wear and tear the item can take before it breaks or becomes unusable.
+	///     The base durability of the item. This represents how much wear and tear the item can take before it breaks or
+	///     becomes unusable.
 	///     If the item does not have durability, this should be set to 0. (e.g., for consumables or quest items)
 	/// </summary>
 	public int BaseDurability { get; init; }

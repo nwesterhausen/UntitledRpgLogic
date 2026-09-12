@@ -1,5 +1,4 @@
 using UntitledRpgLogic.Core.Common;
-using UntitledRpgLogic.Core.Materials;
 
 namespace UntitledRpgLogic.Core.Items;
 
@@ -12,7 +11,7 @@ public interface IItemCatalogService
 	///     Creates a new item definition via the domain factory, persists it to the database,
 	///     and commits the transaction.
 	/// </summary>
-	Task<ItemDefinition> RegisterDefinitionAsync(
+	public Task<ItemDefinition> RegisterDefinitionAsync(
 		Name name,
 		ItemType type,
 		ItemSubtype subtype,
@@ -26,7 +25,7 @@ public interface IItemCatalogService
 	/// <summary>
 	///     Loads an item definition from the database catalog and instantiates an in-memory item token.
 	/// </summary>
-	Task<Item> SpawnItemFromCatalogAsync(
+	public Task<Item> SpawnItemFromCatalogAsync(
 		Ulid itemDefinitionId,
 		int quantity = 1,
 		Ulid? craftedById = null,

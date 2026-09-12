@@ -8,9 +8,9 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="EFCore.NamingConventions" />
+		<PackageReference Include="EFCore.NamingConventions"/>
 		<PackageReference Include="Microsoft.Extensions.Logging"/>
-		<PackageReference Include="UntitledRpg.LibraryFile" />
+		<PackageReference Include="UntitledRpg.LibraryFile"/>
 	</ItemGroup>
 
 	<ItemGroup>

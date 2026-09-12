@@ -1,13 +1,13 @@
-
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using UntitledRpgLogic.Core.Abilities.Effects;
 using UntitledRpgLogic.Infrastructure.Data.LookupEntities;
 
 namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
-///<summary>
-/// Defines advanced table configuration for <see cref="Effect" />
-///</summary>
+
+/// <summary>
+///     Defines advanced table configuration for <see cref="Effect" />
+/// </summary>
 public sealed class EffectConfiguration : IEntityTypeConfiguration<Effect>
 {
 	///<inheritdoc />
@@ -45,6 +45,5 @@ public sealed class EffectConfiguration : IEntityTypeConfiguration<Effect>
 		// Owned Types
 		_ = builder.OwnsMany(e => e.AffectedStats, asb => asb.ToJson());
 		_ = builder.OwnsMany(e => e.AffectedAmbients, aab => aab.ToJson());
-
 	}
 }

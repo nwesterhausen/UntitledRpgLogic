@@ -12,7 +12,6 @@ namespace UntitledRpgLogic.Core.Networking;
 /// <param name="senderId">The identifier of the message sender.</param>
 public class MessageReceivedEventArgs(byte[] data, string? senderId = null) : EventArgs
 {
-
 	/// <summary>
 	///     Gets the raw data of the message that was received.
 	/// </summary>

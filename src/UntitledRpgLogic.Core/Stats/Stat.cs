@@ -28,13 +28,6 @@ public record Stat : IDbEntity<Ulid>
 	public Stat(Ulid definitionId) : this() => this.DefinitionId = definitionId;
 
 	/// <summary>
-	///     The unique identifier for this active stat instance.
-	/// </summary>
-	[Key]
-	[DatabaseGenerated(DatabaseGeneratedOption.None)]
-	public Ulid Id { get; init; }
-
-	/// <summary>
 	///     Foreign key referencing the template <see cref="Definition" />.
 	/// </summary>
 	public Ulid DefinitionId { get; init; }
@@ -56,7 +49,14 @@ public record Stat : IDbEntity<Ulid>
 	public int ApparentValue { get; set; }
 
 	/// <summary>
-	///		The "effective" value, i.e. the value transposed above its minium.
+	///     The "effective" value, i.e. the value transposed above its minium.
 	/// </summary>
 	public int EffectiveValue => this.ApparentValue - this.Definition?.MinValue ?? 0;
+
+	/// <summary>
+	///     The unique identifier for this active stat instance.
+	/// </summary>
+	[Key]
+	[DatabaseGenerated(DatabaseGeneratedOption.None)]
+	public Ulid Id { get; init; }
 }

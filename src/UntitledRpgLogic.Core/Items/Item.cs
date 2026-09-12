@@ -37,13 +37,6 @@ public record Item : IDbEntity<Ulid>
 	public Item(Ulid definitionId, Ulid craftedById) : this(definitionId) => this.CraftedById = craftedById;
 
 	/// <summary>
-	///     The unique primary key for the item instance.
-	/// </summary>
-	[Key]
-	[DatabaseGenerated(DatabaseGeneratedOption.None)]
-	public Ulid Id { get; init; }
-
-	/// <summary>
 	///     Foreign key referencing the parent <see cref="Definition" /> template.
 	/// </summary>
 	public required Ulid DefinitionId { get; init; }
@@ -80,4 +73,11 @@ public record Item : IDbEntity<Ulid>
 	///     Optional identifier for the entity or system that crafted this item.
 	/// </summary>
 	public Ulid? CraftedById { get; init; }
+
+	/// <summary>
+	///     The unique primary key for the item instance.
+	/// </summary>
+	[Key]
+	[DatabaseGenerated(DatabaseGeneratedOption.None)]
+	public Ulid Id { get; init; }
 }

@@ -32,7 +32,7 @@ public class ItemFactoryService : IItemFactoryService
 			MaxStackSize = maxStackSize,
 			CreatorEntityId = creatorEntityId,
 			Materials = materials ?? [],
-			Name = name,
+			Name = name
 		};
 	}
 
@@ -64,10 +64,7 @@ public class ItemFactoryService : IItemFactoryService
 
 		return new Item
 		{
-			Id = Ulid.NewUlid(),
-			DefinitionId = itemDefinitionId,
-			Quantity = quantity,
-			CraftedById = craftedById
+			Id = Ulid.NewUlid(), DefinitionId = itemDefinitionId, Quantity = quantity, CraftedById = craftedById
 		};
 	}
 }

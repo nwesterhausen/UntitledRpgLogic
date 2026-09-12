@@ -36,13 +36,6 @@ public record AppliedModifier : IDbEntity<Ulid>
 	}
 
 	/// <summary>
-	///     Primary key for the applied modifier instance.
-	/// </summary>
-	[Key]
-	[DatabaseGenerated(DatabaseGeneratedOption.None)]
-	public Ulid Id { get; init; }
-
-	/// <summary>
 	///     Foreign key referencing the template <see cref="ModifierDefinition" />.
 	/// </summary>
 	public required Ulid ModifierDefinitionId { get; init; }
@@ -79,4 +72,11 @@ public record AppliedModifier : IDbEntity<Ulid>
 	///     Timestamp when the modifier expires (null for permanent or indefinite modifiers).
 	/// </summary>
 	public DateTimeOffset? ExpiresAt { get; set; }
+
+	/// <summary>
+	///     Primary key for the applied modifier instance.
+	/// </summary>
+	[Key]
+	[DatabaseGenerated(DatabaseGeneratedOption.None)]
+	public Ulid Id { get; init; }
 }

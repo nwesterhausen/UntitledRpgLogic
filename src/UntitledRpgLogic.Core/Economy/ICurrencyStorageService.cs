@@ -10,20 +10,20 @@ public interface ICurrencyStorageService
 	/// <summary>
 	///     Calculates the total aggregate currency value of all currency items stored in the inventory.
 	/// </summary>
-	long GetTotalValue(Inventory inventory);
+	public long GetTotalValue(Inventory inventory);
 
 	/// <summary>
 	///     Gets the total count of a specific currency denomination held in the inventory.
 	/// </summary>
-	int GetQuantity(Inventory inventory, Ulid currencyItemDefinitionId);
+	public int GetQuantity(Inventory inventory, Ulid currencyItemDefinitionId);
 
 	/// <summary>
 	///     Deposits a designated quantity of currency into the inventory using an item definition template.
 	/// </summary>
-	bool TryDeposit(Inventory inventory, ItemDefinition currencyDef, int quantity);
+	public bool TryDeposit(Inventory inventory, ItemDefinition currencyDef, int quantity);
 
 	/// <summary>
 	///     Withdraws a specified quantity of a currency denomination, returning the detached item stack.
 	/// </summary>
-	bool TryWithdraw(Inventory inventory, Ulid currencyItemDefinitionId, int quantity, out Item? withdrawnItem);
+	public bool TryWithdraw(Inventory inventory, Ulid currencyItemDefinitionId, int quantity, out Item? withdrawnItem);
 }

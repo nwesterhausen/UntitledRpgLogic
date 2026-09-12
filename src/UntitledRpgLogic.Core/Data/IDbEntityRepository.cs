@@ -12,19 +12,20 @@ public interface IEntityRepository<TEntity, in TId> where TEntity : class, IDbEn
 	/// <summary>
 	///     Retrieves an entity by its identifier with optional single-level property includes.
 	/// </summary>
-	Task<TEntity?> GetByIdAsync(
+	public Task<TEntity?> GetByIdAsync(
 		TId id,
 		CancellationToken cancellationToken = default,
 		params Expression<Func<TEntity, object?>>[] includes);
 
 	/// <summary>
-	///     Retrieves an entity by its identifier using a composable query builder to support deep navigation includes (ThenInclude).
+	///     Retrieves an entity by its identifier using a composable query builder to support deep navigation includes
+	///     (ThenInclude).
 	/// </summary>
 	/// <param name="id">The entity identifier.</param>
 	/// <param name="include">A function to configure eager-loading includes and then-includes.</param>
 	/// <param name="cancellationToken">Cancellation token.</param>
 	/// <returns>The hydrated entity if found; otherwise, null.</returns>
-	Task<TEntity?> GetByIdAsync(
+	public Task<TEntity?> GetByIdAsync(
 		TId id,
 		Func<IQueryable<TEntity>, IQueryable<TEntity>> include,
 		CancellationToken cancellationToken = default);
@@ -32,7 +33,7 @@ public interface IEntityRepository<TEntity, in TId> where TEntity : class, IDbEn
 	/// <summary>
 	///     Retrieves multiple entities by their unique identifiers.
 	/// </summary>
-	Task<IReadOnlyList<TEntity>> GetByIdsAsync(
+	public Task<IReadOnlyList<TEntity>> GetByIdsAsync(
 		IEnumerable<TId> ids,
 		CancellationToken cancellationToken = default,
 		params Expression<Func<TEntity, object?>>[] includes);
@@ -40,15 +41,15 @@ public interface IEntityRepository<TEntity, in TId> where TEntity : class, IDbEn
 	/// <summary>
 	///     Adds a new entity to the repository.
 	/// </summary>
-	Task AddAsync(TEntity entity, CancellationToken cancellationToken = default);
+	public Task AddAsync(TEntity entity, CancellationToken cancellationToken = default);
 
 	/// <summary>
 	///     Updates an existing entity in the repository.
 	/// </summary>
-	void Update(TEntity entity);
+	public void Update(TEntity entity);
 
 	/// <summary>
 	///     Removes an entity from the repository.
 	/// </summary>
-	void Remove(TEntity entity);
+	public void Remove(TEntity entity);
 }

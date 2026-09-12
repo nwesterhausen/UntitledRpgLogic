@@ -15,17 +15,7 @@ public record WorldChunk : IDbEntity<Ulid>
 	/// <summary>
 	///     Initializes a new instance of the <see cref="WorldChunk" /> record.
 	/// </summary>
-	public WorldChunk()
-	{
-		this.Id = Ulid.NewUlid();
-	}
-
-	/// <summary>
-	///     The unique identifier for the chunk.
-	/// </summary>
-	[Key]
-	[DatabaseGenerated(DatabaseGeneratedOption.None)]
-	public Ulid Id { get; init; }
+	public WorldChunk() => this.Id = Ulid.NewUlid();
 
 	/// <summary>
 	///     Foreign key referencing the parent map definition.
@@ -84,4 +74,11 @@ public record WorldChunk : IDbEntity<Ulid>
 	/// </summary>
 	[NotMapped]
 	public bool HasActiveSimulation { get; set; }
+
+	/// <summary>
+	///     The unique identifier for the chunk.
+	/// </summary>
+	[Key]
+	[DatabaseGenerated(DatabaseGeneratedOption.None)]
+	public Ulid Id { get; init; }
 }

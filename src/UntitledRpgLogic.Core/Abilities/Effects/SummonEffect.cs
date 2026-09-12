@@ -10,15 +10,12 @@ namespace UntitledRpgLogic.Core.Abilities.Effects;
 public record SummonEffect : Effect
 {
 	/// <summary>
-	/// 	Initializes default base values.
+	///     Initializes default base values.
 	/// </summary>
-	public SummonEffect()
-	{
-		this.EffectType = EffectType.Summon;
-	}
+	public SummonEffect() => this.EffectType = EffectType.Summon;
 
 	/// <summary>
-	/// 	Initializes a new <see cref="Effect" /> with <see cref="EffectType.Summon" />.
+	///     Initializes a new <see cref="Effect" /> with <see cref="EffectType.Summon" />.
 	/// </summary>
 	public SummonEffect(Name name) : base(name, EffectType.Summon)
 	{
@@ -30,13 +27,13 @@ public record SummonEffect : Effect
 	public Ulid SummonEntityTemplateId { get; init; }
 
 	/// <summary>
-	/// 	Link to the <see cref="Entity"/> to summon.
+	///     Link to the <see cref="Entity" /> to summon.
 	/// </summary>
 	[ForeignKey(nameof(SummonEntityTemplateId))]
 	public Entity? SummonTemplate { get; init; }
 
 	/// <summary>
-	/// 	The amount of entities summoned.
+	///     The amount of entities summoned.
 	/// </summary>
 	public int Quantity { get; init; } = 1;
 }

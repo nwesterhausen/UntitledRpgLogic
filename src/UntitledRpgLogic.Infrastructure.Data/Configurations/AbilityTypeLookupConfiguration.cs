@@ -1,13 +1,13 @@
-
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using UntitledRpgLogic.Core.Abilities;
 using UntitledRpgLogic.Infrastructure.Data.LookupEntities;
 
 namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
-///<summary>
-/// Defines the <see cref="AbilityType" /> lookup table
-///</summary>
+
+/// <summary>
+///     Defines the <see cref="AbilityType" /> lookup table
+/// </summary>
 public sealed class AbilityTypeLookupConfiguration : IEntityTypeConfiguration<AbilityTypeLookup>
 {
 	///<inheritdoc />
@@ -26,11 +26,7 @@ public sealed class AbilityTypeLookupConfiguration : IEntityTypeConfiguration<Ab
 
 		// Seed with enum data
 		var seedData = Enum.GetValues<AbilityType>()
-			.Select(e => new AbilityTypeLookup
-			{
-				Id = e,
-				Name = e.ToString()
-			});
+			.Select(e => new AbilityTypeLookup { Id = e, Name = e.ToString() });
 		_ = builder.HasData(seedData);
 	}
 }

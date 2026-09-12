@@ -1,13 +1,13 @@
-
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using UntitledRpgLogic.Core.Networking;
 using UntitledRpgLogic.Infrastructure.Data.LookupEntities;
 
 namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
-///<summary>
-/// Defines the <see cref="MessagePriority" /> lookup table
-///</summary>
+
+/// <summary>
+///     Defines the <see cref="MessagePriority" /> lookup table
+/// </summary>
 public sealed class MessagePriorityLookupConfiguration : IEntityTypeConfiguration<MessagePriorityLookup>
 {
 	///<inheritdoc />
@@ -26,11 +26,7 @@ public sealed class MessagePriorityLookupConfiguration : IEntityTypeConfiguratio
 
 		// Seed with enum data
 		var seedData = Enum.GetValues<MessagePriority>()
-			.Select(e => new MessagePriorityLookup
-			{
-				Id = e,
-				Name = e.ToString()
-			});
+			.Select(e => new MessagePriorityLookup { Id = e, Name = e.ToString() });
 		_ = builder.HasData(seedData);
 	}
 }

@@ -7,17 +7,13 @@ namespace UntitledRpgLogic.Core.Abilities.Effects;
 /// </summary>
 public record EnchantEffect : Effect
 {
-
 	/// <summary>
-	/// 	Initializes default base values.
+	///     Initializes default base values.
 	/// </summary>
-	public EnchantEffect()
-	{
-		this.EffectType = EffectType.Enchant;
-	}
+	public EnchantEffect() => this.EffectType = EffectType.Enchant;
 
 	/// <summary>
-	/// 	Initializes a new <see cref="Effect" /> with <see cref="EffectType.Enchant" />.
+	///     Initializes a new <see cref="Effect" /> with <see cref="EffectType.Enchant" />.
 	/// </summary>
 	public EnchantEffect(Name name) : base(name, EffectType.Enchant)
 	{

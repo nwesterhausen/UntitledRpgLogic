@@ -13,11 +13,12 @@ public interface IAbilityCoordinatorService
 	///     and persisting stat changes atomically.
 	/// </summary>
 	/// <param name="targetEntityIds">
-	///     List of targets to use the ability on. Ignored if <see cref="TargetingType.Self"/> or <see cref="TargetingType.None"/>
+	///     List of targets to use the ability on. Ignored if <see cref="TargetingType.Self" /> or
+	///     <see cref="TargetingType.None" />
 	/// </param>
 	/// <param name="cancellationToken">A cancellation token to cancel the task.</param>
-	/// <param name="casterEntityId"><see cref="Entity.Id"/> of the casting entity</param>
-	/// <param name="abilityId"><see cref="AbilityDefinition.Id"/> of the ability to cast.</param>
+	/// <param name="casterEntityId"><see cref="Entity.Id" /> of the casting entity</param>
+	/// <param name="abilityId"><see cref="AbilityDefinition.Id" /> of the ability to cast.</param>
 	public Task<AbilityExecutionResult> CastAbilityAsync(
 		Ulid casterEntityId,
 		Ulid abilityId,
@@ -27,9 +28,9 @@ public interface IAbilityCoordinatorService
 	/// <summary>
 	///     Validates whether an entity meets casting preconditions and has sufficient stat resources.
 	/// </summary>
-	/// <param name="abilityId"><see cref="AbilityDefinition.Id"/> of the ability to check.</param>
+	/// <param name="abilityId"><see cref="AbilityDefinition.Id" /> of the ability to check.</param>
 	/// <param name="cancellationToken">A cancellation token to cancel the task.</param>
-	/// <param name="casterEntityId"><see cref="Entity.Id"/> of the entity attempting to cast.</param>
+	/// <param name="casterEntityId"><see cref="Entity.Id" /> of the entity attempting to cast.</param>
 	public Task<bool> CanCastAbilityAsync(
 		Ulid casterEntityId,
 		Ulid abilityId,

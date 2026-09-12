@@ -26,7 +26,8 @@ public struct Tile2D : IEquatable<Tile2D>
 	public byte GroundPaletteIndex;
 
 	/// <summary>
-	///     0-based index pointing to the chunk's <see cref="WorldChunk.MaterialPalette" /> for the liquid substance (e.g., Water, Acid, Lava).
+	///     0-based index pointing to the chunk's <see cref="WorldChunk.MaterialPalette" /> for the liquid substance (e.g.,
+	///     Water, Acid, Lava).
 	/// </summary>
 	public byte LiquidPaletteIndex;
 

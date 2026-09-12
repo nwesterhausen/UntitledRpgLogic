@@ -28,5 +28,5 @@ public enum MapType
 	/// <summary>
 	///     Isolated pocket dimension, demiplane, or arena.
 	/// </summary>
-	PocketDimension = 4,
+	PocketDimension = 4
 }

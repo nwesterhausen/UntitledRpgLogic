@@ -29,5 +29,4 @@ public static partial class LoggingExtensions
 		Level = LogLevel.Warning,
 		Message = "Attempted to add {points} points to max-level skill {skillName}.")]
 	public static partial void AttemptedIncreaseSkillAtMaxLevel(this ILogger logger, string skillName, int points);
-
 }

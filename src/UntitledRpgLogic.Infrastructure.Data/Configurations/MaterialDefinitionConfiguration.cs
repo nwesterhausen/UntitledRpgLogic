@@ -1,4 +1,3 @@
-
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using UntitledRpgLogic.Core.Materials;
@@ -6,9 +5,10 @@ using UntitledRpgLogic.Infrastructure.Data.LookupEntities;
 using UntitledRpgLogic.Infrastructure.Data.ValueConverters;
 
 namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
-///<summary>
-/// Defines advanced table configuration for <see cref="MaterialDefinition" />
-///</summary>
+
+/// <summary>
+///     Defines advanced table configuration for <see cref="MaterialDefinition" />
+/// </summary>
 public sealed class MaterialDefinitionConfiguration : IEntityTypeConfiguration<MaterialDefinition>
 {
 	///<inheritdoc />
@@ -30,7 +30,7 @@ public sealed class MaterialDefinitionConfiguration : IEntityTypeConfiguration<M
 		{
 			fp.ToJson();
 			fp.Property(p => p.ElementalAttunement)
-	  			.HasConversion<ElementalAttunementConverter>();
+				.HasConversion<ElementalAttunementConverter>();
 		});
 
 		builder.OwnsMany(m => m.StateProperties, spb =>
@@ -48,7 +48,7 @@ public sealed class MaterialDefinitionConfiguration : IEntityTypeConfiguration<M
 			spb.OwnsOne(sp => sp.FantasticalProperties, fb =>
 			{
 				fb.Property(p => p.ElementalAttunement)
-		  			.HasConversion<ElementalAttunementConverter>();
+					.HasConversion<ElementalAttunementConverter>();
 			});
 		});
 

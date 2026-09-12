@@ -11,11 +11,11 @@
 
 	<ItemGroup>
 		<!-- Project References to your adapters and domain layers -->
-		<ProjectReference Include="..\UntitledRpgLogic.Core\UntitledRpgLogic.Core.csproj" />
-		<ProjectReference Include="..\UntitledRpgLogic.Services\UntitledRpgLogic.Services.csproj" />
+		<ProjectReference Include="..\UntitledRpgLogic.Core\UntitledRpgLogic.Core.csproj"/>
+		<ProjectReference Include="..\UntitledRpgLogic.Services\UntitledRpgLogic.Services.csproj"/>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="Microsoft.NET.Test.Sdk" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk"/>
 	</ItemGroup>
 </Project>

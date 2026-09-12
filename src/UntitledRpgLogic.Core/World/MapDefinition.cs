@@ -31,13 +31,6 @@ public record MapDefinition : IDbEntity<Ulid>
 	public MapDefinition(Name name) : this() => this.Name = name;
 
 	/// <summary>
-	///     The unique identifier for the map.
-	/// </summary>
-	[Key]
-	[DatabaseGenerated(DatabaseGeneratedOption.None)]
-	public Ulid Id { get; init; }
-
-	/// <summary>
 	///     The localized display name of the map.
 	/// </summary>
 	public required Name Name { get; init; }
@@ -72,4 +65,11 @@ public record MapDefinition : IDbEntity<Ulid>
 	///     Transition points (doors, stairs, portals) originating on this map.
 	/// </summary>
 	public virtual ICollection<MapTransition> Transitions { get; } = new List<MapTransition>();
+
+	/// <summary>
+	///     The unique identifier for the map.
+	/// </summary>
+	[Key]
+	[DatabaseGenerated(DatabaseGeneratedOption.None)]
+	public Ulid Id { get; init; }
 }

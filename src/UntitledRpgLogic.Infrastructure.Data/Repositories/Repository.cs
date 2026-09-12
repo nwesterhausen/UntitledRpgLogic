@@ -5,10 +5,23 @@ using UntitledRpgLogic.Core.Data;
 namespace UntitledRpgLogic.Infrastructure.Data.Repositories;
 
 /// <summary>
-/// 	Implementation of <see cref="IRepository{T}"/>. Interacts with the <see cref="DbSet" /> declared on the <see cref="RpgDbContext" />.
+///     Implementation of <see cref="IRepository{T}" />. Interacts with the <see cref="DbSet" /> declared on the
+///     <see cref="RpgDbContext" />.
 /// </summary>
 public class Repository<T> : IRepository<T> where T : class
 {
+	/// <summary>
+	///     Creates a repository for the supplied database context.
+	/// </summary>
+	/// <param name="context">Database context to create a respository within</param>
+	public Repository(RpgDbContext context)
+	{
+		ArgumentNullException.ThrowIfNull(context);
+
+		this.Context = context;
+		this.DbSet = context.Set<T>();
+	}
+
 	/// <summary>
 	///     Gets the underlying <see cref="RpgDbContext" />.
 	/// </summary>
@@ -19,17 +32,6 @@ public class Repository<T> : IRepository<T> where T : class
 	/// </summary>
 	protected DbSet<T> DbSet { get; }
 
-	/// <summary>
-	/// 	Creates a repository for the supplied database context.
-	/// </summary>
-	/// <param name="context">Database context to create a respository within</param>
-	public Repository(RpgDbContext context)
-	{
-		ArgumentNullException.ThrowIfNull(context);
-
-		this.Context = context;
-		this.DbSet = context.Set<T>();
-	}
 	/// <inheritdoc />
 	public virtual async Task<T?> FirstOrDefaultAsync(
 		Expression<Func<T, bool>> predicate,
@@ -88,12 +90,10 @@ public class Repository<T> : IRepository<T> where T : class
 	/// <inheritdoc />
 	public virtual async Task<int> CountAsync(
 		Expression<Func<T, bool>>? predicate = null,
-		CancellationToken cancellationToken = default)
-	{
-		return predicate is null
+		CancellationToken cancellationToken = default) =>
+		predicate is null
 			? await this.DbSet.CountAsync(cancellationToken).ConfigureAwait(false)
 			: await this.DbSet.CountAsync(predicate, cancellationToken).ConfigureAwait(false);
-	}
 
 	/// <inheritdoc />
 	public virtual async Task AddAsync(T entity, CancellationToken cancellationToken = default)

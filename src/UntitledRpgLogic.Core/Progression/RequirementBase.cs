@@ -31,7 +31,8 @@ public abstract record RequirementBase
 	public Ulid RequiredEntityId { get; init; }
 
 	/// <summary>
-	///     The numerical threshold or minimum level required to satisfy this condition. Ignored for implicit requirement types.
+	///     The numerical threshold or minimum level required to satisfy this condition. Ignored for implicit requirement
+	///     types.
 	/// </summary>
 	public float AmountNeeded { get; set; }
 }

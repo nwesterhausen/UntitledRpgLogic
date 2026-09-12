@@ -13,7 +13,6 @@ namespace UntitledRpgLogic.Core.Items;
 /// <param name="totalInInventory">Total number of this item in the inventory after storage</param>
 public class SuccessfulItemStorageEventArgs(string item, int amount, Ulid itemId, int totalInInventory) : EventArgs
 {
-
 	/// <summary>
 	///     The item that was stored in the inventory.
 	/// </summary>

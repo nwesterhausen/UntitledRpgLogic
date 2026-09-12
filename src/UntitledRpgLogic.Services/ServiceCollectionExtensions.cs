@@ -1,7 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using UntitledRpgLogic.Core.Economy;
 using UntitledRpgLogic.Core.Items;
-using UntitledRpgLogic.Core.Localization;
 using UntitledRpgLogic.Core.Stats;
 
 namespace UntitledRpgLogic.Services;

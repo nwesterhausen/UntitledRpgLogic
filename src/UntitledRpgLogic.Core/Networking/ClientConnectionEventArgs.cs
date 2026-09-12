@@ -9,7 +9,6 @@ namespace UntitledRpgLogic.Core.Networking;
 /// <param name="clientId">The unique identifier for the client.</param>
 public class ClientConnectionEventArgs(string clientId) : EventArgs
 {
-
 	/// <summary>
 	///     Gets the unique identifier for the client.
 	/// </summary>

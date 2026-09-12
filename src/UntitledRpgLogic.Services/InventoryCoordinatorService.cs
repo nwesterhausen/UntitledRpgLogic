@@ -8,12 +8,12 @@ namespace UntitledRpgLogic.Services;
 /// <inheritdoc />
 public sealed class InventoryCoordinatorService : IInventoryCoordinatorService
 {
-	private readonly IUnitOfWork unitOfWork;
 	private readonly IEntityRepository<Entity, Ulid> entityRepository;
 	private readonly IItemStorageService storageService;
+	private readonly IUnitOfWork unitOfWork;
 
 	/// <summary>
-	///		Creates the Inventory coordinator service
+	///     Creates the Inventory coordinator service
 	/// </summary>
 	/// <param name="unitOfWork"></param>
 	/// <param name="entityRepository"></param>
@@ -40,8 +40,8 @@ public sealed class InventoryCoordinatorService : IInventoryCoordinatorService
 		var entity = await this.entityRepository.GetByIdAsync(
 			entityId,
 			q => q.Include(e => e.Inventory)
-				  .ThenInclude(inv => inv!.Items)
-				  .ThenInclude(i => i.Definition),
+				.ThenInclude(inv => inv!.Items)
+				.ThenInclude(i => i.Definition),
 			cancellationToken).ConfigureAwait(false);
 
 		if (entity?.Inventory is null)
@@ -68,7 +68,7 @@ public sealed class InventoryCoordinatorService : IInventoryCoordinatorService
 		var entity = await this.entityRepository.GetByIdAsync(
 			entityId,
 			q => q.Include(e => e.Inventory)
-				  .ThenInclude(inv => inv!.Items),
+				.ThenInclude(inv => inv!.Items),
 			cancellationToken).ConfigureAwait(false);
 
 		if (entity?.Inventory is null)
@@ -100,15 +100,15 @@ public sealed class InventoryCoordinatorService : IInventoryCoordinatorService
 			var source = await this.entityRepository.GetByIdAsync(
 				sourceEntityId,
 				q => q.Include(e => e.Inventory)
-					  .ThenInclude(inv => inv!.Items)
-					  .ThenInclude(i => i.Definition),
+					.ThenInclude(inv => inv!.Items)
+					.ThenInclude(i => i.Definition),
 				cancellationToken).ConfigureAwait(false);
 
 			var target = await this.entityRepository.GetByIdAsync(
 				targetEntityId,
 				q => q.Include(e => e.Inventory)
-					  .ThenInclude(inv => inv!.Items)
-					  .ThenInclude(i => i.Definition),
+					.ThenInclude(inv => inv!.Items)
+					.ThenInclude(i => i.Definition),
 				cancellationToken).ConfigureAwait(false);
 
 			if (source?.Inventory is null || target?.Inventory is null)

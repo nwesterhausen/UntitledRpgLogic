@@ -3,27 +3,27 @@ using UntitledRpgLogic.Core.Progression;
 namespace UntitledRpgLogic.Infrastructure.Configuration.Definitions;
 
 /// <summary>
-///	 Configuration for a Skill in the RPG logic.
+///     Configuration for a Skill in the RPG logic.
 /// </summary>
 public record SkillConfig
 {
 	/// <summary>
-	///	 Items will always have a name. This is required.
+	///     Items will always have a name. This is required.
 	/// </summary>
 	public required string Name { get; init; }
 
 	/// <summary>
-	///	 A short description of the item. This is optional and can be used to provide additional context or flavor text
+	///     A short description of the item. This is optional and can be used to provide additional context or flavor text
 	/// </summary>
 	public string? Description { get; init; }
 
 	/// <summary>
-	///	 Options for the leveling behavior of the skill. If not provided, the default leveling options will be used.
+	///     Options for the leveling behavior of the skill. If not provided, the default leveling options will be used.
 	/// </summary>
 	public LevelingDefinition LevelingDefinition { get; init; } = new();
 
 	/// <summary>
-	///	 The <see cref="Ulid"/> identifier for this skill configuration. This is required.
+	///     The <see cref="Ulid" /> identifier for this skill configuration. This is required.
 	/// </summary>
 	public Ulid Id { get; init; } = Ulid.NewUlid();
 }

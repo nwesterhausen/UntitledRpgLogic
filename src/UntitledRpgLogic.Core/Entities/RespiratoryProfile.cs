@@ -25,7 +25,8 @@ public record RespiratoryProfile
 	public ICollection<Ulid> AlternativeBreathableMaterials { get; init; } = [];
 
 	/// <summary>
-	///     Minimum partial or hydrostatic pressure in atmospheres required to prevent suffocation (e.g., 0.16 atm for human O2).
+	///     Minimum partial or hydrostatic pressure in atmospheres required to prevent suffocation (e.g., 0.16 atm for human
+	///     O2).
 	/// </summary>
 	public float MinRequiredPressure { get; init; } = 0.16f;
 

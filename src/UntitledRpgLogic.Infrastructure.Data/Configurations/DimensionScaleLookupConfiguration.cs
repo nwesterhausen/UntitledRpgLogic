@@ -1,13 +1,13 @@
-
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using UntitledRpgLogic.Core.Common;
 using UntitledRpgLogic.Infrastructure.Data.LookupEntities;
 
 namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
-///<summary>
-/// Defines the <see cref="DimensionScale" /> lookup table
-///</summary>
+
+/// <summary>
+///     Defines the <see cref="DimensionScale" /> lookup table
+/// </summary>
 public sealed class DimensionScaleLookupConfiguration : IEntityTypeConfiguration<DimensionScaleLookup>
 {
 	///<inheritdoc />
@@ -26,11 +26,7 @@ public sealed class DimensionScaleLookupConfiguration : IEntityTypeConfiguration
 
 		// Seed with enum data
 		var seedData = Enum.GetValues<DimensionScale>()
-			.Select(e => new DimensionScaleLookup
-			{
-				Id = e,
-				Name = e.ToString()
-			});
+			.Select(e => new DimensionScaleLookup { Id = e, Name = e.ToString() });
 		_ = builder.HasData(seedData);
 	}
 }

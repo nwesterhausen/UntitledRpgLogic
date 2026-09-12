@@ -9,7 +9,8 @@ namespace UntitledRpgLogic.Core.World;
 [SuppressMessage(
 	"Naming",
 	"CA1028:Enum Storage should be Int32",
-	Justification = "Underlying byte storage is required for compact memory alignment within unmanaged Tile2D binary arrays.")]
+	Justification =
+		"Underlying byte storage is required for compact memory alignment within unmanaged Tile2D binary arrays.")]
 public enum TileTraits : byte
 {
 	/// <summary>
@@ -35,5 +36,5 @@ public enum TileTraits : byte
 	/// <summary>
 	///     Tile contains dense, concentrated gas or smoke differing from the general atmosphere.
 	/// </summary>
-	HasLocalGas = 1 << 3,
+	HasLocalGas = 1 << 3
 }

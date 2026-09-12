@@ -6,7 +6,7 @@ namespace UntitledRpgLogic.Core.Items;
 public interface IItemStorageService
 {
 	/// <summary>
-	///		Evaluates whether the specified item instance can be stored within the target inventory.
+	///     Evaluates whether the specified item instance can be stored within the target inventory.
 	/// </summary>
 	/// <param name="inventory">Inventory to check if we can store into.</param>
 	/// <param name="item">Item to check if it can be stored in the inventory.</param>

@@ -20,13 +20,6 @@ public record MapTransition : IDbEntity<Ulid>
 	}
 
 	/// <summary>
-	///     The unique identifier for the transition.
-	/// </summary>
-	[Key]
-	[DatabaseGenerated(DatabaseGeneratedOption.None)]
-	public Ulid Id { get; init; }
-
-	/// <summary>
 	///     Foreign key referencing the originating map.
 	/// </summary>
 	public Ulid SourceMapId { get; init; }
@@ -73,4 +66,11 @@ public record MapTransition : IDbEntity<Ulid>
 	/// </summary>
 	[MaxLength(128)]
 	public string TransitionTag { get; init; }
+
+	/// <summary>
+	///     The unique identifier for the transition.
+	/// </summary>
+	[Key]
+	[DatabaseGenerated(DatabaseGeneratedOption.None)]
+	public Ulid Id { get; init; }
 }

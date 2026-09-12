@@ -41,7 +41,8 @@ public enum RequirementType
 	ClassLevel = 6,
 
 	/// <summary>
-	///     Requirement specifying that the player must be of a certain profession and at least a specific level in that profession.
+	///     Requirement specifying that the player must be of a certain profession and at least a specific level in that
+	///     profession.
 	/// </summary>
 	ProfessionLevel = 7,
 
@@ -63,5 +64,5 @@ public enum RequirementType
 	/// <summary>
 	///     Requirement specifying that the player must be of a certain profession (implicit Professionlevel >= 1)
 	/// </summary>
-	Profession = ProfessionLevel,
+	Profession = ProfessionLevel
 }

@@ -36,13 +36,6 @@ public record Element : IDbEntity<Ulid>
 	public Element(Name name, string description) : this(name) => this.Description = description;
 
 	/// <summary>
-	///     The unique catalog identifier for the element. Can be assigned explicitly when loading from config archives.
-	/// </summary>
-	[Key]
-	[DatabaseGenerated(DatabaseGeneratedOption.None)]
-	public Ulid Id { get; init; }
-
-	/// <summary>
 	///     The display name of the element.
 	/// </summary>
 	public required Name Name { get; init; }
@@ -52,4 +45,11 @@ public record Element : IDbEntity<Ulid>
 	/// </summary>
 	[MaxLength(1024)]
 	public string Description { get; init; }
+
+	/// <summary>
+	///     The unique catalog identifier for the element. Can be assigned explicitly when loading from config archives.
+	/// </summary>
+	[Key]
+	[DatabaseGenerated(DatabaseGeneratedOption.None)]
+	public Ulid Id { get; init; }
 }

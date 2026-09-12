@@ -1,13 +1,12 @@
-
 using UntitledRpgLogic.Core.Materials;
 
 namespace UntitledRpgLogic.Infrastructure.Data.LookupEntities;
+
 /// <summary>
-/// Provides a reference table in the databse for the <see cref="StateOfMatter" /> enum.
+///     Provides a reference table in the databse for the <see cref="StateOfMatter" /> enum.
 /// </summary>
 public class StateOfMatterLookup
 {
-
 	///<summary>The specific enum for this entry</summary>
 	public StateOfMatter Id { get; set; }
 

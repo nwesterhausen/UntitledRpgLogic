@@ -1,13 +1,13 @@
-
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using UntitledRpgLogic.Core.Common;
 using UntitledRpgLogic.Infrastructure.Data.LookupEntities;
 
 namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
-///<summary>
-/// Defines the <see cref="MassScale" /> lookup table
-///</summary>
+
+/// <summary>
+///     Defines the <see cref="MassScale" /> lookup table
+/// </summary>
 public sealed class MassScaleLookupConfiguration : IEntityTypeConfiguration<MassScaleLookup>
 {
 	///<inheritdoc />
@@ -26,11 +26,7 @@ public sealed class MassScaleLookupConfiguration : IEntityTypeConfiguration<Mass
 
 		// Seed with enum data
 		var seedData = Enum.GetValues<MassScale>()
-			.Select(e => new MassScaleLookup
-			{
-				Id = e,
-				Name = e.ToString()
-			});
+			.Select(e => new MassScaleLookup { Id = e, Name = e.ToString() });
 		_ = builder.HasData(seedData);
 	}
 }

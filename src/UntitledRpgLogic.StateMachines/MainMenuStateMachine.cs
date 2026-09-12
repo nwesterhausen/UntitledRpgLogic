@@ -113,6 +113,7 @@ public class MainMenuStateMachine
 			this.logger.MainMenuStateMachineTransitioned(
 				t.Source.ToString(), t.Destination.ToString(), t.Trigger.ToString());
 		}
+
 		this.StateChanged?.Invoke(this, new MainMenuStateChangedEventArgs(t.Destination));
 	}
 

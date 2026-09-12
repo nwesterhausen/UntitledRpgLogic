@@ -41,7 +41,7 @@ public class RpgDbContext(DbContextOptions<RpgDbContext> options) : DbContext(op
 	public DbSet<Effect> Effects { get; set; } = null!;
 
 	/// <summary>
-	/// 	Table for fantastical elements
+	///     Table for fantastical elements
 	/// </summary>
 	public DbSet<Element> Elements { get; set; } = null!;
 
@@ -131,7 +131,7 @@ public class RpgDbContext(DbContextOptions<RpgDbContext> options) : DbContext(op
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{
 		base.OnModelCreating(modelBuilder);
-		ArgumentNullException.ThrowIfNull(modelBuilder, nameof(modelBuilder));
+		ArgumentNullException.ThrowIfNull(modelBuilder);
 
 		// Configure lookup tables
 		// Configure advanced table relationships (1 -> M, M -> M, additional FK, composite PK)
@@ -142,7 +142,7 @@ public class RpgDbContext(DbContextOptions<RpgDbContext> options) : DbContext(op
 	/// <inheritdoc />
 	protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
 	{
-		ArgumentNullException.ThrowIfNull(configurationBuilder, nameof(configurationBuilder));
+		ArgumentNullException.ThrowIfNull(configurationBuilder);
 
 		// This is where the value converters are registered.
 		// Tell EF Core to use our custom converter for every property of type Ulid.

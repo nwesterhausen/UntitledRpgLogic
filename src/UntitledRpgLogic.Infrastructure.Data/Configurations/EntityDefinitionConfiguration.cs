@@ -1,12 +1,12 @@
-
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using UntitledRpgLogic.Core.Entities;
 
 namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
-///<summary>
-/// Defines relationship in the <see cref="EntityDefinition" /> table
-///</summary>
+
+/// <summary>
+///     Defines relationship in the <see cref="EntityDefinition" /> table
+/// </summary>
 public sealed class EntityDefinitionConfiguration : IEntityTypeConfiguration<EntityDefinition>
 {
 	///<inheritdoc />

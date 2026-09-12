@@ -5,7 +5,7 @@ using UntitledRpgLogic.Core.World;
 namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
 
 /// <summary>
-/// 	Advanced table configuration for <see cref="MapTransition"/>
+///     Advanced table configuration for <see cref="MapTransition" />
 /// </summary>
 public sealed class MapTransitionConfiguration : IEntityTypeConfiguration<MapTransition>
 {

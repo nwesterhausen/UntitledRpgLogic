@@ -18,27 +18,33 @@ public sealed record PackageIngestionResult
 	public required PackageManifest Manifest { get; init; }
 
 	/// <summary>
-	/// 	Count of loaded <see cref="EntityDefinition" />
+	///     Count of loaded <see cref="EntityDefinition" />
 	/// </summary>
 	public int EntitiesLoaded { get; init; }
+
 	/// <summary>
-	/// 	Count of loaded <see cref="StatDefinition" />
+	///     Count of loaded <see cref="StatDefinition" />
 	/// </summary>
 	public int StatsLoaded { get; init; }
+
 	/// <summary>
-	/// 	Count of loaded <see cref="SkillDefinition" />
+	///     Count of loaded <see cref="SkillDefinition" />
 	/// </summary>
 	public int SkillsLoaded { get; init; }
+
 	/// <summary>
-	/// 	Count of loaded <see cref="ItemDefinition" />
+	///     Count of loaded <see cref="ItemDefinition" />
 	/// </summary>
 	public int ItemsLoaded { get; init; }
+
 	/// <summary>
-	/// 	Count of loaded <see cref="MaterialDefinition" />
+	///     Count of loaded <see cref="MaterialDefinition" />
 	/// </summary>
 	public int MaterialsLoaded { get; init; }
+
 	/// <summary>
-	/// 	Count of all loaded definitions
+	///     Count of all loaded definitions
 	/// </summary>
-	public int TotalDefinitionsLoaded => this.EntitiesLoaded + this.StatsLoaded + this.SkillsLoaded + this.ItemsLoaded + this.MaterialsLoaded;
+	public int TotalDefinitionsLoaded => this.EntitiesLoaded + this.StatsLoaded + this.SkillsLoaded + this.ItemsLoaded +
+	                                     this.MaterialsLoaded;
 }

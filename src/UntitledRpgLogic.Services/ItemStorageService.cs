@@ -3,7 +3,7 @@ using UntitledRpgLogic.Core.Items;
 namespace UntitledRpgLogic.Services;
 
 /// <summary>
-///		Service that handles moving items around while respecting inventory and item restrictions.
+///     Service that handles moving items around while respecting inventory and item restrictions.
 /// </summary>
 public class ItemStorageService : IItemStorageService
 {

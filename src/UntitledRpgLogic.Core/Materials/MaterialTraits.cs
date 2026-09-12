@@ -12,22 +12,26 @@ public enum MaterialTraits
 	None = 0,
 
 	/// <summary>
-	///     Indicates the material occurs naturally as mineable ore deposits, mineral veins, or raw stone within the world terrain.
+	///     Indicates the material occurs naturally as mineable ore deposits, mineral veins, or raw stone within the world
+	///     terrain.
 	/// </summary>
 	NaturalOre = 1 << 0,
 
 	/// <summary>
-	///     Indicates the material has undergone smelting, refining, or metallurgical purification (e.g., metal bars, ingots, or refined sheets).
+	///     Indicates the material has undergone smelting, refining, or metallurgical purification (e.g., metal bars, ingots,
+	///     or refined sheets).
 	/// </summary>
 	RefinedMetal = 1 << 1,
 
 	/// <summary>
-	///     Indicates the material originates from biological matter, such as wood, plant fibers, animal hide, bone, or woven cloth.
+	///     Indicates the material originates from biological matter, such as wood, plant fibers, animal hide, bone, or woven
+	///     cloth.
 	/// </summary>
 	Organic = 1 << 2,
 
 	/// <summary>
-	///     Indicates the material is prone to rapid oxidation or catching fire when exposed to heat, open flame, or thermal damage.
+	///     Indicates the material is prone to rapid oxidation or catching fire when exposed to heat, open flame, or thermal
+	///     damage.
 	/// </summary>
 	Combustible = 1 << 3,
 
@@ -37,12 +41,14 @@ public enum MaterialTraits
 	AtmosphericGas = 1 << 4,
 
 	/// <summary>
-	///     Indicates the material exists primarily in a liquid or viscous fluid state under standard room-temperature conditions.
+	///     Indicates the material exists primarily in a liquid or viscous fluid state under standard room-temperature
+	///     conditions.
 	/// </summary>
 	Fluid = 1 << 5,
 
 	/// <summary>
-	///     Indicates the material possesses high affinity for magical energy, allowing it to naturally channel, store, or resonate with mana.
+	///     Indicates the material possesses high affinity for magical energy, allowing it to naturally channel, store, or
+	///     resonate with mana.
 	/// </summary>
-	MagicalConductor = 1 << 6,
+	MagicalConductor = 1 << 6
 }

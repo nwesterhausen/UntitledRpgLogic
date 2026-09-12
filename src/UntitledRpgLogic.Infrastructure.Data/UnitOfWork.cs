@@ -4,7 +4,7 @@ using UntitledRpgLogic.Core.Data;
 namespace UntitledRpgLogic.Infrastructure.Data;
 
 /// <summary>
-/// 	The implementation of <see cref="IUnitOfWork" /> that allows for modifying/connecting with a database provider.
+///     The implementation of <see cref="IUnitOfWork" /> that allows for modifying/connecting with a database provider.
 /// </summary>
 public sealed class UnitOfWork : IUnitOfWork
 {
@@ -13,26 +13,23 @@ public sealed class UnitOfWork : IUnitOfWork
 
 	/// <summary> Create the unit of work machine for supplied context </summary>
 	/// <param name="context">the database context</param>
-	public UnitOfWork(RpgDbContext context)
-	{
-		_context = context ?? throw new ArgumentNullException(nameof(context));
-	}
+	public UnitOfWork(RpgDbContext context) =>
+		this._context = context ?? throw new ArgumentNullException(nameof(context));
 
 	/// <inheritdoc />
-	public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-	{
-		return await _context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
-	}
+	public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default) =>
+		await this._context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
 
 	/// <inheritdoc />
 	public async Task BeginTransactionAsync(CancellationToken cancellationToken = default)
 	{
-		if (_currentTransaction is not null)
+		if (this._currentTransaction is not null)
 		{
 			return;
 		}
 
-		_currentTransaction = await _context.Database.BeginTransactionAsync(cancellationToken).ConfigureAwait(false);
+		this._currentTransaction =
+			await this._context.Database.BeginTransactionAsync(cancellationToken).ConfigureAwait(false);
 	}
 
 	/// <inheritdoc />
@@ -40,24 +37,24 @@ public sealed class UnitOfWork : IUnitOfWork
 	{
 		try
 		{
-			await _context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+			await this._context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
 
-			if (_currentTransaction is not null)
+			if (this._currentTransaction is not null)
 			{
-				await _currentTransaction.CommitAsync(cancellationToken).ConfigureAwait(false);
+				await this._currentTransaction.CommitAsync(cancellationToken).ConfigureAwait(false);
 			}
 		}
 		catch
 		{
-			await RollbackTransactionAsync(cancellationToken).ConfigureAwait(false);
+			await this.RollbackTransactionAsync(cancellationToken).ConfigureAwait(false);
 			throw;
 		}
 		finally
 		{
-			if (_currentTransaction is not null)
+			if (this._currentTransaction is not null)
 			{
-				await _currentTransaction.DisposeAsync().ConfigureAwait(false);
-				_currentTransaction = null;
+				await this._currentTransaction.DisposeAsync().ConfigureAwait(false);
+				this._currentTransaction = null;
 			}
 		}
 	}
@@ -67,17 +64,17 @@ public sealed class UnitOfWork : IUnitOfWork
 	{
 		try
 		{
-			if (_currentTransaction is not null)
+			if (this._currentTransaction is not null)
 			{
-				await _currentTransaction.RollbackAsync(cancellationToken).ConfigureAwait(false);
+				await this._currentTransaction.RollbackAsync(cancellationToken).ConfigureAwait(false);
 			}
 		}
 		finally
 		{
-			if (_currentTransaction is not null)
+			if (this._currentTransaction is not null)
 			{
-				await _currentTransaction.DisposeAsync().ConfigureAwait(false);
-				_currentTransaction = null;
+				await this._currentTransaction.DisposeAsync().ConfigureAwait(false);
+				this._currentTransaction = null;
 			}
 		}
 	}
@@ -85,8 +82,8 @@ public sealed class UnitOfWork : IUnitOfWork
 	/// <inheritdoc />
 	public void Dispose()
 	{
-		_currentTransaction?.Dispose();
-		_context.Dispose();
+		this._currentTransaction?.Dispose();
+		this._context.Dispose();
 
 		GC.SuppressFinalize(this);
 	}
@@ -94,12 +91,12 @@ public sealed class UnitOfWork : IUnitOfWork
 	/// <inheritdoc />
 	public async ValueTask DisposeAsync()
 	{
-		if (_currentTransaction is not null)
+		if (this._currentTransaction is not null)
 		{
-			await _currentTransaction.DisposeAsync().ConfigureAwait(false);
+			await this._currentTransaction.DisposeAsync().ConfigureAwait(false);
 		}
 
-		await _context.DisposeAsync().ConfigureAwait(false);
+		await this._context.DisposeAsync().ConfigureAwait(false);
 
 		GC.SuppressFinalize(this);
 	}

@@ -1,7 +1,7 @@
 namespace UntitledRpgLogic.Infrastructure.Configuration.Definitions;
 
 /// <summary>
-///		An element in the game. This conceptually would be the name of a magic type.
+///     An element in the game. This conceptually would be the name of a magic type.
 /// </summary>
 public record ElementConfig
 {

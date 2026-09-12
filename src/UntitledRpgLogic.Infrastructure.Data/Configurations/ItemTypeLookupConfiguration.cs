@@ -1,13 +1,13 @@
-
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using UntitledRpgLogic.Core.Items;
 using UntitledRpgLogic.Infrastructure.Data.LookupEntities;
 
 namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
-///<summary>
-/// Defines the <see cref="ItemType" /> lookup table
-///</summary>
+
+/// <summary>
+///     Defines the <see cref="ItemType" /> lookup table
+/// </summary>
 public sealed class ItemTypeLookupConfiguration : IEntityTypeConfiguration<ItemTypeLookup>
 {
 	///<inheritdoc />
@@ -26,11 +26,7 @@ public sealed class ItemTypeLookupConfiguration : IEntityTypeConfiguration<ItemT
 
 		// Seed with enum data
 		var seedData = Enum.GetValues<ItemType>()
-			.Select(e => new ItemTypeLookup
-			{
-				Id = e,
-				Name = e.ToString()
-			});
+			.Select(e => new ItemTypeLookup { Id = e, Name = e.ToString() });
 		_ = builder.HasData(seedData);
 	}
 }

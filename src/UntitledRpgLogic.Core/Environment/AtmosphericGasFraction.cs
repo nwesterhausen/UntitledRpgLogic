@@ -8,7 +8,8 @@ namespace UntitledRpgLogic.Core.Environment;
 public record AtmosphericGasFraction
 {
 	/// <summary>
-	///     The foreign identifier of the gaseous <see cref="MaterialDefinition" /> (e.g., Oxygen, CO2, Methane, Nick's Death Gas v2).
+	///     The foreign identifier of the gaseous <see cref="MaterialDefinition" /> (e.g., Oxygen, CO2, Methane, Nick's Death
+	///     Gas v2).
 	/// </summary>
 	public Ulid MaterialId { get; init; }
 

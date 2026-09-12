@@ -10,7 +10,7 @@ public interface IItemFactoryService
 	/// <summary>
 	///     Creates a new item template definition.
 	/// </summary>
-	ItemDefinition CreateDefinition(
+	public ItemDefinition CreateDefinition(
 		Name name,
 		ItemType type,
 		ItemSubtype subtype,
@@ -23,10 +23,10 @@ public interface IItemFactoryService
 	/// <summary>
 	///     Spawns an instanced item based on an existing item definition.
 	/// </summary>
-	Item CreateItem(ItemDefinition definition, int quantity = 1, Ulid? craftedById = null);
+	public Item CreateItem(ItemDefinition definition, int quantity = 1, Ulid? craftedById = null);
 
 	/// <summary>
 	///     Spawns an instanced item referencing an item definition by its catalog ID.
 	/// </summary>
-	Item CreateItem(Ulid itemDefinitionId, int quantity = 1, Ulid? craftedById = null);
+	public Item CreateItem(Ulid itemDefinitionId, int quantity = 1, Ulid? craftedById = null);
 }

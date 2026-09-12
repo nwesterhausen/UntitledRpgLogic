@@ -56,7 +56,8 @@ public class AdapterVerificationTests
 				await context.Entities.AddAsync(testEntity).ConfigureAwait(false);
 				await context.SaveChangesAsync().ConfigureAwait(false);
 
-				var retrieved = await context.Entities.FirstOrDefaultAsync(e => e.Id == testEntity.Id).ConfigureAwait(false);
+				var retrieved = await context.Entities.FirstOrDefaultAsync(e => e.Id == testEntity.Id)
+					.ConfigureAwait(false);
 				Assert.IsNotNull(retrieved);
 				Assert.AreEqual("VerificationDummy", retrieved.Name.Singular);
 			}
@@ -95,7 +96,8 @@ public class AdapterVerificationTests
 			var context = provider.GetRequiredService<RpgDbContext>();
 
 			// Reset the public schema cleanly
-			await context.Database.ExecuteSqlRawAsync("DROP SCHEMA public CASCADE; CREATE SCHEMA public;").ConfigureAwait(false);
+			await context.Database.ExecuteSqlRawAsync("DROP SCHEMA public CASCADE; CREATE SCHEMA public;")
+				.ConfigureAwait(false);
 
 			// Run migrations via IDatabaseInitializer
 			var initializer = provider.GetRequiredService<IDatabaseInitializer>();
@@ -116,7 +118,8 @@ public class AdapterVerificationTests
 			await context.Entities.AddAsync(testEntity).ConfigureAwait(false);
 			await context.SaveChangesAsync().ConfigureAwait(false);
 
-			var retrieved = await context.Entities.FirstOrDefaultAsync(e => e.Id == testEntity.Id).ConfigureAwait(false);
+			var retrieved = await context.Entities.FirstOrDefaultAsync(e => e.Id == testEntity.Id)
+				.ConfigureAwait(false);
 			Assert.IsNotNull(retrieved);
 			Assert.AreEqual("PostgresDummy", retrieved.Name.Singular);
 		}

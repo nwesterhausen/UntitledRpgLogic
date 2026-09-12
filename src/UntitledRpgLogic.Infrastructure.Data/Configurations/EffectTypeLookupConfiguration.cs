@@ -1,13 +1,13 @@
-
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using UntitledRpgLogic.Core.Abilities.Effects;
 using UntitledRpgLogic.Infrastructure.Data.LookupEntities;
 
 namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
-///<summary>
-/// Defines the <see cref="EffectType" /> lookup table
-///</summary>
+
+/// <summary>
+///     Defines the <see cref="EffectType" /> lookup table
+/// </summary>
 public sealed class EffectTypeLookupConfiguration : IEntityTypeConfiguration<EffectTypeLookup>
 {
 	///<inheritdoc />
@@ -26,11 +26,7 @@ public sealed class EffectTypeLookupConfiguration : IEntityTypeConfiguration<Eff
 
 		// Seed with enum data
 		var seedData = Enum.GetValues<EffectType>()
-			.Select(e => new EffectTypeLookup
-			{
-				Id = e,
-				Name = e.ToString()
-			});
+			.Select(e => new EffectTypeLookup { Id = e, Name = e.ToString() });
 		_ = builder.HasData(seedData);
 	}
 }

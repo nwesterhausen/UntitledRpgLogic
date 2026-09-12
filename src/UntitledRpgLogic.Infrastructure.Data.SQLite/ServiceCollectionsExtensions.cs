@@ -14,7 +14,8 @@ public static class SqliteServiceCollectionsExtensions
 	/// </summary>
 	/// <param name="services">The <see cref="IServiceCollection" /> to which persistence services will be registered.</param>
 	/// <param name="configure">
-	///     An optional delegate used to configure <see cref="SqlitePersistenceOptions" /> such as the connection string and migration behavior.
+	///     An optional delegate used to configure <see cref="SqlitePersistenceOptions" /> such as the connection string and
+	///     migration behavior.
 	///     If <see langword="null" />, default SQLite options are used.
 	/// </param>
 	/// <returns>The same <see cref="IServiceCollection" /> instance so that additional calls can be chained.</returns>
@@ -28,8 +29,8 @@ public static class SqliteServiceCollectionsExtensions
 		// Register the DbContext
 		_ = services.AddDbContext<RpgDbContext>(dbOptions =>
 			dbOptions.UseSqlite(options.ConnectionString, b =>
-				b.MigrationsAssembly("UntitledRpgLogic.Infrastructure.Data.SQLite"))
-			.UseSnakeCaseNamingConvention());
+					b.MigrationsAssembly("UntitledRpgLogic.Infrastructure.Data.SQLite"))
+				.UseSnakeCaseNamingConvention());
 
 		// Register the Unit of Work and Repositories
 		_ = services.AddRpgCommonPersistence();

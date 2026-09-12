@@ -14,12 +14,14 @@ public static class ChunkBlobExtensions
 	///     Amount of tiles on one side of a chunk.
 	/// </summary>
 	public const int ChunkSize = 16;
+
 	/// <summary>
 	///     Total count of tiles inside one chunk.
 	/// </summary>
 	public const int TileCount = ChunkSize * ChunkSize; // 256 tiles
+
 	/// <summary>
-	///     The raw byte size used by a chunk of <see cref="Tile2D"/>.
+	///     The raw byte size used by a chunk of <see cref="Tile2D" />.
 	/// </summary>
 	public static readonly int RawByteSize = TileCount * Marshal.SizeOf<Tile2D>(); // 2,048 bytes
 
@@ -37,10 +39,10 @@ public static class ChunkBlobExtensions
 				nameof(tiles));
 		}
 
-		ReadOnlySpan<byte> rawBytes = MemoryMarshal.AsBytes(tiles);
+		var rawBytes = MemoryMarshal.AsBytes(tiles);
 
 		using var outputStream = new MemoryStream();
-		using (var brotli = new BrotliStream(outputStream, level, leaveOpen: true))
+		using (var brotli = new BrotliStream(outputStream, level, true))
 		{
 			brotli.Write(rawBytes);
 		}
@@ -62,7 +64,7 @@ public static class ChunkBlobExtensions
 				nameof(destination));
 		}
 
-		Span<byte> rawDestBytes = MemoryMarshal.AsBytes(destination);
+		var rawDestBytes = MemoryMarshal.AsBytes(destination);
 
 		using var inputStream = new MemoryStream(compressedBlob.ToArray());
 		using var brotli = new BrotliStream(inputStream, CompressionMode.Decompress);

@@ -456,7 +456,7 @@ public enum ItemSubtype
 	Poison = 5060,
 
 	/// <summary>
-	///		An ore of a material which can be processed.
+	///     An ore of a material which can be processed.
 	/// </summary>
 	Ore = 5070,
 
@@ -466,7 +466,7 @@ public enum ItemSubtype
 	RawGemstone = 5071,
 
 	/// <summary>
-	///		A cut gemstone holds value and can be used as a trade good or further processed for enchanting/armor enhancement.
+	///     A cut gemstone holds value and can be used as a trade good or further processed for enchanting/armor enhancement.
 	/// </summary>
 	CutGemstone = 5072,
 
@@ -606,22 +606,22 @@ public enum ItemSubtype
 	#region Currency Subtypes: 9900 - 9999
 
 	/// <summary>
-	///		Currency in the shape of small tokens used for trade.
+	///     Currency in the shape of small tokens used for trade.
 	/// </summary>
 	Coin = 9900,
 
 	/// <summary>
-	///		A substantial block of <see cref="ItemSubtype.Coin"/> material used for its value in trade.
+	///     A substantial block of <see cref="ItemSubtype.Coin" /> material used for its value in trade.
 	/// </summary>
 	Bullion = 9901,
 
 	/// <summary>
-	///		A written or printed note that is worth money in the context of an economy.
+	///     A written or printed note that is worth money in the context of an economy.
 	/// </summary>
 	Banknote = 9902,
 
 	/// <summary>
-	///		A token representing value in the context of an economy.
+	///     A token representing value in the context of an economy.
 	/// </summary>
 	TradeToken = 9903,
 

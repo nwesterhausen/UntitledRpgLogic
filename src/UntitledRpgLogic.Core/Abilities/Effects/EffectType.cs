@@ -22,7 +22,8 @@ public enum EffectType
 	Enchant = 2,
 
 	/// <summary>
-	///     Applies a special status to an entity, adjusting the difficulty of certain interactions (could be more or less difficult).
+	///     Applies a special status to an entity, adjusting the difficulty of certain interactions (could be more or less
+	///     difficult).
 	/// </summary>
 	Charm = 3,
 

@@ -9,7 +9,7 @@ public interface IInventoryCoordinatorService
 	/// <summary>
 	///     Stores an instanced item into an entity's inventory and commits the transaction.
 	/// </summary>
-	Task<bool> StoreItemInEntityInventoryAsync(
+	public Task<bool> StoreItemInEntityInventoryAsync(
 		Ulid entityId,
 		Item item,
 		CancellationToken cancellationToken = default);
@@ -17,7 +17,7 @@ public interface IInventoryCoordinatorService
 	/// <summary>
 	///     Removes an item from an entity's inventory by ID and commits the transaction.
 	/// </summary>
-	Task<Item?> RemoveItemFromEntityInventoryAsync(
+	public Task<Item?> RemoveItemFromEntityInventoryAsync(
 		Ulid entityId,
 		Ulid itemId,
 		int quantity,
@@ -26,7 +26,7 @@ public interface IInventoryCoordinatorService
 	/// <summary>
 	///     Transfers an item stack between two entity inventories atomically in a single transaction.
 	/// </summary>
-	Task<bool> TransferItemBetweenEntitiesAsync(
+	public Task<bool> TransferItemBetweenEntitiesAsync(
 		Ulid sourceEntityId,
 		Ulid targetEntityId,
 		Ulid itemId,

@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using UntitledRpgLogic.Core.Common;
@@ -12,8 +13,6 @@ namespace UntitledRpgLogic.IntegrationTests;
 [TestClass]
 public class InventoryCoordinatorServiceTests
 {
-	public TestContext TestContext { get; set; } = null!;
-
 	private static readonly Ulid PotionDefId = Ulid.NewUlid();
 	private static readonly Ulid PotionItemId = Ulid.NewUlid();
 	private static readonly Ulid ChestId = Ulid.NewUlid();
@@ -25,35 +24,21 @@ public class InventoryCoordinatorServiceTests
 		ItemType = ItemType.Consumable,
 		MaxStackSize = 10,
 		Name = new Name("Basic Health Potion"),
-		ItemSubtype = ItemSubtype.Potion,
+		ItemSubtype = ItemSubtype.Potion
 	};
 
-	private readonly Entity hero = new(HeroId)
+
+	private readonly Item acceptedPotion = new()
 	{
-		Name = new Name("Hero"),
-		Inventory = new Inventory(Ulid.NewUlid())
-		{
-			Capacity = 10,
-			Items =
-			[
-				new Item
-				{
-					Id = PotionItemId,
-					DefinitionId = PotionDefId,
-					Definition = PotionDef,
-					Quantity = 5
-				}
-			]
-		}
+		Id = Ulid.NewUlid(), DefinitionId = PotionDef.Id, Definition = PotionDef, Quantity = 1
 	};
 
 	private readonly Entity chest = new(ChestId)
 	{
-		Name = new Name("Treasure Chest"),
-		Inventory = new Inventory(Ulid.NewUlid()) { Capacity = 5 }
+		Name = new Name("Treasure Chest"), Inventory = new Inventory(Ulid.NewUlid()) { Capacity = 5 }
 	};
 
-	private readonly Entity filteredBagEntity = new Entity
+	private readonly Entity filteredBagEntity = new()
 	{
 		Id = FilteredChestId,
 		Name = new Name("Alchemist Satchel"),
@@ -69,14 +54,20 @@ public class InventoryCoordinatorServiceTests
 		}
 	};
 
-
-	private readonly Item acceptedPotion = new()
+	private readonly Entity hero = new(HeroId)
 	{
-		Id = Ulid.NewUlid(),
-		DefinitionId = PotionDef.Id,
-		Definition = PotionDef,
-		Quantity = 1
+		Name = new Name("Hero"),
+		Inventory = new Inventory(Ulid.NewUlid())
+		{
+			Capacity = 10,
+			Items =
+			[
+				new Item { Id = PotionItemId, DefinitionId = PotionDefId, Definition = PotionDef, Quantity = 5 }
+			]
+		}
 	};
+
+	public TestContext TestContext { get; set; } = null!;
 
 	[TestMethod]
 	public async Task TransferItemBetweenEntities_PersistsItemMoveAcrossScopes()
@@ -148,7 +139,8 @@ public class InventoryCoordinatorServiceTests
 	}
 
 	[TestMethod]
-	[System.Diagnostics.CodeAnalysis.SuppressMessage("Maintainability", "CA1506:Avoid excessive class coupling", Justification = "Integration test requires end-to-end service, repository, and entity configuration.")]
+	[SuppressMessage("Maintainability", "CA1506:Avoid excessive class coupling",
+		Justification = "Integration test requires end-to-end service, repository, and entity configuration.")]
 	public async Task InventoryWithFilter_PersistsJsonStructure_AndFiltersCorrectlyAfterHydration()
 	{
 		var dbName = $"inv_filter_test_{Guid.NewGuid():N}";
@@ -173,7 +165,8 @@ public class InventoryCoordinatorServiceTests
 				var uow = scope1.ServiceProvider.GetRequiredService<IUnitOfWork>();
 				var entityRepo = scope1.ServiceProvider.GetRequiredService<IEntityRepository<Entity, Ulid>>();
 
-				await entityRepo.AddAsync(this.filteredBagEntity, this.TestContext.CancellationToken).ConfigureAwait(false);
+				await entityRepo.AddAsync(this.filteredBagEntity, this.TestContext.CancellationToken)
+					.ConfigureAwait(false);
 				await uow.SaveChangesAsync(this.TestContext.CancellationToken).ConfigureAwait(false);
 			}
 

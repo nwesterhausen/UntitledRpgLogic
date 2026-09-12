@@ -1,13 +1,13 @@
-
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using UntitledRpgLogic.Core.Progression;
 using UntitledRpgLogic.Infrastructure.Data.LookupEntities;
 
 namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
-///<summary>
-/// Defines the <see cref="ScalingCurveType" /> lookup table
-///</summary>
+
+/// <summary>
+///     Defines the <see cref="ScalingCurveType" /> lookup table
+/// </summary>
 public sealed class ScalingCurveTypeLookupConfiguration : IEntityTypeConfiguration<ScalingCurveTypeLookup>
 {
 	///<inheritdoc />
@@ -26,11 +26,7 @@ public sealed class ScalingCurveTypeLookupConfiguration : IEntityTypeConfigurati
 
 		// Seed with enum data
 		var seedData = Enum.GetValues<ScalingCurveType>()
-			.Select(e => new ScalingCurveTypeLookup
-			{
-				Id = e,
-				Name = e.ToString()
-			});
+			.Select(e => new ScalingCurveTypeLookup { Id = e, Name = e.ToString() });
 		_ = builder.HasData(seedData);
 	}
 }

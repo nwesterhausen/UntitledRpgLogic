@@ -7,17 +7,13 @@ namespace UntitledRpgLogic.Core.Abilities.Effects;
 /// </summary>
 public record DebuffEffect : Effect
 {
-
 	/// <summary>
-	/// 	Initializes default base values.
+	///     Initializes default base values.
 	/// </summary>
-	public DebuffEffect()
-	{
-		this.EffectType = EffectType.Debuff;
-	}
+	public DebuffEffect() => this.EffectType = EffectType.Debuff;
 
 	/// <summary>
-	/// 	Initializes a new <see cref="Effect" /> with <see cref="EffectType.Debuff" />.
+	///     Initializes a new <see cref="Effect" /> with <see cref="EffectType.Debuff" />.
 	/// </summary>
 	public DebuffEffect(Name name) : base(name, EffectType.Debuff)
 	{

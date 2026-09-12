@@ -31,13 +31,6 @@ public record EntityDefinition : IDbEntity<Ulid>
 	public EntityDefinition(Name name) : this() => this.Name = name;
 
 	/// <summary>
-	///     The unique catalog identifier for the entity template. Can be loaded from external config definitions.
-	/// </summary>
-	[Key]
-	[DatabaseGenerated(DatabaseGeneratedOption.None)]
-	public Ulid Id { get; init; }
-
-	/// <summary>
 	///     The display name of the entity template.
 	/// </summary>
 	public required Name Name { get; init; }
@@ -77,4 +70,11 @@ public record EntityDefinition : IDbEntity<Ulid>
 	///     Navigation property to all active world entities spawned from this definition.
 	/// </summary>
 	public virtual ICollection<Entity> Instances { get; } = new List<Entity>();
+
+	/// <summary>
+	///     The unique catalog identifier for the entity template. Can be loaded from external config definitions.
+	/// </summary>
+	[Key]
+	[DatabaseGenerated(DatabaseGeneratedOption.None)]
+	public Ulid Id { get; init; }
 }

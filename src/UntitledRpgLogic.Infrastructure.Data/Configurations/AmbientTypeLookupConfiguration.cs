@@ -1,13 +1,13 @@
-
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using UntitledRpgLogic.Core.Environment;
 using UntitledRpgLogic.Infrastructure.Data.LookupEntities;
 
 namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
-///<summary>
-/// Defines the <see cref="AmbientType" /> lookup table
-///</summary>
+
+/// <summary>
+///     Defines the <see cref="AmbientType" /> lookup table
+/// </summary>
 public sealed class AmbientTypeLookupConfiguration : IEntityTypeConfiguration<AmbientTypeLookup>
 {
 	///<inheritdoc />
@@ -26,11 +26,7 @@ public sealed class AmbientTypeLookupConfiguration : IEntityTypeConfiguration<Am
 
 		// Seed with enum data
 		var seedData = Enum.GetValues<AmbientType>()
-			.Select(e => new AmbientTypeLookup
-			{
-				Id = e,
-				Name = e.ToString()
-			});
+			.Select(e => new AmbientTypeLookup { Id = e, Name = e.ToString() });
 		_ = builder.HasData(seedData);
 	}
 }

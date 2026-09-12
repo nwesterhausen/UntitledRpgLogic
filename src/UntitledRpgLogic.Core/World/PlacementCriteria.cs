@@ -28,7 +28,8 @@ public record PlacementCriteria
 	public bool RequiresRiverProximity { get; init; }
 
 	/// <summary>
-	///     The maximum Chebyshev tile distance to scan for an adjacent river cell when <see cref="RequiresRiverProximity" /> is true.
+	///     The maximum Chebyshev tile distance to scan for an adjacent river cell when <see cref="RequiresRiverProximity" />
+	///     is true.
 	/// </summary>
 	public int MaxDistanceToRiverTiles { get; init; } = 4;
 }

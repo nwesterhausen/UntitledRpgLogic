@@ -6,7 +6,7 @@ using UntitledRpgLogic.Infrastructure.Data.LookupEntities;
 namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
 
 /// <summary>
-/// 	Lookup table for <see cref="MaterialSlot" />
+///     Lookup table for <see cref="MaterialSlot" />
 /// </summary>
 public sealed class MaterialSlotLookupConfiguration : IEntityTypeConfiguration<MaterialSlotLookup>
 {
@@ -19,19 +19,15 @@ public sealed class MaterialSlotLookupConfiguration : IEntityTypeConfiguration<M
 		builder.HasKey(x => x.Id);
 
 		builder.Property(x => x.Id)
-			   .HasConversion<byte>();
+			.HasConversion<byte>();
 
 		builder.Property(x => x.Name)
-			   .HasMaxLength(64)
-			   .IsRequired();
+			.HasMaxLength(64)
+			.IsRequired();
 
 		// Seed values
 		var seed = Enum.GetValues<MaterialSlot>()
-			.Select(e => new MaterialSlotLookup
-			{
-				Id = e,
-				Name = e.ToString()
-			});
+			.Select(e => new MaterialSlotLookup { Id = e, Name = e.ToString() });
 
 		builder.HasData(seed);
 	}

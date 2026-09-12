@@ -36,13 +36,6 @@ public record Entity : IDbEntity<Ulid>
 	public Entity(Name name) : this() => this.Name = name;
 
 	/// <summary>
-	///     The unique primary key for the entity. Can be loaded statically from config archives or generated.
-	/// </summary>
-	[Key]
-	[DatabaseGenerated(DatabaseGeneratedOption.None)]
-	public Ulid Id { get; init; }
-
-	/// <summary>
 	///     The display name of the entity.
 	/// </summary>
 	public required Name Name { get; init; }
@@ -95,4 +88,11 @@ public record Entity : IDbEntity<Ulid>
 	///     Owned collection of stat adjustments applied to this entity.
 	/// </summary>
 	public virtual ICollection<AffectedStat> AffectedStats { get; init; } = [];
+
+	/// <summary>
+	///     The unique primary key for the entity. Can be loaded statically from config archives or generated.
+	/// </summary>
+	[Key]
+	[DatabaseGenerated(DatabaseGeneratedOption.None)]
+	public Ulid Id { get; init; }
 }

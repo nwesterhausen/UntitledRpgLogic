@@ -1,13 +1,13 @@
-
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using UntitledRpgLogic.Core.Stats;
 using UntitledRpgLogic.Infrastructure.Data.LookupEntities;
 
 namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
-///<summary>
-/// Defines the <see cref="StatVariation" /> lookup table
-///</summary>
+
+/// <summary>
+///     Defines the <see cref="StatVariation" /> lookup table
+/// </summary>
 public sealed class StatVariationLookupConfiguration : IEntityTypeConfiguration<StatVariationLookup>
 {
 	///<inheritdoc />
@@ -26,11 +26,7 @@ public sealed class StatVariationLookupConfiguration : IEntityTypeConfiguration<
 
 		// Seed with enum data
 		var seedData = Enum.GetValues<StatVariation>()
-			.Select(e => new StatVariationLookup
-			{
-				Id = e,
-				Name = e.ToString()
-			});
+			.Select(e => new StatVariationLookup { Id = e, Name = e.ToString() });
 		_ = builder.HasData(seedData);
 	}
 }

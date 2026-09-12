@@ -4,9 +4,9 @@ using UntitledRpgLogic.Core.World;
 
 namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
 
-///<summary>
-/// Defines advanced table configuration for <see cref="WorldChunk"/>
-///</summary>
+/// <summary>
+///     Defines advanced table configuration for <see cref="WorldChunk" />
+/// </summary>
 public sealed class WorldChunkConfiguration : IEntityTypeConfiguration<WorldChunk>
 {
 	/// <inheritdoc />

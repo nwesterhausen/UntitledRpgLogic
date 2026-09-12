@@ -4,7 +4,8 @@ using UntitledRpgLogic.Core.Progression;
 namespace UntitledRpgLogic.Core.Abilities;
 
 /// <summary>
-///     Defines an environmental, attribute, or situational factor that influences the chance of ability activation failure.
+///     Defines an environmental, attribute, or situational factor that influences the chance of ability activation
+///     failure.
 /// </summary>
 /// <remarks>Owned by <see cref="Ability" />.</remarks>
 [Table("ability_failure_influences")]

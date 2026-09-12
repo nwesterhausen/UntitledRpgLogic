@@ -37,9 +37,15 @@ public static class RespirationExtensions
 	/// </summary>
 	/// <param name="profile">The respiratory traits and thresholds of the entity.</param>
 	/// <param name="atmosphere">The local atmosphere profile of the chunk or map.</param>
-	/// <param name="submergedLiquidMaterialId">The ULID of the fluid the entity is currently submerged in (null if surfaced/dry).</param>
+	/// <param name="submergedLiquidMaterialId">
+	///     The ULID of the fluid the entity is currently submerged in (null if
+	///     surfaced/dry).
+	/// </param>
 	/// <param name="submergedDepthUnits">Depth in world units (meters) of the liquid above the entity's breathing apparatus.</param>
-	/// <param name="depthPerAtmosphere">How deep in <paramref name="submergedLiquidMaterialId"/> to accumulate 1atm of pressure</param>
+	/// <param name="depthPerAtmosphere">
+	///     How deep in <paramref name="submergedLiquidMaterialId" /> to accumulate 1atm of
+	///     pressure
+	/// </param>
 	public static RespirationState Evaluate(
 		this RespiratoryProfile profile,
 		AtmosphereProfile atmosphere,
@@ -72,7 +78,7 @@ public static class RespirationExtensions
 
 			// 2. Check if the entity can breathe this liquid (Fish, Water Elemental, etc.)
 			var canBreatheLiquid = profile.RequiredMediumMaterialId == liquidId
-								   || profile.AlternativeBreathableMaterials.Contains(liquidId);
+			                       || profile.AlternativeBreathableMaterials.Contains(liquidId);
 
 			if (canBreatheLiquid)
 			{
@@ -99,6 +105,7 @@ public static class RespirationExtensions
 			{
 				return RespirationState.LethallyPoisoned;
 			}
+
 			if (partialPressure >= toxic.DangerousPressure)
 			{
 				return RespirationState.Poisoned;

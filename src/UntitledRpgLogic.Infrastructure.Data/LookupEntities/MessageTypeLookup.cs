@@ -1,13 +1,12 @@
-
 using UntitledRpgLogic.Core.Networking;
 
 namespace UntitledRpgLogic.Infrastructure.Data.LookupEntities;
+
 /// <summary>
-/// Provides a reference table in the databse for the <see cref="MessageType" /> enum.
+///     Provides a reference table in the databse for the <see cref="MessageType" /> enum.
 /// </summary>
 public class MessageTypeLookup
 {
-
 	///<summary>The specific enum for this entry</summary>
 	public MessageType Id { get; set; }
 

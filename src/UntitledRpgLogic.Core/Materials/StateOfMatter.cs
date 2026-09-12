@@ -26,7 +26,7 @@ public enum StateOfMatter
 	Gas = 3,
 
 	/// <summary>
-	/// 	The plasma state of matter.
+	///     The plasma state of matter.
 	/// </summary>
 	Plasma = 4
 }

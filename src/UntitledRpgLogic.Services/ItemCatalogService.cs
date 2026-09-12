@@ -1,19 +1,17 @@
 using UntitledRpgLogic.Core.Common;
 using UntitledRpgLogic.Core.Data;
 using UntitledRpgLogic.Core.Items;
-using UntitledRpgLogic.Core.Materials;
 
 namespace UntitledRpgLogic.Services;
 
 /// <inheritdoc />
 public sealed class ItemCatalogService : IItemCatalogService
 {
-	private readonly IUnitOfWork unitOfWork;
 	private readonly IEntityRepository<ItemDefinition, Ulid> definitionRepository;
 	private readonly IItemFactoryService factory;
+	private readonly IUnitOfWork unitOfWork;
 
 	/// <summary>
-	///
 	/// </summary>
 	/// <param name="unitOfWork"></param>
 	/// <param name="definitionRepository"></param>
@@ -25,7 +23,8 @@ public sealed class ItemCatalogService : IItemCatalogService
 		IItemFactoryService factory)
 	{
 		this.unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
-		this.definitionRepository = definitionRepository ?? throw new ArgumentNullException(nameof(definitionRepository));
+		this.definitionRepository =
+			definitionRepository ?? throw new ArgumentNullException(nameof(definitionRepository));
 		this.factory = factory ?? throw new ArgumentNullException(nameof(factory));
 	}
 

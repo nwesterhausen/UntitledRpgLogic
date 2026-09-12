@@ -15,7 +15,7 @@ public static class ModifierExtensions
 	/// <returns>string representing the modifier (e.g., "+10%", "-5", "+20% (of base)") </returns>
 	public static string ToDisplay(this ModifierDefinition modifier)
 	{
-		ArgumentNullException.ThrowIfNull(modifier, nameof(modifier));
+		ArgumentNullException.ThrowIfNull(modifier);
 		var baseEffectString = string.Empty;
 		if (modifier.ModificationEffects != null)
 		{
@@ -35,14 +35,14 @@ public static class ModifierExtensions
 	}
 
 	/// <summary>
-	///		Represents the collection of modifiers as a single string for tooltips or UI elements.
+	///     Represents the collection of modifiers as a single string for tooltips or UI elements.
 	/// </summary>
 	/// <param name="modifiers">Collection of modification effects</param>
 	/// <returns>String for use in the UI</returns>
 	/// <exception cref="ArgumentNullException"></exception>
 	public static string ToDisplay(this IEnumerable<ModificationEffect> modifiers)
 	{
-		ArgumentNullException.ThrowIfNull(modifiers, nameof(modifiers));
+		ArgumentNullException.ThrowIfNull(modifiers);
 
 		var combinedEffectString = string.Empty;
 		foreach (var effect in modifiers)
@@ -60,7 +60,7 @@ public static class ModifierExtensions
 	/// <returns></returns>
 	public static string ToDisplay(this ModificationEffect effect)
 	{
-		ArgumentNullException.ThrowIfNull(effect, nameof(effect));
+		ArgumentNullException.ThrowIfNull(effect);
 		var sign = effect.IsPositive ? "+" : "-";
 		var flatAmount = effect.FlatAmount != 0f ? $"{sign}{effect.FlatAmount}" : string.Empty;
 		var percentage = effect.Percentage != 0f ? $"{sign}{effect.Percentage:F2}%" : string.Empty;

@@ -15,7 +15,7 @@ public interface IUnitOfWork : IDisposable, IAsyncDisposable
 	///     written to the database.
 	/// </returns>
 	/// <exception cref="OperationCanceledException">Thrown if the operation is canceled before completion.</exception>
-	Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
+	public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 
 	/// <summary>
 	///     Begins an explicit database transaction boundary across all coordinated repositories.
@@ -24,7 +24,7 @@ public interface IUnitOfWork : IDisposable, IAsyncDisposable
 	/// <returns>A task representing the asynchronous operation.</returns>
 	/// <exception cref="InvalidOperationException">Thrown if a transaction is already active on this unit of work.</exception>
 	/// <exception cref="OperationCanceledException">Thrown if the operation is canceled before completion.</exception>
-	Task BeginTransactionAsync(CancellationToken cancellationToken = default);
+	public Task BeginTransactionAsync(CancellationToken cancellationToken = default);
 
 	/// <summary>
 	///     Saves pending changes and commits the active database transaction atomically.
@@ -33,7 +33,7 @@ public interface IUnitOfWork : IDisposable, IAsyncDisposable
 	/// <returns>A task representing the asynchronous operation.</returns>
 	/// <exception cref="InvalidOperationException">Thrown if no transaction has been started.</exception>
 	/// <exception cref="OperationCanceledException">Thrown if the operation is canceled before completion.</exception>
-	Task CommitTransactionAsync(CancellationToken cancellationToken = default);
+	public Task CommitTransactionAsync(CancellationToken cancellationToken = default);
 
 	/// <summary>
 	///     Discards pending changes and rolls back the active database transaction to its initial state.
@@ -42,5 +42,5 @@ public interface IUnitOfWork : IDisposable, IAsyncDisposable
 	/// <returns>A task representing the asynchronous operation.</returns>
 	/// <exception cref="InvalidOperationException">Thrown if no transaction is currently active to roll back.</exception>
 	/// <exception cref="OperationCanceledException">Thrown if the operation is canceled before completion.</exception>
-	Task RollbackTransactionAsync(CancellationToken cancellationToken = default);
+	public Task RollbackTransactionAsync(CancellationToken cancellationToken = default);
 }

@@ -9,7 +9,8 @@ namespace UntitledRpgLogic.Extensions.Common;
 public static class EntityStatExtensions
 {
 	/// <summary>
-	///     Attaches or updates a stat on an entity, initializing the underlying <see cref="Stat" /> and <see cref="EntityStats" /> join record.
+	///     Attaches or updates a stat on an entity, initializing the underlying <see cref="Stat" /> and
+	///     <see cref="EntityStats" /> join record.
 	/// </summary>
 	/// <param name="entity">The target entity.</param>
 	/// <param name="definition">The stat template definition.</param>
@@ -28,32 +29,25 @@ public static class EntityStatExtensions
 				existing.InstancedStat.BaseValue = initialValue;
 				existing.InstancedStat.ApparentValue = initialValue;
 			}
+
 			return existing;
 		}
 
-		var instancedStat = new Stat(definition.Id)
-		{
-			BaseValue = initialValue,
-			ApparentValue = initialValue
-		};
+		var instancedStat = new Stat(definition.Id) { BaseValue = initialValue, ApparentValue = initialValue };
 
-		var join = new EntityStats(entity.Id, instancedStat.Id)
-		{
-			Entity = entity,
-			InstancedStat = instancedStat
-		};
+		var join = new EntityStats(entity.Id, instancedStat.Id) { Entity = entity, InstancedStat = instancedStat };
 
 		entity.Stats.Add(join);
 		return join;
 	}
 
 	/// <summary>
-	///		Get the level of a particular skill on this entity.
+	///     Get the level of a particular skill on this entity.
 	/// </summary>
 	/// <param name="entity">target entity</param>
 	/// <param name="statDefinitionId">The ID of the skill to find</param>
 	/// <returns>The skill level or `0` if the entity doesn't know the skill</returns>
-	/// <exception cref="ArgumentNullException">Throws if <paramref name="entity"/> is `null`</exception>
+	/// <exception cref="ArgumentNullException">Throws if <paramref name="entity" /> is `null`</exception>
 	public static int GetStatApparentValue(this Entity entity, Ulid statDefinitionId)
 	{
 		ArgumentNullException.ThrowIfNull(entity);

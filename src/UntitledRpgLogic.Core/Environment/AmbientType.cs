@@ -23,7 +23,8 @@ public enum AmbientType
 	Precipitation = 2,
 
 	/// <summary>
-	///     The ground or soil permeability determining the rate at which standing surface water absorbs into subterranean layers.
+	///     The ground or soil permeability determining the rate at which standing surface water absorbs into subterranean
+	///     layers.
 	/// </summary>
 	Drainage = 3,
 
@@ -57,7 +58,8 @@ public enum AmbientType
 	SunlightExposure = 20,
 
 	/// <summary>
-	///     The total aggregate ambient illumination at the location, accounting for indirect bounced lighting, artificial sources, and bioluminescence.
+	///     The total aggregate ambient illumination at the location, accounting for indirect bounced lighting, artificial
+	///     sources, and bioluminescence.
 	/// </summary>
 	AmbientLightLevel = 21,
 
@@ -79,7 +81,8 @@ public enum AmbientType
 	ManaDensity = 30,
 
 	/// <summary>
-	///     The environmental resonance or alignment toward specific elemental planes (such as celestial fire, planar cold, or abyssal decay).
+	///     The environmental resonance or alignment toward specific elemental planes (such as celestial fire, planar cold, or
+	///     abyssal decay).
 	/// </summary>
-	ElementalAttunement = 31,
+	ElementalAttunement = 31
 }

@@ -28,13 +28,6 @@ public record Skill : IDbEntity<Ulid>
 	public Skill(Ulid definitionId) : this() => this.DefinitionId = definitionId;
 
 	/// <summary>
-	///     The unique identifier for this active skill instance.
-	/// </summary>
-	[Key]
-	[DatabaseGenerated(DatabaseGeneratedOption.None)]
-	public Ulid Id { get; init; }
-
-	/// <summary>
 	///     Foreign key referencing the template <see cref="Definition" />.
 	/// </summary>
 	public required Ulid DefinitionId { get; init; }
@@ -54,4 +47,11 @@ public record Skill : IDbEntity<Ulid>
 	///     The active proficiency level of this skill instance.
 	/// </summary>
 	public int Level { get; set; }
+
+	/// <summary>
+	///     The unique identifier for this active skill instance.
+	/// </summary>
+	[Key]
+	[DatabaseGenerated(DatabaseGeneratedOption.None)]
+	public Ulid Id { get; init; }
 }

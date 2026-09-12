@@ -34,13 +34,6 @@ public abstract record Effect : IDbEntity<Ulid>
 	}
 
 	/// <summary>
-	///     The unique database identifier for this effect template.
-	/// </summary>
-	[Key]
-	[DatabaseGenerated(DatabaseGeneratedOption.None)]
-	public Ulid Id { get; init; }
-
-	/// <summary>
 	///     The display name of the effect.
 	/// </summary>
 	public required Name Name { get; init; }
@@ -80,4 +73,11 @@ public abstract record Effect : IDbEntity<Ulid>
 	///     Abilities that trigger this effect on successful activation.
 	/// </summary>
 	public virtual ICollection<AbilityDefinition> TriggeringAbilities { get; } = new List<AbilityDefinition>();
+
+	/// <summary>
+	///     The unique database identifier for this effect template.
+	/// </summary>
+	[Key]
+	[DatabaseGenerated(DatabaseGeneratedOption.None)]
+	public Ulid Id { get; init; }
 }

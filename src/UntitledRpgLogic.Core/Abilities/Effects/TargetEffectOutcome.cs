@@ -22,12 +22,12 @@ public record TargetEffectOutcome
 	}
 
 	/// <summary>
-	///     <see cref="Entity.Id"/> of the target
+	///     <see cref="Entity.Id" /> of the target
 	/// </summary>
 	public Ulid TargetEntityId { get; init; }
 
 	/// <summary>
-	///     <see cref="Effect.Id"/> of the effect
+	///     <see cref="Effect.Id" /> of the effect
 	/// </summary>
 	public Ulid EffectId { get; init; }
 

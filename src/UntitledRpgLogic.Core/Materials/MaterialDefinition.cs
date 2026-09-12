@@ -31,13 +31,6 @@ public record MaterialDefinition : IDbEntity<Ulid>
 	public MaterialDefinition(Name name) : this() => this.Name = name;
 
 	/// <summary>
-	///     The unique identifier for the material definition.
-	/// </summary>
-	[Key]
-	[DatabaseGenerated(DatabaseGeneratedOption.None)]
-	public Ulid Id { get; init; }
-
-	/// <summary>
 	///     The display name of the material.
 	/// </summary>
 	public required Name Name { get; init; }
@@ -88,4 +81,11 @@ public record MaterialDefinition : IDbEntity<Ulid>
 	///     Phase transition deviations when the material shifts state (Solid, Liquid, Gas).
 	/// </summary>
 	public ICollection<StateSpecificProperties> StateProperties { get; init; } = [];
+
+	/// <summary>
+	///     The unique identifier for the material definition.
+	/// </summary>
+	[Key]
+	[DatabaseGenerated(DatabaseGeneratedOption.None)]
+	public Ulid Id { get; init; }
 }

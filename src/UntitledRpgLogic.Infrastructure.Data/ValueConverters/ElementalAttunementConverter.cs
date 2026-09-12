@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace UntitledRpgLogic.Infrastructure.Data.ValueConverters;
 
 /// <summary>
-/// 	Conversion for the elemental attunement which is a dict of ID, AMNT
+///     Conversion for the elemental attunement which is a dict of ID, AMNT
 /// </summary>
 public class ElementalAttunementConverter : ValueConverter<Dictionary<Ulid, float>, string>
 {

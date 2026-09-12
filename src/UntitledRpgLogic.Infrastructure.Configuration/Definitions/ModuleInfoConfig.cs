@@ -26,7 +26,8 @@ public record ModuleInfoConfig
 	public string Version { get; init; } = "1.0.0";
 
 	/// <summary>
-	///     A numeric representation of the module's version, which can be used for comparisons, sorting, or dependency management.
+	///     A numeric representation of the module's version, which can be used for comparisons, sorting, or dependency
+	///     management.
 	/// </summary>
 	public int VersionNumber { get; init; } = 1;
 

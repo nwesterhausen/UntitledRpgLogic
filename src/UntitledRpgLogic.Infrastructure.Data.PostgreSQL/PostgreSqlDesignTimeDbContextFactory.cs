@@ -27,9 +27,9 @@ public sealed class PostgreSqlDesignTimeDbContextFactory : IDesignTimeDbContextF
 
 		var optionsBuilder = new DbContextOptionsBuilder<RpgDbContext>();
 		optionsBuilder.UseNpgsql(
-			connectionString, b =>
-				b.MigrationsAssembly("UntitledRpgLogic.Infrastructure.Data.PostgreSQL"))
-				.UseSnakeCaseNamingConvention();
+				connectionString, b =>
+					b.MigrationsAssembly("UntitledRpgLogic.Infrastructure.Data.PostgreSQL"))
+			.UseSnakeCaseNamingConvention();
 
 		return new RpgDbContext(optionsBuilder.Options);
 	}

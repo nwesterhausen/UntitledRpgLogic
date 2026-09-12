@@ -49,7 +49,8 @@ public class TerrainHydrology
 		ArgumentNullException.ThrowIfNull(isRiver);
 
 		var expectedSize = widthTiles * heightTiles;
-		if (liquidDepth.Length != expectedSize || liquidMaterial.Length != expectedSize || isRiver.Length != expectedSize)
+		if (liquidDepth.Length != expectedSize || liquidMaterial.Length != expectedSize ||
+		    isRiver.Length != expectedSize)
 		{
 			throw new ArgumentException($"All input arrays must have length equal to width * height ({expectedSize}).");
 		}

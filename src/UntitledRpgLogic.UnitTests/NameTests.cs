@@ -61,7 +61,7 @@ public class NameTests
 	{
 		var name = new Name("Potion");
 
-		var result = name.GetName(1);
+		var result = name.GetName();
 
 		Assert.AreEqual("Potion", result);
 	}
@@ -104,7 +104,8 @@ public class NameTests
 	[DataRow("Hero;Heros", "Hero", "Heros", "Hero")]
 	[DataRow("Wolf;Wolves;Lupine", "Wolf", "Wolves", "Lupine")]
 	[DataRow("Sword", "Sword", "Swords", "Sword")]
-	public void Deserialize_ValidString_ReconstructsName(string serialized, string expectedSingular, string expectedPlural, string expectedAdjective)
+	public void Deserialize_ValidString_ReconstructsName(string serialized, string expectedSingular,
+		string expectedPlural, string expectedAdjective)
 	{
 		var name = Name.Deserialize(serialized);
 
@@ -117,7 +118,8 @@ public class NameTests
 	[DataRow("Hero")]
 	[DataRow("Wolf", "Wolves", "Lupine")]
 	[DataRow("Iron", "Irons", "Iron")]
-	public void SerializationRoundTrip_PreservesAllFields(string singular, string? plural = null, string? adjective = null)
+	public void SerializationRoundTrip_PreservesAllFields(string singular, string? plural = null,
+		string? adjective = null)
 	{
 		var original = new Name(singular, plural, adjective);
 
@@ -130,8 +132,6 @@ public class NameTests
 	}
 
 	[TestMethod]
-	public void Deserialize_NullInput_ThrowsArgumentNullException()
-	{
+	public void Deserialize_NullInput_ThrowsArgumentNullException() =>
 		Assert.Throws<ArgumentNullException>(() => Name.Deserialize(null!));
-	}
 }
