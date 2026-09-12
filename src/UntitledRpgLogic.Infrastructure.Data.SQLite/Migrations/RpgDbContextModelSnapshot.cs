@@ -55,7 +55,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                     b.ToTable("modification_stack_effects", (string)null);
                 });
 
-            modelBuilder.Entity("UntitledRpgLogic.Core.Abilities.Ability", b =>
+            modelBuilder.Entity("UntitledRpgLogic.Core.Abilities.AbilityDefinition", b =>
                 {
                     b.Property<byte[]>("Id")
                         .HasColumnType("BLOB")
@@ -2780,7 +2780,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                         .HasConstraintName("fk_modification_stack_effects_modification_effects_stack_effects_id");
                 });
 
-            modelBuilder.Entity("UntitledRpgLogic.Core.Abilities.Ability", b =>
+            modelBuilder.Entity("UntitledRpgLogic.Core.Abilities.AbilityDefinition", b =>
                 {
                     b.HasOne("UntitledRpgLogic.Infrastructure.Data.LookupEntities.AbilityTypeLookup", null)
                         .WithMany()
@@ -2802,6 +2802,51 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("fk_abilities_targeting_type_lookup_targeting_type");
+
+                    b.OwnsMany("UntitledRpgLogic.Core.Stats.StatCost", "StatCosts", b1 =>
+                        {
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("INTEGER")
+                                .HasColumnName("id");
+
+                            b1.Property<byte[]>("AbilityDefinitionId")
+                                .IsRequired()
+                                .HasColumnType("BLOB")
+                                .HasColumnName("ability_definition_id");
+
+                            b1.Property<float>("Amount")
+                                .HasColumnType("REAL")
+                                .HasColumnName("amount");
+
+                            b1.Property<byte[]>("StatId")
+                                .IsRequired()
+                                .HasColumnType("BLOB")
+                                .HasColumnName("stat_id");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("AbilityDefinitionId")
+                                .HasDatabaseName("ix_ability_stat_costs_ability_definition_id");
+
+                            b1.HasIndex("StatId")
+                                .HasDatabaseName("ix_ability_stat_costs_stat_id");
+
+                            b1.ToTable("ability_stat_costs", (string)null);
+
+                            b1.WithOwner()
+                                .HasForeignKey("AbilityDefinitionId")
+                                .HasConstraintName("fk_ability_stat_costs_abilities_ability_definition_id");
+
+                            b1.HasOne("UntitledRpgLogic.Core.Stats.StatDefinition", "Stat")
+                                .WithMany()
+                                .HasForeignKey("StatId")
+                                .OnDelete(DeleteBehavior.Restrict)
+                                .IsRequired()
+                                .HasConstraintName("fk_ability_stat_costs_stat_definitions_stat_id");
+
+                            b1.Navigation("Stat");
+                        });
 
                     b.OwnsMany("UntitledRpgLogic.Core.Abilities.CastingRequirement", "CastingRequirements", b1 =>
                         {
@@ -2956,51 +3001,6 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                                 .HasConstraintName("fk_ability_learning_requirements_requirement_type_lookup_requirement_type");
 
                             b1.Navigation("Ability");
-                        });
-
-                    b.OwnsMany("UntitledRpgLogic.Core.Stats.StatCost", "StatCosts", b1 =>
-                        {
-                            b1.Property<int>("Id")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("INTEGER")
-                                .HasColumnName("id");
-
-                            b1.Property<byte[]>("AbilityId")
-                                .IsRequired()
-                                .HasColumnType("BLOB")
-                                .HasColumnName("ability_id");
-
-                            b1.Property<float>("Amount")
-                                .HasColumnType("REAL")
-                                .HasColumnName("amount");
-
-                            b1.Property<byte[]>("StatId")
-                                .IsRequired()
-                                .HasColumnType("BLOB")
-                                .HasColumnName("stat_id");
-
-                            b1.HasKey("Id");
-
-                            b1.HasIndex("AbilityId")
-                                .HasDatabaseName("ix_ability_stat_costs_ability_id");
-
-                            b1.HasIndex("StatId")
-                                .HasDatabaseName("ix_ability_stat_costs_stat_id");
-
-                            b1.ToTable("ability_stat_costs", (string)null);
-
-                            b1.WithOwner()
-                                .HasForeignKey("AbilityId")
-                                .HasConstraintName("fk_ability_stat_costs_abilities_ability_id");
-
-                            b1.HasOne("UntitledRpgLogic.Core.Stats.StatDefinition", "Stat")
-                                .WithMany()
-                                .HasForeignKey("StatId")
-                                .OnDelete(DeleteBehavior.Restrict)
-                                .IsRequired()
-                                .HasConstraintName("fk_ability_stat_costs_stat_definitions_stat_id");
-
-                            b1.Navigation("Stat");
                         });
 
                     b.Navigation("CastingRequirements");
@@ -4111,7 +4111,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
 
             modelBuilder.Entity("ability_active_effects", b =>
                 {
-                    b.HasOne("UntitledRpgLogic.Core.Abilities.Ability", null)
+                    b.HasOne("UntitledRpgLogic.Core.Abilities.AbilityDefinition", null)
                         .WithMany()
                         .HasForeignKey("AbilityId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -4128,7 +4128,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
 
             modelBuilder.Entity("ability_failure_effects", b =>
                 {
-                    b.HasOne("UntitledRpgLogic.Core.Abilities.Ability", null)
+                    b.HasOne("UntitledRpgLogic.Core.Abilities.AbilityDefinition", null)
                         .WithMany()
                         .HasForeignKey("AbilityId")
                         .OnDelete(DeleteBehavior.Cascade)
