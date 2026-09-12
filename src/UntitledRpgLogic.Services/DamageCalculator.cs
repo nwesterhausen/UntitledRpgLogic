@@ -13,19 +13,25 @@ public class DamageCalculator : IDamageCalculator
 		ArgumentNullException.ThrowIfNull(options);
 		ArgumentNullException.ThrowIfNull(targetStat);
 
-		var total = options.FlatDamage ?? 0;
+		var total = 0f;
 
-		if (options.PercentageDamage > 0f)
+		if (options.FlatDamage.HasValue)
 		{
-			total += (int)MathF.Round(targetStat.BaseValue * options.PercentageDamage ?? 0f);
+			total += Math.Max(0, options.FlatDamage.Value);
 		}
 
-		if (options.PercentageDamageOfMax > 0f)
+		if (options.PercentageDamage is > 0f)
 		{
-			total += (int)MathF.Round(targetStat.BaseValue * options.PercentageDamageOfMax ?? 0f);
+			total += targetStat.ApparentValue * options.PercentageDamage.Value;
 		}
 
-		return Math.Max(0, total);
+		if (options.PercentageDamageOfMax is > 0f)
+		{
+			var maxCap = targetStat.Definition?.MaxValue ?? targetStat.ApparentValue;
+			total += maxCap * options.PercentageDamageOfMax.Value;
+		}
+
+		return (int)MathF.Round(MathF.Max(0f, total));
 	}
 
 	/// <inheritdoc />
