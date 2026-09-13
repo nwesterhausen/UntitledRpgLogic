@@ -14,9 +14,7 @@ public class RespirationServiceTests
 	{
 		var profile = new RespiratoryProfile
 		{
-			RequiresBreathing = true,
-			MinRequiredPressure = 0.5f,
-			MaxSafePressure = 2.0f
+			RequiresBreathing = true, MinRequiredPressure = 0.5f, MaxSafePressure = 2.0f
 		};
 
 		var atmosphere = new AtmosphereProfile { TotalPressureAtm = 0.2f };

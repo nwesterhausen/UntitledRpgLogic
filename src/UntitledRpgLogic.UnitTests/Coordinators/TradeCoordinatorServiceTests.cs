@@ -14,10 +14,7 @@ public sealed class TradeCoordinatorServiceTests
 
 	private readonly ItemDefinition goldCoinDef = new(new Name("Gold Coin"))
 	{
-		ItemType = ItemType.Currency,
-		ItemSubtype = ItemSubtype.Coin,
-		BaseValue = 10,
-		MaxStackSize = 100
+		ItemType = ItemType.Currency, ItemSubtype = ItemSubtype.Coin, BaseValue = 10, MaxStackSize = 100
 	};
 
 	private readonly ItemStorageService itemStorageService = new();

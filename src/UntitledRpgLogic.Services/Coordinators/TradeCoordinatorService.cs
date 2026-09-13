@@ -132,7 +132,7 @@ public sealed class TradeCoordinatorService : ITradeCoordinatorService
 			var toTake = Math.Min(neededCount, currencyItem.Quantity);
 
 			if (this.currencyStorageService.TryWithdraw(buyerInventory, currencyItem.DefinitionId, toTake,
-					out var withdrawn) && withdrawn is not null)
+				    out var withdrawn) && withdrawn is not null)
 			{
 				var transferredValue = (long)coinValue * toTake;
 				remainingCost -= transferredValue;

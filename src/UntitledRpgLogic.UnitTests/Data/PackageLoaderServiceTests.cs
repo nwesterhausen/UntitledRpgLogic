@@ -18,8 +18,7 @@ public sealed class PackageLoaderServiceTests
 {
 	private static readonly ItemDefinition ItemDef = new(new Name("Iron Bar"))
 	{
-		ItemType = ItemType.Consumable,
-		ItemSubtype = ItemSubtype.Bullion
+		ItemType = ItemType.Consumable, ItemSubtype = ItemSubtype.Bullion
 	};
 
 	private static readonly StatDefinition StatDef = new(new Name("Strength")) { Variation = StatVariation.Major };
@@ -43,10 +42,7 @@ public sealed class PackageLoaderServiceTests
 
 			var manifest = new PackageManifest
 			{
-				Id = Ulid.NewUlid(),
-				Name = "Core Mod",
-				AuthorName = "Dev",
-				Version = "1.0.0"
+				Id = Ulid.NewUlid(), Name = "Core Mod", AuthorName = "Dev", Version = "1.0.0"
 			};
 
 			// 2. Supply a dummy file map so UrpglibWriter generates a non-empty TAR payload
@@ -103,10 +99,7 @@ public sealed class PackageLoaderServiceTests
 
 			var manifest = new PackageManifest
 			{
-				Id = Ulid.NewUlid(),
-				Name = "Materials Mod",
-				AuthorName = "Dev",
-				Version = "1.0.0"
+				Id = Ulid.NewUlid(), Name = "Materials Mod", AuthorName = "Dev", Version = "1.0.0"
 			};
 
 			var dummyFiles = new Dictionary<string, byte[]> { ["materials.toml"] = "name = \"Iron\""u8.ToArray() };

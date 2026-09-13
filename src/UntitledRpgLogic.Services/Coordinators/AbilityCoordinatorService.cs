@@ -39,7 +39,7 @@ public sealed class AbilityCoordinatorService : IAbilityCoordinatorService
 		this.abilityRepository = abilityRepository ?? throw new ArgumentNullException(nameof(abilityRepository));
 		this.validationService = validationService ?? throw new ArgumentNullException(nameof(validationService));
 		this.effectApplicationService = effectApplicationService ??
-										throw new ArgumentNullException(nameof(effectApplicationService));
+		                                throw new ArgumentNullException(nameof(effectApplicationService));
 	}
 
 	/// <inheritdoc />

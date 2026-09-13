@@ -18,9 +18,7 @@ public class StatServiceTests
 
 		attackDef.LinkedStats.Add(new LinkedStats
 		{
-			StatId = attackDef.Id,
-			DependsOnId = strengthDef.Id,
-			Ratio = 1.5f
+			StatId = attackDef.Id, DependsOnId = strengthDef.Id, Ratio = 1.5f
 		});
 
 		var strengthStat = new Stat { DefinitionId = strengthDef.Id, Definition = strengthDef, ApparentValue = 20 };

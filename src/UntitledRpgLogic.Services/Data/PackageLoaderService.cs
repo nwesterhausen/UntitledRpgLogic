@@ -48,7 +48,7 @@ public sealed class PackageLoaderService : IPackageLoaderService
 		this.itemRepository = itemRepository ?? throw new ArgumentNullException(nameof(itemRepository));
 		this.materialRepository = materialRepository ?? throw new ArgumentNullException(nameof(materialRepository));
 		this.entityDefinitionRepository = entityDefinitionRepository ??
-										  throw new ArgumentNullException(nameof(entityDefinitionRepository));
+		                                  throw new ArgumentNullException(nameof(entityDefinitionRepository));
 	}
 
 	/// <inheritdoc />

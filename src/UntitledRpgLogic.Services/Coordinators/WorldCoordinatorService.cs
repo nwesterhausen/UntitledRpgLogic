@@ -140,9 +140,7 @@ public sealed class WorldCoordinatorService : IWorldCoordinatorService
 		{
 			entity.Position = entity.Position with
 			{
-				MapId = transition.TargetMapId,
-				X = transition.TargetX,
-				Y = transition.TargetY
+				MapId = transition.TargetMapId, X = transition.TargetX, Y = transition.TargetY
 			};
 
 			await this.unitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);

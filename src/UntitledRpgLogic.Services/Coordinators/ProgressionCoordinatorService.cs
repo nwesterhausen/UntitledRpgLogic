@@ -40,13 +40,13 @@ public sealed class ProgressionCoordinatorService : IProgressionCoordinatorServi
 		this.unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
 		this.entityRepository = entityRepository ?? throw new ArgumentNullException(nameof(entityRepository));
 		this.skillDefinitionRepository = skillDefinitionRepository ??
-										 throw new ArgumentNullException(nameof(skillDefinitionRepository));
+		                                 throw new ArgumentNullException(nameof(skillDefinitionRepository));
 		this.abilityDefinitionRepository = abilityDefinitionRepository ??
-										   throw new ArgumentNullException(nameof(abilityDefinitionRepository));
+		                                   throw new ArgumentNullException(nameof(abilityDefinitionRepository));
 		this.skillProgressionService =
 			skillProgressionService ?? throw new ArgumentNullException(nameof(skillProgressionService));
 		this.abilityValidationService = abilityValidationService ??
-										throw new ArgumentNullException(nameof(abilityValidationService));
+		                                throw new ArgumentNullException(nameof(abilityValidationService));
 	}
 
 	/// <inheritdoc />

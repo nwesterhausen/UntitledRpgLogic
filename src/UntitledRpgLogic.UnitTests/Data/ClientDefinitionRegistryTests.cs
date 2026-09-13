@@ -26,9 +26,7 @@ public sealed class ClientDefinitionRegistryTests
 	{
 		var itemDef = new ItemDefinition(new Name("Mithril Dagger"))
 		{
-			ItemType = ItemType.Weapon,
-			ItemSubtype = ItemSubtype.Dagger,
-			BaseValue = 450
+			ItemType = ItemType.Weapon, ItemSubtype = ItemSubtype.Dagger, BaseValue = 450
 		};
 
 		this.registry.RegisterDynamicDefinition(itemDef);

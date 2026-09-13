@@ -72,9 +72,7 @@ public class DamageCalculatorTests
 	{
 		var statDef = new StatDefinition(new Name("Health"))
 		{
-			MinValue = 0,
-			MaxValue = 500,
-			Variation = StatVariation.Major
+			MinValue = 0, MaxValue = 500, Variation = StatVariation.Major
 		};
 
 		var stat = new Stat { Definition = statDef, ApparentValue = 150 };
@@ -91,9 +89,7 @@ public class DamageCalculatorTests
 	{
 		var statDef = new StatDefinition(new Name("Health"))
 		{
-			MinValue = 0,
-			MaxValue = 1000,
-			Variation = StatVariation.Major
+			MinValue = 0, MaxValue = 1000, Variation = StatVariation.Major
 		};
 
 		var stat = new Stat { Definition = statDef, ApparentValue = 500 };

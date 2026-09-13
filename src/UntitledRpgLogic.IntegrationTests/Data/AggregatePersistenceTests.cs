@@ -51,8 +51,7 @@ public class AggregatePersistenceTests
 
 				var skillDef = new SkillDefinition
 				{
-					Id = skillDefId,
-					Name = new Name("Pyromancy", "Pyromancies", "Pyromantic")
+					Id = skillDefId, Name = new Name("Pyromancy", "Pyromancies", "Pyromantic")
 				};
 				await skillRepo.AddAsync(skillDef).ConfigureAwait(false);
 

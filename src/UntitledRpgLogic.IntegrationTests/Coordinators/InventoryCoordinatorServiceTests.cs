@@ -30,16 +30,12 @@ public class InventoryCoordinatorServiceTests
 
 	private readonly Item acceptedPotion = new()
 	{
-		Id = Ulid.NewUlid(),
-		DefinitionId = PotionDef.Id,
-		Definition = PotionDef,
-		Quantity = 1
+		Id = Ulid.NewUlid(), DefinitionId = PotionDef.Id, Definition = PotionDef, Quantity = 1
 	};
 
 	private readonly Entity chest = new(ChestId)
 	{
-		Name = new Name("Treasure Chest"),
-		Inventory = new Inventory(Ulid.NewUlid()) { Capacity = 5 }
+		Name = new Name("Treasure Chest"), Inventory = new Inventory(Ulid.NewUlid()) { Capacity = 5 }
 	};
 
 	private readonly Entity filteredBagEntity = new()

@@ -93,7 +93,7 @@ public sealed class AreaOfInterestService : IAreaOfInterestService
 			foreach (var chunk in oldVisibleChunks)
 			{
 				if (!newVisibleChunks.Contains(chunk) &&
-					this.chunkSubscriptions.TryGetValue(chunk, out var subscribers))
+				    this.chunkSubscriptions.TryGetValue(chunk, out var subscribers))
 				{
 					subscribers.Remove(clientId);
 					if (subscribers.Count == 0)

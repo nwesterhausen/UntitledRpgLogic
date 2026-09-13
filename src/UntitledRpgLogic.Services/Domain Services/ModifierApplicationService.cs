@@ -38,10 +38,7 @@ public sealed class ModifierApplicationService : IModifierApplicationService
 
 		var newModifier = new AppliedModifier(definition.Id, entity.Id)
 		{
-			Stacks = 1,
-			AppliedAt = currentTime,
-			ExpiresAt = expiration,
-			ModifierDefinition = definition
+			Stacks = 1, AppliedAt = currentTime, ExpiresAt = expiration, ModifierDefinition = definition
 		};
 
 		entity.AppliedModifiers.Add(newModifier);
