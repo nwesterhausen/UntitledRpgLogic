@@ -10,23 +10,31 @@ namespace UntitledRpgLogic.Core.Abilities.Effects;
 public record DamageEffect : Effect
 {
 	/// <summary>
-	///     Initializes default base values.
+	///     Creates an empty damage effect record.
 	/// </summary>
 	[SetsRequiredMembers]
-	public DamageEffect() => this.EffectType = EffectType.Damage;
+	public DamageEffect()
+	{
+		this.EffectType = EffectType.Damage;
+		this.DamageType = DamageType.None;
+	}
 
 	/// <summary>
 	///     Initializes a new <see cref="Effect" /> with <see cref="EffectType.Damage" />.
 	/// </summary>
+	/// <param name="name">The name of the effect.</param>
+	/// <param name="affectedStatId">The ID of the affected stat.</param>
+	/// <param name="options">The damage options</param>
+	/// <param name="ignoresArmor">Whether the damage ignores armor</param>
 	[SetsRequiredMembers]
-	public DamageEffect(Name name) : base(name, EffectType.Damage)
+	public DamageEffect(Name name,
+		Ulid affectedStatId,
+		StatChangeOptions options,
+		bool ignoresArmor = false) : base(name, EffectType.Damage)
 	{
+		this.AddAffectedStat(affectedStatId, options);
+		this.IgnoresArmor = ignoresArmor;
 	}
-
-	/// <summary>
-	///     The base amount of damage dealt by this effect.
-	/// </summary>
-	public float BaseDamage { get; init; }
 
 	/// <summary>
 	///     The type of damage dealt by this effect.

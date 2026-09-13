@@ -3,3 +3,6 @@
 dotnet_diagnostic.CA1515.severity = none
 dotnet_diagnostic.CA1591.severity = none
 dotnet_diagnostic.CA1707.severity = none
+
+# Disable excessive coupling warning for integration tests
+dotnet_diagnostic.CA1506.severity = none

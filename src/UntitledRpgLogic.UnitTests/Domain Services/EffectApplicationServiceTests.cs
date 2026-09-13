@@ -16,7 +16,7 @@ public class EffectApplicationServiceTests
 
 	public EffectApplicationServiceTests()
 	{
-		this.service = new EffectApplicationService(new DamageCalculator());
+		this.service = new EffectApplicationService(new StatCalculationService());
 
 		this.healthDef = new StatDefinition(new Name("Health"))
 		{
@@ -40,7 +40,10 @@ public class EffectApplicationServiceTests
 	[TestMethod]
 	public void ApplyEffect_DamageEffect_ReducesHealthApparentValue()
 	{
-		var damageEffect = new DamageEffect(new Name("Firebolt")) { BaseDamage = 35f, IgnoresArmor = true };
+		var damageEffect = new DamageEffect(new Name("Firebolt"),
+			this.healthDef.Id,
+			new StatChangeOptions { FlatChange = 35 },
+			true);
 
 		this.service.ApplyEffect(damageEffect, targets: [this.target]);
 
@@ -50,7 +53,10 @@ public class EffectApplicationServiceTests
 	[TestMethod]
 	public void ApplyEffect_DamageEffect_ClampsAtMinValue()
 	{
-		var lethalDamage = new DamageEffect(new Name("Execute")) { BaseDamage = 250f, IgnoresArmor = true };
+		var lethalDamage = new DamageEffect(new Name("Execute"),
+			this.healthDef.Id,
+			new StatChangeOptions { FlatChange = 250 },
+			true);
 
 		this.service.ApplyEffect(lethalDamage, targets: [this.target]);
 
@@ -62,7 +68,8 @@ public class EffectApplicationServiceTests
 	{
 		this.targetHealth.ApparentValue = 85;
 
-		var healEffect = new HealEffect(new Name("Minor Heal")) { BaseHealAmount = 30f, CanOverheal = false };
+		var healEffect = new HealEffect(new Name("Minor Heal"), this.healthDef.Id,
+			new StatChangeOptions { FlatChange = 30 });
 
 		this.service.ApplyEffect(healEffect, targets: [this.target]);
 
@@ -74,7 +81,10 @@ public class EffectApplicationServiceTests
 	{
 		this.targetHealth.ApparentValue = 90;
 
-		var overhealEffect = new HealEffect(new Name("Divine Shielding")) { BaseHealAmount = 40f, CanOverheal = true };
+		var overhealEffect = new HealEffect(new Name("Divine Shielding"),
+			this.healthDef.Id,
+			new StatChangeOptions { FlatChange = 40 },
+			true);
 
 		this.service.ApplyEffect(overhealEffect, targets: [this.target]);
 

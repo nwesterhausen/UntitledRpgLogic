@@ -8,7 +8,7 @@ public record AtmosphereProfile
 	/// <summary>
 	///     Standard baseline clear atmosphere at 1.0 atmosphere total pressure.
 	/// </summary>
-	public static readonly AtmosphereProfile StandardDefault = new();
+	public static AtmosphereProfile StandardDefault => new();
 
 	/// <summary>
 	///     Total atmospheric pressure measured in atmospheres (1.0 = standard sea level, 0.0 = total vacuum).

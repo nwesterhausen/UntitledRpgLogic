@@ -10,6 +10,7 @@ using UntitledRpgLogic.Core.Materials;
 using UntitledRpgLogic.Core.Progression;
 using UntitledRpgLogic.Core.Skills;
 using UntitledRpgLogic.Core.Stats;
+using UntitledRpgLogic.Core.World;
 using UntitledRpgLogic.Infrastructure.Data.ValueConverters;
 
 namespace UntitledRpgLogic.Infrastructure.Data;
@@ -101,6 +102,16 @@ public class RpgDbContext(DbContextOptions<RpgDbContext> options) : DbContext(op
 	///     Table for leveling definitions, which define how leveling is applied.
 	/// </summary>
 	public DbSet<LevelingDefinition> LevelingDefinitions { get; set; } = null!;
+
+	/// <summary>
+	///     Table for map definitions which are information for various maps.
+	/// </summary>
+	public DbSet<MapDefinition> MapDefinitions { get; set; } = null!;
+
+	/// <summary>
+	///     Table for map transitions which are how maps are connected.
+	/// </summary>
+	public DbSet<MapTransition> MapTransitions { get; set; } = null!;
 
 	/// <summary>
 	///     Table for material definitions, which define the materials that items can be made from.

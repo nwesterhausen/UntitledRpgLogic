@@ -41,4 +41,47 @@ public sealed class StatCalculationService : IStatCalculationService
 		ArgumentNullException.ThrowIfNull(definition);
 		return Math.Clamp(rawValue, definition.MinValue, definition.MaxValue);
 	}
+
+	/// <inheritdoc />
+	public int CalculatePointChange(StatChangeOptions options, Stat targetStat)
+	{
+		ArgumentNullException.ThrowIfNull(options);
+		ArgumentNullException.ThrowIfNull(targetStat);
+
+		var total = 0f;
+
+		if (options.FlatChange.HasValue)
+		{
+			total += Math.Max(0, options.FlatChange.Value);
+		}
+
+		if (options.PercentageChange is > 0f)
+		{
+			total += targetStat.ApparentValue * options.PercentageChange.Value;
+		}
+
+		if (options.PercentageChangeOfMax is > 0f)
+		{
+			var maxCap = targetStat.Definition?.MaxValue ?? targetStat.ApparentValue;
+			total += maxCap * options.PercentageChangeOfMax.Value;
+		}
+
+		return (int)MathF.Round(MathF.Max(0f, total));
+	}
+
+	/// <inheritdoc />
+	public int CalculateMitigatedPointChange(int rawDamage, float resistancePercent, int flatMitigation)
+	{
+		if (rawDamage <= 0)
+		{
+			return 0;
+		}
+
+		// Clamp resistance between 0% and 100%
+		var clampedResistance = Math.Clamp(resistancePercent, 0f, 1.0f);
+		var postResistance = rawDamage * (1.0f - clampedResistance);
+		var finalDamage = (int)MathF.Round(postResistance) - flatMitigation;
+
+		return Math.Max(0, finalDamage);
+	}
 }

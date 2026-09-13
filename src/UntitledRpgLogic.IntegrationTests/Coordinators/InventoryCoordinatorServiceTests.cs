@@ -6,12 +6,13 @@ using UntitledRpgLogic.Core.Data;
 using UntitledRpgLogic.Core.Entities;
 using UntitledRpgLogic.Core.Items;
 using UntitledRpgLogic.Infrastructure.Data.SQLite;
+using UntitledRpgLogic.IntegrationTests.Common;
 using UntitledRpgLogic.Services;
 
 namespace UntitledRpgLogic.IntegrationTests;
 
 [TestClass]
-public class InventoryCoordinatorServiceTests
+public class InventoryCoordinatorServiceTests : CoordinatorIntegrationTestBase
 {
 	private static readonly Ulid PotionDefId = Ulid.NewUlid();
 	private static readonly Ulid PotionItemId = Ulid.NewUlid();
@@ -30,12 +31,16 @@ public class InventoryCoordinatorServiceTests
 
 	private readonly Item acceptedPotion = new()
 	{
-		Id = Ulid.NewUlid(), DefinitionId = PotionDef.Id, Definition = PotionDef, Quantity = 1
+		Id = Ulid.NewUlid(),
+		DefinitionId = PotionDef.Id,
+		Definition = PotionDef,
+		Quantity = 1
 	};
 
 	private readonly Entity chest = new(ChestId)
 	{
-		Name = new Name("Treasure Chest"), Inventory = new Inventory(Ulid.NewUlid()) { Capacity = 5 }
+		Name = new Name("Treasure Chest"),
+		Inventory = new Inventory(Ulid.NewUlid()) { Capacity = 5 }
 	};
 
 	private readonly Entity filteredBagEntity = new()
@@ -74,15 +79,8 @@ public class InventoryCoordinatorServiceTests
 	{
 		var token = this.TestContext.CancellationToken;
 		var dbName = $"inv_persist_test_{Guid.NewGuid():N}";
-		var services = new ServiceCollection();
-		services.AddSqliteDataAccess(opts =>
-		{
-			opts.ConnectionString = $"Data Source={dbName}.db";
-			opts.AutoMigrate = true;
-		});
-		services.AddRpgServerServices();
+		var provider = CreateTestProvider(dbName);
 
-		var provider = services.BuildServiceProvider();
 		await using (provider.ConfigureAwait(false))
 		{
 			var initializer = provider.GetRequiredService<IDatabaseInitializer>();

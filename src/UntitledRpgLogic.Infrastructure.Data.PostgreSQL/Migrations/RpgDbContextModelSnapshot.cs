@@ -2675,10 +2675,6 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                 {
                     b.HasBaseType("UntitledRpgLogic.Core.Abilities.Effects.Effect");
 
-                    b.Property<float>("BaseDamage")
-                        .HasColumnType("real")
-                        .HasColumnName("base_damage");
-
                     b.Property<int>("DamageType")
                         .HasColumnType("integer")
                         .HasColumnName("damage_type");
@@ -2726,10 +2722,6 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
             modelBuilder.Entity("UntitledRpgLogic.Core.Abilities.Effects.HealEffect", b =>
                 {
                     b.HasBaseType("UntitledRpgLogic.Core.Abilities.Effects.Effect");
-
-                    b.Property<float>("BaseHealAmount")
-                        .HasColumnType("real")
-                        .HasColumnName("base_heal_amount");
 
                     b.Property<bool>("CanOverheal")
                         .HasColumnType("boolean")
@@ -3053,9 +3045,13 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                             b1.Property<int>("__synthesizedOrdinal")
                                 .ValueGeneratedOnAdd();
 
-                            b1.Property<float>("AmountChange");
+                            b1.Property<int?>("FlatChange");
 
-                            b1.Property<bool>("IsPercentage");
+                            b1.Property<bool>("IsPositive");
+
+                            b1.Property<float?>("PercentageChange");
+
+                            b1.Property<float?>("PercentageChangeOfMax");
 
                             b1.Property<byte[]>("StatId")
                                 .IsRequired();
@@ -3134,9 +3130,13 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                             b1.Property<int>("__synthesizedOrdinal")
                                 .ValueGeneratedOnAdd();
 
-                            b1.Property<float>("AmountChange");
+                            b1.Property<int?>("FlatChange");
 
-                            b1.Property<bool>("IsPercentage");
+                            b1.Property<bool>("IsPositive");
+
+                            b1.Property<float?>("PercentageChange");
+
+                            b1.Property<float?>("PercentageChangeOfMax");
 
                             b1.Property<byte[]>("StatId")
                                 .IsRequired();
@@ -3211,9 +3211,13 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                             b1.Property<int>("__synthesizedOrdinal")
                                 .ValueGeneratedOnAdd();
 
-                            b1.Property<float>("AmountChange");
+                            b1.Property<int?>("FlatChange");
 
-                            b1.Property<bool>("IsPercentage");
+                            b1.Property<bool>("IsPositive");
+
+                            b1.Property<float?>("PercentageChange");
+
+                            b1.Property<float?>("PercentageChangeOfMax");
 
                             b1.Property<byte[]>("StatId")
                                 .IsRequired();

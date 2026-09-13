@@ -26,7 +26,6 @@ public static class ServiceCollectionExtensions
 	public static IServiceCollection AddRpgCoreDomainServices(this IServiceCollection services)
 	{
 		// Pure domain services (Stateless, zero I/O)
-		services.AddSingleton<IDamageCalculator, DamageCalculator>();
 		services.AddSingleton<IItemFactoryService, ItemFactoryService>();
 		services.AddSingleton<IEffectApplicationService, EffectApplicationService>();
 		services.AddSingleton<ISkillProgressionService, SkillProgressionService>();

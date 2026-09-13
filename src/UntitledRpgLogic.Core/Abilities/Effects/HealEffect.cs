@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using UntitledRpgLogic.Core.Common;
+using UntitledRpgLogic.Core.Stats;
 
 namespace UntitledRpgLogic.Core.Abilities.Effects;
 
@@ -18,14 +19,16 @@ public record HealEffect : Effect
 	///     Initializes a new <see cref="Effect" /> with <see cref="EffectType.Heal" />.
 	/// </summary>
 	[SetsRequiredMembers]
-	public HealEffect(Name name) : base(name, EffectType.Heal)
+	public HealEffect(Name name,
+		Ulid affectedStatId,
+		StatChangeOptions options,
+		bool canOverheal = false) : base(name, EffectType.Heal)
 	{
-	}
+		ArgumentNullException.ThrowIfNull(options);
 
-	/// <summary>
-	///     The amount of healing to apply.
-	/// </summary>
-	public float BaseHealAmount { get; init; }
+		this.AddAffectedStat(affectedStatId, options with { IsPositive = true });
+		this.CanOverheal = canOverheal;
+	}
 
 	/// <summary>
 	///     Whether this healing effect can go beyond the max value of the affected stats.

@@ -11,7 +11,7 @@ using UntitledRpgLogic.Infrastructure.Data;
 namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
 {
     [DbContext(typeof(RpgDbContext))]
-    [Migration("20260913152119_InitialCreate")]
+    [Migration("20260913185724_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -2673,10 +2673,6 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                 {
                     b.HasBaseType("UntitledRpgLogic.Core.Abilities.Effects.Effect");
 
-                    b.Property<float>("BaseDamage")
-                        .HasColumnType("REAL")
-                        .HasColumnName("base_damage");
-
                     b.Property<int>("DamageType")
                         .HasColumnType("INTEGER")
                         .HasColumnName("damage_type");
@@ -2724,10 +2720,6 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
             modelBuilder.Entity("UntitledRpgLogic.Core.Abilities.Effects.HealEffect", b =>
                 {
                     b.HasBaseType("UntitledRpgLogic.Core.Abilities.Effects.Effect");
-
-                    b.Property<float>("BaseHealAmount")
-                        .HasColumnType("REAL")
-                        .HasColumnName("base_heal_amount");
 
                     b.Property<bool>("CanOverheal")
                         .HasColumnType("INTEGER")
@@ -3043,9 +3035,13 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                             b1.Property<int>("__synthesizedOrdinal")
                                 .ValueGeneratedOnAddOrUpdate();
 
-                            b1.Property<float>("AmountChange");
+                            b1.Property<int?>("FlatChange");
 
-                            b1.Property<bool>("IsPercentage");
+                            b1.Property<bool>("IsPositive");
+
+                            b1.Property<float?>("PercentageChange");
+
+                            b1.Property<float?>("PercentageChangeOfMax");
 
                             b1.Property<byte[]>("StatId")
                                 .IsRequired();
@@ -3124,9 +3120,13 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                             b1.Property<int>("__synthesizedOrdinal")
                                 .ValueGeneratedOnAddOrUpdate();
 
-                            b1.Property<float>("AmountChange");
+                            b1.Property<int?>("FlatChange");
 
-                            b1.Property<bool>("IsPercentage");
+                            b1.Property<bool>("IsPositive");
+
+                            b1.Property<float?>("PercentageChange");
+
+                            b1.Property<float?>("PercentageChangeOfMax");
 
                             b1.Property<byte[]>("StatId")
                                 .IsRequired();
@@ -3201,9 +3201,13 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                             b1.Property<int>("__synthesizedOrdinal")
                                 .ValueGeneratedOnAddOrUpdate();
 
-                            b1.Property<float>("AmountChange");
+                            b1.Property<int?>("FlatChange");
 
-                            b1.Property<bool>("IsPercentage");
+                            b1.Property<bool>("IsPositive");
+
+                            b1.Property<float?>("PercentageChange");
+
+                            b1.Property<float?>("PercentageChangeOfMax");
 
                             b1.Property<byte[]>("StatId")
                                 .IsRequired();

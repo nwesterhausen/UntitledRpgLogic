@@ -39,7 +39,7 @@ public sealed class AbilityCoordinatorService : IAbilityCoordinatorService
 		this.abilityRepository = abilityRepository ?? throw new ArgumentNullException(nameof(abilityRepository));
 		this.validationService = validationService ?? throw new ArgumentNullException(nameof(validationService));
 		this.effectApplicationService = effectApplicationService ??
-		                                throw new ArgumentNullException(nameof(effectApplicationService));
+										throw new ArgumentNullException(nameof(effectApplicationService));
 	}
 
 	/// <inheritdoc />
@@ -107,10 +107,20 @@ public sealed class AbilityCoordinatorService : IAbilityCoordinatorService
 		}
 
 		var distinctTargetIds = targetEntityIds.Distinct().ToList();
-		var targets = await this.entityRepository.GetByIdsAsync(
-			distinctTargetIds,
-			cancellationToken,
-			e => e.Stats).ConfigureAwait(false);
+		var targets = new List<Entity>();
+		foreach (var targetId in distinctTargetIds)
+		{
+			var entity = await this.entityRepository.GetByIdAsync(
+				targetId,
+				q => q.Include(e => e.Stats)
+					.ThenInclude(s => s.InstancedStat),
+				cancellationToken).ConfigureAwait(false);
+
+			if (entity is not null)
+			{
+				targets.Add(entity);
+			}
+		}
 
 		await this.unitOfWork.BeginTransactionAsync(cancellationToken).ConfigureAwait(false);
 		try
@@ -161,36 +171,48 @@ public sealed class AbilityCoordinatorService : IAbilityCoordinatorService
 		IReadOnlyList<Entity> targets,
 		IEnumerable<Effect> effects)
 	{
-		var baselineValues = new Dictionary<(Ulid EntityId, string StatName), int>();
+		// 1. Snapshot all initial stat values across all targets by (EntityId, StatDefinitionId)
+		var baselineValues = new Dictionary<(Ulid EntityId, Ulid StatDefinitionId), int>();
 		foreach (var target in targets)
 		{
 			foreach (var es in target.Stats)
 			{
-				if (es.InstancedStat?.Definition is not null)
+				if (es.InstancedStat is not null)
 				{
-					baselineValues[(target.Id, es.InstancedStat.Definition.Name.Singular)] =
-						es.InstancedStat.ApparentValue;
+					baselineValues[(target.Id, es.InstancedStat.DefinitionId)] = es.InstancedStat.ApparentValue;
 				}
 			}
 		}
 
+		// 2. Apply all active effects to targets
 		var outcomes = new List<TargetEffectOutcome>();
 		foreach (var effect in effects)
 		{
 			this.effectApplicationService.ApplyEffect(effect, caster, targets);
 
+			// 3. Compare current apparent values against baseline to detect any stat changes
 			foreach (var target in targets)
 			{
-				var healthStat = target.Stats
-					.FirstOrDefault(s => string.Equals(s.InstancedStat?.Definition?.Name.Singular, "Health",
-						StringComparison.OrdinalIgnoreCase))
-					?.InstancedStat;
-
-				if (healthStat is not null && baselineValues.TryGetValue((target.Id, "Health"), out var oldVal))
+				foreach (var es in target.Stats)
 				{
-					var delta = Math.Abs(healthStat.ApparentValue - oldVal);
-					outcomes.Add(new TargetEffectOutcome(target.Id, effect.Id, delta, false));
-					baselineValues[(target.Id, "Health")] = healthStat.ApparentValue;
+					if (es.InstancedStat is null)
+					{
+						continue;
+					}
+
+					var key = (target.Id, es.InstancedStat.DefinitionId);
+					if (baselineValues.TryGetValue(key, out var oldVal))
+					{
+						var currentVal = es.InstancedStat.ApparentValue;
+						if (currentVal != oldVal)
+						{
+							var delta = Math.Abs(currentVal - oldVal);
+							outcomes.Add(new TargetEffectOutcome(target.Id, effect.Id, delta, false));
+
+							// Update baseline to track incremental deltas for subsequent effects
+							baselineValues[key] = currentVal;
+						}
+					}
 				}
 			}
 		}

@@ -79,4 +79,13 @@ public abstract record Effect : IDbEntity<Ulid>
 	[Key]
 	[DatabaseGenerated(DatabaseGeneratedOption.None)]
 	public Ulid Id { get; init; } = Ulid.NewUlid();
+
+	internal void AddAffectedStat(
+		Ulid affectedStatId,
+		StatChangeOptions options)
+	{
+		var affectedStat = new AffectedStat(affectedStatId);
+		var affectedStat1 = affectedStat.Apply(options);
+		this.AffectedStats.Add(affectedStat1);
+	}
 }
