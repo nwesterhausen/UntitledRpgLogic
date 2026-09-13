@@ -12,6 +12,8 @@ using UntitledRpgLogic.Core.Progression;
 using UntitledRpgLogic.Core.Skills;
 using UntitledRpgLogic.Core.Stats;
 using UntitledRpgLogic.Core.World;
+using UntitledRpgLogic.WorldGen;
+using UntitledRpgLogic.WorldGen.Services;
 
 namespace UntitledRpgLogic.Services;
 
@@ -52,6 +54,10 @@ public static class ServiceCollectionExtensions
 	{
 		services.AddRpgCoreDomainServices();
 
+		// World Gen Services
+		services.AddSingleton<IChunkGeneratorService, ChunkGeneratorService>();
+		services.AddSingleton<IWorldGenContextProvider, WorldGenContextProvider>();
+
 		// Server Application / Persistence Coordinators (Require IUnitOfWork & IEntityRepository)
 		services.AddScoped<IItemCatalogService, ItemCatalogService>();
 		services.AddScoped<IInventoryCoordinatorService, InventoryCoordinatorService>();
@@ -60,6 +66,7 @@ public static class ServiceCollectionExtensions
 		services.AddScoped<IProgressionCoordinatorService, ProgressionCoordinatorService>();
 		services.AddScoped<IWorldCoordinatorService, WorldCoordinatorService>();
 		services.AddScoped<ITradeCoordinatorService, TradeCoordinatorService>();
+		services.AddScoped<IWorldCoordinatorService, WorldCoordinatorService>();
 
 		// Server Networking & Sessions
 		services.AddSingleton<IAreaOfInterestService, AreaOfInterestService>();

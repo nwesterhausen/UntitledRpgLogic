@@ -4,12 +4,16 @@ using UntitledRpgLogic.Core.Data;
 using UntitledRpgLogic.Core.Entities;
 using UntitledRpgLogic.Core.World;
 using UntitledRpgLogic.Services;
+using UntitledRpgLogic.WorldGen.Services;
 
 namespace UntitledRpgLogic.UnitTests;
 
 [TestClass]
 public sealed class WorldCoordinatorServiceTests
 {
+	private readonly ChunkGeneratorService chunkGenerator = new ChunkGeneratorService();
+	private readonly WorldGenContextProvider  contextProvider = new WorldGenContextProvider();
+
 	[TestMethod]
 	public async Task MoveEntityAsync_ValidEntityAndMap_UpdatesWorldPositionAndSaves()
 	{
@@ -27,7 +31,7 @@ public sealed class WorldCoordinatorServiceTests
 			var entity = new Entity(new Name("Player"));
 			entityRepo.Entities[entity.Id] = entity;
 
-			var coordinator = new WorldCoordinatorService(uow, entityRepo, mapRepo, chunkRepo, transRepo);
+			var coordinator = new WorldCoordinatorService(uow, entityRepo, mapRepo, chunkRepo, transRepo, this.chunkGenerator, this.contextProvider);
 
 			var success = await coordinator.MoveEntityAsync(entity.Id, map.Id, 32.5f, 48.0f).ConfigureAwait(false);
 
@@ -69,7 +73,7 @@ public sealed class WorldCoordinatorServiceTests
 			var entity = new Entity(new Name("Explorer")) { Position = new WorldPosition(sourceMapId, 10f, 10f) };
 			entityRepo.Entities[entity.Id] = entity;
 
-			var coordinator = new WorldCoordinatorService(uow, entityRepo, mapRepo, chunkRepo, transRepo);
+			var coordinator = new WorldCoordinatorService(uow, entityRepo, mapRepo, chunkRepo, transRepo, this.chunkGenerator, this.contextProvider);
 
 			var result = await coordinator.TriggerTransitionAsync(entity.Id, transition.Id).ConfigureAwait(false);
 
@@ -93,13 +97,15 @@ public sealed class WorldCoordinatorServiceTests
 			var chunkRepo = new FakeEntityRepository<WorldChunk>();
 			var transRepo = new FakeEntityRepository<MapTransition>();
 
-			var mapId = Ulid.NewUlid();
-			var coordinator = new WorldCoordinatorService(uow, entityRepo, mapRepo, chunkRepo, transRepo);
+			var map = new MapDefinition(new Name("Overworld"));
+			mapRepo.Entities[map.Id] = map;
 
-			var chunk = await coordinator.GetOrLoadChunkAsync(mapId, 2, 3).ConfigureAwait(false);
+			var coordinator = new WorldCoordinatorService(uow, entityRepo, mapRepo, chunkRepo, transRepo, this.chunkGenerator, this.contextProvider);
+
+			var chunk = await coordinator.GetOrLoadChunkAsync(map.Id, 2, 3).ConfigureAwait(false);
 
 			Assert.IsNotNull(chunk);
-			Assert.AreEqual(mapId, chunk.MapId);
+			Assert.AreEqual(map.Id, chunk.MapId);
 			Assert.AreEqual(2, chunk.ChunkX);
 			Assert.AreEqual(3, chunk.ChunkY);
 			Assert.IsNotEmpty(chunk.CompressedTileBlob);

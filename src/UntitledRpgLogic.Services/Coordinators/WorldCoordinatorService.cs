@@ -2,6 +2,9 @@ using UntitledRpgLogic.Core.Data;
 using UntitledRpgLogic.Core.Entities;
 using UntitledRpgLogic.Core.World;
 using UntitledRpgLogic.Extensions.Common;
+using UntitledRpgLogic.WorldGen;
+using UntitledRpgLogic.WorldGen.Models;
+using UntitledRpgLogic.WorldGen.Services;
 
 namespace UntitledRpgLogic.Services;
 
@@ -16,6 +19,8 @@ public sealed class WorldCoordinatorService : IWorldCoordinatorService
 	private readonly IEntityRepository<MapDefinition, Ulid> mapRepository;
 	private readonly IEntityRepository<MapTransition, Ulid> transitionRepository;
 	private readonly IUnitOfWork unitOfWork;
+	private readonly IChunkGeneratorService chunkGenerator;
+	private readonly IWorldGenContextProvider contextProvider;
 
 	/// <summary>
 	///     Initializes a new instance of the <see cref="WorldCoordinatorService" /> class.
@@ -25,12 +30,16 @@ public sealed class WorldCoordinatorService : IWorldCoordinatorService
 	/// <param name="mapRepository">The repository for map definitions[cite: 2, 4].</param>
 	/// <param name="chunkRepository">The repository for world chunk grids[cite: 2, 4].</param>
 	/// <param name="transitionRepository">The repository for map portals and transitions[cite: 2, 4].</param>
+	/// <param name="chunkGenerator"></param>
+	/// <param name="contextProvider"></param>
 	public WorldCoordinatorService(
 		IUnitOfWork unitOfWork,
 		IEntityRepository<Entity, Ulid> entityRepository,
 		IEntityRepository<MapDefinition, Ulid> mapRepository,
 		IEntityRepository<WorldChunk, Ulid> chunkRepository,
-		IEntityRepository<MapTransition, Ulid> transitionRepository)
+		IEntityRepository<MapTransition, Ulid> transitionRepository,
+		IChunkGeneratorService chunkGenerator,
+		IWorldGenContextProvider contextProvider)
 	{
 		this.unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
 		this.entityRepository = entityRepository ?? throw new ArgumentNullException(nameof(entityRepository));
@@ -38,6 +47,8 @@ public sealed class WorldCoordinatorService : IWorldCoordinatorService
 		this.chunkRepository = chunkRepository ?? throw new ArgumentNullException(nameof(chunkRepository));
 		this.transitionRepository =
 			transitionRepository ?? throw new ArgumentNullException(nameof(transitionRepository));
+		this.chunkGenerator = chunkGenerator ?? throw new ArgumentNullException(nameof(chunkGenerator));
+		this.contextProvider = contextProvider ?? throw new ArgumentNullException(nameof(contextProvider));
 	}
 
 	/// <inheritdoc />
@@ -58,18 +69,35 @@ public sealed class WorldCoordinatorService : IWorldCoordinatorService
 			return existingChunk;
 		}
 
-		// 2. Generate a default fallback empty chunk if not present
-		var emptyTiles = new Tile2D[ChunkBlobExtensions.TileCount];
-		var defaultBlob = emptyTiles.CompressTiles();
+		// Find the map definition
+		var map = await this.mapRepository.GetByIdAsync(mapId, cancellationToken).ConfigureAwait(false)
+		          ?? throw new InvalidOperationException($"Map with ID '{mapId}' was not found.");
 
-		var newChunk = new WorldChunk
+		WorldChunk newChunk;
+
+		// Procedurally generate overworld chunks using the context
+		if (map.Type == MapType.Overworld)
 		{
-			MapId = mapId,
-			ChunkX = chunkX,
-			ChunkY = chunkY,
-			CompressedTileBlob = defaultBlob,
-			Version = 1
-		};
+			// Seed derived deterministically from the map ID
+			var mapSeed = (uint)map.Id.GetHashCode();
+			var context = this.contextProvider.GetOrCreateContext(map, mapSeed);
+
+			newChunk = this.chunkGenerator.GenerateChunk(mapId, chunkX, chunkY, context);
+		}
+		else
+		{
+			// Fallback empty flat chunk for interior sub-maps prior to template stamping
+			var emptyTiles = new Tile2D[ChunkBlobExtensions.TileCount];
+			newChunk = new WorldChunk
+			{
+				Id = Ulid.NewUlid(),
+				MapId = mapId,
+				ChunkX = chunkX,
+				ChunkY = chunkY,
+				CompressedTileBlob = emptyTiles.CompressTiles(),
+				Version = 1
+			};
+		}
 
 		await this.chunkRepository.AddAsync(newChunk, cancellationToken).ConfigureAwait(false);
 		await this.unitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);

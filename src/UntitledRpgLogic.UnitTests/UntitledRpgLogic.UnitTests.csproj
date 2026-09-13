@@ -13,6 +13,7 @@
 		<!-- Project References to your adapters and domain layers -->
 		<ProjectReference Include="..\UntitledRpgLogic.Core\UntitledRpgLogic.Core.csproj"/>
 		<ProjectReference Include="..\UntitledRpgLogic.Services\UntitledRpgLogic.Services.csproj"/>
+		<ProjectReference Include="..\UntitledRpgLogic.WorldGen\UntitledRpgLogic.WorldGen.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
