@@ -151,4 +151,17 @@ public class TerrainHydrology
 
 		return false;
 	}
+
+	/// <summary>
+	///     Checks whether the specified tile is part of a river channel.
+	/// </summary>
+	public bool IsRiver(int tileX, int tileY)
+	{
+		if (tileX < 0 || tileX >= this.WidthTiles || tileY < 0 || tileY >= this.HeightTiles)
+		{
+			return false;
+		}
+
+		return this._isRiver[(tileY * this.WidthTiles) + tileX];
+	}
 }

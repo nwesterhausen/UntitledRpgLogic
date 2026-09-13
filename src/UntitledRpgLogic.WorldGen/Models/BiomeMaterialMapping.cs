@@ -32,6 +32,7 @@ public record BiomeMaterialMapping
 		BiomeType.Tundra => this.SnowMaterialId,
 		BiomeType.Glacial => this.IceMaterialId,
 		BiomeType.Mountain => this.StoneMaterialId,
+		BiomeType.Lake => this.DirtMaterialId,
 		_ => this.StoneMaterialId
 	};
 }

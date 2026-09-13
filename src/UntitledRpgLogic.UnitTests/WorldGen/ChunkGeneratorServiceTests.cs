@@ -15,8 +15,9 @@ public sealed class ChunkGeneratorServiceTests
 		const uint seed = 42u;
 		var waterId = Ulid.NewUlid();
 		var mapping = new BiomeMaterialMapping { WaterMaterialId = waterId };
+		var mapConfig = new WorldMapConfiguration { HeightTiles = 32, WidthTiles = 32 };
 
-		var heightmap = MacroHeightmapGenerator.Generate(32, 32, seed);
+		var heightmap = MacroHeightmapGenerator.Generate(seed, mapConfig);
 		var hydrology = MacroHydrologyGenerator.Generate(heightmap, waterId, seed);
 		var climate = MacroClimateGenerator.Generate(heightmap, hydrology, seed);
 		var context = new WorldGenContext(heightmap, hydrology, climate, mapping, seed);
@@ -24,7 +25,7 @@ public sealed class ChunkGeneratorServiceTests
 		var service = new ChunkGeneratorService();
 		var mapId = Ulid.NewUlid();
 
-		var chunk = service.GenerateChunk(mapId, chunkX: 1, chunkY: 1, context);
+		var chunk = service.GenerateChunk(mapId, 1, 1, context);
 
 		Assert.AreEqual(mapId, chunk.MapId);
 		Assert.AreEqual(1, chunk.ChunkX);

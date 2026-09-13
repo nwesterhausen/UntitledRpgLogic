@@ -9,7 +9,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\UntitledRpgLogic.Core\UntitledRpgLogic.Core.csproj"/>
-		<ProjectReference Include="..\UntitledRpgLogic.Extensions.Common\UntitledRpgLogic.Extensions.Common.csproj" />
+		<ProjectReference Include="..\UntitledRpgLogic.Extensions.Common\UntitledRpgLogic.Extensions.Common.csproj"/>
 	</ItemGroup>
 
 	<ItemGroup>

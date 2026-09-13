@@ -17,12 +17,14 @@ public sealed class WorldGenContextProvider : IWorldGenContextProvider
 	{
 		ArgumentNullException.ThrowIfNull(map);
 
+		var config = new WorldMapConfiguration { WidthTiles = widthTiles, HeightTiles = heightTiles };
+
 		return this.contexts.GetOrAdd(map.Id, _ =>
 		{
 			var mapping = new BiomeMaterialMapping();
 
 			// 1. Generate macro heightmap
-			var heightmap = MacroHeightmapGenerator.Generate(widthTiles, heightTiles, seed);
+			var heightmap = MacroHeightmapGenerator.Generate(seed, config);
 
 			// 2. Simulate ocean filling and river descent
 			var hydrology = MacroHydrologyGenerator.Generate(heightmap, mapping.WaterMaterialId, seed);

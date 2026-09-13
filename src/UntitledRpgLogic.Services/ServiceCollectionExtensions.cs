@@ -14,6 +14,7 @@ using UntitledRpgLogic.Core.Stats;
 using UntitledRpgLogic.Core.World;
 using UntitledRpgLogic.WorldGen;
 using UntitledRpgLogic.WorldGen.Services;
+using Random = UntitledRpgLogic.Extensions.Common.Random;
 
 namespace UntitledRpgLogic.Services;
 

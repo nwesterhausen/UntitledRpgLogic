@@ -62,5 +62,11 @@ public enum BiomeType : byte
 	/// <summary>
 	///     Rugged, high-elevation alpine terrain above the tree line.
 	/// </summary>
-	Mountain = 10
+	Mountain = 10,
+
+	/// <summary>
+	///     A river is able to appear anywhere above sea level.
+	/// </summary>
+	River = 11,
+	Lake = 12
 }

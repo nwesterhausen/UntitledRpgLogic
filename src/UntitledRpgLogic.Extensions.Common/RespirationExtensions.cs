@@ -78,7 +78,7 @@ public static class RespirationExtensions
 
 			// 2. Check if the entity can breathe this liquid (Fish, Water Elemental, etc.)
 			var canBreatheLiquid = profile.RequiredMediumMaterialId == liquidId
-								   || profile.AlternativeBreathableMaterials.Contains(liquidId);
+			                       || profile.AlternativeBreathableMaterials.Contains(liquidId);
 
 			if (canBreatheLiquid)
 			{

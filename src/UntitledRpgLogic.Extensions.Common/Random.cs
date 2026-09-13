@@ -1,6 +1,6 @@
 using UntitledRpgLogic.Core.Common;
 
-namespace UntitledRpgLogic.Services;
+namespace UntitledRpgLogic.Extensions.Common;
 
 /// <summary>
 ///     Alternative to System.Random based on the Lehmer algorithm.

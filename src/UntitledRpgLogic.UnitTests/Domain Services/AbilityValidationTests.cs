@@ -5,7 +5,7 @@ using UntitledRpgLogic.Core.Progression;
 using UntitledRpgLogic.Core.Skills;
 using UntitledRpgLogic.Core.Stats;
 using UntitledRpgLogic.Services;
-using Random = UntitledRpgLogic.Services.Random;
+using Random = UntitledRpgLogic.Extensions.Common.Random;
 
 namespace UntitledRpgLogic.UnitTests;
 

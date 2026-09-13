@@ -44,8 +44,7 @@ public sealed class ProgressionCoordinatorIntegrationTests : CoordinatorIntegrat
 
 				var skillDef = new SkillDefinition(new Name("Blacksmithing"))
 				{
-					Id = skillDefId,
-					LevelingDefinition = levelingDef
+					Id = skillDefId, LevelingDefinition = levelingDef
 				};
 
 				var skill = new Skill { DefinitionId = skillDefId, Level = 1, ExperiencePoints = 0 };

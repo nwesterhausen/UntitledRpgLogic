@@ -3,7 +3,6 @@ using UntitledRpgLogic.Core.Entities;
 using UntitledRpgLogic.Core.World;
 using UntitledRpgLogic.Extensions.Common;
 using UntitledRpgLogic.WorldGen;
-using UntitledRpgLogic.WorldGen.Models;
 using UntitledRpgLogic.WorldGen.Services;
 
 namespace UntitledRpgLogic.Services;
@@ -14,13 +13,13 @@ namespace UntitledRpgLogic.Services;
 /// </summary>
 public sealed class WorldCoordinatorService : IWorldCoordinatorService
 {
+	private readonly IChunkGeneratorService chunkGenerator;
 	private readonly IEntityRepository<WorldChunk, Ulid> chunkRepository;
+	private readonly IWorldGenContextProvider contextProvider;
 	private readonly IEntityRepository<Entity, Ulid> entityRepository;
 	private readonly IEntityRepository<MapDefinition, Ulid> mapRepository;
 	private readonly IEntityRepository<MapTransition, Ulid> transitionRepository;
 	private readonly IUnitOfWork unitOfWork;
-	private readonly IChunkGeneratorService chunkGenerator;
-	private readonly IWorldGenContextProvider contextProvider;
 
 	/// <summary>
 	///     Initializes a new instance of the <see cref="WorldCoordinatorService" /> class.

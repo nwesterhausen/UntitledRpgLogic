@@ -11,8 +11,8 @@ namespace UntitledRpgLogic.UnitTests;
 [TestClass]
 public sealed class WorldCoordinatorServiceTests
 {
-	private readonly ChunkGeneratorService chunkGenerator = new ChunkGeneratorService();
-	private readonly WorldGenContextProvider  contextProvider = new WorldGenContextProvider();
+	private readonly ChunkGeneratorService chunkGenerator = new();
+	private readonly WorldGenContextProvider contextProvider = new();
 
 	[TestMethod]
 	public async Task MoveEntityAsync_ValidEntityAndMap_UpdatesWorldPositionAndSaves()
@@ -31,7 +31,8 @@ public sealed class WorldCoordinatorServiceTests
 			var entity = new Entity(new Name("Player"));
 			entityRepo.Entities[entity.Id] = entity;
 
-			var coordinator = new WorldCoordinatorService(uow, entityRepo, mapRepo, chunkRepo, transRepo, this.chunkGenerator, this.contextProvider);
+			var coordinator = new WorldCoordinatorService(uow, entityRepo, mapRepo, chunkRepo, transRepo,
+				this.chunkGenerator, this.contextProvider);
 
 			var success = await coordinator.MoveEntityAsync(entity.Id, map.Id, 32.5f, 48.0f).ConfigureAwait(false);
 
@@ -73,7 +74,8 @@ public sealed class WorldCoordinatorServiceTests
 			var entity = new Entity(new Name("Explorer")) { Position = new WorldPosition(sourceMapId, 10f, 10f) };
 			entityRepo.Entities[entity.Id] = entity;
 
-			var coordinator = new WorldCoordinatorService(uow, entityRepo, mapRepo, chunkRepo, transRepo, this.chunkGenerator, this.contextProvider);
+			var coordinator = new WorldCoordinatorService(uow, entityRepo, mapRepo, chunkRepo, transRepo,
+				this.chunkGenerator, this.contextProvider);
 
 			var result = await coordinator.TriggerTransitionAsync(entity.Id, transition.Id).ConfigureAwait(false);
 
@@ -100,7 +102,8 @@ public sealed class WorldCoordinatorServiceTests
 			var map = new MapDefinition(new Name("Overworld"));
 			mapRepo.Entities[map.Id] = map;
 
-			var coordinator = new WorldCoordinatorService(uow, entityRepo, mapRepo, chunkRepo, transRepo, this.chunkGenerator, this.contextProvider);
+			var coordinator = new WorldCoordinatorService(uow, entityRepo, mapRepo, chunkRepo, transRepo,
+				this.chunkGenerator, this.contextProvider);
 
 			var chunk = await coordinator.GetOrLoadChunkAsync(map.Id, 2, 3).ConfigureAwait(false);
 

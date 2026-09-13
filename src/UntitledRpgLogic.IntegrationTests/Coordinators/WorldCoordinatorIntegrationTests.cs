@@ -51,8 +51,7 @@ public sealed class WorldCoordinatorIntegrationTests : CoordinatorIntegrationTes
 
 				var entity = new Entity(new Name("Wanderer"))
 				{
-					Id = entityId,
-					Position = new WorldPosition(overworldMapId, 0f, 0f)
+					Id = entityId, Position = new WorldPosition(overworldMapId, 0f, 0f)
 				};
 
 				await context.MapDefinitions.AddRangeAsync([overworld, dungeon], token).ConfigureAwait(false);
