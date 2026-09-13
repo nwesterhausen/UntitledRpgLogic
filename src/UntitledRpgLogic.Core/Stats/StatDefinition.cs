@@ -12,7 +12,7 @@ namespace UntitledRpgLogic.Core.Stats;
 ///     defines how those stats would behave.
 /// </summary>
 [Table("stat_definitions")]
-public record StatDefinition : IDbEntity<Ulid>
+public record StatDefinition : IDbEntity<Ulid>, IDefined
 {
 	/// <summary>
 	///     Initializes a new instance of the <see cref="StatDefinition" /> class with default values.
@@ -52,11 +52,6 @@ public record StatDefinition : IDbEntity<Ulid>
 	}
 
 	/// <summary>
-	///     The name of the stat. This is used to identify the stat in the game and is used in the UI.
-	/// </summary>
-	public required Name Name { get; init; }
-
-	/// <summary>
 	///     Whether the stat is able to be directly changed or not.
 	/// </summary>
 	public bool HasChangeableValue { get; init; }
@@ -87,4 +82,14 @@ public record StatDefinition : IDbEntity<Ulid>
 	[Key]
 	[DatabaseGenerated(DatabaseGeneratedOption.None)]
 	public Ulid Id { get; init; }
+
+	/// <summary>
+	///     The name of the stat. This is used to identify the stat in the game and is used in the UI.
+	/// </summary>
+	public required Name Name { get; init; }
+
+	/// <summary>
+	///     The description of the stat, visible in UI or tooltips.
+	/// </summary>
+	public string Description { get; init; } = string.Empty;
 }

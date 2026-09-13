@@ -24,6 +24,7 @@ public record AbilityDefinition : IDbEntity<Ulid>
 	///     Initializes a new instance of the <see cref="AbilityDefinition" /> record with a designated name.
 	/// </summary>
 	/// <param name="name">The display name of the ability.</param>
+	[SetsRequiredMembers]
 	public AbilityDefinition(Name name) : this() => this.Name = name;
 
 	/// <summary>

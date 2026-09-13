@@ -11,7 +11,7 @@ namespace UntitledRpgLogic.Core.Items;
 ///     Provides baseline attributes, classification, and constraints for all instantiated game items.
 /// </summary>
 [Table("item_definitions")]
-public record ItemDefinition : IDbEntity<Ulid>
+public record ItemDefinition : IDbEntity<Ulid>, IDefined
 {
 	/// <summary>
 	///     Initializes a new instance of the <see cref="ItemDefinition" /> record with default values (for EF Core).
@@ -56,17 +56,6 @@ public record ItemDefinition : IDbEntity<Ulid>
 		this.Id = id;
 		this.Name = name;
 	}
-
-	/// <summary>
-	///     The name of the item template.
-	/// </summary>
-	public required Name Name { get; init; }
-
-	/// <summary>
-	///     A descriptive overview or flavor text for the item.
-	/// </summary>
-	[MaxLength(1024)]
-	public string Description { get; init; }
 
 	/// <summary>
 	///     The high-level category of the item (e.g., Weapon, Armor, Consumable, Material).
@@ -126,4 +115,15 @@ public record ItemDefinition : IDbEntity<Ulid>
 	[Key]
 	[DatabaseGenerated(DatabaseGeneratedOption.None)]
 	public Ulid Id { get; init; }
+
+	/// <summary>
+	///     The name of the item template.
+	/// </summary>
+	public required Name Name { get; init; }
+
+	/// <summary>
+	///     A descriptive overview or flavor text for the item.
+	/// </summary>
+	[MaxLength(1024)]
+	public string Description { get; init; }
 }

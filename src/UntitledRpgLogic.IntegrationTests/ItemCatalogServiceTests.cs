@@ -20,7 +20,7 @@ public class ItemCatalogServiceTests
 			opts.ConnectionString = $"Data Source={dbName}.db";
 			opts.AutoMigrate = true;
 		});
-		services.AddRpgServices();
+		services.AddRpgServerServices();
 
 		var provider = services.BuildServiceProvider();
 		await using (provider.ConfigureAwait(false))

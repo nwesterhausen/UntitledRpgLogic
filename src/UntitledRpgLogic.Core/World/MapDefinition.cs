@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 using UntitledRpgLogic.Core.Common;
 using UntitledRpgLogic.Core.Data;
 using UntitledRpgLogic.Core.Environment;
@@ -15,6 +16,7 @@ public record MapDefinition : IDbEntity<Ulid>
 	/// <summary>
 	///     Initializes a new instance of the <see cref="MapDefinition" /> record.
 	/// </summary>
+	[SetsRequiredMembers]
 	public MapDefinition()
 	{
 		this.Id = Ulid.NewUlid();
@@ -28,6 +30,7 @@ public record MapDefinition : IDbEntity<Ulid>
 	///     Initializes a new instance of the <see cref="MapDefinition" /> record with a name.
 	/// </summary>
 	/// <param name="name">The name of the map.</param>
+	[SetsRequiredMembers]
 	public MapDefinition(Name name) : this() => this.Name = name;
 
 	/// <summary>

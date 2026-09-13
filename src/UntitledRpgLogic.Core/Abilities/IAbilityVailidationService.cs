@@ -15,7 +15,7 @@ public interface IAbilityValidationService
 	/// <summary>
 	///     Evaluates casting requirements and calculates whether the cast backfires based on failure influences.
 	/// </summary>
-	public bool EvaluateCastingSuccess(Entity caster, AbilityDefinition ability, Random random);
+	public bool EvaluateCastingSuccess(Entity caster, AbilityDefinition ability);
 
 	/// <summary>
 	///     Checks if an entity satisfies all prerequisite conditions to learn an ability.

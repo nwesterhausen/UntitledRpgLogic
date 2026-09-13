@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 using UntitledRpgLogic.Core.Abilities;
 using UntitledRpgLogic.Core.Data;
 using UntitledRpgLogic.Core.Entities;
@@ -15,6 +16,7 @@ public record AppliedModifier : IDbEntity<Ulid>
 	/// <summary>
 	///     Initializes a new instance of the <see cref="AppliedModifier" /> record for EF Core.
 	/// </summary>
+	[SetsRequiredMembers]
 	public AppliedModifier()
 	{
 		this.ModifierDefinitionId = Ulid.Empty;
@@ -28,6 +30,7 @@ public record AppliedModifier : IDbEntity<Ulid>
 	/// </summary>
 	/// <param name="modifierDefinitionId">The identifier of the modifier definition being applied.</param>
 	/// <param name="entityId">The identifier of the entity receiving the modifier.</param>
+	[SetsRequiredMembers]
 	public AppliedModifier(Ulid modifierDefinitionId, Ulid entityId) : this()
 	{
 		this.ModifierDefinitionId = modifierDefinitionId;

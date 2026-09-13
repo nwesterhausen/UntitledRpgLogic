@@ -12,7 +12,7 @@ namespace UntitledRpgLogic.Core.Entities;
 ///     Provides baseline attributes, creature classification, and spawning templates for active world entities.
 /// </summary>
 [Table("entity_definitions")]
-public record EntityDefinition : IDbEntity<Ulid>
+public record EntityDefinition : IDbEntity<Ulid>, IDefined
 {
 	/// <summary>
 	///     Initializes a new instance of the <see cref="EntityDefinition" /> record with default values for EF Core.
@@ -32,17 +32,6 @@ public record EntityDefinition : IDbEntity<Ulid>
 	/// <param name="name">The display name of the entity archetype.</param>
 	[SetsRequiredMembers]
 	public EntityDefinition(Name name) : this() => this.Name = name;
-
-	/// <summary>
-	///     The display name of the entity template.
-	/// </summary>
-	public required Name Name { get; init; }
-
-	/// <summary>
-	///     Descriptive overview or lore notes for this entity archetype.
-	/// </summary>
-	[MaxLength(1024)]
-	public string Description { get; init; }
 
 	/// <summary>
 	///     Bitwise classification flags categorizing the entity archetype.
@@ -80,4 +69,15 @@ public record EntityDefinition : IDbEntity<Ulid>
 	[Key]
 	[DatabaseGenerated(DatabaseGeneratedOption.None)]
 	public Ulid Id { get; init; }
+
+	/// <summary>
+	///     The display name of the entity template.
+	/// </summary>
+	public required Name Name { get; init; }
+
+	/// <summary>
+	///     Descriptive overview or lore notes for this entity archetype.
+	/// </summary>
+	[MaxLength(1024)]
+	public string Description { get; init; }
 }

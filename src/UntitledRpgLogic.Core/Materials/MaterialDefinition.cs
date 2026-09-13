@@ -11,7 +11,7 @@ namespace UntitledRpgLogic.Core.Materials;
 ///     Additional physical properties are attached by owned property classes.
 /// </summary>
 [Table("material_definitions")]
-public record MaterialDefinition : IDbEntity<Ulid>
+public record MaterialDefinition : IDbEntity<Ulid>, IDefined
 {
 	/// <summary>
 	///     Initializes a new instance of the <see cref="MaterialDefinition" /> record with default values.
@@ -32,17 +32,6 @@ public record MaterialDefinition : IDbEntity<Ulid>
 	/// <param name="name">The name of the material.</param>
 	[SetsRequiredMembers]
 	public MaterialDefinition(Name name) : this() => this.Name = name;
-
-	/// <summary>
-	///     The display name of the material.
-	/// </summary>
-	public required Name Name { get; init; }
-
-	/// <summary>
-	///     A descriptive overview of the material's appearance, lore, and traits.
-	/// </summary>
-	[MaxLength(1024)]
-	public string Description { get; init; }
 
 	/// <summary>
 	///     Bitwise classification flags (e.g., NaturalOre, Combustible, Fluid).
@@ -91,4 +80,15 @@ public record MaterialDefinition : IDbEntity<Ulid>
 	[Key]
 	[DatabaseGenerated(DatabaseGeneratedOption.None)]
 	public Ulid Id { get; init; }
+
+	/// <summary>
+	///     The display name of the material.
+	/// </summary>
+	public required Name Name { get; init; }
+
+	/// <summary>
+	///     A descriptive overview of the material's appearance, lore, and traits.
+	/// </summary>
+	[MaxLength(1024)]
+	public string Description { get; init; }
 }

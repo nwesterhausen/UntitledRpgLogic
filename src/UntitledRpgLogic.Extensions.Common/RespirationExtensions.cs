@@ -58,7 +58,7 @@ public static class RespirationExtensions
 
 		if (!profile.RequiresBreathing)
 		{
-			return RespirationState.Optimal;
+			return RespirationState.Normal;
 		}
 
 		// --- Case A: Submerged in Liquid ---
@@ -78,22 +78,22 @@ public static class RespirationExtensions
 
 			// 2. Check if the entity can breathe this liquid (Fish, Water Elemental, etc.)
 			var canBreatheLiquid = profile.RequiredMediumMaterialId == liquidId
-			                       || profile.AlternativeBreathableMaterials.Contains(liquidId);
+								   || profile.AlternativeBreathableMaterials.Contains(liquidId);
 
 			if (canBreatheLiquid)
 			{
 				if (liquidHydrostaticPressure < profile.MinRequiredPressure)
 				{
-					return RespirationState.Suffocating;
+					return RespirationState.Suffocation;
 				}
 
 				return liquidHydrostaticPressure > profile.MaxSafePressure
-					? RespirationState.OverpressureToxicity
-					: RespirationState.Optimal;
+					? RespirationState.Asphyxiation
+					: RespirationState.Normal;
 			}
 
 			// Submerged in a liquid the entity cannot respire (standard drowning)
-			return RespirationState.Suffocating;
+			return RespirationState.Suffocation;
 		}
 
 		// --- Case B: Exposed to Gaseous Atmosphere ---
@@ -127,20 +127,20 @@ public static class RespirationExtensions
 					if (altPressure >= profile.MinRequiredPressure)
 					{
 						return altPressure > profile.MaxSafePressure
-							? RespirationState.OverpressureToxicity
-							: RespirationState.Optimal;
+							? RespirationState.Asphyxiation
+							: RespirationState.Normal;
 					}
 				}
 
-				return RespirationState.Suffocating;
+				return RespirationState.Suffocation;
 			}
 
 			if (partialPressure > profile.MaxSafePressure)
 			{
-				return RespirationState.OverpressureToxicity;
+				return RespirationState.Asphyxiation;
 			}
 		}
 
-		return RespirationState.Optimal;
+		return RespirationState.Normal;
 	}
 }

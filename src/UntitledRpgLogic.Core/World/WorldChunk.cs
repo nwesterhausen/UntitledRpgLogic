@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 using UntitledRpgLogic.Core.Data;
 using UntitledRpgLogic.Core.Environment;
 using UntitledRpgLogic.Core.Materials;
@@ -56,6 +57,8 @@ public record WorldChunk : IDbEntity<Ulid>
 	/// <summary>
 	///     Compressed Brotli byte payload containing the 16x16 <see cref="Tile2D" /> array.
 	/// </summary>
+	[SuppressMessage("Performance", "CA1819:Properties should not return arrays",
+		Justification = "Byte array is required for EF Core binary column mapping and unmanaged Brotli decompression.")]
 	public byte[] CompressedTileBlob { get; set; } = [];
 
 	/// <summary>

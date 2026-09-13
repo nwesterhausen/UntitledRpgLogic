@@ -8,25 +8,25 @@ public enum RespirationState
 	/// <summary>
 	///     Breathing normally
 	/// </summary>
-	Optimal = 0,
+	Normal = 0,
 
 	/// <summary>
-	///     Unable to breathe and in danger
+	///     Unable to breathe because there is not enough of the required material, or too little atmostpheric pressure.
 	/// </summary>
-	Suffocating = 1,
+	Suffocation = 1,
 
 	/// <summary>
-	///     Poisioned by some material being breathed
+	///     Unable to breathe because there is too much of the required material, or too much atmospheric pressure.
 	/// </summary>
-	Poisoned = 2,
+	Asphyxiation = 2,
 
 	/// <summary>
-	///     Lethally poisoned by some material being breathed
+	///     Poisoned by a toxic material being breathed
 	/// </summary>
-	LethallyPoisoned = 3,
+	Poisoned = 3,
 
 	/// <summary>
-	///     Poisoned by being in an enivronment with too much preferred breathing material (e.g. hyperoxia)
+	///     Lethally poisoned by a toxic material being breathed
 	/// </summary>
-	OverpressureToxicity = 4
+	LethallyPoisoned = 4
 }

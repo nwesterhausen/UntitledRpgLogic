@@ -3,8 +3,13 @@ using UntitledRpgLogic.Core.Items;
 
 namespace UntitledRpgLogic.Services;
 
-public class ItemFactoryService : IItemFactoryService
+/// <summary>
+///     Pure domain service responsible for generating, validating, and instantiating
+///     item catalog definitions and in-memory item tokens.
+/// </summary>
+public sealed class ItemFactoryService : IItemFactoryService
 {
+	/// <inheritdoc />
 	public ItemDefinition CreateDefinition(
 		Name name,
 		ItemType type,
@@ -36,6 +41,7 @@ public class ItemFactoryService : IItemFactoryService
 		};
 	}
 
+	/// <inheritdoc />
 	public Item CreateItem(ItemDefinition definition, int quantity = 1, Ulid? craftedById = null)
 	{
 		ArgumentNullException.ThrowIfNull(definition);
@@ -55,6 +61,7 @@ public class ItemFactoryService : IItemFactoryService
 		};
 	}
 
+	/// <inheritdoc />
 	public Item CreateItem(Ulid itemDefinitionId, int quantity = 1, Ulid? craftedById = null)
 	{
 		if (quantity <= 0)
@@ -64,7 +71,10 @@ public class ItemFactoryService : IItemFactoryService
 
 		return new Item
 		{
-			Id = Ulid.NewUlid(), DefinitionId = itemDefinitionId, Quantity = quantity, CraftedById = craftedById
+			Id = Ulid.NewUlid(),
+			DefinitionId = itemDefinitionId,
+			Quantity = quantity,
+			CraftedById = craftedById
 		};
 	}
 }

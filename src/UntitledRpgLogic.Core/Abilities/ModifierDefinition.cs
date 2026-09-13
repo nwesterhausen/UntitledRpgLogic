@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 using UntitledRpgLogic.Core.Abilities.Effects;
 using UntitledRpgLogic.Core.Common;
 using UntitledRpgLogic.Core.Data;
@@ -15,6 +16,7 @@ public record ModifierDefinition : IDbEntity<Ulid>
 	/// <summary>
 	///     Initializes a new instance of the <see cref="ModifierDefinition" /> record with default values for EF Core.
 	/// </summary>
+	[SetsRequiredMembers]
 	public ModifierDefinition()
 	{
 		this.Id = Ulid.NewUlid();
@@ -27,6 +29,7 @@ public record ModifierDefinition : IDbEntity<Ulid>
 	///     Initializes a new instance of the <see cref="ModifierDefinition" /> record with a designated name.
 	/// </summary>
 	/// <param name="name">The display name of the modifier.</param>
+	[SetsRequiredMembers]
 	public ModifierDefinition(Name name) : this() => this.Name = name;
 
 	/// <summary>

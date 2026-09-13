@@ -34,22 +34,22 @@ public record WorldPosition
 	/// <summary>
 	///     Horizontal world coordinate.
 	/// </summary>
-	public float X { get; set; }
+	public float X { get; init; }
 
 	/// <summary>
 	///     Vertical world coordinate.
 	/// </summary>
-	public float Y { get; set; }
+	public float Y { get; init; }
 
 	/// <summary>
 	///     Facing angle or heading in degrees (0 to 360).
 	/// </summary>
-	public float RotationYaw { get; set; }
+	public float RotationYaw { get; init; }
 
 	/// <summary>
 	///     Elevation relative to world datum (-32,768 to +32,767).
 	/// </summary>
-	public short Elevation { get; set; }
+	public short Elevation { get; init; }
 
 	/// <summary>
 	///     Calculates the horizontal chunk index containing this position.

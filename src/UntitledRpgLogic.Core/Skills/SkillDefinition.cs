@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 using UntitledRpgLogic.Core.Abilities;
 using UntitledRpgLogic.Core.Common;
 using UntitledRpgLogic.Core.Data;
@@ -11,11 +12,12 @@ namespace UntitledRpgLogic.Core.Skills;
 ///     A skill definition in the RPG logic, for usage with a database.
 /// </summary>
 [Table("skill_definitions")]
-public record SkillDefinition : IDbEntity<Ulid>
+public record SkillDefinition : IDbEntity<Ulid>, IDefined
 {
 	/// <summary>
 	///     Initializes an empty instance of the <see cref="SkillDefinition" /> class (for EF use).
 	/// </summary>
+	[SetsRequiredMembers]
 	public SkillDefinition()
 	{
 		this.Id = Ulid.NewUlid();
@@ -26,12 +28,8 @@ public record SkillDefinition : IDbEntity<Ulid>
 	///     Initializes a new instance of the <see cref="SkillDefinition" /> class with the specified name.
 	/// </summary>
 	/// <param name="name">The name of the skill.</param>
+	[SetsRequiredMembers]
 	public SkillDefinition(Name name) : this() => this.Name = name;
-
-	/// <summary>
-	///     The name of the skill. This is used to identify the skill in the game and should be unique.
-	/// </summary>
-	public required Name Name { get; init; }
 
 	/// <summary>
 	///     The id of the leveling definition used by this skill.
@@ -55,4 +53,14 @@ public record SkillDefinition : IDbEntity<Ulid>
 	[Key]
 	[DatabaseGenerated(DatabaseGeneratedOption.None)]
 	public Ulid Id { get; init; }
+
+	/// <summary>
+	///     The name of the skill. This is used to identify the skill in the game and should be unique.
+	/// </summary>
+	public required Name Name { get; init; }
+
+	/// <summary>
+	///     The description of the skill. Visible in the UI or tooltip.
+	/// </summary>
+	public string Description { get; init; } = string.Empty;
 }

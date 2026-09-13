@@ -30,12 +30,16 @@ public class InventoryCoordinatorServiceTests
 
 	private readonly Item acceptedPotion = new()
 	{
-		Id = Ulid.NewUlid(), DefinitionId = PotionDef.Id, Definition = PotionDef, Quantity = 1
+		Id = Ulid.NewUlid(),
+		DefinitionId = PotionDef.Id,
+		Definition = PotionDef,
+		Quantity = 1
 	};
 
 	private readonly Entity chest = new(ChestId)
 	{
-		Name = new Name("Treasure Chest"), Inventory = new Inventory(Ulid.NewUlid()) { Capacity = 5 }
+		Name = new Name("Treasure Chest"),
+		Inventory = new Inventory(Ulid.NewUlid()) { Capacity = 5 }
 	};
 
 	private readonly Entity filteredBagEntity = new()
@@ -80,7 +84,7 @@ public class InventoryCoordinatorServiceTests
 			opts.ConnectionString = $"Data Source={dbName}.db";
 			opts.AutoMigrate = true;
 		});
-		services.AddRpgServices();
+		services.AddRpgServerServices();
 
 		var provider = services.BuildServiceProvider();
 		await using (provider.ConfigureAwait(false))
@@ -150,7 +154,7 @@ public class InventoryCoordinatorServiceTests
 			opts.ConnectionString = $"Data Source={dbName}.db";
 			opts.AutoMigrate = true;
 		});
-		services.AddRpgServices();
+		services.AddRpgCoreDomainServices();
 
 		var provider = services.BuildServiceProvider();
 		await using (provider.ConfigureAwait(false))
