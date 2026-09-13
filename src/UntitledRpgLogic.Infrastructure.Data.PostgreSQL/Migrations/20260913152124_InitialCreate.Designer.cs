@@ -12,7 +12,7 @@ using UntitledRpgLogic.Infrastructure.Data;
 namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
 {
     [DbContext(typeof(RpgDbContext))]
-    [Migration("20260912151457_InitialCreate")]
+    [Migration("20260913152124_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -681,6 +681,11 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                         .HasColumnType("bytea")
                         .HasColumnName("id");
 
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("description");
+
                     b.Property<byte[]>("LevelingDefinitionId")
                         .HasColumnType("bytea")
                         .HasColumnName("leveling_definition_id");
@@ -802,6 +807,11 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                     b.Property<byte[]>("Id")
                         .HasColumnType("bytea")
                         .HasColumnName("id");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("description");
 
                     b.Property<bool>("HasChangeableValue")
                         .HasColumnType("boolean")

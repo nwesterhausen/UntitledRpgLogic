@@ -678,6 +678,11 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                         .HasColumnType("bytea")
                         .HasColumnName("id");
 
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("description");
+
                     b.Property<byte[]>("LevelingDefinitionId")
                         .HasColumnType("bytea")
                         .HasColumnName("leveling_definition_id");
@@ -799,6 +804,11 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                     b.Property<byte[]>("Id")
                         .HasColumnType("bytea")
                         .HasColumnName("id");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("description");
 
                     b.Property<bool>("HasChangeableValue")
                         .HasColumnType("boolean")

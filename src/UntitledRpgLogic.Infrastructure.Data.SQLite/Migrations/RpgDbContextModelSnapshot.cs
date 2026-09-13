@@ -673,6 +673,11 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                         .HasColumnType("BLOB")
                         .HasColumnName("id");
 
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("description");
+
                     b.Property<byte[]>("LevelingDefinitionId")
                         .HasColumnType("BLOB")
                         .HasColumnName("leveling_definition_id");
@@ -794,6 +799,11 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                     b.Property<byte[]>("Id")
                         .HasColumnType("BLOB")
                         .HasColumnName("id");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("description");
 
                     b.Property<bool>("HasChangeableValue")
                         .HasColumnType("INTEGER")
