@@ -1,9 +1,8 @@
 using UntitledRpgLogic.Core.Environment;
 using UntitledRpgLogic.Core.World;
 using UntitledRpgLogic.Extensions.Common;
-using UntitledRpgLogic.WorldGen.Models;
 
-namespace UntitledRpgLogic.WorldGen.Services;
+namespace UntitledRpgLogic.WorldGen;
 
 /// <summary>
 ///     Pure domain service synthesizing individual 16x16 world chunks from macro simulation context.

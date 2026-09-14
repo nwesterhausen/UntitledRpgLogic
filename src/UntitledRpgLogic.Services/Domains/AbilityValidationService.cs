@@ -3,7 +3,7 @@ using UntitledRpgLogic.Core.Common;
 using UntitledRpgLogic.Core.Entities;
 using UntitledRpgLogic.Core.Progression;
 
-namespace UntitledRpgLogic.Services;
+namespace UntitledRpgLogic.Services.Domains;
 
 /// <summary>
 ///     Pure domain service evaluating costs, requirements, and casting success for abilities.

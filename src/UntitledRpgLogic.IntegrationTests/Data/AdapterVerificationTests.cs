@@ -7,7 +7,7 @@ using UntitledRpgLogic.Infrastructure.Data;
 using UntitledRpgLogic.Infrastructure.Data.PostgreSQL;
 using UntitledRpgLogic.Infrastructure.Data.SQLite;
 
-namespace UntitledRpgLogic.IntegrationTests;
+namespace UntitledRpgLogic.IntegrationTests.Data;
 
 [TestClass]
 public class AdapterVerificationTests

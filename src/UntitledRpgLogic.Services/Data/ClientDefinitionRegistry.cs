@@ -2,7 +2,7 @@ using System.Collections.Concurrent;
 using UntitledRpgLogic.Core.Data;
 using UntitledRpgLogic.Core.Data.Urpglib;
 
-namespace UntitledRpgLogic.Services;
+namespace UntitledRpgLogic.Services.Data;
 
 /// <summary>
 ///     Thread-safe client-side registry storing static package-loaded definitions

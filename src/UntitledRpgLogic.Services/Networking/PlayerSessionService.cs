@@ -2,7 +2,7 @@ using System.Collections.Concurrent;
 using System.Globalization;
 using UntitledRpgLogic.Core.Networking;
 
-namespace UntitledRpgLogic.Services;
+namespace UntitledRpgLogic.Services.Networking;
 
 /// <summary>
 ///     In-memory player session service maintaining thread-safe bidirectional mappings

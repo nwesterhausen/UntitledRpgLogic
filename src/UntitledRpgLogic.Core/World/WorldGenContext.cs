@@ -1,4 +1,4 @@
-namespace UntitledRpgLogic.WorldGen.Models;
+namespace UntitledRpgLogic.Core.World;
 
 /// <summary>
 ///     Encapsulates the precomputed macro simulation layers for chunk sampling.

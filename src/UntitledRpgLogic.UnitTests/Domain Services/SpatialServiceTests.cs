@@ -1,7 +1,7 @@
 using UntitledRpgLogic.Core.Entities;
-using UntitledRpgLogic.Services;
+using UntitledRpgLogic.Services.Domains;
 
-namespace UntitledRpgLogic.UnitTests;
+namespace UntitledRpgLogic.UnitTests.Domain_Services;
 
 [TestClass]
 public sealed class SpatialAndRespirationServiceTests

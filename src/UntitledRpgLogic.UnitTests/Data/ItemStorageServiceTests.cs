@@ -1,8 +1,8 @@
 using UntitledRpgLogic.Core.Common;
 using UntitledRpgLogic.Core.Items;
-using UntitledRpgLogic.Services;
+using UntitledRpgLogic.Services.Data;
 
-namespace UntitledRpgLogic.UnitTests;
+namespace UntitledRpgLogic.UnitTests.Data;
 
 [TestClass]
 public class ItemStorageServiceTests

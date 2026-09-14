@@ -1,7 +1,7 @@
 using UntitledRpgLogic.Core.Progression;
 using UntitledRpgLogic.Core.Skills;
 
-namespace UntitledRpgLogic.Services;
+namespace UntitledRpgLogic.Services.Domains;
 
 /// <summary>
 ///     Service for evaluating skill experience curves and advancing proficiency levels.

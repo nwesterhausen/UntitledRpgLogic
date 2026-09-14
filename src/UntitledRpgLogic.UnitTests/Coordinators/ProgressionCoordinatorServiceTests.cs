@@ -5,10 +5,11 @@ using UntitledRpgLogic.Core.Data;
 using UntitledRpgLogic.Core.Entities;
 using UntitledRpgLogic.Core.Progression;
 using UntitledRpgLogic.Core.Skills;
-using UntitledRpgLogic.Services;
+using UntitledRpgLogic.Services.Coordinators;
+using UntitledRpgLogic.Services.Domains;
 using Random = UntitledRpgLogic.Extensions.Common.Random;
 
-namespace UntitledRpgLogic.UnitTests;
+namespace UntitledRpgLogic.UnitTests.Coordinators;
 
 [TestClass]
 public sealed class ProgressionCoordinatorServiceTests

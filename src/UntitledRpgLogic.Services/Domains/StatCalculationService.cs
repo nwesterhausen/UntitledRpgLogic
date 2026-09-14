@@ -1,6 +1,6 @@
 using UntitledRpgLogic.Core.Stats;
 
-namespace UntitledRpgLogic.Services;
+namespace UntitledRpgLogic.Services.Domains;
 
 /// <summary>
 ///     Service for calculating stat apparent values, min-max bounds, and linked dependencies.

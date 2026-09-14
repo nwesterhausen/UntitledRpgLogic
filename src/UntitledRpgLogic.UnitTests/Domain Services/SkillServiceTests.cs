@@ -1,8 +1,8 @@
 using UntitledRpgLogic.Core.Progression;
 using UntitledRpgLogic.Core.Skills;
-using UntitledRpgLogic.Services;
+using UntitledRpgLogic.Services.Domains;
 
-namespace UntitledRpgLogic.UnitTests;
+namespace UntitledRpgLogic.UnitTests.Domain_Services;
 
 [TestClass]
 public sealed class SkillServiceTests

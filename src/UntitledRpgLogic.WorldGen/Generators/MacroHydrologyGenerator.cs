@@ -1,4 +1,4 @@
-using UntitledRpgLogic.WorldGen.Models;
+using UntitledRpgLogic.Core.World;
 using Random = UntitledRpgLogic.Extensions.Common.Random;
 
 namespace UntitledRpgLogic.WorldGen.Generators;

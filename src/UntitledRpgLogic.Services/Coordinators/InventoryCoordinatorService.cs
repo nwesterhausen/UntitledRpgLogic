@@ -3,7 +3,7 @@ using UntitledRpgLogic.Core.Data;
 using UntitledRpgLogic.Core.Entities;
 using UntitledRpgLogic.Core.Items;
 
-namespace UntitledRpgLogic.Services;
+namespace UntitledRpgLogic.Services.Coordinators;
 
 /// <inheritdoc />
 public sealed class InventoryCoordinatorService : IInventoryCoordinatorService

@@ -7,7 +7,7 @@ using UntitledRpgLogic.Core.Skills;
 using UntitledRpgLogic.Extensions.Common;
 using UntitledRpgLogic.Infrastructure.Data.SQLite;
 
-namespace UntitledRpgLogic.IntegrationTests;
+namespace UntitledRpgLogic.IntegrationTests.Data;
 
 [TestClass]
 public class AggregatePersistenceTests

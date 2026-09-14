@@ -1,8 +1,9 @@
 using System.Globalization;
 using UntitledRpgLogic.Core.Networking;
-using UntitledRpgLogic.Services;
+using UntitledRpgLogic.Services.Domains;
+using UntitledRpgLogic.Services.Networking;
 
-namespace UntitledRpgLogic.UnitTests;
+namespace UntitledRpgLogic.UnitTests.Networking;
 
 [TestClass]
 public sealed class AreaOfInterestServiceTests

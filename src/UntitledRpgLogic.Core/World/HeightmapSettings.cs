@@ -1,4 +1,4 @@
-namespace UntitledRpgLogic.WorldGen.Generators;
+namespace UntitledRpgLogic.Core.World;
 
 /// <summary>
 ///     Configurable parameters for generating large-scale terrain elevation grids.

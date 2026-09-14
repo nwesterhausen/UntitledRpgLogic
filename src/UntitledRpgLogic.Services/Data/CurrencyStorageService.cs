@@ -1,7 +1,7 @@
 using UntitledRpgLogic.Core.Economy;
 using UntitledRpgLogic.Core.Items;
 
-namespace UntitledRpgLogic.Services;
+namespace UntitledRpgLogic.Services.Data;
 
 /// <summary>
 ///     A service for handling the process of moving currency around.

@@ -1,0 +1,45 @@
+namespace UntitledRpgLogic.Core.World;
+
+/// <summary>
+///     Represents the procedural or sampled bedrock elevation grid across a 2D map coordinate space.
+/// </summary>
+public sealed class TerrainLiquidDepthMap : TerrainGrid2D<ushort>
+{
+	/// <summary>
+	///     Initializes a new instance of the <see cref="TerrainLiquidDepthMap" /> class with specified grid dimensions.
+	/// </summary>
+	/// <param name="widthTiles">The total width of the heightmap in tiles.</param>
+	/// <param name="heightTiles">The total height of the heightmap in tiles.</param>
+	public TerrainLiquidDepthMap(int widthTiles, int heightTiles)
+		: base(widthTiles, heightTiles)
+	{
+	}
+
+	/// <summary>
+	///     Initializes a new instance of the <see cref="TerrainLiquidDepthMap" /> class using an existing flat depth array.
+	/// </summary>
+	/// <param name="widthTiles">The total width of the heightmap in tiles.</param>
+	/// <param name="heightTiles">The total height of the heightmap in tiles.</param>
+	/// <param name="depths">The flattened liquid depth array of length <c>widthTiles * heightTiles</c>.</param>
+	public TerrainLiquidDepthMap(int widthTiles, int heightTiles, ushort[] depths)
+		: base(widthTiles, heightTiles, depths)
+	{
+	}
+
+
+	/// <summary>
+	///     Retrieves the material identifier for the liquid at the specified tile coordinate.
+	/// </summary>
+	/// <param name="tileX">The horizontal tile index.</param>
+	/// <param name="tileY">The vertical tile index.</param>
+	/// <returns>The depth of the liquid.</returns>
+	public ushort GetLiquidDepth(int tileX, int tileY) => this.GetValueClamped(tileX, tileY);
+
+	/// <summary>
+	///     Sets the liquid depth at the specified tile coordinate if within valid bounds.
+	/// </summary>
+	/// <param name="tileX">The horizontal tile index.</param>
+	/// <param name="tileY">The vertical tile index.</param>
+	/// <param name="depth">The liquid depth to assign.</param>
+	public void SetLiquidDepth(int tileX, int tileY, ushort depth) => this.SetValue(tileX, tileY, depth);
+}

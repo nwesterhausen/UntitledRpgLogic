@@ -1,8 +1,8 @@
 using UntitledRpgLogic.Core.Common;
 using UntitledRpgLogic.Core.Items;
-using UntitledRpgLogic.Services;
+using UntitledRpgLogic.Services.Domains;
 
-namespace UntitledRpgLogic.UnitTests;
+namespace UntitledRpgLogic.UnitTests.Coordinators;
 
 [TestClass]
 public class ItemFactoryServiceTests

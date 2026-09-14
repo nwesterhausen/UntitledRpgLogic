@@ -4,7 +4,7 @@ using UntitledRpgLogic.Core.Economy;
 using UntitledRpgLogic.Core.Entities;
 using UntitledRpgLogic.Core.Items;
 
-namespace UntitledRpgLogic.Services;
+namespace UntitledRpgLogic.Services.Coordinators;
 
 /// <summary>
 ///     Application coordinator service managing atomic exchanges of items and currency

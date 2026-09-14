@@ -7,7 +7,7 @@ using UntitledRpgLogic.Core.Skills;
 using UntitledRpgLogic.Core.Stats;
 using UntitledRpgLogic.LibraryFile;
 
-namespace UntitledRpgLogic.Services;
+namespace UntitledRpgLogic.Services.Data;
 
 /// <summary>
 ///     Orchestrates unpacking, parsing, and transactional database insertion of .urpglib content packages.

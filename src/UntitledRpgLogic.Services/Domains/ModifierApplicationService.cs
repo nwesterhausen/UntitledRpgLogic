@@ -2,7 +2,7 @@ using UntitledRpgLogic.Core.Abilities;
 using UntitledRpgLogic.Core.Entities;
 using UntitledRpgLogic.Core.Stats;
 
-namespace UntitledRpgLogic.Services;
+namespace UntitledRpgLogic.Services.Domains;
 
 /// <summary>
 ///     Pure domain service managing stack counts, duration renewal, and stat adjustments for active modifiers.

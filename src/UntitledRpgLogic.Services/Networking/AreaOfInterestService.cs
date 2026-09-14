@@ -2,7 +2,7 @@ using System.Collections.Concurrent;
 using UntitledRpgLogic.Core.Networking;
 using UntitledRpgLogic.Core.World;
 
-namespace UntitledRpgLogic.Services;
+namespace UntitledRpgLogic.Services.Networking;
 
 /// <summary>
 ///     In-memory spatial interest management service tracking entity chunk locations

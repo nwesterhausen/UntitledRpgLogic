@@ -1,7 +1,7 @@
 using UntitledRpgLogic.Core.World;
-using UntitledRpgLogic.WorldGen.Models;
+using UntitledRpgLogic.Extensions.Common;
 
-namespace UntitledRpgLogic.WorldGen.Services;
+namespace UntitledRpgLogic.WorldGen;
 
 /// <summary>
 ///     Evaluates prospective locations on procedural terrain grids to find valid sites for handcrafted stamps.

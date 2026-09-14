@@ -2,7 +2,7 @@ using UntitledRpgLogic.Core.Common;
 using UntitledRpgLogic.Core.Data;
 using UntitledRpgLogic.Core.Items;
 
-namespace UntitledRpgLogic.Services;
+namespace UntitledRpgLogic.Services.Data;
 
 /// <inheritdoc />
 public sealed class ItemCatalogService : IItemCatalogService

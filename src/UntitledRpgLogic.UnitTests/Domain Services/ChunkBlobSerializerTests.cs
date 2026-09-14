@@ -2,7 +2,7 @@ using System.Runtime.InteropServices;
 using UntitledRpgLogic.Core.World;
 using UntitledRpgLogic.Extensions.Common;
 
-namespace UntitledRpgLogic.UnitTests;
+namespace UntitledRpgLogic.UnitTests.Domain_Services;
 
 [TestClass]
 public class ChunkBlobSerializerTests

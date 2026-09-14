@@ -1,4 +1,4 @@
-namespace UntitledRpgLogic.WorldGen.Models;
+namespace UntitledRpgLogic.Core.World;
 
 /// <summary>
 ///     Specifies boundary size and topological constraints for bounded world map generation.

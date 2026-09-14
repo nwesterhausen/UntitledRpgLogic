@@ -9,9 +9,9 @@ using UntitledRpgLogic.Core.Materials;
 using UntitledRpgLogic.Core.Skills;
 using UntitledRpgLogic.Core.Stats;
 using UntitledRpgLogic.LibraryFile;
-using UntitledRpgLogic.Services;
+using UntitledRpgLogic.Services.Data;
 
-namespace UntitledRpgLogic.UnitTests;
+namespace UntitledRpgLogic.UnitTests.Data;
 
 [TestClass]
 public sealed class PackageLoaderServiceTests

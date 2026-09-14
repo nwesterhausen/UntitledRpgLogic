@@ -1,4 +1,4 @@
-namespace UntitledRpgLogic.Core.Data.Configuration;
+namespace UntitledRpgLogic.Core.Data.Urpglib;
 
 /// <summary>
 ///     Enforces that a configuration DTO can deserialize from external TOML and map itself

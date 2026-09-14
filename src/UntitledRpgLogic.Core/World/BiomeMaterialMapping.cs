@@ -1,6 +1,4 @@
-using UntitledRpgLogic.Core.World;
-
-namespace UntitledRpgLogic.WorldGen.Models;
+namespace UntitledRpgLogic.Core.World;
 
 /// <summary>
 ///     Defines the default ground and liquid material identifiers assigned to each biome type.

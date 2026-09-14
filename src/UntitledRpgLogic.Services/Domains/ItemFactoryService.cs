@@ -1,7 +1,7 @@
 using UntitledRpgLogic.Core.Common;
 using UntitledRpgLogic.Core.Items;
 
-namespace UntitledRpgLogic.Services;
+namespace UntitledRpgLogic.Services.Domains;
 
 /// <summary>
 ///     Pure domain service responsible for generating, validating, and instantiating

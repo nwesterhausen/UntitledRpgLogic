@@ -5,7 +5,7 @@ using UntitledRpgLogic.Core.Entities;
 using UntitledRpgLogic.Core.Progression;
 using UntitledRpgLogic.Core.Skills;
 
-namespace UntitledRpgLogic.Services;
+namespace UntitledRpgLogic.Services.Coordinators;
 
 /// <summary>
 ///     Application coordination service managing skill experience awarding, level progression,

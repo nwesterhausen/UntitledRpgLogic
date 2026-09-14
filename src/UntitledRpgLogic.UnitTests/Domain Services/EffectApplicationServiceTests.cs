@@ -2,9 +2,9 @@ using UntitledRpgLogic.Core.Abilities.Effects;
 using UntitledRpgLogic.Core.Common;
 using UntitledRpgLogic.Core.Entities;
 using UntitledRpgLogic.Core.Stats;
-using UntitledRpgLogic.Services;
+using UntitledRpgLogic.Services.Domains;
 
-namespace UntitledRpgLogic.UnitTests;
+namespace UntitledRpgLogic.UnitTests.Domain_Services;
 
 [TestClass]
 public class EffectApplicationServiceTests

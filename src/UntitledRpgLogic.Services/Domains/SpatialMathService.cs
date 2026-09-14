@@ -1,7 +1,7 @@
 using UntitledRpgLogic.Core.Entities;
 using UntitledRpgLogic.Core.World;
 
-namespace UntitledRpgLogic.Services;
+namespace UntitledRpgLogic.Services.Domains;
 
 /// <summary>
 ///     Pure spatial math service converting continuous floating-point coordinates

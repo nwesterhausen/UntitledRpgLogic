@@ -12,8 +12,11 @@ using UntitledRpgLogic.Core.Progression;
 using UntitledRpgLogic.Core.Skills;
 using UntitledRpgLogic.Core.Stats;
 using UntitledRpgLogic.Core.World;
+using UntitledRpgLogic.Services.Coordinators;
+using UntitledRpgLogic.Services.Data;
+using UntitledRpgLogic.Services.Domains;
+using UntitledRpgLogic.Services.Networking;
 using UntitledRpgLogic.WorldGen;
-using UntitledRpgLogic.WorldGen.Services;
 using Random = UntitledRpgLogic.Extensions.Common.Random;
 
 namespace UntitledRpgLogic.Services;

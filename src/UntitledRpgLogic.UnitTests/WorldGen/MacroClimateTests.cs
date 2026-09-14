@@ -1,6 +1,5 @@
 using UntitledRpgLogic.Core.World;
 using UntitledRpgLogic.WorldGen.Generators;
-using UntitledRpgLogic.WorldGen.Models;
 
 namespace UntitledRpgLogic.UnitTests.WorldGen;
 

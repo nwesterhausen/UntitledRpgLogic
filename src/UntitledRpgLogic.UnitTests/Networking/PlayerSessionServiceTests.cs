@@ -1,6 +1,6 @@
-using UntitledRpgLogic.Services;
+using UntitledRpgLogic.Services.Networking;
 
-namespace UntitledRpgLogic.UnitTests;
+namespace UntitledRpgLogic.UnitTests.Networking;
 
 [TestClass]
 public sealed class PlayerSessionServiceTests

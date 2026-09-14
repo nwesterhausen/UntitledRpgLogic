@@ -1,4 +1,4 @@
-using UntitledRpgLogic.WorldGen.Models;
+using UntitledRpgLogic.Core.World;
 using UntitledRpgLogic.WorldGen.Noise;
 
 namespace UntitledRpgLogic.WorldGen.Generators;

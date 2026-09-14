@@ -2,7 +2,7 @@ using UntitledRpgLogic.Core.Abilities.Effects;
 using UntitledRpgLogic.Core.Entities;
 using UntitledRpgLogic.Core.Stats;
 
-namespace UntitledRpgLogic.Services;
+namespace UntitledRpgLogic.Services.Domains;
 
 /// <summary>
 ///     Applies domain effect payloads to target entities, delegating damage calculations

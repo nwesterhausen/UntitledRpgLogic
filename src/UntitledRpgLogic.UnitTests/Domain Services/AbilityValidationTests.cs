@@ -4,10 +4,10 @@ using UntitledRpgLogic.Core.Entities;
 using UntitledRpgLogic.Core.Progression;
 using UntitledRpgLogic.Core.Skills;
 using UntitledRpgLogic.Core.Stats;
-using UntitledRpgLogic.Services;
+using UntitledRpgLogic.Services.Domains;
 using Random = UntitledRpgLogic.Extensions.Common.Random;
 
-namespace UntitledRpgLogic.UnitTests;
+namespace UntitledRpgLogic.UnitTests.Domain_Services;
 
 [TestClass]
 public class AbilityValidationTests

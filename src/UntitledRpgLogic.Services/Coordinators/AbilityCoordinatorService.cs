@@ -5,7 +5,7 @@ using UntitledRpgLogic.Core.Data;
 using UntitledRpgLogic.Core.Entities;
 using UntitledRpgLogic.Core.Stats;
 
-namespace UntitledRpgLogic.Services;
+namespace UntitledRpgLogic.Services.Coordinators;
 
 /// <summary>
 ///     Application coordination service managing database loading, validation,

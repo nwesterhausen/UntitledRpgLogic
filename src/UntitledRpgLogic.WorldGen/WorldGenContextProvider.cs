@@ -1,9 +1,8 @@
 using System.Collections.Concurrent;
 using UntitledRpgLogic.Core.World;
 using UntitledRpgLogic.WorldGen.Generators;
-using UntitledRpgLogic.WorldGen.Models;
 
-namespace UntitledRpgLogic.WorldGen.Services;
+namespace UntitledRpgLogic.WorldGen;
 
 /// <summary>
 ///     In-memory cache and builder for macro simulation contexts across active maps.

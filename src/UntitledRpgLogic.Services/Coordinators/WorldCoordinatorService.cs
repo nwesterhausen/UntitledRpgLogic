@@ -2,10 +2,8 @@ using UntitledRpgLogic.Core.Data;
 using UntitledRpgLogic.Core.Entities;
 using UntitledRpgLogic.Core.World;
 using UntitledRpgLogic.Extensions.Common;
-using UntitledRpgLogic.WorldGen;
-using UntitledRpgLogic.WorldGen.Services;
 
-namespace UntitledRpgLogic.Services;
+namespace UntitledRpgLogic.Services.Coordinators;
 
 /// <summary>
 ///     Application coordination service managing spatial streaming, chunk persistence,

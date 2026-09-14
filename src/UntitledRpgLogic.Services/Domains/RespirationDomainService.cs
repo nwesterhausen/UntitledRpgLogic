@@ -1,7 +1,7 @@
 using UntitledRpgLogic.Core.Entities;
 using UntitledRpgLogic.Core.Environment;
 
-namespace UntitledRpgLogic.Services;
+namespace UntitledRpgLogic.Services.Domains;
 
 /// <summary>
 ///     Pure domain service evaluating gas concentrations, atmospheric pressures,

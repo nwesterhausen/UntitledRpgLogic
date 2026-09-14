@@ -1,10 +1,7 @@
-using UntitledRpgLogic.Core.World;
-using UntitledRpgLogic.WorldGen.Models;
-
-namespace UntitledRpgLogic.WorldGen;
+namespace UntitledRpgLogic.Core.World;
 
 /// <summary>
-///     Pure domain service synthesizing individual 16x16 world chunks from macro simulation context.
+///     Pure domain service synthesizing individual world chunks from macro simulation context.
 /// </summary>
 public interface IChunkGeneratorService
 {

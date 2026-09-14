@@ -3,10 +3,10 @@ using UntitledRpgLogic.Core.Common;
 using UntitledRpgLogic.Core.Data;
 using UntitledRpgLogic.Core.Entities;
 using UntitledRpgLogic.Core.World;
-using UntitledRpgLogic.Services;
-using UntitledRpgLogic.WorldGen.Services;
+using UntitledRpgLogic.Services.Coordinators;
+using UntitledRpgLogic.WorldGen;
 
-namespace UntitledRpgLogic.UnitTests;
+namespace UntitledRpgLogic.UnitTests.Coordinators;
 
 [TestClass]
 public sealed class WorldCoordinatorServiceTests

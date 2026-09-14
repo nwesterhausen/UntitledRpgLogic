@@ -1,7 +1,7 @@
 using UntitledRpgLogic.Core.Abilities;
 using UntitledRpgLogic.Core.Abilities.Effects;
 
-namespace UntitledRpgLogic.Core.Data.Configuration;
+namespace UntitledRpgLogic.Core.Data.Urpglib;
 
 /// <summary>
 ///     Defines a service for writing configuration settings.

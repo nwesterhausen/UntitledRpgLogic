@@ -5,7 +5,7 @@ using UntitledRpgLogic.Core.Items;
 using UntitledRpgLogic.Infrastructure.Data.SQLite;
 using UntitledRpgLogic.Services;
 
-namespace UntitledRpgLogic.IntegrationTests;
+namespace UntitledRpgLogic.IntegrationTests.Data;
 
 [TestClass]
 public class ItemCatalogServiceTests

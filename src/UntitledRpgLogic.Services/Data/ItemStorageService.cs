@@ -1,6 +1,6 @@
 using UntitledRpgLogic.Core.Items;
 
-namespace UntitledRpgLogic.Services;
+namespace UntitledRpgLogic.Services.Data;
 
 /// <summary>
 ///     Service that handles moving items around while respecting inventory and item restrictions.

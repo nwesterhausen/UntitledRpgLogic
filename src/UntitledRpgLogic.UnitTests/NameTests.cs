@@ -1,6 +1,6 @@
 using UntitledRpgLogic.Core.Common;
 
-namespace UntitledRpgLogic.UnitTests.Core;
+namespace UntitledRpgLogic.UnitTests;
 
 [TestClass]
 public class NameTests

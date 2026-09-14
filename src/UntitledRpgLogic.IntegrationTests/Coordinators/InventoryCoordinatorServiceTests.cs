@@ -9,7 +9,7 @@ using UntitledRpgLogic.Infrastructure.Data.SQLite;
 using UntitledRpgLogic.IntegrationTests.Common;
 using UntitledRpgLogic.Services;
 
-namespace UntitledRpgLogic.IntegrationTests;
+namespace UntitledRpgLogic.IntegrationTests.Coordinators;
 
 [TestClass]
 public class InventoryCoordinatorServiceTests : CoordinatorIntegrationTestBase

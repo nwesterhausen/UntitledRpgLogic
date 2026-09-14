@@ -1,5 +1,5 @@
+using UntitledRpgLogic.Core.World;
 using UntitledRpgLogic.WorldGen.Generators;
-using UntitledRpgLogic.WorldGen.Models;
 using UntitledRpgLogic.WorldGen.Noise;
 
 namespace UntitledRpgLogic.UnitTests.WorldGen;

@@ -3,9 +3,10 @@ using UntitledRpgLogic.Core.Common;
 using UntitledRpgLogic.Core.Data;
 using UntitledRpgLogic.Core.Entities;
 using UntitledRpgLogic.Core.Items;
-using UntitledRpgLogic.Services;
+using UntitledRpgLogic.Services.Coordinators;
+using UntitledRpgLogic.Services.Data;
 
-namespace UntitledRpgLogic.UnitTests;
+namespace UntitledRpgLogic.UnitTests.Coordinators;
 
 [TestClass]
 public sealed class TradeCoordinatorServiceTests
