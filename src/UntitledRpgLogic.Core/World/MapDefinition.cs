@@ -70,6 +70,17 @@ public record MapDefinition : IDbEntity<Ulid>
 	public virtual ICollection<MapTransition> Transitions { get; } = new List<MapTransition>();
 
 	/// <summary>
+	///     The primary random seed used for deterministic procedural generation.
+	/// </summary>
+	public uint Seed { get; init; }
+
+	/// <summary>
+	///     The procedural generator settings and macro recipe for this map.
+	///     Null for handcrafted static interiors or non-procedural maps.
+	/// </summary>
+	public WorldMapConfiguration? GenerationConfig { get; init; }
+
+	/// <summary>
 	///     The unique identifier for the map.
 	/// </summary>
 	[Key]

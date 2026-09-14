@@ -36,5 +36,13 @@ public sealed class MapDefinitionConfiguration : IEntityTypeConfiguration<MapDef
 			.WithOne(t => t.SourceMap)
 			.HasForeignKey(t => t.SourceMapId)
 			.OnDelete(DeleteBehavior.Cascade);
+
+		builder.OwnsOne(m => m.GenerationConfig, cb =>
+		{
+			cb.ToJson("generation_config");
+			cb.OwnsOne(c => c.Heightmap);
+			cb.OwnsOne(c => c.Hydrology);
+			cb.OwnsOne(c => c.Climate);
+		});
 	}
 }

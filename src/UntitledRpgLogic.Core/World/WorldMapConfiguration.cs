@@ -44,4 +44,19 @@ public record WorldMapConfiguration
 	///     Gets the maximum allowable bedrock elevation in meters.
 	/// </summary>
 	public short MaxElevation { get; init; } = 4000;
+
+	/// <summary>
+	///     Specific elevation noise frequencies, octaves, and vertical limits.
+	/// </summary>
+	public HeightmapSettings Heightmap { get; init; } = new();
+
+	/// <summary>
+	///     Precipitation cycles, river carving flux, and sea fill rules.
+	/// </summary>
+	public HydrologySettings Hydrology { get; init; } = new();
+
+	/// <summary>
+	///     Latitudinal temperature curves, lapse rates, and moisture distribution.
+	/// </summary>
+	public ClimateSettings Climate { get; init; } = new();
 }
