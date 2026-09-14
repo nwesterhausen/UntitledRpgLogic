@@ -12,11 +12,12 @@ public sealed class ItemCatalogService : IItemCatalogService
 	private readonly IUnitOfWork unitOfWork;
 
 	/// <summary>
+	///     Initializes a new instance of the <see cref="ItemCatalogService" /> class.
 	/// </summary>
-	/// <param name="unitOfWork"></param>
-	/// <param name="definitionRepository"></param>
-	/// <param name="factory"></param>
-	/// <exception cref="ArgumentNullException"></exception>
+	/// <param name="unitOfWork">The transaction coordinator for persisting catalog updates.</param>
+	/// <param name="definitionRepository">The repository managing item template definitions.</param>
+	/// <param name="factory">The pure domain factory for item instantiation.</param>
+	/// <exception cref="ArgumentNullException">Thrown if any required dependency is <see langword="null" />.</exception>
 	public ItemCatalogService(
 		IUnitOfWork unitOfWork,
 		IEntityRepository<ItemDefinition, Ulid> definitionRepository,

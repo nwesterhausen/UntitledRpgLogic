@@ -7,7 +7,7 @@ namespace UntitledRpgLogic.Services.Coordinators;
 
 /// <summary>
 ///     Application coordination service managing spatial streaming, chunk persistence,
-///     entity world movement, and map transition portals[cite: 2, 4].
+///     entity world movement, and map transition portals.
 /// </summary>
 public sealed class WorldCoordinatorService : IWorldCoordinatorService
 {
@@ -22,13 +22,13 @@ public sealed class WorldCoordinatorService : IWorldCoordinatorService
 	/// <summary>
 	///     Initializes a new instance of the <see cref="WorldCoordinatorService" /> class.
 	/// </summary>
-	/// <param name="unitOfWork">The transaction and persistence coordinator[cite: 2, 4].</param>
+	/// <param name="unitOfWork">The transaction and persistence coordinator.</param>
 	/// <param name="entityRepository">The repository for entity aggregates.</param>
-	/// <param name="mapRepository">The repository for map definitions[cite: 2, 4].</param>
-	/// <param name="chunkRepository">The repository for world chunk grids[cite: 2, 4].</param>
-	/// <param name="transitionRepository">The repository for map portals and transitions[cite: 2, 4].</param>
-	/// <param name="chunkGenerator"></param>
-	/// <param name="contextProvider"></param>
+	/// <param name="mapRepository">The repository for map definitions.</param>
+	/// <param name="chunkRepository">The repository for world chunk grids.</param>
+	/// <param name="transitionRepository">The repository for map portals and transitions.</param>
+	/// <param name="chunkGenerator">The chunk synthesis generator service.</param>
+	/// <param name="contextProvider">The provider for cached or generated macro simulation context grids.</param>
 	public WorldCoordinatorService(
 		IUnitOfWork unitOfWork,
 		IEntityRepository<Entity, Ulid> entityRepository,

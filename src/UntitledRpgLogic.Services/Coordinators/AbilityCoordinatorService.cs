@@ -9,7 +9,7 @@ namespace UntitledRpgLogic.Services.Coordinators;
 
 /// <summary>
 ///     Application coordination service managing database loading, validation,
-///     resource deduction, effect execution, and transaction commits for ability invocations[cite: 3].
+///     resource deduction, effect execution, and transaction commits for ability invocations.
 /// </summary>
 public sealed class AbilityCoordinatorService : IAbilityCoordinatorService
 {

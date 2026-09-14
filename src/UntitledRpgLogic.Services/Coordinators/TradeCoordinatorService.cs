@@ -8,7 +8,7 @@ namespace UntitledRpgLogic.Services.Coordinators;
 
 /// <summary>
 ///     Application coordinator service managing atomic exchanges of items and currency
-///     between buyer and seller entities[cite: 2, 4].
+///     between buyer and seller entities.
 /// </summary>
 public sealed class TradeCoordinatorService : ITradeCoordinatorService
 {
@@ -20,10 +20,10 @@ public sealed class TradeCoordinatorService : ITradeCoordinatorService
 	/// <summary>
 	///     Initializes a new instance of the <see cref="TradeCoordinatorService" /> class.
 	/// </summary>
-	/// <param name="unitOfWork">The transaction boundary coordinator[cite: 2, 4].</param>
-	/// <param name="entityRepository">The repository for entity aggregates[cite: 1, 2].</param>
-	/// <param name="itemStorageService">The pure domain service managing item placement and transfers[cite: 2, 3].</param>
-	/// <param name="currencyStorageService">The domain service managing currency calculations and denominations[cite: 2, 3].</param>
+	/// <param name="unitOfWork">The transaction boundary coordinator.</param>
+	/// <param name="entityRepository">The repository for entity aggregates.</param>
+	/// <param name="itemStorageService">The pure domain service managing item placement and transfers.</param>
+	/// <param name="currencyStorageService">The domain service managing currency calculations and denominations.</param>
 	public TradeCoordinatorService(
 		IUnitOfWork unitOfWork,
 		IEntityRepository<Entity, Ulid> entityRepository,

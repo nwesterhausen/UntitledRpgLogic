@@ -1,47 +1,47 @@
 namespace UntitledRpgLogic.Core.World;
 
 /// <summary>
-///     Specifies boundary size and topological constraints for bounded world map generation.
+///     Specifies generation boundaries, island falloff parameters, and vertical limits for an overworld map.
 /// </summary>
 public record WorldMapConfiguration
 {
 	/// <summary>
-	///     Total width of the bounded world map in tiles (must be a multiple of 16).
+	///     Gets the total horizontal extent of the map in tiles. Defaults to 512.
 	/// </summary>
 	public int WidthTiles { get; init; } = 512;
 
 	/// <summary>
-	///     Total height of the bounded world map in tiles (must be a multiple of 16).
+	///     Gets the total vertical extent of the map in tiles. Defaults to 512.
 	/// </summary>
 	public int HeightTiles { get; init; } = 512;
 
 	/// <summary>
-	///     Enforces an oceanic buffer around the perimeter so land forms an island or continent.
+	///     Gets a value indicating whether ocean falloff masks are applied to force borders below sea level.
 	/// </summary>
 	public bool SurroundWithOcean { get; init; } = true;
 
 	/// <summary>
-	///     The normalized fraction (0.0 to 0.5) of the outer border dedicated to coastal ocean dropoff.
+	///     Gets the fractional perimeter margin where elevation degrades into ocean.
 	/// </summary>
-	public float OceanBorderThickness { get; init; } = 0.15f;
+	public float OceanBorderThickness { get; init; } = 0.20f;
 
 	/// <summary>
-	///     Exponent shaping how steeply land drops off into the surrounding ocean (higher = flatter center, steeper coast).
+	///     Gets the exponential steepness applied to the island falloff curve.
 	/// </summary>
-	public float IslandFalloffSteepness { get; init; } = 2.5f;
+	public float IslandFalloffSteepness { get; init; } = 2.0f;
 
 	/// <summary>
-	///     Global sea datum level.
+	///     Gets the vertical datum elevation defining sea level in meters.
 	/// </summary>
 	public short SeaLevel { get; init; }
 
 	/// <summary>
-	///     Minimum bedrock elevation allowed.
+	///     Gets the minimum allowable bedrock elevation in meters.
 	/// </summary>
-	public short MinElevation { get; init; } = -6000;
+	public short MinElevation { get; init; } = -2000;
 
 	/// <summary>
-	///     Maximum bedrock elevation allowed.
+	///     Gets the maximum allowable bedrock elevation in meters.
 	/// </summary>
-	public short MaxElevation { get; init; } = 6000;
+	public short MaxElevation { get; init; } = 4000;
 }

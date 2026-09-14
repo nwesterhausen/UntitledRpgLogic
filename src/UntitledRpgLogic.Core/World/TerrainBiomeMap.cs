@@ -1,7 +1,7 @@
 namespace UntitledRpgLogic.Core.World;
 
 /// <summary>
-///     Represents the derived ecological biome classification grid across a 2D map space[cite: 2].
+///     Represents the derived ecological biome classification grid across a 2D map space.
 /// </summary>
 public sealed class TerrainBiomeMap : TerrainGrid2D<BiomeType>
 {

@@ -23,15 +23,16 @@ public sealed class PackageLoaderService : IPackageLoaderService
 	private readonly IUnitOfWork unitOfWork;
 
 	/// <summary>
+	///     Initializes a new instance of the <see cref="PackageLoaderService" /> class.
 	/// </summary>
-	/// <param name="unitOfWork"></param>
-	/// <param name="contentParser"></param>
-	/// <param name="statRepository"></param>
-	/// <param name="skillRepository"></param>
-	/// <param name="itemRepository"></param>
-	/// <param name="materialRepository"></param>
-	/// <param name="entityDefinitionRepository"></param>
-	/// <exception cref="ArgumentNullException"></exception>
+	/// <param name="unitOfWork">The transaction and commit coordinator.</param>
+	/// <param name="contentParser">The parser converting raw tar entries into domain definition collections.</param>
+	/// <param name="statRepository">The repository persisting stat definitions.</param>
+	/// <param name="skillRepository">The repository persisting skill definitions.</param>
+	/// <param name="itemRepository">The repository persisting item definitions.</param>
+	/// <param name="materialRepository">The repository persisting material definitions.</param>
+	/// <param name="entityDefinitionRepository">The repository persisting entity blueprint definitions.</param>
+	/// <exception cref="ArgumentNullException">Thrown if any required dependency is <see langword="null" />.</exception>
 	public PackageLoaderService(
 		IUnitOfWork unitOfWork,
 		IPackageContentParser contentParser,

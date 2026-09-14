@@ -2,7 +2,7 @@ namespace UntitledRpgLogic.Core.World;
 
 /// <summary>
 ///     Represents the mid-scale normalized precipitation/rainfall simulation layer (0.0 to 1.0) across a 2D map
-///     space[cite: 2].
+///     space.
 /// </summary>
 public sealed class TerrainRainfallMap : TerrainGrid2D<float>
 {

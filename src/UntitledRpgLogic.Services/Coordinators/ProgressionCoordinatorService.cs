@@ -9,7 +9,7 @@ namespace UntitledRpgLogic.Services.Coordinators;
 
 /// <summary>
 ///     Application coordination service managing skill experience awarding, level progression,
-///     ability prerequisite evaluations, and persistence commits[cite: 2, 3].
+///     ability prerequisite evaluations, and persistence commits.
 /// </summary>
 public sealed class ProgressionCoordinatorService : IProgressionCoordinatorService
 {
@@ -24,11 +24,11 @@ public sealed class ProgressionCoordinatorService : IProgressionCoordinatorServi
 	///     Initializes a new instance of the <see cref="ProgressionCoordinatorService" /> class.
 	/// </summary>
 	/// <param name="unitOfWork">The unit of work for managing transaction boundaries.</param>
-	/// <param name="entityRepository">The repository for entity aggregates[cite: 1, 2].</param>
-	/// <param name="skillDefinitionRepository">The repository for skill definitions[cite: 1, 2].</param>
-	/// <param name="abilityDefinitionRepository">The repository for ability definitions[cite: 1, 2].</param>
-	/// <param name="skillProgressionService">The pure domain service for experience and level curves[cite: 2].</param>
-	/// <param name="abilityValidationService">The pure domain service for checking prerequisites[cite: 2].</param>
+	/// <param name="entityRepository">The repository for entity aggregates.</param>
+	/// <param name="skillDefinitionRepository">The repository for skill definitions.</param>
+	/// <param name="abilityDefinitionRepository">The repository for ability definitions.</param>
+	/// <param name="skillProgressionService">The pure domain service for experience and level curves.</param>
+	/// <param name="abilityValidationService">The pure domain service for checking prerequisites.</param>
 	public ProgressionCoordinatorService(
 		IUnitOfWork unitOfWork,
 		IEntityRepository<Entity, Ulid> entityRepository,
