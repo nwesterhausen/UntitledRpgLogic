@@ -17,17 +17,19 @@ public sealed class WorldGenContextProvider : IWorldGenContextProvider
 	{
 		ArgumentNullException.ThrowIfNull(map);
 
-		var config = new WorldMapConfiguration { WidthTiles = widthTiles, HeightTiles = heightTiles };
+		var mapConfig = new WorldMapConfiguration { WidthTiles = widthTiles, HeightTiles = heightTiles };
+		var noiseConfig = new HeightmapSettings { MinElevation = -200, MaxElevation = 2000 };
+		var hydroConfig = new HydrologySettings();
 
 		return this.contexts.GetOrAdd(map.Id, _ =>
 		{
 			var mapping = new BiomeMaterialMapping();
 
 			// 1. Generate macro heightmap
-			var heightmap = MacroHeightmapGenerator.Generate(seed, config);
+			var heightmap = MacroHeightmapGenerator.Generate(seed, mapConfig, noiseConfig);
 
 			// 2. Simulate ocean filling and river descent
-			var hydrology = MacroHydrologyGenerator.Generate(heightmap, mapping.WaterMaterialId, seed);
+			var hydrology = MacroHydrologyGenerator.Generate(heightmap, mapping.WaterMaterialId, seed, hydroConfig);
 
 			// 3. Derive temperature, rainfall, and Whittaker biomes
 			var climate = MacroClimateGenerator.Generate(heightmap, hydrology, seed);
