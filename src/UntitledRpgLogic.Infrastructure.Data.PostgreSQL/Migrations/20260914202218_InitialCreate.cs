@@ -327,8 +327,10 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                     name = table.Column<string>(type: "text", nullable: false),
                     description = table.Column<string>(type: "character varying(512)", maxLength: 512, nullable: false),
                     type = table.Column<int>(type: "integer", nullable: false),
+                    seed = table.Column<long>(type: "bigint", nullable: false),
                     atmosphere = table.Column<string>(type: "jsonb", nullable: false),
-                    baseline_ambients = table.Column<string>(type: "jsonb", nullable: true)
+                    baseline_ambients = table.Column<string>(type: "jsonb", nullable: true),
+                    generation_config = table.Column<string>(type: "jsonb", nullable: true)
                 },
                 constraints: table =>
                 {

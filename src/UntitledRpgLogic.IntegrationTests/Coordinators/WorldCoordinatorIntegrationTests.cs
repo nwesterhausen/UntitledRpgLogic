@@ -5,6 +5,7 @@ using UntitledRpgLogic.Core.Entities;
 using UntitledRpgLogic.Core.World;
 using UntitledRpgLogic.Infrastructure.Data;
 using UntitledRpgLogic.IntegrationTests.Common;
+using UntitledRpgLogic.WorldGen;
 
 namespace UntitledRpgLogic.IntegrationTests.Coordinators;
 
@@ -16,7 +17,10 @@ public sealed class WorldCoordinatorIntegrationTests : CoordinatorIntegrationTes
 	{
 		var token = this.TestContext.CancellationToken;
 		var dbName = $"world_int_{Guid.NewGuid():N}";
-		var provider = CreateTestProvider(dbName);
+		var worldServices = new ServiceCollection();
+		worldServices.AddSingleton<IChunkGeneratorService, ChunkGeneratorService>();
+		worldServices.AddSingleton<IWorldGenContextProvider, WorldGenContextProvider>();
+		var provider = CreateTestProvider(dbName, worldServices);
 
 		await using (provider.ConfigureAwait(false))
 		{

@@ -9,7 +9,5 @@ public record HeightmapSettings
 	public int Octaves { get; init; } = 5;
 	public float Persistence { get; init; } = 0.45f;
 	public float Lacunarity { get; init; } = 2.0f;
-	public short MinElevation { get; init; } = -200;
-	public short MaxElevation { get; init; } = 2000;
 	public short SeaLevel { get; init; }
 }

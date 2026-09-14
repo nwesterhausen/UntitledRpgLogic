@@ -16,24 +16,33 @@ public sealed class WorldGenContextProvider : IWorldGenContextProvider
 	{
 		ArgumentNullException.ThrowIfNull(map);
 
-		var mapConfig = new WorldMapConfiguration { WidthTiles = widthTiles, HeightTiles = heightTiles };
-		var noiseConfig = new HeightmapSettings { MinElevation = -200, MaxElevation = 2000 };
+		var noiseConfig = new HeightmapSettings();
 		var hydroConfig = new HydrologySettings();
+
+		var worldConfig = new WorldMapConfiguration
+		{
+			MaxElevation = 2000,
+			MinElevation = -200,
+			WidthTiles = widthTiles,
+			HeightTiles = heightTiles,
+			Heightmap = noiseConfig,
+			Hydrology = hydroConfig
+		};
 
 		return this.contexts.GetOrAdd(map.Id, _ =>
 		{
 			var mapping = new BiomeMaterialMapping();
 
 			// 1. Generate macro heightmap
-			var heightmap = MacroHeightmapGenerator.Generate(seed, mapConfig, noiseConfig);
+			var heightmap = MacroHeightmapGenerator.Generate(map.Seed, worldConfig);
 
 			// 2. Simulate ocean filling and river descent
-			var hydrology = MacroHydrologyGenerator.Generate(heightmap, mapping.WaterMaterialId, seed, hydroConfig);
+			var hydrology = MacroHydrologyGenerator.Generate(heightmap, map.Seed, worldConfig, mapping.WaterMaterialId);
 
 			// 3. Derive temperature, rainfall, and Whittaker biomes
-			var climate = MacroClimateGenerator.Generate(heightmap, hydrology, seed);
+			var climate = MacroClimateGenerator.Generate(heightmap, hydrology, map.Seed);
 
-			return new WorldGenContext(heightmap, hydrology, climate, mapping, seed);
+			return new WorldGenContext(heightmap, hydrology, climate, mapping, map.Seed);
 		});
 	}
 }

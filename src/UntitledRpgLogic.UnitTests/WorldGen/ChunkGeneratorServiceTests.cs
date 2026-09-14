@@ -17,7 +17,7 @@ public sealed class ChunkGeneratorServiceTests
 		var mapConfig = new WorldMapConfiguration { HeightTiles = 32, WidthTiles = 32 };
 
 		var heightmap = MacroHeightmapGenerator.Generate(seed, mapConfig);
-		var hydrology = MacroHydrologyGenerator.Generate(heightmap, waterId, seed);
+		var hydrology = MacroHydrologyGenerator.Generate(heightmap, seed, mapConfig, waterId);
 		var climate = MacroClimateGenerator.Generate(heightmap, hydrology, seed);
 		var context = new WorldGenContext(heightmap, hydrology, climate, mapping, seed);
 

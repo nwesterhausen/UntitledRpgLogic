@@ -10,14 +10,13 @@ public static class MacroHeightmapGenerator
 	/// </summary>
 	public static TerrainHeightmap Generate(
 		uint seed,
-		WorldMapConfiguration config,
-		HeightmapSettings? noiseSettings = null)
+		WorldMapConfiguration config)
 	{
 		ArgumentNullException.ThrowIfNull(config);
 		ArgumentOutOfRangeException.ThrowIfNegativeOrZero(config.WidthTiles);
 		ArgumentOutOfRangeException.ThrowIfNegativeOrZero(config.HeightTiles);
 
-		var noise = noiseSettings ?? new HeightmapSettings();
+		var noise = config.Heightmap ?? new HeightmapSettings();
 		var heightmap = new TerrainHeightmap(config.WidthTiles, config.HeightTiles);
 		var elevationSpan = config.MaxElevation - config.MinElevation;
 

@@ -326,8 +326,10 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                     name = table.Column<string>(type: "TEXT", nullable: false),
                     description = table.Column<string>(type: "TEXT", maxLength: 512, nullable: false),
                     type = table.Column<int>(type: "INTEGER", nullable: false),
+                    seed = table.Column<uint>(type: "INTEGER", nullable: false),
                     atmosphere = table.Column<string>(type: "TEXT", nullable: false),
-                    baseline_ambients = table.Column<string>(type: "TEXT", nullable: true)
+                    baseline_ambients = table.Column<string>(type: "TEXT", nullable: true),
+                    generation_config = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {

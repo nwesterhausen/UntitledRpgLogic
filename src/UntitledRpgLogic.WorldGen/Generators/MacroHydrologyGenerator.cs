@@ -28,17 +28,17 @@ public static class MacroHydrologyGenerator
 		(-1, 1) // South-West
 	];
 
-	public static TerrainHydrology Generate(
-		TerrainHeightmap heightmap,
-		Ulid waterMaterialId,
+	public static TerrainHydrology Generate(TerrainHeightmap heightmap,
 		uint seed,
-		HydrologySettings? settings = null)
+		WorldMapConfiguration settings,
+		Ulid waterMaterialId)
 	{
+		ArgumentNullException.ThrowIfNull(settings);
 		ArgumentNullException.ThrowIfNull(heightmap);
 
-		var cfg = settings ?? new HydrologySettings();
-		var width = heightmap.WidthTiles;
-		var height = heightmap.HeightTiles;
+		var cfg = settings.Hydrology ?? new HydrologySettings();
+		var width = settings.WidthTiles;
+		var height = settings.HeightTiles;
 		var hydrology = new TerrainHydrology(width, height);
 
 		// 1. Fill ocean basins below SeaLevel

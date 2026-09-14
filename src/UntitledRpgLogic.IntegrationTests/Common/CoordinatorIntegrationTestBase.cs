@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using UntitledRpgLogic.Core.Data;
 using UntitledRpgLogic.Infrastructure.Data;
 using UntitledRpgLogic.Infrastructure.Data.SQLite;
@@ -13,7 +14,7 @@ public abstract class CoordinatorIntegrationTestBase
 {
 	public TestContext TestContext { get; set; } = null!;
 
-	protected static ServiceProvider CreateTestProvider(string dbName)
+	protected static ServiceProvider CreateTestProvider(string dbName, ServiceCollection? extraServices = null)
 	{
 		var services = new ServiceCollection();
 
@@ -25,6 +26,14 @@ public abstract class CoordinatorIntegrationTestBase
 
 		// Registers all domain services, persistence coordinators, and session registries
 		services.AddRpgServerServices();
+
+		if (extraServices != null)
+		{
+			foreach (var service in extraServices)
+			{
+				services.Add(service);
+			}
+		}
 
 		return services.BuildServiceProvider();
 	}

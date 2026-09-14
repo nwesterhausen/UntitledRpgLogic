@@ -12,7 +12,7 @@ using UntitledRpgLogic.Infrastructure.Data;
 namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
 {
     [DbContext(typeof(RpgDbContext))]
-    [Migration("20260913185729_InitialCreate")]
+    [Migration("20260914202218_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -859,6 +859,10 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("name");
+
+                    b.Property<long>("Seed")
+                        .HasColumnType("bigint")
+                        .HasColumnName("seed");
 
                     b.Property<int>("Type")
                         .HasColumnType("integer")
@@ -4032,10 +4036,130 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                                 .HasConstraintName("fk_map_definitions_map_definitions_map_definition_id");
                         });
 
+                    b.OwnsOne("UntitledRpgLogic.Core.World.WorldMapConfiguration", "GenerationConfig", b1 =>
+                        {
+                            b1.Property<byte[]>("MapDefinitionId");
+
+                            b1.Property<int>("HeightTiles");
+
+                            b1.Property<float>("IslandFalloffSteepness");
+
+                            b1.Property<short>("MaxElevation");
+
+                            b1.Property<short>("MinElevation");
+
+                            b1.Property<float>("OceanBorderThickness");
+
+                            b1.Property<short>("SeaLevel");
+
+                            b1.Property<bool>("SurroundWithOcean");
+
+                            b1.Property<int>("WidthTiles");
+
+                            b1.HasKey("MapDefinitionId");
+
+                            b1.ToTable("map_definitions");
+
+                            b1
+                                .ToJson("generation_config")
+                                .HasColumnType("jsonb");
+
+                            b1.WithOwner()
+                                .HasForeignKey("MapDefinitionId")
+                                .HasConstraintName("fk_map_definitions_map_definitions_id");
+
+                            b1.OwnsOne("UntitledRpgLogic.Core.World.ClimateSettings", "Climate", b2 =>
+                                {
+                                    b2.Property<byte[]>("WorldMapConfigurationMapDefinitionId");
+
+                                    b2.Property<float>("EquatorTemperature");
+
+                                    b2.Property<float>("LapseRatePer1000M");
+
+                                    b2.Property<short>("MountainThreshold");
+
+                                    b2.Property<float>("PoleTemperature");
+
+                                    b2.Property<float>("RainfallNoiseFrequency");
+
+                                    b2.Property<float>("TemperatureNoiseFrequency");
+
+                                    b2.HasKey("WorldMapConfigurationMapDefinitionId")
+                                        .HasName("pk_map_definitions");
+
+                                    b2.ToTable("map_definitions");
+
+                                    b2.WithOwner()
+                                        .HasForeignKey("WorldMapConfigurationMapDefinitionId")
+                                        .HasConstraintName("fk_map_definitions_map_definitions_world_map_configuration_map_def");
+                                });
+
+                            b1.OwnsOne("UntitledRpgLogic.Core.World.HeightmapSettings", "Heightmap", b2 =>
+                                {
+                                    b2.Property<byte[]>("WorldMapConfigurationMapDefinitionId");
+
+                                    b2.Property<float>("Frequency");
+
+                                    b2.Property<float>("Lacunarity");
+
+                                    b2.Property<int>("Octaves");
+
+                                    b2.Property<float>("Persistence");
+
+                                    b2.Property<short>("SeaLevel");
+
+                                    b2.HasKey("WorldMapConfigurationMapDefinitionId")
+                                        .HasName("pk_map_definitions");
+
+                                    b2.ToTable("map_definitions");
+
+                                    b2.WithOwner()
+                                        .HasForeignKey("WorldMapConfigurationMapDefinitionId")
+                                        .HasConstraintName("fk_map_definitions_map_definitions_world_map_configuration_map_def");
+                                });
+
+                            b1.OwnsOne("UntitledRpgLogic.Core.World.HydrologySettings", "Hydrology", b2 =>
+                                {
+                                    b2.Property<byte[]>("WorldMapConfigurationMapDefinitionId");
+
+                                    b2.Property<int>("BaseRiverDepth");
+
+                                    b2.Property<int>("MaxDescentSteps");
+
+                                    b2.Property<int>("RaindropCycles");
+
+                                    b2.Property<short>("RiverBedErosionMeters");
+
+                                    b2.Property<int>("RiverFluxThreshold");
+
+                                    b2.Property<short>("SeaLevel");
+
+                                    b2.HasKey("WorldMapConfigurationMapDefinitionId")
+                                        .HasName("pk_map_definitions");
+
+                                    b2.ToTable("map_definitions");
+
+                                    b2.WithOwner()
+                                        .HasForeignKey("WorldMapConfigurationMapDefinitionId")
+                                        .HasConstraintName("fk_map_definitions_map_definitions_world_map_configuration_map_def");
+                                });
+
+                            b1.Navigation("Climate")
+                                .IsRequired();
+
+                            b1.Navigation("Heightmap")
+                                .IsRequired();
+
+                            b1.Navigation("Hydrology")
+                                .IsRequired();
+                        });
+
                     b.Navigation("Atmosphere")
                         .IsRequired();
 
                     b.Navigation("BaselineAmbients");
+
+                    b.Navigation("GenerationConfig");
                 });
 
             modelBuilder.Entity("UntitledRpgLogic.Core.World.MapTransition", b =>

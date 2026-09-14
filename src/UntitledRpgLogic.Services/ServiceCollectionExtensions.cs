@@ -16,7 +16,6 @@ using UntitledRpgLogic.Services.Coordinators;
 using UntitledRpgLogic.Services.Data;
 using UntitledRpgLogic.Services.Domains;
 using UntitledRpgLogic.Services.Networking;
-using UntitledRpgLogic.WorldGen;
 using Random = UntitledRpgLogic.Extensions.Common.Random;
 
 namespace UntitledRpgLogic.Services;
@@ -57,10 +56,6 @@ public static class ServiceCollectionExtensions
 	public static IServiceCollection AddRpgServerServices(this IServiceCollection services)
 	{
 		services.AddRpgCoreDomainServices();
-
-		// World Gen Services
-		services.AddSingleton<IChunkGeneratorService, ChunkGeneratorService>();
-		services.AddSingleton<IWorldGenContextProvider, WorldGenContextProvider>();
 
 		// Server Application / Persistence Coordinators (Require IUnitOfWork & IEntityRepository)
 		services.AddScoped<IItemCatalogService, ItemCatalogService>();
