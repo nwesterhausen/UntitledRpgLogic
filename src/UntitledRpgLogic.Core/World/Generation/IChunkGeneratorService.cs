@@ -1,4 +1,4 @@
-namespace UntitledRpgLogic.Core.World;
+namespace UntitledRpgLogic.Core.World.Generation;
 
 /// <summary>
 ///     Pure domain service synthesizing individual world chunks from macro simulation context.

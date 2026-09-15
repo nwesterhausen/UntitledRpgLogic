@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace UntitledRpgLogic.Core.World;
+namespace UntitledRpgLogic.Core.World.Generation;
 
 /// <summary>
 /// </summary>

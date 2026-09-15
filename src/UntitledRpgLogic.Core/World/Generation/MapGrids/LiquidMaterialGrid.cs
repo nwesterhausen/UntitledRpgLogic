@@ -1,9 +1,9 @@
-namespace UntitledRpgLogic.Core.World;
+namespace UntitledRpgLogic.Core.World.Generation.MapGrids;
 
 /// <summary>
 ///     Represents the procedural or sampled bedrock elevation grid across a 2D map coordinate space.
 /// </summary>
-public sealed class TerrainLiquidMaterialMap : TerrainGrid2D<Ulid?>
+public sealed class TerrainLiquidMaterialMap : NoiseGrid2D<Ulid?>
 {
 	/// <summary>
 	///     Initializes a new instance of the <see cref="TerrainLiquidMaterialMap" /> class with specified grid dimensions.

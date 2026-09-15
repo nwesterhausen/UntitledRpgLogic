@@ -1,4 +1,4 @@
-namespace UntitledRpgLogic.Core.World;
+namespace UntitledRpgLogic.Core.World.Generation;
 
 /// <summary>
 ///     Provides or generates the macro world simulation context for a given map.

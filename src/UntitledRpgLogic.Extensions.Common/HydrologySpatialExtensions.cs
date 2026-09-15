@@ -1,4 +1,5 @@
 using UntitledRpgLogic.Core.World;
+using UntitledRpgLogic.Core.World.Generation.NoiseMaps;
 
 namespace UntitledRpgLogic.Extensions.Common;
 

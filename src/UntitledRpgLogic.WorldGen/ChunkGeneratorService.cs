@@ -1,5 +1,6 @@
 using UntitledRpgLogic.Core.Environment;
 using UntitledRpgLogic.Core.World;
+using UntitledRpgLogic.Core.World.Generation;
 using UntitledRpgLogic.Extensions.Common;
 
 namespace UntitledRpgLogic.WorldGen;

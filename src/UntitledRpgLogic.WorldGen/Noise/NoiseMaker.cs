@@ -1,4 +1,6 @@
 using UntitledRpgLogic.Core.World;
+using UntitledRpgLogic.Core.World.Generation;
+using UntitledRpgLogic.Core.World.Generation.NoiseMaps;
 
 namespace UntitledRpgLogic.WorldGen.Noise;
 

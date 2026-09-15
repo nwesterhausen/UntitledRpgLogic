@@ -1,9 +1,11 @@
-namespace UntitledRpgLogic.Core.World;
+using UntitledRpgLogic.Core.World.Generation.NoiseMaps;
+
+namespace UntitledRpgLogic.Core.World.Generation.MapGrids;
 
 /// <summary>
 ///     Represents the mid-scale climate simulation layers (temperature, rainfall, and derived biomes) across 2D map space.
 /// </summary>
-public sealed class TerrainClimate : TerrainGridDimensions
+public sealed class TerrainClimate : NoiseGridDimensions
 {
 	private readonly TerrainBiomeMap biomeMap;
 	private readonly TerrainRainfallMap rainfallMap;

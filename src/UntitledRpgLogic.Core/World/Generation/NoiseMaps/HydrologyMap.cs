@@ -1,9 +1,11 @@
-namespace UntitledRpgLogic.Core.World;
+using UntitledRpgLogic.Core.World.Generation.MapGrids;
+
+namespace UntitledRpgLogic.Core.World.Generation.NoiseMaps;
 
 /// <summary>
 ///     Tracks surface liquid columns, liquid composition, and river presence across a 2D map coordinate space.
 /// </summary>
-public sealed class TerrainHydrology : TerrainGridDimensions
+public sealed class TerrainHydrology : NoiseGridDimensions
 {
 	private readonly TerrainLiquidIsRiverMap isRiver;
 	private readonly TerrainLiquidDepthMap liquidDepth;

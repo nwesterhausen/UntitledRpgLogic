@@ -1,9 +1,9 @@
-namespace UntitledRpgLogic.Core.World;
+namespace UntitledRpgLogic.Core.World.Generation.NoiseMaps;
 
 /// <summary>
 ///     Represents the derived ecological biome classification grid across a 2D map space.
 /// </summary>
-public sealed class TerrainBiomeMap : TerrainGrid2D<BiomeType>
+public sealed class TerrainBiomeMap : NoiseGrid2D<BiomeType>
 {
 	/// <summary>
 	///     Initializes a new instance of the <see cref="TerrainBiomeMap" /> class with specified grid dimensions.

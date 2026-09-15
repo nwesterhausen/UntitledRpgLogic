@@ -1,4 +1,7 @@
-namespace UntitledRpgLogic.Core.World;
+using UntitledRpgLogic.Core.World.Generation.MapGrids;
+using UntitledRpgLogic.Core.World.Generation.NoiseMaps;
+
+namespace UntitledRpgLogic.Core.World.Generation;
 
 /// <summary>
 ///     Encapsulates the precomputed macro simulation layers for chunk sampling.

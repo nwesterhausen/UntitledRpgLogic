@@ -1,6 +1,7 @@
 using UntitledRpgLogic.Core.Data;
 using UntitledRpgLogic.Core.Entities;
 using UntitledRpgLogic.Core.World;
+using UntitledRpgLogic.Core.World.Generation;
 using UntitledRpgLogic.Extensions.Common;
 
 namespace UntitledRpgLogic.Services.Coordinators;

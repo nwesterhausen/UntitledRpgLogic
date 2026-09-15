@@ -1,10 +1,10 @@
-namespace UntitledRpgLogic.Core.World;
+namespace UntitledRpgLogic.Core.World.Generation.NoiseMaps;
 
 /// <summary>
 ///     Represents the mid-scale normalized precipitation/rainfall simulation layer (0.0 to 1.0) across a 2D map
 ///     space.
 /// </summary>
-public sealed class TerrainRainfallMap : TerrainGrid2D<float>
+public sealed class TerrainRainfallMap : NoiseGrid2D<float>
 {
 	/// <summary>
 	///     Initializes a new instance of the <see cref="TerrainRainfallMap" /> class with specified grid dimensions.

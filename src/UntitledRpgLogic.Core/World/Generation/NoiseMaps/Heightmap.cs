@@ -1,9 +1,9 @@
-namespace UntitledRpgLogic.Core.World;
+namespace UntitledRpgLogic.Core.World.Generation.NoiseMaps;
 
 /// <summary>
 ///     Represents the procedural or sampled bedrock elevation grid across a 2D map coordinate space.
 /// </summary>
-public sealed class TerrainHeightmap : TerrainGrid2D<short>
+public sealed class TerrainHeightmap : NoiseGrid2D<short>
 {
 	/// <summary>
 	///     Initializes a new instance of the <see cref="TerrainHeightmap" /> class with specified grid dimensions.

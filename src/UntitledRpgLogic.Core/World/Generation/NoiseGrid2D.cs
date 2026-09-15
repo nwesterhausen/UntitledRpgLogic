@@ -1,10 +1,10 @@
-namespace UntitledRpgLogic.Core.World;
+namespace UntitledRpgLogic.Core.World.Generation;
 
 /// <summary>
 ///     Abstract base container representing a 2D scalar or typed simulation grid backed by a flattened 1D array.
 /// </summary>
 /// <typeparam name="T">The primitive cell element type.</typeparam>
-public abstract class TerrainGrid2D<T> : TerrainGridDimensions
+public abstract class NoiseGrid2D<T> : NoiseGridDimensions
 {
 	/// <summary>
 	///     The 1D array holding all the cells in this grid.
@@ -12,18 +12,18 @@ public abstract class TerrainGrid2D<T> : TerrainGridDimensions
 	private readonly T[] cells;
 
 	/// <summary>
-	///     Initializes a new default instance of the <see cref="TerrainGrid2D{T}" /> class with empty cells.
+	///     Initializes a new default instance of the <see cref="NoiseGrid2D{T}" /> class with empty cells.
 	/// </summary>
 	/// <param name="widthTiles">The total width of the grid in tiles.</param>
 	/// <param name="heightTiles">The total height of the grid in tiles.</param>
 	/// <exception cref="ArgumentOutOfRangeException">
 	///     Thrown if <paramref name="widthTiles" /> or <paramref name="heightTiles" /> is less than or equal to zero.
 	/// </exception>
-	protected TerrainGrid2D(int widthTiles, int heightTiles) : base(widthTiles, heightTiles) =>
+	protected NoiseGrid2D(int widthTiles, int heightTiles) : base(widthTiles, heightTiles) =>
 		this.cells = new T[widthTiles * heightTiles];
 
 	/// <summary>
-	///     Initializes a new instance of the <see cref="TerrainGrid2D{T}" /> class backed by an existing flattened cell array.
+	///     Initializes a new instance of the <see cref="NoiseGrid2D{T}" /> class backed by an existing flattened cell array.
 	/// </summary>
 	/// <param name="widthTiles">The total width of the grid in tiles.</param>
 	/// <param name="heightTiles">The total height of the grid in tiles.</param>
@@ -35,7 +35,7 @@ public abstract class TerrainGrid2D<T> : TerrainGridDimensions
 	/// <exception cref="ArgumentException">
 	///     Thrown if the length of <paramref name="cells" /> does not equal <c>widthTiles * heightTiles</c>.
 	/// </exception>
-	protected TerrainGrid2D(int widthTiles, int heightTiles, T[] cells)
+	protected NoiseGrid2D(int widthTiles, int heightTiles, T[] cells)
 		: base(widthTiles, heightTiles)
 	{
 		ArgumentNullException.ThrowIfNull(cells);

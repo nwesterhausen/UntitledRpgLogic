@@ -1,9 +1,9 @@
-namespace UntitledRpgLogic.Core.World;
+namespace UntitledRpgLogic.Core.World.Generation.NoiseMaps;
 
 /// <summary>
-///     Represents the derived ecological noise classification grid across a 2D map space.
+///     A normal distribution of noise in a 2D grid.
 /// </summary>
-public sealed class NoiseMap : TerrainGrid2D<float>
+public sealed class NoiseMap : NoiseGrid2D<float>
 {
 	/// <summary>
 	///     Initializes a new instance of the <see cref="NoiseMap" /> class with specified grid dimensions.

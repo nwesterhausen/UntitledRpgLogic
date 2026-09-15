@@ -1,11 +1,16 @@
-namespace UntitledRpgLogic.Core.World;
+namespace UntitledRpgLogic.Core.World.Generation;
 
 /// <summary>
 ///     Base container representing 2D grid dimensions and coordinate boundary math without holding cell memory.
 /// </summary>
-public abstract class TerrainGridDimensions
+public abstract class NoiseGridDimensions
 {
-	protected TerrainGridDimensions(int widthTiles, int heightTiles)
+	/// <summary>
+	/// 	Create a new noise grid of specific size.
+	/// </summary>
+	/// <param name="widthTiles">Width of the grid</param>
+	/// <param name="heightTiles">Height of the grid</param>
+	protected NoiseGridDimensions(int widthTiles, int heightTiles)
 	{
 		ArgumentOutOfRangeException.ThrowIfNegativeOrZero(widthTiles);
 		ArgumentOutOfRangeException.ThrowIfNegativeOrZero(heightTiles);

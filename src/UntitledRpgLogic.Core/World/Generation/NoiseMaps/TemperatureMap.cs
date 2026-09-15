@@ -1,9 +1,9 @@
-namespace UntitledRpgLogic.Core.World;
+namespace UntitledRpgLogic.Core.World.Generation.NoiseMaps;
 
 /// <summary>
 ///     Represents the mid-scale ambient temperature simulation layer in degrees Celsius across a 2D map space.
 /// </summary>
-public sealed class TerrainTemperatureMap : TerrainGrid2D<float>
+public sealed class TerrainTemperatureMap : NoiseGrid2D<float>
 {
 	/// <summary>
 	///     Initializes a new instance of the <see cref="TerrainTemperatureMap" /> class with specified grid dimensions.
