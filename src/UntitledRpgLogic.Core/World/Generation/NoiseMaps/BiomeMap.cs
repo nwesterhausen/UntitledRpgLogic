@@ -3,25 +3,25 @@ namespace UntitledRpgLogic.Core.World.Generation.NoiseMaps;
 /// <summary>
 ///     Represents the derived ecological biome classification grid across a 2D map space.
 /// </summary>
-public sealed class TerrainBiomeMap : NoiseGrid2D<BiomeType>
+public sealed class BiomeMap : NoiseGrid2D<BiomeType>
 {
 	/// <summary>
-	///     Initializes a new instance of the <see cref="TerrainBiomeMap" /> class with specified grid dimensions.
+	///     Initializes a new instance of the <see cref="BiomeMap" /> class with specified grid dimensions.
 	/// </summary>
 	/// <param name="widthTiles">The total width of the heightmap in tiles.</param>
 	/// <param name="heightTiles">The total height of the heightmap in tiles.</param>
-	public TerrainBiomeMap(int widthTiles, int heightTiles)
+	public BiomeMap(int widthTiles, int heightTiles)
 		: base(widthTiles, heightTiles)
 	{
 	}
 
 	/// <summary>
-	///     Initializes a new instance of the <see cref="TerrainBiomeMap" /> class using an existing flat materials array.
+	///     Initializes a new instance of the <see cref="BiomeMap" /> class using an existing flat materials array.
 	/// </summary>
 	/// <param name="widthTiles">The total width of the heightmap in tiles.</param>
 	/// <param name="heightTiles">The total height of the heightmap in tiles.</param>
 	/// <param name="biomes">The flattened biome array of length <c>widthTiles * heightTiles</c>.</param>
-	public TerrainBiomeMap(int widthTiles, int heightTiles, BiomeType[] biomes)
+	public BiomeMap(int widthTiles, int heightTiles, BiomeType[] biomes)
 		: base(widthTiles, heightTiles, biomes)
 	{
 	}

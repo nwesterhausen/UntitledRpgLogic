@@ -1,7 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
-using UntitledRpgLogic.Core.Abilities.Effects;
 using UntitledRpgLogic.Core.Common;
 using UntitledRpgLogic.Core.Data;
 
@@ -86,12 +85,12 @@ public record ModifierDefinition : IDbEntity<Ulid>
 	/// <summary>
 	///     Base effects of this modifier.
 	/// </summary>
-	public IReadOnlyCollection<ModificationEffect>? ModificationEffects { get; init; } = [];
+	public IReadOnlyCollection<Modification>? ModificationEffects { get; init; } = [];
 
 	/// <summary>
 	///     Navigation property to the per-stack modification effect.
 	/// </summary>
-	public IReadOnlyCollection<ModificationEffect>? StackEffects { get; init; }
+	public IReadOnlyCollection<Modification>? StackEffects { get; init; }
 
 	/// <summary>
 	///     The unique identifier for the modifier definition.

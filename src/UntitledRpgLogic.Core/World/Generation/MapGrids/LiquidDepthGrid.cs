@@ -3,25 +3,25 @@ namespace UntitledRpgLogic.Core.World.Generation.MapGrids;
 /// <summary>
 ///     Represents the procedural or sampled bedrock elevation grid across a 2D map coordinate space.
 /// </summary>
-public sealed class TerrainLiquidDepthMap : NoiseGrid2D<ushort>
+public sealed class LiquidDepthGrid : NoiseGrid2D<ushort>
 {
 	/// <summary>
-	///     Initializes a new instance of the <see cref="TerrainLiquidDepthMap" /> class with specified grid dimensions.
+	///     Initializes a new instance of the <see cref="LiquidDepthGrid" /> class with specified grid dimensions.
 	/// </summary>
 	/// <param name="widthTiles">The total width of the heightmap in tiles.</param>
 	/// <param name="heightTiles">The total height of the heightmap in tiles.</param>
-	public TerrainLiquidDepthMap(int widthTiles, int heightTiles)
+	public LiquidDepthGrid(int widthTiles, int heightTiles)
 		: base(widthTiles, heightTiles)
 	{
 	}
 
 	/// <summary>
-	///     Initializes a new instance of the <see cref="TerrainLiquidDepthMap" /> class using an existing flat depth array.
+	///     Initializes a new instance of the <see cref="LiquidDepthGrid" /> class using an existing flat depth array.
 	/// </summary>
 	/// <param name="widthTiles">The total width of the heightmap in tiles.</param>
 	/// <param name="heightTiles">The total height of the heightmap in tiles.</param>
 	/// <param name="depths">The flattened liquid depth array of length <c>widthTiles * heightTiles</c>.</param>
-	public TerrainLiquidDepthMap(int widthTiles, int heightTiles, ushort[] depths)
+	public LiquidDepthGrid(int widthTiles, int heightTiles, ushort[] depths)
 		: base(widthTiles, heightTiles, depths)
 	{
 	}

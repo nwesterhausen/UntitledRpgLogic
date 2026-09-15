@@ -23,6 +23,16 @@ public abstract record Effect : IDbEntity<Ulid>
 	}
 
 	/// <summary>
+	///     Initializes with default values and a designated type.
+	/// </summary>
+	[SetsRequiredMembers]
+	protected Effect(EffectType effectType): this()
+	{
+		this.EffectType = effectType;
+		this.Name = new Name($"{nameof(this.EffectType)}-{this.Id.ToString()[..16]})");
+	}
+
+	/// <summary>
 	///     Initializes a new instance of the <see cref="Effect" /> record with a designated name and type.
 	/// </summary>
 	[SetsRequiredMembers]

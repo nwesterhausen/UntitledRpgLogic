@@ -8,11 +8,14 @@ namespace UntitledRpgLogic.Core.Abilities.Effects;
 /// </summary>
 public record BuffEffect : Effect
 {
+
 	/// <summary>
 	///     Initializes default base values.
 	/// </summary>
 	[SetsRequiredMembers]
-	public BuffEffect() => this.EffectType = EffectType.Buff;
+	public BuffEffect() : base(EffectType.Buff)
+	{
+	}
 
 	/// <summary>
 	///     Initializes a new <see cref="Effect" /> with <see cref="EffectType.Buff" />.

@@ -12,7 +12,7 @@ using UntitledRpgLogic.Infrastructure.Data;
 namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
 {
     [DbContext(typeof(RpgDbContext))]
-    [Migration("20260914202218_InitialCreate")]
+    [Migration("20260915203331_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -25,7 +25,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("ModificationEffectModifierDefinition", b =>
+            modelBuilder.Entity("ModificationModifierDefinition", b =>
                 {
                     b.Property<byte[]>("ModificationEffectsId")
                         .HasColumnType("bytea")
@@ -44,7 +44,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                     b.ToTable("modification_base_effects", (string)null);
                 });
 
-            modelBuilder.Entity("ModificationEffectModifierDefinition1", b =>
+            modelBuilder.Entity("ModificationModifierDefinition1", b =>
                 {
                     b.Property<byte[]>("ModifierDefinition1Id")
                         .HasColumnType("bytea")
@@ -160,7 +160,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                     b.UseTphMappingStrategy();
                 });
 
-            modelBuilder.Entity("UntitledRpgLogic.Core.Abilities.Effects.ModificationEffect", b =>
+            modelBuilder.Entity("UntitledRpgLogic.Core.Abilities.Modification", b =>
                 {
                     b.Property<byte[]>("Id")
                         .HasColumnType("bytea")
@@ -199,9 +199,9 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                         .HasColumnName("scaling_factor");
 
                     b.HasKey("Id")
-                        .HasName("pk_modification_effects");
+                        .HasName("pk_modifications");
 
-                    b.ToTable("modification_effects", (string)null);
+                    b.ToTable("modifications", (string)null);
                 });
 
             modelBuilder.Entity("UntitledRpgLogic.Core.Abilities.ModifierDefinition", b =>
@@ -2760,14 +2760,14 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                     b.HasDiscriminator().HasValue(1);
                 });
 
-            modelBuilder.Entity("ModificationEffectModifierDefinition", b =>
+            modelBuilder.Entity("ModificationModifierDefinition", b =>
                 {
-                    b.HasOne("UntitledRpgLogic.Core.Abilities.Effects.ModificationEffect", null)
+                    b.HasOne("UntitledRpgLogic.Core.Abilities.Modification", null)
                         .WithMany()
                         .HasForeignKey("ModificationEffectsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_modification_base_effects_modification_effects_modification");
+                        .HasConstraintName("fk_modification_base_effects_modifications_modification_effect");
 
                     b.HasOne("UntitledRpgLogic.Core.Abilities.ModifierDefinition", null)
                         .WithMany()
@@ -2777,7 +2777,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                         .HasConstraintName("fk_modification_base_effects_modifier_definitions_modifier_def");
                 });
 
-            modelBuilder.Entity("ModificationEffectModifierDefinition1", b =>
+            modelBuilder.Entity("ModificationModifierDefinition1", b =>
                 {
                     b.HasOne("UntitledRpgLogic.Core.Abilities.ModifierDefinition", null)
                         .WithMany()
@@ -2786,12 +2786,12 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                         .IsRequired()
                         .HasConstraintName("fk_modification_stack_effects_modifier_definitions_modifier_de");
 
-                    b.HasOne("UntitledRpgLogic.Core.Abilities.Effects.ModificationEffect", null)
+                    b.HasOne("UntitledRpgLogic.Core.Abilities.Modification", null)
                         .WithMany()
                         .HasForeignKey("StackEffectsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_modification_stack_effects_modification_effects_stack_effec");
+                        .HasConstraintName("fk_modification_stack_effects_modifications_stack_effects_id");
                 });
 
             modelBuilder.Entity("UntitledRpgLogic.Core.Abilities.AbilityDefinition", b =>
@@ -4042,18 +4042,6 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
 
                             b1.Property<int>("HeightTiles");
 
-                            b1.Property<float>("IslandFalloffSteepness");
-
-                            b1.Property<short>("MaxElevation");
-
-                            b1.Property<short>("MinElevation");
-
-                            b1.Property<float>("OceanBorderThickness");
-
-                            b1.Property<short>("SeaLevel");
-
-                            b1.Property<bool>("SurroundWithOcean");
-
                             b1.Property<int>("WidthTiles");
 
                             b1.HasKey("MapDefinitionId");
@@ -4068,7 +4056,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                                 .HasForeignKey("MapDefinitionId")
                                 .HasConstraintName("fk_map_definitions_map_definitions_id");
 
-                            b1.OwnsOne("UntitledRpgLogic.Core.World.ClimateSettings", "Climate", b2 =>
+                            b1.OwnsOne("UntitledRpgLogic.Core.World.Generation.ClimateSettings", "ClimateSettings", b2 =>
                                 {
                                     b2.Property<byte[]>("WorldMapConfigurationMapDefinitionId");
 
@@ -4094,13 +4082,21 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                                         .HasConstraintName("fk_map_definitions_map_definitions_world_map_configuration_map_def");
                                 });
 
-                            b1.OwnsOne("UntitledRpgLogic.Core.World.HeightmapSettings", "Heightmap", b2 =>
+                            b1.OwnsOne("UntitledRpgLogic.Core.World.Generation.HeightmapSettings", "HeightmapSettings", b2 =>
                                 {
                                     b2.Property<byte[]>("WorldMapConfigurationMapDefinitionId");
 
                                     b2.Property<float>("Frequency");
 
+                                    b2.Property<float>("IslandFalloffSteepness");
+
                                     b2.Property<float>("Lacunarity");
+
+                                    b2.Property<short>("MaxElevation");
+
+                                    b2.Property<short>("MinElevation");
+
+                                    b2.Property<float>("OceanBorderThickness");
 
                                     b2.Property<int>("Octaves");
 
@@ -4108,6 +4104,8 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
 
                                     b2.Property<short>("SeaLevel");
 
+                                    b2.Property<bool>("SurroundWithOcean");
+
                                     b2.HasKey("WorldMapConfigurationMapDefinitionId")
                                         .HasName("pk_map_definitions");
 
@@ -4118,13 +4116,19 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                                         .HasConstraintName("fk_map_definitions_map_definitions_world_map_configuration_map_def");
                                 });
 
-                            b1.OwnsOne("UntitledRpgLogic.Core.World.HydrologySettings", "Hydrology", b2 =>
+                            b1.OwnsOne("UntitledRpgLogic.Core.World.Generation.HydrologySettings", "HydrologySettings", b2 =>
                                 {
                                     b2.Property<byte[]>("WorldMapConfigurationMapDefinitionId");
 
                                     b2.Property<int>("BaseRiverDepth");
 
+                                    b2.Property<bool>("FormInlandLakes");
+
                                     b2.Property<int>("MaxDescentSteps");
+
+                                    b2.Property<short>("MaxLakeDepthMeters");
+
+                                    b2.Property<int>("MaxLakeTiles");
 
                                     b2.Property<int>("RaindropCycles");
 
@@ -4132,8 +4136,6 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
 
                                     b2.Property<int>("RiverFluxThreshold");
 
-                                    b2.Property<short>("SeaLevel");
-
                                     b2.HasKey("WorldMapConfigurationMapDefinitionId")
                                         .HasName("pk_map_definitions");
 
@@ -4144,13 +4146,13 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                                         .HasConstraintName("fk_map_definitions_map_definitions_world_map_configuration_map_def");
                                 });
 
-                            b1.Navigation("Climate")
+                            b1.Navigation("ClimateSettings")
                                 .IsRequired();
 
-                            b1.Navigation("Heightmap")
+                            b1.Navigation("HeightmapSettings")
                                 .IsRequired();
 
-                            b1.Navigation("Hydrology")
+                            b1.Navigation("HydrologySettings")
                                 .IsRequired();
                         });
 

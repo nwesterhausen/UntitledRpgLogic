@@ -13,7 +13,7 @@ public record HealEffect : Effect
 	///     Initializes default base values.
 	/// </summary>
 	[SetsRequiredMembers]
-	public HealEffect() => this.EffectType = EffectType.Heal;
+	public HealEffect() : base(EffectType.Heal){}
 
 	/// <summary>
 	///     Initializes a new <see cref="Effect" /> with <see cref="EffectType.Heal" />.

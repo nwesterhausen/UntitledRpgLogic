@@ -22,7 +22,7 @@ public sealed class WorldGenContextProvider : IWorldGenContextProvider
 
 		var worldConfig = new WorldMapConfiguration
 		{
-			WidthTiles = widthTiles, HeightTiles = heightTiles, Heightmap = noiseConfig, Hydrology = hydroConfig
+			WidthTiles = widthTiles, HeightTiles = heightTiles, HeightmapSettings = noiseConfig, HydrologySettings = hydroConfig
 		};
 
 		return this.contexts.GetOrAdd(map.Id, _ =>

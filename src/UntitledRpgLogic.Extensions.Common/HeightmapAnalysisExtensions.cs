@@ -18,7 +18,7 @@ public static class HeightmapAnalysisExtensions
 	/// <param name="heightmap">The terrain elevation heightmap.</param>
 	/// <param name="seaLevel">The vertical datum defining sea level in meters.</param>
 	public static LandmassStatistics CalculateLandmass(
-		this TerrainHeightmap heightmap,
+		this Heightmap heightmap,
 		short seaLevel = 0)
 	{
 		ArgumentNullException.ThrowIfNull(heightmap);

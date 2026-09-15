@@ -3,26 +3,26 @@ namespace UntitledRpgLogic.Core.World.Generation.NoiseMaps;
 /// <summary>
 ///     Represents the mid-scale ambient temperature simulation layer in degrees Celsius across a 2D map space.
 /// </summary>
-public sealed class TerrainTemperatureMap : NoiseGrid2D<float>
+public sealed class TemperatureMap : NoiseGrid2D<float>
 {
 	/// <summary>
-	///     Initializes a new instance of the <see cref="TerrainTemperatureMap" /> class with specified grid dimensions.
+	///     Initializes a new instance of the <see cref="TemperatureMap" /> class with specified grid dimensions.
 	/// </summary>
 	/// <param name="widthTiles">The total width of the heightmap in tiles.</param>
 	/// <param name="heightTiles">The total height of the heightmap in tiles.</param>
-	public TerrainTemperatureMap(int widthTiles, int heightTiles)
+	public TemperatureMap(int widthTiles, int heightTiles)
 		: base(widthTiles, heightTiles)
 	{
 	}
 
 	/// <summary>
-	///     Initializes a new instance of the <see cref="TerrainTemperatureMap" /> class using an existing flat materials
+	///     Initializes a new instance of the <see cref="TemperatureMap" /> class using an existing flat materials
 	///     array.
 	/// </summary>
 	/// <param name="widthTiles">The total width of the heightmap in tiles.</param>
 	/// <param name="heightTiles">The total height of the heightmap in tiles.</param>
 	/// <param name="temperatures">The flattened temperature array of length <c>widthTiles * heightTiles</c>.</param>
-	public TerrainTemperatureMap(int widthTiles, int heightTiles, float[] temperatures)
+	public TemperatureMap(int widthTiles, int heightTiles, float[] temperatures)
 		: base(widthTiles, heightTiles, temperatures)
 	{
 	}

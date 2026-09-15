@@ -3,20 +3,20 @@ namespace UntitledRpgLogic.Core.World.Generation.MapGrids;
 /// <summary>
 ///     Represents the procedural or sampled bedrock elevation grid across a 2D map coordinate space.
 /// </summary>
-public sealed class TerrainLiquidIsRiverMap : NoiseGrid2D<bool>
+public sealed class IsRiverGrid : NoiseGrid2D<bool>
 {
 	/// <summary>
-	///     Initializes a new instance of the <see cref="TerrainLiquidIsRiverMap" /> class with specified grid dimensions.
+	///     Initializes a new instance of the <see cref="IsRiverGrid" /> class with specified grid dimensions.
 	/// </summary>
 	/// <param name="widthTiles">The total width of the heightmap in tiles.</param>
 	/// <param name="heightTiles">The total height of the heightmap in tiles.</param>
-	public TerrainLiquidIsRiverMap(int widthTiles, int heightTiles)
+	public IsRiverGrid(int widthTiles, int heightTiles)
 		: base(widthTiles, heightTiles)
 	{
 	}
 
 	/// <summary>
-	///     Initializes a new instance of the <see cref="TerrainLiquidIsRiverMap" /> class using an existing flat depth array.
+	///     Initializes a new instance of the <see cref="IsRiverGrid" /> class using an existing flat depth array.
 	/// </summary>
 	/// <param name="widthTiles">The total width of the heightmap in tiles.</param>
 	/// <param name="heightTiles">The total height of the heightmap in tiles.</param>
@@ -24,7 +24,7 @@ public sealed class TerrainLiquidIsRiverMap : NoiseGrid2D<bool>
 	///     The flattened boolean array indicating if the tile is a river of length
 	///     <c>widthTiles * heightTiles</c>.
 	/// </param>
-	public TerrainLiquidIsRiverMap(int widthTiles, int heightTiles, bool[] riverStatuses)
+	public IsRiverGrid(int widthTiles, int heightTiles, bool[] riverStatuses)
 		: base(widthTiles, heightTiles, riverStatuses)
 	{
 	}

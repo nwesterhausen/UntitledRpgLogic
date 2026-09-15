@@ -4,25 +4,25 @@ namespace UntitledRpgLogic.Core.World.Generation.NoiseMaps;
 ///     Represents the mid-scale normalized precipitation/rainfall simulation layer (0.0 to 1.0) across a 2D map
 ///     space.
 /// </summary>
-public sealed class TerrainRainfallMap : NoiseGrid2D<float>
+public sealed class RainfallMap : NoiseGrid2D<float>
 {
 	/// <summary>
-	///     Initializes a new instance of the <see cref="TerrainRainfallMap" /> class with specified grid dimensions.
+	///     Initializes a new instance of the <see cref="RainfallMap" /> class with specified grid dimensions.
 	/// </summary>
 	/// <param name="widthTiles">The total width of the heightmap in tiles.</param>
 	/// <param name="heightTiles">The total height of the heightmap in tiles.</param>
-	public TerrainRainfallMap(int widthTiles, int heightTiles)
+	public RainfallMap(int widthTiles, int heightTiles)
 		: base(widthTiles, heightTiles)
 	{
 	}
 
 	/// <summary>
-	///     Initializes a new instance of the <see cref="TerrainRainfallMap" /> class using an existing flat materials array.
+	///     Initializes a new instance of the <see cref="RainfallMap" /> class using an existing flat materials array.
 	/// </summary>
 	/// <param name="widthTiles">The total width of the heightmap in tiles.</param>
 	/// <param name="heightTiles">The total height of the heightmap in tiles.</param>
 	/// <param name="rainfall">The flattened rainfall array of length <c>widthTiles * heightTiles</c>.</param>
-	public TerrainRainfallMap(int widthTiles, int heightTiles, float[] rainfall)
+	public RainfallMap(int widthTiles, int heightTiles, float[] rainfall)
 		: base(widthTiles, heightTiles, rainfall)
 	{
 	}

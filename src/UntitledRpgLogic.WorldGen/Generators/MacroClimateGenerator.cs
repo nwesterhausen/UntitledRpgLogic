@@ -14,9 +14,9 @@ public static class MacroClimateGenerator
 	/// <summary>
 	///     Generates temperature, rainfall, and derived biomes across the map based on heightmap and hydrology inputs.
 	/// </summary>
-	public static TerrainClimate Generate(
-		TerrainHeightmap heightmap,
-		TerrainHydrology hydrology,
+	public static ClimateGrid Generate(
+		Heightmap heightmap,
+		HydrologyMap hydrology,
 		uint seed,
 		WorldMapConfiguration worldConfig)
 	{
@@ -24,7 +24,7 @@ public static class MacroClimateGenerator
 		ArgumentNullException.ThrowIfNull(hydrology);
 		ArgumentNullException.ThrowIfNull(worldConfig);
 
-		var cfg = worldConfig.Climate ?? new ClimateSettings();
+		var cfg = worldConfig.ClimateSettings ?? new ClimateSettings();
 		var width = heightmap.WidthTiles;
 		var height = heightmap.HeightTiles;
 
@@ -54,7 +54,7 @@ public static class MacroClimateGenerator
 				TargetMax = 1.0f
 			}, width, height);
 
-		var climate = new TerrainClimate(width, height);
+		var climate = new ClimateGrid(width, height);
 		var halfHeight = height / 2.0f;
 		var warpSeed = seed ^ 0x517cc1b7u;
 
@@ -87,7 +87,7 @@ public static class MacroClimateGenerator
 
 				// --- 3. PRECIPITATION & MARITIME BUFFERS ---
 				// Coastlines and ocean air supply humidity buffers
-				var isOcean = liquidDepth > 0 && elevation < worldConfig.Heightmap.SeaLevel;
+				var isOcean = liquidDepth > 0 && elevation < worldConfig.HeightmapSettings.SeaLevel;
 				var riverBonus = hydrology.IsRiver(x, y) ? 0.25f : 0.0f;
 				var marineBonus = isOcean ? 0.15f : 0.0f;
 

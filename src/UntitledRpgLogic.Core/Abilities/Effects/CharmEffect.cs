@@ -12,7 +12,7 @@ public record CharmEffect : Effect
 	///     Initializes default base values.
 	/// </summary>
 	[SetsRequiredMembers]
-	public CharmEffect() => this.EffectType = EffectType.Charm;
+	public CharmEffect() : base(EffectType.Charm){}
 
 	/// <summary>
 	///     Initializes a new <see cref="Effect" /> with <see cref="EffectType.Charm" />.

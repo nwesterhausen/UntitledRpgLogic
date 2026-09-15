@@ -26,8 +26,8 @@ public static class TemplatePlacementService
 	/// <param name="criteria">The terrain and moisture constraints required by the stamp.</param>
 	/// <returns>A positive fitness score where higher values represent flatter/better matches, or 0.0f if rejected.</returns>
 	public static float EvaluateCandidateScore(
-		TerrainHeightmap heightmap,
-		TerrainHydrology hydrology,
+		Heightmap heightmap,
+		HydrologyMap hydrology,
 		int targetChunkX,
 		int targetChunkY,
 		int templateWidthChunks,

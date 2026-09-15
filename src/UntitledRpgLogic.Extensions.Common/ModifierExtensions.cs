@@ -40,7 +40,7 @@ public static class ModifierExtensions
 	/// <param name="modifiers">Collection of modification effects</param>
 	/// <returns>String for use in the UI</returns>
 	/// <exception cref="ArgumentNullException"></exception>
-	public static string ToDisplay(this IEnumerable<ModificationEffect> modifiers)
+	public static string ToDisplay(this IEnumerable<Modification> modifiers)
 	{
 		ArgumentNullException.ThrowIfNull(modifiers);
 
@@ -58,7 +58,7 @@ public static class ModifierExtensions
 	/// </summary>
 	/// <param name="effect"></param>
 	/// <returns></returns>
-	public static string ToDisplay(this ModificationEffect effect)
+	public static string ToDisplay(this Modification effect)
 	{
 		ArgumentNullException.ThrowIfNull(effect);
 		var sign = effect.IsPositive ? "+" : "-";

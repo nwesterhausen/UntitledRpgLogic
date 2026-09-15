@@ -20,15 +20,15 @@ public record WorldMapConfiguration
 	/// <summary>
 	///     Specific elevation noise frequencies, octaves, and vertical limits.
 	/// </summary>
-	public HeightmapSettings Heightmap { get; init; } = new();
+	public HeightmapSettings HeightmapSettings { get; init; } = new();
 
 	/// <summary>
 	///     Precipitation cycles, river carving flux, and sea fill rules.
 	/// </summary>
-	public HydrologySettings Hydrology { get; init; } = new();
+	public HydrologySettings HydrologySettings { get; init; } = new();
 
 	/// <summary>
 	///     Latitudinal temperature curves, lapse rates, and moisture distribution.
 	/// </summary>
-	public ClimateSettings Climate { get; init; } = new();
+	public ClimateSettings ClimateSettings { get; init; } = new();
 }

@@ -3,26 +3,26 @@ namespace UntitledRpgLogic.Core.World.Generation.MapGrids;
 /// <summary>
 ///     Represents the procedural or sampled bedrock elevation grid across a 2D map coordinate space.
 /// </summary>
-public sealed class TerrainLiquidMaterialMap : NoiseGrid2D<Ulid?>
+public sealed class LiquidMaterialGrid : NoiseGrid2D<Ulid?>
 {
 	/// <summary>
-	///     Initializes a new instance of the <see cref="TerrainLiquidMaterialMap" /> class with specified grid dimensions.
+	///     Initializes a new instance of the <see cref="LiquidMaterialGrid" /> class with specified grid dimensions.
 	/// </summary>
 	/// <param name="widthTiles">The total width of the heightmap in tiles.</param>
 	/// <param name="heightTiles">The total height of the heightmap in tiles.</param>
-	public TerrainLiquidMaterialMap(int widthTiles, int heightTiles)
+	public LiquidMaterialGrid(int widthTiles, int heightTiles)
 		: base(widthTiles, heightTiles)
 	{
 	}
 
 	/// <summary>
-	///     Initializes a new instance of the <see cref="TerrainLiquidMaterialMap" /> class using an existing flat materials
+	///     Initializes a new instance of the <see cref="LiquidMaterialGrid" /> class using an existing flat materials
 	///     array.
 	/// </summary>
 	/// <param name="widthTiles">The total width of the heightmap in tiles.</param>
 	/// <param name="heightTiles">The total height of the heightmap in tiles.</param>
 	/// <param name="materials">The flattened material ID array of length <c>widthTiles * heightTiles</c>.</param>
-	public TerrainLiquidMaterialMap(int widthTiles, int heightTiles, Ulid?[] materials)
+	public LiquidMaterialGrid(int widthTiles, int heightTiles, Ulid?[] materials)
 		: base(widthTiles, heightTiles, materials)
 	{
 	}

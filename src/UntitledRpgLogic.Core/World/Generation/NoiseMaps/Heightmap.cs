@@ -3,25 +3,25 @@ namespace UntitledRpgLogic.Core.World.Generation.NoiseMaps;
 /// <summary>
 ///     Represents the procedural or sampled bedrock elevation grid across a 2D map coordinate space.
 /// </summary>
-public sealed class TerrainHeightmap : NoiseGrid2D<short>
+public sealed class Heightmap : NoiseGrid2D<short>
 {
 	/// <summary>
-	///     Initializes a new instance of the <see cref="TerrainHeightmap" /> class with specified grid dimensions.
+	///     Initializes a new instance of the <see cref="Heightmap" /> class with specified grid dimensions.
 	/// </summary>
 	/// <param name="widthTiles">The total width of the heightmap in tiles.</param>
 	/// <param name="heightTiles">The total height of the heightmap in tiles.</param>
-	public TerrainHeightmap(int widthTiles, int heightTiles)
+	public Heightmap(int widthTiles, int heightTiles)
 		: base(widthTiles, heightTiles)
 	{
 	}
 
 	/// <summary>
-	///     Initializes a new instance of the <see cref="TerrainHeightmap" /> class using an existing flat elevations array.
+	///     Initializes a new instance of the <see cref="Heightmap" /> class using an existing flat elevations array.
 	/// </summary>
 	/// <param name="widthTiles">The total width of the heightmap in tiles.</param>
 	/// <param name="heightTiles">The total height of the heightmap in tiles.</param>
 	/// <param name="elevations">The flattened bedrock elevations array of length <c>widthTiles * heightTiles</c>.</param>
-	public TerrainHeightmap(int widthTiles, int heightTiles, short[] elevations)
+	public Heightmap(int widthTiles, int heightTiles, short[] elevations)
 		: base(widthTiles, heightTiles, elevations)
 	{
 	}

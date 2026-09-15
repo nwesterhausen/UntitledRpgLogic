@@ -11,9 +11,9 @@ namespace UntitledRpgLogic.WorldGen.Generators;
 public static class MacroHeightmapGenerator
 {
 	/// <summary>
-	///     Populates a <see cref="TerrainHeightmap" /> with bedrock elevations, applying an ocean falloff mask if requested.
+	///     Populates a <see cref="Heightmap" /> with bedrock elevations, applying an ocean falloff mask if requested.
 	/// </summary>
-	public static TerrainHeightmap Generate(
+	public static Heightmap Generate(
 		uint seed,
 		WorldMapConfiguration worldConfig)
 	{
@@ -25,25 +25,25 @@ public static class MacroHeightmapGenerator
 		{
 			Seed = seed,
 			Scale = 48f,
-			Octaves = worldConfig.Heightmap.Octaves,
-			Lacunarity = worldConfig.Heightmap.Lacunarity,
-			Persistence = worldConfig.Heightmap.Persistence
+			Octaves = worldConfig.HeightmapSettings.Octaves,
+			Lacunarity = worldConfig.HeightmapSettings.Lacunarity,
+			Persistence = worldConfig.HeightmapSettings.Persistence
 		};
 
 		var rawNoise = NoiseMaker.GenerateNoiseArray(noiseSettings, worldConfig.WidthTiles, worldConfig.HeightTiles);
-		var heightmap = new TerrainHeightmap(worldConfig.WidthTiles, worldConfig.HeightTiles);
+		var heightmap = new Heightmap(worldConfig.WidthTiles, worldConfig.HeightTiles);
 		var height = worldConfig.HeightTiles;
 		var width = worldConfig.WidthTiles;
 
 		var halfW = width / 2.0f;
 		var halfH = height / 2.0f;
-		var elevationSpan = worldConfig.Heightmap.MaxElevation - worldConfig.Heightmap.MinElevation;
+		var elevationSpan = worldConfig.HeightmapSettings.MaxElevation - worldConfig.HeightmapSettings.MinElevation;
 
 		var modifiedSeed1 = new NoiseSettings { Seed = seed ^ 0x1030fedu };
 		var modifiedSeed2 = new NoiseSettings { Seed = seed ^ 0xab20cd44u };
 
 		// Secondary buffer width: 25% of the configured ocean border thickness
-		var secondaryBorderThickness = Math.Clamp(worldConfig.Heightmap.OceanBorderThickness * 0.25f, 0.03f, 0.10f);
+		var secondaryBorderThickness = Math.Clamp(worldConfig.HeightmapSettings.OceanBorderThickness * 0.25f, 0.03f, 0.10f);
 		var secondaryBorderStart = 1.0f - secondaryBorderThickness;
 
 		for (var y = 0; y < height; y++)
@@ -57,7 +57,7 @@ public static class MacroHeightmapGenerator
 				var dx = (x - halfW) / halfW;
 				var normalized = rawNoise[rowOffset + x]; // Must be [0.0, 1.0]
 
-				if (worldConfig.Heightmap.SurroundWithOcean)
+				if (worldConfig.HeightmapSettings.SurroundWithOcean)
 				{
 					// Sample low-frequency noise to distort the distance field
 					var warpX = NoiseMaker.GenerateNoise(modifiedSeed1, x * 0.015f, y * 0.015f);
@@ -76,7 +76,7 @@ public static class MacroHeightmapGenerator
 					if (dist > InnerLandRadius)
 					{
 						var t = (dist - InnerLandRadius) / (1.15f - InnerLandRadius);
-						falloff = MathF.Pow(Math.Clamp(t, 0.0f, 1.0f), worldConfig.Heightmap.IslandFalloffSteepness);
+						falloff = MathF.Pow(Math.Clamp(t, 0.0f, 1.0f), worldConfig.HeightmapSettings.IslandFalloffSteepness);
 						// Subtracting the falloff pulls elevations toward 0.0 (< 0.09 is ocean)
 						normalized = Math.Clamp(normalized - falloff, 0.0f, 1.0f);
 					}
@@ -124,7 +124,7 @@ public static class MacroHeightmapGenerator
 				}
 
 				var targetElev =
-					(short)MathF.Round(worldConfig.Heightmap.MinElevation + (shapedElevation * elevationSpan));
+					(short)MathF.Round(worldConfig.HeightmapSettings.MinElevation + (shapedElevation * elevationSpan));
 
 
 				heightmap.SetElevation(x, y, (short)Math.Clamp(targetElev, short.MinValue, short.MaxValue));

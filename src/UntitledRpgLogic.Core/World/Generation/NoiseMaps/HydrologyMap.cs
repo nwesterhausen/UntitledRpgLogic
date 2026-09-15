@@ -5,33 +5,33 @@ namespace UntitledRpgLogic.Core.World.Generation.NoiseMaps;
 /// <summary>
 ///     Tracks surface liquid columns, liquid composition, and river presence across a 2D map coordinate space.
 /// </summary>
-public sealed class TerrainHydrology : NoiseGridDimensions
+public sealed class HydrologyMap : NoiseGridDimensions
 {
-	private readonly TerrainLiquidIsRiverMap isRiver;
-	private readonly TerrainLiquidDepthMap liquidDepth;
-	private readonly TerrainLiquidMaterialMap liquidMaterial;
+	private readonly IsRiverGrid isRiver;
+	private readonly LiquidDepthGrid liquidDepth;
+	private readonly LiquidMaterialGrid liquidMaterial;
 
 	/// <summary>
-	///     Initializes a new instance of the <see cref="TerrainHydrology" /> class with specified grid dimensions.
+	///     Initializes a new instance of the <see cref="HydrologyMap" /> class with specified grid dimensions.
 	/// </summary>
 	/// <param name="widthTiles">The total width of the hydrological grid in tiles.</param>
 	/// <param name="heightTiles">The total height of the hydrological grid in tiles.</param>
-	public TerrainHydrology(int widthTiles, int heightTiles) : base(widthTiles, heightTiles)
+	public HydrologyMap(int widthTiles, int heightTiles) : base(widthTiles, heightTiles)
 	{
-		this.liquidDepth = new TerrainLiquidDepthMap(widthTiles, heightTiles);
-		this.liquidMaterial = new TerrainLiquidMaterialMap(widthTiles, heightTiles);
-		this.isRiver = new TerrainLiquidIsRiverMap(widthTiles, heightTiles);
+		this.liquidDepth = new LiquidDepthGrid(widthTiles, heightTiles);
+		this.liquidMaterial = new LiquidMaterialGrid(widthTiles, heightTiles);
+		this.isRiver = new IsRiverGrid(widthTiles, heightTiles);
 	}
 
 	/// <summary>
-	///     Initializes a new instance of the <see cref="TerrainHydrology" /> class using existing flat arrays.
+	///     Initializes a new instance of the <see cref="HydrologyMap" /> class using existing flat arrays.
 	/// </summary>
 	/// <param name="widthTiles">The total width of the hydrological grid in tiles.</param>
 	/// <param name="heightTiles">The total height of the hydrological grid in tiles.</param>
 	/// <param name="liquidDepth">The flattened surface liquid depth array of length <c>widthTiles * heightTiles</c>.</param>
 	/// <param name="liquidMaterial">The flattened liquid material ULID array of length <c>widthTiles * heightTiles</c>.</param>
 	/// <param name="isRiver">The flattened river flag array of length <c>widthTiles * heightTiles</c>.</param>
-	public TerrainHydrology(
+	public HydrologyMap(
 		int widthTiles,
 		int heightTiles,
 		ushort[] liquidDepth,
@@ -49,9 +49,9 @@ public sealed class TerrainHydrology : NoiseGridDimensions
 			throw new ArgumentException($"All input arrays must have length equal to width * height ({expectedSize}).");
 		}
 
-		this.liquidDepth = new TerrainLiquidDepthMap(widthTiles, heightTiles, liquidDepth);
-		this.liquidMaterial = new TerrainLiquidMaterialMap(widthTiles, heightTiles, liquidMaterial);
-		this.isRiver = new TerrainLiquidIsRiverMap(widthTiles, heightTiles);
+		this.liquidDepth = new LiquidDepthGrid(widthTiles, heightTiles, liquidDepth);
+		this.liquidMaterial = new LiquidMaterialGrid(widthTiles, heightTiles, liquidMaterial);
+		this.isRiver = new IsRiverGrid(widthTiles, heightTiles);
 	}
 
 	/// <summary>

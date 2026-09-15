@@ -7,7 +7,7 @@ namespace UntitledRpgLogic.Core.World.Generation;
 public interface IHeightmapGenerator
 {
 	/// <summary>
-	///     Populates a <see cref="TerrainHeightmap" /> with bedrock elevations, applying an ocean falloff mask if requested.
+	///     Populates a <see cref="Heightmap" /> with bedrock elevations, applying an ocean falloff mask if requested.
 	/// </summary>
-	public TerrainHeightmap Generate();
+	public Heightmap Generate();
 }

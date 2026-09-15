@@ -5,23 +5,23 @@ namespace UntitledRpgLogic.Core.World.Generation.MapGrids;
 /// <summary>
 ///     Represents the mid-scale climate simulation layers (temperature, rainfall, and derived biomes) across 2D map space.
 /// </summary>
-public sealed class TerrainClimate : NoiseGridDimensions
+public sealed class ClimateGrid : NoiseGridDimensions
 {
-	private readonly TerrainBiomeMap biomeMap;
-	private readonly TerrainRainfallMap rainfallMap;
-	private readonly TerrainTemperatureMap temperatureMap;
+	private readonly BiomeMap biomeMap;
+	private readonly RainfallMap rainfallMap;
+	private readonly TemperatureMap temperatureMap;
 
 	/// <summary>
-	///     Initializes a new instance of the <see cref="TerrainClimate" /> class with the specified grid dimensions.
+	///     Initializes a new instance of the <see cref="ClimateGrid" /> class with the specified grid dimensions.
 	/// </summary>
 	/// <param name="widthTiles">The total width of the climate grid in tiles.</param>
 	/// <param name="heightTiles">The total height of the climate grid in tiles.</param>
-	public TerrainClimate(int widthTiles, int heightTiles)
+	public ClimateGrid(int widthTiles, int heightTiles)
 		: base(widthTiles, heightTiles)
 	{
-		this.temperatureMap = new TerrainTemperatureMap(widthTiles, heightTiles);
-		this.rainfallMap = new TerrainRainfallMap(widthTiles, heightTiles);
-		this.biomeMap = new TerrainBiomeMap(widthTiles, heightTiles);
+		this.temperatureMap = new TemperatureMap(widthTiles, heightTiles);
+		this.rainfallMap = new RainfallMap(widthTiles, heightTiles);
+		this.biomeMap = new BiomeMap(widthTiles, heightTiles);
 	}
 
 	/// <summary>

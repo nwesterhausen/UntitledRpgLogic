@@ -12,7 +12,7 @@ public record EnchantEffect : Effect
 	///     Initializes default base values.
 	/// </summary>
 	[SetsRequiredMembers]
-	public EnchantEffect() => this.EffectType = EffectType.Enchant;
+	public EnchantEffect() : base(EffectType.Elemental){}
 
 	/// <summary>
 	///     Initializes a new <see cref="Effect" /> with <see cref="EffectType.Enchant" />.

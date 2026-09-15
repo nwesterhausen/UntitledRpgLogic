@@ -126,7 +126,7 @@ public class RpgDbContext(DbContextOptions<RpgDbContext> options) : DbContext(op
 	/// <summary>
 	///     Table for modification effects, which define the specific effects of modifiers.
 	/// </summary>
-	public DbSet<ModificationEffect> ModificationEffects { get; set; } = null!;
+	public DbSet<Modification> ModificationEffects { get; set; } = null!;
 
 	/// <summary>
 	///     Table for skill definitions, which define the skills that entities can possess.

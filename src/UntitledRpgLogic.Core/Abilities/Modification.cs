@@ -2,19 +2,19 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using UntitledRpgLogic.Core.Data;
 
-namespace UntitledRpgLogic.Core.Abilities.Effects;
+namespace UntitledRpgLogic.Core.Abilities;
 
 /// <summary>
 ///     Database catalog model defining numerical stat adjustments (buffs or debuffs)
 ///     applied by a modifier template.
 /// </summary>
-[Table("modification_effects")]
-public record ModificationEffect : IDbEntity<Ulid>
+[Table("modifications")]
+public record Modification : IDbEntity<Ulid>
 {
 	/// <summary>
-	///     Initializes a new instance of the <see cref="ModificationEffect" /> record for EF Core.
+	///     Initializes a new instance of the <see cref="Modification" /> record for EF Core.
 	/// </summary>
-	public ModificationEffect() => this.Id = Ulid.NewUlid();
+	public Modification() => this.Id = Ulid.NewUlid();
 
 	/// <summary>
 	///     A flat amount that affects the stat.

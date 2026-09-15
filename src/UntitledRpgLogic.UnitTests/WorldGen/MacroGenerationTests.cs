@@ -24,7 +24,7 @@ public sealed class MacroGenerationTests
 	public void MacroHeightmapGenerator_ValidDimensions_GeneratesWithinSpecifiedBounds()
 	{
 		var settings = new HeightmapSettings { MinElevation = -500, MaxElevation = 1500 };
-		var mapConfig = new WorldMapConfiguration { HeightTiles = 64, WidthTiles = 64, Heightmap = settings };
+		var mapConfig = new WorldMapConfiguration { HeightTiles = 64, WidthTiles = 64, HeightmapSettings = settings };
 
 		var map = MacroHeightmapGenerator.Generate(12345u, mapConfig);
 
@@ -36,8 +36,8 @@ public sealed class MacroGenerationTests
 			for (var x = 0; x < map.WidthTiles; x++)
 			{
 				var elev = map.GetElevation(x, y);
-				Assert.IsGreaterThanOrEqualTo(mapConfig.Heightmap.MinElevation, elev);
-				Assert.IsLessThanOrEqualTo(mapConfig.Heightmap.MaxElevation, elev);
+				Assert.IsGreaterThanOrEqualTo(mapConfig.HeightmapSettings.MinElevation, elev);
+				Assert.IsLessThanOrEqualTo(mapConfig.HeightmapSettings.MaxElevation, elev);
 			}
 		}
 	}
@@ -49,7 +49,7 @@ public sealed class MacroGenerationTests
 		{
 			HeightTiles = 32,
 			WidthTiles = 32,
-			Heightmap = new HeightmapSettings { SeaLevel = 0, MinElevation = -1000, MaxElevation = 1000 }
+			HeightmapSettings = new HeightmapSettings { SeaLevel = 0, MinElevation = -1000, MaxElevation = 1000 }
 		};
 		var heightmap = MacroHeightmapGenerator.Generate(777u, mapConfig);
 
@@ -73,7 +73,7 @@ public sealed class MacroGenerationTests
 	[TestMethod]
 	public void FloodFillConnectedOceans_IsolatedInlandBasin_RemainsDry()
 	{
-		var heightmap = new TerrainHeightmap(5, 5);
+		var heightmap = new Heightmap(5, 5);
 
 		// Create a 5x5 bowl: edges are at elevation 100m, center (2,2) is at -500m
 		for (var y = 0; y < 5; y++)
@@ -92,8 +92,8 @@ public sealed class MacroGenerationTests
 			42u,
 			waterId, new WorldMapConfiguration
 			{
-				Heightmap = new HeightmapSettings { SeaLevel = 0 },
-				Hydrology =
+				HeightmapSettings = new HeightmapSettings { SeaLevel = 0 },
+				HydrologySettings =
 					new HydrologySettings { RaindropCycles = 0 }
 			});
 
