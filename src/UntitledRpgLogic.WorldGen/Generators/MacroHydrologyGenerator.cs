@@ -1,4 +1,5 @@
 using UntitledRpgLogic.Core.World;
+using UntitledRpgLogic.WorldGen.Noise;
 using Random = UntitledRpgLogic.Extensions.Common.Random;
 
 namespace UntitledRpgLogic.WorldGen.Generators;
@@ -28,43 +29,56 @@ public static class MacroHydrologyGenerator
 		(-1, 1) // South-West
 	];
 
-	public static TerrainHydrology Generate(TerrainHeightmap heightmap,
+	public static TerrainHydrology Generate(
+		TerrainHeightmap heightmap,
 		uint seed,
-		WorldMapConfiguration settings,
-		Ulid waterMaterialId)
+		Ulid waterMaterialId,
+		WorldMapConfiguration worldConfig)
 	{
-		ArgumentNullException.ThrowIfNull(settings);
 		ArgumentNullException.ThrowIfNull(heightmap);
+		ArgumentNullException.ThrowIfNull(worldConfig);
 
-		var cfg = settings.Hydrology ?? new HydrologySettings();
-		var width = settings.WidthTiles;
-		var height = settings.HeightTiles;
+		var cfg = worldConfig.Hydrology ?? new HydrologySettings();
+		var width = heightmap.WidthTiles;
+		var height = heightmap.HeightTiles;
 		var hydrology = new TerrainHydrology(width, height);
 
-		// 1. Fill ocean basins below SeaLevel
-		FloodFillConnectedOceans(heightmap, hydrology, waterMaterialId, cfg.SeaLevel);
+		// 1. Flood-fill connected perimeter oceans using SeaLevel
+		FloodFillConnectedOceans(heightmap, hydrology, waterMaterialId, worldConfig.Heightmap.SeaLevel);
 
-		// 2. Accumulate flow flux across the terrain
+		// 2. Pre-generate continuous moisture map to guide river origins
+		var moistureMap = NoiseMaker.GenerateNoiseArray(
+			new NoiseSettings
+			{
+				Seed = seed ^ 0x31415926u,
+				Scale = 1.0f / 0.01f,
+				Octaves = 3,
+				Persistence = 0.5f,
+				Lacunarity = 2.0f,
+				TargetMin = 0.0f,
+				TargetMax = 1.0f
+			}, width, height);
+
+		// 3. Accumulate flow flux across the terrain using RaindropCycles and MaxDescentSteps
 		var fluxMap = new int[width * height];
 		var rng = new Random((int)seed);
-
-		// Path buffer to store steps of a single drop descent
-		var pathBuffer = new (int x, int y)[cfg.MaxDescentSteps];
+		var pathBuffer = new (int X, int Y)[cfg.MaxDescentSteps];
 
 		for (var i = 0; i < cfg.RaindropCycles; i++)
 		{
-			var startX = rng.NextInt(0, width);
-			var startY = rng.NextInt(0, height);
+			var rx = rng.NextInt(1, width - 1);
+			var ry = rng.NextInt(1, height - 1);
 
-			// Rivers start well above sea level in mountains or uplands
-			if (heightmap.GetElevation(startX, startY) <= cfg.SeaLevel + 60)
+			// Rivers start primarily in moist uplands above sea level
+			if (heightmap.GetElevation(rx, ry) <= worldConfig.Heightmap.SeaLevel + 40 ||
+			    moistureMap[(ry * width) + rx] < 0.55f)
 			{
 				continue;
 			}
 
-			var pathLength = TraceDescentPath(heightmap, hydrology, startX, startY, cfg, pathBuffer);
+			var pathLength = TraceDescentPath(heightmap, hydrology, rx, ry, worldConfig, pathBuffer);
 
-			// Increment flux along the entire path
+			// Record flux along the path traced
 			for (var p = 0; p < pathLength; p++)
 			{
 				var (px, py) = pathBuffer[p];
@@ -72,64 +86,48 @@ public static class MacroHydrologyGenerator
 			}
 		}
 
-		// 3. Consolidate: Only promote paths that exceed the flux threshold to active rivers
+		// 4. Filter by RiverFluxThreshold, size via BaseRiverDepth, and carve using RiverBedErosionMeters
 		for (var y = 0; y < height; y++)
 		{
+			var rowOffset = y * width;
 			for (var x = 0; x < width; x++)
 			{
-				var idx = (y * width) + x;
+				var idx = rowOffset + x;
 				var flux = fluxMap[idx];
 				var elev = heightmap.GetElevation(x, y);
 
-				// Ignore tiles already submerged in oceans
-				if (elev < cfg.SeaLevel)
+				// Skip tiles already submerged in oceans
+				if (hydrology.GetLiquidDepth(x, y) > 0 && elev < worldConfig.Heightmap.SeaLevel)
 				{
 					continue;
 				}
 
 				if (flux >= cfg.RiverFluxThreshold)
 				{
-					// Scale depth proportionally to the accumulated water volume
+					// Scale water depth proportional to flux volume above the threshold
 					var depthScale = Math.Min(30, flux / cfg.RiverFluxThreshold);
 					var depth = (ushort)Math.Min(ushort.MaxValue, cfg.BaseRiverDepth + (depthScale * 2));
 
 					hydrology.SetLiquid(x, y, depth, waterMaterialId, true);
 
-					// Erode bedrock slightly so rivers sit in natural trenches
-					heightmap.SetElevation(x, y, (short)(elev - cfg.RiverBedErosionMeters));
-				}
-			}
-
-			// 4. Fill terminal depression sinks into Lakes
-			for (var y2 = 0; y2 < height; y2++)
-			{
-				for (var x = 0; x < width; x++)
-				{
-					var idx = (y2 * width) + x;
-					var flux = fluxMap[idx];
-					var elev = heightmap.GetElevation(x, y2);
-
-					// A terminal sink is an active river tile surrounded by higher or equal terrain
-					if (flux >= cfg.RiverFluxThreshold && !hydrology.IsRiver(x, y2) && elev >= cfg.SeaLevel)
+					// Erode bedrock so rivers sit inside natural trenches
+					if (cfg.RiverBedErosionMeters > 0)
 					{
-						continue;
-					}
-
-					if (hydrology.IsRiver(x, y2) && IsLocalDepression(heightmap, x, y2))
-					{
-						FloodFillLakeBasin(heightmap, hydrology, x, y2, waterMaterialId, cfg);
+						var erodedElevation = (short)(elev - cfg.RiverBedErosionMeters);
+						heightmap.SetElevation(x, y, erodedElevation);
 					}
 				}
 			}
 		}
 
+		if (cfg.FormInlandLakes)
+		{
+			FloodInlandTerminalLakes(heightmap, hydrology, waterMaterialId, worldConfig);
+		}
+
 		return hydrology;
 	}
 
-	/// <summary>
-	///     Floods all sub-sea level basins connected to the outer world perimeter.
-	///     Isolated inland basins below SeaLevel are ignored and remain dry.
-	/// </summary>
 	private static void FloodFillConnectedOceans(
 		TerrainHeightmap heightmap,
 		TerrainHydrology hydrology,
@@ -139,32 +137,30 @@ public static class MacroHydrologyGenerator
 		var width = heightmap.WidthTiles;
 		var height = heightmap.HeightTiles;
 		var visited = new bool[width * height];
-		var queue = new Queue<(int x, int y)>();
+		var queue = new Queue<(int X, int Y)>();
 
-		// Seed BFS with border tiles that sit below sea level
+		void EnqueueIfOcean(int x, int y)
+		{
+			var idx = (y * width) + x;
+			if (!visited[idx] && heightmap.GetElevation(x, y) < seaLevel)
+			{
+				visited[idx] = true;
+				queue.Enqueue((x, y));
+			}
+		}
+
 		for (var x = 0; x < width; x++)
 		{
-			EnqueIfSubmerged(x, 0);
-			EnqueIfSubmerged(x, height - 1);
+			EnqueueIfOcean(x, 0);
+			EnqueueIfOcean(x, height - 1);
 		}
 
 		for (var y = 1; y < height - 1; y++)
 		{
-			EnqueIfSubmerged(0, y);
-			EnqueIfSubmerged(width - 1, y);
+			EnqueueIfOcean(0, y);
+			EnqueueIfOcean(width - 1, y);
 		}
 
-		void EnqueIfSubmerged(int bx, int by)
-		{
-			var idx = (by * width) + bx;
-			if (heightmap.GetElevation(bx, by) < seaLevel && !visited[idx])
-			{
-				visited[idx] = true;
-				queue.Enqueue((bx, by));
-			}
-		}
-
-		// Expand ocean across contiguous sub-sea terrain
 		while (queue.Count > 0)
 		{
 			var (cx, cy) = queue.Dequeue();
@@ -178,7 +174,7 @@ public static class MacroHydrologyGenerator
 				var nx = cx + dx;
 				var ny = cy + dy;
 
-				if (nx < 0 || nx >= width || ny < 0 || ny >= height)
+				if (!hydrology.IsInBounds(nx, ny))
 				{
 					continue;
 				}
@@ -193,16 +189,18 @@ public static class MacroHydrologyGenerator
 		}
 	}
 
-	private static int TraceDescentPath(TerrainHeightmap heightmap,
+	private static int TraceDescentPath(
+		TerrainHeightmap heightmap,
 		TerrainHydrology hydrology,
 		int startX,
 		int startY,
-		HydrologySettings cfg,
-		(int x, int y)[] pathBuffer)
+		WorldMapConfiguration worldConfig,
+		(int X, int Y)[] pathBuffer)
 	{
 		var cx = startX;
 		var cy = startY;
 		var steps = 0;
+		var cfg = worldConfig.Hydrology;
 
 		while (steps < cfg.MaxDescentSteps)
 		{
@@ -210,13 +208,12 @@ public static class MacroHydrologyGenerator
 
 			var curElev = heightmap.GetElevation(cx, cy);
 
-			// Terminate if we reached an active ocean basin
-			if (curElev < cfg.SeaLevel && hydrology.GetLiquidDepth(cx, cy) > 0)
+			// Terminate once an ocean basin is reached
+			if (curElev < worldConfig.Heightmap.SeaLevel && hydrology.GetLiquidDepth(cx, cy) > 0)
 			{
 				break;
 			}
 
-			// Find lowest neighbor (steepest descent)
 			var lowestX = cx;
 			var lowestY = cy;
 			var lowestElev = curElev;
@@ -226,7 +223,7 @@ public static class MacroHydrologyGenerator
 				var nx = cx + dx;
 				var ny = cy + dy;
 
-				if (nx < 0 || nx >= heightmap.WidthTiles || ny < 0 || ny >= heightmap.HeightTiles)
+				if (!hydrology.IsInBounds(nx, ny))
 				{
 					continue;
 				}
@@ -240,7 +237,7 @@ public static class MacroHydrologyGenerator
 				}
 			}
 
-			// Local minimum reached (inland lake pool or valley floor)
+			// Terminate if caught in an inland depression basin
 			if (lowestX == cx && lowestY == cy)
 			{
 				break;
@@ -253,7 +250,36 @@ public static class MacroHydrologyGenerator
 		return steps;
 	}
 
-	private static bool IsLocalDepression(TerrainHeightmap heightmap, int cx, int cy)
+	private static void FloodInlandTerminalLakes(
+		TerrainHeightmap heightmap,
+		TerrainHydrology hydrology,
+		Ulid waterMaterialId,
+		WorldMapConfiguration worldConfig)
+	{
+		var width = heightmap.WidthTiles;
+		var height = heightmap.HeightTiles;
+		var cfg = worldConfig.Hydrology;
+
+		for (var y = 0; y < height; y++)
+		{
+			for (var x = 0; x < width; x++)
+			{
+				// Only examine active river tiles sitting at or above sea level
+				if (!hydrology.IsRiver(x, y) || heightmap.GetElevation(x, y) < worldConfig.Heightmap.SeaLevel)
+				{
+					continue;
+				}
+
+				// A terminal sink has no strictly lower neighbor to flow to
+				if (IsDepressionSink(heightmap, hydrology, x, y))
+				{
+					FloodFillLake(heightmap, hydrology, x, y, waterMaterialId, cfg);
+				}
+			}
+		}
+	}
+
+	private static bool IsDepressionSink(TerrainHeightmap heightmap, TerrainHydrology hydrology, int cx, int cy)
 	{
 		var curElev = heightmap.GetElevation(cx, cy);
 
@@ -262,12 +288,12 @@ public static class MacroHydrologyGenerator
 			var nx = cx + dx;
 			var ny = cy + dy;
 
-			if (nx < 0 || nx >= heightmap.WidthTiles || ny < 0 || ny >= heightmap.HeightTiles)
+			if (!hydrology.IsInBounds(nx, ny))
 			{
 				continue;
 			}
 
-			// If any neighbor is lower, water continues descending and has not pooled
+			// If any neighbor is lower, water flows away and is not trapped
 			if (heightmap.GetElevation(nx, ny) < curElev)
 			{
 				return false;
@@ -277,7 +303,7 @@ public static class MacroHydrologyGenerator
 		return true;
 	}
 
-	private static void FloodFillLakeBasin(
+	private static void FloodFillLake(
 		TerrainHeightmap heightmap,
 		TerrainHydrology hydrology,
 		int sinkX,
@@ -287,44 +313,45 @@ public static class MacroHydrologyGenerator
 	{
 		var width = heightmap.WidthTiles;
 		var height = heightmap.HeightTiles;
-		var baseElev = heightmap.GetElevation(sinkX, sinkY);
+		var sinkElevation = heightmap.GetElevation(sinkX, sinkY);
 
-		// Fill up to a small spillway depth (e.g., 20-30 meters above the sink floor)
-		var targetLakeLevel = baseElev + 25;
+		// Lake water level fills up to a capped spillway height above the basin bottom
+		var lakeWaterLevel = (short)(sinkElevation + cfg.MaxLakeDepthMeters);
+
+		var queue = new Queue<(int X, int Y)>();
 		var visited = new HashSet<int>();
-		var queue = new Queue<(int x, int y)>();
 
 		queue.Enqueue((sinkX, sinkY));
 		visited.Add((sinkY * width) + sinkX);
 
-		var lakeTileCount = 0;
-		const int maxLakeTiles = 120; // Caps lake expansion to prevent flooding entire continents
+		var tilesFilled = 0;
 
-		while (queue.Count > 0 && lakeTileCount < maxLakeTiles)
+		while (queue.Count > 0 && tilesFilled < cfg.MaxLakeTiles)
 		{
 			var (cx, cy) = queue.Dequeue();
 			var elev = heightmap.GetElevation(cx, cy);
 
-			if (elev <= targetLakeLevel)
+			if (elev <= lakeWaterLevel)
 			{
-				var depth = (ushort)Math.Clamp(targetLakeLevel - elev + cfg.BaseRiverDepth, 1, ushort.MaxValue);
+				// Compute fluid depth relative to the lake's horizontal surface datum
+				var depth = (ushort)Math.Clamp(lakeWaterLevel - elev + cfg.BaseRiverDepth, 1, ushort.MaxValue);
 
-				// Lakes are marked with isRiverChannel: false
-				hydrology.SetLiquid(cx, cy, depth, waterMaterialId);
-				lakeTileCount++;
+				// Setting isRiverChannel: false causes MacroClimateGenerator to classify this as BiomeType.Lake
+				hydrology.SetLiquid(cx, cy, depth, waterMaterialId, false);
+				tilesFilled++;
 
 				foreach (var (dx, dy) in AllNeighbors)
 				{
 					var nx = cx + dx;
 					var ny = cy + dy;
 
-					if (nx < 0 || nx >= width || ny < 0 || ny >= height)
+					if (!hydrology.IsInBounds(nx, ny))
 					{
 						continue;
 					}
 
 					var nIdx = (ny * width) + nx;
-					if (!visited.Contains(nIdx) && heightmap.GetElevation(nx, ny) <= targetLakeLevel)
+					if (!visited.Contains(nIdx) && heightmap.GetElevation(nx, ny) <= lakeWaterLevel)
 					{
 						visited.Add(nIdx);
 						queue.Enqueue((nx, ny));

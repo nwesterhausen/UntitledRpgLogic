@@ -52,6 +52,11 @@ public abstract class TerrainGrid2D<T> : TerrainGridDimensions
 	}
 
 	/// <summary>
+	///     Gets the internal cell array directly.
+	/// </summary>
+	protected T[] Cells => this.cells;
+
+	/// <summary>
 	///     Retrieves the value of the cell at the given tile coordinate, clamping to grid boundaries if outside.
 	/// </summary>
 	/// <param name="tileX">The horizontal tile coordinate.</param>
@@ -82,4 +87,19 @@ public abstract class TerrainGrid2D<T> : TerrainGridDimensions
 			this.cells[this.GetStrideIndex(tileX, tileY)] = value;
 		}
 	}
+
+	/// <summary>
+	///     Provides direct read-only access to the underlying cell buffer.
+	/// </summary>
+	public ReadOnlySpan<T> AsReadOnlySpan() => this.cells;
+
+	/// <summary>
+	///     Creates a shallow clone of the flattened cell array.
+	/// </summary>
+	public T[] CloneCells() => (T[])this.cells.Clone();
+
+	/// <summary>
+	///     Copies the underlying cells into a destination array or span.
+	/// </summary>
+	public void CopyTo(Span<T> destination) => this.cells.AsSpan().CopyTo(destination);
 }

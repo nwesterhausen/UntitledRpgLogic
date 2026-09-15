@@ -10,9 +10,9 @@ public sealed class MacroGenerationTests
 	[TestMethod]
 	public void SimplexNoise_IdenticalInputsAndSeeds_ProduceDeterministicValues()
 	{
-		var sample1 = SimplexNoise.Sample(12.34f, 56.78f, 42u);
-		var sample2 = SimplexNoise.Sample(12.34f, 56.78f, 42u);
-		var sampleOther = SimplexNoise.Sample(12.34f, 56.78f, 99u);
+		var sample1 = NoiseMaker.GenerateNoise(new NoiseSettings { Seed = 42u }, 12.34f, 56.78f);
+		var sample2 = NoiseMaker.GenerateNoise(new NoiseSettings { Seed = 42u }, 12.34f, 56.78f);
+		var sampleOther = NoiseMaker.GenerateNoise(new NoiseSettings { Seed = 99u }, 12.34f, 56.78f);
 
 		Assert.AreEqual(sample1, sample2);
 		Assert.AreNotEqual(sample1, sampleOther);
@@ -21,15 +21,8 @@ public sealed class MacroGenerationTests
 	[TestMethod]
 	public void MacroHeightmapGenerator_ValidDimensions_GeneratesWithinSpecifiedBounds()
 	{
-		var settings = new HeightmapSettings();
-		var mapConfig = new WorldMapConfiguration
-		{
-			HeightTiles = 64,
-			WidthTiles = 64,
-			MinElevation = -500,
-			MaxElevation = 1500,
-			Heightmap = settings
-		};
+		var settings = new HeightmapSettings { MinElevation = -500, MaxElevation = 1500 };
+		var mapConfig = new WorldMapConfiguration { HeightTiles = 64, WidthTiles = 64, Heightmap = settings };
 
 		var map = MacroHeightmapGenerator.Generate(12345u, mapConfig);
 
@@ -41,8 +34,8 @@ public sealed class MacroGenerationTests
 			for (var x = 0; x < map.WidthTiles; x++)
 			{
 				var elev = map.GetElevation(x, y);
-				Assert.IsGreaterThanOrEqualTo(mapConfig.MinElevation, elev);
-				Assert.IsLessThanOrEqualTo(mapConfig.MaxElevation, elev);
+				Assert.IsGreaterThanOrEqualTo(mapConfig.Heightmap.MinElevation, elev);
+				Assert.IsLessThanOrEqualTo(mapConfig.Heightmap.MaxElevation, elev);
 			}
 		}
 	}
@@ -54,14 +47,12 @@ public sealed class MacroGenerationTests
 		{
 			HeightTiles = 32,
 			WidthTiles = 32,
-			MinElevation = -1000,
-			MaxElevation = 1000,
-			Heightmap = new HeightmapSettings { SeaLevel = 0 }
+			Heightmap = new HeightmapSettings { SeaLevel = 0, MinElevation = -1000, MaxElevation = 1000 }
 		};
 		var heightmap = MacroHeightmapGenerator.Generate(777u, mapConfig);
 
 		var waterId = Ulid.NewUlid();
-		var hydrology = MacroHydrologyGenerator.Generate(heightmap, 777u, mapConfig, waterId);
+		var hydrology = MacroHydrologyGenerator.Generate(heightmap, 777u, waterId, mapConfig);
 
 		for (var y = 0; y < 32; y++)
 		{
@@ -97,12 +88,12 @@ public sealed class MacroGenerationTests
 		var hydrology = MacroHydrologyGenerator.Generate(
 			heightmap,
 			42u,
-			new WorldMapConfiguration
+			waterId, new WorldMapConfiguration
 			{
-				HeightTiles = 5,
-				WidthTiles = 5,
-				Hydrology = new HydrologySettings { SeaLevel = 0, RaindropCycles = 0 }
-			}, waterId);
+				Heightmap = new HeightmapSettings { SeaLevel = 0 },
+				Hydrology =
+					new HydrologySettings { RaindropCycles = 0 }
+			});
 
 		// The center tile is below sea level, but because the perimeter is above sea level,
 		// the ocean cannot breach it.

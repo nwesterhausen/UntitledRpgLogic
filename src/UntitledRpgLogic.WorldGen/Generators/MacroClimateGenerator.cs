@@ -1,5 +1,4 @@
 using UntitledRpgLogic.Core.World;
-using UntitledRpgLogic.Extensions.Common;
 using UntitledRpgLogic.WorldGen.Noise;
 
 namespace UntitledRpgLogic.WorldGen.Generators;
@@ -16,50 +15,89 @@ public static class MacroClimateGenerator
 		TerrainHeightmap heightmap,
 		TerrainHydrology hydrology,
 		uint seed,
-		ClimateSettings? settings = null)
+		WorldMapConfiguration worldConfig)
 	{
 		ArgumentNullException.ThrowIfNull(heightmap);
 		ArgumentNullException.ThrowIfNull(hydrology);
+		ArgumentNullException.ThrowIfNull(worldConfig);
 
-		var cfg = settings ?? new ClimateSettings();
+		var cfg = worldConfig.Climate ?? new ClimateSettings();
 		var width = heightmap.WidthTiles;
 		var height = heightmap.HeightTiles;
-		var climate = new TerrainClimate(width, height);
 
-		var tempSeed = seed ^ 0x9e3779b9u;
-		var rainSeed = seed ^ 0x85ebca6bu;
+		// 1. Generate multi-octave temperature variations [-8.0°C to +8.0°C]
+		var tempTurbulence = NoiseMaker.GenerateNoiseArray(
+			new NoiseSettings
+			{
+				Seed = seed ^ 0x9e3779b9u,
+				Scale = 32.0f,
+				Octaves = 3,
+				Persistence = 0.5f,
+				Lacunarity = 2.0f,
+				TargetMin = -8.0f,
+				TargetMax = 8.0f
+			}, width, height);
+
+		// 2. Generate multi-octave base rainfall [0.0 to 1.0]
+		var rawRainfall = NoiseMaker.GenerateNoiseArray(
+			new NoiseSettings
+			{
+				Seed = seed ^ 0x85ebca6bu,
+				Scale = 28.0f,
+				Octaves = 4,
+				Persistence = 0.5f,
+				Lacunarity = 2.0f,
+				TargetMin = 0.0f,
+				TargetMax = 1.0f
+			}, width, height);
+
+		var climate = new TerrainClimate(width, height);
 		var halfHeight = height / 2.0f;
+		var warpSeed = seed ^ 0x517cc1b7u;
 
 		for (var y = 0; y < height; y++)
 		{
-			// Latitudinal factor: 1.0 at equator (center), 0.0 at poles (top/bottom edges)
-			var latDist = Math.Abs(y - halfHeight) / halfHeight;
-			var latFactor = 1.0f - latDist;
-			var baseLatTemp = MathF.Min(cfg.EquatorTemperature, cfg.PoleTemperature) +
-			                  (latFactor * MathF.Abs(cfg.EquatorTemperature - cfg.PoleTemperature));
+			var rowOffset = y * width;
 
 			for (var x = 0; x < width; x++)
 			{
+				var idx = rowOffset + x;
 				var elevation = heightmap.GetElevation(x, y);
 				var liquidDepth = hydrology.GetLiquidDepth(x, y);
 
-				// 1. Calculate temperature (latitude baseline + lapse rate cooling + simplex noise turbulence)
+				// --- 1. DOMAIN WARPING FOR LATITUDE ---
+				// Sample low-frequency noise to bend the horizontal isotherm lines
+				var warpOffset = NoiseMaker.GenerateSimpleNoise(x * 0.015f, y * 0.015f, warpSeed) * (height * 0.22f);
+				var warpedY = Math.Clamp(y + warpOffset, 0, height);
+
+				var latDist = Math.Abs(warpedY - halfHeight) / halfHeight;
+				var latFactor = 1.0f - latDist;
+
+				// Base regional temperature curve
+				var baseLatTemp = MathF.Min(cfg.EquatorTemperature, cfg.PoleTemperature) +
+				                  (latFactor * MathF.Abs(cfg.EquatorTemperature - cfg.PoleTemperature));
+
+				// --- 2. TEMPERATURE EVALUATION ---
+				// High mountains cool off via lapse rate (e.g., 6.5°C per 1,000m)
 				var lapseCooling = Math.Max((short)0, elevation) / 1000.0f * cfg.LapseRatePer1000M;
-				var tempNoise = SimplexNoise.Sample(x * cfg.TemperatureNoiseFrequency,
-					y * cfg.TemperatureNoiseFrequency, tempSeed) * 5.0f;
-				var temperature = baseLatTemp - lapseCooling + tempNoise;
+				var temperature = baseLatTemp - lapseCooling + tempTurbulence[idx];
 
-				// 2. Calculate rainfall (fBm noise + proximity to water bodies)
-				var rainNoise =
-					(SimplexNoise.SampleFbm(x * cfg.RainfallNoiseFrequency, y * cfg.RainfallNoiseFrequency, rainSeed,
-						4) + 1.0f) * 0.5f;
-				var riverBonus = hydrology.IsRiverWithinDistance(x, y, 2) ? 0.25f : 0.0f;
-				var rainfall = Math.Clamp(rainNoise + riverBonus, 0.0f, 1.0f);
-				var isRiver = hydrology.IsRiver(x, y);
+				// --- 3. PRECIPITATION & MARITIME BUFFERS ---
+				// Coastlines and ocean air supply humidity buffers
+				var isOcean = liquidDepth > 0 && elevation < worldConfig.Heightmap.SeaLevel;
+				var riverBonus = hydrology.IsRiver(x, y) ? 0.25f : 0.0f;
+				var marineBonus = isOcean ? 0.15f : 0.0f;
 
-				// 3. Classify Whittaker biome
-				var biome = ClassifyBiome(elevation, liquidDepth, temperature, rainfall, cfg.MountainThreshold,
-					isRiver);
+				var rainfall = Math.Clamp(rawRainfall[idx] + riverBonus + marineBonus, 0.0f, 1.0f);
+
+				// --- 4. WHITTAKER BIOME CLASSIFICATION ---
+				var biome = ClassifyBiome(
+					elevation,
+					liquidDepth,
+					temperature,
+					rainfall,
+					cfg.MountainThreshold,
+					hydrology.IsRiver(x, y));
 
 				climate.SetCell(x, y, temperature, rainfall, biome);
 			}

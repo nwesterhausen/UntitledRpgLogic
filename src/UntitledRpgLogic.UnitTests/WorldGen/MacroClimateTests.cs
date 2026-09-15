@@ -59,7 +59,7 @@ public sealed class MacroClimateTests
 		heightmap.SetElevation(0, 5, 0);
 		heightmap.SetElevation(1, 5, 3000);
 
-		var climate = MacroClimateGenerator.Generate(heightmap, hydrology, 12345u);
+		var climate = MacroClimateGenerator.Generate(heightmap, hydrology, 12345u, new WorldMapConfiguration());
 
 		var lowValleyTemp = climate.GetTemperature(0, 5);
 		var mountainTemp = climate.GetTemperature(1, 5);
