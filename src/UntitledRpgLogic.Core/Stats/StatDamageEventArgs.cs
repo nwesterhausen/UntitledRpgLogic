@@ -14,7 +14,7 @@ public class StatDamageEventArgs : EventArgs
 	///     The Ulid of the MagicTypeDataConfig that defines the type of damage.
 	///     Can be null for physical damage.
 	/// </summary>
-	public Ulid? MagicType { get; }
+	public Ulid? MagicType { get; init; }
 
 	/// <summary>
 	///     Gets the amount of damage before any mitigation is applied.

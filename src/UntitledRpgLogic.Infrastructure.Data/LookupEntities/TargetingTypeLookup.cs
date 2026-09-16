@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using UntitledRpgLogic.Core.Abilities;
 
 namespace UntitledRpgLogic.Infrastructure.Data.LookupEntities;
@@ -14,5 +15,6 @@ public class TargetingTypeLookup
 	public string Name { get; set; } = string.Empty;
 
 	///<summary>An optional description. Possibly provide something to describe it in-game</summary>
+	[MaxLength(512)]
 	public string? Description { get; set; }
 }

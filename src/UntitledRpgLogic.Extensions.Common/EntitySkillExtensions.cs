@@ -58,7 +58,7 @@ public static class EntitySkillExtensions
 	{
 		ArgumentNullException.ThrowIfNull(entity);
 
-		var skill = entity.Skills?
+		var skill = entity.Skills
 			.FirstOrDefault(s => s.InstancedSkillId == skillDefinitionId)?
 			.InstancedSkill;
 

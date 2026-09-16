@@ -4,35 +4,30 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using UntitledRpgLogic.Infrastructure.Data;
 
 #nullable disable
 
-namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
+namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
 {
     [DbContext(typeof(RpgDbContext))]
-    [Migration("20260915203331_InitialCreate")]
+    [Migration("20260916001202_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder
-                .HasAnnotation("ProductVersion", "10.0.12")
-                .HasAnnotation("Relational:MaxIdentifierLength", 63);
-
-            NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+            modelBuilder.HasAnnotation("ProductVersion", "10.0.12");
 
             modelBuilder.Entity("ModificationModifierDefinition", b =>
                 {
                     b.Property<byte[]>("ModificationEffectsId")
-                        .HasColumnType("bytea")
+                        .HasColumnType("BLOB")
                         .HasColumnName("modification_effects_id");
 
                     b.Property<byte[]>("ModifierDefinitionId")
-                        .HasColumnType("bytea")
+                        .HasColumnType("BLOB")
                         .HasColumnName("modifier_definition_id");
 
                     b.HasKey("ModificationEffectsId", "ModifierDefinitionId")
@@ -47,11 +42,11 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
             modelBuilder.Entity("ModificationModifierDefinition1", b =>
                 {
                     b.Property<byte[]>("ModifierDefinition1Id")
-                        .HasColumnType("bytea")
+                        .HasColumnType("BLOB")
                         .HasColumnName("modifier_definition1id");
 
                     b.Property<byte[]>("StackEffectsId")
-                        .HasColumnType("bytea")
+                        .HasColumnType("BLOB")
                         .HasColumnName("stack_effects_id");
 
                     b.HasKey("ModifierDefinition1Id", "StackEffectsId")
@@ -66,41 +61,41 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
             modelBuilder.Entity("UntitledRpgLogic.Core.Abilities.AbilityDefinition", b =>
                 {
                     b.Property<byte[]>("Id")
-                        .HasColumnType("bytea")
+                        .HasColumnType("BLOB")
                         .HasColumnName("id");
 
                     b.Property<int>("AbilityType")
-                        .HasColumnType("integer")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("ability_type");
 
                     b.Property<bool>("AffectsAllies")
-                        .HasColumnType("boolean")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("affects_allies");
 
                     b.Property<bool>("AffectsCaster")
-                        .HasColumnType("boolean")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("affects_caster");
 
                     b.Property<float>("CastTime")
-                        .HasColumnType("real")
+                        .HasColumnType("REAL")
                         .HasColumnName("cast_time");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text")
+                        .HasColumnType("TEXT")
                         .HasColumnName("name");
 
                     b.Property<int>("NumberOfTargets")
-                        .HasColumnType("integer")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("number_of_targets");
 
                     b.Property<byte[]>("SkillDisciplineId")
                         .IsRequired()
-                        .HasColumnType("bytea")
+                        .HasColumnType("BLOB")
                         .HasColumnName("skill_discipline_id");
 
                     b.Property<int>("TargetingType")
-                        .HasColumnType("integer")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("targeting_type");
 
                     b.HasKey("Id")
@@ -121,30 +116,30 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
             modelBuilder.Entity("UntitledRpgLogic.Core.Abilities.Effects.Effect", b =>
                 {
                     b.Property<byte[]>("Id")
-                        .HasColumnType("bytea")
+                        .HasColumnType("BLOB")
                         .HasColumnName("id");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(1024)
-                        .HasColumnType("character varying(1024)")
+                        .HasColumnType("TEXT")
                         .HasColumnName("description");
 
                     b.Property<float>("Duration")
-                        .HasColumnType("real")
+                        .HasColumnType("REAL")
                         .HasColumnName("duration");
 
                     b.Property<int>("EffectType")
-                        .HasColumnType("integer")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("effect_type");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text")
+                        .HasColumnType("TEXT")
                         .HasColumnName("name");
 
                     b.Property<float>("TickInterval")
-                        .HasColumnType("real")
+                        .HasColumnType("REAL")
                         .HasColumnName("tick_interval");
 
                     b.HasKey("Id")
@@ -163,39 +158,39 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
             modelBuilder.Entity("UntitledRpgLogic.Core.Abilities.Modification", b =>
                 {
                     b.Property<byte[]>("Id")
-                        .HasColumnType("bytea")
+                        .HasColumnType("BLOB")
                         .HasColumnName("id");
 
                     b.Property<int>("FlatAmount")
-                        .HasColumnType("integer")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("flat_amount");
 
                     b.Property<bool>("IsAdditive")
-                        .HasColumnType("boolean")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("is_additive");
 
                     b.Property<bool>("IsPositive")
-                        .HasColumnType("boolean")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("is_positive");
 
                     b.Property<float>("Percentage")
-                        .HasColumnType("real")
+                        .HasColumnType("REAL")
                         .HasColumnName("percentage");
 
                     b.Property<float>("PercentageOfMax")
-                        .HasColumnType("real")
+                        .HasColumnType("REAL")
                         .HasColumnName("percentage_of_max");
 
                     b.Property<int>("Priority")
-                        .HasColumnType("integer")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("priority");
 
                     b.Property<bool>("ScalesOnBaseValue")
-                        .HasColumnType("boolean")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("scales_on_base_value");
 
                     b.Property<float>("ScalingFactor")
-                        .HasColumnType("real")
+                        .HasColumnType("REAL")
                         .HasColumnName("scaling_factor");
 
                     b.HasKey("Id")
@@ -207,48 +202,48 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
             modelBuilder.Entity("UntitledRpgLogic.Core.Abilities.ModifierDefinition", b =>
                 {
                     b.Property<byte[]>("Id")
-                        .HasColumnType("bytea")
+                        .HasColumnType("BLOB")
                         .HasColumnName("id");
 
                     b.Property<float>("Duration")
-                        .HasColumnType("real")
+                        .HasColumnType("REAL")
                         .HasColumnName("duration");
 
                     b.Property<bool>("IsAdditive")
-                        .HasColumnType("boolean")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("is_additive");
 
                     b.Property<bool>("IsMultiplicative")
-                        .HasColumnType("boolean")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("is_multiplicative");
 
                     b.Property<bool>("IsPermanent")
-                        .HasColumnType("boolean")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("is_permanent");
 
                     b.Property<bool>("IsPositive")
-                        .HasColumnType("boolean")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("is_positive");
 
                     b.Property<bool>("LoseAllStacksOnExpiration")
-                        .HasColumnType("boolean")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("lose_all_stacks_on_expiration");
 
                     b.Property<int>("MaxStacks")
-                        .HasColumnType("integer")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("max_stacks");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text")
+                        .HasColumnType("TEXT")
                         .HasColumnName("name");
 
                     b.Property<int>("Priority")
-                        .HasColumnType("integer")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("priority");
 
                     b.Property<bool>("ScalesOnBaseValue")
-                        .HasColumnType("boolean")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("scales_on_base_value");
 
                     b.HasKey("Id")
@@ -260,38 +255,38 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
             modelBuilder.Entity("UntitledRpgLogic.Core.Data.LogEntry", b =>
                 {
                     b.Property<byte[]>("Id")
-                        .HasColumnType("bytea")
+                        .HasColumnType("BLOB")
                         .HasColumnName("id");
 
                     b.Property<string>("Category")
                         .HasMaxLength(256)
-                        .HasColumnType("character varying(256)")
+                        .HasColumnType("TEXT")
                         .HasColumnName("category");
 
                     b.Property<byte[]>("EntityId")
-                        .HasColumnType("bytea")
+                        .HasColumnType("BLOB")
                         .HasColumnName("entity_id");
 
                     b.Property<int>("EventId")
-                        .HasColumnType("integer")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("event_id");
 
                     b.Property<int>("Level")
-                        .HasColumnType("integer")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("level");
 
                     b.Property<string>("Message")
                         .IsRequired()
                         .HasMaxLength(2048)
-                        .HasColumnType("character varying(2048)")
+                        .HasColumnType("TEXT")
                         .HasColumnName("message");
 
                     b.Property<string>("Parameters")
-                        .HasColumnType("text")
+                        .HasColumnType("TEXT")
                         .HasColumnName("parameters");
 
                     b.Property<DateTimeOffset>("Timestamp")
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("TEXT")
                         .HasColumnName("timestamp");
 
                     b.HasKey("Id")
@@ -306,18 +301,18 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
             modelBuilder.Entity("UntitledRpgLogic.Core.Elements.Element", b =>
                 {
                     b.Property<byte[]>("Id")
-                        .HasColumnType("bytea")
+                        .HasColumnType("BLOB")
                         .HasColumnName("id");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(1024)
-                        .HasColumnType("character varying(1024)")
+                        .HasColumnType("TEXT")
                         .HasColumnName("description");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text")
+                        .HasColumnType("TEXT")
                         .HasColumnName("name");
 
                     b.HasKey("Id")
@@ -329,20 +324,20 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
             modelBuilder.Entity("UntitledRpgLogic.Core.Entities.Entity", b =>
                 {
                     b.Property<byte[]>("Id")
-                        .HasColumnType("bytea")
+                        .HasColumnType("BLOB")
                         .HasColumnName("id");
 
                     b.Property<byte[]>("DefinitionId")
-                        .HasColumnType("bytea")
+                        .HasColumnType("BLOB")
                         .HasColumnName("definition_id");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text")
+                        .HasColumnType("TEXT")
                         .HasColumnName("name");
 
                     b.Property<byte[]>("Position_MapId")
-                        .HasColumnType("bytea")
+                        .HasColumnType("BLOB")
                         .HasColumnName("position_map_id");
 
                     b.HasKey("Id")
@@ -360,32 +355,32 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
             modelBuilder.Entity("UntitledRpgLogic.Core.Entities.EntityDefinition", b =>
                 {
                     b.Property<byte[]>("Id")
-                        .HasColumnType("bytea")
+                        .HasColumnType("BLOB")
                         .HasColumnName("id");
 
                     b.Property<int>("Classification")
-                        .HasColumnType("integer")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("classification");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(1024)
-                        .HasColumnType("character varying(1024)")
+                        .HasColumnType("TEXT")
                         .HasColumnName("description");
 
                     b.Property<byte[]>("InnateSkillDefinitionIds")
                         .IsRequired()
-                        .HasColumnType("bytea")
+                        .HasColumnType("BLOB")
                         .HasColumnName("innate_skill_definition_ids");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text")
+                        .HasColumnType("TEXT")
                         .HasColumnName("name");
 
                     b.Property<byte[]>("StartingItemDefinitionIds")
                         .IsRequired()
-                        .HasColumnType("bytea")
+                        .HasColumnType("BLOB")
                         .HasColumnName("starting_item_definition_ids");
 
                     b.HasKey("Id")
@@ -397,11 +392,11 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
             modelBuilder.Entity("UntitledRpgLogic.Core.Entities.EntitySkills", b =>
                 {
                     b.Property<byte[]>("EntityId")
-                        .HasColumnType("bytea")
+                        .HasColumnType("BLOB")
                         .HasColumnName("entity_id");
 
                     b.Property<byte[]>("InstancedSkillId")
-                        .HasColumnType("bytea")
+                        .HasColumnType("BLOB")
                         .HasColumnName("instanced_skill_id");
 
                     b.HasKey("EntityId", "InstancedSkillId")
@@ -416,11 +411,11 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
             modelBuilder.Entity("UntitledRpgLogic.Core.Entities.EntityStats", b =>
                 {
                     b.Property<byte[]>("EntityId")
-                        .HasColumnType("bytea")
+                        .HasColumnType("BLOB")
                         .HasColumnName("entity_id");
 
                     b.Property<byte[]>("InstancedStatId")
-                        .HasColumnType("bytea")
+                        .HasColumnType("BLOB")
                         .HasColumnName("instanced_stat_id");
 
                     b.HasKey("EntityId", "InstancedStatId")
@@ -435,16 +430,16 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
             modelBuilder.Entity("UntitledRpgLogic.Core.Items.Inventory", b =>
                 {
                     b.Property<byte[]>("Id")
-                        .HasColumnType("bytea")
+                        .HasColumnType("BLOB")
                         .HasColumnName("id");
 
                     b.Property<int>("Capacity")
-                        .HasColumnType("integer")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("capacity");
 
                     b.Property<byte[]>("EntityId")
                         .IsRequired()
-                        .HasColumnType("bytea")
+                        .HasColumnType("BLOB")
                         .HasColumnName("entity_id");
 
                     b.HasKey("Id")
@@ -460,32 +455,32 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
             modelBuilder.Entity("UntitledRpgLogic.Core.Items.Item", b =>
                 {
                     b.Property<byte[]>("Id")
-                        .HasColumnType("bytea")
+                        .HasColumnType("BLOB")
                         .HasColumnName("id");
 
                     b.Property<byte[]>("CraftedById")
-                        .HasColumnType("bytea")
+                        .HasColumnType("BLOB")
                         .HasColumnName("crafted_by_id");
 
                     b.Property<byte[]>("DefinitionId")
                         .IsRequired()
-                        .HasColumnType("bytea")
+                        .HasColumnType("BLOB")
                         .HasColumnName("definition_id");
 
                     b.Property<int>("Durability")
-                        .HasColumnType("integer")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("durability");
 
                     b.Property<byte[]>("InventoryId")
-                        .HasColumnType("bytea")
+                        .HasColumnType("BLOB")
                         .HasColumnName("inventory_id");
 
                     b.Property<byte[]>("PrimaryMaterialId")
-                        .HasColumnType("bytea")
+                        .HasColumnType("BLOB")
                         .HasColumnName("primary_material_id");
 
                     b.Property<int>("Quantity")
-                        .HasColumnType("integer")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("quantity");
 
                     b.HasKey("Id")
@@ -506,50 +501,50 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
             modelBuilder.Entity("UntitledRpgLogic.Core.Items.ItemDefinition", b =>
                 {
                     b.Property<byte[]>("Id")
-                        .HasColumnType("bytea")
+                        .HasColumnType("BLOB")
                         .HasColumnName("id");
 
                     b.Property<float>("BaseDurability")
-                        .HasColumnType("real")
+                        .HasColumnType("REAL")
                         .HasColumnName("base_durability");
 
                     b.Property<int>("BaseQuality")
-                        .HasColumnType("integer")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("base_quality");
 
                     b.Property<int>("BaseValue")
-                        .HasColumnType("integer")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("base_value");
 
                     b.Property<byte[]>("CreatorEntityId")
-                        .HasColumnType("bytea")
+                        .HasColumnType("BLOB")
                         .HasColumnName("creator_entity_id");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(1024)
-                        .HasColumnType("character varying(1024)")
+                        .HasColumnType("TEXT")
                         .HasColumnName("description");
 
                     b.Property<int>("ItemSubtype")
-                        .HasColumnType("integer")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("item_subtype");
 
                     b.Property<int>("ItemType")
-                        .HasColumnType("integer")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("item_type");
 
                     b.Property<int>("MaxStackSize")
-                        .HasColumnType("integer")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("max_stack_size");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text")
+                        .HasColumnType("TEXT")
                         .HasColumnName("name");
 
                     b.Property<float>("Weight")
-                        .HasColumnType("real")
+                        .HasColumnType("REAL")
                         .HasColumnName("weight");
 
                     b.HasKey("Id")
@@ -573,26 +568,26 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
             modelBuilder.Entity("UntitledRpgLogic.Core.Materials.MaterialDefinition", b =>
                 {
                     b.Property<byte[]>("Id")
-                        .HasColumnType("bytea")
+                        .HasColumnType("BLOB")
                         .HasColumnName("id");
 
                     b.Property<int>("DefaultState")
-                        .HasColumnType("integer")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("default_state");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(1024)
-                        .HasColumnType("character varying(1024)")
+                        .HasColumnType("TEXT")
                         .HasColumnName("description");
 
                     b.Property<int>("Flags")
-                        .HasColumnType("integer")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("flags");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text")
+                        .HasColumnType("TEXT")
                         .HasColumnName("name");
 
                     b.HasKey("Id")
@@ -607,35 +602,35 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
             modelBuilder.Entity("UntitledRpgLogic.Core.Progression.LevelingDefinition", b =>
                 {
                     b.Property<byte[]>("Id")
-                        .HasColumnType("bytea")
+                        .HasColumnType("BLOB")
                         .HasColumnName("id");
 
                     b.Property<int>("MaxLevel")
-                        .HasColumnType("integer")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("max_level");
 
                     b.Property<int>("PointsForFirstLevel")
-                        .HasColumnType("integer")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("points_for_first_level");
 
                     b.Property<int>("ScalingCurve")
-                        .HasColumnType("integer")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("scaling_curve");
 
                     b.Property<float>("ScalingFactorA")
-                        .HasColumnType("real")
+                        .HasColumnType("REAL")
                         .HasColumnName("scaling_factor_a");
 
                     b.Property<float>("ScalingFactorB")
-                        .HasColumnType("real")
+                        .HasColumnType("REAL")
                         .HasColumnName("scaling_factor_b");
 
                     b.Property<float>("ScalingFactorC")
-                        .HasColumnType("real")
+                        .HasColumnType("REAL")
                         .HasColumnName("scaling_factor_c");
 
                     b.Property<int>("StartingLevel")
-                        .HasColumnType("integer")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("starting_level");
 
                     b.HasKey("Id")
@@ -650,20 +645,20 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
             modelBuilder.Entity("UntitledRpgLogic.Core.Skills.Skill", b =>
                 {
                     b.Property<byte[]>("Id")
-                        .HasColumnType("bytea")
+                        .HasColumnType("BLOB")
                         .HasColumnName("id");
 
                     b.Property<byte[]>("DefinitionId")
                         .IsRequired()
-                        .HasColumnType("bytea")
+                        .HasColumnType("BLOB")
                         .HasColumnName("definition_id");
 
                     b.Property<int>("ExperiencePoints")
-                        .HasColumnType("integer")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("experience_points");
 
                     b.Property<int>("Level")
-                        .HasColumnType("integer")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("level");
 
                     b.HasKey("Id")
@@ -678,21 +673,21 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
             modelBuilder.Entity("UntitledRpgLogic.Core.Skills.SkillDefinition", b =>
                 {
                     b.Property<byte[]>("Id")
-                        .HasColumnType("bytea")
+                        .HasColumnType("BLOB")
                         .HasColumnName("id");
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("text")
+                        .HasColumnType("TEXT")
                         .HasColumnName("description");
 
                     b.Property<byte[]>("LevelingDefinitionId")
-                        .HasColumnType("bytea")
+                        .HasColumnType("BLOB")
                         .HasColumnName("leveling_definition_id");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text")
+                        .HasColumnType("TEXT")
                         .HasColumnName("name");
 
                     b.HasKey("Id")
@@ -707,29 +702,29 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
             modelBuilder.Entity("UntitledRpgLogic.Core.Stats.AppliedModifier", b =>
                 {
                     b.Property<byte[]>("Id")
-                        .HasColumnType("bytea")
+                        .HasColumnType("BLOB")
                         .HasColumnName("id");
 
                     b.Property<DateTimeOffset>("AppliedAt")
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("TEXT")
                         .HasColumnName("applied_at");
 
                     b.Property<byte[]>("EntityId")
                         .IsRequired()
-                        .HasColumnType("bytea")
+                        .HasColumnType("BLOB")
                         .HasColumnName("entity_id");
 
                     b.Property<DateTimeOffset?>("ExpiresAt")
-                        .HasColumnType("timestamp with time zone")
+                        .HasColumnType("TEXT")
                         .HasColumnName("expires_at");
 
                     b.Property<byte[]>("ModifierDefinitionId")
                         .IsRequired()
-                        .HasColumnType("bytea")
+                        .HasColumnType("BLOB")
                         .HasColumnName("modifier_definition_id");
 
                     b.Property<int>("Stacks")
-                        .HasColumnType("integer")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("stacks");
 
                     b.HasKey("Id")
@@ -747,19 +742,19 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
             modelBuilder.Entity("UntitledRpgLogic.Core.Stats.LinkedStats", b =>
                 {
                     b.Property<byte[]>("StatId")
-                        .HasColumnType("bytea")
+                        .HasColumnType("BLOB")
                         .HasColumnName("stat_id");
 
                     b.Property<byte[]>("DependsOnId")
-                        .HasColumnType("bytea")
+                        .HasColumnType("BLOB")
                         .HasColumnName("depends_on_id");
 
                     b.Property<float>("Ratio")
-                        .HasColumnType("real")
+                        .HasColumnType("REAL")
                         .HasColumnName("ratio");
 
                     b.Property<byte[]>("StatDefinitionId")
-                        .HasColumnType("bytea")
+                        .HasColumnType("BLOB")
                         .HasColumnName("stat_definition_id");
 
                     b.HasKey("StatId", "DependsOnId")
@@ -777,20 +772,20 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
             modelBuilder.Entity("UntitledRpgLogic.Core.Stats.Stat", b =>
                 {
                     b.Property<byte[]>("Id")
-                        .HasColumnType("bytea")
+                        .HasColumnType("BLOB")
                         .HasColumnName("id");
 
                     b.Property<int>("ApparentValue")
-                        .HasColumnType("integer")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("apparent_value");
 
                     b.Property<int>("BaseValue")
-                        .HasColumnType("integer")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("base_value");
 
                     b.Property<byte[]>("DefinitionId")
                         .IsRequired()
-                        .HasColumnType("bytea")
+                        .HasColumnType("BLOB")
                         .HasColumnName("definition_id");
 
                     b.HasKey("Id")
@@ -805,33 +800,33 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
             modelBuilder.Entity("UntitledRpgLogic.Core.Stats.StatDefinition", b =>
                 {
                     b.Property<byte[]>("Id")
-                        .HasColumnType("bytea")
+                        .HasColumnType("BLOB")
                         .HasColumnName("id");
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("text")
+                        .HasColumnType("TEXT")
                         .HasColumnName("description");
 
                     b.Property<bool>("HasChangeableValue")
-                        .HasColumnType("boolean")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("has_changeable_value");
 
                     b.Property<int>("MaxValue")
-                        .HasColumnType("integer")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("max_value");
 
                     b.Property<int>("MinValue")
-                        .HasColumnType("integer")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("min_value");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text")
+                        .HasColumnType("TEXT")
                         .HasColumnName("name");
 
                     b.Property<int>("Variation")
-                        .HasColumnType("integer")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("variation");
 
                     b.HasKey("Id")
@@ -846,26 +841,26 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
             modelBuilder.Entity("UntitledRpgLogic.Core.World.MapDefinition", b =>
                 {
                     b.Property<byte[]>("Id")
-                        .HasColumnType("bytea")
+                        .HasColumnType("BLOB")
                         .HasColumnName("id");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(512)
-                        .HasColumnType("character varying(512)")
+                        .HasColumnType("TEXT")
                         .HasColumnName("description");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text")
+                        .HasColumnType("TEXT")
                         .HasColumnName("name");
 
-                    b.Property<long>("Seed")
-                        .HasColumnType("bigint")
+                    b.Property<uint>("Seed")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("seed");
 
                     b.Property<int>("Type")
-                        .HasColumnType("integer")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("type");
 
                     b.HasKey("Id")
@@ -880,39 +875,39 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
             modelBuilder.Entity("UntitledRpgLogic.Core.World.MapTransition", b =>
                 {
                     b.Property<byte[]>("Id")
-                        .HasColumnType("bytea")
+                        .HasColumnType("BLOB")
                         .HasColumnName("id");
 
                     b.Property<byte[]>("SourceMapId")
                         .IsRequired()
-                        .HasColumnType("bytea")
+                        .HasColumnType("BLOB")
                         .HasColumnName("source_map_id");
 
                     b.Property<float>("SourceX")
-                        .HasColumnType("real")
+                        .HasColumnType("REAL")
                         .HasColumnName("source_x");
 
                     b.Property<float>("SourceY")
-                        .HasColumnType("real")
+                        .HasColumnType("REAL")
                         .HasColumnName("source_y");
 
                     b.Property<byte[]>("TargetMapId")
                         .IsRequired()
-                        .HasColumnType("bytea")
+                        .HasColumnType("BLOB")
                         .HasColumnName("target_map_id");
 
                     b.Property<float>("TargetX")
-                        .HasColumnType("real")
+                        .HasColumnType("REAL")
                         .HasColumnName("target_x");
 
                     b.Property<float>("TargetY")
-                        .HasColumnType("real")
+                        .HasColumnType("REAL")
                         .HasColumnName("target_y");
 
                     b.Property<string>("TransitionTag")
                         .IsRequired()
                         .HasMaxLength(128)
-                        .HasColumnType("character varying(128)")
+                        .HasColumnType("TEXT")
                         .HasColumnName("transition_tag");
 
                     b.HasKey("Id")
@@ -930,34 +925,34 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
             modelBuilder.Entity("UntitledRpgLogic.Core.World.WorldChunk", b =>
                 {
                     b.Property<byte[]>("Id")
-                        .HasColumnType("bytea")
+                        .HasColumnType("BLOB")
                         .HasColumnName("id");
 
                     b.Property<int>("ChunkX")
-                        .HasColumnType("integer")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("chunk_x");
 
                     b.Property<int>("ChunkY")
-                        .HasColumnType("integer")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("chunk_y");
 
                     b.Property<byte[]>("CompressedTileBlob")
                         .IsRequired()
-                        .HasColumnType("bytea")
+                        .HasColumnType("BLOB")
                         .HasColumnName("compressed_tile_blob");
 
                     b.Property<byte[]>("MapId")
                         .IsRequired()
-                        .HasColumnType("bytea")
+                        .HasColumnType("BLOB")
                         .HasColumnName("map_id");
 
                     b.Property<byte[]>("MaterialPalette")
                         .IsRequired()
-                        .HasColumnType("bytea")
+                        .HasColumnType("BLOB")
                         .HasColumnName("material_palette");
 
-                    b.Property<long>("Version")
-                        .HasColumnType("bigint")
+                    b.Property<uint>("Version")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("version");
 
                     b.HasKey("Id")
@@ -973,17 +968,18 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
             modelBuilder.Entity("UntitledRpgLogic.Infrastructure.Data.LookupEntities.AbilityTypeLookup", b =>
                 {
                     b.Property<int>("Id")
-                        .HasColumnType("integer")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("id");
 
                     b.Property<string>("Description")
-                        .HasColumnType("text")
+                        .HasMaxLength(512)
+                        .HasColumnType("TEXT")
                         .HasColumnName("description");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(127)
-                        .HasColumnType("character varying(127)")
+                        .HasColumnType("TEXT")
                         .HasColumnName("name");
 
                     b.HasKey("Id")
@@ -1017,17 +1013,18 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
             modelBuilder.Entity("UntitledRpgLogic.Infrastructure.Data.LookupEntities.AmbientTypeLookup", b =>
                 {
                     b.Property<int>("Id")
-                        .HasColumnType("integer")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("id");
 
                     b.Property<string>("Description")
-                        .HasColumnType("text")
+                        .HasMaxLength(512)
+                        .HasColumnType("TEXT")
                         .HasColumnName("description");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(127)
-                        .HasColumnType("character varying(127)")
+                        .HasColumnType("TEXT")
                         .HasColumnName("name");
 
                     b.HasKey("Id")
@@ -1111,17 +1108,18 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
             modelBuilder.Entity("UntitledRpgLogic.Infrastructure.Data.LookupEntities.DimensionScaleLookup", b =>
                 {
                     b.Property<int>("Id")
-                        .HasColumnType("integer")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("id");
 
                     b.Property<string>("Description")
-                        .HasColumnType("text")
+                        .HasMaxLength(512)
+                        .HasColumnType("TEXT")
                         .HasColumnName("description");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(127)
-                        .HasColumnType("character varying(127)")
+                        .HasColumnType("TEXT")
                         .HasColumnName("name");
 
                     b.HasKey("Id")
@@ -1160,17 +1158,18 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
             modelBuilder.Entity("UntitledRpgLogic.Infrastructure.Data.LookupEntities.EffectTypeLookup", b =>
                 {
                     b.Property<int>("Id")
-                        .HasColumnType("integer")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("id");
 
                     b.Property<string>("Description")
-                        .HasColumnType("text")
+                        .HasMaxLength(512)
+                        .HasColumnType("TEXT")
                         .HasColumnName("description");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(127)
-                        .HasColumnType("character varying(127)")
+                        .HasColumnType("TEXT")
                         .HasColumnName("name");
 
                     b.HasKey("Id")
@@ -1239,17 +1238,18 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
             modelBuilder.Entity("UntitledRpgLogic.Infrastructure.Data.LookupEntities.FractureTypeLookup", b =>
                 {
                     b.Property<int>("Id")
-                        .HasColumnType("integer")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("id");
 
                     b.Property<string>("Description")
-                        .HasColumnType("text")
+                        .HasMaxLength(512)
+                        .HasColumnType("TEXT")
                         .HasColumnName("description");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(127)
-                        .HasColumnType("character varying(127)")
+                        .HasColumnType("TEXT")
                         .HasColumnName("name");
 
                     b.HasKey("Id")
@@ -1298,17 +1298,18 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
             modelBuilder.Entity("UntitledRpgLogic.Infrastructure.Data.LookupEntities.ItemSubtypeLookup", b =>
                 {
                     b.Property<int>("Id")
-                        .HasColumnType("integer")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("id");
 
                     b.Property<string>("Description")
-                        .HasColumnType("text")
+                        .HasMaxLength(512)
+                        .HasColumnType("TEXT")
                         .HasColumnName("description");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(127)
-                        .HasColumnType("character varying(127)")
+                        .HasColumnType("TEXT")
                         .HasColumnName("name");
 
                     b.HasKey("Id")
@@ -1892,17 +1893,18 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
             modelBuilder.Entity("UntitledRpgLogic.Infrastructure.Data.LookupEntities.ItemTypeLookup", b =>
                 {
                     b.Property<int>("Id")
-                        .HasColumnType("integer")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("id");
 
                     b.Property<string>("Description")
-                        .HasColumnType("text")
+                        .HasMaxLength(512)
+                        .HasColumnType("TEXT")
                         .HasColumnName("description");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(127)
-                        .HasColumnType("character varying(127)")
+                        .HasColumnType("TEXT")
                         .HasColumnName("name");
 
                     b.HasKey("Id")
@@ -1971,17 +1973,18 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
             modelBuilder.Entity("UntitledRpgLogic.Infrastructure.Data.LookupEntities.MapTypeLookup", b =>
                 {
                     b.Property<int>("Id")
-                        .HasColumnType("integer")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("id");
 
                     b.Property<string>("Description")
-                        .HasColumnType("text")
+                        .HasMaxLength(512)
+                        .HasColumnType("TEXT")
                         .HasColumnName("description");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(127)
-                        .HasColumnType("character varying(127)")
+                        .HasColumnType("TEXT")
                         .HasColumnName("name");
 
                     b.HasKey("Id")
@@ -2020,17 +2023,18 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
             modelBuilder.Entity("UntitledRpgLogic.Infrastructure.Data.LookupEntities.MassScaleLookup", b =>
                 {
                     b.Property<int>("Id")
-                        .HasColumnType("integer")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("id");
 
                     b.Property<string>("Description")
-                        .HasColumnType("text")
+                        .HasMaxLength(512)
+                        .HasColumnType("TEXT")
                         .HasColumnName("description");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(127)
-                        .HasColumnType("character varying(127)")
+                        .HasColumnType("TEXT")
                         .HasColumnName("name");
 
                     b.HasKey("Id")
@@ -2064,17 +2068,18 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
             modelBuilder.Entity("UntitledRpgLogic.Infrastructure.Data.LookupEntities.MaterialSlotLookup", b =>
                 {
                     b.Property<byte>("Id")
-                        .HasColumnType("smallint")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("id");
 
                     b.Property<string>("Description")
-                        .HasColumnType("text")
+                        .HasMaxLength(512)
+                        .HasColumnType("TEXT")
                         .HasColumnName("description");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(64)
-                        .HasColumnType("character varying(64)")
+                        .HasColumnType("TEXT")
                         .HasColumnName("name");
 
                     b.HasKey("Id")
@@ -2113,17 +2118,18 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
             modelBuilder.Entity("UntitledRpgLogic.Infrastructure.Data.LookupEntities.MessagePriorityLookup", b =>
                 {
                     b.Property<int>("Id")
-                        .HasColumnType("integer")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("id");
 
                     b.Property<string>("Description")
-                        .HasColumnType("text")
+                        .HasMaxLength(512)
+                        .HasColumnType("TEXT")
                         .HasColumnName("description");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(127)
-                        .HasColumnType("character varying(127)")
+                        .HasColumnType("TEXT")
                         .HasColumnName("name");
 
                     b.HasKey("Id")
@@ -2152,17 +2158,18 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
             modelBuilder.Entity("UntitledRpgLogic.Infrastructure.Data.LookupEntities.MessageTypeLookup", b =>
                 {
                     b.Property<int>("Id")
-                        .HasColumnType("integer")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("id");
 
                     b.Property<string>("Description")
-                        .HasColumnType("text")
+                        .HasMaxLength(512)
+                        .HasColumnType("TEXT")
                         .HasColumnName("description");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(127)
-                        .HasColumnType("character varying(127)")
+                        .HasColumnType("TEXT")
                         .HasColumnName("name");
 
                     b.HasKey("Id")
@@ -2291,17 +2298,18 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
             modelBuilder.Entity("UntitledRpgLogic.Infrastructure.Data.LookupEntities.QualityLookup", b =>
                 {
                     b.Property<int>("Id")
-                        .HasColumnType("integer")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("id");
 
                     b.Property<string>("Description")
-                        .HasColumnType("text")
+                        .HasMaxLength(512)
+                        .HasColumnType("TEXT")
                         .HasColumnName("description");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(127)
-                        .HasColumnType("character varying(127)")
+                        .HasColumnType("TEXT")
                         .HasColumnName("name");
 
                     b.HasKey("Id")
@@ -2360,17 +2368,18 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
             modelBuilder.Entity("UntitledRpgLogic.Infrastructure.Data.LookupEntities.RequirementTypeLookup", b =>
                 {
                     b.Property<int>("Id")
-                        .HasColumnType("integer")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("id");
 
                     b.Property<string>("Description")
-                        .HasColumnType("text")
+                        .HasMaxLength(512)
+                        .HasColumnType("TEXT")
                         .HasColumnName("description");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(127)
-                        .HasColumnType("character varying(127)")
+                        .HasColumnType("TEXT")
                         .HasColumnName("name");
 
                     b.HasKey("Id")
@@ -2429,17 +2438,18 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
             modelBuilder.Entity("UntitledRpgLogic.Infrastructure.Data.LookupEntities.ScalingCurveTypeLookup", b =>
                 {
                     b.Property<int>("Id")
-                        .HasColumnType("integer")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("id");
 
                     b.Property<string>("Description")
-                        .HasColumnType("text")
+                        .HasMaxLength(512)
+                        .HasColumnType("TEXT")
                         .HasColumnName("description");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(127)
-                        .HasColumnType("character varying(127)")
+                        .HasColumnType("TEXT")
                         .HasColumnName("name");
 
                     b.HasKey("Id")
@@ -2473,17 +2483,18 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
             modelBuilder.Entity("UntitledRpgLogic.Infrastructure.Data.LookupEntities.StatVariationLookup", b =>
                 {
                     b.Property<int>("Id")
-                        .HasColumnType("integer")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("id");
 
                     b.Property<string>("Description")
-                        .HasColumnType("text")
+                        .HasMaxLength(512)
+                        .HasColumnType("TEXT")
                         .HasColumnName("description");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(127)
-                        .HasColumnType("character varying(127)")
+                        .HasColumnType("TEXT")
                         .HasColumnName("name");
 
                     b.HasKey("Id")
@@ -2522,17 +2533,18 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
             modelBuilder.Entity("UntitledRpgLogic.Infrastructure.Data.LookupEntities.StateOfMatterLookup", b =>
                 {
                     b.Property<int>("Id")
-                        .HasColumnType("integer")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("id");
 
                     b.Property<string>("Description")
-                        .HasColumnType("text")
+                        .HasMaxLength(512)
+                        .HasColumnType("TEXT")
                         .HasColumnName("description");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(127)
-                        .HasColumnType("character varying(127)")
+                        .HasColumnType("TEXT")
                         .HasColumnName("name");
 
                     b.HasKey("Id")
@@ -2571,17 +2583,18 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
             modelBuilder.Entity("UntitledRpgLogic.Infrastructure.Data.LookupEntities.TargetingTypeLookup", b =>
                 {
                     b.Property<int>("Id")
-                        .HasColumnType("integer")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("id");
 
                     b.Property<string>("Description")
-                        .HasColumnType("text")
+                        .HasMaxLength(512)
+                        .HasColumnType("TEXT")
                         .HasColumnName("description");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(127)
-                        .HasColumnType("character varying(127)")
+                        .HasColumnType("TEXT")
                         .HasColumnName("name");
 
                     b.HasKey("Id")
@@ -2625,11 +2638,11 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
             modelBuilder.Entity("ability_active_effects", b =>
                 {
                     b.Property<byte[]>("AbilityId")
-                        .HasColumnType("bytea")
+                        .HasColumnType("BLOB")
                         .HasColumnName("ability_id");
 
                     b.Property<byte[]>("EffectId")
-                        .HasColumnType("bytea")
+                        .HasColumnType("BLOB")
                         .HasColumnName("effect_id");
 
                     b.HasKey("AbilityId", "EffectId")
@@ -2644,11 +2657,11 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
             modelBuilder.Entity("ability_failure_effects", b =>
                 {
                     b.Property<byte[]>("AbilityId")
-                        .HasColumnType("bytea")
+                        .HasColumnType("BLOB")
                         .HasColumnName("ability_id");
 
                     b.Property<byte[]>("EffectId")
-                        .HasColumnType("bytea")
+                        .HasColumnType("BLOB")
                         .HasColumnName("effect_id");
 
                     b.HasKey("AbilityId", "EffectId")
@@ -2683,15 +2696,15 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                     b.HasBaseType("UntitledRpgLogic.Core.Abilities.Effects.Effect");
 
                     b.Property<int>("DamageType")
-                        .HasColumnType("integer")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("damage_type");
 
                     b.Property<TimeSpan?>("Delay")
-                        .HasColumnType("interval")
+                        .HasColumnType("TEXT")
                         .HasColumnName("delay");
 
                     b.Property<bool>("IgnoresArmor")
-                        .HasColumnType("boolean")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("ignores_armor");
 
                     b.ToTable("effects", (string)null);
@@ -2731,7 +2744,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                     b.HasBaseType("UntitledRpgLogic.Core.Abilities.Effects.Effect");
 
                     b.Property<bool>("CanOverheal")
-                        .HasColumnType("boolean")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("can_overheal");
 
                     b.ToTable("effects", (string)null);
@@ -2744,12 +2757,12 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                     b.HasBaseType("UntitledRpgLogic.Core.Abilities.Effects.Effect");
 
                     b.Property<int>("Quantity")
-                        .HasColumnType("integer")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("quantity");
 
                     b.Property<byte[]>("SummonEntityTemplateId")
                         .IsRequired()
-                        .HasColumnType("bytea")
+                        .HasColumnType("BLOB")
                         .HasColumnName("summon_entity_template_id");
 
                     b.HasIndex("SummonEntityTemplateId")
@@ -2767,14 +2780,14 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                         .HasForeignKey("ModificationEffectsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_modification_base_effects_modifications_modification_effect");
+                        .HasConstraintName("fk_modification_base_effects_modifications_modification_effects_id");
 
                     b.HasOne("UntitledRpgLogic.Core.Abilities.ModifierDefinition", null)
                         .WithMany()
                         .HasForeignKey("ModifierDefinitionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_modification_base_effects_modifier_definitions_modifier_def");
+                        .HasConstraintName("fk_modification_base_effects_modifier_definitions_modifier_definition_id");
                 });
 
             modelBuilder.Entity("ModificationModifierDefinition1", b =>
@@ -2784,7 +2797,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                         .HasForeignKey("ModifierDefinition1Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_modification_stack_effects_modifier_definitions_modifier_de");
+                        .HasConstraintName("fk_modification_stack_effects_modifier_definitions_modifier_definition1id");
 
                     b.HasOne("UntitledRpgLogic.Core.Abilities.Modification", null)
                         .WithMany()
@@ -2821,23 +2834,21 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                         {
                             b1.Property<int>("Id")
                                 .ValueGeneratedOnAdd()
-                                .HasColumnType("integer")
+                                .HasColumnType("INTEGER")
                                 .HasColumnName("id");
-
-                            NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b1.Property<int>("Id"));
 
                             b1.Property<byte[]>("AbilityDefinitionId")
                                 .IsRequired()
-                                .HasColumnType("bytea")
+                                .HasColumnType("BLOB")
                                 .HasColumnName("ability_definition_id");
 
                             b1.Property<float>("Amount")
-                                .HasColumnType("real")
+                                .HasColumnType("REAL")
                                 .HasColumnName("amount");
 
                             b1.Property<byte[]>("StatId")
                                 .IsRequired()
-                                .HasColumnType("bytea")
+                                .HasColumnType("BLOB")
                                 .HasColumnName("stat_id");
 
                             b1.HasKey("Id");
@@ -2868,27 +2879,25 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                         {
                             b1.Property<int>("Id")
                                 .ValueGeneratedOnAdd()
-                                .HasColumnType("integer")
+                                .HasColumnType("INTEGER")
                                 .HasColumnName("id");
-
-                            NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b1.Property<int>("Id"));
 
                             b1.Property<byte[]>("AbilityId")
                                 .IsRequired()
-                                .HasColumnType("bytea")
+                                .HasColumnType("BLOB")
                                 .HasColumnName("ability_id");
 
                             b1.Property<float>("AmountNeeded")
-                                .HasColumnType("real")
+                                .HasColumnType("REAL")
                                 .HasColumnName("amount_needed");
 
                             b1.Property<byte[]>("RequiredEntityId")
                                 .IsRequired()
-                                .HasColumnType("bytea")
+                                .HasColumnType("BLOB")
                                 .HasColumnName("required_entity_id");
 
                             b1.Property<int>("RequirementType")
-                                .HasColumnType("integer")
+                                .HasColumnType("INTEGER")
                                 .HasColumnName("requirement_type");
 
                             b1.HasKey("Id");
@@ -2910,7 +2919,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                                 .HasForeignKey("RequirementType")
                                 .OnDelete(DeleteBehavior.Restrict)
                                 .IsRequired()
-                                .HasConstraintName("fk_ability_casting_requirements_requirement_type_lookup_requir");
+                                .HasConstraintName("fk_ability_casting_requirements_requirement_type_lookup_requirement_type");
 
                             b1.Navigation("Ability");
                         });
@@ -2919,35 +2928,33 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                         {
                             b1.Property<int>("Id")
                                 .ValueGeneratedOnAdd()
-                                .HasColumnType("integer")
+                                .HasColumnType("INTEGER")
                                 .HasColumnName("id");
-
-                            NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b1.Property<int>("Id"));
 
                             b1.Property<byte[]>("AbilityId")
                                 .IsRequired()
-                                .HasColumnType("bytea")
+                                .HasColumnType("BLOB")
                                 .HasColumnName("ability_id");
 
                             b1.Property<float>("AmountAlwaysSucceed")
-                                .HasColumnType("real")
+                                .HasColumnType("REAL")
                                 .HasColumnName("amount_always_succeed");
 
                             b1.Property<float>("AmountNeeded")
-                                .HasColumnType("real")
+                                .HasColumnType("REAL")
                                 .HasColumnName("amount_needed");
 
                             b1.Property<float>("InfluenceScale")
-                                .HasColumnType("real")
+                                .HasColumnType("REAL")
                                 .HasColumnName("influence_scale");
 
                             b1.Property<byte[]>("RequiredEntityId")
                                 .IsRequired()
-                                .HasColumnType("bytea")
+                                .HasColumnType("BLOB")
                                 .HasColumnName("required_entity_id");
 
                             b1.Property<int>("RequirementType")
-                                .HasColumnType("integer")
+                                .HasColumnType("INTEGER")
                                 .HasColumnName("requirement_type");
 
                             b1.HasKey("Id");
@@ -2969,7 +2976,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                                 .HasForeignKey("RequirementType")
                                 .OnDelete(DeleteBehavior.Restrict)
                                 .IsRequired()
-                                .HasConstraintName("fk_ability_failure_influences_requirement_type_lookup_requirem");
+                                .HasConstraintName("fk_ability_failure_influences_requirement_type_lookup_requirement_type");
 
                             b1.Navigation("Ability");
                         });
@@ -2978,27 +2985,25 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                         {
                             b1.Property<int>("Id")
                                 .ValueGeneratedOnAdd()
-                                .HasColumnType("integer")
+                                .HasColumnType("INTEGER")
                                 .HasColumnName("id");
-
-                            NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b1.Property<int>("Id"));
 
                             b1.Property<byte[]>("AbilityId")
                                 .IsRequired()
-                                .HasColumnType("bytea")
+                                .HasColumnType("BLOB")
                                 .HasColumnName("ability_id");
 
                             b1.Property<float>("AmountNeeded")
-                                .HasColumnType("real")
+                                .HasColumnType("REAL")
                                 .HasColumnName("amount_needed");
 
                             b1.Property<byte[]>("RequiredEntityId")
                                 .IsRequired()
-                                .HasColumnType("bytea")
+                                .HasColumnType("BLOB")
                                 .HasColumnName("required_entity_id");
 
                             b1.Property<int>("RequirementType")
-                                .HasColumnType("integer")
+                                .HasColumnType("INTEGER")
                                 .HasColumnName("requirement_type");
 
                             b1.HasKey("Id");
@@ -3020,7 +3025,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                                 .HasForeignKey("RequirementType")
                                 .OnDelete(DeleteBehavior.Restrict)
                                 .IsRequired()
-                                .HasConstraintName("fk_ability_learning_requirements_requirement_type_lookup_requi");
+                                .HasConstraintName("fk_ability_learning_requirements_requirement_type_lookup_requirement_type");
 
                             b1.Navigation("Ability");
                         });
@@ -3050,7 +3055,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                             b1.Property<byte[]>("EffectId");
 
                             b1.Property<int>("__synthesizedOrdinal")
-                                .ValueGeneratedOnAdd();
+                                .ValueGeneratedOnAddOrUpdate();
 
                             b1.Property<int?>("FlatChange");
 
@@ -3069,7 +3074,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
 
                             b1
                                 .ToJson("affected_stats")
-                                .HasColumnType("jsonb");
+                                .HasColumnType("TEXT");
 
                             b1.WithOwner()
                                 .HasForeignKey("EffectId")
@@ -3081,7 +3086,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                             b1.Property<byte[]>("EffectId");
 
                             b1.Property<int>("__synthesizedOrdinal")
-                                .ValueGeneratedOnAdd();
+                                .ValueGeneratedOnAddOrUpdate();
 
                             b1.Property<int>("AmbientType");
 
@@ -3095,7 +3100,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
 
                             b1
                                 .ToJson("affected_ambients")
-                                .HasColumnType("jsonb");
+                                .HasColumnType("TEXT");
 
                             b1.WithOwner()
                                 .HasForeignKey("EffectId")
@@ -3135,7 +3140,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                             b1.Property<byte[]>("EntityId");
 
                             b1.Property<int>("__synthesizedOrdinal")
-                                .ValueGeneratedOnAdd();
+                                .ValueGeneratedOnAddOrUpdate();
 
                             b1.Property<int?>("FlatChange");
 
@@ -3154,7 +3159,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
 
                             b1
                                 .ToJson("affected_stats")
-                                .HasColumnType("jsonb");
+                                .HasColumnType("TEXT");
 
                             b1.WithOwner()
                                 .HasForeignKey("EntityId")
@@ -3164,28 +3169,28 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                     b.OwnsOne("UntitledRpgLogic.Core.Entities.WorldPosition", "Position", b1 =>
                         {
                             b1.Property<byte[]>("EntityId")
-                                .HasColumnType("bytea")
+                                .HasColumnType("BLOB")
                                 .HasColumnName("id");
 
                             b1.Property<short>("Elevation")
-                                .HasColumnType("smallint")
+                                .HasColumnType("INTEGER")
                                 .HasColumnName("position_elevation");
 
                             b1.Property<byte[]>("MapId")
                                 .IsRequired()
-                                .HasColumnType("bytea")
+                                .HasColumnType("BLOB")
                                 .HasColumnName("map_id");
 
                             b1.Property<float>("RotationYaw")
-                                .HasColumnType("real")
+                                .HasColumnType("REAL")
                                 .HasColumnName("rotation_yaw");
 
                             b1.Property<float>("X")
-                                .HasColumnType("real")
+                                .HasColumnType("REAL")
                                 .HasColumnName("position_x");
 
                             b1.Property<float>("Y")
-                                .HasColumnType("real")
+                                .HasColumnType("REAL")
                                 .HasColumnName("position_y");
 
                             b1.HasKey("EntityId");
@@ -3216,7 +3221,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                             b1.Property<byte[]>("EntityDefinitionId");
 
                             b1.Property<int>("__synthesizedOrdinal")
-                                .ValueGeneratedOnAdd();
+                                .ValueGeneratedOnAddOrUpdate();
 
                             b1.Property<int?>("FlatChange");
 
@@ -3235,7 +3240,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
 
                             b1
                                 .ToJson("starting_stats")
-                                .HasColumnType("jsonb");
+                                .HasColumnType("TEXT");
 
                             b1.WithOwner()
                                 .HasForeignKey("EntityDefinitionId")
@@ -3263,7 +3268,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
 
                             b1
                                 .ToJson("respiratory_profile")
-                                .HasColumnType("jsonb");
+                                .HasColumnType("TEXT");
 
                             b1.WithOwner()
                                 .HasForeignKey("EntityDefinitionId")
@@ -3274,7 +3279,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                                     b2.Property<byte[]>("RespiratoryProfileEntityDefinitionId");
 
                                     b2.Property<int>("__synthesizedOrdinal")
-                                        .ValueGeneratedOnAdd();
+                                        .ValueGeneratedOnAddOrUpdate();
 
                                     b2.Property<float>("DangerousPressure");
 
@@ -3290,7 +3295,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
 
                                     b2.WithOwner()
                                         .HasForeignKey("RespiratoryProfileEntityDefinitionId")
-                                        .HasConstraintName("fk_entity_definitions_entity_definitions_respiratory_profile_ent");
+                                        .HasConstraintName("fk_entity_definitions_entity_definitions_respiratory_profile_entity_definition_id");
                                 });
 
                             b1.Navigation("ToxicSubstances");
@@ -3370,7 +3375,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
 
                             b1
                                 .ToJson("filter")
-                                .HasColumnType("jsonb");
+                                .HasColumnType("TEXT");
 
                             b1.WithOwner()
                                 .HasForeignKey("InventoryId")
@@ -3438,27 +3443,25 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                     b.OwnsMany("UntitledRpgLogic.Core.Items.ItemMaterialComponent", "Materials", b1 =>
                         {
                             b1.Property<byte[]>("ItemDefinitionId")
-                                .HasColumnType("bytea")
+                                .HasColumnType("BLOB")
                                 .HasColumnName("item_definition_id");
 
                             b1.Property<int>("Id")
                                 .ValueGeneratedOnAdd()
-                                .HasColumnType("integer")
+                                .HasColumnType("INTEGER")
                                 .HasColumnName("id");
-
-                            NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b1.Property<int>("Id"));
 
                             b1.Property<byte[]>("MaterialId")
                                 .IsRequired()
-                                .HasColumnType("bytea")
+                                .HasColumnType("BLOB")
                                 .HasColumnName("material_id");
 
                             b1.Property<float>("Proportion")
-                                .HasColumnType("real")
+                                .HasColumnType("REAL")
                                 .HasColumnName("proportion");
 
                             b1.Property<byte>("Slot")
-                                .HasColumnType("smallint")
+                                .HasColumnType("INTEGER")
                                 .HasColumnName("slot");
 
                             b1.HasKey("ItemDefinitionId", "Id")
@@ -3474,7 +3477,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
 
                             b1.WithOwner()
                                 .HasForeignKey("ItemDefinitionId")
-                                .HasConstraintName("fk_item_definition_materials_item_definitions_item_definition_");
+                                .HasConstraintName("fk_item_definition_materials_item_definitions_item_definition_id");
 
                             b1.HasOne("UntitledRpgLogic.Core.Materials.MaterialDefinition", "Material")
                                 .WithMany()
@@ -3518,11 +3521,11 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
 
                             b1
                                 .ToJson("electrical_properties")
-                                .HasColumnType("jsonb");
+                                .HasColumnType("TEXT");
 
                             b1.WithOwner()
                                 .HasForeignKey("MaterialDefinitionId")
-                                .HasConstraintName("fk_material_definitions_material_definitions_material_definitio");
+                                .HasConstraintName("fk_material_definitions_material_definitions_material_definition_id");
                         });
 
                     b.OwnsOne("UntitledRpgLogic.Core.Materials.FantasticalProperties", "FantasticalProperties", b1 =>
@@ -3547,11 +3550,11 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
 
                             b1
                                 .ToJson("fantastical_properties")
-                                .HasColumnType("jsonb");
+                                .HasColumnType("TEXT");
 
                             b1.WithOwner()
                                 .HasForeignKey("MaterialDefinitionId")
-                                .HasConstraintName("fk_material_definitions_material_definitions_material_definitio");
+                                .HasConstraintName("fk_material_definitions_material_definitions_material_definition_id");
                         });
 
                     b.OwnsOne("UntitledRpgLogic.Core.Materials.MechanicalProperties", "MechanicalProperties", b1 =>
@@ -3581,11 +3584,11 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
 
                             b1
                                 .ToJson("mechanical_properties")
-                                .HasColumnType("jsonb");
+                                .HasColumnType("TEXT");
 
                             b1.WithOwner()
                                 .HasForeignKey("MaterialDefinitionId")
-                                .HasConstraintName("fk_material_definitions_material_definitions_material_definitio");
+                                .HasConstraintName("fk_material_definitions_material_definitions_material_definition_id");
                         });
 
                     b.OwnsOne("UntitledRpgLogic.Core.Materials.ThermalProperties", "ThermalProperties", b1 =>
@@ -3607,11 +3610,11 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
 
                             b1
                                 .ToJson("thermal_properties")
-                                .HasColumnType("jsonb");
+                                .HasColumnType("TEXT");
 
                             b1.WithOwner()
                                 .HasForeignKey("MaterialDefinitionId")
-                                .HasConstraintName("fk_material_definitions_material_definitions_material_definitio");
+                                .HasConstraintName("fk_material_definitions_material_definitions_material_definition_id");
                         });
 
                     b.OwnsMany("UntitledRpgLogic.Core.Materials.OreYield", "SmeltYields", b1 =>
@@ -3619,7 +3622,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                             b1.Property<byte[]>("MaterialDefinitionId");
 
                             b1.Property<int>("__synthesizedOrdinal")
-                                .ValueGeneratedOnAdd();
+                                .ValueGeneratedOnAddOrUpdate();
 
                             b1.Property<float>("Chance");
 
@@ -3636,33 +3639,31 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
 
                             b1
                                 .ToJson("smelt_yields")
-                                .HasColumnType("jsonb");
+                                .HasColumnType("TEXT");
 
                             b1.WithOwner()
                                 .HasForeignKey("MaterialDefinitionId")
-                                .HasConstraintName("fk_material_definitions_material_definitions_material_definitio");
+                                .HasConstraintName("fk_material_definitions_material_definitions_material_definition_id");
                         });
 
                     b.OwnsMany("UntitledRpgLogic.Core.Materials.StateSpecificProperties", "StateProperties", b1 =>
                         {
                             b1.Property<byte[]>("MaterialDefinitionId")
-                                .HasColumnType("bytea")
+                                .HasColumnType("BLOB")
                                 .HasColumnName("material_definition_id");
 
                             b1.Property<int>("Id")
                                 .ValueGeneratedOnAdd()
-                                .HasColumnType("integer")
+                                .HasColumnType("INTEGER")
                                 .HasColumnName("id");
-
-                            NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b1.Property<int>("Id"));
 
                             b1.Property<string>("Color")
                                 .IsRequired()
-                                .HasColumnType("text")
+                                .HasColumnType("TEXT")
                                 .HasColumnName("color");
 
                             b1.Property<int>("State")
-                                .HasColumnType("integer")
+                                .HasColumnType("INTEGER")
                                 .HasColumnName("state");
 
                             b1.HasKey("MaterialDefinitionId", "Id")
@@ -3675,7 +3676,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
 
                             b1.WithOwner()
                                 .HasForeignKey("MaterialDefinitionId")
-                                .HasConstraintName("fk_material_state_properties_material_definitions_material_def");
+                                .HasConstraintName("fk_material_state_properties_material_definitions_material_definition_id");
 
                             b1.HasOne("UntitledRpgLogic.Infrastructure.Data.LookupEntities.StateOfMatterLookup", null)
                                 .WithMany()
@@ -3687,15 +3688,15 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                             b1.OwnsOne("UntitledRpgLogic.Core.Materials.ElectricalProperties", "ElectricalProperties", b2 =>
                                 {
                                     b2.Property<byte[]>("StateSpecificPropertiesMaterialDefinitionId")
-                                        .HasColumnType("bytea")
+                                        .HasColumnType("BLOB")
                                         .HasColumnName("material_definition_id");
 
                                     b2.Property<int>("StateSpecificPropertiesId")
-                                        .HasColumnType("integer")
+                                        .HasColumnType("INTEGER")
                                         .HasColumnName("id");
 
                                     b2.Property<float>("Conductivity")
-                                        .HasColumnType("real")
+                                        .HasColumnType("REAL")
                                         .HasColumnName("electrical_properties_conductivity");
 
                                     b2.HasKey("StateSpecificPropertiesMaterialDefinitionId", "StateSpecificPropertiesId");
@@ -3704,38 +3705,38 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
 
                                     b2.WithOwner()
                                         .HasForeignKey("StateSpecificPropertiesMaterialDefinitionId", "StateSpecificPropertiesId")
-                                        .HasConstraintName("fk_material_state_properties_material_state_properties_materia");
+                                        .HasConstraintName("fk_material_state_properties_material_state_properties_material_definition_id_id");
                                 });
 
                             b1.OwnsOne("UntitledRpgLogic.Core.Materials.FantasticalProperties", "FantasticalProperties", b2 =>
                                 {
                                     b2.Property<byte[]>("StateSpecificPropertiesMaterialDefinitionId")
-                                        .HasColumnType("bytea")
+                                        .HasColumnType("BLOB")
                                         .HasColumnName("material_definition_id");
 
                                     b2.Property<int>("StateSpecificPropertiesId")
-                                        .HasColumnType("integer")
+                                        .HasColumnType("INTEGER")
                                         .HasColumnName("id");
 
                                     b2.Property<float>("AetherialConductivity")
-                                        .HasColumnType("real")
+                                        .HasColumnType("REAL")
                                         .HasColumnName("fantastical_properties_aetherial_conductivity");
 
                                     b2.Property<string>("ElementalAttunement")
                                         .IsRequired()
-                                        .HasColumnType("text")
+                                        .HasColumnType("TEXT")
                                         .HasColumnName("fantastical_properties_elemental_attunement");
 
                                     b2.Property<float>("Luminosity")
-                                        .HasColumnType("real")
+                                        .HasColumnType("REAL")
                                         .HasColumnName("fantastical_properties_luminosity");
 
                                     b2.Property<float>("ManaCapacity")
-                                        .HasColumnType("real")
+                                        .HasColumnType("REAL")
                                         .HasColumnName("fantastical_properties_mana_capacity");
 
                                     b2.Property<float>("Purity")
-                                        .HasColumnType("real")
+                                        .HasColumnType("REAL")
                                         .HasColumnName("fantastical_properties_purity");
 
                                     b2.HasKey("StateSpecificPropertiesMaterialDefinitionId", "StateSpecificPropertiesId");
@@ -3744,49 +3745,49 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
 
                                     b2.WithOwner()
                                         .HasForeignKey("StateSpecificPropertiesMaterialDefinitionId", "StateSpecificPropertiesId")
-                                        .HasConstraintName("fk_material_state_properties_material_state_properties_materia");
+                                        .HasConstraintName("fk_material_state_properties_material_state_properties_material_definition_id_id");
                                 });
 
                             b1.OwnsOne("UntitledRpgLogic.Core.Materials.MechanicalProperties", "MechanicalProperties", b2 =>
                                 {
                                     b2.Property<byte[]>("StateSpecificPropertiesMaterialDefinitionId")
-                                        .HasColumnType("bytea")
+                                        .HasColumnType("BLOB")
                                         .HasColumnName("material_definition_id");
 
                                     b2.Property<int>("StateSpecificPropertiesId")
-                                        .HasColumnType("integer")
+                                        .HasColumnType("INTEGER")
                                         .HasColumnName("id");
 
                                     b2.Property<float?>("Adhesion")
-                                        .HasColumnType("real")
+                                        .HasColumnType("REAL")
                                         .HasColumnName("mechanical_properties_adhesion");
 
                                     b2.Property<float>("Density")
-                                        .HasColumnType("real")
+                                        .HasColumnType("REAL")
                                         .HasColumnName("mechanical_properties_density");
 
                                     b2.Property<float?>("Hardness")
-                                        .HasColumnType("real")
+                                        .HasColumnType("REAL")
                                         .HasColumnName("mechanical_properties_hardness");
 
                                     b2.Property<float?>("Malleability")
-                                        .HasColumnType("real")
+                                        .HasColumnType("REAL")
                                         .HasColumnName("mechanical_properties_malleability");
 
                                     b2.Property<float?>("Stiffness")
-                                        .HasColumnType("real")
+                                        .HasColumnType("REAL")
                                         .HasColumnName("mechanical_properties_stiffness");
 
                                     b2.Property<float?>("SurfaceTension")
-                                        .HasColumnType("real")
+                                        .HasColumnType("REAL")
                                         .HasColumnName("mechanical_properties_surface_tension");
 
                                     b2.Property<float?>("Toughness")
-                                        .HasColumnType("real")
+                                        .HasColumnType("REAL")
                                         .HasColumnName("mechanical_properties_toughness");
 
                                     b2.Property<float?>("Viscosity")
-                                        .HasColumnType("real")
+                                        .HasColumnType("REAL")
                                         .HasColumnName("mechanical_properties_viscosity");
 
                                     b2.HasKey("StateSpecificPropertiesMaterialDefinitionId", "StateSpecificPropertiesId");
@@ -3795,33 +3796,33 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
 
                                     b2.WithOwner()
                                         .HasForeignKey("StateSpecificPropertiesMaterialDefinitionId", "StateSpecificPropertiesId")
-                                        .HasConstraintName("fk_material_state_properties_material_state_properties_materia");
+                                        .HasConstraintName("fk_material_state_properties_material_state_properties_material_definition_id_id");
                                 });
 
                             b1.OwnsOne("UntitledRpgLogic.Core.Materials.ThermalProperties", "ThermalProperties", b2 =>
                                 {
                                     b2.Property<byte[]>("StateSpecificPropertiesMaterialDefinitionId")
-                                        .HasColumnType("bytea")
+                                        .HasColumnType("BLOB")
                                         .HasColumnName("material_definition_id");
 
                                     b2.Property<int>("StateSpecificPropertiesId")
-                                        .HasColumnType("integer")
+                                        .HasColumnType("INTEGER")
                                         .HasColumnName("id");
 
                                     b2.Property<float>("BoilingPoint")
-                                        .HasColumnType("real")
+                                        .HasColumnType("REAL")
                                         .HasColumnName("thermal_properties_boiling_point");
 
                                     b2.Property<float>("IgnitionTemperature")
-                                        .HasColumnType("real")
+                                        .HasColumnType("REAL")
                                         .HasColumnName("thermal_properties_ignition_temperature");
 
                                     b2.Property<float>("MeltingPoint")
-                                        .HasColumnType("real")
+                                        .HasColumnType("REAL")
                                         .HasColumnName("thermal_properties_melting_point");
 
                                     b2.Property<float>("ThermalConductivity")
-                                        .HasColumnType("real")
+                                        .HasColumnType("REAL")
                                         .HasColumnName("thermal_properties_thermal_conductivity");
 
                                     b2.HasKey("StateSpecificPropertiesMaterialDefinitionId", "StateSpecificPropertiesId");
@@ -3830,7 +3831,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
 
                                     b2.WithOwner()
                                         .HasForeignKey("StateSpecificPropertiesMaterialDefinitionId", "StateSpecificPropertiesId")
-                                        .HasConstraintName("fk_material_state_properties_material_state_properties_materia");
+                                        .HasConstraintName("fk_material_state_properties_material_state_properties_material_definition_id_id");
                                 });
 
                             b1.Navigation("ElectricalProperties");
@@ -3882,7 +3883,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                     b.HasOne("UntitledRpgLogic.Core.Progression.LevelingDefinition", "LevelingDefinition")
                         .WithMany()
                         .HasForeignKey("LevelingDefinitionId")
-                        .HasConstraintName("fk_skill_definitions_leveling_definitions_leveling_definition_");
+                        .HasConstraintName("fk_skill_definitions_leveling_definitions_leveling_definition_id");
 
                     b.Navigation("LevelingDefinition");
                 });
@@ -3901,7 +3902,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                         .HasForeignKey("ModifierDefinitionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_applied_modifiers_modifier_definitions_modifier_definition_");
+                        .HasConstraintName("fk_applied_modifiers_modifier_definitions_modifier_definition_id");
 
                     b.Navigation("Entity");
 
@@ -3980,7 +3981,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
 
                             b1
                                 .ToJson("atmosphere")
-                                .HasColumnType("jsonb");
+                                .HasColumnType("TEXT");
 
                             b1.WithOwner()
                                 .HasForeignKey("MapDefinitionId")
@@ -3991,7 +3992,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                                     b2.Property<byte[]>("AtmosphereProfileMapDefinitionId");
 
                                     b2.Property<int>("__synthesizedOrdinal")
-                                        .ValueGeneratedOnAdd();
+                                        .ValueGeneratedOnAddOrUpdate();
 
                                     b2.Property<byte[]>("MaterialId")
                                         .IsRequired();
@@ -4005,7 +4006,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
 
                                     b2.WithOwner()
                                         .HasForeignKey("AtmosphereProfileMapDefinitionId")
-                                        .HasConstraintName("fk_map_definitions_map_definitions_atmosphere_profile_map_definit");
+                                        .HasConstraintName("fk_map_definitions_map_definitions_atmosphere_profile_map_definition_id");
                                 });
 
                             b1.Navigation("GasFractions");
@@ -4016,7 +4017,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                             b1.Property<byte[]>("MapDefinitionId");
 
                             b1.Property<int>("__synthesizedOrdinal")
-                                .ValueGeneratedOnAdd();
+                                .ValueGeneratedOnAddOrUpdate();
 
                             b1.Property<int>("Type");
 
@@ -4029,7 +4030,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
 
                             b1
                                 .ToJson("baseline_ambients")
-                                .HasColumnType("jsonb");
+                                .HasColumnType("TEXT");
 
                             b1.WithOwner()
                                 .HasForeignKey("MapDefinitionId")
@@ -4050,7 +4051,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
 
                             b1
                                 .ToJson("generation_config")
-                                .HasColumnType("jsonb");
+                                .HasColumnType("TEXT");
 
                             b1.WithOwner()
                                 .HasForeignKey("MapDefinitionId")
@@ -4079,7 +4080,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
 
                                     b2.WithOwner()
                                         .HasForeignKey("WorldMapConfigurationMapDefinitionId")
-                                        .HasConstraintName("fk_map_definitions_map_definitions_world_map_configuration_map_def");
+                                        .HasConstraintName("fk_map_definitions_map_definitions_world_map_configuration_map_definition_id");
                                 });
 
                             b1.OwnsOne("UntitledRpgLogic.Core.World.Generation.HeightmapSettings", "HeightmapSettings", b2 =>
@@ -4113,14 +4114,14 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
 
                                     b2.WithOwner()
                                         .HasForeignKey("WorldMapConfigurationMapDefinitionId")
-                                        .HasConstraintName("fk_map_definitions_map_definitions_world_map_configuration_map_def");
+                                        .HasConstraintName("fk_map_definitions_map_definitions_world_map_configuration_map_definition_id");
                                 });
 
                             b1.OwnsOne("UntitledRpgLogic.Core.World.Generation.HydrologySettings", "HydrologySettings", b2 =>
                                 {
                                     b2.Property<byte[]>("WorldMapConfigurationMapDefinitionId");
 
-                                    b2.Property<int>("BaseRiverDepth");
+                                    b2.Property<ushort>("BaseRiverDepth");
 
                                     b2.Property<bool>("FormInlandLakes");
 
@@ -4143,7 +4144,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
 
                                     b2.WithOwner()
                                         .HasForeignKey("WorldMapConfigurationMapDefinitionId")
-                                        .HasConstraintName("fk_map_definitions_map_definitions_world_map_configuration_map_def");
+                                        .HasConstraintName("fk_map_definitions_map_definitions_world_map_configuration_map_definition_id");
                                 });
 
                             b1.Navigation("ClimateSettings")
@@ -4199,7 +4200,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                             b1.Property<byte[]>("WorldChunkId");
 
                             b1.Property<int>("__synthesizedOrdinal")
-                                .ValueGeneratedOnAdd();
+                                .ValueGeneratedOnAddOrUpdate();
 
                             b1.Property<int>("Type");
 
@@ -4211,7 +4212,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
 
                             b1
                                 .ToJson("ambient_overrides")
-                                .HasColumnType("jsonb");
+                                .HasColumnType("TEXT");
 
                             b1.WithOwner()
                                 .HasForeignKey("WorldChunkId")
@@ -4232,7 +4233,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
 
                             b1
                                 .ToJson("atmosphere_override")
-                                .HasColumnType("jsonb");
+                                .HasColumnType("TEXT");
 
                             b1.WithOwner()
                                 .HasForeignKey("WorldChunkId")
@@ -4243,7 +4244,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                                     b2.Property<byte[]>("AtmosphereProfileWorldChunkId");
 
                                     b2.Property<int>("__synthesizedOrdinal")
-                                        .ValueGeneratedOnAdd();
+                                        .ValueGeneratedOnAddOrUpdate();
 
                                     b2.Property<byte[]>("MaterialId")
                                         .IsRequired();

@@ -8,7 +8,6 @@ namespace UntitledRpgLogic.Core.Abilities.Effects;
 /// </summary>
 public record BuffEffect : Effect
 {
-
 	/// <summary>
 	///     Initializes default base values.
 	/// </summary>

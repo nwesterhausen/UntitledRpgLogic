@@ -69,27 +69,4 @@ public sealed class EffectApplicationService(IStatCalculationService statCalcula
 				: Math.Clamp(stat.ApparentValue - change, min, max);
 		}
 	}
-
-	/// <summary>
-	///     Tries to get a <see cref="Stat" /> that belongs to an <see cref="Entity" />.
-	/// </summary>
-	/// <param name="target">Entity to find stat on</param>
-	/// <param name="statId">The Id of the stat's definition</param>
-	/// <returns>The stat if it was found, otherwise null</returns>
-	private static Stat? FindStat(Entity target, Ulid statId) =>
-		target.Stats
-			.FirstOrDefault(s => s.InstancedStat?.DefinitionId == statId)
-			?.InstancedStat;
-
-	/// <summary>
-	///     Tries to get a <see cref="Stat" /> that belongs to an <see cref="Entity" />.
-	/// </summary>
-	/// <param name="target">Entity to find stat on</param>
-	/// <param name="statName">The name to search the stat by</param>
-	/// <returns>The stat if it was found, otherwise null</returns>
-	private static Stat? FindStat(Entity target, string statName) =>
-		target.Stats
-			.FirstOrDefault(s => string.Equals(s.InstancedStat?.Definition?.Name.Singular, statName,
-				StringComparison.OrdinalIgnoreCase))
-			?.InstancedStat;
 }

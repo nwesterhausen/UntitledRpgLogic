@@ -12,7 +12,7 @@ namespace UntitledRpgLogic.Core.Stats;
 ///     defines how those stats would behave.
 /// </summary>
 [Table("stat_definitions")]
-public record StatDefinition : IDbEntity<Ulid>, IDefined
+public record StatDefinition : IDefined
 {
 	/// <summary>
 	///     Initializes a new instance of the <see cref="StatDefinition" /> class with default values.

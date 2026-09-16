@@ -30,9 +30,24 @@ public record HeightmapSettings
 	/// </summary>
 	public short MaxElevation { get; init; } = 4000;
 
+	/// <summary>
+	///     Affects how different each noise generation is
+	/// </summary>
 	public float Frequency { get; init; } = 0.000_8f;
+
+	/// <summary>
+	///     How many noise generations to run
+	/// </summary>
 	public int Octaves { get; init; } = 5;
+
+	/// <summary>
+	///     How rapidly to decrease the influence of each consecutive octave
+	/// </summary>
 	public float Persistence { get; init; } = 0.45f;
+
+	/// <summary>
+	///     How rapidly to increase the frequency
+	/// </summary>
 	public float Lacunarity { get; init; } = 2.0f;
 
 	/// <summary>

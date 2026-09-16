@@ -974,7 +974,8 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                         .HasColumnName("id");
 
                     b.Property<string>("Description")
-                        .HasColumnType("text")
+                        .HasMaxLength(512)
+                        .HasColumnType("character varying(512)")
                         .HasColumnName("description");
 
                     b.Property<string>("Name")
@@ -1018,7 +1019,8 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                         .HasColumnName("id");
 
                     b.Property<string>("Description")
-                        .HasColumnType("text")
+                        .HasMaxLength(512)
+                        .HasColumnType("character varying(512)")
                         .HasColumnName("description");
 
                     b.Property<string>("Name")
@@ -1112,7 +1114,8 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                         .HasColumnName("id");
 
                     b.Property<string>("Description")
-                        .HasColumnType("text")
+                        .HasMaxLength(512)
+                        .HasColumnType("character varying(512)")
                         .HasColumnName("description");
 
                     b.Property<string>("Name")
@@ -1161,7 +1164,8 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                         .HasColumnName("id");
 
                     b.Property<string>("Description")
-                        .HasColumnType("text")
+                        .HasMaxLength(512)
+                        .HasColumnType("character varying(512)")
                         .HasColumnName("description");
 
                     b.Property<string>("Name")
@@ -1240,7 +1244,8 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                         .HasColumnName("id");
 
                     b.Property<string>("Description")
-                        .HasColumnType("text")
+                        .HasMaxLength(512)
+                        .HasColumnType("character varying(512)")
                         .HasColumnName("description");
 
                     b.Property<string>("Name")
@@ -1299,7 +1304,8 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                         .HasColumnName("id");
 
                     b.Property<string>("Description")
-                        .HasColumnType("text")
+                        .HasMaxLength(512)
+                        .HasColumnType("character varying(512)")
                         .HasColumnName("description");
 
                     b.Property<string>("Name")
@@ -1893,7 +1899,8 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                         .HasColumnName("id");
 
                     b.Property<string>("Description")
-                        .HasColumnType("text")
+                        .HasMaxLength(512)
+                        .HasColumnType("character varying(512)")
                         .HasColumnName("description");
 
                     b.Property<string>("Name")
@@ -1972,7 +1979,8 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                         .HasColumnName("id");
 
                     b.Property<string>("Description")
-                        .HasColumnType("text")
+                        .HasMaxLength(512)
+                        .HasColumnType("character varying(512)")
                         .HasColumnName("description");
 
                     b.Property<string>("Name")
@@ -2021,7 +2029,8 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                         .HasColumnName("id");
 
                     b.Property<string>("Description")
-                        .HasColumnType("text")
+                        .HasMaxLength(512)
+                        .HasColumnType("character varying(512)")
                         .HasColumnName("description");
 
                     b.Property<string>("Name")
@@ -2065,7 +2074,8 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                         .HasColumnName("id");
 
                     b.Property<string>("Description")
-                        .HasColumnType("text")
+                        .HasMaxLength(512)
+                        .HasColumnType("character varying(512)")
                         .HasColumnName("description");
 
                     b.Property<string>("Name")
@@ -2114,7 +2124,8 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                         .HasColumnName("id");
 
                     b.Property<string>("Description")
-                        .HasColumnType("text")
+                        .HasMaxLength(512)
+                        .HasColumnType("character varying(512)")
                         .HasColumnName("description");
 
                     b.Property<string>("Name")
@@ -2153,7 +2164,8 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                         .HasColumnName("id");
 
                     b.Property<string>("Description")
-                        .HasColumnType("text")
+                        .HasMaxLength(512)
+                        .HasColumnType("character varying(512)")
                         .HasColumnName("description");
 
                     b.Property<string>("Name")
@@ -2292,7 +2304,8 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                         .HasColumnName("id");
 
                     b.Property<string>("Description")
-                        .HasColumnType("text")
+                        .HasMaxLength(512)
+                        .HasColumnType("character varying(512)")
                         .HasColumnName("description");
 
                     b.Property<string>("Name")
@@ -2361,7 +2374,8 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                         .HasColumnName("id");
 
                     b.Property<string>("Description")
-                        .HasColumnType("text")
+                        .HasMaxLength(512)
+                        .HasColumnType("character varying(512)")
                         .HasColumnName("description");
 
                     b.Property<string>("Name")
@@ -2430,7 +2444,8 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                         .HasColumnName("id");
 
                     b.Property<string>("Description")
-                        .HasColumnType("text")
+                        .HasMaxLength(512)
+                        .HasColumnType("character varying(512)")
                         .HasColumnName("description");
 
                     b.Property<string>("Name")
@@ -2474,7 +2489,8 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                         .HasColumnName("id");
 
                     b.Property<string>("Description")
-                        .HasColumnType("text")
+                        .HasMaxLength(512)
+                        .HasColumnType("character varying(512)")
                         .HasColumnName("description");
 
                     b.Property<string>("Name")
@@ -2523,7 +2539,8 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                         .HasColumnName("id");
 
                     b.Property<string>("Description")
-                        .HasColumnType("text")
+                        .HasMaxLength(512)
+                        .HasColumnType("character varying(512)")
                         .HasColumnName("description");
 
                     b.Property<string>("Name")
@@ -2572,7 +2589,8 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                         .HasColumnName("id");
 
                     b.Property<string>("Description")
-                        .HasColumnType("text")
+                        .HasMaxLength(512)
+                        .HasColumnType("character varying(512)")
                         .HasColumnName("description");
 
                     b.Property<string>("Name")

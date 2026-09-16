@@ -43,7 +43,8 @@ public static class MacroHeightmapGenerator
 		var modifiedSeed2 = new NoiseSettings { Seed = seed ^ 0xab20cd44u };
 
 		// Secondary buffer width: 25% of the configured ocean border thickness
-		var secondaryBorderThickness = Math.Clamp(worldConfig.HeightmapSettings.OceanBorderThickness * 0.25f, 0.03f, 0.10f);
+		var secondaryBorderThickness =
+			Math.Clamp(worldConfig.HeightmapSettings.OceanBorderThickness * 0.25f, 0.03f, 0.10f);
 		var secondaryBorderStart = 1.0f - secondaryBorderThickness;
 
 		for (var y = 0; y < height; y++)
@@ -70,13 +71,13 @@ public static class MacroHeightmapGenerator
 
 					// 3. Smooth power curve falloff across the outer half of the map
 					// Center (dist <= 0.35) remains unpenalized; edges (dist >= 1.0) drop completely
-					var falloff = 0.0f;
 					const float InnerLandRadius = 0.35f;
 
 					if (dist > InnerLandRadius)
 					{
 						var t = (dist - InnerLandRadius) / (1.15f - InnerLandRadius);
-						falloff = MathF.Pow(Math.Clamp(t, 0.0f, 1.0f), worldConfig.HeightmapSettings.IslandFalloffSteepness);
+						var falloff = MathF.Pow(Math.Clamp(t, 0.0f, 1.0f),
+							worldConfig.HeightmapSettings.IslandFalloffSteepness);
 						// Subtracting the falloff pulls elevations toward 0.0 (< 0.09 is ocean)
 						normalized = Math.Clamp(normalized - falloff, 0.0f, 1.0f);
 					}
@@ -90,10 +91,11 @@ public static class MacroHeightmapGenerator
 					var straightEdgeDist = MathF.Max(absX, absY);
 					var cornerExcessX = MathF.Max(0.0f, absX - (1.0f - cornerRadius));
 					var cornerExcessY = MathF.Max(0.0f, absY - (1.0f - cornerRadius));
-					var cornerDist = (1.0f - cornerRadius) + MathF.Sqrt((cornerExcessX * cornerExcessX) + (cornerExcessY * cornerExcessY));
+					var cornerDist = 1.0f - cornerRadius +
+					                 MathF.Sqrt((cornerExcessX * cornerExcessX) + (cornerExcessY * cornerExcessY));
 
 					// Blend straight edges into rounded corners
-					var roundedBoxDist = (absX > 1.0f - cornerRadius && absY > 1.0f - cornerRadius)
+					var roundedBoxDist = absX > 1.0f - cornerRadius && absY > 1.0f - cornerRadius
 						? cornerDist
 						: straightEdgeDist;
 
@@ -127,7 +129,7 @@ public static class MacroHeightmapGenerator
 					(short)MathF.Round(worldConfig.HeightmapSettings.MinElevation + (shapedElevation * elevationSpan));
 
 
-				heightmap.SetElevation(x, y, (short)Math.Clamp(targetElev, short.MinValue, short.MaxValue));
+				heightmap.SetElevation(x, y, Math.Clamp(targetElev, short.MinValue, short.MaxValue));
 			}
 		}
 

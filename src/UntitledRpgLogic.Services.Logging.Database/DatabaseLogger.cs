@@ -138,7 +138,7 @@ public sealed class DatabaseLogger : ILogger, IDisposable
 	public bool IsEnabled(LogLevel logLevel) => logLevel >= LogLevel.Information;
 
 	/// <inheritdoc />
-	public IDisposable? BeginScope<TState>(TState state) where TState : notnull => this.scopeProvider.Push(state);
+	public IDisposable BeginScope<TState>(TState state) where TState : notnull => this.scopeProvider.Push(state);
 
 	private async Task ProcessLogQueue()
 	{

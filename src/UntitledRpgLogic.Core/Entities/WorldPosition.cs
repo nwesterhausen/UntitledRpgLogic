@@ -8,12 +8,16 @@ namespace UntitledRpgLogic.Core.Entities;
 /// </summary>
 public record WorldPosition
 {
-	/// <inheritdoc />
+	/// <summary>
+	///     Create an empty world position record.
+	/// </summary>
 	public WorldPosition()
 	{
 	}
 
-	/// <inheritdoc />
+	/// <summary>
+	///     Create a world position record.
+	/// </summary>
 	/// <param name="mapId">ULID of the map located on</param>
 	/// <param name="x">X position</param>
 	/// <param name="y">Y position</param>

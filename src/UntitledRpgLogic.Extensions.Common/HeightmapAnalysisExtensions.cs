@@ -1,15 +1,10 @@
-using UntitledRpgLogic.Core.World;
 using UntitledRpgLogic.Core.World.Generation.NoiseMaps;
 
 namespace UntitledRpgLogic.Extensions.Common;
 
-public readonly record struct LandmassStatistics(
-	int TotalTiles,
-	int LandTiles,
-	int WaterTiles,
-	float LandFraction,
-	float LandPercentage);
-
+/// <summary>
+///     Extensions to analyze heightmaps.
+/// </summary>
 public static class HeightmapAnalysisExtensions
 {
 	/// <summary>
@@ -40,10 +35,10 @@ public static class HeightmapAnalysisExtensions
 		var fraction = totalTiles > 0 ? (float)landTiles / totalTiles : 0.0f;
 
 		return new LandmassStatistics(
-			TotalTiles: totalTiles,
-			LandTiles: landTiles,
-			WaterTiles: waterTiles,
-			LandFraction: fraction,
-			LandPercentage: fraction * 100.0f);
+			totalTiles,
+			landTiles,
+			waterTiles,
+			fraction,
+			fraction * 100.0f);
 	}
 }

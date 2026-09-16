@@ -24,7 +24,7 @@ public static class MacroClimateGenerator
 		ArgumentNullException.ThrowIfNull(hydrology);
 		ArgumentNullException.ThrowIfNull(worldConfig);
 
-		var cfg = worldConfig.ClimateSettings ?? new ClimateSettings();
+		var cfg = worldConfig.ClimateSettings;
 		var width = heightmap.WidthTiles;
 		var height = heightmap.HeightTiles;
 

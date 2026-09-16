@@ -1,4 +1,3 @@
-using UntitledRpgLogic.Core.World;
 using UntitledRpgLogic.Core.World.Generation;
 using UntitledRpgLogic.Core.World.Generation.NoiseMaps;
 
@@ -7,8 +6,15 @@ namespace UntitledRpgLogic.WorldGen.Noise;
 /// <summary>
 ///     An API for generating layered noise.
 /// </summary>
-public class NoiseMaker
+public static class NoiseMaker
 {
+	/// <summary>
+	///     Generate noise for a given point and seed.
+	/// </summary>
+	/// <param name="x"></param>
+	/// <param name="y"></param>
+	/// <param name="seed"></param>
+	/// <returns></returns>
 	public static float GenerateSimpleNoise(float x, float y, long seed) =>
 		OpenSimplex2.Noise2(seed, x, y);
 

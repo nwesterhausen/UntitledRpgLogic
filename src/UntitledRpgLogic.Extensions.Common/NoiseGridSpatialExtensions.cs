@@ -1,9 +1,11 @@
-using UntitledRpgLogic.Core.World;
 using UntitledRpgLogic.Core.World.Generation;
 
 namespace UntitledRpgLogic.Extensions.Common;
 
-public static class TerrainGridSpatialExtensions
+/// <summary>
+///     Extensions for spatial math on <see cref="NoiseGridDimensions" />
+/// </summary>
+public static class NoiseGridSpatialExtensions
 {
 	/// <summary>
 	///     Evaluates whether a sub-rectangle fits entirely within the map boundary.

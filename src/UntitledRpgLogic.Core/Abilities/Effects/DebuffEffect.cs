@@ -12,7 +12,7 @@ public record DebuffEffect : Effect
 	///     Initializes default base values.
 	/// </summary>
 	[SetsRequiredMembers]
-	public DebuffEffect() : base(EffectType.Debuff){}
+	public DebuffEffect() : base(EffectType.Debuff) { }
 
 	/// <summary>
 	///     Initializes a new <see cref="Effect" /> with <see cref="EffectType.Debuff" />.

@@ -12,7 +12,7 @@ namespace UntitledRpgLogic.Core.Skills;
 ///     A skill definition in the RPG logic, for usage with a database.
 /// </summary>
 [Table("skill_definitions")]
-public record SkillDefinition : IDbEntity<Ulid>, IDefined
+public record SkillDefinition : IDefined
 {
 	/// <summary>
 	///     Initializes an empty instance of the <see cref="SkillDefinition" /> class (for EF use).

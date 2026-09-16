@@ -70,7 +70,7 @@ public enum BiomeType : byte
 	River = 11,
 
 	/// <summary>
-	/// 	A lake is a collection of water inland, typically made from rivers and rainfall.
+	///     A lake is a collection of water inland, typically made from rivers and rainfall.
 	/// </summary>
 	Lake = 12
 }

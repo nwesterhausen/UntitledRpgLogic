@@ -13,7 +13,7 @@ public record ElementalEffect : Effect
 	///     Initializes default base values.
 	/// </summary>
 	[SetsRequiredMembers]
-	public ElementalEffect() : base(EffectType.Elemental){}
+	public ElementalEffect() : base(EffectType.Elemental) { }
 
 	/// <summary>
 	///     Initializes a new <see cref="Effect" /> with <see cref="EffectType.Elemental" />.

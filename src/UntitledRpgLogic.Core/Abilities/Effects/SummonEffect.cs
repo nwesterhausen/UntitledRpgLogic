@@ -14,7 +14,7 @@ public record SummonEffect : Effect
 	///     Initializes default base values.
 	/// </summary>
 	[SetsRequiredMembers]
-	public SummonEffect() : base(EffectType.Summon){}
+	public SummonEffect() : base(EffectType.Summon) { }
 
 	/// <summary>
 	///     Initializes a new <see cref="Effect" /> with <see cref="EffectType.Summon" />.

@@ -1,8 +1,10 @@
-using UntitledRpgLogic.Core.World;
 using UntitledRpgLogic.Core.World.Generation.NoiseMaps;
 
 namespace UntitledRpgLogic.Extensions.Common;
 
+/// <summary>
+///     Extensions for spatial math with hydrology maps.
+/// </summary>
 public static class HydrologySpatialExtensions
 {
 	/// <summary>

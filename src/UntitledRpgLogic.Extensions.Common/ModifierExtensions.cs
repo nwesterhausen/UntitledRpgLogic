@@ -1,5 +1,4 @@
 using UntitledRpgLogic.Core.Abilities;
-using UntitledRpgLogic.Core.Abilities.Effects;
 
 namespace UntitledRpgLogic.Extensions.Common;
 

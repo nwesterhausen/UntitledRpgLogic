@@ -11,7 +11,7 @@ namespace UntitledRpgLogic.Core.Materials;
 ///     Additional physical properties are attached by owned property classes.
 /// </summary>
 [Table("material_definitions")]
-public record MaterialDefinition : IDbEntity<Ulid>, IDefined
+public record MaterialDefinition : IDefined
 {
 	/// <summary>
 	///     Initializes a new instance of the <see cref="MaterialDefinition" /> record with default values.

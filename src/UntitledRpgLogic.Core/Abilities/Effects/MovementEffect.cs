@@ -12,7 +12,7 @@ public record MovementEffect : Effect
 	///     Initializes default base values.
 	/// </summary>
 	[SetsRequiredMembers]
-	public MovementEffect() : base(EffectType.Movement){}
+	public MovementEffect() : base(EffectType.Movement) { }
 
 	/// <summary>
 	///     Initializes a new <see cref="Effect" /> with <see cref="EffectType.Movement" />.

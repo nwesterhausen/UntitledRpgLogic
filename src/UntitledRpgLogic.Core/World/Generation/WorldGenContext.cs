@@ -27,27 +27,28 @@ public class WorldGenContext
 	}
 
 	/// <summary>
-	/// 	The noisemap for terrain height.
+	///     The noisemap for terrain height.
 	/// </summary>
 	public Heightmap Heightmap { get; }
 
 	/// <summary>
-	/// 	The noisemap for terrain hydrology.
+	///     The noisemap for terrain hydrology.
 	/// </summary>
 	public HydrologyMap Hydrology { get; }
 
 	/// <summary>
-	/// 	The determined climate at grid locations based on height and hydrology.
+	///     The determined climate at grid locations based on height and hydrology.
 	/// </summary>
 	public ClimateGrid Climate { get; }
 
 	/// <summary>
-	/// 	A mapping of <see cref="MaterialDefinition" /> to <see cref="BiomeType"/> for the base ground material in each biome.
+	///     A mapping of <see cref="MaterialDefinition" /> to <see cref="BiomeType" /> for the base ground material in each
+	///     biome.
 	/// </summary>
 	public BiomeMaterialMapping MaterialMapping { get; }
 
 	/// <summary>
-	/// 	The seed used to generate the noise maps.
+	///     The seed used to generate the noise maps.
 	/// </summary>
 	public uint Seed { get; }
 }

@@ -31,6 +31,14 @@ public static class MacroHydrologyGenerator
 		(-1, 1) // South-West
 	];
 
+	/// <summary>
+	/// </summary>
+	/// <param name="heightmap"></param>
+	/// <param name="seed"></param>
+	/// <param name="waterMaterialId"></param>
+	/// <param name="worldConfig"></param>
+	/// <returns></returns>
+	/// <exception cref="ArgumentNullException"></exception>
 	public static HydrologyMap Generate(
 		Heightmap heightmap,
 		uint seed,
@@ -40,7 +48,7 @@ public static class MacroHydrologyGenerator
 		ArgumentNullException.ThrowIfNull(heightmap);
 		ArgumentNullException.ThrowIfNull(worldConfig);
 
-		var cfg = worldConfig.HydrologySettings ?? new HydrologySettings();
+		var cfg = worldConfig.HydrologySettings;
 		var width = heightmap.WidthTiles;
 		var height = heightmap.HeightTiles;
 		var hydrology = new HydrologyMap(width, height);
@@ -314,7 +322,6 @@ public static class MacroHydrologyGenerator
 		HydrologySettings cfg)
 	{
 		var width = heightmap.WidthTiles;
-		var height = heightmap.HeightTiles;
 		var sinkElevation = heightmap.GetElevation(sinkX, sinkY);
 
 		// Lake water level fills up to a capped spillway height above the basin bottom
@@ -339,7 +346,7 @@ public static class MacroHydrologyGenerator
 				var depth = (ushort)Math.Clamp(lakeWaterLevel - elev + cfg.BaseRiverDepth, 1, ushort.MaxValue);
 
 				// Setting isRiverChannel: false causes MacroClimateGenerator to classify this as BiomeType.Lake
-				hydrology.SetLiquid(cx, cy, depth, waterMaterialId, false);
+				hydrology.SetLiquid(cx, cy, depth, waterMaterialId);
 				tilesFilled++;
 
 				foreach (var (dx, dy) in AllNeighbors)

@@ -12,7 +12,7 @@ public record TransformationEffect : Effect
 	///     Initializes default base values.
 	/// </summary>
 	[SetsRequiredMembers]
-	public TransformationEffect() : base(EffectType.Transformation){}
+	public TransformationEffect() : base(EffectType.Transformation) { }
 
 	/// <summary>
 	///     Initializes a new <see cref="Effect" /> with <see cref="EffectType.Transformation" />.

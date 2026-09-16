@@ -12,7 +12,7 @@ namespace UntitledRpgLogic.Core.Entities;
 ///     Provides baseline attributes, creature classification, and spawning templates for active world entities.
 /// </summary>
 [Table("entity_definitions")]
-public record EntityDefinition : IDbEntity<Ulid>, IDefined
+public record EntityDefinition : IDefined
 {
 	/// <summary>
 	///     Initializes a new instance of the <see cref="EntityDefinition" /> record with default values for EF Core.

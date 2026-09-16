@@ -27,7 +27,14 @@ public static class EntityProgressionExtensions
 
 			RequirementType.None => true,
 
-			_ => true
+			// How to check these?
+			// RequirementType.OwnedItem => expr,
+			// RequirementType.OwnedItemSet => expr,
+			// RequirementType.RaceLevel => expr,
+			// RequirementType.ClassLevel => expr,
+			// RequirementType.ProfessionLevel => expr,
+			// RequirementType.OngoingSpell => expr,
+			_ => false
 		};
 	}
 

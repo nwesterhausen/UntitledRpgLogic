@@ -26,7 +26,7 @@ public abstract record Effect : IDbEntity<Ulid>
 	///     Initializes with default values and a designated type.
 	/// </summary>
 	[SetsRequiredMembers]
-	protected Effect(EffectType effectType): this()
+	protected Effect(EffectType effectType) : this()
 	{
 		this.EffectType = effectType;
 		this.Name = new Name($"{nameof(this.EffectType)}-{this.Id.ToString()[..16]})");

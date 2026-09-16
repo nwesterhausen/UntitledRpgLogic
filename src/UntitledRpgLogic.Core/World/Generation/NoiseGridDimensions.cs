@@ -6,7 +6,7 @@ namespace UntitledRpgLogic.Core.World.Generation;
 public abstract class NoiseGridDimensions
 {
 	/// <summary>
-	/// 	Create a new noise grid of specific size.
+	///     Create a new noise grid of specific size.
 	/// </summary>
 	/// <param name="widthTiles">Width of the grid</param>
 	/// <param name="heightTiles">Height of the grid</param>

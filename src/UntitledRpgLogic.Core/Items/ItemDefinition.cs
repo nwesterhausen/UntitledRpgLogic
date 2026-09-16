@@ -11,7 +11,7 @@ namespace UntitledRpgLogic.Core.Items;
 ///     Provides baseline attributes, classification, and constraints for all instantiated game items.
 /// </summary>
 [Table("item_definitions")]
-public record ItemDefinition : IDbEntity<Ulid>, IDefined
+public record ItemDefinition : IDefined
 {
 	/// <summary>
 	///     Initializes a new instance of the <see cref="ItemDefinition" /> record with default values (for EF Core).

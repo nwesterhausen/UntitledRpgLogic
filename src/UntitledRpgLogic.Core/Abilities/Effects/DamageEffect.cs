@@ -13,7 +13,7 @@ public record DamageEffect : Effect
 	///     Creates an empty damage effect record.
 	/// </summary>
 	[SetsRequiredMembers]
-	public DamageEffect(): base(EffectType.Damage) => this.DamageType = DamageType.None;
+	public DamageEffect() : base(EffectType.Damage) => this.DamageType = DamageType.None;
 
 	/// <summary>
 	///     Initializes a new <see cref="Effect" /> with <see cref="EffectType.Damage" />.

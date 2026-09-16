@@ -969,6 +969,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                         .HasColumnName("id");
 
                     b.Property<string>("Description")
+                        .HasMaxLength(512)
                         .HasColumnType("TEXT")
                         .HasColumnName("description");
 
@@ -1013,6 +1014,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                         .HasColumnName("id");
 
                     b.Property<string>("Description")
+                        .HasMaxLength(512)
                         .HasColumnType("TEXT")
                         .HasColumnName("description");
 
@@ -1107,6 +1109,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                         .HasColumnName("id");
 
                     b.Property<string>("Description")
+                        .HasMaxLength(512)
                         .HasColumnType("TEXT")
                         .HasColumnName("description");
 
@@ -1156,6 +1159,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                         .HasColumnName("id");
 
                     b.Property<string>("Description")
+                        .HasMaxLength(512)
                         .HasColumnType("TEXT")
                         .HasColumnName("description");
 
@@ -1235,6 +1239,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                         .HasColumnName("id");
 
                     b.Property<string>("Description")
+                        .HasMaxLength(512)
                         .HasColumnType("TEXT")
                         .HasColumnName("description");
 
@@ -1294,6 +1299,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                         .HasColumnName("id");
 
                     b.Property<string>("Description")
+                        .HasMaxLength(512)
                         .HasColumnType("TEXT")
                         .HasColumnName("description");
 
@@ -1888,6 +1894,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                         .HasColumnName("id");
 
                     b.Property<string>("Description")
+                        .HasMaxLength(512)
                         .HasColumnType("TEXT")
                         .HasColumnName("description");
 
@@ -1967,6 +1974,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                         .HasColumnName("id");
 
                     b.Property<string>("Description")
+                        .HasMaxLength(512)
                         .HasColumnType("TEXT")
                         .HasColumnName("description");
 
@@ -2016,6 +2024,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                         .HasColumnName("id");
 
                     b.Property<string>("Description")
+                        .HasMaxLength(512)
                         .HasColumnType("TEXT")
                         .HasColumnName("description");
 
@@ -2060,6 +2069,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                         .HasColumnName("id");
 
                     b.Property<string>("Description")
+                        .HasMaxLength(512)
                         .HasColumnType("TEXT")
                         .HasColumnName("description");
 
@@ -2109,6 +2119,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                         .HasColumnName("id");
 
                     b.Property<string>("Description")
+                        .HasMaxLength(512)
                         .HasColumnType("TEXT")
                         .HasColumnName("description");
 
@@ -2148,6 +2159,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                         .HasColumnName("id");
 
                     b.Property<string>("Description")
+                        .HasMaxLength(512)
                         .HasColumnType("TEXT")
                         .HasColumnName("description");
 
@@ -2287,6 +2299,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                         .HasColumnName("id");
 
                     b.Property<string>("Description")
+                        .HasMaxLength(512)
                         .HasColumnType("TEXT")
                         .HasColumnName("description");
 
@@ -2356,6 +2369,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                         .HasColumnName("id");
 
                     b.Property<string>("Description")
+                        .HasMaxLength(512)
                         .HasColumnType("TEXT")
                         .HasColumnName("description");
 
@@ -2425,6 +2439,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                         .HasColumnName("id");
 
                     b.Property<string>("Description")
+                        .HasMaxLength(512)
                         .HasColumnType("TEXT")
                         .HasColumnName("description");
 
@@ -2469,6 +2484,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                         .HasColumnName("id");
 
                     b.Property<string>("Description")
+                        .HasMaxLength(512)
                         .HasColumnType("TEXT")
                         .HasColumnName("description");
 
@@ -2518,6 +2534,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                         .HasColumnName("id");
 
                     b.Property<string>("Description")
+                        .HasMaxLength(512)
                         .HasColumnType("TEXT")
                         .HasColumnName("description");
 
@@ -2567,6 +2584,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                         .HasColumnName("id");
 
                     b.Property<string>("Description")
+                        .HasMaxLength(512)
                         .HasColumnType("TEXT")
                         .HasColumnName("description");
 

@@ -1,5 +1,4 @@
 using Microsoft.Extensions.DependencyInjection;
-using UntitledRpgLogic.Core.World;
 using UntitledRpgLogic.Core.World.Generation;
 
 namespace UntitledRpgLogic.WorldGen;
