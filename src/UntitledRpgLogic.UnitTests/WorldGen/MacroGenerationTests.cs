@@ -24,9 +24,9 @@ public sealed class MacroGenerationTests
 	public void MacroHeightmapGenerator_ValidDimensions_GeneratesWithinSpecifiedBounds()
 	{
 		var settings = new HeightmapSettings { MinElevation = -500, MaxElevation = 1500 };
-		var mapConfig = new WorldMapConfiguration { HeightTiles = 64, WidthTiles = 64, HeightmapSettings = settings };
+		var mapConfig = new WorldMapConfiguration { Seed = 12345u, HeightTiles = 64, WidthTiles = 64, HeightmapSettings = settings };
 
-		var map = MacroHeightmapGenerator.Generate(12345u, mapConfig);
+		var map = MacroHeightmapGenerator.Generate(mapConfig);
 
 		Assert.AreEqual(64, map.WidthTiles);
 		Assert.AreEqual(64, map.HeightTiles);
@@ -47,11 +47,12 @@ public sealed class MacroGenerationTests
 	{
 		var mapConfig = new WorldMapConfiguration
 		{
+			Seed = 777u,
 			HeightTiles = 32,
 			WidthTiles = 32,
-			HeightmapSettings = new HeightmapSettings { SeaLevel = 0, MinElevation = -1000, MaxElevation = 1000 }
+			HeightmapSettings = new HeightmapSettings {  SeaLevel = 0, MinElevation = -1000, MaxElevation = 1000 }
 		};
-		var heightmap = MacroHeightmapGenerator.Generate(777u, mapConfig);
+		var heightmap = MacroHeightmapGenerator.Generate(mapConfig);
 
 		var waterId = Ulid.NewUlid();
 		var hydrology = MacroHydrologyGenerator.Generate(heightmap, 777u, waterId, mapConfig);

@@ -8,6 +8,11 @@ namespace UntitledRpgLogic.Core.World;
 public record WorldMapConfiguration
 {
 	/// <summary>
+	/// 	The seed used for random generation.
+	/// </summary>
+	public long Seed { get; init; } = 0x12345678u;
+
+	/// <summary>
 	///     Gets the total horizontal extent of the map in tiles. Defaults to 512.
 	/// </summary>
 	public int WidthTiles { get; init; } = 512;

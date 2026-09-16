@@ -33,7 +33,7 @@ public sealed class WorldGenContextProvider : IWorldGenContextProvider
 			var mapping = new BiomeMaterialMapping();
 
 			// 1. Generate macro heightmap
-			var heightmap = MacroHeightmapGenerator.Generate(map.Seed, worldConfig);
+			var heightmap = MacroHeightmapGenerator.Generate(worldConfig);
 
 			// 2. Simulate ocean filling and river descent
 			var hydrology = MacroHydrologyGenerator.Generate(heightmap, map.Seed, mapping.WaterMaterialId, worldConfig);

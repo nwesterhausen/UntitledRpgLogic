@@ -8,19 +8,21 @@ namespace UntitledRpgLogic.WorldGen.Generators;
 /// <summary>
 ///     Generates a heightmap based on settings.
 /// </summary>
-public static class MacroHeightmapGenerator
+public sealed class MacroHeightmapGenerator : INoisemapGenerator<Heightmap>
 {
+	private MacroHeightmapGenerator() {}
+
 	/// <summary>
 	///     Populates a <see cref="Heightmap" /> with bedrock elevations, applying an ocean falloff mask if requested.
 	/// </summary>
 	public static Heightmap Generate(
-		uint seed,
-		WorldMapConfiguration worldConfig)
+		WorldMapConfiguration worldConfig,WorldGenContext? generationContext = null)
 	{
 		ArgumentNullException.ThrowIfNull(worldConfig);
 		ArgumentOutOfRangeException.ThrowIfNegativeOrZero(worldConfig.WidthTiles);
 		ArgumentOutOfRangeException.ThrowIfNegativeOrZero(worldConfig.HeightTiles);
 
+		var seed = worldConfig.Seed;
 		var noiseSettings = new NoiseSettings
 		{
 			Seed = seed,
