@@ -1,4 +1,4 @@
-<Project Sdk="MSTest.Sdk/4.4.0">
+<Project Sdk="MSTest.Sdk/4.4.1">
 	<PropertyGroup>
 		<!-- Do not generate or require XML documentation in tests -->
 		<GenerateDocumentationFile>false</GenerateDocumentationFile>
