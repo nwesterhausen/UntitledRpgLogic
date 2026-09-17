@@ -8,7 +8,7 @@ namespace UntitledRpgLogic.Core.World;
 public record WorldMapConfiguration
 {
 	/// <summary>
-	/// 	The seed used for random generation.
+	///     The seed used for random generation.
 	/// </summary>
 	public long Seed { get; init; } = 0x12345678u;
 
@@ -25,15 +25,20 @@ public record WorldMapConfiguration
 	/// <summary>
 	///     Specific elevation noise frequencies, octaves, and vertical limits.
 	/// </summary>
-	public HeightmapSettings HeightmapSettings { get; init; } = new();
+	public TerrainConfiguration Terrain { get; init; } = new();
 
 	/// <summary>
 	///     Precipitation cycles, river carving flux, and sea fill rules.
 	/// </summary>
-	public HydrologySettings HydrologySettings { get; init; } = new();
+	public HydrologyConfiguration Hydrology { get; init; } = new();
 
 	/// <summary>
 	///     Latitudinal temperature curves, lapse rates, and moisture distribution.
 	/// </summary>
-	public ClimateSettings ClimateSettings { get; init; } = new();
+	public ClimateConfiguration Climate { get; init; } = new();
+
+	/// <summary>
+	///     Alignment, savagery, and magical options.
+	/// </summary>
+	public ArcanaConfiguration Arcana { get; init; } = new();
 }

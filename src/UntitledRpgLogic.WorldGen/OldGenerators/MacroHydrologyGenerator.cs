@@ -40,21 +40,21 @@ public static class MacroHydrologyGenerator
 	/// <returns></returns>
 	/// <exception cref="ArgumentNullException"></exception>
 	public static HydrologyMap Generate(
-		Heightmap heightmap,
-		uint seed,
+		HeightMap heightmap,
+		long seed,
 		Ulid waterMaterialId,
 		WorldMapConfiguration worldConfig)
 	{
 		ArgumentNullException.ThrowIfNull(heightmap);
 		ArgumentNullException.ThrowIfNull(worldConfig);
 
-		var cfg = worldConfig.HydrologySettings;
+		var cfg = worldConfig.Hydrology;
 		var width = heightmap.WidthTiles;
 		var height = heightmap.HeightTiles;
 		var hydrology = new HydrologyMap(width, height);
 
 		// 1. Flood-fill connected perimeter oceans using SeaLevel
-		FloodFillConnectedOceans(heightmap, hydrology, waterMaterialId, worldConfig.HeightmapSettings.SeaLevel);
+		FloodFillConnectedOceans(heightmap, hydrology, waterMaterialId, worldConfig.Terrain.SeaLevel);
 
 		// 2. Pre-generate continuous moisture map to guide river origins
 		var moistureMap = NoiseMaker.GenerateNoiseArray(
@@ -80,7 +80,7 @@ public static class MacroHydrologyGenerator
 			var ry = rng.NextInt(1, height - 1);
 
 			// Rivers start primarily in moist uplands above sea level
-			if (heightmap.GetElevation(rx, ry) <= worldConfig.HeightmapSettings.SeaLevel + 40 ||
+			if (heightmap.GetElevation(rx, ry) <= worldConfig.Terrain.SeaLevel + 40 ||
 			    moistureMap[(ry * width) + rx] < 0.55f)
 			{
 				continue;
@@ -107,7 +107,7 @@ public static class MacroHydrologyGenerator
 				var elev = heightmap.GetElevation(x, y);
 
 				// Skip tiles already submerged in oceans
-				if (hydrology.GetLiquidDepth(x, y) > 0 && elev < worldConfig.HeightmapSettings.SeaLevel)
+				if (hydrology.GetLiquidDepth(x, y) > 0 && elev < worldConfig.Terrain.SeaLevel)
 				{
 					continue;
 				}
@@ -139,7 +139,7 @@ public static class MacroHydrologyGenerator
 	}
 
 	private static void FloodFillConnectedOceans(
-		Heightmap heightmap,
+		HeightMap heightmap,
 		HydrologyMap hydrology,
 		Ulid oceanWaterId,
 		short seaLevel)
@@ -200,7 +200,7 @@ public static class MacroHydrologyGenerator
 	}
 
 	private static int TraceDescentPath(
-		Heightmap heightmap,
+		HeightMap heightmap,
 		HydrologyMap hydrology,
 		int startX,
 		int startY,
@@ -210,7 +210,7 @@ public static class MacroHydrologyGenerator
 		var cx = startX;
 		var cy = startY;
 		var steps = 0;
-		var cfg = worldConfig.HydrologySettings;
+		var cfg = worldConfig.Hydrology;
 
 		while (steps < cfg.MaxDescentSteps)
 		{
@@ -219,7 +219,7 @@ public static class MacroHydrologyGenerator
 			var curElev = heightmap.GetElevation(cx, cy);
 
 			// Terminate once an ocean basin is reached
-			if (curElev < worldConfig.HeightmapSettings.SeaLevel && hydrology.GetLiquidDepth(cx, cy) > 0)
+			if (curElev < worldConfig.Terrain.SeaLevel && hydrology.GetLiquidDepth(cx, cy) > 0)
 			{
 				break;
 			}
@@ -261,21 +261,21 @@ public static class MacroHydrologyGenerator
 	}
 
 	private static void FloodInlandTerminalLakes(
-		Heightmap heightmap,
+		HeightMap heightmap,
 		HydrologyMap hydrology,
 		Ulid waterMaterialId,
 		WorldMapConfiguration worldConfig)
 	{
 		var width = heightmap.WidthTiles;
 		var height = heightmap.HeightTiles;
-		var cfg = worldConfig.HydrologySettings;
+		var cfg = worldConfig.Hydrology;
 
 		for (var y = 0; y < height; y++)
 		{
 			for (var x = 0; x < width; x++)
 			{
 				// Only examine active river tiles sitting at or above sea level
-				if (!hydrology.IsRiver(x, y) || heightmap.GetElevation(x, y) < worldConfig.HeightmapSettings.SeaLevel)
+				if (!hydrology.IsRiver(x, y) || heightmap.GetElevation(x, y) < worldConfig.Terrain.SeaLevel)
 				{
 					continue;
 				}
@@ -289,7 +289,7 @@ public static class MacroHydrologyGenerator
 		}
 	}
 
-	private static bool IsDepressionSink(Heightmap heightmap, HydrologyMap hydrology, int cx, int cy)
+	private static bool IsDepressionSink(HeightMap heightmap, HydrologyMap hydrology, int cx, int cy)
 	{
 		var curElev = heightmap.GetElevation(cx, cy);
 
@@ -314,12 +314,12 @@ public static class MacroHydrologyGenerator
 	}
 
 	private static void FloodFillLake(
-		Heightmap heightmap,
+		HeightMap heightmap,
 		HydrologyMap hydrology,
 		int sinkX,
 		int sinkY,
 		Ulid waterMaterialId,
-		HydrologySettings cfg)
+		HydrologyConfiguration cfg)
 	{
 		var width = heightmap.WidthTiles;
 		var sinkElevation = heightmap.GetElevation(sinkX, sinkY);

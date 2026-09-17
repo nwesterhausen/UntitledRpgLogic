@@ -53,7 +53,7 @@ public sealed class MacroClimateTests
 	[TestMethod]
 	public void MacroClimateGenerator_ElevationLapseRate_CoolerAtHighAltitudes()
 	{
-		var heightmap = new Heightmap(10, 10);
+		var heightmap = new HeightMap(10, 10);
 		var hydrology = new HydrologyMap(10, 10);
 
 		// Cell (0, 5) low valley at equator; Cell (1, 5) high mountain at equator

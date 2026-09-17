@@ -4057,6 +4057,8 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
 
                             b1.Property<int>("HeightTiles");
 
+                            b1.Property<long>("Seed");
+
                             b1.Property<int>("WidthTiles");
 
                             b1.HasKey("MapDefinitionId");
@@ -4071,7 +4073,61 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                                 .HasForeignKey("MapDefinitionId")
                                 .HasConstraintName("fk_map_definitions_map_definitions_id");
 
-                            b1.OwnsOne("UntitledRpgLogic.Core.World.Generation.ClimateSettings", "ClimateSettings", b2 =>
+                            b1.OwnsOne("UntitledRpgLogic.Core.World.ArcanaConfiguration", "Arcana", b2 =>
+                                {
+                                    b2.Property<byte[]>("WorldMapConfigurationMapDefinitionId");
+
+                                    b2.Property<float>("AlignmentInfluence");
+
+                                    b2.Property<bool>("AllowNeutralAffinity");
+
+                                    b2.Property<float>("BenignSavageryWeight");
+
+                                    b2.Property<float>("EvilAlignmentWeight");
+
+                                    b2.Property<float>("GoodAlignmentWeight");
+
+                                    b2.Property<float>("MeanManaDensity");
+
+                                    b2.Property<float>("SavageryInfluence");
+
+                                    b2.Property<float>("VisciousSavageryWeight");
+
+                                    b2.HasKey("WorldMapConfigurationMapDefinitionId")
+                                        .HasName("pk_map_definitions");
+
+                                    b2.ToTable("map_definitions");
+
+                                    b2.WithOwner()
+                                        .HasForeignKey("WorldMapConfigurationMapDefinitionId")
+                                        .HasConstraintName("fk_map_definitions_map_definitions_world_map_configuration_map_def");
+
+                                    b2.OwnsMany("UntitledRpgLogic.Core.World.ElementalOption", "AvailableElements", b3 =>
+                                        {
+                                            b3.Property<byte[]>("ArcanaConfigurationWorldMapConfigurationMapDefinitionId");
+
+                                            b3.Property<int>("__synthesizedOrdinal")
+                                                .ValueGeneratedOnAdd();
+
+                                            b3.Property<byte[]>("DefinitionId")
+                                                .IsRequired();
+
+                                            b3.Property<float>("Frequency");
+
+                                            b3.HasKey("ArcanaConfigurationWorldMapConfigurationMapDefinitionId", "__synthesizedOrdinal")
+                                                .HasName("pk_map_definitions");
+
+                                            b3.ToTable("map_definitions");
+
+                                            b3.WithOwner()
+                                                .HasForeignKey("ArcanaConfigurationWorldMapConfigurationMapDefinitionId")
+                                                .HasConstraintName("fk_map_definitions_map_definitions_arcana_configuration_world_map");
+                                        });
+
+                                    b2.Navigation("AvailableElements");
+                                });
+
+                            b1.OwnsOne("UntitledRpgLogic.Core.World.Generation.ClimateConfiguration", "Climate", b2 =>
                                 {
                                     b2.Property<byte[]>("WorldMapConfigurationMapDefinitionId");
 
@@ -4079,11 +4135,16 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
 
                                     b2.Property<float>("LapseRatePer1000M");
 
-                                    b2.Property<short>("MountainThreshold");
+                                    b2.Property<bool>("NorthPole");
 
                                     b2.Property<float>("PoleTemperature");
 
+                                    b2.Property<byte[]>("RainLiquidMaterialId")
+                                        .IsRequired();
+
                                     b2.Property<float>("RainfallNoiseFrequency");
+
+                                    b2.Property<bool>("SouthPol");
 
                                     b2.Property<float>("TemperatureNoiseFrequency");
 
@@ -4097,41 +4158,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                                         .HasConstraintName("fk_map_definitions_map_definitions_world_map_configuration_map_def");
                                 });
 
-                            b1.OwnsOne("UntitledRpgLogic.Core.World.Generation.HeightmapSettings", "HeightmapSettings", b2 =>
-                                {
-                                    b2.Property<byte[]>("WorldMapConfigurationMapDefinitionId");
-
-                                    b2.Property<float>("Frequency");
-
-                                    b2.Property<float>("IslandFalloffSteepness");
-
-                                    b2.Property<float>("Lacunarity");
-
-                                    b2.Property<short>("MaxElevation");
-
-                                    b2.Property<short>("MinElevation");
-
-                                    b2.Property<float>("OceanBorderThickness");
-
-                                    b2.Property<int>("Octaves");
-
-                                    b2.Property<float>("Persistence");
-
-                                    b2.Property<short>("SeaLevel");
-
-                                    b2.Property<bool>("SurroundWithOcean");
-
-                                    b2.HasKey("WorldMapConfigurationMapDefinitionId")
-                                        .HasName("pk_map_definitions");
-
-                                    b2.ToTable("map_definitions");
-
-                                    b2.WithOwner()
-                                        .HasForeignKey("WorldMapConfigurationMapDefinitionId")
-                                        .HasConstraintName("fk_map_definitions_map_definitions_world_map_configuration_map_def");
-                                });
-
-                            b1.OwnsOne("UntitledRpgLogic.Core.World.Generation.HydrologySettings", "HydrologySettings", b2 =>
+                            b1.OwnsOne("UntitledRpgLogic.Core.World.Generation.HydrologyConfiguration", "Hydrology", b2 =>
                                 {
                                     b2.Property<byte[]>("WorldMapConfigurationMapDefinitionId");
 
@@ -4139,11 +4166,17 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
 
                                     b2.Property<bool>("FormInlandLakes");
 
+                                    b2.Property<byte[]>("FreshwaterLiquidMaterialId")
+                                        .IsRequired();
+
                                     b2.Property<int>("MaxDescentSteps");
 
                                     b2.Property<short>("MaxLakeDepthMeters");
 
                                     b2.Property<int>("MaxLakeTiles");
+
+                                    b2.Property<byte[]>("OceanLiquidMaterialId")
+                                        .IsRequired();
 
                                     b2.Property<int>("RaindropCycles");
 
@@ -4161,13 +4194,126 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                                         .HasConstraintName("fk_map_definitions_map_definitions_world_map_configuration_map_def");
                                 });
 
-                            b1.Navigation("ClimateSettings")
+                            b1.OwnsOne("UntitledRpgLogic.Core.World.Generation.TerrainConfiguration", "Terrain", b2 =>
+                                {
+                                    b2.Property<byte[]>("WorldMapConfigurationMapDefinitionId");
+
+                                    b2.Property<float>("IslandFalloffSteepness");
+
+                                    b2.Property<short>("MaxElevation");
+
+                                    b2.Property<short>("MinElevation");
+
+                                    b2.Property<short>("MountainThreshold");
+
+                                    b2.Property<float>("OceanBorderThickness");
+
+                                    b2.Property<short>("SeaLevel");
+
+                                    b2.Property<bool>("SurroundWithOcean");
+
+                                    b2.HasKey("WorldMapConfigurationMapDefinitionId")
+                                        .HasName("pk_map_definitions");
+
+                                    b2.ToTable("map_definitions");
+
+                                    b2.WithOwner()
+                                        .HasForeignKey("WorldMapConfigurationMapDefinitionId")
+                                        .HasConstraintName("fk_map_definitions_map_definitions_world_map_configuration_map_def");
+
+                                    b2.OwnsOne("UntitledRpgLogic.Core.World.Generation.NoiseSettings", "NoiseGeneration", b3 =>
+                                        {
+                                            b3.Property<byte[]>("TerrainConfigurationWorldMapConfigurationMapDefinitionId");
+
+                                            b3.Property<float>("Amplitude");
+
+                                            b3.Property<float>("Frequency");
+
+                                            b3.Property<float>("Lacunarity");
+
+                                            b3.Property<int>("Octaves");
+
+                                            b3.Property<float>("Persistence");
+
+                                            b3.Property<float>("Scale");
+
+                                            b3.Property<long>("Seed");
+
+                                            b3.Property<float>("TargetMax");
+
+                                            b3.Property<float>("TargetMin");
+
+                                            b3.HasKey("TerrainConfigurationWorldMapConfigurationMapDefinitionId")
+                                                .HasName("pk_map_definitions");
+
+                                            b3.ToTable("map_definitions");
+
+                                            b3.WithOwner()
+                                                .HasForeignKey("TerrainConfigurationWorldMapConfigurationMapDefinitionId")
+                                                .HasConstraintName("fk_map_definitions_map_definitions_terrain_configuration_world_ma");
+                                        });
+
+                                    b2.OwnsMany("UntitledRpgLogic.Core.World.MaterialOption", "Minerals", b3 =>
+                                        {
+                                            b3.Property<byte[]>("TerrainConfigurationWorldMapConfigurationMapDefinitionId");
+
+                                            b3.Property<int>("__synthesizedOrdinal")
+                                                .ValueGeneratedOnAdd();
+
+                                            b3.Property<byte[]>("DefinitionId")
+                                                .IsRequired();
+
+                                            b3.Property<float>("Frequency");
+
+                                            b3.HasKey("TerrainConfigurationWorldMapConfigurationMapDefinitionId", "__synthesizedOrdinal")
+                                                .HasName("pk_map_definitions");
+
+                                            b3.ToTable("map_definitions");
+
+                                            b3.WithOwner()
+                                                .HasForeignKey("TerrainConfigurationWorldMapConfigurationMapDefinitionId")
+                                                .HasConstraintName("fk_map_definitions_map_definitions_terrain_configuration_world_ma");
+                                        });
+
+                                    b2.OwnsMany("UntitledRpgLogic.Core.World.MaterialOption", "Stone", b3 =>
+                                        {
+                                            b3.Property<byte[]>("TerrainConfigurationWorldMapConfigurationMapDefinitionId");
+
+                                            b3.Property<int>("__synthesizedOrdinal")
+                                                .ValueGeneratedOnAdd();
+
+                                            b3.Property<byte[]>("DefinitionId")
+                                                .IsRequired();
+
+                                            b3.Property<float>("Frequency");
+
+                                            b3.HasKey("TerrainConfigurationWorldMapConfigurationMapDefinitionId", "__synthesizedOrdinal");
+
+                                            b3.ToTable("map_definitions");
+
+                                            b3.WithOwner()
+                                                .HasForeignKey("TerrainConfigurationWorldMapConfigurationMapDefinitionId")
+                                                .HasConstraintName("fk_map_definitions_map_definitions_terrain_configuration_world_ma");
+                                        });
+
+                                    b2.Navigation("Minerals");
+
+                                    b2.Navigation("NoiseGeneration")
+                                        .IsRequired();
+
+                                    b2.Navigation("Stone");
+                                });
+
+                            b1.Navigation("Arcana")
                                 .IsRequired();
 
-                            b1.Navigation("HeightmapSettings")
+                            b1.Navigation("Climate")
                                 .IsRequired();
 
-                            b1.Navigation("HydrologySettings")
+                            b1.Navigation("Hydrology")
+                                .IsRequired();
+
+                            b1.Navigation("Terrain")
                                 .IsRequired();
                         });
 

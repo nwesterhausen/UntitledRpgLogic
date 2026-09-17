@@ -13,11 +13,11 @@ public class WorldGenContext
 	///     Encapsulates the precomputed macro simulation layers for chunk sampling.
 	/// </summary>
 	public WorldGenContext(
-		Heightmap heightmap,
+		HeightMap heightmap,
 		HydrologyMap hydrology,
 		ClimateGrid climate,
 		BiomeMaterialMapping materialMapping,
-		uint seed)
+		long seed)
 	{
 		this.Heightmap = heightmap ?? throw new ArgumentNullException(nameof(heightmap));
 		this.Hydrology = hydrology ?? throw new ArgumentNullException(nameof(hydrology));
@@ -29,7 +29,7 @@ public class WorldGenContext
 	/// <summary>
 	///     The noisemap for terrain height.
 	/// </summary>
-	public Heightmap Heightmap { get; }
+	public HeightMap Heightmap { get; }
 
 	/// <summary>
 	///     The noisemap for terrain hydrology.
@@ -50,5 +50,5 @@ public class WorldGenContext
 	/// <summary>
 	///     The seed used to generate the noise maps.
 	/// </summary>
-	public uint Seed { get; }
+	public long Seed { get; }
 }

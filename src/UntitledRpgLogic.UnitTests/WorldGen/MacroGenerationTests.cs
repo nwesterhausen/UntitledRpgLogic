@@ -23,8 +23,9 @@ public sealed class MacroGenerationTests
 	[TestMethod]
 	public void MacroHeightmapGenerator_ValidDimensions_GeneratesWithinSpecifiedBounds()
 	{
-		var settings = new HeightmapSettings { MinElevation = -500, MaxElevation = 1500 };
-		var mapConfig = new WorldMapConfiguration { Seed = 12345u, HeightTiles = 64, WidthTiles = 64, HeightmapSettings = settings };
+		var settings = new TerrainConfiguration { MinElevation = -500, MaxElevation = 1500 };
+		var mapConfig =
+			new WorldMapConfiguration { Seed = 12345u, HeightTiles = 64, WidthTiles = 64, Terrain = settings };
 
 		var map = MacroHeightmapGenerator.Generate(mapConfig);
 
@@ -36,8 +37,8 @@ public sealed class MacroGenerationTests
 			for (var x = 0; x < map.WidthTiles; x++)
 			{
 				var elev = map.GetElevation(x, y);
-				Assert.IsGreaterThanOrEqualTo(mapConfig.HeightmapSettings.MinElevation, elev);
-				Assert.IsLessThanOrEqualTo(mapConfig.HeightmapSettings.MaxElevation, elev);
+				Assert.IsGreaterThanOrEqualTo(mapConfig.Terrain.MinElevation, elev);
+				Assert.IsLessThanOrEqualTo(mapConfig.Terrain.MaxElevation, elev);
 			}
 		}
 	}
@@ -50,7 +51,7 @@ public sealed class MacroGenerationTests
 			Seed = 777u,
 			HeightTiles = 32,
 			WidthTiles = 32,
-			HeightmapSettings = new HeightmapSettings {  SeaLevel = 0, MinElevation = -1000, MaxElevation = 1000 }
+			Terrain = new TerrainConfiguration { SeaLevel = 0, MinElevation = -1000, MaxElevation = 1000 }
 		};
 		var heightmap = MacroHeightmapGenerator.Generate(mapConfig);
 
@@ -74,7 +75,7 @@ public sealed class MacroGenerationTests
 	[TestMethod]
 	public void FloodFillConnectedOceans_IsolatedInlandBasin_RemainsDry()
 	{
-		var heightmap = new Heightmap(5, 5);
+		var heightmap = new HeightMap(5, 5);
 
 		// Create a 5x5 bowl: edges are at elevation 100m, center (2,2) is at -500m
 		for (var y = 0; y < 5; y++)
@@ -93,9 +94,9 @@ public sealed class MacroGenerationTests
 			42u,
 			waterId, new WorldMapConfiguration
 			{
-				HeightmapSettings = new HeightmapSettings { SeaLevel = 0 },
-				HydrologySettings =
-					new HydrologySettings { RaindropCycles = 0 }
+				Terrain = new TerrainConfiguration { SeaLevel = 0 },
+				Hydrology =
+					new HydrologyConfiguration { RaindropCycles = 0 }
 			});
 
 		// The center tile is below sea level, but because the perimeter is above sea level,

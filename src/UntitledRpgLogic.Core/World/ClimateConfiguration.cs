@@ -3,7 +3,7 @@ namespace UntitledRpgLogic.Core.World.Generation;
 /// <summary>
 ///     Configurable parameters for temperature gradients, environmental lapse rates, and moisture distribution.
 /// </summary>
-public record ClimateSettings
+public record ClimateConfiguration
 {
 	/// <summary>
 	///     Average temperature around the equator/middle latitude.
@@ -14,6 +14,16 @@ public record ClimateSettings
 	///     Average temperature at the poles (top/bottom latitude).
 	/// </summary>
 	public float PoleTemperature { get; init; } = -15.0f;
+
+	/// <summary>
+	///     Whether to create a pole on the north end of the map.
+	/// </summary>
+	public bool NorthPole { get; init; } = true;
+
+	/// <summary>
+	///     Whether to create a pole on the south end of the map.
+	/// </summary>
+	public bool SouthPol { get; init; } = true;
 
 	/// <summary>
 	///     Environmental cooling rate per 1000 units of elevation.
@@ -31,7 +41,7 @@ public record ClimateSettings
 	public float RainfallNoiseFrequency { get; init; } = 0.006f;
 
 	/// <summary>
-	///     Height above sea level where land is considered a mountain.
+	///     Material to use for rain during world generation.
 	/// </summary>
-	public short MountainThreshold { get; init; } = 1800;
+	public Ulid RainLiquidMaterialId { get; init; } = Ulid.Empty;
 }

@@ -40,9 +40,18 @@ public sealed class MapDefinitionConfiguration : IEntityTypeConfiguration<MapDef
 		builder.OwnsOne(m => m.GenerationConfig, cb =>
 		{
 			cb.ToJson("generation_config");
-			cb.OwnsOne(c => c.HeightmapSettings);
-			cb.OwnsOne(c => c.HydrologySettings);
-			cb.OwnsOne(c => c.ClimateSettings);
+			cb.OwnsOne(c => c.Terrain, tb =>
+			{
+				tb.OwnsMany(t => t.Minerals);
+				tb.OwnsMany(t => t.Stone);
+				tb.OwnsOne(t => t.NoiseGeneration);
+			});
+			cb.OwnsOne(c => c.Hydrology);
+			cb.OwnsOne(c => c.Climate);
+			cb.OwnsOne(c => c.Arcana, ab =>
+			{
+				ab.OwnsMany(a => a.AvailableElements);
+			});
 		});
 	}
 }

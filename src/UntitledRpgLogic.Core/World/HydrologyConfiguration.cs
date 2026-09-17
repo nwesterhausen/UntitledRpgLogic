@@ -3,7 +3,7 @@ namespace UntitledRpgLogic.Core.World.Generation;
 /// <summary>
 ///     Configurable parameters for water accumulation, river routing, and sea flooding.
 /// </summary>
-public record HydrologySettings
+public record HydrologyConfiguration
 {
 	/// <summary>
 	///     How much rain to simulate when simulating rainfall and river generation.
@@ -50,4 +50,14 @@ public record HydrologySettings
 	///     Maximum vertical water depth in meters to fill above a terminal basin floor.
 	/// </summary>
 	public short MaxLakeDepthMeters { get; init; } = 25;
+
+	/// <summary>
+	///     Material definition to use for the water in the ocean during world gen.
+	/// </summary>
+	public Ulid OceanLiquidMaterialId { get; init; } = Ulid.Empty;
+
+	/// <summary>
+	///     Material definition to use for aquifers and lakes during world gen.
+	/// </summary>
+	public Ulid FreshwaterLiquidMaterialId { get; init; } = Ulid.Empty;
 }

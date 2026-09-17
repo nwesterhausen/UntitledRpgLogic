@@ -19,6 +19,16 @@ public static class NoiseMaker
 		OpenSimplex2.Noise2(seed, x, y);
 
 	/// <summary>
+	///     Generate noise for a given point and seed.
+	/// </summary>
+	/// <param name="x"></param>
+	/// <param name="y"></param>
+	/// <param name="seed"></param>
+	/// <returns></returns>
+	public static float GenerateSimpleNoise(double x, double y, long seed) =>
+		OpenSimplex2.Noise2(seed, x, y);
+
+	/// <summary>
 	///     Generates an octave-summed noise value for the given settings.
 	/// </summary>
 	/// <param name="settings">The sampling configuration parameters.</param>
@@ -103,8 +113,13 @@ public static class NoiseMaker
 	/// <returns>A populated, normalized <see cref="NoiseMap" />.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="settings" /> is null.</exception>
 	/// <exception cref="ArgumentOutOfRangeException">Thrown if width or height is less than or equal to zero.</exception>
-	public static NoiseMap GenerateNoiseMap(NoiseSettings settings, int width, int height) =>
-		new(width, height, GenerateNoiseArray(settings, width, height));
+	public static NoiseMap GenerateNoiseMap(NoiseSettings settings, int width, int height)
+	{
+		ArgumentNullException.ThrowIfNull(settings);
+
+		return new NoiseMap(width, height,
+			GenerateNoiseArray(settings with { TargetMin = 0.0f, TargetMax = 1.0f }, width, height));
+	}
 
 	/// <summary>
 	///     Generates a flattened 1D array of noise normalized to the settings' TargetMin and TargetMax.

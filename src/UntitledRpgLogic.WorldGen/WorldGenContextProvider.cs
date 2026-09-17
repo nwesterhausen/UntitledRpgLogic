@@ -13,27 +13,16 @@ public sealed class WorldGenContextProvider : IWorldGenContextProvider
 	private readonly ConcurrentDictionary<Ulid, WorldGenContext> contexts = new();
 
 	/// <inheritdoc />
-	public WorldGenContext GetOrCreateContext(MapDefinition map, uint seed, int widthTiles = 512, int heightTiles = 512)
+	public WorldGenContext GetOrCreateContext(MapDefinition map, WorldMapConfiguration worldConfig)
 	{
 		ArgumentNullException.ThrowIfNull(map);
-
-		var noiseConfig = new HeightmapSettings();
-		var hydroConfig = new HydrologySettings();
-
-		var worldConfig = new WorldMapConfiguration
-		{
-			WidthTiles = widthTiles,
-			HeightTiles = heightTiles,
-			HeightmapSettings = noiseConfig,
-			HydrologySettings = hydroConfig
-		};
 
 		return this.contexts.GetOrAdd(map.Id, _ =>
 		{
 			var mapping = new BiomeMaterialMapping();
 
 			// 1. Generate macro heightmap
-			var heightmap = MacroHeightmapGenerator.Generate(worldConfig);
+			var heightmap = HeightMapGenerator.Generate(worldConfig);
 
 			// 2. Simulate ocean filling and river descent
 			var hydrology = MacroHydrologyGenerator.Generate(heightmap, map.Seed, mapping.WaterMaterialId, worldConfig);

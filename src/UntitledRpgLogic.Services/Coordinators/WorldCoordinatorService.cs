@@ -78,9 +78,7 @@ public sealed class WorldCoordinatorService : IWorldCoordinatorService
 		{
 			var context = this.contextProvider.GetOrCreateContext(
 				map,
-				map.Seed,
-				map.GenerationConfig.WidthTiles,
-				map.GenerationConfig.HeightTiles);
+				map.GenerationConfig);
 
 			newChunk = this.chunkGenerator.GenerateChunk(mapId, chunkX, chunkY, context);
 		}
