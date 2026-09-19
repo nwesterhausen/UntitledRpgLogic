@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using UntitledRpgLogic.Core.Common;
 using UntitledRpgLogic.Core.Data;
 using UntitledRpgLogic.Core.Environment;
+using UntitledRpgLogic.Core.World.Generation.GridMaps;
 
 namespace UntitledRpgLogic.Core.World;
 
@@ -24,6 +25,10 @@ public record MapDefinition : IDbEntity<Ulid>
 		this.Description = string.Empty;
 		this.Type = MapType.Overworld;
 		this.Atmosphere = AtmosphereProfile.StandardDefault;
+		this.BaselineAmbients = new List<AmbientValue>();
+		this.Chunks = new List<WorldChunk>();
+		this.Transitions = new List<MapTransition>();
+		this.OreDeposits = new List<OreDepositDefinition>();
 	}
 
 	/// <summary>
@@ -57,17 +62,22 @@ public record MapDefinition : IDbEntity<Ulid>
 	/// <summary>
 	///     Baseline ambient climate values (e.g., Temperature, Gravity, Humidity).
 	/// </summary>
-	public ICollection<AmbientValue> BaselineAmbients { get; init; } = [];
+	public ICollection<AmbientValue> BaselineAmbients { get; }
 
 	/// <summary>
 	///     Navigation property to all chunks persisted for this map.
 	/// </summary>
-	public virtual ICollection<WorldChunk> Chunks { get; } = new List<WorldChunk>();
+	public virtual ICollection<WorldChunk> Chunks { get; }
 
 	/// <summary>
 	///     Transition points (doors, stairs, portals) originating on this map.
 	/// </summary>
-	public virtual ICollection<MapTransition> Transitions { get; } = new List<MapTransition>();
+	public virtual ICollection<MapTransition> Transitions { get; }
+
+	/// <summary>
+	///     List of ore deposits that may be referenced by the <see cref="OreDepositMap" />.
+	/// </summary>
+	public ICollection<OreDepositDefinition> OreDeposits { get; }
 
 	/// <summary>
 	///     The primary random seed used for deterministic procedural generation.
@@ -85,5 +95,5 @@ public record MapDefinition : IDbEntity<Ulid>
 	/// </summary>
 	[Key]
 	[DatabaseGenerated(DatabaseGeneratedOption.None)]
-	public Ulid Id { get; init; }
+	public Ulid Id { get; init; } = Ulid.NewUlid();
 }

@@ -1,8 +1,7 @@
 using UntitledRpgLogic.Core.World;
 using UntitledRpgLogic.Core.World.Generation;
-using UntitledRpgLogic.Core.World.Generation.NoiseMaps;
-using UntitledRpgLogic.WorldGen.Generators;
 using UntitledRpgLogic.WorldGen.Noise;
+using UntitledRpgLogic.WorldGen.OldGenerators;
 
 namespace UntitledRpgLogic.UnitTests.WorldGen;
 
@@ -26,8 +25,9 @@ public sealed class MacroGenerationTests
 		var settings = new TerrainConfiguration { MinElevation = -500, MaxElevation = 1500 };
 		var mapConfig =
 			new WorldMapConfiguration { Seed = 12345u, HeightTiles = 64, WidthTiles = 64, Terrain = settings };
+		var context = new WorldGenContext(mapConfig);
 
-		var map = MacroHeightmapGenerator.Generate(mapConfig);
+		var map = MacroHeightmapGenerator.Generate(context);
 
 		Assert.AreEqual(64, map.WidthTiles);
 		Assert.AreEqual(64, map.HeightTiles);
@@ -48,22 +48,27 @@ public sealed class MacroGenerationTests
 	{
 		var mapConfig = new WorldMapConfiguration
 		{
-			Seed = 777u,
+			Seed = 123456,
 			HeightTiles = 32,
 			WidthTiles = 32,
-			Terrain = new TerrainConfiguration { SeaLevel = 0, MinElevation = -1000, MaxElevation = 1000 }
+			Terrain = new TerrainConfiguration
+			{
+				SeaLevel = 0, MinElevation = -200, MaxElevation = 1000, SurroundWithOcean = true
+			}
 		};
-		var heightmap = MacroHeightmapGenerator.Generate(mapConfig);
+		var context = new WorldGenContext(mapConfig);
+
+		MacroHeightmapGenerator.Generate(context);
 
 		var waterId = Ulid.NewUlid();
-		var hydrology = MacroHydrologyGenerator.Generate(heightmap, 777u, waterId, mapConfig);
+		var hydrology = MacroHydrologyGenerator.Generate(context, 123456, waterId, mapConfig);
 
 		for (var y = 0; y < 32; y++)
 		{
 			for (var x = 0; x < 32; x++)
 			{
-				var elev = heightmap.GetElevation(x, y);
-				if (elev < 0)
+				if (context.Terrain.GetElevation(x, y) < 0 &&
+				    context.Hydrology.GetWaterBodyType(x, y) == WaterBodyType.Ocean)
 				{
 					Assert.IsGreaterThan(0, hydrology.GetLiquidDepth(x, y));
 					Assert.AreEqual(waterId, hydrology.GetLiquidMaterial(x, y));
@@ -75,22 +80,22 @@ public sealed class MacroGenerationTests
 	[TestMethod]
 	public void FloodFillConnectedOceans_IsolatedInlandBasin_RemainsDry()
 	{
-		var heightmap = new HeightMap(5, 5);
+		var context = new WorldGenContext(new WorldMapConfiguration { HeightTiles = 5, WidthTiles = 5 });
 
 		// Create a 5x5 bowl: edges are at elevation 100m, center (2,2) is at -500m
 		for (var y = 0; y < 5; y++)
 		{
 			for (var x = 0; x < 5; x++)
 			{
-				heightmap.SetElevation(x, y, 100);
+				context.Terrain.SetElevation(x, y, 100);
 			}
 		}
 
-		heightmap.SetElevation(2, 2, -500);
+		context.Terrain.SetElevation(2, 2, -500);
 
 		var waterId = Ulid.NewUlid();
 		var hydrology = MacroHydrologyGenerator.Generate(
-			heightmap,
+			context,
 			42u,
 			waterId, new WorldMapConfiguration
 			{

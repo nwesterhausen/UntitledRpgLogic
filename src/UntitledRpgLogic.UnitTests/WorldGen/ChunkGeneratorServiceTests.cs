@@ -3,6 +3,7 @@ using UntitledRpgLogic.Core.World.Generation;
 using UntitledRpgLogic.Extensions.Common;
 using UntitledRpgLogic.WorldGen;
 using UntitledRpgLogic.WorldGen.Generators;
+using UntitledRpgLogic.WorldGen.OldGenerators;
 
 namespace UntitledRpgLogic.UnitTests.WorldGen;
 
@@ -16,11 +17,12 @@ public sealed class ChunkGeneratorServiceTests
 		var waterId = Ulid.NewUlid();
 		var mapping = new BiomeMaterialMapping { WaterMaterialId = waterId };
 		var mapConfig = new WorldMapConfiguration { Seed = seed, HeightTiles = 32, WidthTiles = 32 };
+		var map = new MapDefinition { Seed = seed, GenerationConfig = mapConfig };
 
-		var heightmap = MacroHeightmapGenerator.Generate(mapConfig);
-		var hydrology = MacroHydrologyGenerator.Generate(heightmap, seed, waterId, mapConfig);
-		var climate = MacroClimateGenerator.Generate(heightmap, hydrology, seed, mapConfig);
-		var context = new WorldGenContext(heightmap, hydrology, climate, mapping, seed);
+		var context = new WorldGenContext(mapConfig);
+		HeightMapGenerator.Generate(context);
+		var hydrology = MacroHydrologyGenerator.Generate(context, seed, waterId, mapConfig);
+		MacroClimateGenerator.Generate(context);
 
 		var service = new ChunkGeneratorService();
 		var mapId = Ulid.NewUlid();

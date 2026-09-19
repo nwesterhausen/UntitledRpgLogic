@@ -21,7 +21,7 @@ public record FantasticalProperties
 	public float AetherialConductivity { get; init; }
 
 	/// <summary>
-	///     Natural resonance or affinity for elemental forces, keyed by the <see cref="Element.Id" />.
+	///     Natural resonance or affinity for elemental forces, keyed by the <see cref="ElementDefinition.Id" />.
 	/// </summary>
 	public Dictionary<Ulid, float> ElementalAttunement { get; init; } = new();
 

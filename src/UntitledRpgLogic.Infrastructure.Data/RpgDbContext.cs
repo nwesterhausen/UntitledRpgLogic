@@ -44,7 +44,7 @@ public class RpgDbContext(DbContextOptions<RpgDbContext> options) : DbContext(op
 	/// <summary>
 	///     Table for fantastical elements
 	/// </summary>
-	public DbSet<Element> Elements { get; set; } = null!;
+	public DbSet<ElementDefinition> Elements { get; set; } = null!;
 
 	/// <summary>
 	///     Table for entities, which represent characters, NPCs, mobs, etc. in the game world.
@@ -146,7 +146,7 @@ public class RpgDbContext(DbContextOptions<RpgDbContext> options) : DbContext(op
 
 		// Configure lookup tables
 		// Configure advanced table relationships (1 -> M, M -> M, additional FK, composite PK)
-		// (automatically pull table definitions from `Configurations` via `IEntityTypeConfiguration`)
+		// (automatically pull table definitions from `.Configurations` via `IEntityTypeConfiguration`)
 		_ = modelBuilder.ApplyConfigurationsFromAssembly(typeof(RpgDbContext).Assembly);
 	}
 

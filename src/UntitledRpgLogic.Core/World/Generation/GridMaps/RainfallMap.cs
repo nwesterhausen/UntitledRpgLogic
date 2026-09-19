@@ -1,4 +1,4 @@
-namespace UntitledRpgLogic.Core.World.Generation.NoiseMaps;
+namespace UntitledRpgLogic.Core.World.Generation.GridMaps;
 
 /// <summary>
 ///     Represents the mid-scale normalized precipitation/rainfall simulation layer (0.0 to 1.0) across a 2D map

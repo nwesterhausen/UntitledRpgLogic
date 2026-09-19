@@ -15,8 +15,6 @@ public record MapTransition : IDbEntity<Ulid>
 	/// </summary>
 	public MapTransition()
 	{
-		this.Id = Ulid.NewUlid();
-		this.TransitionTag = "Door";
 	}
 
 	/// <summary>
@@ -65,12 +63,12 @@ public record MapTransition : IDbEntity<Ulid>
 	///     Semantic descriptor for the transition trigger (e.g., "Door", "CaveEntrance", "LadderUp").
 	/// </summary>
 	[MaxLength(128)]
-	public string TransitionTag { get; init; }
+	public string TransitionTag { get; init; } = string.Empty;
 
 	/// <summary>
 	///     The unique identifier for the transition.
 	/// </summary>
 	[Key]
 	[DatabaseGenerated(DatabaseGeneratedOption.None)]
-	public Ulid Id { get; init; }
+	public Ulid Id { get; init; } = Ulid.NewUlid();
 }

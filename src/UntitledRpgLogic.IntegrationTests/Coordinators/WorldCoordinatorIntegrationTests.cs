@@ -67,7 +67,7 @@ public sealed class WorldCoordinatorIntegrationTests : CoordinatorIntegrationTes
 
 			// 2. Move entity and trigger transition through coordinator
 			var coordScope = provider.CreateAsyncScope();
-			var chunkId = Ulid.Empty;
+			Ulid chunkId;
 			await using (coordScope.ConfigureAwait(false))
 			{
 				var coordinator = coordScope.ServiceProvider.GetRequiredService<IWorldCoordinatorService>();

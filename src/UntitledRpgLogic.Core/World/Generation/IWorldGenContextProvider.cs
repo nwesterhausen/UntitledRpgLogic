@@ -9,6 +9,5 @@ public interface IWorldGenContextProvider
 	///     Gets or generates the <see cref="WorldGenContext" /> for the specified map.
 	/// </summary>
 	/// <param name="map">The map definition entity.</param>
-	/// <param name="worldConfig">The configuration for generating the world.</param>
-	public WorldGenContext GetOrCreateContext(MapDefinition map, WorldMapConfiguration worldConfig);
+	public WorldGenContext GetOrCreateContext(MapDefinition map);
 }

@@ -1,6 +1,4 @@
 using UntitledRpgLogic.Core.Materials;
-using UntitledRpgLogic.Core.World.Generation.MapGrids;
-using UntitledRpgLogic.Core.World.Generation.NoiseMaps;
 
 namespace UntitledRpgLogic.Core.World.Generation;
 
@@ -13,42 +11,66 @@ public class WorldGenContext
 	///     Encapsulates the precomputed macro simulation layers for chunk sampling.
 	/// </summary>
 	public WorldGenContext(
-		HeightMap heightmap,
-		HydrologyMap hydrology,
-		ClimateGrid climate,
+		TerrainMaps terrain,
+		HydrologyMaps hydrology,
+		ClimateMaps climate,
+		ArcanaMaps arcana,
 		BiomeMaterialMapping materialMapping,
-		long seed)
+		WorldMapConfiguration worldMapConfiguration)
 	{
-		this.Heightmap = heightmap ?? throw new ArgumentNullException(nameof(heightmap));
+		this.Terrain = terrain ?? throw new ArgumentNullException(nameof(terrain));
 		this.Hydrology = hydrology ?? throw new ArgumentNullException(nameof(hydrology));
 		this.Climate = climate ?? throw new ArgumentNullException(nameof(climate));
+		this.Arcana = arcana ?? throw new ArgumentNullException(nameof(arcana));
 		this.MaterialMapping = materialMapping ?? throw new ArgumentNullException(nameof(materialMapping));
-		this.Seed = seed;
+		this.MapConfig = worldMapConfiguration ?? throw new ArgumentNullException(nameof(worldMapConfiguration));
 	}
 
 	/// <summary>
-	///     The noisemap for terrain height.
+	///     Create a new, empty world generation context for a world map of size <paramref name="mapConfig.WidthTiles" /> by
+	///     <paramref name="mapConfig.HeightTiles" />.
 	/// </summary>
-	public HeightMap Heightmap { get; }
+	/// <param name="mapConfig">The world map generation configuration to use</param>
+	public WorldGenContext(WorldMapConfiguration mapConfig)
+	{
+		ArgumentNullException.ThrowIfNull(mapConfig);
+
+		this.MapConfig = mapConfig;
+		this.Terrain = new TerrainMaps(mapConfig.WidthTiles, mapConfig.HeightTiles);
+		this.Hydrology = new HydrologyMaps(mapConfig.WidthTiles, mapConfig.HeightTiles);
+		this.Climate = new ClimateMaps(mapConfig.WidthTiles, mapConfig.HeightTiles);
+		this.Arcana = new ArcanaMaps(mapConfig.WidthTiles, mapConfig.HeightTiles);
+	}
 
 	/// <summary>
-	///     The noisemap for terrain hydrology.
+	///     The world/map generation configuration to use.
 	/// </summary>
-	public HydrologyMap Hydrology { get; }
+	public WorldMapConfiguration MapConfig { get; }
 
 	/// <summary>
-	///     The determined climate at grid locations based on height and hydrology.
+	///     Terrain related noisemaps and map grids.
 	/// </summary>
-	public ClimateGrid Climate { get; }
+	public TerrainMaps Terrain { get; }
+
+	/// <summary>
+	///     Hydrology related noisemaps and map grids.
+	/// </summary>
+	public HydrologyMaps Hydrology { get; }
+
+	/// <summary>
+	///     Climate realted noisemaps and map grids.
+	/// </summary>
+	public ClimateMaps Climate { get; }
+
+	/// <summary>
+	///     Arcana realted noisemaps and map grids.
+	/// </summary>
+	public ArcanaMaps Arcana { get; }
 
 	/// <summary>
 	///     A mapping of <see cref="MaterialDefinition" /> to <see cref="BiomeType" /> for the base ground material in each
 	///     biome.
 	/// </summary>
-	public BiomeMaterialMapping MaterialMapping { get; }
-
-	/// <summary>
-	///     The seed used to generate the noise maps.
-	/// </summary>
-	public long Seed { get; }
+	[Obsolete("Holdover from initial generation engine. Should be replaced with catalog-aware material context.")]
+	public BiomeMaterialMapping MaterialMapping { get; } = new();
 }

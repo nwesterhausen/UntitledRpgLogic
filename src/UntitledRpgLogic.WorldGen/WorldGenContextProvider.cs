@@ -13,24 +13,38 @@ public sealed class WorldGenContextProvider : IWorldGenContextProvider
 	private readonly ConcurrentDictionary<Ulid, WorldGenContext> contexts = new();
 
 	/// <inheritdoc />
-	public WorldGenContext GetOrCreateContext(MapDefinition map, WorldMapConfiguration worldConfig)
+	public WorldGenContext GetOrCreateContext(MapDefinition map)
 	{
 		ArgumentNullException.ThrowIfNull(map);
 
+		if (map.GenerationConfig == null)
+		{
+			throw new InvalidOperationException(
+				"Map generation config is null, but required for a generation context.");
+		}
+
 		return this.contexts.GetOrAdd(map.Id, _ =>
 		{
-			var mapping = new BiomeMaterialMapping();
+			var newContext = new WorldGenContext(map.GenerationConfig);
 
-			// 1. Generate macro heightmap
-			var heightmap = HeightMapGenerator.Generate(worldConfig);
+			/****** The world map generation flow. ********/
+			// Tier 1
+			HeightMapGenerator.Generate(newContext);
 
-			// 2. Simulate ocean filling and river descent
-			var hydrology = MacroHydrologyGenerator.Generate(heightmap, map.Seed, mapping.WaterMaterialId, worldConfig);
+			// Tier 1.5
 
-			// 3. Derive temperature, rainfall, and Whittaker biomes
-			var climate = MacroClimateGenerator.Generate(heightmap, hydrology, map.Seed, worldConfig);
+			// Tier 2
 
-			return new WorldGenContext(heightmap, hydrology, climate, mapping, map.Seed);
+			// Tier 2.5
+
+			// Tier 3
+
+			// Final Processing
+
+			// Map post-back
+			// ! set map.OreDeposits with new OreDeposit definitions
+
+			return newContext;
 		});
 	}
 }

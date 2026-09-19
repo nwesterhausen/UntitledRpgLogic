@@ -1,28 +1,31 @@
-namespace UntitledRpgLogic.Core.World.Generation.MapGrids;
+using UntitledRpgLogic.Core.Materials;
+
+namespace UntitledRpgLogic.Core.World.Generation.GridMaps;
 
 /// <summary>
-///     Represents the procedural or sampled bedrock elevation grid across a 2D map coordinate space.
+///     Stores the <see cref="MaterialDefinition.Id" /> for the liquid body on each tile. <c>null</c> if there is not
+///     a body of water in the tile.
 /// </summary>
-public sealed class LiquidMaterialGrid : NoiseGrid2D<Ulid?>
+public sealed class LiquidMaterialMap : NoiseGrid2D<Ulid?>
 {
 	/// <summary>
-	///     Initializes a new instance of the <see cref="LiquidMaterialGrid" /> class with specified grid dimensions.
+	///     Initializes a new instance of the <see cref="LiquidMaterialMap" /> class with specified grid dimensions.
 	/// </summary>
-	/// <param name="widthTiles">The total width of the heightmap in tiles.</param>
-	/// <param name="heightTiles">The total height of the heightmap in tiles.</param>
-	public LiquidMaterialGrid(int widthTiles, int heightTiles)
+	/// <param name="widthTiles">The total width of the grid in tiles.</param>
+	/// <param name="heightTiles">The total height of the grid in tiles.</param>
+	public LiquidMaterialMap(int widthTiles, int heightTiles)
 		: base(widthTiles, heightTiles)
 	{
 	}
 
 	/// <summary>
-	///     Initializes a new instance of the <see cref="LiquidMaterialGrid" /> class using an existing flat materials
+	///     Initializes a new instance of the <see cref="LiquidMaterialMap" /> class using an existing flat materials
 	///     array.
 	/// </summary>
-	/// <param name="widthTiles">The total width of the heightmap in tiles.</param>
-	/// <param name="heightTiles">The total height of the heightmap in tiles.</param>
+	/// <param name="widthTiles">The total width of the grid in tiles.</param>
+	/// <param name="heightTiles">The total height of the grid in tiles.</param>
 	/// <param name="materials">The flattened material ID array of length <c>widthTiles * heightTiles</c>.</param>
-	public LiquidMaterialGrid(int widthTiles, int heightTiles, Ulid?[] materials)
+	public LiquidMaterialMap(int widthTiles, int heightTiles, Ulid?[] materials)
 		: base(widthTiles, heightTiles, materials)
 	{
 	}

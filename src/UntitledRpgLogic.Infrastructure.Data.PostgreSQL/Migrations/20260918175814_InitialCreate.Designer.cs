@@ -12,7 +12,7 @@ using UntitledRpgLogic.Infrastructure.Data;
 namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
 {
     [DbContext(typeof(RpgDbContext))]
-    [Migration("20260917021535_InitialCreate")]
+    [Migration("20260918175814_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -303,7 +303,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                     b.ToTable("log_entries", (string)null);
                 });
 
-            modelBuilder.Entity("UntitledRpgLogic.Core.Elements.Element", b =>
+            modelBuilder.Entity("UntitledRpgLogic.Core.Elements.ElementDefinition", b =>
                 {
                     b.Property<byte[]>("Id")
                         .HasColumnType("bytea")
@@ -4054,6 +4054,41 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                                 .HasConstraintName("fk_map_definitions_map_definitions_map_definition_id");
                         });
 
+                    b.OwnsMany("UntitledRpgLogic.Core.World.OreDepositDefinition", "OreDeposits", b1 =>
+                        {
+                            b1.Property<byte[]>("MapDefinitionId");
+
+                            b1.Property<int>("__synthesizedOrdinal")
+                                .ValueGeneratedOnAdd();
+
+                            b1.Property<int>("DepositId");
+
+                            b1.Property<float>("PrimaryChance");
+
+                            b1.Property<byte[]>("PrimaryMaterialId")
+                                .IsRequired();
+
+                            b1.Property<float>("SecondaryChance");
+
+                            b1.Property<byte[]>("SecondaryMaterialId");
+
+                            b1.Property<float>("TertiaryChance");
+
+                            b1.Property<byte[]>("TertiaryMaterialId");
+
+                            b1.HasKey("MapDefinitionId", "__synthesizedOrdinal");
+
+                            b1.ToTable("map_definitions");
+
+                            b1
+                                .ToJson("ore_deposits")
+                                .HasColumnType("jsonb");
+
+                            b1.WithOwner()
+                                .HasForeignKey("MapDefinitionId")
+                                .HasConstraintName("fk_map_definitions_map_definitions_map_definition_id");
+                        });
+
                     b.OwnsOne("UntitledRpgLogic.Core.World.WorldMapConfiguration", "GenerationConfig", b1 =>
                         {
                             b1.Property<byte[]>("MapDefinitionId");
@@ -4130,7 +4165,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                                     b2.Navigation("AvailableElements");
                                 });
 
-                            b1.OwnsOne("UntitledRpgLogic.Core.World.Generation.ClimateConfiguration", "Climate", b2 =>
+                            b1.OwnsOne("UntitledRpgLogic.Core.World.ClimateConfiguration", "Climate", b2 =>
                                 {
                                     b2.Property<byte[]>("WorldMapConfigurationMapDefinitionId");
 
@@ -4161,7 +4196,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                                         .HasConstraintName("fk_map_definitions_map_definitions_world_map_configuration_map_def");
                                 });
 
-                            b1.OwnsOne("UntitledRpgLogic.Core.World.Generation.HydrologyConfiguration", "Hydrology", b2 =>
+                            b1.OwnsOne("UntitledRpgLogic.Core.World.HydrologyConfiguration", "Hydrology", b2 =>
                                 {
                                     b2.Property<byte[]>("WorldMapConfigurationMapDefinitionId");
 
@@ -4197,7 +4232,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                                         .HasConstraintName("fk_map_definitions_map_definitions_world_map_configuration_map_def");
                                 });
 
-                            b1.OwnsOne("UntitledRpgLogic.Core.World.Generation.TerrainConfiguration", "Terrain", b2 =>
+                            b1.OwnsOne("UntitledRpgLogic.Core.World.TerrainConfiguration", "Terrain", b2 =>
                                 {
                                     b2.Property<byte[]>("WorldMapConfigurationMapDefinitionId");
 
@@ -4326,6 +4361,8 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                     b.Navigation("BaselineAmbients");
 
                     b.Navigation("GenerationConfig");
+
+                    b.Navigation("OreDeposits");
                 });
 
             modelBuilder.Entity("UntitledRpgLogic.Core.World.MapTransition", b =>

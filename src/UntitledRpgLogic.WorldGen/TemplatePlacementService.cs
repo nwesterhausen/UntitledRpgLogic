@@ -1,4 +1,5 @@
 using UntitledRpgLogic.Core.World;
+using UntitledRpgLogic.Core.World.Generation;
 using UntitledRpgLogic.Core.World.Generation.NoiseMaps;
 using UntitledRpgLogic.Extensions.Common;
 
@@ -27,7 +28,7 @@ public static class TemplatePlacementService
 	/// <returns>A positive fitness score where higher values represent flatter/better matches, or 0.0f if rejected.</returns>
 	public static float EvaluateCandidateScore(
 		HeightMap heightmap,
-		HydrologyMap hydrology,
+		HydrologyMaps hydrology,
 		int targetChunkX,
 		int targetChunkY,
 		int templateWidthChunks,

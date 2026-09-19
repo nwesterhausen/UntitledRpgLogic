@@ -7,8 +7,11 @@ public interface INoisemapGenerator<out T>
 	where T : NoiseGridDimensions
 {
 	/// <summary>
-	///     Populates a <see cref="NoiseGrid2D{T}" /> implmenter with values appropriate to the type of grid.
+	///     Fills in the appropriate <see cref="NoiseGrid2D{T}" /> in the <paramref name="generationContext" />
+	///     using the <see cref="WorldMapConfiguration" /> stored in the <paramref name="generationContext" />.
+	///     Returns a copy that can be used or discarded.
 	/// </summary>
 	/// <returns>A new <see cref="NoiseGrid2D{T}" /> implementer with generated values.</returns>
-	public static abstract T Generate(WorldMapConfiguration worldConfig, WorldGenContext? generationContext = null);
+	/// <param name="generationContext">The generation context which holds all the noise maps</param>
+	public static abstract T Generate(WorldGenContext generationContext);
 }

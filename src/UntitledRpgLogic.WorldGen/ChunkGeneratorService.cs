@@ -33,7 +33,7 @@ public sealed class ChunkGeneratorService : IChunkGeneratorService
 				var wy = startTileY + ly;
 				var tileIdx = (ly * ChunkSize) + lx;
 
-				var elevation = context.Heightmap.GetElevation(wx, wy);
+				var elevation = context.Terrain.GetElevation(wx, wy);
 				var liquidDepth = context.Hydrology.GetLiquidDepth(wx, wy);
 				var liquidMaterial = context.Hydrology.GetLiquidMaterial(wx, wy) ?? Ulid.Empty;
 				var biome = context.Climate.GetBiome(wx, wy);

@@ -1,4 +1,4 @@
-namespace UntitledRpgLogic.Core.World.Generation;
+namespace UntitledRpgLogic.Core.World;
 
 /// <summary>
 ///     Configurable parameters for water accumulation, river routing, and sea flooding.

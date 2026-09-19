@@ -76,9 +76,7 @@ public sealed class WorldCoordinatorService : IWorldCoordinatorService
 		// Procedurally generate overworld chunks using the context
 		if (map is { Type: MapType.Overworld, GenerationConfig: not null })
 		{
-			var context = this.contextProvider.GetOrCreateContext(
-				map,
-				map.GenerationConfig);
+			var context = this.contextProvider.GetOrCreateContext(map);
 
 			newChunk = this.chunkGenerator.GenerateChunk(mapId, chunkX, chunkY, context);
 		}

@@ -11,13 +11,13 @@ namespace UntitledRpgLogic.Core.Elements;
 ///     (e.g., Fire, Cold, Lightning, Aether).
 /// </summary>
 [Table("elements")]
-public record Element : IDbEntity<Ulid>
+public record ElementDefinition : IDefined
 {
 	/// <summary>
-	///     Initializes a new instance of the <see cref="Element" /> record with default values for EF Core.
+	///     Initializes a new instance of the <see cref="ElementDefinition" /> record with default values for EF Core.
 	/// </summary>
 	[SetsRequiredMembers]
-	public Element()
+	public ElementDefinition()
 	{
 		this.Id = Ulid.NewUlid();
 		this.Name = Name.Empty;
@@ -25,19 +25,19 @@ public record Element : IDbEntity<Ulid>
 	}
 
 	/// <summary>
-	///     Initializes a new instance of the <see cref="Element" /> record with a designated name.
+	///     Initializes a new instance of the <see cref="ElementDefinition" /> record with a designated name.
 	/// </summary>
 	/// <param name="name">The name of the element.</param>
 	[SetsRequiredMembers]
-	public Element(Name name) : this() => this.Name = name;
+	public ElementDefinition(Name name) : this() => this.Name = name;
 
 	/// <summary>
-	///     Initializes a new instance of the <see cref="Element" /> record with a designated name and description.
+	///     Initializes a new instance of the <see cref="ElementDefinition" /> record with a designated name and description.
 	/// </summary>
 	/// <param name="name">The name of the element.</param>
 	/// <param name="description">Flavor text detailing the element's planar origin or behavior.</param>
 	[SetsRequiredMembers]
-	public Element(Name name, string description) : this(name) => this.Description = description;
+	public ElementDefinition(Name name, string description) : this(name) => this.Description = description;
 
 	/// <summary>
 	///     The display name of the element.

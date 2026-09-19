@@ -1,4 +1,4 @@
-using UntitledRpgLogic.Core.World.Generation.NoiseMaps;
+using UntitledRpgLogic.Core.World.Generation;
 
 namespace UntitledRpgLogic.Extensions.Common;
 
@@ -11,7 +11,7 @@ public static class HydrologySpatialExtensions
 	///     Scans whether a designated river cell exists within a Chebyshev distance radius around an origin coordinate[cite:
 	///     2].
 	/// </summary>
-	public static bool IsRiverWithinDistance(this HydrologyMap hydrology, int originX, int originY,
+	public static bool IsRiverWithinDistance(this HydrologyMaps hydrology, int originX, int originY,
 		int maxDistanceTiles)
 	{
 		ArgumentNullException.ThrowIfNull(hydrology);

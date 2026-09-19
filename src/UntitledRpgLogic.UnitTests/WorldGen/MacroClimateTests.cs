@@ -1,6 +1,6 @@
 using UntitledRpgLogic.Core.World;
-using UntitledRpgLogic.Core.World.Generation.NoiseMaps;
-using UntitledRpgLogic.WorldGen.Generators;
+using UntitledRpgLogic.Core.World.Generation;
+using UntitledRpgLogic.WorldGen.OldGenerators;
 
 namespace UntitledRpgLogic.UnitTests.WorldGen;
 
@@ -53,17 +53,17 @@ public sealed class MacroClimateTests
 	[TestMethod]
 	public void MacroClimateGenerator_ElevationLapseRate_CoolerAtHighAltitudes()
 	{
-		var heightmap = new HeightMap(10, 10);
-		var hydrology = new HydrologyMap(10, 10);
+		var context =
+			new WorldGenContext(new WorldMapConfiguration { WidthTiles = 10, HeightTiles = 10, Seed = 12345u });
 
 		// Cell (0, 5) low valley at equator; Cell (1, 5) high mountain at equator
-		heightmap.SetElevation(0, 5, 0);
-		heightmap.SetElevation(1, 5, 3000);
+		context.Terrain.SetElevation(0, 5, 0);
+		context.Terrain.SetElevation(1, 5, 3000);
 
-		var climate = MacroClimateGenerator.Generate(heightmap, hydrology, 12345u, new WorldMapConfiguration());
+		MacroClimateGenerator.Generate(context);
 
-		var lowValleyTemp = climate.GetTemperature(0, 5);
-		var mountainTemp = climate.GetTemperature(1, 5);
+		var lowValleyTemp = context.Climate.GetTemperature(0, 5);
+		var mountainTemp = context.Climate.GetTemperature(1, 5);
 
 		Assert.IsLessThan(lowValleyTemp, mountainTemp, "High elevation should reduce temperature due to lapse rate.");
 	}

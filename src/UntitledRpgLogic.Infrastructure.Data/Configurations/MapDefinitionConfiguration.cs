@@ -20,19 +20,19 @@ public sealed class MapDefinitionConfiguration : IEntityTypeConfiguration<MapDef
 			.HasForeignKey(m => m.Type)
 			.OnDelete(DeleteBehavior.Restrict);
 
-		_ = builder.OwnsOne(m => m.Atmosphere, ab =>
+		builder.OwnsOne(m => m.Atmosphere, ab =>
 		{
 			ab.ToJson();
 			ab.OwnsMany(a => a.GasFractions);
 		});
-		_ = builder.OwnsMany(m => m.BaselineAmbients, bb => bb.ToJson());
+		builder.OwnsMany(m => m.BaselineAmbients, bb => bb.ToJson());
 
-		_ = builder.HasMany(m => m.Chunks)
+		builder.HasMany(m => m.Chunks)
 			.WithOne(c => c.Map)
 			.HasForeignKey(c => c.MapId)
 			.OnDelete(DeleteBehavior.Cascade);
 
-		_ = builder.HasMany(m => m.Transitions)
+		builder.HasMany(m => m.Transitions)
 			.WithOne(t => t.SourceMap)
 			.HasForeignKey(t => t.SourceMapId)
 			.OnDelete(DeleteBehavior.Cascade);
@@ -52,6 +52,11 @@ public sealed class MapDefinitionConfiguration : IEntityTypeConfiguration<MapDef
 			{
 				ab.OwnsMany(a => a.AvailableElements);
 			});
+		});
+
+		builder.OwnsMany(m => m.OreDeposits, ob =>
+		{
+			ob.ToJson();
 		});
 	}
 }

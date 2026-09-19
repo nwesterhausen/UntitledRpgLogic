@@ -1,3 +1,6 @@
+using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
+
 namespace UntitledRpgLogic.Core.World.Generation;
 
 /// <summary>
@@ -30,6 +33,11 @@ public abstract class NoiseGridDimensions
 	public int HeightTiles { get; }
 
 	/// <summary>
+	///     Gets the total amount of tiles in this grid.
+	/// </summary>
+	public int TotalTiles => this.WidthTiles * this.HeightTiles;
+
+	/// <summary>
 	///     Evaluates whether a tile coordinate falls strictly within the grid boundaries.
 	/// </summary>
 	public bool IsInBounds(int tileX, int tileY) =>
@@ -49,4 +57,33 @@ public abstract class NoiseGridDimensions
 		var clampedY = Math.Clamp(tileY, 0, this.HeightTiles - 1);
 		return (clampedY * this.WidthTiles) + clampedX;
 	}
+
+	/// <summary>
+	///     Throws an <see cref="ArgumentOutOfRangeException" /> if the coordinate is outside the grid bounds.
+	/// </summary>
+	public void ThrowIfNotInBounds(
+		int tileX,
+		int tileY,
+		[CallerArgumentExpression(nameof(tileX))]
+		string? paramNameX = null,
+		[CallerArgumentExpression(nameof(tileY))]
+		string? paramNameY = null)
+	{
+		if (!this.IsInBounds(tileX, tileY))
+		{
+			ThrowOutOfBounds(tileX, tileY, this.WidthTiles, this.HeightTiles, paramNameX, paramNameY);
+		}
+	}
+
+	[DoesNotReturn]
+	private static void ThrowOutOfBounds(
+		int x,
+		int y,
+		int width,
+		int height,
+		string? paramNameX,
+		string? paramNameY) =>
+		throw new ArgumentOutOfRangeException(
+			$"{paramNameX}, {paramNameY}",
+			$"Coordinates ({x}, {y}) are outside grid bounds [0..{width - 1}, 0..{height - 1}].");
 }

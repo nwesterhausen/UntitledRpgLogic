@@ -1,27 +1,27 @@
-namespace UntitledRpgLogic.Core.World.Generation.MapGrids;
+namespace UntitledRpgLogic.Core.World.Generation.GridMaps;
 
 /// <summary>
-///     Represents the procedural or sampled bedrock elevation grid across a 2D map coordinate space.
+///     Represents the depth of a body of water at the specific tiles.
 /// </summary>
-public sealed class LiquidDepthGrid : NoiseGrid2D<ushort>
+public sealed class LiquidDepthMap : NoiseGrid2D<ushort>
 {
 	/// <summary>
-	///     Initializes a new instance of the <see cref="LiquidDepthGrid" /> class with specified grid dimensions.
+	///     Initializes a new instance of the <see cref="LiquidDepthMap" /> class with specified grid dimensions.
 	/// </summary>
-	/// <param name="widthTiles">The total width of the heightmap in tiles.</param>
-	/// <param name="heightTiles">The total height of the heightmap in tiles.</param>
-	public LiquidDepthGrid(int widthTiles, int heightTiles)
+	/// <param name="widthTiles">The total width of the grid in tiles.</param>
+	/// <param name="heightTiles">The total height of the grid in tiles.</param>
+	public LiquidDepthMap(int widthTiles, int heightTiles)
 		: base(widthTiles, heightTiles)
 	{
 	}
 
 	/// <summary>
-	///     Initializes a new instance of the <see cref="LiquidDepthGrid" /> class using an existing flat depth array.
+	///     Initializes a new instance of the <see cref="LiquidDepthMap" /> class using an existing flat depth array.
 	/// </summary>
-	/// <param name="widthTiles">The total width of the heightmap in tiles.</param>
-	/// <param name="heightTiles">The total height of the heightmap in tiles.</param>
+	/// <param name="widthTiles">The total width of the grid in tiles.</param>
+	/// <param name="heightTiles">The total height of the grid in tiles.</param>
 	/// <param name="depths">The flattened liquid depth array of length <c>widthTiles * heightTiles</c>.</param>
-	public LiquidDepthGrid(int widthTiles, int heightTiles, ushort[] depths)
+	public LiquidDepthMap(int widthTiles, int heightTiles, ushort[] depths)
 		: base(widthTiles, heightTiles, depths)
 	{
 	}

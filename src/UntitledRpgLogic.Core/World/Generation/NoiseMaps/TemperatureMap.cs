@@ -2,6 +2,7 @@ namespace UntitledRpgLogic.Core.World.Generation.NoiseMaps;
 
 /// <summary>
 ///     Represents the mid-scale ambient temperature simulation layer in degrees Celsius across a 2D map space.
+///     Influenced by <see cref="HeightMap" />, desired pole direction(s), and desired equatorial and polar temperatures.
 /// </summary>
 public sealed class TemperatureMap : NoiseGrid2D<float>
 {

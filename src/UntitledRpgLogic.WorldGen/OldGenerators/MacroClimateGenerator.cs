@@ -1,10 +1,8 @@
 using UntitledRpgLogic.Core.World;
 using UntitledRpgLogic.Core.World.Generation;
-using UntitledRpgLogic.Core.World.Generation.MapGrids;
-using UntitledRpgLogic.Core.World.Generation.NoiseMaps;
 using UntitledRpgLogic.WorldGen.Noise;
 
-namespace UntitledRpgLogic.WorldGen.Generators;
+namespace UntitledRpgLogic.WorldGen.OldGenerators;
 
 /// <summary>
 ///     Generates temperature gradients, precipitation simulations, and Whittaker-style biome classifications.
@@ -14,19 +12,17 @@ public static class MacroClimateGenerator
 	/// <summary>
 	///     Generates temperature, rainfall, and derived biomes across the map based on heightmap and hydrology inputs.
 	/// </summary>
-	public static ClimateGrid Generate(
-		HeightMap heightmap,
-		HydrologyMap hydrology,
-		long seed,
-		WorldMapConfiguration worldConfig)
+	public static void Generate(
+		WorldGenContext context)
 	{
-		ArgumentNullException.ThrowIfNull(heightmap);
-		ArgumentNullException.ThrowIfNull(hydrology);
-		ArgumentNullException.ThrowIfNull(worldConfig);
+		ArgumentNullException.ThrowIfNull(context);
+
+		var worldConfig = context.MapConfig;
+		var seed = context.MapConfig.Seed;
 
 		var cfg = worldConfig.Climate;
-		var width = heightmap.WidthTiles;
-		var height = heightmap.HeightTiles;
+		var width = context.MapConfig.WidthTiles;
+		var height = context.MapConfig.HeightTiles;
 
 		// 1. Generate multi-octave temperature variations [-8.0°C to +8.0°C]
 		var tempTurbulence = NoiseMaker.GenerateNoiseArray(
@@ -54,7 +50,6 @@ public static class MacroClimateGenerator
 				TargetMax = 1.0f
 			}, width, height);
 
-		var climate = new ClimateGrid(width, height);
 		var halfHeight = height / 2.0f;
 		var warpSeed = seed ^ 0x517cc1b7u;
 
@@ -65,8 +60,8 @@ public static class MacroClimateGenerator
 			for (var x = 0; x < width; x++)
 			{
 				var idx = rowOffset + x;
-				var elevation = heightmap.GetElevation(x, y);
-				var liquidDepth = hydrology.GetLiquidDepth(x, y);
+				var elevation = context.Terrain.GetElevation(x, y);
+				var liquidDepth = context.Hydrology.GetLiquidDepth(x, y);
 
 				// --- 1. DOMAIN WARPING FOR LATITUDE ---
 				// Sample low-frequency noise to bend the horizontal isotherm lines
@@ -88,7 +83,7 @@ public static class MacroClimateGenerator
 				// --- 3. PRECIPITATION & MARITIME BUFFERS ---
 				// Coastlines and ocean air supply humidity buffers
 				var isOcean = liquidDepth > 0 && elevation < worldConfig.Terrain.SeaLevel;
-				var riverBonus = hydrology.IsRiver(x, y) ? 0.25f : 0.0f;
+				var riverBonus = context.Hydrology.IsRiver(x, y) ? 0.25f : 0.0f;
 				var marineBonus = isOcean ? 0.15f : 0.0f;
 
 				var rainfall = Math.Clamp(rawRainfall[idx] + riverBonus + marineBonus, 0.0f, 1.0f);
@@ -100,13 +95,11 @@ public static class MacroClimateGenerator
 					temperature,
 					rainfall,
 					worldConfig.Terrain.MountainThreshold,
-					hydrology.IsRiver(x, y));
+					context.Hydrology.IsRiver(x, y));
 
-				climate.SetCell(x, y, temperature, rainfall, biome);
+				context.Climate.SetClimate(x, y, temperature, rainfall, biome);
 			}
 		}
-
-		return climate;
 	}
 
 	/// <summary>
