@@ -1,24 +1,25 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using UntitledRpgLogic.Core.Models;
+using UntitledRpgLogic.Core.Entities;
+using UntitledRpgLogic.Core.Items;
 using UntitledRpgLogic.Infrastructure.Data.LookupEntities;
 
 namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
 
-///<summary>
-/// Defines advanced table configuration for <see cref="ItemDefinition"/>
-///</summary>
+/// <summary>
+///     Defines advanced table configuration for <see cref="ItemDefinition" />
+/// </summary>
 public sealed class ItemDefinitionConfiguration : IEntityTypeConfiguration<ItemDefinition>
 {
-	/// <inheritdoc  />
+	/// <inheritdoc />
 	public void Configure(EntityTypeBuilder<ItemDefinition> builder)
 	{
 		ArgumentNullException.ThrowIfNull(builder);
 
 		// Instances relationships
 		builder.HasMany(i => i.Instances)
-			.WithOne(ii => ii.ItemDefinition)
-			.HasForeignKey(ii => ii.ItemDefinitionId)
+			.WithOne(ii => ii.Definition)
+			.HasForeignKey(ii => ii.DefinitionId)
 			.OnDelete(DeleteBehavior.Cascade);
 
 		// Map lookup tables for enums
@@ -31,13 +32,13 @@ public sealed class ItemDefinitionConfiguration : IEntityTypeConfiguration<ItemD
 			.HasForeignKey(x => x.ItemSubtype)
 			.OnDelete(DeleteBehavior.Restrict);
 		builder.HasOne<QualityLookup>()
-		   .WithMany()
-		   .HasForeignKey(i => i.BaseQuality)
-		   .OnDelete(DeleteBehavior.Restrict);
+			.WithMany()
+			.HasForeignKey(i => i.BaseQuality)
+			.OnDelete(DeleteBehavior.Restrict);
 		builder.HasOne<Entity>()
-		   .WithMany()
-		   .HasForeignKey(i => i.CreatorEntityId)
-		   .OnDelete(DeleteBehavior.SetNull);
+			.WithMany()
+			.HasForeignKey(i => i.CreatorEntityId)
+			.OnDelete(DeleteBehavior.SetNull);
 
 		// Configure the owned collection into a dedicated relational child table
 		builder.OwnsMany(i => i.Materials, mb =>
@@ -46,8 +47,8 @@ public sealed class ItemDefinitionConfiguration : IEntityTypeConfiguration<ItemD
 
 			// Outward foreign key constraint to the material slot lookup (as byte)
 			mb.Property(m => m.Slot)
-			  .HasConversion<byte>()
-			  .IsRequired();
+				.HasConversion<byte>()
+				.IsRequired();
 			mb.HasOne<MaterialSlotLookup>()
 				.WithMany()
 				.HasForeignKey(x => x.Slot)
@@ -55,9 +56,9 @@ public sealed class ItemDefinitionConfiguration : IEntityTypeConfiguration<ItemD
 
 			// Outward foreign key constraint to the materials catalog table
 			mb.HasOne(m => m.Material)
-			  .WithMany()
-			  .HasForeignKey(m => m.MaterialId)
-			  .OnDelete(DeleteBehavior.Restrict);
+				.WithMany()
+				.HasForeignKey(m => m.MaterialId)
+				.OnDelete(DeleteBehavior.Restrict);
 		});
 	}
 }

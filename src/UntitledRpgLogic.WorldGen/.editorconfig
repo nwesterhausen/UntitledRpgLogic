@@ -1,0 +1,3 @@
+# Exclude the imported noise code from compiler warnings.
+[Noise/OpenSimplex2.cs]
+generated_code = true

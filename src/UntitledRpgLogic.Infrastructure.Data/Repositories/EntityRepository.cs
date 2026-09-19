@@ -1,7 +1,6 @@
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
-using UntitledRpgLogic.Core.Interfaces.Data;
-using UntitledRpgLogic.Core.Interfaces.Data.Repositories;
+using UntitledRpgLogic.Core.Data;
 
 namespace UntitledRpgLogic.Infrastructure.Data.Repositories;
 
@@ -23,7 +22,7 @@ public class EntityRepository<TEntity, TId> : Repository<TEntity>, IEntityReposi
 	{
 		var query = ApplyIncludes(this.DbSet, includes);
 
-		return await query.FirstOrDefaultAsync(e => e.Id!.Equals(id), cancellationToken).ConfigureAwait(false);
+		return await query.FirstOrDefaultAsync(e => e.Id.Equals(id), cancellationToken).ConfigureAwait(false);
 	}
 
 	/// <inheritdoc />
@@ -36,7 +35,7 @@ public class EntityRepository<TEntity, TId> : Repository<TEntity>, IEntityReposi
 
 		var query = include(this.DbSet.AsQueryable());
 
-		return await query.FirstOrDefaultAsync(e => e.Id!.Equals(id), cancellationToken).ConfigureAwait(false);
+		return await query.FirstOrDefaultAsync(e => e.Id.Equals(id), cancellationToken).ConfigureAwait(false);
 	}
 
 	/// <inheritdoc />

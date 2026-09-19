@@ -1,12 +1,13 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using UntitledRpgLogic.Core.Enums;
+using UntitledRpgLogic.Core.Progression;
 using UntitledRpgLogic.Infrastructure.Data.LookupEntities;
 
 namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
-///<summary>
-/// Defines the <see cref="RequirementType" /> lookup table
-///</summary>
+
+/// <summary>
+///     Defines the <see cref="RequirementType" /> lookup table
+/// </summary>
 public sealed class RequirementTypeLookupConfiguration : IEntityTypeConfiguration<RequirementTypeLookup>
 {
 	///<inheritdoc />
@@ -26,11 +27,7 @@ public sealed class RequirementTypeLookupConfiguration : IEntityTypeConfiguratio
 		// Seed with enum data
 		var seedData = Enum.GetValues<RequirementType>()
 			.DistinctBy(e => (int)e)
-			.Select(e => new RequirementTypeLookup
-			{
-				Id = e,
-				Name = e.ToString()
-			});
+			.Select(e => new RequirementTypeLookup { Id = e, Name = e.ToString() });
 		_ = builder.HasData(seedData);
 	}
 }

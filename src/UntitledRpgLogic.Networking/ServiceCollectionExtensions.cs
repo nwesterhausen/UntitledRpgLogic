@@ -1,6 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 
-namespace UntitledRpgLogic.Services;
+namespace UntitledRpgLogic.Networking;
 
 /// <summary>
 ///     Provides extension methods for registering application services with the DI container.

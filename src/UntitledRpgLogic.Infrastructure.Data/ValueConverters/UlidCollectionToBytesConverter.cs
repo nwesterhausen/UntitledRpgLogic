@@ -22,7 +22,7 @@ public class UlidCollectionToBytesConverter : ValueConverter<ICollection<Ulid>, 
 
 	private static byte[] PackUlids(ICollection<Ulid> ulids)
 	{
-		if (ulids == null || ulids.Count == 0)
+		if (ulids.Count == 0)
 		{
 			return [];
 		}
@@ -43,7 +43,7 @@ public class UlidCollectionToBytesConverter : ValueConverter<ICollection<Ulid>, 
 
 	private static List<Ulid> UnpackUlids(byte[] bytes)
 	{
-		if (bytes == null || bytes.Length == 0)
+		if (bytes.Length == 0)
 		{
 			return new List<Ulid>();
 		}

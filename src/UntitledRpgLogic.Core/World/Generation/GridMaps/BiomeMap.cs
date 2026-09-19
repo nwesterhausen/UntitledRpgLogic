@@ -1,0 +1,44 @@
+namespace UntitledRpgLogic.Core.World.Generation.GridMaps;
+
+/// <summary>
+///     Represents the derived ecological biome classification grid across a 2D map space.
+/// </summary>
+public sealed class BiomeMap : NoiseGrid2D<BiomeType>
+{
+	/// <summary>
+	///     Initializes a new instance of the <see cref="BiomeMap" /> class with specified grid dimensions.
+	/// </summary>
+	/// <param name="widthTiles">The total width of the grid in tiles.</param>
+	/// <param name="heightTiles">The total height of the grid in tiles.</param>
+	public BiomeMap(int widthTiles, int heightTiles)
+		: base(widthTiles, heightTiles)
+	{
+	}
+
+	/// <summary>
+	///     Initializes a new instance of the <see cref="BiomeMap" /> class using an existing flat materials array.
+	/// </summary>
+	/// <param name="widthTiles">The total width of the grid in tiles.</param>
+	/// <param name="heightTiles">The total height of the grid in tiles.</param>
+	/// <param name="biomes">The flattened biome array of length <c>widthTiles * heightTiles</c>.</param>
+	public BiomeMap(int widthTiles, int heightTiles, BiomeType[] biomes)
+		: base(widthTiles, heightTiles, biomes)
+	{
+	}
+
+	/// <summary>
+	///     Retrieves the biome at the specified tile coordinate.
+	/// </summary>
+	/// <param name="tileX">The horizontal tile index.</param>
+	/// <param name="tileY">The vertical tile index.</param>
+	/// <returns>The biome of the tile, or null if out of bounds.</returns>
+	public BiomeType GetBiome(int tileX, int tileY) => this.GetValueClamped(tileX, tileY);
+
+	/// <summary>
+	///     Sets the biome at the specified tile coordinate if within valid bounds.
+	/// </summary>
+	/// <param name="tileX">The horizontal tile index.</param>
+	/// <param name="tileY">The vertical tile index.</param>
+	/// <param name="biome">The biome to assign.</param>
+	public void SetBiome(int tileX, int tileY, BiomeType biome) => this.SetValue(tileX, tileY, biome);
+}

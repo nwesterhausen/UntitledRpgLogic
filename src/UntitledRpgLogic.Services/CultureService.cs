@@ -1,9 +1,9 @@
-using UntitledRpgLogic.Core.Interfaces.Services;
+using UntitledRpgLogic.Core.Localization;
 
 namespace UntitledRpgLogic.Services;
 
 /// <summary>
-///     An implementation of <see cref="ICultureService" /> that can be used to store and manage culture-specific data,
+///     An implementation of <see cref="ICultureService" /> managing culture-specific localization data and formatting.
 /// </summary>
 public class CultureService : ICultureService
 {

@@ -2,7 +2,7 @@ using System.Collections.Concurrent;
 using System.Text.Json;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using UntitledRpgLogic.Core.Models;
+using UntitledRpgLogic.Core.Data;
 using UntitledRpgLogic.Infrastructure.Data;
 
 namespace UntitledRpgLogic.Services.Logging.Database;
@@ -39,7 +39,8 @@ public sealed class DatabaseLogger : ILogger, IDisposable
 	private readonly IExternalScopeProvider scopeProvider;
 
 	/// <summary>
-	///     The <see cref="IServiceProvider" /> used to resolve dependencies, such as the <see cref="RpgDbContext" />, for database operations.
+	///     The <see cref="IServiceProvider" /> used to resolve dependencies, such as the <see cref="RpgDbContext" />, for
+	///     database operations.
 	/// </summary>
 	private readonly IServiceProvider serviceProvider;
 
@@ -66,8 +67,9 @@ public sealed class DatabaseLogger : ILogger, IDisposable
 		{
 			// Wait for the processing task to finish handling any remaining items.
 			while (!
-			 this.processingTask.Wait(TimeSpan.FromSeconds(1)))
-			{ }
+			       this.processingTask.Wait(TimeSpan.FromSeconds(1)))
+			{
+			}
 		}
 		catch (OperationCanceledException) { }
 
@@ -76,7 +78,8 @@ public sealed class DatabaseLogger : ILogger, IDisposable
 	}
 
 	/// <inheritdoc />
-	public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception? exception, Func<TState, Exception?, string> formatter)
+	public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception? exception,
+		Func<TState, Exception?, string> formatter)
 	{
 		if (!this.IsEnabled(logLevel))
 		{
@@ -114,7 +117,7 @@ public sealed class DatabaseLogger : ILogger, IDisposable
 			}
 		}, state);
 
-		ArgumentNullException.ThrowIfNull(formatter, nameof(formatter));
+		ArgumentNullException.ThrowIfNull(formatter);
 		var message = formatter(state, exception);
 		var parametersJson = parameters.Count > 0 ? JsonSerializer.Serialize(parameters) : null;
 
@@ -135,7 +138,7 @@ public sealed class DatabaseLogger : ILogger, IDisposable
 	public bool IsEnabled(LogLevel logLevel) => logLevel >= LogLevel.Information;
 
 	/// <inheritdoc />
-	public IDisposable? BeginScope<TState>(TState state) where TState : notnull => this.scopeProvider.Push(state);
+	public IDisposable BeginScope<TState>(TState state) where TState : notnull => this.scopeProvider.Push(state);
 
 	private async Task ProcessLogQueue()
 	{
@@ -159,7 +162,8 @@ public sealed class DatabaseLogger : ILogger, IDisposable
 					using var scope = this.serviceProvider.CreateScope();
 					var dbContext = scope.ServiceProvider.GetRequiredService<RpgDbContext>();
 
-					await dbContext.LogEntries.AddRangeAsync(logEntries, this.cancellationTokenSource.Token).ConfigureAwait(false);
+					await dbContext.LogEntries.AddRangeAsync(logEntries, this.cancellationTokenSource.Token)
+						.ConfigureAwait(false);
 					_ = await dbContext.SaveChangesAsync(this.cancellationTokenSource.Token).ConfigureAwait(false);
 				}
 			}

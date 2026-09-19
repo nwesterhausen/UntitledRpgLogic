@@ -1,16 +1,13 @@
-
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using UntitledRpgLogic.Core;
-using UntitledRpgLogic.Core.Classes;
-using UntitledRpgLogic.Core.Enums;
-using UntitledRpgLogic.Core.Models;
+using UntitledRpgLogic.Core.Stats;
 using UntitledRpgLogic.Infrastructure.Data.LookupEntities;
 
 namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
-///<summary>
-/// Defines advanced table configuration for <see cref="StatDefinition" />
-///</summary>
+
+/// <summary>
+///     Defines advanced table configuration for <see cref="StatDefinition" />
+/// </summary>
 public sealed class StatDefinitionConfiguration : IEntityTypeConfiguration<StatDefinition>
 {
 	///<inheritdoc />
@@ -22,16 +19,5 @@ public sealed class StatDefinitionConfiguration : IEntityTypeConfiguration<StatD
 			.WithMany()
 			.HasForeignKey(x => x.Variation)
 			.OnDelete(DeleteBehavior.Restrict);
-
-		// seed well-known universal stats
-		builder.HasData(new StatDefinition
-		{
-			Id = WellKnownIdentifiers.PlayerLevel,
-			Name = new Name("Level"),
-			Variation = StatVariation.Pseudo,
-			MinValue = 0,
-			MaxValue = int.MaxValue,
-			HasChangeableValue = true
-		});
 	}
 }

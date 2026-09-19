@@ -8,13 +8,16 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="EFCore.NamingConventions"/>
 		<PackageReference Include="Microsoft.Extensions.Logging"/>
+		<PackageReference Include="UntitledRpg.LibraryFile"/>
 	</ItemGroup>
 
 	<ItemGroup>
 		<ProjectReference Include="..\UntitledRpgLogic.Core\UntitledRpgLogic.Core.csproj"/>
 		<ProjectReference Include="..\UntitledRpgLogic.Extensions.Common\UntitledRpgLogic.Extensions.Common.csproj"/>
 		<ProjectReference Include="..\UntitledRpgLogic.Extensions.Logging\UntitledRpgLogic.Extensions.Logging.csproj"/>
+		<ProjectReference Include="..\UntitledRpgLogic.WorldGen\UntitledRpgLogic.WorldGen.csproj"/>
 	</ItemGroup>
 
 </Project>

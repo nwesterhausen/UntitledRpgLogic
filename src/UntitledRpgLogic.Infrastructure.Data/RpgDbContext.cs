@@ -1,6 +1,16 @@
 using Microsoft.EntityFrameworkCore;
-using UntitledRpgLogic.Core.Classes;
-using UntitledRpgLogic.Core.Models;
+using UntitledRpgLogic.Core.Abilities;
+using UntitledRpgLogic.Core.Abilities.Effects;
+using UntitledRpgLogic.Core.Common;
+using UntitledRpgLogic.Core.Data;
+using UntitledRpgLogic.Core.Elements;
+using UntitledRpgLogic.Core.Entities;
+using UntitledRpgLogic.Core.Items;
+using UntitledRpgLogic.Core.Materials;
+using UntitledRpgLogic.Core.Progression;
+using UntitledRpgLogic.Core.Skills;
+using UntitledRpgLogic.Core.Stats;
+using UntitledRpgLogic.Core.World;
 using UntitledRpgLogic.Infrastructure.Data.ValueConverters;
 
 namespace UntitledRpgLogic.Infrastructure.Data;
@@ -17,7 +27,7 @@ public class RpgDbContext(DbContextOptions<RpgDbContext> options) : DbContext(op
 	/// <summary>
 	///     Gets or sets the DbSet for all Ability definitions.
 	/// </summary>
-	public DbSet<Ability> Abilities { get; set; } = null!;
+	public DbSet<AbilityDefinition> Abilities { get; set; } = null!;
 
 
 	/// <summary>
@@ -32,9 +42,9 @@ public class RpgDbContext(DbContextOptions<RpgDbContext> options) : DbContext(op
 	public DbSet<Effect> Effects { get; set; } = null!;
 
 	/// <summary>
-	/// 	Table for fantastical elements
+	///     Table for fantastical elements
 	/// </summary>
-	public DbSet<Element> Elements { get; set; } = null!;
+	public DbSet<ElementDefinition> Elements { get; set; } = null!;
 
 	/// <summary>
 	///     Table for entities, which represent characters, NPCs, mobs, etc. in the game world.
@@ -44,7 +54,7 @@ public class RpgDbContext(DbContextOptions<RpgDbContext> options) : DbContext(op
 	/// <summary>
 	///     Table for entity inventories, which link entities to the item instances they own.
 	/// </summary>
-	public DbSet<EntityInventory> EntityInventories { get; set; } = null!;
+	public DbSet<Inventory> Inventories { get; set; } = null!;
 
 	/// <summary>
 	///     Table for entity skills, which link entities to their instanced skills.
@@ -65,17 +75,17 @@ public class RpgDbContext(DbContextOptions<RpgDbContext> options) : DbContext(op
 	/// <summary>
 	///     Table for item instances, which are specific instances of item definitions owned by entities.
 	/// </summary>
-	public DbSet<ItemInstance> ItemInstances { get; set; } = null!;
+	public DbSet<Item> ItemInstances { get; set; } = null!;
 
 	/// <summary>
 	///     Table for instanced skills, which are specific instances of skill definitions assigned to entities.
 	/// </summary>
-	public DbSet<InstancedSkill> InstancedSkills { get; set; } = null!;
+	public DbSet<Skill> InstancedSkills { get; set; } = null!;
 
 	/// <summary>
 	///     Table for instanced stats, which are specific instances of stat definitions assigned to entities.
 	/// </summary>
-	public DbSet<InstancedStat> InstancedStats { get; set; } = null!;
+	public DbSet<Stat> InstancedStats { get; set; } = null!;
 
 	// Linking Tables
 	/// <summary>
@@ -87,6 +97,21 @@ public class RpgDbContext(DbContextOptions<RpgDbContext> options) : DbContext(op
 	///     Table for log entries, which store application logs for auditing and debugging purposes.
 	/// </summary>
 	public DbSet<LogEntry> LogEntries { get; set; } = null!;
+
+	/// <summary>
+	///     Table for leveling definitions, which define how leveling is applied.
+	/// </summary>
+	public DbSet<LevelingDefinition> LevelingDefinitions { get; set; } = null!;
+
+	/// <summary>
+	///     Table for map definitions which are information for various maps.
+	/// </summary>
+	public DbSet<MapDefinition> MapDefinitions { get; set; } = null!;
+
+	/// <summary>
+	///     Table for map transitions which are how maps are connected.
+	/// </summary>
+	public DbSet<MapTransition> MapTransitions { get; set; } = null!;
 
 	/// <summary>
 	///     Table for material definitions, which define the materials that items can be made from.
@@ -101,7 +126,7 @@ public class RpgDbContext(DbContextOptions<RpgDbContext> options) : DbContext(op
 	/// <summary>
 	///     Table for modification effects, which define the specific effects of modifiers.
 	/// </summary>
-	public DbSet<ModificationEffect> ModificationEffects { get; set; } = null!;
+	public DbSet<Modification> ModificationEffects { get; set; } = null!;
 
 	/// <summary>
 	///     Table for skill definitions, which define the skills that entities can possess.
@@ -117,18 +142,18 @@ public class RpgDbContext(DbContextOptions<RpgDbContext> options) : DbContext(op
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{
 		base.OnModelCreating(modelBuilder);
-		ArgumentNullException.ThrowIfNull(modelBuilder, nameof(modelBuilder));
+		ArgumentNullException.ThrowIfNull(modelBuilder);
 
 		// Configure lookup tables
 		// Configure advanced table relationships (1 -> M, M -> M, additional FK, composite PK)
-		// (automatically pull table definitions from `Configurations` via `IEntityTypeConfiguration`)
+		// (automatically pull table definitions from `.Configurations` via `IEntityTypeConfiguration`)
 		_ = modelBuilder.ApplyConfigurationsFromAssembly(typeof(RpgDbContext).Assembly);
 	}
 
 	/// <inheritdoc />
 	protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
 	{
-		ArgumentNullException.ThrowIfNull(configurationBuilder, nameof(configurationBuilder));
+		ArgumentNullException.ThrowIfNull(configurationBuilder);
 
 		// This is where the value converters are registered.
 		// Tell EF Core to use our custom converter for every property of type Ulid.

@@ -1,13 +1,13 @@
-
-using UntitledRpgLogic.Core.Enums;
+using System.ComponentModel.DataAnnotations;
+using UntitledRpgLogic.Core.World;
 
 namespace UntitledRpgLogic.Infrastructure.Data.LookupEntities;
+
 /// <summary>
-/// Provides a reference table in the databse for the <see cref="MapType" /> enum.
+///     Provides a reference table in the databse for the <see cref="MapType" /> enum.
 /// </summary>
 public class MapTypeLookup
 {
-
 	///<summary>The specific enum for this entry</summary>
 	public MapType Id { get; set; }
 
@@ -15,5 +15,6 @@ public class MapTypeLookup
 	public string Name { get; set; } = string.Empty;
 
 	///<summary>An optional description. Possibly provide something to describe it in-game</summary>
+	[MaxLength(512)]
 	public string? Description { get; set; }
 }

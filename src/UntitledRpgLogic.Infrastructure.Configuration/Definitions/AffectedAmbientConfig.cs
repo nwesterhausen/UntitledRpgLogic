@@ -1,5 +1,5 @@
-using UntitledRpgLogic.Core.Enums;
-using UntitledRpgLogic.Core.Models;
+using UntitledRpgLogic.Core.Abilities.Effects;
+using UntitledRpgLogic.Core.Environment;
 
 namespace UntitledRpgLogic.Infrastructure.Configuration.Definitions;
 

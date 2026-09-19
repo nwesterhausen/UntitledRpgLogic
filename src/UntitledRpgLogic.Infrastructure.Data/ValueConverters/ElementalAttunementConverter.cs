@@ -1,10 +1,11 @@
+using System.Globalization;
 using System.Text.Json;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace UntitledRpgLogic.Infrastructure.Data.ValueConverters;
 
 /// <summary>
-/// 	Conversion for the elemental attunement which is a dict of ID, AMNT
+///     Conversion for the elemental attunement which is a dict of ID, AMNT
 /// </summary>
 public class ElementalAttunementConverter : ValueConverter<Dictionary<Ulid, float>, string>
 {
@@ -19,7 +20,7 @@ public class ElementalAttunementConverter : ValueConverter<Dictionary<Ulid, floa
 		json => string.IsNullOrEmpty(json)
 			? new Dictionary<Ulid, float>()
 			: JsonSerializer.Deserialize<Dictionary<string, float>>(json, (JsonSerializerOptions?)null)!
-				.ToDictionary(k => Ulid.Parse(k.Key), v => v.Value)
+				.ToDictionary(k => Ulid.Parse(k.Key, CultureInfo.InvariantCulture), v => v.Value)
 	)
 	{
 	}

@@ -1,0 +1,72 @@
+using UntitledRpgLogic.Core.Abilities.Effects;
+using UntitledRpgLogic.Core.Entities;
+using UntitledRpgLogic.Core.Stats;
+
+namespace UntitledRpgLogic.Services.Domains;
+
+/// <summary>
+///     Applies domain effect payloads to target entities, delegating damage calculations
+///     and updating apparent and base stat values in memory.
+/// </summary>
+public sealed class EffectApplicationService(IStatCalculationService statCalculationService) : IEffectApplicationService
+{
+	private readonly IStatCalculationService statCalculationService =
+		statCalculationService ?? throw new ArgumentNullException(nameof(statCalculationService));
+
+	/// <inheritdoc />
+	public void ApplyEffect(Effect effect, Entity? caster = null, IEnumerable<Entity>? targets = null)
+	{
+		ArgumentNullException.ThrowIfNull(effect);
+
+		if (targets is null)
+		{
+			return;
+		}
+
+		foreach (var target in targets)
+		{
+			this.ApplyStatDeltas(effect, target);
+		}
+	}
+
+
+	/// <summary>
+	///     Generically apply changes to stats from any <see cref="Effect" />.
+	/// </summary>
+	/// <param name="effect">Effect to apply</param>
+	/// <param name="target">Target entity</param>
+	private void ApplyStatDeltas(Effect effect, Entity target)
+	{
+		if (effect.AffectedStats is null or { Count: 0 })
+		{
+			return;
+		}
+
+		foreach (var delta in effect.AffectedStats)
+		{
+			var stat = target.Stats
+				.FirstOrDefault(es => es.InstancedStat?.DefinitionId == delta.StatId)
+				?.InstancedStat;
+
+			if (stat is null)
+			{
+				continue;
+			}
+
+			var change = this.statCalculationService.CalculatePointChange(delta, stat);
+
+			var min = stat.Definition?.MinValue ?? int.MinValue;
+			var max = stat.Definition?.MaxValue ?? int.MaxValue;
+
+			if (effect is HealEffect { CanOverheal: true } && delta.IsPositive)
+			{
+				stat.ApparentValue = Math.Clamp(stat.ApparentValue + change, min, int.MaxValue);
+				return;
+			}
+
+			stat.ApparentValue = delta.IsPositive
+				? Math.Clamp(stat.ApparentValue + change, min, max)
+				: Math.Clamp(stat.ApparentValue - change, min, max);
+		}
+	}
+}

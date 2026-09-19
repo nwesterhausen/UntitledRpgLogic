@@ -1,13 +1,13 @@
-
-using UntitledRpgLogic.Core.Enums;
+using System.ComponentModel.DataAnnotations;
+using UntitledRpgLogic.Core.Networking;
 
 namespace UntitledRpgLogic.Infrastructure.Data.LookupEntities;
+
 /// <summary>
-/// Provides a reference table in the databse for the <see cref="MessagePriority" /> enum.
+///     Provides a reference table in the databse for the <see cref="MessagePriority" /> enum.
 /// </summary>
 public class MessagePriorityLookup
 {
-
 	///<summary>The specific enum for this entry</summary>
 	public MessagePriority Id { get; set; }
 
@@ -15,5 +15,6 @@ public class MessagePriorityLookup
 	public string Name { get; set; } = string.Empty;
 
 	///<summary>An optional description. Possibly provide something to describe it in-game</summary>
+	[MaxLength(512)]
 	public string? Description { get; set; }
 }

@@ -1,4 +1,4 @@
-using UntitledRpgLogic.Core.Interfaces.Effects;
+using UntitledRpgLogic.Core.Abilities;
 
 namespace UntitledRpgLogic.Extensions.Common;
 
@@ -12,13 +12,13 @@ public static class ModifierExtensions
 	/// </summary>
 	/// <param name="modifier">modifier to create short display string for</param>
 	/// <returns>string representing the modifier (e.g., "+10%", "-5", "+20% (of base)") </returns>
-	public static string ToDisplay(this IModifier modifier)
+	public static string ToDisplay(this ModifierDefinition modifier)
 	{
-		ArgumentNullException.ThrowIfNull(modifier, nameof(modifier));
+		ArgumentNullException.ThrowIfNull(modifier);
 		var baseEffectString = string.Empty;
-		if (modifier.ModificationEffect != null)
+		if (modifier.ModificationEffects != null)
 		{
-			baseEffectString = modifier.ModificationEffect.ToDisplay();
+			baseEffectString = modifier.ModificationEffects.ToDisplay();
 		}
 
 		if (modifier.StackEffects != null)
@@ -34,17 +34,36 @@ public static class ModifierExtensions
 	}
 
 	/// <summary>
+	///     Represents the collection of modifiers as a single string for tooltips or UI elements.
+	/// </summary>
+	/// <param name="modifiers">Collection of modification effects</param>
+	/// <returns>String for use in the UI</returns>
+	/// <exception cref="ArgumentNullException"></exception>
+	public static string ToDisplay(this IEnumerable<Modification> modifiers)
+	{
+		ArgumentNullException.ThrowIfNull(modifiers);
+
+		var combinedEffectString = string.Empty;
+		foreach (var effect in modifiers)
+		{
+			combinedEffectString += effect.ToDisplay();
+		}
+
+		return combinedEffectString;
+	}
+
+	/// <summary>
 	///     Represents the modifier effect as a display string for tooltips or UI elements.
 	/// </summary>
 	/// <param name="effect"></param>
 	/// <returns></returns>
-	public static string ToDisplay(this IModifierEffect effect)
+	public static string ToDisplay(this Modification effect)
 	{
-		ArgumentNullException.ThrowIfNull(effect, nameof(effect));
+		ArgumentNullException.ThrowIfNull(effect);
 		var sign = effect.IsPositive ? "+" : "-";
-		var flatAmount = effect.AppliesFlatAmount ? $"{sign}{effect.FlatAmount}" : string.Empty;
-		var percentage = effect.AppliesPercentage ? $"{sign}{effect.Percentage:F2}%" : string.Empty;
-		var percentageOfMax = effect.AppliesPercentageOfMax
+		var flatAmount = effect.FlatAmount != 0f ? $"{sign}{effect.FlatAmount}" : string.Empty;
+		var percentage = effect.Percentage != 0f ? $"{sign}{effect.Percentage:F2}%" : string.Empty;
+		var percentageOfMax = effect.PercentageOfMax != 0f
 			? $"{sign}{effect.PercentageOfMax:F2}% of MAX"
 			: string
 				.Empty;

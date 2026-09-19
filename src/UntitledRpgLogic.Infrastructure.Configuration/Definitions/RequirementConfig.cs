@@ -1,9 +1,9 @@
-using UntitledRpgLogic.Core.Enums;
-using UntitledRpgLogic.Core.Models;
+using UntitledRpgLogic.Core.Abilities;
+using UntitledRpgLogic.Core.Progression;
 
 namespace UntitledRpgLogic.Infrastructure.Configuration.Definitions;
 
 /// <summary>
-///     Describes a requirement that must be met to use an <see cref="Ability" />.
+///     Describes a requirement that must be met to use an <see cref="AbilityDefinition" />.
 /// </summary>
 public record RequirementConfig(RequirementType Type, Ulid EntityId, float Amount);

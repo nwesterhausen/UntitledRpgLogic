@@ -1,12 +1,12 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using UntitledRpgLogic.Core.Models;
+using UntitledRpgLogic.Core.World;
 
 namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
 
-///<summary>
-/// Defines advanced table configuration for <see cref="WorldChunk"/>
-///</summary>
+/// <summary>
+///     Defines advanced table configuration for <see cref="WorldChunk" />
+/// </summary>
 public sealed class WorldChunkConfiguration : IEntityTypeConfiguration<WorldChunk>
 {
 	/// <inheritdoc />

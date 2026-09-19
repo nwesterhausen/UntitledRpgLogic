@@ -1,5 +1,22 @@
 using Microsoft.Extensions.DependencyInjection;
-using UntitledRpgLogic.Core.Interfaces.Services;
+using UntitledRpgLogic.Core.Abilities;
+using UntitledRpgLogic.Core.Abilities.Effects;
+using UntitledRpgLogic.Core.Common;
+using UntitledRpgLogic.Core.Data;
+using UntitledRpgLogic.Core.Data.Urpglib;
+using UntitledRpgLogic.Core.Economy;
+using UntitledRpgLogic.Core.Environment;
+using UntitledRpgLogic.Core.Items;
+using UntitledRpgLogic.Core.Networking;
+using UntitledRpgLogic.Core.Progression;
+using UntitledRpgLogic.Core.Skills;
+using UntitledRpgLogic.Core.Stats;
+using UntitledRpgLogic.Core.World;
+using UntitledRpgLogic.Services.Coordinators;
+using UntitledRpgLogic.Services.Data;
+using UntitledRpgLogic.Services.Domains;
+using UntitledRpgLogic.Services.Networking;
+using Random = UntitledRpgLogic.Extensions.Common.Random;
 
 namespace UntitledRpgLogic.Services;
 
@@ -9,24 +26,63 @@ namespace UntitledRpgLogic.Services;
 public static class ServiceCollectionExtensions
 {
 	/// <summary>
-	///     Adds all the core application logic services to the specified IServiceCollection.
+	///     Registers pure domain calculation services used by both client and server.
 	/// </summary>
-	/// <param name="services">The IServiceCollection to add the services to.</param>
-	/// <returns>The IServiceCollection so that additional calls can be chained.</returns>
-	public static IServiceCollection AddApplicationServices(this IServiceCollection services)
+	public static IServiceCollection AddRpgCoreDomainServices(this IServiceCollection services)
 	{
-		// SCOPED SERVICES
-		// -- These are created each time they are asked for and disposed of with the creator.
-		_ = services.AddScoped(typeof(ILevelingService<>), typeof(LevelingService<>));
-		_ = services.AddScoped<IItemStorageService, ItemStorageService>();
-		_ = services.AddScoped<ICurrencyStorageService, CurrencyStorageService>();
+		// Pure domain services (Stateless, zero I/O)
+		services.AddSingleton<IItemFactoryService, ItemFactoryService>();
+		services.AddSingleton<IEffectApplicationService, EffectApplicationService>();
+		services.AddSingleton<ISkillProgressionService, SkillProgressionService>();
+		services.AddSingleton<IStatCalculationService, StatCalculationService>();
+		services.AddSingleton<IModifierApplicationService, ModifierApplicationService>();
+		services.AddSingleton<IAbilityValidationService, AbilityValidationService>();
+		services.AddSingleton<ISpatialMathService, SpatialMathService>();
+		services.AddSingleton<IRespirationDomainService, RespirationDomainService>();
 
-		// SINGLETON SERVICES
-		// -- These are created the first time they're asked for and never disposed (until program ends)
-		_ = services.AddSingleton<ICultureService, CultureService>();
-		_ = services.AddSingleton<ISkillService, SkillService>();
-		// _ = services.AddSingleton<IStatService, StatService>();
-		_ = services.AddSingleton<IDamageCalculator, DamageCalculator>();
+		// Supporting services
+		services.AddSingleton<IRandom, Random>();
+
+		// Domain storage mutations on hydrated records
+		services.AddScoped<IItemStorageService, ItemStorageService>();
+		services.AddScoped<ICurrencyStorageService, CurrencyStorageService>();
+
+		return services;
+	}
+
+	/// <summary>
+	///     Registers authoritative server coordinators, background tick handlers, and session services.
+	/// </summary>
+	public static IServiceCollection AddRpgServerServices(this IServiceCollection services)
+	{
+		services.AddRpgCoreDomainServices();
+
+		// Server Application / Persistence Coordinators (Require IUnitOfWork & IEntityRepository)
+		services.AddScoped<IItemCatalogService, ItemCatalogService>();
+		services.AddScoped<IInventoryCoordinatorService, InventoryCoordinatorService>();
+		services.AddScoped<IPackageLoaderService, PackageLoaderService>();
+		services.AddScoped<IAbilityCoordinatorService, AbilityCoordinatorService>();
+		services.AddScoped<IProgressionCoordinatorService, ProgressionCoordinatorService>();
+		services.AddScoped<IWorldCoordinatorService, WorldCoordinatorService>();
+		services.AddScoped<ITradeCoordinatorService, TradeCoordinatorService>();
+		services.AddScoped<IWorldCoordinatorService, WorldCoordinatorService>();
+
+		// Server Networking & Sessions
+		services.AddSingleton<IAreaOfInterestService, AreaOfInterestService>();
+		services.AddSingleton<IPlayerSessionService, PlayerSessionService>();
+
+		return services;
+	}
+
+	/// <summary>
+	///     Registers client-side services (prediction, interpolation, and definition caching).
+	/// </summary>
+	public static IServiceCollection AddRpgClientServices(this IServiceCollection services)
+	{
+		services.AddRpgCoreDomainServices();
+
+		// Client-Specific Registries
+		services.AddSingleton<IClientDefinitionRegistry, ClientDefinitionRegistry>();
 
 		return services;
 	}

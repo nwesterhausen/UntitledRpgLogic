@@ -29,11 +29,9 @@ jobs:
         id: setup-dotnet
         with:
           dotnet-version: 10.0.x
-
-      - name: 🥟 Setup Bun
-        uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
-        with:
-          bun-version: latest
+          source-url: https://nuget.pkg.github.com/nwesterhausen/index.json
+        env:
+          NUGET_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: 📦 Cache DotNet Workloads
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6

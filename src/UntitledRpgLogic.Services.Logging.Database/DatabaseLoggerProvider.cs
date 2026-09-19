@@ -35,7 +35,10 @@ public class DatabaseLoggerProvider(IServiceProvider serviceProvider) : ILoggerP
 	/// <summary>
 	///     Disposes the provider and its underlying loggers.
 	/// </summary>
-	/// <param name="disposing">True to release both managed and unmanaged resources; false to release only unmanaged resources.</param>
+	/// <param name="disposing">
+	///     True to release both managed and unmanaged resources; false to release only unmanaged
+	///     resources.
+	/// </param>
 	protected virtual void Dispose(bool disposing)
 	{
 		if (this.disposed)

@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using UntitledRpgLogic.Core.Classes;
+using UntitledRpgLogic.Core.Common;
 
 namespace UntitledRpgLogic.Infrastructure.Data.ValueConverters;
 

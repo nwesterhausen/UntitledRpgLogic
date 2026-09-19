@@ -1,0 +1,26 @@
+using System.Diagnostics.CodeAnalysis;
+using UntitledRpgLogic.Core.Common;
+
+namespace UntitledRpgLogic.Core.Abilities.Effects;
+
+/// <summary>
+///     An effect that applies a positive or neutral impact to the target, enhancing their attributes or abilities.
+/// </summary>
+public record BuffEffect : Effect
+{
+	/// <summary>
+	///     Initializes default base values.
+	/// </summary>
+	[SetsRequiredMembers]
+	public BuffEffect() : base(EffectType.Buff)
+	{
+	}
+
+	/// <summary>
+	///     Initializes a new <see cref="Effect" /> with <see cref="EffectType.Buff" />.
+	/// </summary>
+	[SetsRequiredMembers]
+	public BuffEffect(Name name) : base(name, EffectType.Buff)
+	{
+	}
+}

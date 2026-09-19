@@ -1,11 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using UntitledRpgLogic.Core.Models;
+using UntitledRpgLogic.Core.World;
 
 namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
 
 /// <summary>
-/// 	Advanced table configuration for <see cref="MapTransition"/>
+///     Advanced table configuration for <see cref="MapTransition" />
 /// </summary>
 public sealed class MapTransitionConfiguration : IEntityTypeConfiguration<MapTransition>
 {

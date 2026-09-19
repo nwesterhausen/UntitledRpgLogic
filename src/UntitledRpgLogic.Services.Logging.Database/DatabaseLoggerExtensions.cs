@@ -15,7 +15,7 @@ public static class DatabaseLoggerExtensions
 	/// <param name="builder">The <see cref="ILoggingBuilder" /> to use.</param>
 	public static ILoggingBuilder AddDatabase(this ILoggingBuilder builder)
 	{
-		ArgumentNullException.ThrowIfNull(builder, nameof(builder));
+		ArgumentNullException.ThrowIfNull(builder);
 		// Register the DatabaseLoggerProvider as a singleton service
 		builder.Services.TryAddEnumerable(ServiceDescriptor.Singleton<ILoggerProvider, DatabaseLoggerProvider>());
 		return builder;

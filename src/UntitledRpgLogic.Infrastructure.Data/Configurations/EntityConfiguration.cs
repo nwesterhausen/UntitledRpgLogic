@@ -1,24 +1,24 @@
-
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using UntitledRpgLogic.Core.Models;
+using UntitledRpgLogic.Core.Entities;
+using UntitledRpgLogic.Core.Items;
 
 namespace UntitledRpgLogic.Infrastructure.Data.Configurations;
-///<summary>
-/// Defines advanced table configuration for <see cref="Entity" />
-///</summary>
+
+/// <summary>
+///     Defines advanced table configuration for <see cref="Entity" />
+/// </summary>
 public sealed class EntityConfiguration : IEntityTypeConfiguration<Entity>
 {
 	///<inheritdoc />
 	public void Configure(EntityTypeBuilder<Entity> builder)
 	{
-
 		ArgumentNullException.ThrowIfNull(builder);
 
 		// Relationships
 		_ = builder.HasOne(e => e.Inventory)
 			.WithOne(i => i.Entity)
-			.HasForeignKey<EntityInventory>(i => i.EntityId);
+			.HasForeignKey<Inventory>(i => i.EntityId);
 
 		_ = builder.OwnsMany(e => e.AffectedStats, sp =>
 		{
@@ -29,7 +29,7 @@ public sealed class EntityConfiguration : IEntityTypeConfiguration<Entity>
 		builder.OwnsOne(e => e.Position, pb =>
 		{
 			pb.Property(p => p.MapId)
-			  .HasColumnName("map_id");
+				.HasColumnName("map_id");
 
 			pb.Property(p => p.X).HasColumnName("position_x");
 			pb.Property(p => p.Y).HasColumnName("position_y");
@@ -40,8 +40,8 @@ public sealed class EntityConfiguration : IEntityTypeConfiguration<Entity>
 		});
 
 		builder.HasOne(e => e.CurrentMap)
-			   .WithMany()
-			   .HasForeignKey("Position_MapId")
-			   .OnDelete(DeleteBehavior.SetNull);
+			.WithMany()
+			.HasForeignKey("Position_MapId")
+			.OnDelete(DeleteBehavior.SetNull);
 	}
 }
