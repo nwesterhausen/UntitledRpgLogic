@@ -1,0 +1,37 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Folder Name="/01 - Core/">
+    <Project Path="src/UntitledRpgLogic.Core/UntitledRpgLogic.Core.csproj" />
+    <Project Path="src/UntitledRpgLogic.Resources/UntitledRpgLogic.Resources.csproj" />
+  </Folder>
+  <Folder Name="/02 - Extensions/">
+    <Project Path="src/UntitledRpgLogic.Extensions.Common/UntitledRpgLogic.Extensions.Common.csproj" />
+    <Project Path="src/UntitledRpgLogic.Extensions.Godot/UntitledRpgLogic.Extensions.Godot.csproj" />
+    <Project Path="src/UntitledRpgLogic.Extensions.Logging/UntitledRpgLogic.Extensions.Logging.csproj">
+      <BuildDependency Project="src/UntitledRpgLogic.Core/UntitledRpgLogic.Core.csproj" />
+    </Project>
+  </Folder>
+  <Folder Name="/10 - Data Layer/">
+    <Project Path="src/UntitledRpgLogic.Infrastructure.Configuration/UntitledRpgLogic.Infrastructure.Configuration.csproj" />
+    <Project Path="src/UntitledRpgLogic.Infrastructure.Data.PostgreSQL/UntitledRpgLogic.Infrastructure.Data.PostgreSQL.csproj" />
+    <Project Path="src/UntitledRpgLogic.Infrastructure.Data.SQLite/UntitledRpgLogic.Infrastructure.Data.Sqlite.csproj" />
+    <Project Path="src/UntitledRpgLogic.Infrastructure.Data/UntitledRpgLogic.Infrastructure.Data.csproj" />
+  </Folder>
+  <Folder Name="/20 - Logic Layer/">
+    <Project Path="src/UntitledRpgLogic.Services.Logging.Database/UntitledRpgLogic.Services.Logging.Database.csproj" />
+    <Project Path="src/UntitledRpgLogic.Services/UntitledRpgLogic.Services.csproj" />
+    <Project Path="src/UntitledRpgLogic.StateMachines/UntitledRpgLogic.StateMachines.csproj" />
+    <Project Path="src/UntitledRpgLogic.WorldGen/UntitledRpgLogic.WorldGen.csproj" />
+  </Folder>
+  <Folder Name="/30 - Networking/">
+    <Project Path="src/UntitledRpgLogic.Networking/UntitledRpgLogic.Networking.csproj" />
+  </Folder>
+  <Folder Name="/99 - Tests/">
+    <Project Path="src/UntitledRpgLogic.IntegrationTests/UntitledRpgLogic.IntegrationTests.csproj" />
+    <Project Path="src/UntitledRpgLogic.UnitTests/UntitledRpgLogic.UnitTests.csproj" />
+  </Folder>
+</Solution>
