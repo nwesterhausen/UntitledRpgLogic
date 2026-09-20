@@ -1,0 +1,2 @@
+[Dtos/**.cs]
+dotnet_diagnostic.CA1002.severity = none
