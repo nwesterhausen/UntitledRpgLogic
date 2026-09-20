@@ -68,7 +68,7 @@ public sealed class AbilityCoordinatorIntegrationTests : CoordinatorIntegrationT
 
 				var damageEffect = new DamageEffect(new Name("Chaos Damage"),
 					healthDefId,
-					new StatChangeOptions { FlatChange = 60 },
+					new ChangeOptions { FlatChange = 60 },
 					true);
 				ability.ActiveEffects.Add(damageEffect);
 

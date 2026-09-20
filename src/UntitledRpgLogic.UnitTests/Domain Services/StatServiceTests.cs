@@ -43,7 +43,7 @@ public class StatServiceTests
 	[TestMethod]
 	public void CalculatePointDamage_WithPercentage_AddsProportionOfTargetBase()
 	{
-		var options = new StatChangeOptions { FlatChange = 10, PercentageChange = 0.20f };
+		var options = new ChangeOptions { FlatChange = 10, PercentageChange = 0.20f };
 		var stat = new Stat { BaseValue = 200, ApparentValue = 200 };
 
 		var damage = this.statCalculationService.CalculatePointChange(options, stat);
@@ -73,7 +73,7 @@ public class StatServiceTests
 	{
 		Assert.Throws<ArgumentNullException>(() => this.statCalculationService.CalculatePointChange(null!, new Stat()));
 		Assert.Throws<ArgumentNullException>(() =>
-			this.statCalculationService.CalculatePointChange(new StatChangeOptions(), null!));
+			this.statCalculationService.CalculatePointChange(new ChangeOptions(), null!));
 	}
 
 	[
@@ -81,7 +81,7 @@ public class StatServiceTests
 	public void CalculatePointDamage_FlatDamageOnly_ReturnsExactAmount()
 	{
 		var stat = new Stat { ApparentValue = 100 };
-		var options = new StatChangeOptions { FlatChange = 25 };
+		var options = new ChangeOptions { FlatChange = 25 };
 
 		var damage = this.statCalculationService.CalculatePointChange(options, stat);
 
@@ -92,7 +92,7 @@ public class StatServiceTests
 	public void CalculatePointDamage_PercentageOfCurrent_CalculatesProportionally()
 	{
 		var stat = new Stat { ApparentValue = 200 };
-		var options = new StatChangeOptions { PercentageChange = 0.15f }; // 15% of 200 = 30
+		var options = new ChangeOptions { PercentageChange = 0.15f }; // 15% of 200 = 30
 
 		var damage = this.statCalculationService.CalculatePointChange(options, stat);
 
@@ -109,7 +109,7 @@ public class StatServiceTests
 
 		var stat = new Stat { Definition = statDef, ApparentValue = 150 };
 
-		var options = new StatChangeOptions { PercentageChangeOfMax = 0.10f }; // 10% of 500 = 50
+		var options = new ChangeOptions { PercentageChangeOfMax = 0.10f }; // 10% of 500 = 50
 
 		var damage = this.statCalculationService.CalculatePointChange(options, stat);
 
@@ -126,7 +126,7 @@ public class StatServiceTests
 
 		var stat = new Stat { Definition = statDef, ApparentValue = 500 };
 
-		var options = new StatChangeOptions
+		var options = new ChangeOptions
 		{
 			FlatChange = 50, // 50
 			PercentageChange = 0.10f, // 10% of 500 = 50

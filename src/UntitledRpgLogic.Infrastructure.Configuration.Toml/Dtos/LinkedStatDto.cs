@@ -4,31 +4,24 @@ using UntitledRpgLogic.Core.Stats;
 namespace UntitledRpgLogic.Infrastructure.Configuration.Toml.Dtos;
 
 /// <summary>
-///
 /// </summary>
 public sealed class LinkedStatDto
 {
-	[JsonPropertyName("stat_id")]
-	public Ulid? StatId { get; init; }
+	[JsonPropertyName("stat_id")] public Ulid? StatId { get; init; }
 
 	[JsonPropertyName("dependent_stat_id")]
 	public Ulid DependentStatId { get; init; }
 
-	[JsonPropertyName("ratio")]
-	public float Ratio { get; init; } = 1.0f;
+	[JsonPropertyName("ratio")] public float Ratio { get; init; } = 1.0f;
 
 	public LinkedStats ToModel(Ulid parentStatId) => new()
 	{
-		StatId = parentStatId,
-		DependsOnId = this.DependentStatId,
-		Ratio = this.Ratio
+		StatId = parentStatId, DependsOnId = this.DependentStatId, Ratio = this.Ratio
 	};
 
 	public LinkedStats ToModel() => new()
 	{
-		StatId = this.StatId ?? Ulid.Empty,
-		DependsOnId = this.DependentStatId,
-		Ratio = this.Ratio
+		StatId = this.StatId ?? Ulid.Empty, DependsOnId = this.DependentStatId, Ratio = this.Ratio
 	};
 
 	public static LinkedStatDto FromModel(LinkedStats model)

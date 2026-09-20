@@ -4,12 +4,13 @@ using UntitledRpgLogic.Core.Common;
 namespace UntitledRpgLogic.Infrastructure.Configuration.Serialization;
 
 /// <summary>
-///		A converter to convert <see cref="Name"/> to <see cref="string"/> and vice versa.
+///     A converter to convert <see cref="Name" /> to <see cref="string" /> and vice versa.
 /// </summary>
 public sealed class TomlNameConverter : TomlConverter<Name>
 {
 	/// <inheritdoc />
-	public override Name? Read(TomlReader reader) {
+	public override Name? Read(TomlReader reader)
+	{
 		ArgumentNullException.ThrowIfNull(reader);
 
 		var nameStr = reader.GetString();

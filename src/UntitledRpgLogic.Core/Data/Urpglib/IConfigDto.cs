@@ -17,7 +17,7 @@ public interface IConfigDto<out TSelf, TModel>
 	public TModel ToModel();
 
 	/// <summary>
-	/// Constructs the configuration DTO from an existing domain model representation.
+	///     Constructs the configuration DTO from an existing domain model representation.
 	/// </summary>
 	public static abstract TSelf FromModel(TModel model);
 }

@@ -699,19 +699,19 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                 columns: table => new
                 {
                     id = table.Column<byte[]>(type: "bytea", nullable: false),
-                    name = table.Column<string>(type: "text", nullable: false),
-                    description = table.Column<string>(type: "character varying(1024)", maxLength: 1024, nullable: false),
                     effect_type = table.Column<int>(type: "integer", nullable: false),
                     duration = table.Column<float>(type: "real", nullable: false),
                     tick_interval = table.Column<float>(type: "real", nullable: false),
+                    name = table.Column<string>(type: "text", nullable: false),
+                    description = table.Column<string>(type: "character varying(1024)", maxLength: 1024, nullable: false),
                     damage_type = table.Column<int>(type: "integer", nullable: true),
                     ignores_armor = table.Column<bool>(type: "boolean", nullable: true),
                     delay = table.Column<TimeSpan>(type: "interval", nullable: true),
                     can_overheal = table.Column<bool>(type: "boolean", nullable: true),
                     summon_entity_template_id = table.Column<byte[]>(type: "bytea", nullable: true),
                     quantity = table.Column<int>(type: "integer", nullable: true),
-                    affected_ambients = table.Column<string>(type: "jsonb", nullable: true),
-                    affected_stats = table.Column<string>(type: "jsonb", nullable: true)
+                    affected_ambient = table.Column<string>(type: "jsonb", nullable: true),
+                    affected_stat = table.Column<string>(type: "jsonb", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -823,14 +823,15 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                 columns: table => new
                 {
                     id = table.Column<byte[]>(type: "bytea", nullable: false),
-                    name = table.Column<string>(type: "text", nullable: false),
                     ability_type = table.Column<int>(type: "integer", nullable: false),
                     targeting_type = table.Column<int>(type: "integer", nullable: false),
                     affects_caster = table.Column<bool>(type: "boolean", nullable: false),
                     affects_allies = table.Column<bool>(type: "boolean", nullable: false),
                     number_of_targets = table.Column<int>(type: "integer", nullable: false),
                     cast_time = table.Column<float>(type: "real", nullable: false),
-                    skill_discipline_id = table.Column<byte[]>(type: "bytea", nullable: false)
+                    skill_discipline_id = table.Column<byte[]>(type: "bytea", nullable: false),
+                    name = table.Column<string>(type: "text", nullable: false),
+                    description = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {

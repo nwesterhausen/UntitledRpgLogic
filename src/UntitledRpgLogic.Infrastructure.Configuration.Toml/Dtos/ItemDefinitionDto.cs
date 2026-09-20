@@ -9,26 +9,19 @@ namespace UntitledRpgLogic.Infrastructure.Configuration.Toml.Dtos;
 /// <inheritdoc />
 public sealed class ItemDefinitionDto : ITomlConfigDto<ItemDefinitionDto, ItemDefinition>
 {
-	[JsonPropertyName("id")]
-	public Ulid Id { get; init; }
+	[JsonPropertyName("id")] public Ulid Id { get; init; }
 
-	[JsonPropertyName("name")]
-	public Name Name { get; init; } = default!;
+	[JsonPropertyName("name")] public Name Name { get; init; } = default!;
 
-	[JsonPropertyName("description")]
-	public string? Description { get; init; }
+	[JsonPropertyName("description")] public string? Description { get; init; }
 
-	[JsonPropertyName("max_stack")]
-	public int MaxStack { get; init; } = 1;
+	[JsonPropertyName("max_stack")] public int MaxStack { get; init; } = 1;
 
-	[JsonPropertyName("type")]
-	public ItemType MainType { get; init;} = ItemType.Miscellaneous;
+	[JsonPropertyName("type")] public ItemType MainType { get; init; } = ItemType.Miscellaneous;
 
-	[JsonPropertyName("sub_type")]
-	public ItemSubtype SubType { get; init;} = ItemSubtype.None;
+	[JsonPropertyName("sub_type")] public ItemSubtype SubType { get; init; } = ItemSubtype.None;
 
-	[JsonPropertyName("base_quality")]
-	public Quality BaseQuality { get; init; } = Quality.Common;
+	[JsonPropertyName("base_quality")] public Quality BaseQuality { get; init; } = Quality.Common;
 
 	[JsonPropertyName("base_durability")] public float BaseDurability { get; init; } = 100f;
 

@@ -21,12 +21,12 @@ public record HealEffect : Effect
 	[SetsRequiredMembers]
 	public HealEffect(Name name,
 		Ulid affectedStatId,
-		StatChangeOptions options,
+		ChangeOptions options,
 		bool canOverheal = false) : base(name, EffectType.Heal)
 	{
 		ArgumentNullException.ThrowIfNull(options);
 
-		this.AddAffectedStat(affectedStatId, options with { IsPositive = true });
+		this.SetAffectedStat(affectedStatId, options with { IsPositive = true });
 		this.CanOverheal = canOverheal;
 	}
 

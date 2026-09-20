@@ -25,10 +25,10 @@ public record DamageEffect : Effect
 	[SetsRequiredMembers]
 	public DamageEffect(Name name,
 		Ulid affectedStatId,
-		StatChangeOptions options,
+		ChangeOptions options,
 		bool ignoresArmor = false) : base(name, EffectType.Damage)
 	{
-		this.AddAffectedStat(affectedStatId, options);
+		this.SetAffectedStat(affectedStatId, options);
 		this.IgnoresArmor = ignoresArmor;
 	}
 

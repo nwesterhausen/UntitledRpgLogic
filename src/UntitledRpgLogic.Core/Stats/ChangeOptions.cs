@@ -3,7 +3,7 @@ namespace UntitledRpgLogic.Core.Stats;
 /// <summary>
 ///     Options available when applying damage to a stat.
 /// </summary>
-public record StatChangeOptions
+public record ChangeOptions
 {
 	/// <summary>
 	///     A flat amount of damage to apply to the stat.
@@ -31,7 +31,7 @@ public record StatChangeOptions
 	/// <param name="options">The options to apply</param>
 	/// <returns>A record with any applicable fields overwritten by <paramref name="options" /></returns>
 	/// <exception cref="ArgumentNullException"></exception>
-	public virtual StatChangeOptions Apply(StatChangeOptions options)
+	public virtual ChangeOptions Apply(ChangeOptions options)
 	{
 		ArgumentNullException.ThrowIfNull(options);
 

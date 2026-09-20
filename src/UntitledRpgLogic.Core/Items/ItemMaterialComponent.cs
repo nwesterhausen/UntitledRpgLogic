@@ -1,4 +1,3 @@
-using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using UntitledRpgLogic.Core.Materials;
 
@@ -9,10 +8,11 @@ namespace UntitledRpgLogic.Core.Items;
 /// </summary>
 public record ItemMaterialComponent
 {
-	public ItemMaterialComponent(Ulid id)
+	public ItemMaterialComponent()
 	{
-		this.MaterialId = id;
 	}
+
+	public ItemMaterialComponent(Ulid id) => this.MaterialId = id;
 
 	public ItemMaterialComponent(Ulid id, float materialRatio)
 	{

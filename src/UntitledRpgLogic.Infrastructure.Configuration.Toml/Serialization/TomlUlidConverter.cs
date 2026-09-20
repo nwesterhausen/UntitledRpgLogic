@@ -4,7 +4,6 @@ using Tomlyn.Serialization;
 namespace UntitledRpgLogic.Infrastructure.Configuration.Serialization;
 
 /// <summary>
-///
 /// </summary>
 public sealed class TomlUlidConverter : TomlConverter<Ulid>
 {

@@ -14,13 +14,13 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\UntitledRpgLogic.Core\UntitledRpgLogic.Core.csproj"/>
-		<ProjectReference Include="..\UntitledRpgLogic.Infrastructure.Configuration.Json\UntitledRpgLogic.Infrastructure.Configuration.Json.csproj" />
-		<ProjectReference Include="..\UntitledRpgLogic.Infrastructure.Configuration.Toml\UntitledRpgLogic.Infrastructure.Configuration.Toml.csproj" />
-		<ProjectReference Include="..\UntitledRpgLogic.Infrastructure.Configuration.Yaml\UntitledRpgLogic.Infrastructure.Configuration.Yaml.csproj" />
+		<ProjectReference Include="..\UntitledRpgLogic.Infrastructure.Configuration.Json\UntitledRpgLogic.Infrastructure.Configuration.Json.csproj"/>
+		<ProjectReference Include="..\UntitledRpgLogic.Infrastructure.Configuration.Toml\UntitledRpgLogic.Infrastructure.Configuration.Toml.csproj"/>
+		<ProjectReference Include="..\UntitledRpgLogic.Infrastructure.Configuration.Yaml\UntitledRpgLogic.Infrastructure.Configuration.Yaml.csproj"/>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <EditorConfigFiles Remove=".editorconfig" />
+		<EditorConfigFiles Remove=".editorconfig"/>
 	</ItemGroup>
 
 </Project>

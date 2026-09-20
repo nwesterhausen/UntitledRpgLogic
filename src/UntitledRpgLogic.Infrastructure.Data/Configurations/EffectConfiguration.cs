@@ -43,7 +43,7 @@ public sealed class EffectConfiguration : IEntityTypeConfiguration<Effect>
 			.OnDelete(DeleteBehavior.Restrict);
 
 		// Owned Types
-		_ = builder.OwnsMany(e => e.AffectedStats, asb => asb.ToJson());
-		_ = builder.OwnsMany(e => e.AffectedAmbients, aab => aab.ToJson());
+		_ = builder.OwnsOne(e => e.AffectedStat, asb => asb.ToJson());
+		_ = builder.OwnsOne(e => e.AffectedAmbient, aab => aab.ToJson());
 	}
 }

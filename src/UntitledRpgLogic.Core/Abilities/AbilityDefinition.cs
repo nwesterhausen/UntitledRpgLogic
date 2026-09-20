@@ -13,7 +13,7 @@ namespace UntitledRpgLogic.Core.Abilities;
 ///     Database catalog model defining an ability (Spell, Active Skill, or Passive Perk).
 /// </summary>
 [Table("abilities")]
-public record AbilityDefinition : IDbEntity<Ulid>
+public record AbilityDefinition : IDefined
 {
 	/// <summary>
 	///     Initializes a new instance of the <see cref="AbilityDefinition" /> record with default values for EF Core.
@@ -39,11 +39,6 @@ public record AbilityDefinition : IDbEntity<Ulid>
 		this.Name = name;
 		this.SkillDisciplineId = skillDisciplineId;
 	}
-
-	/// <summary>
-	///     The display name of the ability.
-	/// </summary>
-	public required Name Name { get; init; } = Name.Empty;
 
 	/// <summary>
 	///     The broad classification (Active, Passive, Spell, Channel).
@@ -120,6 +115,16 @@ public record AbilityDefinition : IDbEntity<Ulid>
 	///     Effects applied when activation fails or backfires.
 	/// </summary>
 	public ICollection<Effect> FailureEffects { get; } = new List<Effect>();
+
+	/// <summary>
+	///     The display name of the ability.
+	/// </summary>
+	public required Name Name { get; init; } = Name.Empty;
+
+	/// <summary>
+	///     Description of the ability.
+	/// </summary>
+	public string Description { get; init; } = string.Empty;
 
 	/// <summary>
 	///     The unique identifier for the ability (can be supplied from external TOML config).

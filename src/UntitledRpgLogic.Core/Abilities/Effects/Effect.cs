@@ -12,7 +12,7 @@ namespace UntitledRpgLogic.Core.Abilities.Effects;
 ///     Abstract base record defining a magical, physical, or status outcome applied by an ability or world interaction.
 /// </summary>
 [Table("effects")]
-public abstract record Effect : IDbEntity<Ulid>
+public abstract record Effect : IDefined
 {
 	/// <summary>
 	///     Initializes default base values for EF Core materialization.
@@ -43,17 +43,6 @@ public abstract record Effect : IDbEntity<Ulid>
 	}
 
 	/// <summary>
-	///     The display name of the effect.
-	/// </summary>
-	public required Name Name { get; init; } = Name.Empty;
-
-	/// <summary>
-	///     Descriptive flavor text detailing the effect's mechanics.
-	/// </summary>
-	[MaxLength(1024)]
-	public string Description { get; init; } = string.Empty;
-
-	/// <summary>
 	///     The classification of this effect, serving as the EF Core TPH discriminator.
 	/// </summary>
 	public EffectType EffectType { get; init; } = EffectType.None;
@@ -71,17 +60,28 @@ public abstract record Effect : IDbEntity<Ulid>
 	/// <summary>
 	///     Specific stat modifications (e.g., -50 Health, +10 Strength) applied by this effect.
 	/// </summary>
-	public ICollection<AffectedStat> AffectedStats { get; init; } = [];
+	public AffectedStat? AffectedStat { get; private set; }
 
 	/// <summary>
 	///     Environmental modifications (e.g., +150°C local temperature) applied by this effect.
 	/// </summary>
-	public ICollection<AffectedAmbient> AffectedAmbients { get; init; } = [];
+	public AffectedAmbient? AffectedAmbient { get; private set; }
 
 	/// <summary>
 	///     Abilities that trigger this effect on successful activation.
 	/// </summary>
 	public virtual ICollection<AbilityDefinition> TriggeringAbilities { get; } = new List<AbilityDefinition>();
+
+	/// <summary>
+	///     The display name of the effect.
+	/// </summary>
+	public required Name Name { get; init; } = Name.Empty;
+
+	/// <summary>
+	///     Descriptive flavor text detailing the effect's mechanics.
+	/// </summary>
+	[MaxLength(1024)]
+	public string Description { get; init; } = string.Empty;
 
 	/// <summary>
 	///     The unique database identifier for this effect template.
@@ -90,12 +90,13 @@ public abstract record Effect : IDbEntity<Ulid>
 	[DatabaseGenerated(DatabaseGeneratedOption.None)]
 	public Ulid Id { get; init; } = Ulid.NewUlid();
 
-	internal void AddAffectedStat(
+	internal void SetAffectedStat(
 		Ulid affectedStatId,
-		StatChangeOptions options)
-	{
-		var affectedStat = new AffectedStat(affectedStatId);
-		var affectedStat1 = affectedStat.Apply(options);
-		this.AffectedStats.Add(affectedStat1);
-	}
+		ChangeOptions options) =>
+		this.AffectedStat = new AffectedStat(affectedStatId).Apply(options);
+
+	internal void SetAffectedAmbient(
+		AmbientType ambientType,
+		ChangeOptions options) =>
+		this.AffectedAmbient = new AffectedAmbient(ambientType).Apply(options);
 }

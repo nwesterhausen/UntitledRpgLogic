@@ -1,4 +1,5 @@
 using UntitledRpgLogic.Core.Abilities.Effects;
+using UntitledRpgLogic.Core.Stats;
 
 namespace UntitledRpgLogic.Core.Environment;
 
@@ -6,20 +7,35 @@ namespace UntitledRpgLogic.Core.Environment;
 ///     Defines an owned modification to an environmental ambient condition (e.g., Temperature, Gravity).
 /// </summary>
 /// <remarks>Owned by <see cref="Effect" /> and serialized as JSON.</remarks>
-public record AffectedAmbient
+public record AffectedAmbient : ChangeOptions
 {
+	public AffectedAmbient()
+	{
+	}
+
+	public AffectedAmbient(AmbientType ambientType) : this() => this.AmbientType = ambientType;
+
+
 	/// <summary>
 	///     The type of ambient condition being influenced (Temperature, Gravity, Humidity, etc.).
 	/// </summary>
 	public AmbientType AmbientType { get; init; }
 
-	/// <summary>
-	///     The magnitude of the change.
-	/// </summary>
-	public float AmountChange { get; init; }
+	/// <inheritdoc />
+	public override AffectedAmbient Apply(ChangeOptions options)
+	{
+		var mergedBase = base.Apply(options);
 
-	/// <summary>
-	///     Indicates whether AmountChange is a percentage modifier (true) or a flat offset (false).
-	/// </summary>
-	public bool IsPercentage { get; init; }
+		if (options is AffectedAmbient affectedOptions)
+		{
+			return (AffectedAmbient)mergedBase with
+			{
+				AmbientType = affectedOptions.AmbientType == AmbientType.None
+					? this.AmbientType
+					: affectedOptions.AmbientType
+			};
+		}
+
+		return (AffectedAmbient)mergedBase;
+	}
 }

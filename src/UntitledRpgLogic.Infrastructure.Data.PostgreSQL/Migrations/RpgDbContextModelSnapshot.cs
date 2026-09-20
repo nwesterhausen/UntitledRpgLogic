@@ -82,6 +82,11 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                         .HasColumnType("real")
                         .HasColumnName("cast_time");
 
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("description");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text")
@@ -3060,12 +3065,9 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                         .IsRequired()
                         .HasConstraintName("fk_effects_effect_type_lookup_effect_type");
 
-                    b.OwnsMany("UntitledRpgLogic.Core.Stats.AffectedStat", "AffectedStats", b1 =>
+                    b.OwnsOne("UntitledRpgLogic.Core.Stats.AffectedStat", "AffectedStat", b1 =>
                         {
                             b1.Property<byte[]>("EffectId");
-
-                            b1.Property<int>("__synthesizedOrdinal")
-                                .ValueGeneratedOnAdd();
 
                             b1.Property<int?>("FlatChange");
 
@@ -3078,12 +3080,13 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                             b1.Property<byte[]>("StatId")
                                 .IsRequired();
 
-                            b1.HasKey("EffectId", "__synthesizedOrdinal");
+                            b1.HasKey("EffectId")
+                                .HasName("pk_effects");
 
                             b1.ToTable("effects");
 
                             b1
-                                .ToJson("affected_stats")
+                                .ToJson("affected_stat")
                                 .HasColumnType("jsonb");
 
                             b1.WithOwner()
@@ -3091,35 +3094,36 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                                 .HasConstraintName("fk_effects_effects_effect_id");
                         });
 
-                    b.OwnsMany("UntitledRpgLogic.Core.Environment.AffectedAmbient", "AffectedAmbients", b1 =>
+                    b.OwnsOne("UntitledRpgLogic.Core.Environment.AffectedAmbient", "AffectedAmbient", b1 =>
                         {
                             b1.Property<byte[]>("EffectId");
 
-                            b1.Property<int>("__synthesizedOrdinal")
-                                .ValueGeneratedOnAdd();
-
                             b1.Property<int>("AmbientType");
 
-                            b1.Property<float>("AmountChange");
+                            b1.Property<int?>("FlatChange");
 
-                            b1.Property<bool>("IsPercentage");
+                            b1.Property<bool>("IsPositive");
 
-                            b1.HasKey("EffectId", "__synthesizedOrdinal");
+                            b1.Property<float?>("PercentageChange");
+
+                            b1.Property<float?>("PercentageChangeOfMax");
+
+                            b1.HasKey("EffectId");
 
                             b1.ToTable("effects");
 
                             b1
-                                .ToJson("affected_ambients")
+                                .ToJson("affected_ambient")
                                 .HasColumnType("jsonb");
 
                             b1.WithOwner()
                                 .HasForeignKey("EffectId")
-                                .HasConstraintName("fk_effects_effects_effect_id");
+                                .HasConstraintName("fk_effects_effects_id");
                         });
 
-                    b.Navigation("AffectedAmbients");
+                    b.Navigation("AffectedAmbient");
 
-                    b.Navigation("AffectedStats");
+                    b.Navigation("AffectedStat");
                 });
 
             modelBuilder.Entity("UntitledRpgLogic.Core.Data.LogEntry", b =>

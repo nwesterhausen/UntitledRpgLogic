@@ -43,7 +43,7 @@ public sealed class StatCalculationService : IStatCalculationService
 	}
 
 	/// <inheritdoc />
-	public int CalculatePointChange(StatChangeOptions options, Stat targetStat)
+	public int CalculatePointChange(ChangeOptions options, Stat targetStat)
 	{
 		ArgumentNullException.ThrowIfNull(options);
 		ArgumentNullException.ThrowIfNull(targetStat);

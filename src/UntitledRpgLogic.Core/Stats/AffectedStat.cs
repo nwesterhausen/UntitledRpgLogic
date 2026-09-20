@@ -7,7 +7,7 @@ namespace UntitledRpgLogic.Core.Stats;
 ///     Defines an owned modification delta applied to a character stat (e.g., HP, Mana, Strength).
 /// </summary>
 /// <remarks>Owned by <see cref="Effect" /> and serialized as JSON.</remarks>
-public record AffectedStat : StatChangeOptions
+public record AffectedStat : ChangeOptions
 {
 	/// <summary>
 	///     Create an empty
@@ -29,7 +29,7 @@ public record AffectedStat : StatChangeOptions
 	public required Ulid StatId { get; init; }
 
 	/// <inheritdoc />
-	public override AffectedStat Apply(StatChangeOptions options)
+	public override AffectedStat Apply(ChangeOptions options)
 	{
 		var mergedBase = base.Apply(options);
 

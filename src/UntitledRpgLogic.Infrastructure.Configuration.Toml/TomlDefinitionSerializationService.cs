@@ -1,6 +1,7 @@
 using System.Text;
 using System.Text.Json;
 using Tomlyn;
+using UntitledRpgLogic.Core.Abilities.Effects;
 using UntitledRpgLogic.Core.Data;
 using UntitledRpgLogic.Core.Data.Urpglib;
 using UntitledRpgLogic.Core.Items;
@@ -17,17 +18,18 @@ public sealed class TomlDefinitionSerializationService : IDefinitionSerializatio
 	private readonly TomlSerializerOptions options;
 
 	/// <summary>
-	///		Create a new TOML definition serializer.
+	///     Create a new TOML definition serializer.
 	/// </summary>
 	public TomlDefinitionSerializationService() =>
 		this.options = new TomlSerializerOptions
 		{
 			PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower,
 			DefaultIgnoreCondition = TomlIgnoreCondition.WhenWritingNull,
-			Converters = [
+			Converters =
+			[
 				new TomlNameConverter(),
 				new TomlUlidConverter()
-			],
+			]
 		};
 
 	/// <inheritdoc />
@@ -39,7 +41,13 @@ public sealed class TomlDefinitionSerializationService : IDefinitionSerializatio
 	/// <inheritdoc />
 	public TModel Deserialize<TModel>(string content) where TModel : class, IDefined
 	{
-		// 1. Delegate to mapping logic to find the registered DTO
+		// Check if the requested type is Effect or a subtype of Effect
+		if (typeof(Effect).IsAssignableFrom(typeof(TModel)))
+		{
+			var effect = EffectConfigDtoMapper.Deserialize(content, this.options);
+			return (effect as TModel)!;
+		}
+
 		if (typeof(TModel) == typeof(ItemDefinition))
 		{
 			if (TomlSerializer.TryDeserialize<ItemDefinitionDto>(
@@ -69,21 +77,27 @@ public sealed class TomlDefinitionSerializationService : IDefinitionSerializatio
 	/// <inheritdoc />
 	public TModel Deserialize<TModel>(Stream stream) where TModel : class, IDefined
 	{
-		using var reader = new StreamReader(stream, Encoding.UTF8, detectEncodingFromByteOrderMarks: true, leaveOpen: true);
+		using var reader = new StreamReader(stream, Encoding.UTF8, leaveOpen: true);
 		return this.Deserialize<TModel>(reader.ReadToEnd());
 	}
 
 	/// <inheritdoc />
 	public string Serialize<TModel>(TModel model) where TModel : class, IDefined
 	{
+		if (model is Effect effect)
+		{
+			return EffectConfigDtoMapper.Serialize(effect, this.options);
+		}
 		if (model is ItemDefinition itemDef)
 		{
 			return TomlSerializer.Serialize(ItemDefinitionDto.FromModel(itemDef), this.options);
 		}
+
 		if (model is StatDefinition statDef)
 		{
 			return TomlSerializer.Serialize(StatDefinitionDto.FromModel(statDef), this.options);
 		}
+
 		if (model is SkillDefinition skillDef)
 		{
 			return TomlSerializer.Serialize(SkillDefinitionDto.FromModel(skillDef), this.options);

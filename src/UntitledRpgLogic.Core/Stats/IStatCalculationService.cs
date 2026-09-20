@@ -21,7 +21,7 @@ public interface IStatCalculationService
 	/// <param name="options">The incoming damage parameters and scaling.</param>
 	/// <param name="targetStat">The concrete stat instance being damaged.</param>
 	/// <returns>The total point damage to inflict.</returns>
-	public int CalculatePointChange(StatChangeOptions options, Stat targetStat);
+	public int CalculatePointChange(ChangeOptions options, Stat targetStat);
 
 	/// <summary>
 	///     Calculates effective damage after applying resistance percentage and flat reduction.

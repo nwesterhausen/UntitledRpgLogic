@@ -7,29 +7,24 @@ namespace UntitledRpgLogic.Infrastructure.Configuration.Toml.Dtos;
 
 public sealed class SkillDefinitionDto : ITomlConfigDto<SkillDefinitionDto, SkillDefinition>
 {
-	[JsonPropertyName("id")]
-	public Ulid Id { get; init; } = Ulid.Empty;
+	[JsonPropertyName("id")] public Ulid Id { get; init; } = Ulid.Empty;
 
-	[JsonPropertyName("name")]
-	public Name Name { get; init; } = Name.Empty;
+	[JsonPropertyName("name")] public Name Name { get; init; } = Name.Empty;
 
-	[JsonPropertyName("description")]
-	public string Description { get; init; } = string.Empty;
+	[JsonPropertyName("description")] public string Description { get; init; } = string.Empty;
 
 	[JsonPropertyName("leveling_definition_id")]
 	public Ulid? LevelingDefinitionId { get; init; }
 
 	/// <inheritdoc />
-	public SkillDefinition ToModel()
-	{
-		return new SkillDefinition
+	public SkillDefinition ToModel() =>
+		new()
 		{
 			Id = this.Id,
 			Name = this.Name,
 			Description = this.Description,
 			LevelingDefinitionId = this.LevelingDefinitionId
 		};
-	}
 
 	/// <inheritdoc />
 	public static SkillDefinitionDto FromModel(SkillDefinition model)

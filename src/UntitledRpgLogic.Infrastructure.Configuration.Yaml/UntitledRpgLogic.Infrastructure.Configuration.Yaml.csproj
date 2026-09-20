@@ -1,10 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-  	<!-- Package metadata -->
+	<PropertyGroup>
+		<!-- Package metadata -->
 		<AssemblyName>UntitledRpgLogic.Infrastructure.Configuration.Yaml</AssemblyName>
 		<PackageId>UntitledRpgLogic.Infrastructure.Configuration.Yaml</PackageId>
 		<RootNamespace>UntitledRpgLogic.Infrastructure.Configuration.Yaml</RootNamespace>
-  </PropertyGroup>
+	</PropertyGroup>
 
 </Project>

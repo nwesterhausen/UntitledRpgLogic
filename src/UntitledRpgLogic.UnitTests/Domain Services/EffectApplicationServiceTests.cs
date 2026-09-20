@@ -42,7 +42,7 @@ public class EffectApplicationServiceTests
 	{
 		var damageEffect = new DamageEffect(new Name("Firebolt"),
 			this.healthDef.Id,
-			new StatChangeOptions { FlatChange = 35 },
+			new ChangeOptions { FlatChange = 35 },
 			true);
 
 		this.service.ApplyEffect(damageEffect, targets: [this.target]);
@@ -55,7 +55,7 @@ public class EffectApplicationServiceTests
 	{
 		var lethalDamage = new DamageEffect(new Name("Execute"),
 			this.healthDef.Id,
-			new StatChangeOptions { FlatChange = 250 },
+			new ChangeOptions { FlatChange = 250 },
 			true);
 
 		this.service.ApplyEffect(lethalDamage, targets: [this.target]);
@@ -69,7 +69,7 @@ public class EffectApplicationServiceTests
 		this.targetHealth.ApparentValue = 85;
 
 		var healEffect = new HealEffect(new Name("Minor Heal"), this.healthDef.Id,
-			new StatChangeOptions { FlatChange = 30 });
+			new ChangeOptions { FlatChange = 30 });
 
 		this.service.ApplyEffect(healEffect, targets: [this.target]);
 
@@ -83,7 +83,7 @@ public class EffectApplicationServiceTests
 
 		var overhealEffect = new HealEffect(new Name("Divine Shielding"),
 			this.healthDef.Id,
-			new StatChangeOptions { FlatChange = 40 },
+			new ChangeOptions { FlatChange = 40 },
 			true);
 
 		this.service.ApplyEffect(overhealEffect, targets: [this.target]);
