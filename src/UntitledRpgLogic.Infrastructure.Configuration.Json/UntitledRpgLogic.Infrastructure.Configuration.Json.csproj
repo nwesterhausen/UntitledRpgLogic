@@ -1,0 +1,10 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+  	<!-- Package metadata -->
+		<AssemblyName>UntitledRpgLogic.Infrastructure.Configuration.Json</AssemblyName>
+		<PackageId>UntitledRpgLogic.Infrastructure.Configuration.Json</PackageId>
+		<RootNamespace>UntitledRpgLogic.Infrastructure.Configuration.Json</RootNamespace>
+  </PropertyGroup>
+
+</Project>

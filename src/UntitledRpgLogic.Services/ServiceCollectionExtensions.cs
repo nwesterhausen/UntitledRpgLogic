@@ -39,6 +39,7 @@ public static class ServiceCollectionExtensions
 		services.AddSingleton<IAbilityValidationService, AbilityValidationService>();
 		services.AddSingleton<ISpatialMathService, SpatialMathService>();
 		services.AddSingleton<IRespirationDomainService, RespirationDomainService>();
+		services.AddSingleton<IDefinitionSerializerRouter, DefinitionSerializerRouter>();
 
 		// Supporting services
 		services.AddSingleton<IRandom, Random>();

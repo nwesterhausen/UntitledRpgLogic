@@ -9,6 +9,24 @@ namespace UntitledRpgLogic.Core.Items;
 /// </summary>
 public record ItemMaterialComponent
 {
+	public ItemMaterialComponent(Ulid id)
+	{
+		this.MaterialId = id;
+	}
+
+	public ItemMaterialComponent(Ulid id, float materialRatio)
+	{
+		this.MaterialId = id;
+		this.Proportion = materialRatio;
+	}
+
+	public ItemMaterialComponent(Ulid id, float materialRatio, MaterialSlot slot)
+	{
+		this.MaterialId = id;
+		this.Proportion = materialRatio;
+		this.Slot = slot;
+	}
+
 	/// <summary>
 	///     The functional slot or placement for this material.
 	/// </summary>

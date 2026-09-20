@@ -16,9 +16,12 @@
     </Project>
   </Folder>
   <Folder Name="/10 - Data Layer/">
+    <Project Path="src/UntitledRpgLogic.Infrastructure.Configuration.Json/UntitledRpgLogic.Infrastructure.Configuration.Json.csproj" />
+    <Project Path="src/UntitledRpgLogic.Infrastructure.Configuration.Toml/UntitledRpgLogic.Infrastructure.Configuration.Toml.csproj" />
+    <Project Path="src/UntitledRpgLogic.Infrastructure.Configuration.Yaml/UntitledRpgLogic.Infrastructure.Configuration.Yaml.csproj" />
     <Project Path="src/UntitledRpgLogic.Infrastructure.Configuration/UntitledRpgLogic.Infrastructure.Configuration.csproj" />
     <Project Path="src/UntitledRpgLogic.Infrastructure.Data.PostgreSQL/UntitledRpgLogic.Infrastructure.Data.PostgreSQL.csproj" />
-    <Project Path="src/UntitledRpgLogic.Infrastructure.Data.SQLite/UntitledRpgLogic.Infrastructure.Data.Sqlite.csproj" />
+    <Project Path="src/UntitledRpgLogic.Infrastructure.Data.SQLite/UntitledRpgLogic.Infrastructure.Data.SQLite.csproj" />
     <Project Path="src/UntitledRpgLogic.Infrastructure.Data/UntitledRpgLogic.Infrastructure.Data.csproj" />
   </Folder>
   <Folder Name="/20 - Logic Layer/">
@@ -34,4 +37,6 @@
     <Project Path="src/UntitledRpgLogic.IntegrationTests/UntitledRpgLogic.IntegrationTests.csproj" />
     <Project Path="src/UntitledRpgLogic.UnitTests/UntitledRpgLogic.UnitTests.csproj" />
   </Folder>
+  <Folder Name="/src/" />
+  <Folder Name="/src/UntitledRpgLogic.Infrastructure.Data.SQLite/" />
 </Solution>
