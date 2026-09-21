@@ -12,18 +12,32 @@ public class StatServiceTests
 	[TestMethod]
 	public void CalculateApparentValue_WithLinkedDependency_AppliesProportion()
 	{
-		var strengthDef = new StatDefinition(new Name("Strength")) { MinValue = 0, MaxValue = 100 };
+		var strengthDef = new StatDefinition(new Name("Strength"));
 
-		var attackDef = new StatDefinition(new Name("Attack Power")) { MinValue = 0, MaxValue = 500 };
+		var attackDef = new StatDefinition(new Name("Attack Power"));
 
 		attackDef.LinkedStats.Add(new LinkedStats
 		{
 			StatId = attackDef.Id, DependsOnId = strengthDef.Id, Ratio = 1.5f
 		});
 
-		var strengthStat = new Stat { DefinitionId = strengthDef.Id, Definition = strengthDef, ApparentValue = 20 };
+		var strengthStat = new Stat
+		{
+			DefinitionId = strengthDef.Id,
+			Definition = strengthDef,
+			ApparentValue = 20,
+			MinValue = 0,
+			MaxValue = 100
+		};
 
-		var attackStat = new Stat { DefinitionId = attackDef.Id, Definition = attackDef, BaseValue = 10 };
+		var attackStat = new Stat
+		{
+			DefinitionId = attackDef.Id,
+			Definition = attackDef,
+			BaseValue = 10,
+			MinValue = 0,
+			MaxValue = 500
+		};
 
 		// 10 base + (20 * 1.5 = 30) = 40
 		var apparent = this.statCalculationService.CalculateApparentValue(attackStat, [strengthStat]);
@@ -32,12 +46,13 @@ public class StatServiceTests
 	}
 
 	[TestMethod]
-	public void ClampToDefinitionBounds_ExceedsBounds_ClampsAccurately()
+	public void ClampToStatBounds_ExceedsBounds_ClampsAccurately()
 	{
-		var def = new StatDefinition(new Name("Health")) { MinValue = 0, MaxValue = 100 };
+		var def = new StatDefinition(new Name("Health"));
+		var stat = new Stat { Definition = def, ApparentValue = 20, MinValue = 0, MaxValue = 100 };
 
-		Assert.AreEqual(100, this.statCalculationService.ClampToDefinitionBounds(def, 150));
-		Assert.AreEqual(0, this.statCalculationService.ClampToDefinitionBounds(def, -20));
+		Assert.AreEqual(100, this.statCalculationService.ClampToStatBounds(stat, 150));
+		Assert.AreEqual(0, this.statCalculationService.ClampToStatBounds(stat, -20));
 	}
 
 	[TestMethod]
@@ -102,12 +117,9 @@ public class StatServiceTests
 	[TestMethod]
 	public void CalculatePointDamage_PercentageOfMax_UsesDefinitionMaximum()
 	{
-		var statDef = new StatDefinition(new Name("Health"))
-		{
-			MinValue = 0, MaxValue = 500, Variation = StatVariation.Major
-		};
+		var statDef = new StatDefinition(new Name("Health")) { Variation = StatVariation.Major };
 
-		var stat = new Stat { Definition = statDef, ApparentValue = 150 };
+		var stat = new Stat { MinValue = 0, MaxValue = 500, Definition = statDef, ApparentValue = 150 };
 
 		var options = new ChangeOptions { PercentageChangeOfMax = 0.10f }; // 10% of 500 = 50
 
@@ -119,12 +131,9 @@ public class StatServiceTests
 	[TestMethod]
 	public void CalculatePointDamage_CombinedDamage_SumsAllComponentsCorrectly()
 	{
-		var statDef = new StatDefinition(new Name("Health"))
-		{
-			MinValue = 0, MaxValue = 1000, Variation = StatVariation.Major
-		};
+		var statDef = new StatDefinition(new Name("Health")) { Variation = StatVariation.Major };
 
-		var stat = new Stat { Definition = statDef, ApparentValue = 500 };
+		var stat = new Stat { MinValue = 0, MaxValue = 1000, Definition = statDef, ApparentValue = 500 };
 
 		var options = new ChangeOptions
 		{

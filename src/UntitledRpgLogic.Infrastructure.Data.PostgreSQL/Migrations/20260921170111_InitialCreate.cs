@@ -422,8 +422,6 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                 {
                     id = table.Column<byte[]>(type: "bytea", nullable: false),
                     has_changeable_value = table.Column<bool>(type: "boolean", nullable: false),
-                    min_value = table.Column<int>(type: "integer", nullable: false),
-                    max_value = table.Column<int>(type: "integer", nullable: false),
                     variation = table.Column<int>(type: "integer", nullable: false),
                     name = table.Column<string>(type: "text", nullable: false),
                     description = table.Column<string>(type: "text", nullable: false)
@@ -608,7 +606,9 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                     id = table.Column<byte[]>(type: "bytea", nullable: false),
                     definition_id = table.Column<byte[]>(type: "bytea", nullable: false),
                     base_value = table.Column<int>(type: "integer", nullable: false),
-                    apparent_value = table.Column<int>(type: "integer", nullable: false)
+                    apparent_value = table.Column<int>(type: "integer", nullable: false),
+                    min_value = table.Column<int>(type: "integer", nullable: false),
+                    max_value = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {

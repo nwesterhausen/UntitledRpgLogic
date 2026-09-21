@@ -421,8 +421,6 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                 {
                     id = table.Column<byte[]>(type: "BLOB", nullable: false),
                     has_changeable_value = table.Column<bool>(type: "INTEGER", nullable: false),
-                    min_value = table.Column<int>(type: "INTEGER", nullable: false),
-                    max_value = table.Column<int>(type: "INTEGER", nullable: false),
                     variation = table.Column<int>(type: "INTEGER", nullable: false),
                     name = table.Column<string>(type: "TEXT", nullable: false),
                     description = table.Column<string>(type: "TEXT", nullable: false)
@@ -607,7 +605,9 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                     id = table.Column<byte[]>(type: "BLOB", nullable: false),
                     definition_id = table.Column<byte[]>(type: "BLOB", nullable: false),
                     base_value = table.Column<int>(type: "INTEGER", nullable: false),
-                    apparent_value = table.Column<int>(type: "INTEGER", nullable: false)
+                    apparent_value = table.Column<int>(type: "INTEGER", nullable: false),
+                    min_value = table.Column<int>(type: "INTEGER", nullable: false),
+                    max_value = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {

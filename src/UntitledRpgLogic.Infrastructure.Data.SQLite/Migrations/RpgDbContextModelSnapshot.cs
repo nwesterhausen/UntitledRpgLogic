@@ -790,6 +790,14 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                         .HasColumnType("BLOB")
                         .HasColumnName("definition_id");
 
+                    b.Property<int>("MaxValue")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("max_value");
+
+                    b.Property<int>("MinValue")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("min_value");
+
                     b.HasKey("Id")
                         .HasName("pk_stats");
 
@@ -813,14 +821,6 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                     b.Property<bool>("HasChangeableValue")
                         .HasColumnType("INTEGER")
                         .HasColumnName("has_changeable_value");
-
-                    b.Property<int>("MaxValue")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("max_value");
-
-                    b.Property<int>("MinValue")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("min_value");
 
                     b.Property<string>("Name")
                         .IsRequired()

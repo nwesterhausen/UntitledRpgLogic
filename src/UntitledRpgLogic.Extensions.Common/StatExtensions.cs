@@ -19,13 +19,13 @@ public static class StatExtensions
 
 		var definition = stat.Definition;
 
-		if (definition.MinValue == DefaultValues.StatDefaultMinValue)
+		if (stat.MinValue == DefaultValues.StatDefaultMinValue)
 		{
 			return
-				$"{definition.Variation} {definition.Name}: {stat.ApparentValue} / {definition.MaxValue} ({stat.ApparentValue / (float)definition.MaxValue:F2 * 100}";
+				$"{definition.Variation} {definition.Name}: {stat.ApparentValue} / {stat.MaxValue} ({stat.ApparentValue / (float)stat.MaxValue:F2 * 100}";
 		}
 
 		return
-			$"{definition.Variation} {definition.Name}: {stat.ApparentValue} / {definition.MaxValue} with {definition.MinValue} minimum ({stat.EffectiveValue / (float)(definition.MaxValue - definition.MinValue):F2})%";
+			$"{definition.Variation} {definition.Name}: {stat.ApparentValue} / {stat.MaxValue} with {stat.MinValue} minimum ({stat.EffectiveValue / (float)(stat.MaxValue - stat.MinValue):F2})%";
 	}
 }

@@ -18,8 +18,8 @@ public class AbilityValidationTests
 	[TestMethod]
 	public void CanAffordCosts_InsufficientResource_ReturnsFalse()
 	{
-		var manaDef = new StatDefinition(new Name("Mana")) { MinValue = 0, MaxValue = 100 };
-		var manaStat = new Stat(manaDef.Id) { ApparentValue = 10 };
+		var manaDef = new StatDefinition(new Name("Mana"));
+		var manaStat = new Stat(manaDef.Id) { MinValue = 0, MaxValue = 100, ApparentValue = 10 };
 
 		var caster = new Entity(new Name("Mage"))
 		{

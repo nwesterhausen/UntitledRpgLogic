@@ -1,6 +1,5 @@
 using System.Text.Json.Serialization;
 using Tomlyn.Serialization;
-using UntitledRpgLogic.Core;
 using UntitledRpgLogic.Core.Common;
 using UntitledRpgLogic.Core.Stats;
 using UntitledRpgLogic.Infrastructure.Configuration.Dtos;
@@ -20,10 +19,6 @@ public sealed class StatDefinitionDto : ITomlConfigDto<StatDefinitionDto, StatDe
 	[JsonPropertyName("has_changeable_value")]
 	public bool HasChangeableValue { get; init; } = true;
 
-	[JsonPropertyName("min_value")] public int MinValue { get; init; } = DefaultValues.StatDefaultMinValue;
-
-	[JsonPropertyName("max_value")] public int MaxValue { get; init; } = DefaultValues.StatDefaultMaxValue;
-
 	[JsonPropertyName("linked_stats")]
 	[TomlSingleOrArray]
 	public List<LinkedStatDto> LinkedStats { get; init; } = [];
@@ -37,8 +32,6 @@ public sealed class StatDefinitionDto : ITomlConfigDto<StatDefinitionDto, StatDe
 			Description = this.Description,
 			Variation = this.Variation,
 			HasChangeableValue = this.HasChangeableValue,
-			MinValue = this.MinValue,
-			MaxValue = this.MaxValue,
 			LinkedStats = this.LinkedStats.ConvertAll(s => s.ToModel(this.Id))
 		};
 
@@ -54,8 +47,6 @@ public sealed class StatDefinitionDto : ITomlConfigDto<StatDefinitionDto, StatDe
 			Description = model.Description,
 			Variation = model.Variation,
 			HasChangeableValue = model.HasChangeableValue,
-			MinValue = model.MinValue,
-			MaxValue = model.MaxValue,
 			LinkedStats = model.LinkedStats.Select(LinkedStatDto.FromModel).ToList()
 		};
 	}

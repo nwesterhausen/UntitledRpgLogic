@@ -38,13 +38,15 @@ public sealed class AbilityCoordinatorIntegrationTests : CoordinatorIntegrationT
 			{
 				var context = seedScope.ServiceProvider.GetRequiredService<RpgDbContext>();
 
-				var manaDef = new StatDefinition(new Name("Mana")) { Id = manaDefId, MinValue = 0, MaxValue = 100 };
+				var manaDef = new StatDefinition(new Name("Mana")) { Id = manaDefId };
 				var healthDef =
-					new StatDefinition(new Name("Health")) { Id = healthDefId, MinValue = 0, MaxValue = 200 };
+					new StatDefinition(new Name("Health")) { Id = healthDefId };
 				var skillDef = new SkillDefinition(new Name("Destruction"));
 
-				var manaStat = new Stat(manaDefId) { BaseValue = 100, ApparentValue = 100 };
-				var healthStat = new Stat(healthDefId) { BaseValue = 200, ApparentValue = 200 };
+				var manaStat =
+					new Stat(manaDefId) { BaseValue = 100, ApparentValue = 100, MinValue = 0, MaxValue = 100 };
+				var healthStat =
+					new Stat(healthDefId) { BaseValue = 200, ApparentValue = 200, MinValue = 0, MaxValue = 200 };
 
 				var caster = new Entity(new Name("Mage"))
 				{

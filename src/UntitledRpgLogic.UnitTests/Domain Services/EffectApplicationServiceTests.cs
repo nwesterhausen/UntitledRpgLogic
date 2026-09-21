@@ -18,14 +18,15 @@ public class EffectApplicationServiceTests
 	{
 		this.service = new EffectApplicationService(new StatCalculationService());
 
-		this.healthDef = new StatDefinition(new Name("Health"))
-		{
-			MinValue = 0, MaxValue = 100, Variation = StatVariation.Major
-		};
+		this.healthDef = new StatDefinition(new Name("Health")) { Variation = StatVariation.Major };
 
 		this.targetHealth = new Stat(this.healthDef.Id)
 		{
-			Definition = this.healthDef, BaseValue = 100, ApparentValue = 100
+			MinValue = 0,
+			MaxValue = 100,
+			Definition = this.healthDef,
+			BaseValue = 100,
+			ApparentValue = 100
 		};
 
 		this.target = new Entity(new Name("Target Dummy"))

@@ -31,15 +31,15 @@ public sealed class StatCalculationService : IStatCalculationService
 		var candidateValue = targetStat.BaseValue + (int)MathF.Round(netOffset);
 
 		return targetStat.Definition is not null
-			? this.ClampToDefinitionBounds(targetStat.Definition, candidateValue)
+			? this.ClampToStatBounds(targetStat, candidateValue)
 			: candidateValue;
 	}
 
 	/// <inheritdoc />
-	public int ClampToDefinitionBounds(StatDefinition definition, int rawValue)
+	public int ClampToStatBounds(Stat stat, int rawValue)
 	{
-		ArgumentNullException.ThrowIfNull(definition);
-		return Math.Clamp(rawValue, definition.MinValue, definition.MaxValue);
+		ArgumentNullException.ThrowIfNull(stat);
+		return Math.Clamp(rawValue, stat.MinValue, stat.MaxValue);
 	}
 
 	/// <inheritdoc />
@@ -62,7 +62,7 @@ public sealed class StatCalculationService : IStatCalculationService
 
 		if (options.PercentageChangeOfMax is > 0f)
 		{
-			var maxCap = targetStat.Definition?.MaxValue ?? targetStat.ApparentValue;
+			var maxCap = targetStat.MaxValue;
 			total += maxCap * options.PercentageChangeOfMax.Value;
 		}
 

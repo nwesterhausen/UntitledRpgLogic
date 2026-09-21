@@ -53,8 +53,8 @@ public sealed class EffectApplicationService(IStatCalculationService statCalcula
 
 		var change = this.statCalculationService.CalculatePointChange(effect.AffectedStat, stat);
 
-		var min = stat.Definition?.MinValue ?? int.MinValue;
-		var max = stat.Definition?.MaxValue ?? int.MaxValue;
+		var min = stat.MinValue;
+		var max = stat.MaxValue;
 
 		if (effect is HealEffect { CanOverheal: true } && effect.AffectedStat.IsPositive)
 		{

@@ -19,6 +19,8 @@ public record Stat : IDbEntity<Ulid>
 		this.DefinitionId = Ulid.Empty;
 		this.BaseValue = 0;
 		this.ApparentValue = 0;
+		this.MinValue = DefaultValues.StatDefaultMinValue;
+		this.MaxValue = DefaultValues.StatDefaultMaxValue;
 	}
 
 	/// <summary>
@@ -51,7 +53,17 @@ public record Stat : IDbEntity<Ulid>
 	/// <summary>
 	///     The "effective" value, i.e. the value transposed above its minium.
 	/// </summary>
-	public int EffectiveValue => this.ApparentValue - this.Definition?.MinValue ?? 0;
+	public int EffectiveValue => this.ApparentValue - this.MinValue;
+
+	/// <summary>
+	///     The minimum value for this stat. This is the lowest value the stat can have.
+	/// </summary>
+	public int MinValue { get; init; }
+
+	/// <summary>
+	///     The maximum value for this stat. This is the highest value the stat can have.
+	/// </summary>
+	public int MaxValue { get; init; }
 
 	/// <summary>
 	///     The unique identifier for this active stat instance.

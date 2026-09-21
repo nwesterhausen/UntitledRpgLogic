@@ -13,7 +13,7 @@ public interface IStatCalculationService
 	/// <summary>
 	///     Clamps a value within the boundaries defined by the stat's template definition.
 	/// </summary>
-	public int ClampToDefinitionBounds(StatDefinition definition, int rawValue);
+	public int ClampToStatBounds(Stat stat, int rawValue);
 
 	/// <summary>
 	///     Calculates the raw damage value to subtract from a health or armor stat.

@@ -23,8 +23,6 @@ public record StatDefinition : IDefined
 		this.Name = Name.Empty;
 		this.Variation = StatVariation.Major;
 		this.HasChangeableValue = true;
-		this.MinValue = DefaultValues.StatDefaultMinValue;
-		this.MaxValue = DefaultValues.StatDefaultMaxValue;
 	}
 
 	/// <summary>
@@ -55,16 +53,6 @@ public record StatDefinition : IDefined
 	///     Whether the stat is able to be directly changed or not.
 	/// </summary>
 	public bool HasChangeableValue { get; init; }
-
-	/// <summary>
-	///     The minimum value for this stat. This is the lowest value the stat can have.
-	/// </summary>
-	public int MinValue { get; init; }
-
-	/// <summary>
-	///     The maximum value for this stat. This is the highest value the stat can have.
-	/// </summary>
-	public int MaxValue { get; init; }
 
 	/// <summary>
 	///     The type of stat this is. This is used to determine how the stat behaves in the game.

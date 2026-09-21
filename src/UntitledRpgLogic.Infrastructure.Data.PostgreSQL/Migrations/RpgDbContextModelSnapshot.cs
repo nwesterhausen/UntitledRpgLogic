@@ -795,6 +795,14 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                         .HasColumnType("bytea")
                         .HasColumnName("definition_id");
 
+                    b.Property<int>("MaxValue")
+                        .HasColumnType("integer")
+                        .HasColumnName("max_value");
+
+                    b.Property<int>("MinValue")
+                        .HasColumnType("integer")
+                        .HasColumnName("min_value");
+
                     b.HasKey("Id")
                         .HasName("pk_stats");
 
@@ -818,14 +826,6 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                     b.Property<bool>("HasChangeableValue")
                         .HasColumnType("boolean")
                         .HasColumnName("has_changeable_value");
-
-                    b.Property<int>("MaxValue")
-                        .HasColumnType("integer")
-                        .HasColumnName("max_value");
-
-                    b.Property<int>("MinValue")
-                        .HasColumnType("integer")
-                        .HasColumnName("min_value");
 
                     b.Property<string>("Name")
                         .IsRequired()
