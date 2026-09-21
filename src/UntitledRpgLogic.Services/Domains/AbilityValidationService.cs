@@ -108,13 +108,13 @@ public sealed class AbilityValidationService : IAbilityValidationService
 		return true;
 	}
 
-	private bool IsRequirementSatisfied(Entity entity, CastingRequirement req)
+	private bool IsRequirementSatisfied(Entity entity, AbilityCastingRequirement req)
 	{
 		var currentVal = this.GetEntityValue(entity, req.RequirementType, req.RequiredEntityId);
 		return currentVal >= req.AmountNeeded;
 	}
 
-	private bool IsRequirementSatisfied(Entity entity, LearningRequirement req)
+	private bool IsRequirementSatisfied(Entity entity, AbilityLearningRequirement req)
 	{
 		var currentVal = this.GetEntityValue(entity, req.RequirementType, req.RequiredEntityId);
 		return currentVal >= req.AmountNeeded;

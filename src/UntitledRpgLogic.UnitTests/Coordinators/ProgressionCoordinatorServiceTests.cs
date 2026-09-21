@@ -89,7 +89,7 @@ public sealed class ProgressionCoordinatorServiceTests
 			{
 				LearningRequirements =
 				[
-					new LearningRequirement
+					new AbilityLearningRequirement
 					{
 						RequirementType = RequirementType.SkillLevel,
 						RequiredEntityId = skillDef.Id,

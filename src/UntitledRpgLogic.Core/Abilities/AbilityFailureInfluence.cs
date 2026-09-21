@@ -9,8 +9,13 @@ namespace UntitledRpgLogic.Core.Abilities;
 /// </summary>
 /// <remarks>Owned by <see cref="Ability" />.</remarks>
 [Table("ability_failure_influences")]
-public record FailureInfluence : RequirementBase
+public record AbilityFailureInfluence : RequirementBase
 {
+	/// <summary>
+	///     Foreign key of the owning <see cref="AbilityDefinition" />.
+	/// </summary>
+	public Ulid AbilityId { get; init; }
+
 	/// <summary>
 	///     Navigation property back to the owning ability.
 	/// </summary>

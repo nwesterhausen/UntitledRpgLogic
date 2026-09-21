@@ -6,7 +6,7 @@ namespace UntitledRpgLogic.Core.Progression;
 /// <summary>
 ///     Defines a prerequisite condition that must be met.
 /// </summary>
-/// <remarks>Extended by <see cref="LearningRequirement" /> and <see cref="CastingRequirement" />.</remarks>
+/// <remarks>Extended by <see cref="AbilityLearningRequirement" /> and <see cref="AbilityCastingRequirement" />.</remarks>
 public abstract record RequirementBase
 {
 	/// <summary>
@@ -14,11 +14,6 @@ public abstract record RequirementBase
 	/// </summary>
 	[Key]
 	public int Id { get; init; }
-
-	/// <summary>
-	///     Foreign key of the owning <see cref="AbilityDefinition" />.
-	/// </summary>
-	public Ulid AbilityId { get; init; }
 
 	/// <summary>
 	///     The category of requirement (e.g., Level, Stat, Class, Race).

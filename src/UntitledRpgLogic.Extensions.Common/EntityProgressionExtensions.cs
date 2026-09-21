@@ -41,7 +41,7 @@ public static class EntityProgressionExtensions
 	/// <summary>
 	///     Calculates the failure chance percentage for an ability influence threshold.
 	/// </summary>
-	public static float CalculateFailureChance(this FailureInfluence influence, Entity caster)
+	public static float CalculateFailureChance(this AbilityFailureInfluence influence, Entity caster)
 	{
 		ArgumentNullException.ThrowIfNull(influence);
 		ArgumentNullException.ThrowIfNull(caster);

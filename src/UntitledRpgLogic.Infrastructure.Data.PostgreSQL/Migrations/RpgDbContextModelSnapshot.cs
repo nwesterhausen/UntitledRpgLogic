@@ -2884,7 +2884,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                             b1.Navigation("Stat");
                         });
 
-                    b.OwnsMany("UntitledRpgLogic.Core.Abilities.CastingRequirement", "CastingRequirements", b1 =>
+                    b.OwnsMany("UntitledRpgLogic.Core.Abilities.AbilityCastingRequirement", "CastingRequirements", b1 =>
                         {
                             b1.Property<int>("Id")
                                 .ValueGeneratedOnAdd()
@@ -2935,7 +2935,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                             b1.Navigation("Ability");
                         });
 
-                    b.OwnsMany("UntitledRpgLogic.Core.Abilities.FailureInfluence", "FailureInfluences", b1 =>
+                    b.OwnsMany("UntitledRpgLogic.Core.Abilities.AbilityFailureInfluence", "FailureInfluences", b1 =>
                         {
                             b1.Property<int>("Id")
                                 .ValueGeneratedOnAdd()
@@ -2994,7 +2994,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                             b1.Navigation("Ability");
                         });
 
-                    b.OwnsMany("UntitledRpgLogic.Core.Abilities.LearningRequirement", "LearningRequirements", b1 =>
+                    b.OwnsMany("UntitledRpgLogic.Core.Abilities.AbilityLearningRequirement", "LearningRequirements", b1 =>
                         {
                             b1.Property<int>("Id")
                                 .ValueGeneratedOnAdd()

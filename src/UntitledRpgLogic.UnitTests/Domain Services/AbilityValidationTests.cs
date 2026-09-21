@@ -54,7 +54,7 @@ public class AbilityValidationTests
 		{
 			LearningRequirements =
 			[
-				new LearningRequirement
+				new AbilityLearningRequirement
 				{
 					RequirementType = RequirementType.SkillLevel,
 					RequiredEntityId = fireballSkillDef.Id,

@@ -88,6 +88,7 @@ public sealed class TomlDefinitionSerializationService : IDefinitionSerializatio
 		{
 			return EffectConfigDtoMapper.Serialize(effect, this.options);
 		}
+
 		if (model is ItemDefinition itemDef)
 		{
 			return TomlSerializer.Serialize(ItemDefinitionDto.FromModel(itemDef), this.options);

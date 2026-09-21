@@ -8,8 +8,13 @@ namespace UntitledRpgLogic.Core.Abilities;
 /// </summary>
 /// <remarks>Owned by <see cref="Ability" />.</remarks>
 [Table("ability_casting_requirements")]
-public record CastingRequirement : RequirementBase
+public record AbilityCastingRequirement : RequirementBase
 {
+	/// <summary>
+	///     Foreign key of the owning <see cref="AbilityDefinition" />.
+	/// </summary>
+	public Ulid AbilityId { get; init; }
+
 	/// <summary>
 	///     Navigation property back to the owning ability.
 	/// </summary>

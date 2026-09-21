@@ -92,17 +92,17 @@ public record AbilityDefinition : IDefined
 	/// <summary>
 	///     Prerequisites required to permanently learn or unlock this ability.
 	/// </summary>
-	public ICollection<LearningRequirement> LearningRequirements { get; init; } = [];
+	public ICollection<AbilityLearningRequirement> LearningRequirements { get; init; } = [];
 
 	/// <summary>
 	///     Preconditions verified immediately prior to activation.
 	/// </summary>
-	public ICollection<CastingRequirement> CastingRequirements { get; init; } = [];
+	public ICollection<AbilityCastingRequirement> CastingRequirements { get; init; } = [];
 
 	/// <summary>
 	///     Environmental or state influences contributing to activation failure chance.
 	/// </summary>
-	public ICollection<FailureInfluence> FailureInfluences { get; init; } = [];
+	public ICollection<AbilityFailureInfluence> FailureInfluences { get; init; } = [];
 
 	// --- Many-to-Many Relationships (Configured in AbilityConfiguration) ---
 
