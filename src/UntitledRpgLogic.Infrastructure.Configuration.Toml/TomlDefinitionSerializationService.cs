@@ -5,6 +5,7 @@ using UntitledRpgLogic.Core.Abilities.Effects;
 using UntitledRpgLogic.Core.Data;
 using UntitledRpgLogic.Core.Data.Urpglib;
 using UntitledRpgLogic.Core.Items;
+using UntitledRpgLogic.Core.Materials;
 using UntitledRpgLogic.Core.Skills;
 using UntitledRpgLogic.Core.Stats;
 using UntitledRpgLogic.Infrastructure.Configuration.Serialization;
@@ -56,16 +57,37 @@ public sealed class TomlDefinitionSerializationService : IDefinitionSerializatio
 				return (itemDefinitionDto.ToModel() as TModel)!;
 			}
 
+			throw new NotSupportedException($"Invalid TOML file encountered for  {typeof(TModel).Name}.");
+		}
+
+		if (typeof(TModel) == typeof(StatDefinition))
+		{
 			if (TomlSerializer.TryDeserialize<StatDefinitionDto>(
 				    content, out var statDefinitionDto, this.options))
 			{
 				return (statDefinitionDto.ToModel() as TModel)!;
 			}
 
+			throw new NotSupportedException($"Invalid TOML file encountered for  {typeof(TModel).Name}.");
+		}
+
+		if (typeof(TModel) == typeof(SkillDefinition))
+		{
 			if (TomlSerializer.TryDeserialize<SkillDefinitionDto>(
 				    content, out var skillDefinitionDto, this.options))
 			{
 				return (skillDefinitionDto.ToModel() as TModel)!;
+			}
+
+			throw new NotSupportedException($"Invalid TOML file encountered for  {typeof(TModel).Name}.");
+		}
+
+		if (typeof(TModel) == typeof(MaterialDefinition))
+		{
+			if (TomlSerializer.TryDeserialize<MaterialDefinitionDto>(
+				    content, out var materialDefinitionDto, this.options))
+			{
+				return (materialDefinitionDto.ToModel() as TModel)!;
 			}
 
 			throw new NotSupportedException($"Invalid TOML file encountered for  {typeof(TModel).Name}.");
@@ -102,6 +124,11 @@ public sealed class TomlDefinitionSerializationService : IDefinitionSerializatio
 		if (model is SkillDefinition skillDef)
 		{
 			return TomlSerializer.Serialize(SkillDefinitionDto.FromModel(skillDef), this.options);
+		}
+
+		if (model is MaterialDefinition materialDef)
+		{
+			return TomlSerializer.Serialize(MaterialDefinitionDto.FromModel(materialDef), this.options);
 		}
 
 		throw new NotSupportedException($"No TOML configuration DTO registered for {typeof(TModel).Name}.");
