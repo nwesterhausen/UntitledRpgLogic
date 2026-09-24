@@ -5,11 +5,19 @@ namespace UntitledRpgLogic.Infrastructure.Configuration.Toml.Dtos;
 
 public sealed class ThermalPropertiesDto
 {
-	[JsonPropertyName("melting_point")] public float MeltingPoint { get; init; }
+	/// <summary>
+	///     Temperature in Celsius at which the material shifts from solid to liquid.
+	/// </summary>
+	public float MeltingPoint { get; init; }
 
-	[JsonPropertyName("boiling_point")] public float BoilingPoint { get; init; }
+	/// <summary>
+	///     Temperature in Celsius at which the material boils into vapor.
+	/// </summary>
+	public float BoilingPoint { get; init; }
 
-	[JsonPropertyName("ignition_temperature")]
+	/// <summary>
+	///     Flashpoint or spontaneous autoignition temperature in Celsius for combustible materials.
+	/// </summary>
 	public float IgnitionTemperature { get; init; }
 
 	[JsonPropertyName("thermal_conductivity")]

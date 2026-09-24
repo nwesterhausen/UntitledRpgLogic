@@ -5,17 +5,39 @@ namespace UntitledRpgLogic.Infrastructure.Configuration.Toml.Dtos;
 
 public sealed class StateSpecificPropertiesDto
 {
-	[JsonPropertyName("state")] public StateOfMatter State { get; init; } = StateOfMatter.None;
+	/// <summary>
+	///     The specific phase of matter these overrides apply to.
+	/// </summary>
+	public StateOfMatter State { get; init; } = StateOfMatter.None;
 
-	[JsonPropertyName("color")] public string Color { get; init; } = "#FFFFFF";
+	/// <summary>
+	///     Hexadecimal color representation of the material in this physical state.
+	/// </summary>
+	public string Color { get; init; } = "#FFFFFF";
 
-	[JsonPropertyName("mechanical")] public MechanicalPropertiesDto? MechanicalProperties { get; init; }
+	/// <summary>
+	///     Mechanical property overrides for this state (null if using default material baseline).
+	/// </summary>
+	[JsonPropertyName("mechanical")]
+	public MechanicalPropertiesDto? MechanicalProperties { get; init; }
 
-	[JsonPropertyName("thermal")] public ThermalPropertiesDto? ThermalProperties { get; init; }
+	/// <summary>
+	///     Thermal property overrides for this state (null if using default material baseline).
+	/// </summary>
+	[JsonPropertyName("thermal")]
+	public ThermalPropertiesDto? ThermalProperties { get; init; }
 
-	[JsonPropertyName("electrical")] public ElectricalPropertiesDto? ElectricalProperties { get; init; }
+	/// <summary>
+	///     Electrical property overrides for this state (null if using default material baseline).
+	/// </summary>
+	[JsonPropertyName("electrical")]
+	public ElectricalPropertiesDto? ElectricalProperties { get; init; }
 
-	[JsonPropertyName("fantastical")] public FantasticalPropertiesDto? FantasticalProperties { get; init; }
+	/// <summary>
+	///     Mystical property overrides for this state (null if using default material baseline).
+	/// </summary>
+	[JsonPropertyName("fantastical")]
+	public FantasticalPropertiesDto? FantasticalProperties { get; init; }
 
 	public StateSpecificProperties ToModel() => new()
 	{

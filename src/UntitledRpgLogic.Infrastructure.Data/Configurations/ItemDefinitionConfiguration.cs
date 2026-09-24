@@ -39,26 +39,5 @@ public sealed class ItemDefinitionConfiguration : IEntityTypeConfiguration<ItemD
 			.WithMany()
 			.HasForeignKey(i => i.CreatorEntityId)
 			.OnDelete(DeleteBehavior.SetNull);
-
-		// Configure the owned collection into a dedicated relational child table
-		builder.OwnsMany(i => i.Materials, mb =>
-		{
-			mb.ToTable("item_definition_materials");
-
-			// Outward foreign key constraint to the material slot lookup (as byte)
-			mb.Property(m => m.Slot)
-				.HasConversion<byte>()
-				.IsRequired();
-			mb.HasOne<MaterialSlotLookup>()
-				.WithMany()
-				.HasForeignKey(x => x.Slot)
-				.OnDelete(DeleteBehavior.Restrict);
-
-			// Outward foreign key constraint to the materials catalog table
-			mb.HasOne(m => m.Material)
-				.WithMany()
-				.HasForeignKey(m => m.MaterialId)
-				.OnDelete(DeleteBehavior.Restrict);
-		});
 	}
 }

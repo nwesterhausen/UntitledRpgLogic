@@ -27,16 +27,16 @@ public sealed class ItemFactoryService : IItemFactoryService
 			throw new ArgumentOutOfRangeException(nameof(maxStackSize), "Max stack size must be at least 1.");
 		}
 
+		// Todo: item shape inclusion.
+
 		return new ItemDefinition(name)
 		{
 			Id = Ulid.NewUlid(),
 			ItemType = type,
 			ItemSubtype = subtype,
 			BaseValue = Math.Max(0, baseValue),
-			Weight = Math.Max(0f, weight),
 			MaxStackSize = maxStackSize,
 			CreatorEntityId = creatorEntityId,
-			Materials = materials ?? [],
 			Name = name
 		};
 	}

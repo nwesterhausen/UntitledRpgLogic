@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+		<AssemblyName>UntitledRpgLogic.Tools.DataImporter</AssemblyName>
+		<PackageId>UntitledRpgLogic.Tools.DataImporter</PackageId>
+		<RootNamespace>UntitledRpgLogic.Tools.DataImporter</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\UntitledRpgLogic.Core\UntitledRpgLogic.Core.csproj" />
+    <ProjectReference Include="..\UntitledRpgLogic.Infrastructure.Configuration.Toml\UntitledRpgLogic.Infrastructure.Configuration.Toml.csproj" />
+  </ItemGroup>
+
+</Project>

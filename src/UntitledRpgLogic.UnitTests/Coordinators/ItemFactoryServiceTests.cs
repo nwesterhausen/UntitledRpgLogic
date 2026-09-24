@@ -24,7 +24,6 @@ public class ItemFactoryServiceTests
 		Assert.AreEqual("Iron Broadsword", def.Name.Singular);
 		Assert.AreEqual(ItemType.Weapon, def.ItemType);
 		Assert.AreEqual(150, def.BaseValue);
-		Assert.AreEqual(3.5f, def.Weight);
 		Assert.AreEqual(1, def.MaxStackSize);
 	}
 

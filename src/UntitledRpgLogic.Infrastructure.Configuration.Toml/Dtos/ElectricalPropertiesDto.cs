@@ -5,7 +5,12 @@ namespace UntitledRpgLogic.Infrastructure.Configuration.Toml.Dtos;
 
 public sealed class ElectricalPropertiesDto
 {
-	[JsonPropertyName("conductivity")] public float Conductivity { get; init; } = 0.25f;
+	/// <summary>
+	///     A relative measure of how well the material conducts electrical current.
+	///     0 indicates an absolute insulator; values above 1.0 represent high-efficiency conductors.
+	/// </summary>
+	[JsonPropertyName("conductivity")]
+	public float Conductivity { get; init; } = 0.25f;
 
 	public ElectricalProperties ToModel() => new(this.Conductivity);
 

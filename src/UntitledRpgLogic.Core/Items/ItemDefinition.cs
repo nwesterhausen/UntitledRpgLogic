@@ -25,10 +25,9 @@ public record ItemDefinition : IDefined
 		this.ItemType = ItemType.Miscellaneous;
 		this.ItemSubtype = ItemSubtype.None;
 		this.BaseQuality = Quality.Common;
+		this.BaseValue = 1;
 		this.MaxStackSize = 1;
-		this.BaseDurability = 100f;
-		this.Weight = 1.0f;
-		this.BaseValue = 0;
+		this.BaseDurability = 1;
 	}
 
 	/// <summary>
@@ -68,6 +67,12 @@ public record ItemDefinition : IDefined
 	public required ItemSubtype ItemSubtype { get; init; }
 
 	/// <summary>
+	///     The required 'pieces' that need to be crafted for this item. Allows for different materials on the blade/handle
+	///     of swords, for example.
+	/// </summary>
+	public ICollection<ItemShape> ItemShapes { get; init; } = new List<ItemShape>();
+
+	/// <summary>
 	///     The baseline craft/spawn quality tier of the item.
 	/// </summary>
 	public Quality BaseQuality { get; init; }
@@ -84,11 +89,6 @@ public record ItemDefinition : IDefined
 	public float BaseDurability { get; init; }
 
 	/// <summary>
-	///     The physical weight of a single unit of this item.
-	/// </summary>
-	public float Weight { get; init; }
-
-	/// <summary>
 	///     The base currency value or merchant trading cost.
 	/// </summary>
 	public int BaseValue { get; init; }
@@ -98,11 +98,6 @@ public record ItemDefinition : IDefined
 	///     Null for standard base game items.
 	/// </summary>
 	public Ulid? CreatorEntityId { get; init; }
-
-	/// <summary>
-	///     Constituent materials that make up this item template (primary metal, hilt wrap, pommel gem, etc.).
-	/// </summary>
-	public ICollection<ItemMaterialComponent> Materials { get; init; } = [];
 
 	/// <summary>
 	///     All instances of this item actively existing in player inventories, containers, or the world.

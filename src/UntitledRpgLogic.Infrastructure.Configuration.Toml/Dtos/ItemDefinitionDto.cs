@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using Tomlyn.Serialization;
 using UntitledRpgLogic.Core.Common;
 using UntitledRpgLogic.Core.Items;
 using UntitledRpgLogic.Infrastructure.Configuration.Dtos;
@@ -27,11 +26,7 @@ public sealed class ItemDefinitionDto : ITomlConfigDto<ItemDefinitionDto, ItemDe
 
 	[JsonPropertyName("base_value")] public int BaseValue { get; init; } = 1;
 
-	[JsonPropertyName("weight")] public float Weight { get; init; } = 1f;
-
-	[JsonPropertyName("materials")]
-	[TomlSingleOrArray]
-	public List<ItemMaterialComponentDto> Materials { get; init; } = [];
+	public List<ItemShapeDto> ItemShapes { get; init; } = [];
 
 	/// <inheritdoc />
 	public ItemDefinition ToModel() =>
@@ -46,8 +41,7 @@ public sealed class ItemDefinitionDto : ITomlConfigDto<ItemDefinitionDto, ItemDe
 			BaseQuality = this.BaseQuality,
 			BaseDurability = this.BaseDurability,
 			BaseValue = this.BaseValue,
-			Weight = this.Weight,
-			Materials = this.Materials.ConvertAll(m => m.ToModel())
+			ItemShapes = this.ItemShapes.ConvertAll(x => x.ToModel())
 		};
 
 	/// <inheritdoc />
@@ -66,8 +60,7 @@ public sealed class ItemDefinitionDto : ITomlConfigDto<ItemDefinitionDto, ItemDe
 			BaseQuality = model.BaseQuality,
 			BaseDurability = model.BaseDurability,
 			BaseValue = model.BaseValue,
-			Weight = model.Weight,
-			Materials = model.Materials.Select(ItemMaterialComponentDto.FromModel).ToList()
+			ItemShapes = model.ItemShapes.Select(ItemShapeDto.FromModel).ToList()
 		};
 	}
 }

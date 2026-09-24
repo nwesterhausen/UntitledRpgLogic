@@ -482,10 +482,6 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                         .HasColumnType("bytea")
                         .HasColumnName("inventory_id");
 
-                    b.Property<byte[]>("PrimaryMaterialId")
-                        .HasColumnType("bytea")
-                        .HasColumnName("primary_material_id");
-
                     b.Property<int>("Quantity")
                         .HasColumnType("integer")
                         .HasColumnName("quantity");
@@ -498,9 +494,6 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
 
                     b.HasIndex("InventoryId")
                         .HasDatabaseName("ix_items_inventory_id");
-
-                    b.HasIndex("PrimaryMaterialId")
-                        .HasDatabaseName("ix_items_primary_material_id");
 
                     b.ToTable("items", (string)null);
                 });
@@ -550,10 +543,6 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                         .HasColumnType("text")
                         .HasColumnName("name");
 
-                    b.Property<float>("Weight")
-                        .HasColumnType("real")
-                        .HasColumnName("weight");
-
                     b.HasKey("Id")
                         .HasName("pk_item_definitions");
 
@@ -570,6 +559,88 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                         .HasDatabaseName("ix_item_definitions_item_type");
 
                     b.ToTable("item_definitions", (string)null);
+                });
+
+            modelBuilder.Entity("UntitledRpgLogic.Core.Items.ItemShape", b =>
+                {
+                    b.Property<byte[]>("Id")
+                        .HasColumnType("bytea")
+                        .HasColumnName("id");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(1024)
+                        .HasColumnType("character varying(1024)")
+                        .HasColumnName("description");
+
+                    b.Property<byte[]>("ItemDefinitionId")
+                        .HasColumnType("bytea")
+                        .HasColumnName("item_definition_id");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("name");
+
+                    b.HasKey("Id")
+                        .HasName("pk_item_shapes");
+
+                    b.HasIndex("ItemDefinitionId")
+                        .HasDatabaseName("ix_item_shapes_item_definition_id");
+
+                    b.ToTable("item_shapes", (string)null);
+                });
+
+            modelBuilder.Entity("UntitledRpgLogic.Core.Items.ShapedComponent", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<float>("Durability")
+                        .HasColumnType("real")
+                        .HasColumnName("durability");
+
+                    b.Property<byte[]>("ItemId")
+                        .HasColumnType("bytea")
+                        .HasColumnName("item_id");
+
+                    b.Property<byte[]>("MaterialId")
+                        .IsRequired()
+                        .HasColumnType("bytea")
+                        .HasColumnName("material_id");
+
+                    b.Property<float>("MaxDurability")
+                        .HasColumnType("real")
+                        .HasColumnName("max_durability");
+
+                    b.Property<byte[]>("ShapeId")
+                        .IsRequired()
+                        .HasColumnType("bytea")
+                        .HasColumnName("shape_id");
+
+                    b.Property<float>("Volume")
+                        .HasColumnType("real")
+                        .HasColumnName("volume");
+
+                    b.Property<int>("VolumeScale")
+                        .HasColumnType("integer")
+                        .HasColumnName("volume_scale");
+
+                    b.Property<float>("Weight")
+                        .HasColumnType("real")
+                        .HasColumnName("weight");
+
+                    b.HasKey("Id")
+                        .HasName("pk_shaped_components");
+
+                    b.HasIndex("ItemId")
+                        .HasDatabaseName("ix_shaped_components_item_id");
+
+                    b.ToTable("shaped_components", (string)null);
                 });
 
             modelBuilder.Entity("UntitledRpgLogic.Core.Materials.MaterialDefinition", b =>
@@ -3415,14 +3486,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                         .HasForeignKey("InventoryId")
                         .HasConstraintName("fk_items_inventories_inventory_id");
 
-                    b.HasOne("UntitledRpgLogic.Core.Materials.MaterialDefinition", "PrimaryMaterial")
-                        .WithMany()
-                        .HasForeignKey("PrimaryMaterialId")
-                        .HasConstraintName("fk_items_material_definitions_primary_material_id");
-
                     b.Navigation("Definition");
-
-                    b.Navigation("PrimaryMaterial");
                 });
 
             modelBuilder.Entity("UntitledRpgLogic.Core.Items.ItemDefinition", b =>
@@ -3453,66 +3517,60 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("fk_item_definitions_item_type_lookup_item_type");
+                });
 
-                    b.OwnsMany("UntitledRpgLogic.Core.Items.ItemMaterialComponent", "Materials", b1 =>
+            modelBuilder.Entity("UntitledRpgLogic.Core.Items.ItemShape", b =>
+                {
+                    b.HasOne("UntitledRpgLogic.Core.Items.ItemDefinition", null)
+                        .WithMany("ItemShapes")
+                        .HasForeignKey("ItemDefinitionId")
+                        .HasConstraintName("fk_item_shapes_item_definitions_item_definition_id");
+
+                    b.OwnsOne("UntitledRpgLogic.Core.Common.Dimensions", "Dimensions", b1 =>
                         {
-                            b1.Property<byte[]>("ItemDefinitionId")
+                            b1.Property<byte[]>("ItemShapeId")
                                 .HasColumnType("bytea")
-                                .HasColumnName("item_definition_id");
-
-                            b1.Property<int>("Id")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("integer")
                                 .HasColumnName("id");
 
-                            NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b1.Property<int>("Id"));
-
-                            b1.Property<byte[]>("MaterialId")
-                                .IsRequired()
-                                .HasColumnType("bytea")
-                                .HasColumnName("material_id");
-
-                            b1.Property<float>("Proportion")
+                            b1.Property<float>("Depth")
                                 .HasColumnType("real")
-                                .HasColumnName("proportion");
+                                .HasColumnName("length");
 
-                            b1.Property<byte>("Slot")
-                                .HasColumnType("smallint")
-                                .HasColumnName("slot");
+                            b1.Property<int>("DimensionScale")
+                                .HasColumnType("integer")
+                                .HasColumnName("dimension_scale");
 
-                            b1.HasKey("ItemDefinitionId", "Id")
-                                .HasName("pk_item_definition_materials");
+                            b1.Property<float>("Height")
+                                .HasColumnType("real")
+                                .HasColumnName("height");
 
-                            b1.HasIndex("MaterialId")
-                                .HasDatabaseName("ix_item_definition_materials_material_id");
+                            b1.Property<int>("ShapeType")
+                                .HasColumnType("integer")
+                                .HasColumnName("dimensions_shape");
 
-                            b1.HasIndex("Slot")
-                                .HasDatabaseName("ix_item_definition_materials_slot");
+                            b1.Property<float>("Width")
+                                .HasColumnType("real")
+                                .HasColumnName("width");
 
-                            b1.ToTable("item_definition_materials", (string)null);
+                            b1.HasKey("ItemShapeId");
+
+                            b1.ToTable("item_shapes");
 
                             b1.WithOwner()
-                                .HasForeignKey("ItemDefinitionId")
-                                .HasConstraintName("fk_item_definition_materials_item_definitions_item_definition_");
-
-                            b1.HasOne("UntitledRpgLogic.Core.Materials.MaterialDefinition", "Material")
-                                .WithMany()
-                                .HasForeignKey("MaterialId")
-                                .OnDelete(DeleteBehavior.Restrict)
-                                .IsRequired()
-                                .HasConstraintName("fk_item_definition_materials_material_definitions_material_id");
-
-                            b1.HasOne("UntitledRpgLogic.Infrastructure.Data.LookupEntities.MaterialSlotLookup", null)
-                                .WithMany()
-                                .HasForeignKey("Slot")
-                                .OnDelete(DeleteBehavior.Restrict)
-                                .IsRequired()
-                                .HasConstraintName("fk_item_definition_materials_material_slot_lookup_slot");
-
-                            b1.Navigation("Material");
+                                .HasForeignKey("ItemShapeId")
+                                .HasConstraintName("fk_item_shapes_item_shapes_id");
                         });
 
-                    b.Navigation("Materials");
+                    b.Navigation("Dimensions")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("UntitledRpgLogic.Core.Items.ShapedComponent", b =>
+                {
+                    b.HasOne("UntitledRpgLogic.Core.Items.Item", null)
+                        .WithMany("Components")
+                        .HasForeignKey("ItemId")
+                        .HasConstraintName("fk_shaped_components_items_item_id");
                 });
 
             modelBuilder.Entity("UntitledRpgLogic.Core.Materials.MaterialDefinition", b =>
@@ -4538,9 +4596,16 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
                     b.Navigation("Items");
                 });
 
+            modelBuilder.Entity("UntitledRpgLogic.Core.Items.Item", b =>
+                {
+                    b.Navigation("Components");
+                });
+
             modelBuilder.Entity("UntitledRpgLogic.Core.Items.ItemDefinition", b =>
                 {
                     b.Navigation("Instances");
+
+                    b.Navigation("ItemShapes");
                 });
 
             modelBuilder.Entity("UntitledRpgLogic.Core.Skills.SkillDefinition", b =>

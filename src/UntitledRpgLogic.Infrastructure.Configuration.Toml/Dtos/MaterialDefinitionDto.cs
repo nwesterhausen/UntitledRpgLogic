@@ -1,4 +1,3 @@
-using System.Text.Json.Serialization;
 using Tomlyn.Serialization;
 using UntitledRpgLogic.Core.Common;
 using UntitledRpgLogic.Core.Data.Urpglib;
@@ -8,29 +7,62 @@ namespace UntitledRpgLogic.Infrastructure.Configuration.Toml.Dtos;
 
 public sealed class MaterialDefinitionDto : IConfigDto<MaterialDefinitionDto, MaterialDefinition>
 {
-	[JsonPropertyName("id")] public Ulid Id { get; init; } = Ulid.Empty;
+	/// <summary>
+	///     The unique identifier for the material definition.
+	/// </summary>
+	public Ulid Id { get; init; } = Ulid.Empty;
 
-	[JsonPropertyName("name")] public Name Name { get; init; } = Name.Empty;
+	/// <summary>
+	///     The display name of the material.
+	/// </summary>
+	public Name Name { get; init; } = Name.Empty;
 
-	[JsonPropertyName("description")] public string Description { get; init; } = string.Empty;
+	/// <summary>
+	///     A descriptive overview of the material's appearance, lore, and traits.
+	/// </summary>
+	public string Description { get; init; } = string.Empty;
 
-	[JsonPropertyName("flags")] public MaterialTraits Flags { get; init; } = MaterialTraits.None;
+	/// <summary>
+	///     Bitwise classification flags (e.g., NaturalOre, Combustible, Fluid).
+	/// </summary>
+	public MaterialTraits Flags { get; init; } = MaterialTraits.None;
 
-	[JsonPropertyName("default_state")] public StateOfMatter DefaultState { get; init; } = StateOfMatter.Solid;
+	/// <summary>
+	///     The default phase of matter for this material under standard room temperature conditions.
+	/// </summary>
+	public StateOfMatter DefaultState { get; init; } = StateOfMatter.Solid;
 
-	[JsonPropertyName("smelt_yields")]
+
+	/// <summary>
+	///     Compositional breakdown and metal extraction yields produced when smelting this material.
+	///     Empty for pure elements or non-ores.
+	/// </summary>
 	[TomlSingleOrArray]
 	public List<OreYieldDto> SmeltYields { get; init; } = [];
 
-	[JsonPropertyName("mechanical")] public MechanicalPropertiesDto? MechanicalProperties { get; init; }
+	/// <summary>
+	///     Baseline mechanical characteristics (density, hardness, elasticity).
+	/// </summary>
+	public MechanicalPropertiesDto? MechanicalProperties { get; init; }
 
-	[JsonPropertyName("thermal")] public ThermalPropertiesDto? ThermalProperties { get; init; }
+	/// <summary>
+	///     Baseline thermal properties (melting point, boiling point, specific heat).
+	/// </summary>
+	public ThermalPropertiesDto? ThermalProperties { get; init; }
 
-	[JsonPropertyName("electrical")] public ElectricalPropertiesDto? ElectricalProperties { get; init; }
+	/// <summary>
+	///     Baseline electrical and magnetic characteristics.
+	/// </summary>
+	public ElectricalPropertiesDto? ElectricalProperties { get; init; }
 
-	[JsonPropertyName("fantastical")] public FantasticalPropertiesDto? FantasticalProperties { get; init; }
+	/// <summary>
+	///     Baseline mystical traits, mana conductivity, and planar elemental attunements.
+	/// </summary>
+	public FantasticalPropertiesDto? FantasticalProperties { get; init; }
 
-	[JsonPropertyName("state_properties")]
+	/// <summary>
+	///     Phase transition deviations when the material shifts state (Solid, Liquid, Gas).
+	/// </summary>
 	[TomlSingleOrArray]
 	public List<StateSpecificPropertiesDto> StateProperties { get; init; } = [];
 

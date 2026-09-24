@@ -1,7 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using UntitledRpgLogic.Core.Data;
-using UntitledRpgLogic.Core.Materials;
 
 namespace UntitledRpgLogic.Core.Items;
 
@@ -56,18 +55,13 @@ public record Item : IDbEntity<Ulid>
 	/// <summary>
 	///     Current durability remaining (0 indicates not applicable or indestructible).
 	/// </summary>
+	/// <remarks>This should include any durability from <see cref="Components" />.</remarks>
 	public int Durability { get; set; }
 
 	/// <summary>
-	///     Optional material reference for the primary material of this specific instance.
+	///     The collection of components that make up this item.
 	/// </summary>
-	public Ulid? PrimaryMaterialId { get; init; }
-
-	/// <summary>
-	///     Navigation property to the primary material definition.
-	/// </summary>
-	[ForeignKey(nameof(PrimaryMaterialId))]
-	public MaterialDefinition? PrimaryMaterial { get; init; }
+	public ICollection<ShapedComponent> Components { get; init; } = new List<ShapedComponent>();
 
 	/// <summary>
 	///     Optional identifier for the entity or system that crafted this item.

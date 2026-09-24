@@ -1,17 +1,28 @@
-using System.Text.Json.Serialization;
 using UntitledRpgLogic.Core.Materials;
 
 namespace UntitledRpgLogic.Infrastructure.Configuration.Toml.Dtos;
 
 public sealed class OreYieldDto
 {
-	[JsonPropertyName("material_id")] public Ulid MaterialId { get; init; }
+	/// <summary>
+	///     The ULID of the refined target material (e.g., Iron, Lead, Silver).
+	/// </summary>
+	public Ulid MaterialId { get; init; }
 
-	[JsonPropertyName("efficiency")] public float Efficiency { get; init; } = 1.0f;
+	/// <summary>
+	///     Base ratio or units produced per unit of ore (e.g., 1.0 for full yield).
+	/// </summary>
+	public float Efficiency { get; init; } = 1.0f;
 
-	[JsonPropertyName("chance")] public float Chance { get; init; } = 1.0f;
+	/// <summary>
+	///     Probability of obtaining this yield during processing (0.0 to 1.0).
+	///     (e.g., Galena always yields Lead (1.0), with a 0.5 chance of Silver).
+	/// </summary>
+	public float Chance { get; init; } = 1.0f;
 
-	[JsonPropertyName("minimum_smelt_temperature")]
+	/// <summary>
+	///     Minimum furnace temperature required to extract this yield.
+	/// </summary>
 	public float MinimumSmeltTemperature { get; init; }
 
 	public OreYield ToModel() => new()
