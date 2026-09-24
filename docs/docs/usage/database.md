@@ -3,14 +3,14 @@
 Set up a database connection via the appropriate adapter:
 
 ```csharp
-// Single-player / Godot client:
+// SQLite3 Database (singleplayer or to export perhaps)
 services.AddSqlitePersistence(opts =>
 {
     opts.ConnectionString = "Data Source=saves/slot1.db";
     // opts.AutoMigrate = true; // The default value for AutoMigrate is true
 });
 
-// Dedicated PostgreSQL server:
+// Dedicated PostgreSQL (multiplayer contexts)
 services.AddPostgreSqlPersistence(opts =>
 {
     opts.ConnectionString = hostContext.Configuration.GetConnectionString("Postgres")!;
@@ -27,3 +27,16 @@ await initializer.InitializeAsync();
 ```
 
 If `AutoMigrate` is set to `false`, `InitializeAsync()` exits safely without touching the schema.
+
+### Configuring the HostContext for PostgreSQL
+
+Programmatically setting the HostContext is easily done like so:
+
+```cs
+services.AddPostgreSqlPersistence(opts =>
+{
+    // Hardcoded or dynamically constructed
+    opts.ConnectionString = "Host=localhost;Port=5432;Database=my_db;Username=postgres;Password=secret;";
+    opts.AutoMigrate = false;
+});
+```

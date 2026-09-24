@@ -3,6 +3,6 @@
 - name: RPG Config Tooling
   href: ./tooling.md
 - name: "Library Usage: Database"
-  href: ./usage/interfaces.md
-- name: "Library Usage: Interfaces"
-  href: ./usage/interfaces.md
+  href: ./usage/database.md
+- name: "Internal Process: World Gen"
+  href: ./worldgen.md
