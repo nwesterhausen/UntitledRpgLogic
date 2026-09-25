@@ -27,7 +27,7 @@ public sealed class MacroGenerationTests
 			new WorldMapConfiguration { Seed = 12345u, HeightTiles = 64, WidthTiles = 64, Terrain = settings };
 		var context = new WorldGenContext(mapConfig);
 
-		var map = MacroHeightmapGenerator.Generate(context);
+		var map = MacroHeightmapGenerator.Generate(context.AsReadOnly());
 
 		Assert.AreEqual(64, map.WidthTiles);
 		Assert.AreEqual(64, map.HeightTiles);
@@ -58,7 +58,8 @@ public sealed class MacroGenerationTests
 		};
 		var context = new WorldGenContext(mapConfig);
 
-		MacroHeightmapGenerator.Generate(context);
+		var heightMap = MacroHeightmapGenerator.Generate(context.AsReadOnly());
+		context.Terrain.OverwriteHeightMap(heightMap);
 
 		var waterId = Ulid.NewUlid();
 		var hydrology = MacroHydrologyGenerator.Generate(context, 123456, waterId, mapConfig);

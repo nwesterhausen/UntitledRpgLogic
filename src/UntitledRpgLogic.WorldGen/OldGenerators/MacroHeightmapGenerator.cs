@@ -15,10 +15,8 @@ public sealed class MacroHeightmapGenerator : INoisemapGenerator<HeightMap>
 	///     Populates a <see cref="HeightMap" /> with bedrock elevations, applying an ocean falloff mask if requested.
 	/// </summary>
 	public static HeightMap Generate(
-		WorldGenContext generationContext)
+		ReadOnlyWorldGenContext generationContext)
 	{
-		ArgumentNullException.ThrowIfNull(generationContext);
-
 		var worldConfig = generationContext.MapConfig;
 
 		var seed = worldConfig.Seed;

@@ -95,4 +95,22 @@ public sealed class ArcanaMaps : NoiseGridDimensions
 	/// <param name="tileY"></param>
 	/// <returns></returns>
 	public Ulid? GetManaAttunement(int tileX, int tileY) => this.manaAttunement.GetManaAttunement(tileX, tileY);
+
+	public void OverwriteLeylineMap(LeylineMap leylineMap)
+	{
+		ArgumentNullException.ThrowIfNull(leylineMap);
+		this.leylines.ReplaceCells(leylineMap.Cells);
+	}
+
+	public void OverwriteAlignmentMap(AlignmentMap alignmentMap)
+	{
+		ArgumentNullException.ThrowIfNull(alignmentMap);
+		this.alignment.ReplaceCells(alignmentMap.Cells);
+	}
+
+	public void OverwriteSavageryMap(SavageryMap savageryMap)
+	{
+		ArgumentNullException.ThrowIfNull(savageryMap);
+		this.savagery.ReplaceCells(savageryMap.Cells);
+	}
 }

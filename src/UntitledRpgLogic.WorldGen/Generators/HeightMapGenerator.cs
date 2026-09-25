@@ -12,10 +12,10 @@ public class HeightMapGenerator : INoisemapGenerator<HeightMap>
 	private HeightMapGenerator() { }
 
 	/// <inheritdoc />
-	public static HeightMap Generate(WorldGenContext generationContext)
+	public static HeightMap Generate(ReadOnlyWorldGenContext generationContext)
 	{
-		ArgumentNullException.ThrowIfNull(generationContext);
 		var worldConfig = generationContext.MapConfig;
+		var terrainHeight = new HeightMap(worldConfig.HeightTiles, worldConfig.WidthTiles);
 
 		var normalizedMap = NoiseMaker.GenerateNoiseMap(
 			worldConfig.Terrain.NoiseGeneration with { Seed = worldConfig.Seed }, worldConfig.WidthTiles,
@@ -111,11 +111,11 @@ public class HeightMapGenerator : INoisemapGenerator<HeightMap>
 				}
 
 				adjustedElevation = worldConfig.Terrain.MinElevation + MathF.Round(rawElevation);
-				generationContext.Terrain.SetElevation(x, y,
+				terrainHeight.SetElevation(x, y,
 					(short)Math.Clamp(adjustedElevation, short.MinValue, short.MaxValue));
 			}
 		}
 
-		return generationContext.Terrain.HeightMapAsCopy();
+		return terrainHeight;
 	}
 }

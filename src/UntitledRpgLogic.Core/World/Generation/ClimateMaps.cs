@@ -135,4 +135,10 @@ public sealed class ClimateMaps : NoiseGridDimensions
 		this.rainfall.SetRainfall(tileX, tileY, rainfallValue);
 		this.biome.SetBiome(tileX, tileY, biomeType);
 	}
+
+	public void OverwriteTurbulenceMap(ClimateTurbulenceMap climateEnergyTurbulence)
+	{
+		ArgumentNullException.ThrowIfNull(climateEnergyTurbulence);
+		this.turbulence.ReplaceCells(climateEnergyTurbulence.Cells);
+	}
 }

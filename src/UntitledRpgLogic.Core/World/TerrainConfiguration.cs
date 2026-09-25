@@ -59,4 +59,14 @@ public record TerrainConfiguration
 	///     List of available non-mineral rock/stone for world generation.
 	/// </summary>
 	public IReadOnlyList<MaterialOption> Stone { get; init; } = [];
+
+	/// <summary>
+	///     The distance between <see cref="MaxElevation" /> and <see cref="SeaLevel" />
+	/// </summary>
+	public short LandSpan => (short)Math.Max(1, this.MaxElevation - this.SeaLevel);
+
+	/// <summary>
+	///     The distance between <see cref="MinElevation" /> and <see cref="SeaLevel" />
+	/// </summary>
+	public short WaterSpan => (short)Math.Max(1, this.SeaLevel - this.MinElevation);
 }

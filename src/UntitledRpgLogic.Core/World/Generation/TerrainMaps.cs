@@ -248,4 +248,16 @@ public sealed class TerrainMaps : NoiseGridDimensions
 
 		this.geologyLayer.SetGeologyLayer(tileX, tileY, rockLayerMaterial);
 	}
+
+	public void OverwriteHeightMap(HeightMap heightMap)
+	{
+		ArgumentNullException.ThrowIfNull(heightMap);
+		this.height.ReplaceCells(heightMap.Cells);
+	}
+
+	public void OverwriteVolcanismMap(VolcanismMap volcanismMap)
+	{
+		ArgumentNullException.ThrowIfNull(volcanismMap);
+		this.volcanism.ReplaceCells(volcanismMap.Cells);
+	}
 }

@@ -13,5 +13,5 @@ public interface INoisemapGenerator<out T>
 	/// </summary>
 	/// <returns>A new <see cref="NoiseGrid2D{T}" /> implementer with generated values.</returns>
 	/// <param name="generationContext">The generation context which holds all the noise maps</param>
-	public static abstract T Generate(WorldGenContext generationContext);
+	public static abstract T Generate(ReadOnlyWorldGenContext generationContext);
 }

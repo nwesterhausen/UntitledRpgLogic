@@ -87,4 +87,23 @@ public abstract class NoiseGrid2D<T> : NoiseGridDimensions
 			this.cells[this.GetStrideIndex(tileX, tileY)] = value;
 		}
 	}
+
+	/// <summary>
+	///     Overwrite the existing cells in this grid with a new set of cells.
+	/// </summary>
+	/// <param name="newCells">Replacement cell values.</param>
+	/// <exception cref="ArgumentNullException">If <paramref name="newCells" /> is <c>null</c></exception>
+	/// <exception cref="ArgumentException">If <paramref name="newCells" /> is a different length than our cells.</exception>
+	internal void ReplaceCells(ReadOnlySpan<T> newCells)
+	{
+		if (this.cells.Length != newCells.Length)
+		{
+			throw new ArgumentException("Cells array length (" + newCells.Length + ") != " + this.cells.Length);
+		}
+
+		for (var i = 0; i < newCells.Length; i++)
+		{
+			this.cells[i] = newCells[i];
+		}
+	}
 }

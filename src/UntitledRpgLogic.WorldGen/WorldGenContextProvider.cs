@@ -28,11 +28,28 @@ public sealed class WorldGenContextProvider : IWorldGenContextProvider
 			var newContext = new WorldGenContext(map.GenerationConfig);
 
 			/****** The world map generation flow. ********/
-			// Tier 1
-			HeightMapGenerator.Generate(newContext);
+			// Tier 1, these can happen in parallel with the ReadOnly context
+			var heightMap = HeightMapGenerator.Generate(newContext.AsReadOnly());
+			var leylineMap = LeylineMapGenerator.Generate(newContext.AsReadOnly());
+			var alignmentMap = AlignmentMapGenerator.Generate(newContext.AsReadOnly());
+			var savageryMap = SavageryMapGenerator.Generate(newContext.AsReadOnly());
+			var volcanismMap = VolcanismMapGenerator.Generate(newContext.AsReadOnly());
 
+			// End of Tier 1, must update context with new maps
+			newContext.Terrain.OverwriteHeightMap(heightMap);
+			newContext.Terrain.OverwriteVolcanismMap(volcanismMap);
+			newContext.Arcana.OverwriteLeylineMap(leylineMap);
+			newContext.Arcana.OverwriteAlignmentMap(alignmentMap);
+			newContext.Arcana.OverwriteSavageryMap(savageryMap);
 			// Tier 1.5
+			var blendedHeight = BlendedHeightMapGenerator.Generate(newContext.AsReadOnly());
+			var climateEnergyTurbulence = ClimateTurbulenceMapGenerator.Generate(newContext.AsReadOnly());
 
+			newContext.Terrain.OverwriteHeightMap(blendedHeight);
+			newContext.Climate.OverwriteTurbulenceMap(climateEnergyTurbulence);
+
+			var basinMap = BasinMapGenerator.Generate(newContext.AsReadOnly());
+			newContext.Hydrology.OverwriteBasinMap(basinMap);
 			// Tier 2
 
 			// Tier 2.5

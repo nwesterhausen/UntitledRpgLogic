@@ -135,4 +135,10 @@ public sealed class HydrologyMaps : NoiseGridDimensions
 	///     Checks whether the specified tile is part of a river channel.
 	/// </summary>
 	public bool IsRiver(int tileX, int tileY) => this.basin.GetWaterBody(tileX, tileY) == WaterBodyType.River;
+
+	public void OverwriteBasinMap(BasinMap basinMap)
+	{
+		ArgumentNullException.ThrowIfNull(basinMap);
+		this.basin.ReplaceCells(basinMap.Cells);
+	}
 }

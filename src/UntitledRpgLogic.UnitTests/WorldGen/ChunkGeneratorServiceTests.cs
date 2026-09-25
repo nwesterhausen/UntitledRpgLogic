@@ -20,7 +20,8 @@ public sealed class ChunkGeneratorServiceTests
 		var map = new MapDefinition { Seed = seed, GenerationConfig = mapConfig };
 
 		var context = new WorldGenContext(mapConfig);
-		HeightMapGenerator.Generate(context);
+		var heightmap = HeightMapGenerator.Generate(context.AsReadOnly());
+		context.Terrain.OverwriteHeightMap(heightmap);
 		var hydrology = MacroHydrologyGenerator.Generate(context, seed, waterId, mapConfig);
 		MacroClimateGenerator.Generate(context);
 

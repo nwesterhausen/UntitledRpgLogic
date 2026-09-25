@@ -73,4 +73,10 @@ public class WorldGenContext
 	/// </summary>
 	[Obsolete("Holdover from initial generation engine. Should be replaced with catalog-aware material context.")]
 	public BiomeMaterialMapping MaterialMapping { get; } = new();
+
+	/// <summary>
+	///     Get a read only context.
+	/// </summary>
+	/// <returns>A read only world generation context</returns>
+	public ReadOnlyWorldGenContext AsReadOnly() => new(this);
 }
