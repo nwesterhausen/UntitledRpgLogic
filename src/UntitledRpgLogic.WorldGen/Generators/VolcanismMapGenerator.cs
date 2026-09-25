@@ -21,7 +21,7 @@ public class VolcanismMapGenerator : INoisemapGenerator<VolcanismMap>
 	{
 		var volcanisms =
 			new VolcanismMap(generationContext.MapConfig.WidthTiles, generationContext.MapConfig.HeightTiles);
-		var noiseMap = NoiseMaker.GenerateNoiseMap(
+		var noiseMap = NoiseMaker.GenerateNormalNoiseMap(
 			VolcanismNoise with { Seed = generationContext.MapConfig.Seed },
 			generationContext.MapConfig.WidthTiles,
 			generationContext.MapConfig.HeightTiles);

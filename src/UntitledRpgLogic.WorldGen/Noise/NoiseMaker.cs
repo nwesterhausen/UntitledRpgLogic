@@ -113,6 +113,23 @@ public static class NoiseMaker
 	/// <returns>A populated, normalized <see cref="NoiseMap" />.</returns>
 	/// <exception cref="ArgumentNullException">Thrown if <paramref name="settings" /> is null.</exception>
 	/// <exception cref="ArgumentOutOfRangeException">Thrown if width or height is less than or equal to zero.</exception>
+	public static NoiseMap GenerateNormalNoiseMap(NoiseSettings settings, int width, int height)
+	{
+		ArgumentNullException.ThrowIfNull(settings);
+
+		return new NoiseMap(width, height,
+			GenerateNoiseArray(settings with { TargetMin = 0.0f, TargetMax = 1.0f }, width, height));
+	}
+
+	/// <summary>
+	///     Generates a 2D <see cref="NoiseMap" /> according to <paramref name="settings" />
+	/// </summary>
+	/// <param name="settings">The base noise configuration.</param>
+	/// <param name="width">The horizontal dimension of the map in tiles.</param>
+	/// <param name="height">The vertical dimension of the map in tiles.</param>
+	/// <returns>A populated <see cref="NoiseMap" />.</returns>
+	/// <exception cref="ArgumentNullException">Thrown if <paramref name="settings" /> is null.</exception>
+	/// <exception cref="ArgumentOutOfRangeException">Thrown if width or height is less than or equal to zero.</exception>
 	public static NoiseMap GenerateNoiseMap(NoiseSettings settings, int width, int height)
 	{
 		ArgumentNullException.ThrowIfNull(settings);

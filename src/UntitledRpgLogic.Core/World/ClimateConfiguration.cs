@@ -23,7 +23,7 @@ public record ClimateConfiguration
 	/// <summary>
 	///     Whether to create a pole on the south end of the map.
 	/// </summary>
-	public bool SouthPol { get; init; } = true;
+	public bool SouthPole { get; init; } = true;
 
 	/// <summary>
 	///     Environmental cooling rate per 1000 units of elevation.

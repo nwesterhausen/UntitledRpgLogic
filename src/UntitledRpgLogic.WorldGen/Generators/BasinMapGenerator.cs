@@ -8,6 +8,9 @@ public class BasinMapGenerator : INoisemapGenerator<BasinMap>
 {
 	private BasinMapGenerator() { }
 
+	/// <summary>
+	///     Does a water type assignment only for ocean tiles and flood-filling in from the edge.
+	/// </summary>
 	public static BasinMap Generate(ReadOnlyWorldGenContext generationContext)
 	{
 		var width = generationContext.MapConfig.WidthTiles;

@@ -23,11 +23,11 @@ public class AlignmentMapGenerator : INoisemapGenerator<AlignmentMap>
 	{
 		var alignment =
 			new AlignmentMap(generationContext.MapConfig.WidthTiles, generationContext.MapConfig.HeightTiles);
-		var noiseMap = NoiseMaker.GenerateNoiseMap(
+		var noiseMap = NoiseMaker.GenerateNormalNoiseMap(
 			AlignmentNoise with { Seed = generationContext.MapConfig.Seed },
 			generationContext.MapConfig.WidthTiles,
 			generationContext.MapConfig.HeightTiles);
-		var chanceMap = NoiseMaker.GenerateNoiseMap(
+		var chanceMap = NoiseMaker.GenerateNormalNoiseMap(
 			AlignmentNoise with { Seed = generationContext.MapConfig.Seed ^ 0x200abc },
 			generationContext.MapConfig.WidthTiles,
 			generationContext.MapConfig.HeightTiles);

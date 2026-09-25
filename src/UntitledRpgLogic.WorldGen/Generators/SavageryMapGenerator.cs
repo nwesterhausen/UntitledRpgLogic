@@ -22,11 +22,11 @@ public class SavageryMapGenerator : INoisemapGenerator<SavageryMap>
 	public static SavageryMap Generate(ReadOnlyWorldGenContext generationContext)
 	{
 		var savagery = new SavageryMap(generationContext.MapConfig.WidthTiles, generationContext.MapConfig.HeightTiles);
-		var noiseMap = NoiseMaker.GenerateNoiseMap(
+		var noiseMap = NoiseMaker.GenerateNormalNoiseMap(
 			SavageryNoise with { Seed = generationContext.MapConfig.Seed },
 			generationContext.MapConfig.WidthTiles,
 			generationContext.MapConfig.HeightTiles);
-		var chanceMap = NoiseMaker.GenerateNoiseMap(
+		var chanceMap = NoiseMaker.GenerateNormalNoiseMap(
 			SavageryNoise with { Seed = generationContext.MapConfig.Seed ^ 0x100abc },
 			generationContext.MapConfig.WidthTiles,
 			generationContext.MapConfig.HeightTiles);

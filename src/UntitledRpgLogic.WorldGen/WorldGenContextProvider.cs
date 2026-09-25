@@ -54,6 +54,8 @@ public sealed class WorldGenContextProvider : IWorldGenContextProvider
 			basinMap = BasinMapGenerator.Generate(newContext.AsReadOnly()); // regen after heightmap adjust
 			newContext.Hydrology.OverwriteBasinMap(basinMap);
 			// Tier 2
+			var temperatureMap = TemperatureMapGenerator.Generate(newContext.AsReadOnly());
+			newContext.Climate.OverwriteTemperatureMap(temperatureMap);
 
 			// Tier 2.5
 

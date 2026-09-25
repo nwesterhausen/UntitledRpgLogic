@@ -17,7 +17,7 @@ public class HeightMapGenerator : INoisemapGenerator<HeightMap>
 		var worldConfig = generationContext.MapConfig;
 		var terrainHeight = new HeightMap(worldConfig.HeightTiles, worldConfig.WidthTiles);
 
-		var normalizedMap = NoiseMaker.GenerateNoiseMap(
+		var normalizedMap = NoiseMaker.GenerateNormalNoiseMap(
 			worldConfig.Terrain.NoiseGeneration with { Seed = worldConfig.Seed }, worldConfig.WidthTiles,
 			worldConfig.HeightTiles);
 

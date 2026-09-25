@@ -20,7 +20,7 @@ public class LeylineMapGenerator : INoisemapGenerator<LeylineMap>
 	public static LeylineMap Generate(ReadOnlyWorldGenContext generationContext)
 	{
 		var leylines = new LeylineMap(generationContext.MapConfig.WidthTiles, generationContext.MapConfig.HeightTiles);
-		var noiseMap = NoiseMaker.GenerateNoiseMap(
+		var noiseMap = NoiseMaker.GenerateNormalNoiseMap(
 			LeylineNoise with { Seed = generationContext.MapConfig.Seed },
 			generationContext.MapConfig.WidthTiles,
 			generationContext.MapConfig.HeightTiles);

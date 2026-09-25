@@ -4178,17 +4178,17 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
 
                                     b2.Property<bool>("AllowNeutralAffinity");
 
-                                    b2.Property<float>("BenignSavageryWeight");
+                                    b2.Property<int>("BenignSavageryWeight");
 
-                                    b2.Property<float>("EvilAlignmentWeight");
+                                    b2.Property<int>("EvilAlignmentWeight");
 
-                                    b2.Property<float>("GoodAlignmentWeight");
+                                    b2.Property<int>("GoodAlignmentWeight");
 
                                     b2.Property<float>("MeanManaDensity");
 
                                     b2.Property<float>("SavageryInfluence");
 
-                                    b2.Property<float>("VisciousSavageryWeight");
+                                    b2.Property<int>("ViciousSavageryWeight");
 
                                     b2.HasKey("WorldMapConfigurationMapDefinitionId")
                                         .HasName("pk_map_definitions");
@@ -4241,7 +4241,7 @@ namespace UntitledRpgLogic.Infrastructure.Data.PostgreSQL.Migrations
 
                                     b2.Property<float>("RainfallNoiseFrequency");
 
-                                    b2.Property<bool>("SouthPol");
+                                    b2.Property<bool>("SouthPole");
 
                                     b2.Property<float>("TemperatureNoiseFrequency");
 
