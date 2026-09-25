@@ -42,13 +42,16 @@ public sealed class WorldGenContextProvider : IWorldGenContextProvider
 			newContext.Arcana.OverwriteAlignmentMap(alignmentMap);
 			newContext.Arcana.OverwriteSavageryMap(savageryMap);
 			// Tier 1.5
+			var basinMap = BasinMapGenerator.Generate(newContext.AsReadOnly());
+			newContext.Hydrology.OverwriteBasinMap(basinMap);
+
 			var blendedHeight = BlendedHeightMapGenerator.Generate(newContext.AsReadOnly());
 			var climateEnergyTurbulence = ClimateTurbulenceMapGenerator.Generate(newContext.AsReadOnly());
 
 			newContext.Terrain.OverwriteHeightMap(blendedHeight);
 			newContext.Climate.OverwriteTurbulenceMap(climateEnergyTurbulence);
 
-			var basinMap = BasinMapGenerator.Generate(newContext.AsReadOnly());
+			basinMap = BasinMapGenerator.Generate(newContext.AsReadOnly()); // regen after heightmap adjust
 			newContext.Hydrology.OverwriteBasinMap(basinMap);
 			// Tier 2
 

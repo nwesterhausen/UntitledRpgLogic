@@ -26,7 +26,7 @@ public sealed class AlignmentMap : NoiseGrid2D<float>
 	/// <param name="widthTiles">The total width of the grid in tiles.</param>
 	/// <param name="heightTiles">The total height of the grid in tiles.</param>
 	/// <param name="alignments">The flattened alignments array of length <c>widthTiles * heightTiles</c>.</param>
-	public AlignmentMap(int widthTiles, int heightTiles, float[] alignments)
+	public AlignmentMap(int widthTiles, int heightTiles, ReadOnlySpan<float> alignments)
 		: base(widthTiles, heightTiles, alignments)
 	{
 	}

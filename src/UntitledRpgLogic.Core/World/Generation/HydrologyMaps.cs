@@ -141,4 +141,28 @@ public sealed class HydrologyMaps : NoiseGridDimensions
 		ArgumentNullException.ThrowIfNull(basinMap);
 		this.basin.ReplaceCells(basinMap.Cells);
 	}
+
+	public void OverwriteLiquidDepthMap(LiquidDepthMap liquidDepthMap)
+	{
+		ArgumentNullException.ThrowIfNull(liquidDepthMap);
+		this.liquidDepth.ReplaceCells(liquidDepthMap.Cells);
+	}
+
+	public void OverwriteLiquidMaterialMap(LiquidMaterialMap liquidMaterialMap)
+	{
+		ArgumentNullException.ThrowIfNull(liquidMaterialMap);
+		this.liquidMaterial.ReplaceCells(liquidMaterialMap.Cells);
+	}
+
+	public void OverwriteWaterSourceMap(WaterSourceMap waterSourceMap)
+	{
+		ArgumentNullException.ThrowIfNull(waterSourceMap);
+		this.waterSource.ReplaceCells(waterSourceMap.Cells);
+	}
+
+	public void OverwriteAquiferMap(AquiferMap aquiferMap)
+	{
+		ArgumentNullException.ThrowIfNull(aquiferMap);
+		this.aquifer.ReplaceCells(aquiferMap.Cells);
+	}
 }

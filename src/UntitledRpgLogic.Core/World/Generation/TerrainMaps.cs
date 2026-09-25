@@ -12,6 +12,7 @@ public sealed class TerrainMaps : NoiseGridDimensions
 	private readonly HeightMap height;
 	private readonly OreDepositMap oreDeposit;
 	private readonly Dictionary<ushort, OreDepositDefinition> oreDepositDefinitions;
+	private readonly HeightMap originalHeight;
 	private readonly SoilDepthMap soilDepth;
 	private readonly SoilMaterialMap soilMaterial;
 	private readonly VolcanismMap volcanism;
@@ -29,6 +30,7 @@ public sealed class TerrainMaps : NoiseGridDimensions
 		this.soilMaterial = new SoilMaterialMap(widthTiles, heightTiles);
 		this.volcanism = new VolcanismMap(widthTiles, heightTiles);
 		this.oreDepositDefinitions = new Dictionary<ushort, OreDepositDefinition>();
+		this.originalHeight = new HeightMap(widthTiles, heightTiles);
 	}
 
 	/// <summary>
@@ -96,24 +98,6 @@ public sealed class TerrainMaps : NoiseGridDimensions
 	public ReadOnlySpan<Ulid> SoilMaterialMapCells => this.soilMaterial.Cells;
 
 	public ReadOnlySpan<float> VolcanismMapCells => this.volcanism.Cells;
-
-	public HeightMap HeightMapAsCopy() => new(
-		this.WidthTiles, this.HeightTiles, [.. this.height.Cells]);
-
-	public GeologyLayerMap GeologyLayerMapAsCopy() => new(
-		this.WidthTiles, this.HeightTiles, [.. this.geologyLayer.Cells]);
-
-	public OreDepositMap OreDepositMapAsCopy() => new(
-		this.WidthTiles, this.HeightTiles, [.. this.oreDeposit.Cells]);
-
-	public SoilDepthMap SoilDepthMapAsCopy() => new(
-		this.WidthTiles, this.HeightTiles, [.. this.soilDepth.Cells]);
-
-	public SoilMaterialMap SoilMaterialMapAsCopy() => new(
-		this.WidthTiles, this.HeightTiles, [.. this.soilMaterial.Cells]);
-
-	public VolcanismMap VolcanismMapAsCopy() => new(
-		this.WidthTiles, this.HeightTiles, [.. this.volcanism.Cells]);
 
 	/// <summary>
 	/// </summary>
@@ -252,12 +236,49 @@ public sealed class TerrainMaps : NoiseGridDimensions
 	public void OverwriteHeightMap(HeightMap heightMap)
 	{
 		ArgumentNullException.ThrowIfNull(heightMap);
+		this.originalHeight.ReplaceCells(this.height.Cells);
 		this.height.ReplaceCells(heightMap.Cells);
 	}
+
+	public short GetOGElevation(int tileX, int tileY) => this.originalHeight.GetElevation(tileX, tileY);
 
 	public void OverwriteVolcanismMap(VolcanismMap volcanismMap)
 	{
 		ArgumentNullException.ThrowIfNull(volcanismMap);
 		this.volcanism.ReplaceCells(volcanismMap.Cells);
+	}
+
+	public void OverwriteGeologyLayerMap(GeologyLayerMap geologyLayerMap)
+	{
+		ArgumentNullException.ThrowIfNull(geologyLayerMap);
+		this.geologyLayer.ReplaceCells(geologyLayerMap.Cells);
+	}
+
+	public void OverwriteOreDepositMap(OreDepositMap oreDepositMap)
+	{
+		ArgumentNullException.ThrowIfNull(oreDepositMap);
+		this.oreDeposit.ReplaceCells(oreDepositMap.Cells);
+	}
+
+	public void ReplaceSoilDepthmap(SoilDepthMap soilDepthMap)
+	{
+		ArgumentNullException.ThrowIfNull(soilDepthMap);
+		this.soilDepth.ReplaceCells(soilDepthMap.Cells);
+	}
+
+	public void ReplaceSoilMaterialMap(SoilMaterialMap soilMaterialMap)
+	{
+		ArgumentNullException.ThrowIfNull(soilMaterialMap);
+		this.soilMaterial.ReplaceCells(soilMaterialMap.Cells);
+	}
+
+	public void ReplaceOreDepositDefinitions(Dictionary<ushort, OreDepositDefinition> oreDepositDefinitions)
+	{
+		ArgumentNullException.ThrowIfNull(oreDepositDefinitions);
+		this.oreDepositDefinitions.Clear();
+		foreach (var oreDepositDefinition in oreDepositDefinitions)
+		{
+			this.oreDepositDefinitions.Add(oreDepositDefinition.Key, oreDepositDefinition.Value);
+		}
 	}
 }

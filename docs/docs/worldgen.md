@@ -84,7 +84,7 @@ These depend on one-another or first tier noise maps to generate biased noise ma
 - geologyLayers: biased by height and volcanism; generates stratigraphic rock layers
 - geologyOres: biased by heightmap, volcanism, and geologyLayers; generates ore and mineral veins found in each grid cell 
 
-### Tier 2.5: 
+### Tier 2.5: A
 There are influenced by influenced maps, but still affected by noise (even if its a very small influence). These are not pure calculated layers like Tier 3. These must be serialized.
 
 - moisture: influenced by height, temperature, ocean/lake basins, and wind; moisture is moved around by wind, falling off at high elevations, decreasing in cooler temperatures, and recharging over warm water; given very slight variation/noise from turbulence

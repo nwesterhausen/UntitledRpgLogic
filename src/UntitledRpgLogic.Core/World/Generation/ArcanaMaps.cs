@@ -113,4 +113,16 @@ public sealed class ArcanaMaps : NoiseGridDimensions
 		ArgumentNullException.ThrowIfNull(savageryMap);
 		this.savagery.ReplaceCells(savageryMap.Cells);
 	}
+
+	public void OverwriteManaAttunementMap(ManaAttunementMap manaAttunementMap)
+	{
+		ArgumentNullException.ThrowIfNull(manaAttunementMap);
+		this.manaAttunement.ReplaceCells(manaAttunementMap.Cells);
+	}
+
+	public void OverwriteManaDensityMap(ManaDensityMap manaDensityMap)
+	{
+		ArgumentNullException.ThrowIfNull(manaDensityMap);
+		this.manaDensity.ReplaceCells(manaDensityMap.Cells);
+	}
 }

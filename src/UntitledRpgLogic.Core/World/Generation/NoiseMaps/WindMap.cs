@@ -27,7 +27,7 @@ public sealed class WindMap : NoiseGrid2D<Vector2>
 	/// <param name="widthTiles">The total width of the grid in tiles.</param>
 	/// <param name="heightTiles">The total height of the grid in tiles.</param>
 	/// <param name="windVector">The flattened vector array of length <c>widthTiles * heightTiles</c>.</param>
-	public WindMap(int widthTiles, int heightTiles, Vector2[] windVector)
+	public WindMap(int widthTiles, int heightTiles, ReadOnlySpan<Vector2> windVector)
 		: base(widthTiles, heightTiles, windVector)
 	{
 	}

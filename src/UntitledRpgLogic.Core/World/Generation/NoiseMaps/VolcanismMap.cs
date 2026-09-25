@@ -22,7 +22,7 @@ public sealed class VolcanismMap : NoiseGrid2D<float>
 	/// <param name="widthTiles">The total width of the grid in tiles.</param>
 	/// <param name="heightTiles">The total height of the grid in tiles.</param>
 	/// <param name="volcanism">The flattened volcanism levels array of length <c>widthTiles * heightTiles</c>.</param>
-	public VolcanismMap(int widthTiles, int heightTiles, float[] volcanism)
+	public VolcanismMap(int widthTiles, int heightTiles, ReadOnlySpan<float> volcanism)
 		: base(widthTiles, heightTiles, volcanism)
 	{
 	}

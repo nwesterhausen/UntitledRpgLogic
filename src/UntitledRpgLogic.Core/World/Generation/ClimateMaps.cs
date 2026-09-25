@@ -141,4 +141,28 @@ public sealed class ClimateMaps : NoiseGridDimensions
 		ArgumentNullException.ThrowIfNull(climateEnergyTurbulence);
 		this.turbulence.ReplaceCells(climateEnergyTurbulence.Cells);
 	}
+
+	public void OverwriteTemperatureMap(TemperatureMap temperatureMap)
+	{
+		ArgumentNullException.ThrowIfNull(temperatureMap);
+		this.temperature.ReplaceCells(temperatureMap.Cells);
+	}
+
+	public void OverwriteRainfallMap(RainfallMap rainfallMap)
+	{
+		ArgumentNullException.ThrowIfNull(rainfallMap);
+		this.rainfall.ReplaceCells(rainfallMap.Cells);
+	}
+
+	public void OverwriteBiomeMap(BiomeMap biomeMap)
+	{
+		ArgumentNullException.ThrowIfNull(biomeMap);
+		this.biome.ReplaceCells(biomeMap.Cells);
+	}
+
+	public void OverwriteWindMap(WindMap windMap)
+	{
+		ArgumentNullException.ThrowIfNull(windMap);
+		this.wind.ReplaceCells(windMap.Cells);
+	}
 }

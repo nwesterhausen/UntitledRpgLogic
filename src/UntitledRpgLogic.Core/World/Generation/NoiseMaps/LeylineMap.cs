@@ -22,7 +22,7 @@ public sealed class LeylineMap : NoiseGrid2D<float>
 	/// <param name="widthTiles">The total width of the LeylineMap in tiles.</param>
 	/// <param name="heightTiles">The total height of the LeylineMap in tiles.</param>
 	/// <param name="energyLevels">The flattened magical energy levels array of length <c>widthTiles * heightTiles</c>.</param>
-	public LeylineMap(int widthTiles, int heightTiles, float[] energyLevels)
+	public LeylineMap(int widthTiles, int heightTiles, ReadOnlySpan<float> energyLevels)
 		: base(widthTiles, heightTiles, energyLevels)
 	{
 	}

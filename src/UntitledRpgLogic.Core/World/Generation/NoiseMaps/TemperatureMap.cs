@@ -23,7 +23,7 @@ public sealed class TemperatureMap : NoiseGrid2D<float>
 	/// <param name="widthTiles">The total width of the heightmap in tiles.</param>
 	/// <param name="heightTiles">The total height of the heightmap in tiles.</param>
 	/// <param name="temperatures">The flattened temperature array of length <c>widthTiles * heightTiles</c>.</param>
-	public TemperatureMap(int widthTiles, int heightTiles, float[] temperatures)
+	public TemperatureMap(int widthTiles, int heightTiles, ReadOnlySpan<float> temperatures)
 		: base(widthTiles, heightTiles, temperatures)
 	{
 	}

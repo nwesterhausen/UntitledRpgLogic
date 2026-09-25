@@ -26,7 +26,7 @@ public sealed class ClimateTurbulenceMap : NoiseGrid2D<float>
 	/// <param name="widthTiles">The total width of the grid in tiles.</param>
 	/// <param name="heightTiles">The total height of the grid in tiles.</param>
 	/// <param name="turbulenceArray">The flattened climate turbulence levels array of length <c>widthTiles * heightTiles</c>.</param>
-	public ClimateTurbulenceMap(int widthTiles, int heightTiles, float[] turbulenceArray)
+	public ClimateTurbulenceMap(int widthTiles, int heightTiles, ReadOnlySpan<float> turbulenceArray)
 		: base(widthTiles, heightTiles, turbulenceArray)
 	{
 	}

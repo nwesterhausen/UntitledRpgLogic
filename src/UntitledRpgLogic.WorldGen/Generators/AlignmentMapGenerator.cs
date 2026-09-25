@@ -27,18 +27,42 @@ public class AlignmentMapGenerator : INoisemapGenerator<AlignmentMap>
 			AlignmentNoise with { Seed = generationContext.MapConfig.Seed },
 			generationContext.MapConfig.WidthTiles,
 			generationContext.MapConfig.HeightTiles);
+		var chanceMap = NoiseMaker.GenerateNoiseMap(
+			AlignmentNoise with { Seed = generationContext.MapConfig.Seed ^ 0x200abc },
+			generationContext.MapConfig.WidthTiles,
+			generationContext.MapConfig.HeightTiles);
+
+		var chanceGood = generationContext.MapConfig.Arcana.AlignmentInfluence == 0f
+			? 0f
+			: generationContext.MapConfig.Arcana.GoodAlignmentWeight /
+			  (float)Math.Max(1,
+				  generationContext.MapConfig.Arcana.GoodAlignmentWeight +
+				  generationContext.MapConfig.Arcana.EvilAlignmentWeight) *
+			  generationContext.MapConfig.Arcana.AlignmentInfluence;
+		var chanceEvil = generationContext.MapConfig.Arcana.AlignmentInfluence == 0f
+			? 0f
+			: generationContext.MapConfig.Arcana.EvilAlignmentWeight /
+			  (float)Math.Max(1,
+				  generationContext.MapConfig.Arcana.GoodAlignmentWeight +
+				  generationContext.MapConfig.Arcana.EvilAlignmentWeight) *
+			  generationContext.MapConfig.Arcana.AlignmentInfluence;
 
 		for (var x = 0; x < alignment.WidthTiles; x++)
 		{
 			for (var y = 0; y < alignment.HeightTiles; y++)
 			{
 				var smoothNoise = 0f;
-				if (noiseMap.GetNoise(x, y) < FirstSep)
+				var noise = noiseMap.GetNoise(x, y);
+				var chance = chanceMap.GetNoise(x, y);
+
+				if (chance < chanceEvil && noise < FirstSep)
 				{
+					// If we were within the first segment of the split function
 					smoothNoise = FirstSmoothFn(x);
 				}
-				else if (noiseMap.GetNoise(x, y) > SecondSep)
+				else if (chance < chanceGood && noise > SecondSep)
 				{
+					// If we were within the last segment of the split function
 					smoothNoise = SecondSmoothFn(x);
 				}
 

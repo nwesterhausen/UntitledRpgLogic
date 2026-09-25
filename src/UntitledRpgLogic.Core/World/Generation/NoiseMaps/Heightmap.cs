@@ -21,7 +21,7 @@ public sealed class HeightMap : NoiseGrid2D<short>
 	/// <param name="widthTiles">The total width of the heightmap in tiles.</param>
 	/// <param name="heightTiles">The total height of the heightmap in tiles.</param>
 	/// <param name="elevations">The flattened bedrock elevations array of length <c>widthTiles * heightTiles</c>.</param>
-	public HeightMap(int widthTiles, int heightTiles, short[] elevations)
+	public HeightMap(int widthTiles, int heightTiles, ReadOnlySpan<short> elevations)
 		: base(widthTiles, heightTiles, elevations)
 	{
 	}

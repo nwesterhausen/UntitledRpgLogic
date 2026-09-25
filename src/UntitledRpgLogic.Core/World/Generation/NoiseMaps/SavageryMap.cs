@@ -22,7 +22,7 @@ public sealed class SavageryMap : NoiseGrid2D<float>
 	/// <param name="widthTiles">The total width of the SavageryMap in tiles.</param>
 	/// <param name="heightTiles">The total height of the SavageryMap in tiles.</param>
 	/// <param name="savageryList">The flattened Savagerys array of length <c>widthTiles * heightTiles</c>.</param>
-	public SavageryMap(int widthTiles, int heightTiles, float[] savageryList)
+	public SavageryMap(int widthTiles, int heightTiles, ReadOnlySpan<float> savageryList)
 		: base(widthTiles, heightTiles, savageryList)
 	{
 	}

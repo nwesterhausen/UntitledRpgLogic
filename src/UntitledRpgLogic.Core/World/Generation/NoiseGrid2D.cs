@@ -35,11 +35,9 @@ public abstract class NoiseGrid2D<T> : NoiseGridDimensions
 	/// <exception cref="ArgumentException">
 	///     Thrown if the length of <paramref name="cells" /> does not equal <c>widthTiles * heightTiles</c>.
 	/// </exception>
-	protected NoiseGrid2D(int widthTiles, int heightTiles, T[] cells)
+	protected NoiseGrid2D(int widthTiles, int heightTiles, ReadOnlySpan<T> cells)
 		: base(widthTiles, heightTiles)
 	{
-		ArgumentNullException.ThrowIfNull(cells);
-
 		var expectedSize = widthTiles * heightTiles;
 		if (cells.Length != expectedSize)
 		{
@@ -48,7 +46,7 @@ public abstract class NoiseGrid2D<T> : NoiseGridDimensions
 				nameof(cells));
 		}
 
-		this.cells = cells;
+		this.cells = [.. cells];
 	}
 
 	/// <summary>

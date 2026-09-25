@@ -21,7 +21,7 @@ public sealed class NoiseMap : NoiseGrid2D<float>
 	/// <param name="widthTiles">The total width of the heightmap in tiles.</param>
 	/// <param name="heightTiles">The total height of the heightmap in tiles.</param>
 	/// <param name="noises">The flattened noise array of length <c>widthTiles * heightTiles</c>.</param>
-	public NoiseMap(int widthTiles, int heightTiles, float[] noises)
+	public NoiseMap(int widthTiles, int heightTiles, ReadOnlySpan<float> noises)
 		: base(widthTiles, heightTiles, noises)
 	{
 	}

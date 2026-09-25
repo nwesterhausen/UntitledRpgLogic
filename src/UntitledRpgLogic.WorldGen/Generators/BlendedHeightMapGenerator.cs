@@ -32,13 +32,15 @@ public class BlendedHeightMapGenerator : INoisemapGenerator<HeightMap>
 	public static HeightMap Generate(ReadOnlyWorldGenContext generationContext)
 	{
 		var blendedHeight =
-			new HeightMap(generationContext.MapConfig.WidthTiles, generationContext.MapConfig.HeightTiles);
+			new HeightMap(
+				generationContext.MapConfig.WidthTiles, generationContext.MapConfig.HeightTiles,
+				generationContext.Terrain.HeightMapCells);
 
 		for (var x = 0; x < generationContext.MapConfig.WidthTiles; x++)
 		{
 			for (var y = 0; y < generationContext.MapConfig.HeightTiles; y++)
 			{
-				var elevation = generationContext.Terrain.GetElevation(x, y);
+				var elevation = blendedHeight.GetElevation(x, y);
 				var volcanism = generationContext.Terrain.GetVolcanism(x, y);
 
 				// Trigger a volcano caldera only at high volcanism AND high height
