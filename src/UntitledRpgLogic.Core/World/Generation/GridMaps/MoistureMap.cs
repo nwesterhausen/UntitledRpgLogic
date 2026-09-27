@@ -47,4 +47,21 @@ public sealed class MoistureMap : NoiseGrid2D<float>
 	/// <param name="tileY">The vertical tile index.</param>
 	/// <param name="capacity">The moisture capacity to assign.</param>
 	public void SetMoistureCapacity(int tileX, int tileY, float capacity) => this.SetValue(tileX, tileY, capacity);
+
+	/// <summary>
+	///     Get the moisture capacity or a default value if out of bounds
+	/// </summary>
+	/// <param name="tileX"></param>
+	/// <param name="tileY"></param>
+	/// <param name="defaultValue"></param>
+	/// <returns></returns>
+	public float GetMoistureCapacityOrDefault(int tileX, int tileY, float defaultValue = 0f)
+	{
+		if (this.IsInBounds(tileX, tileY))
+		{
+			return this.GetMoistureCapacity(tileX, tileY);
+		}
+
+		return defaultValue;
+	}
 }

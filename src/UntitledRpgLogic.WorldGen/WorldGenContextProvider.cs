@@ -60,7 +60,9 @@ public sealed class WorldGenContextProvider : IWorldGenContextProvider
 			var windMap = WindMapGenerator.Generate(newContext.AsReadOnly());
 			newContext.Climate.OverwriteWindMap(windMap);
 			// Tier 2.5
-
+			var rainAndMoisture = MoistureRainfallPropogator.PropogateMoistureAndRainfall(newContext.AsReadOnly());
+			newContext.Climate.OverwriteRainfallMap(rainAndMoisture.rainfall);
+			newContext.Climate.OverwriteMoistureMap(rainAndMoisture.moisture);
 			// Tier 3
 
 			// Final Processing

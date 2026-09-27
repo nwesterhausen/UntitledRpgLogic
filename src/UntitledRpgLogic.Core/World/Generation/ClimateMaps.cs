@@ -9,6 +9,7 @@ namespace UntitledRpgLogic.Core.World.Generation;
 public sealed class ClimateMaps : NoiseGridDimensions
 {
 	private readonly BiomeMap biome;
+	private readonly MoistureMap moisture;
 	private readonly RainfallMap rainfall;
 	private readonly TemperatureMap temperature;
 	private readonly ClimateTurbulenceMap turbulence;
@@ -25,6 +26,7 @@ public sealed class ClimateMaps : NoiseGridDimensions
 		this.temperature = new TemperatureMap(widthTiles, heightTiles);
 		this.rainfall = new RainfallMap(widthTiles, heightTiles);
 		this.biome = new BiomeMap(widthTiles, heightTiles);
+		this.moisture = new MoistureMap(widthTiles, heightTiles);
 	}
 
 	/// <summary>
@@ -76,6 +78,8 @@ public sealed class ClimateMaps : NoiseGridDimensions
 	/// <returns></returns>
 	public float GetRainfall(int tileX, int tileY) => this.rainfall.GetRainfall(tileX, tileY);
 
+	public float GetMoistureCapacity(int tileX, int tileY) => this.moisture.GetMoistureCapacity(tileX, tileY);
+
 	/// <summary>
 	/// </summary>
 	/// <param name="tileX"></param>
@@ -122,6 +126,9 @@ public sealed class ClimateMaps : NoiseGridDimensions
 	/// <param name="value"></param>
 	public void SetRainfall(int tileX, int tileY, float value) => this.rainfall.SetRainfall(tileX, tileY, value);
 
+	public void SetMoistureCapacity(int tileX, int tileY, float value) =>
+		this.moisture.SetMoistureCapacity(tileX, tileY, value);
+
 	/// <summary>
 	/// </summary>
 	/// <param name="tileX"></param>
@@ -164,5 +171,11 @@ public sealed class ClimateMaps : NoiseGridDimensions
 	{
 		ArgumentNullException.ThrowIfNull(windMap);
 		this.wind.ReplaceCells(windMap.Cells);
+	}
+
+	public void OverwriteMoistureMap(MoistureMap moistureMap)
+	{
+		ArgumentNullException.ThrowIfNull(moistureMap);
+		this.moisture.ReplaceCells(moistureMap.Cells);
 	}
 }

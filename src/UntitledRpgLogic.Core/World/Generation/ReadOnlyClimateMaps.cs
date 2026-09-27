@@ -25,4 +25,6 @@ public readonly struct ReadOnlyClimateMaps(ClimateMaps inner)
 	public float GetTemperature(int tileX, int tileY) => this.inner.GetTemperature(tileX, tileY);
 
 	public float GetRainfall(int tileX, int tileY) => this.inner.GetRainfall(tileX, tileY);
+
+	public float GetMoistureCapacity(int tileX, int tileY) => this.inner.GetMoistureCapacity(tileX, tileY);
 }
