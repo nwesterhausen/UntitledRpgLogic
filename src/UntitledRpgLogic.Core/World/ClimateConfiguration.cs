@@ -41,7 +41,22 @@ public record ClimateConfiguration
 	public float RainfallNoiseFrequency { get; init; } = 0.006f;
 
 	/// <summary>
-	///     Material to use for rain during world generation.
+	///     Default material to use for freshwater liquid.
+	/// </summary>
+	public Ulid FreshwaterLiquidMaterialId { get; init; } = Ulid.Empty;
+
+	/// <summary>
+	///     Default material to use for rain liquid, will default to be the same as <see cref="FreshwaterLiquidMaterialId" />
 	/// </summary>
 	public Ulid RainLiquidMaterialId { get; init; } = Ulid.Empty;
+
+	/// <summary>
+	///     Default material to use for saltwater liquid.
+	/// </summary>
+	public Ulid SaltwaterLiquidMaterialId { get; init; } = Ulid.Empty;
+
+	/// <summary>
+	///     List of biomes to assign during world generation. Listed by their IDs.
+	/// </summary>
+	public IReadOnlyCollection<Ulid> BiomeDefinitions { get; init; } = Array.Empty<Ulid>();
 }
