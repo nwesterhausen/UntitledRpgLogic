@@ -69,4 +69,25 @@ public record TerrainConfiguration
 	///     The distance between <see cref="MinElevation" /> and <see cref="SeaLevel" />
 	/// </summary>
 	public short WaterSpan => (short)Math.Max(1, this.SeaLevel - this.MinElevation);
+
+	/// <summary>
+	///     Exponential factor applied to volcanism noise.
+	///     Values like 4.0 - 6.0 squash overall activity, leaving only rare, isolated hotspots.
+	/// </summary>
+	public float VolcanismExponent { get; init; } = 4.0f;
+
+	/// <summary>
+	///     Exponential factor applied to the base noise. Values > 1.0 flatten valleys and plains while keeping peaks sharp.
+	/// </summary>
+	public float ElevationExponent { get; init; } = 1.0f;
+
+	/// <summary>
+	///     Whether to apply step-like terracing to the terrain.
+	/// </summary>
+	public bool EnableTerracing { get; init; }
+
+	/// <summary>
+	///     The height interval in meters for each terrace step.
+	/// </summary>
+	public short TerraceStepHeight { get; init; } = 200;
 }

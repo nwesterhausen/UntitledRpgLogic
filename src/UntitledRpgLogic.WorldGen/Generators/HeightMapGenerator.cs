@@ -64,15 +64,20 @@ public class HeightMapGenerator : INoisemapGenerator<HeightMap>
 				var noise = normalizedMap.GetNoise(x, y);
 				modifiedMaxElevation = worldConfig.Terrain.MaxElevation;
 
-				// Can do island falloff calculation in here.
+				// Exponentiation: Flatten the mid-range noise to create sweeping plains
+				// A value of 2.0 pulls a 0.5 noise value down to 0.25, widening lowlands.
+				if (Math.Abs(worldConfig.Terrain.ElevationExponent - 1.0f) > float.Epsilon)
+				{
+					noise = MathF.Pow(noise, worldConfig.Terrain.ElevationExponent);
+				}
+
 				if (worldConfig.Terrain.SurroundWithOcean)
 				{
 					// translate our point in [width, height] to a point in [-1.0, 1.0]
 					normalX = (x - midX) / midX;
 					normalY = (y - midY) / midY;
-
-					// calculate distance from center of the grid (normalized)
 					var dist = (float)Math.Sqrt((normalX * normalX) + (normalY * normalY));
+
 					// warp noise is added to dist to create bays and other inland-pointing coastal features
 					// helps break up the island from being all round to much more irregular
 					var warpNoise = NoiseMaker.GenerateNoise(warpNoiseSettings, x, y);
@@ -84,15 +89,12 @@ public class HeightMapGenerator : INoisemapGenerator<HeightMap>
 					{
 						if (dist > finalEdge)
 						{
-							// max elevation capped at -100
 							modifiedMaxElevation = -100;
 						}
 						else
 						{
-							// max elevation is ratio * falloffElevSpan
 							ratioEdgeDist =
-								Math.Clamp((dist - falloffStartDistance) / (finalEdge - falloffStartDistance), 0f,
-									1f);
+								Math.Clamp((dist - falloffStartDistance) / (finalEdge - falloffStartDistance), 0f, 1f);
 							modifiedMaxElevation = (short)Math.Round(worldConfig.Terrain.MaxElevation -
 							                                         (ratioEdgeDist * falloffElevationSpan));
 						}
@@ -102,17 +104,19 @@ public class HeightMapGenerator : INoisemapGenerator<HeightMap>
 				}
 				else
 				{
-					// To meet "base" requirements, just map noise into the range for elevation
-					//
-					// elevationSpan = MaxElevation - MinElevation. Simply transform noise into a value in 0 - elevationSpan.
-					// Then, make sure we do not go out of bounds for allowed value.
-					//
 					rawElevation = elevationSpan * noise;
 				}
 
 				adjustedElevation = worldConfig.Terrain.MinElevation + MathF.Round(rawElevation);
-				terrainHeight.SetElevation(x, y,
-					(short)Math.Clamp(adjustedElevation, short.MinValue, short.MaxValue));
+
+				// Terracing: Quantize the elevation into distinct steps (plateaus)
+				if (worldConfig.Terrain.EnableTerracing)
+				{
+					var step = worldConfig.Terrain.TerraceStepHeight;
+					adjustedElevation = MathF.Round(adjustedElevation / step) * step;
+				}
+
+				terrainHeight.SetElevation(x, y, (short)Math.Clamp(adjustedElevation, short.MinValue, short.MaxValue));
 			}
 		}
 

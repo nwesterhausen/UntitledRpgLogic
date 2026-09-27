@@ -15,6 +15,8 @@ public class VolcanismMapGenerator : INoisemapGenerator<VolcanismMap>
 		Persistence = 0.4f
 	};
 
+	private static readonly uint VolcanismSeedMod = 0x456abc;
+
 	private VolcanismMapGenerator() { }
 
 	public static VolcanismMap Generate(ReadOnlyWorldGenContext generationContext)
@@ -22,7 +24,7 @@ public class VolcanismMapGenerator : INoisemapGenerator<VolcanismMap>
 		var volcanisms =
 			new VolcanismMap(generationContext.MapConfig.WidthTiles, generationContext.MapConfig.HeightTiles);
 		var noiseMap = NoiseMaker.GenerateNormalNoiseMap(
-			VolcanismNoise with { Seed = generationContext.MapConfig.Seed },
+			VolcanismNoise with { Seed = generationContext.MapConfig.Seed ^ VolcanismSeedMod },
 			generationContext.MapConfig.WidthTiles,
 			generationContext.MapConfig.HeightTiles);
 
@@ -31,7 +33,10 @@ public class VolcanismMapGenerator : INoisemapGenerator<VolcanismMap>
 			for (var y = 0; y < volcanisms.HeightTiles; y++)
 			{
 				var smoothNoise = (float)SmoothFn(noiseMap.GetNoise(x, y));
-				volcanisms.SetVolcanism(x, y, smoothNoise);
+				// Squash the activity to create rare, isolated peaks (high exponent > 1) or multiply activity (exponent < 1)
+				var dampenedVolcanism = MathF.Pow(smoothNoise, generationContext.MapConfig.Terrain.VolcanismExponent);
+
+				volcanisms.SetVolcanism(x, y, dampenedVolcanism);
 			}
 		}
 
