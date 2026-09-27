@@ -281,4 +281,31 @@ public sealed class TerrainMaps : NoiseGridDimensions
 			this.oreDepositDefinitions.Add(oreDepositDefinition.Key, oreDepositDefinition.Value);
 		}
 	}
+
+	/// <summary>
+	///     Get the evelation or return default value if out of bounds
+	/// </summary>
+	/// <param name="tileX"></param>
+	/// <param name="tileY"></param>
+	/// <param name="defaultValue"></param>
+	/// <returns></returns>
+	public short GetElevationOrDefault(int tileX, int tileY, short defaultValue)
+	{
+		if (this.IsInBounds(tileX, tileY))
+		{
+			return this.GetElevation(tileX, tileY);
+		}
+
+		return defaultValue;
+	}
+
+	public float GetVolcanismOrDefault(int tileX, int tileY, float defaultValue)
+	{
+		if (this.IsInBounds(tileX, tileY))
+		{
+			return this.GetVolcanism(tileX, tileY);
+		}
+
+		return defaultValue;
+	}
 }

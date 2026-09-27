@@ -57,6 +57,8 @@ public sealed class WorldGenContextProvider : IWorldGenContextProvider
 			var temperatureMap = TemperatureMapGenerator.Generate(newContext.AsReadOnly());
 			newContext.Climate.OverwriteTemperatureMap(temperatureMap);
 
+			var windMap = WindMapGenerator.Generate(newContext.AsReadOnly());
+			newContext.Climate.OverwriteWindMap(windMap);
 			// Tier 2.5
 
 			// Tier 3

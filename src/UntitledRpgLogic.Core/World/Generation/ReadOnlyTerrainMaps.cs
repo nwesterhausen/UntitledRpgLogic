@@ -25,4 +25,10 @@ public readonly struct ReadOnlyTerrainMaps(TerrainMaps inner)
 	public OreDepositDefinition GetOreDeposit(ushort id) => this.inner.GetOreDeposit(id);
 	public Ulid? GetRockLayerMaterialId(int tileX, int tileY) => this.inner.GetRockLayerMaterialId(tileX, tileY);
 	public ushort GetOreDepositId(int tileX, int tileY) => this.inner.GetOreDepositId(tileX, tileY);
+
+	public short GetElevationOrDefault(int tileX, int tileY, short defaultValue) =>
+		this.inner.GetElevationOrDefault(tileX, tileY, defaultValue);
+
+	public float GetVolcanismOrDefault(int tileX, int tileY, float defaultValue) =>
+		this.inner.GetVolcanismOrDefault(tileX, tileY, defaultValue);
 }

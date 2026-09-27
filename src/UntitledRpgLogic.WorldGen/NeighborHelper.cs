@@ -5,6 +5,16 @@ namespace UntitledRpgLogic.WorldGen;
 /// </summary>
 public static class NeighborHelper
 {
+	public static readonly (int x, int y) North = (0, -1);
+	public static readonly (int x, int y) East = (1, 0);
+	public static readonly (int x, int y) South = (0, 1);
+	public static readonly (int x, int y) West = (-1, 0);
+
+	public static readonly (int x, int y) NorthWest = (-1, -1);
+	public static readonly (int x, int y) NorthEast = (1, -1);
+	public static readonly (int x, int y) SouthWest = (-1, 1);
+	public static readonly (int x, int y) SouthEast = (1, 1);
+
 	/// <summary>
 	///     Provides an array of pairs for directions North, East, South, West (in that order).
 	/// </summary>
@@ -13,10 +23,10 @@ public static class NeighborHelper
 	/// </remarks>
 	public static readonly (int dx, int dy)[] CardinalNeighbors =
 	[
-		(0, -1), // North
-		(1, 0), // East
-		(0, 1), // South
-		(-1, 0) // West
+		North,
+		South,
+		East,
+		West
 	];
 
 	/// <summary>
@@ -28,13 +38,10 @@ public static class NeighborHelper
 	/// </remarks>
 	public static readonly (int dx, int dy)[] AllNeighbors =
 	[
-		(0, -1), // North
-		(1, 0), // East
-		(0, 1), // South
-		(-1, 0), // West
-		(-1, -1), // North-West
-		(1, -1), // North-East
-		(1, 1), // South-East
-		(-1, 1) // South-West
+		.. CardinalNeighbors,
+		NorthWest,
+		NorthEast,
+		SouthEast,
+		SouthWest
 	];
 }

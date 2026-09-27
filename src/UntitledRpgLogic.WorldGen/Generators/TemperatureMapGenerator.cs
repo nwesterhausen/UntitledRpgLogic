@@ -85,27 +85,39 @@ public class TemperatureMapGenerator : INoisemapGenerator<TemperatureMap>
 			}
 		}
 
+		// Using the 8 neighboring temperatures, average out each tile
+		var relaxedTemperature = new TemperatureMap(width, height);
+		for (var x2 = 0; x2 < width; x2++)
+		{
+			for (var y2 = 0; y2 < height; y2++)
+			{
+				var temperatureSum = temperature.GetTemperature(x2, y2);
+				foreach (var (dirX, dirY) in NeighborHelper.AllNeighbors)
+				{
+					temperatureSum += temperature.GetTemperature(x2 + dirX, y2 + dirY);
+				}
 
-		return temperature;
+				var temperatureAverage = temperatureSum / 9f;
+				relaxedTemperature.SetTemperature(x2, y2, temperatureAverage);
+			}
+		}
+
+		return relaxedTemperature;
 
 		float CalculateLatitudeTemp(float yCoord, bool isOcean)
 		{
-			var halfHeight = height / 2f;
-			// 0.0 at equator (y = halfHeight), 1.0 at top/bottom poles
-			var distFromEquator = Math.Clamp(Math.Abs(halfHeight - yCoord) / halfHeight, 0f, 1f);
-
 			var baseEquator = isOcean ? oceanEquatorialTemp : equatorTemp;
 			var basePole = isOcean ? oceanPolarTemp : polarTemp;
 
-			// Check hemisphere pole configuration
-			var isNorthern = yCoord < halfHeight;
-			if ((isNorthern && !hasNorthPole) || (!isNorthern && !hasSouthPole))
+			// Neither pole enabled: uniform equatorial temperature across the entire map
+			if (!hasNorthPole && !hasSouthPole)
 			{
-				// If pole is disabled, maintain warm/temperate climate instead of freezing
 				return baseEquator;
 			}
 
-			// Smooth cosine transition across latitudes (gives wider tropical bands)
+			var distFromEquator = Calculations.CalculateNormalizedLatitude(
+				yCoord, height, hasNorthPole, hasSouthPole);
+			// Smooth cosine transition across latitudes (gives wide tropical/temperate zones)
 			var t = (float)(1.0 - Math.Cos(distFromEquator * Math.PI * 0.5));
 			return float.Lerp(baseEquator, basePole, t);
 		}
