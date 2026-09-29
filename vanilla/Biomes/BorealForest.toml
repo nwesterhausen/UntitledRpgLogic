@@ -1,0 +1,12 @@
+id = "01M3MAYQA6JMABY12CM0NDXAB3"
+name = "Boreal Forest"
+description = "A cold, subarctic taiga environment dominated by dense, hardy coniferous evergreen forests."
+min_temperature = 0.1
+max_temperature = 0.4
+min_moisture = 0.3
+max_moisture = 0.7
+min_elevation = 0.1
+max_elevation = 0.7
+min_tectonic = 0.0
+min_water_accumulation = 0.0
+required_bedrock_formation = "Any"

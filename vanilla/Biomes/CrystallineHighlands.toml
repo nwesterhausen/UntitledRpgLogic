@@ -1,0 +1,12 @@
+id = "01M3MC8S2PC9EZVPPMHSHYE32M"
+name = "Crystalline Highlands"
+description = "Heavily folded, mineral-rich metamorphic ridges resistant to weathering."
+min_temperature = 0.2
+max_temperature = 0.6
+min_moisture = 0.2
+max_moisture = 0.6
+min_elevation = 0.5
+max_elevation = 0.85
+min_tectonic = 0.3
+min_water_accumulation = 0.0
+required_bedrock_formation = "Metamorphic"

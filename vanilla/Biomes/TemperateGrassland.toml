@@ -1,0 +1,12 @@
+id = "01M3MAYQA6NVZPTJGM3M6T5T2D"
+name = "Temperate Grassland"
+description = "Vast open plains with rich soil, dominated by grasses and lacking trees due to lower rainfall."
+min_temperature = 0.3
+max_temperature = 0.7
+min_moisture = 0.1
+max_moisture = 0.4
+min_elevation = 0.1
+max_elevation = 0.6
+min_tectonic = 0.0
+min_water_accumulation = 0.0
+required_bedrock_formation = "Any"

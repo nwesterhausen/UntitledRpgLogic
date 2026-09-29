@@ -1,0 +1,12 @@
+id = "01M3MAXJ910ZMQRSZ2P4GYSTRG"
+name = "Volcanic Caldera"
+description = "A highly active geological region featuring exposed magma."
+min_temperature = 0.7
+max_temperature = 1.0
+min_moisture = 0.0
+max_moisture = 0.4
+min_elevation = 0.4
+max_elevation = 1.0
+min_tectonic = 0.8
+min_water_accumulation = 0.0
+required_bedrock_formation = "Igneous"

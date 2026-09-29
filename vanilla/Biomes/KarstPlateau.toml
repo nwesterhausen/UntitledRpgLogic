@@ -1,0 +1,12 @@
+id = "01M3MC8S2PBFCMCGB9K7T3G7DV"
+name = "Karst Plateau"
+description = "Soluble limestone formations characterized by jagged pillars, sinkholes, and subterranean caverns."
+min_temperature = 0.4
+max_temperature = 0.8
+min_moisture = 0.6
+max_moisture = 1.0
+min_elevation = 0.3
+max_elevation = 0.7
+min_tectonic = 0.0
+min_water_accumulation = 0.5
+required_bedrock_formation = "Sedimentary"

@@ -1,0 +1,12 @@
+id = "01M3MAYQA6XGQ68KRNXGWQS992"
+name = "Swamp"
+description = "A forested wetland characterized by poor drainage."
+min_temperature = 0.4
+max_temperature = 0.8
+min_moisture = 0.6
+max_moisture = 1.0
+min_elevation = 0.0
+max_elevation = 0.2
+min_tectonic = 0.0
+min_water_accumulation = 0.7
+required_bedrock_formation = "Any"

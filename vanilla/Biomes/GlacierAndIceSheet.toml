@@ -1,0 +1,12 @@
+id = "01M3MC8S2PXCM7AVVH9H2M1A04"
+name = "Glacier and Ice Sheet"
+description = "Permanent sheets of thick ice and compacted snow covering high elevations or polar lowlands."
+min_temperature = 0.0
+max_temperature = 0.1
+min_moisture = 0.3
+max_moisture = 1.0
+min_elevation = 0.4
+max_elevation = 1.0
+min_tectonic = 0.0
+min_water_accumulation = 0.0
+required_bedrock_formation = "Any"

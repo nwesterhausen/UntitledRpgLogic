@@ -1,0 +1,12 @@
+id = "01M3MC8S2PSH8936N52AQHX3S9"
+name = "Frozen Ocean"
+description = "Sub-zero seas covered by sheets of pack ice and ice floes."
+min_temperature = 0.0
+max_temperature = 0.15
+min_moisture = 0.0
+max_moisture = 1.0
+min_elevation = -1.0
+max_elevation = 0.0
+min_tectonic = 0.0
+min_water_accumulation = 0.9
+required_bedrock_formation = "Any"

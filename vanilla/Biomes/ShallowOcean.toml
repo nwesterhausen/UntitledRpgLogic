@@ -1,0 +1,12 @@
+id = "01M3MC8S2PTBDXRDKRVR2D8RKR"
+name = "Shallow Ocean"
+description = "Sunlit coastal waters and continental shelves teeming with aquatic life."
+min_temperature = 0.3
+max_temperature = 0.8
+min_moisture = 0.0
+max_moisture = 1.0
+min_elevation = -0.5
+max_elevation = 0.0
+min_tectonic = 0.0
+min_water_accumulation = 0.8
+required_bedrock_formation = "Any"

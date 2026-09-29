@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="/Volumes/LaCie/Repos/UntitledRpg.LibraryFile/src/UntitledRpg.LibraryFile.BuildTasks/UntitledRpg.LibraryFile.BuildTasks.csproj"
+											ReferenceOutputAssembly="false"/>
+	</ItemGroup>
+
+	<!-- 1. Register the task -->
+	<UsingTask
+		TaskName="UntitledRpg.LibraryFile.BuildTasks.PackUrpgLibTask"
+		AssemblyFile="/Volumes/LaCie/Repos/UntitledRpg.LibraryFile/src/UntitledRpg.LibraryFile.BuildTasks/bin/Release/net10.0/UntitledRpg.LibraryFile.BuildTasks.dll" />
+
+	<!-- 2. Execute the task after building -->
+	<Target Name="PackageVanillaDir" AfterTargets="Build">
+		<PackUrpgLibTask
+			InputDirectory="$(SolutionDir)vanilla"
+			OutputFile="$(ProjectDir)vanilla.urpglib" />
+	</Target>
+</Project>
