@@ -2,7 +2,7 @@ using System.Globalization;
 using System.Text.Json;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace UntitledRpgLogic.Infrastructure.Data.ValueConverters;
+namespace UntitledRpgLogic.Infrastructure.Data.Converters;
 
 /// <summary>
 ///     Conversion for the elemental attunement which is a dict of ID, AMNT

@@ -28,6 +28,10 @@ Provides a 'debug' interface:
 
 ## Game Context: "New Game"
 
-Choose an existing map or make a new one. Choose to keep or re-gen a map until you like one.
+Choose an existing map or make a new one. 
 
-Create a character. Enter the game.
+Choose to keep or re-gen a map until you like one.
+
+Create a character. 
+
+Enter the game.

@@ -1,4 +1,4 @@
-using UntitledRpgLogic.Core.Data;
+using System.Diagnostics.CodeAnalysis;
 
 namespace UntitledRpgLogic.Core.Common;
 
@@ -12,7 +12,7 @@ namespace UntitledRpgLogic.Core.Common;
 /// <param name="singular"></param>
 /// <param name="plural"></param>
 /// <param name="adjective"></param>
-public class Name(string singular, string? plural = null, string? adjective = null) : IStringSerializable<Name>
+public class Name(string singular, string? plural = null, string? adjective = null) : IParsable<Name>
 {
 	private const char Delim = ';';
 
@@ -37,29 +37,78 @@ public class Name(string singular, string? plural = null, string? adjective = nu
 	public string Adjective { get; init; } = adjective ?? singular;
 
 	/// <inheritdoc />
-	public string Serialize()
+	public static Name Parse(string s, IFormatProvider? provider = null) =>
+		TryParse(s, provider, out var result)
+			? result
+			: throw new FormatException($"Invalid name format: '{s}'.");
+
+	/// <inheritdoc />
+	public static bool TryParse(
+		[NotNullWhen(true)] string? s,
+		IFormatProvider? provider,
+		[MaybeNullWhen(false)] out Name result)
 	{
+		result = null;
+
+		if (string.IsNullOrWhiteSpace(s))
+		{
+			return false;
+		}
+
+		var span = s.AsSpan().Trim();
+		var firstDelim = span.IndexOf(Delim);
+
+		if (firstDelim < 0)
+		{
+			result = new Name(span.ToString());
+			return true;
+		}
+
+		var singular = span[..firstDelim];
+		var remainder = span[(firstDelim + 1)..];
+
+		if (singular.IsEmpty || remainder.IsEmpty)
+		{
+			return false;
+		}
+
+		var secondDelim = remainder.IndexOf(Delim);
+		if (secondDelim < 0)
+		{
+			result = new Name(singular.ToString(), remainder.ToString());
+			return true;
+		}
+
+		var plural = remainder[..secondDelim];
+		var adjective = remainder[(secondDelim + 1)..];
+
+		if (plural.IsEmpty || adjective.IsEmpty || adjective.IndexOf(Delim) >= 0)
+		{
+			return false;
+		}
+
+		result = new Name(singular.ToString(), plural.ToString(), adjective.ToString());
+		return true;
+	}
+
+	/// <inheritdoc />
+	public override string ToString()
+	{
+		// Both Adjective and Plural match defaults, use one part
+		if (this.Singular.Equals(this.Adjective, StringComparison.Ordinal) &&
+		    this.Plural.Equals(BestGuessPlural(this.Singular), StringComparison.Ordinal))
+		{
+			return this.Singular;
+		}
+
+		// Adjective matches Singular, but Plural is custom, use two parts
 		if (this.Singular.Equals(this.Adjective, StringComparison.Ordinal))
 		{
 			return $"{this.Singular}{Delim}{this.Plural}";
 		}
 
+		// Fully custom Adjective requires 3 parts
 		return $"{this.Singular}{Delim}{this.Plural}{Delim}{this.Adjective}";
-	}
-
-	/// <inheritdoc />
-	public static Name Deserialize(string serialized)
-	{
-		ArgumentNullException.ThrowIfNull(serialized);
-
-		var parts = serialized.Split(Delim);
-		return parts.Length switch
-		{
-			0 => throw new ArgumentException("Invalid serialized name format."),
-			1 => new Name(parts[0]),
-			2 => new Name(parts[0], parts[1]),
-			_ => new Name(parts[0], parts[1], parts[2])
-		};
 	}
 
 	/// <summary>
@@ -104,4 +153,8 @@ public class Name(string singular, string? plural = null, string? adjective = nu
 	/// <param name="count">number of items</param>
 	/// <returns>appropriate name for the count of objects</returns>
 	public string GetName(int count = 1) => count == 1 ? this.Singular : this.Plural;
+
+	// Convenient overload without IFormatProvider
+	public static bool TryParse([NotNullWhen(true)] string? s, [MaybeNullWhen(false)] out Name result) =>
+		TryParse(s, null, out result);
 }

@@ -10,6 +10,7 @@ using UntitledRpgLogic.Core.Skills;
 using UntitledRpgLogic.Core.Stats;
 using UntitledRpgLogic.Infrastructure.Configuration.Serialization;
 using UntitledRpgLogic.Infrastructure.Configuration.Toml.Dtos;
+using UntitledRpgLogic.Infrastructure.Configuration.Toml.Serialization;
 
 namespace UntitledRpgLogic.Infrastructure.Configuration.Toml;
 

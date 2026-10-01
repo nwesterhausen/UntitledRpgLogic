@@ -1,3 +1,4 @@
+using System.Globalization;
 using UntitledRpgLogic.Core.Common;
 
 namespace UntitledRpgLogic.UnitTests;
@@ -84,7 +85,7 @@ public class NameTests
 	{
 		var name = new Name("Hero");
 
-		var serialized = name.Serialize();
+		var serialized = name.ToString();
 
 		StringAssert.StartsWith(serialized, "Hero", StringComparison.InvariantCulture);
 		StringAssert.EndsWith(serialized, "Heroes", StringComparison.InvariantCulture);
@@ -95,7 +96,7 @@ public class NameTests
 	{
 		var name = new Name("Gold", "Golds", "Golden");
 
-		var serialized = name.Serialize();
+		var serialized = name.ToString();
 
 		Assert.AreEqual("Gold;Golds;Golden", serialized);
 	}
@@ -107,7 +108,7 @@ public class NameTests
 	public void Deserialize_ValidString_ReconstructsName(string serialized, string expectedSingular,
 		string expectedPlural, string expectedAdjective)
 	{
-		var name = Name.Deserialize(serialized);
+		var name = Name.Parse(serialized, CultureInfo.InvariantCulture);
 
 		Assert.AreEqual(expectedSingular, name.Singular);
 		Assert.AreEqual(expectedPlural, name.Plural);
@@ -123,8 +124,8 @@ public class NameTests
 	{
 		var original = new Name(singular, plural, adjective);
 
-		var serialized = original.Serialize();
-		var reconstructed = Name.Deserialize(serialized);
+		var serialized = original.ToString();
+		var reconstructed = Name.Parse(serialized, CultureInfo.InvariantCulture);
 
 		Assert.AreEqual(original.Singular, reconstructed.Singular);
 		Assert.AreEqual(original.Plural, reconstructed.Plural);
@@ -133,5 +134,5 @@ public class NameTests
 
 	[TestMethod]
 	public void Deserialize_NullInput_ThrowsArgumentNullException() =>
-		Assert.Throws<ArgumentNullException>(() => Name.Deserialize(null!));
+		Assert.Throws<ArgumentNullException>(() => Name.Parse(null!, CultureInfo.InvariantCulture));
 }

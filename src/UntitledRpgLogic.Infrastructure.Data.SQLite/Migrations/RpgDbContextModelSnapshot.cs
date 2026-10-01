@@ -300,6 +300,23 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                     b.ToTable("log_entries", (string)null);
                 });
 
+            modelBuilder.Entity("UntitledRpgLogic.Core.Data.ModuleInfo", b =>
+                {
+                    b.Property<byte[]>("ModuleId")
+                        .HasColumnType("BLOB")
+                        .HasColumnName("module_id");
+
+                    b.Property<string>("FilePath")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("file_path");
+
+                    b.HasKey("ModuleId")
+                        .HasName("pk_module_info");
+
+                    b.ToTable("module_info", (string)null);
+                });
+
             modelBuilder.Entity("UntitledRpgLogic.Core.Elements.ElementDefinition", b =>
                 {
                     b.Property<byte[]>("Id")
@@ -3192,6 +3209,89 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                     b.Navigation("Entity");
                 });
 
+            modelBuilder.Entity("UntitledRpgLogic.Core.Data.ModuleInfo", b =>
+                {
+                    b.OwnsOne("UntitledRpg.LibraryFile.PackageManifest", "Manifest", b1 =>
+                        {
+                            b1.Property<byte[]>("ModuleInfoModuleId")
+                                .HasColumnType("BLOB")
+                                .HasColumnName("module_id");
+
+                            b1.Property<byte[]>("AuthorId")
+                                .IsRequired()
+                                .HasColumnType("BLOB")
+                                .HasColumnName("author_id");
+
+                            b1.Property<string>("AuthorName")
+                                .IsRequired()
+                                .HasColumnType("TEXT")
+                                .HasColumnName("author_name");
+
+                            b1.Property<string>("Dependencies")
+                                .IsRequired()
+                                .HasColumnType("TEXT")
+                                .HasColumnName("dependencies");
+
+                            b1.Property<string>("Description")
+                                .IsRequired()
+                                .HasColumnType("TEXT")
+                                .HasColumnName("description");
+
+                            b1.Property<byte[]>("Id")
+                                .IsRequired()
+                                .HasColumnType("BLOB")
+                                .HasColumnName("package_id");
+
+                            b1.Property<string>("Name")
+                                .IsRequired()
+                                .HasColumnType("TEXT")
+                                .HasColumnName("name");
+
+                            b1.Property<string>("Version")
+                                .IsRequired()
+                                .HasColumnType("TEXT")
+                                .HasColumnName("version");
+
+                            b1.HasKey("ModuleInfoModuleId");
+
+                            b1.ToTable("module_info");
+
+                            b1.WithOwner()
+                                .HasForeignKey("ModuleInfoModuleId")
+                                .HasConstraintName("fk_module_info_module_info_module_id");
+                        });
+
+                    b.OwnsMany("UntitledRpgLogic.Core.Data.ContentSummaryEntry", "ContentSummary", b1 =>
+                        {
+                            b1.Property<byte[]>("ModuleInfoModuleId");
+
+                            b1.Property<int>("__synthesizedOrdinal")
+                                .ValueGeneratedOnAddOrUpdate();
+
+                            b1.Property<string>("Category")
+                                .IsRequired();
+
+                            b1.Property<uint>("Count");
+
+                            b1.HasKey("ModuleInfoModuleId", "__synthesizedOrdinal");
+
+                            b1.ToTable("module_info");
+
+                            b1
+                                .ToJson("content_summary")
+                                .HasColumnType("TEXT");
+
+                            b1.WithOwner()
+                                .HasForeignKey("ModuleInfoModuleId")
+                                .HasConstraintName("fk_module_info_module_info_module_info_module_id");
+                        });
+
+                    b.Navigation("ContentSummary");
+
+                    b.Navigation("Manifest")
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("UntitledRpgLogic.Core.Entities.Entity", b =>
                 {
                     b.HasOne("UntitledRpgLogic.Core.Entities.EntityDefinition", "Definition")
@@ -4211,7 +4311,13 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                                 {
                                     b2.Property<byte[]>("WorldMapConfigurationMapDefinitionId");
 
+                                    b2.Property<byte[]>("BiomeDefinitions")
+                                        .IsRequired();
+
                                     b2.Property<float>("EquatorTemperature");
+
+                                    b2.Property<byte[]>("FreshwaterLiquidMaterialId")
+                                        .IsRequired();
 
                                     b2.Property<float>("LapseRatePer1000M");
 
@@ -4223,6 +4329,9 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                                         .IsRequired();
 
                                     b2.Property<float>("RainfallNoiseFrequency");
+
+                                    b2.Property<byte[]>("SaltwaterLiquidMaterialId")
+                                        .IsRequired();
 
                                     b2.Property<bool>("SouthPole");
 
@@ -4278,6 +4387,10 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                                 {
                                     b2.Property<byte[]>("WorldMapConfigurationMapDefinitionId");
 
+                                    b2.Property<float>("ElevationExponent");
+
+                                    b2.Property<bool>("EnableTerracing");
+
                                     b2.Property<float>("IslandFalloffSteepness");
 
                                     b2.Property<short>("MaxElevation");
@@ -4291,6 +4404,10 @@ namespace UntitledRpgLogic.Infrastructure.Data.SQLite.Migrations
                                     b2.Property<short>("SeaLevel");
 
                                     b2.Property<bool>("SurroundWithOcean");
+
+                                    b2.Property<short>("TerraceStepHeight");
+
+                                    b2.Property<float>("VolcanismExponent");
 
                                     b2.HasKey("WorldMapConfigurationMapDefinitionId")
                                         .HasName("pk_map_definitions");

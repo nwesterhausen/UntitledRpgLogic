@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using UntitledRpg.LibraryFile;
 using UntitledRpgLogic.Core.Abilities;
 using UntitledRpgLogic.Core.Abilities.Effects;
 using UntitledRpgLogic.Core.Common;
@@ -11,7 +12,8 @@ using UntitledRpgLogic.Core.Progression;
 using UntitledRpgLogic.Core.Skills;
 using UntitledRpgLogic.Core.Stats;
 using UntitledRpgLogic.Core.World;
-using UntitledRpgLogic.Infrastructure.Data.ValueConverters;
+using UntitledRpgLogic.Infrastructure.Data.Converters;
+using Version = UntitledRpg.LibraryFile.Version;
 
 namespace UntitledRpgLogic.Infrastructure.Data;
 
@@ -157,15 +159,36 @@ public class RpgDbContext(DbContextOptions<RpgDbContext> options) : DbContext(op
 
 		// This is where the value converters are registered.
 		// Tell EF Core to use our custom converter for every property of type Ulid.
-		_ = configurationBuilder.Properties<Ulid>()
+		configurationBuilder.Properties<Ulid>()
 			.HaveConversion<UlidToBytesConverter>();
-		// Tell EF Core to use our custom converter for every property of type ICollection<Ulid>.
-		_ = configurationBuilder.Properties<ICollection<Ulid>>()
-			.HaveConversion<UlidCollectionToBytesConverter>();
 
-		// Tell EF Core to use our custom converter for every property of type Name.
-		_ = configurationBuilder.Properties<Name>()
-			.HaveConversion<NameToSimpleStringConverter>();
+		// Mutable ULID collection
+		configurationBuilder.Properties<ICollection<Ulid>>()
+			.HaveConversion<UlidCollectionToBytesConverter, UlidCollectionValueComparer>();
+
+		// Read-only ULID collection
+		configurationBuilder.Properties<IReadOnlyCollection<Ulid>>()
+			.HaveConversion<UlidReadOnlyCollectionToBytesConverter, UlidReadOnlyCollectionValueComparer>();
+
+		// Name value object
+		configurationBuilder.Properties<Name>()
+			.HaveConversion<NameValueConverter>();
+
+		// Version value object
+		configurationBuilder.Properties<Version>()
+			.HaveConversion<VersionValueConverter>();
+
+		// PackageLinks collection
+		configurationBuilder.Properties<IReadOnlyCollection<PackageLink>>()
+			.HaveConversion<PackageLinkCollectionConverter, PackageLinkCollectionComparer>();
+
+		// Read-only PackageLinks collection
+		configurationBuilder.Properties<IReadOnlyCollection<PackageLink>>()
+			.HaveConversion<PackageLinkReadOnlyCollectionConverter, PackageLinkReadOnlyCollectionComparer>();
+
+		// Read-only PackageLinks list (used in PackageManifest)
+		configurationBuilder.Properties<IReadOnlyList<PackageLink>>()
+			.HaveConversion<PackageLinkReadOnlyListConverter, PackageLinkReadOnlyListComparer>();
 
 		base.ConfigureConventions(configurationBuilder);
 	}

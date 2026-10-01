@@ -1,5 +1,6 @@
 using System.Formats.Tar;
 using System.Linq.Expressions;
+using UntitledRpg.LibraryFile;
 using UntitledRpgLogic.Core.Common;
 using UntitledRpgLogic.Core.Data;
 using UntitledRpgLogic.Core.Data.Urpglib;
@@ -8,8 +9,8 @@ using UntitledRpgLogic.Core.Items;
 using UntitledRpgLogic.Core.Materials;
 using UntitledRpgLogic.Core.Skills;
 using UntitledRpgLogic.Core.Stats;
-using UntitledRpgLogic.LibraryFile;
 using UntitledRpgLogic.Services.Data;
+using Version = UntitledRpg.LibraryFile.Version;
 
 namespace UntitledRpgLogic.UnitTests.Data;
 
@@ -42,7 +43,7 @@ public sealed class PackageLoaderServiceTests
 
 			var manifest = new PackageManifest
 			{
-				Id = Ulid.NewUlid(), Name = "Core Mod", AuthorName = "Dev", Version = "1.0.0"
+				Id = Ulid.NewUlid(), Name = "Core Mod", AuthorName = "Dev", Version = new Version()
 			};
 
 			// 2. Supply a dummy file map so UrpglibWriter generates a non-empty TAR payload
@@ -99,7 +100,7 @@ public sealed class PackageLoaderServiceTests
 
 			var manifest = new PackageManifest
 			{
-				Id = Ulid.NewUlid(), Name = "Materials Mod", AuthorName = "Dev", Version = "1.0.0"
+				Id = Ulid.NewUlid(), Name = "Materials Mod", AuthorName = "Dev", Version = new Version()
 			};
 
 			var dummyFiles = new Dictionary<string, byte[]> { ["materials.toml"] = "name = \"Iron\""u8.ToArray() };

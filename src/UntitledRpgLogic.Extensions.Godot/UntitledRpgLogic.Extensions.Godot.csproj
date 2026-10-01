@@ -7,4 +7,17 @@
 		<RootNamespace>UntitledRpgLogic.Extensions.Godot</RootNamespace>
 	</PropertyGroup>
 
+	<ItemGroup>
+		<ProjectReference Include="..\UntitledRpgLogic.Infrastructure.Configuration\UntitledRpgLogic.Infrastructure.Configuration.csproj"/>
+		<ProjectReference Include="..\UntitledRpgLogic.Infrastructure.Data.SQLite\UntitledRpgLogic.Infrastructure.Data.SQLite.csproj"/>
+		<ProjectReference Include="..\UntitledRpgLogic.Networking\UntitledRpgLogic.Networking.csproj"/>
+		<ProjectReference Include="..\UntitledRpgLogic.Services\UntitledRpgLogic.Services.csproj"/>
+		<ProjectReference Include="..\UntitledRpgLogic.WorldGen\UntitledRpgLogic.WorldGen.csproj"/>
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="GodotSharp"/>
+		<PackageReference Include="ZLogger"/>
+	</ItemGroup>
+
 </Project>

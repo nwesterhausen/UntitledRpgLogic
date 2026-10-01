@@ -20,7 +20,7 @@ public static class ServiceCollectionExtensions
 	/// <returns>The same <see cref="IServiceCollection" /> instance so that additional calls can be chained.</returns>
 	public static IServiceCollection AddConfigurationInfrastructure(this IServiceCollection services)
 	{
-		// Try adding the default handlers
+		// Try adding the default handler
 		services.TryAddEnumerable(
 			ServiceDescriptor.Singleton<IDefinitionSerializationService, TomlDefinitionSerializationService>()
 		);

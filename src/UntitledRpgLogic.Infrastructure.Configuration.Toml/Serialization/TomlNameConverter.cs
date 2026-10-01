@@ -1,7 +1,8 @@
+using System.Globalization;
 using Tomlyn.Serialization;
 using UntitledRpgLogic.Core.Common;
 
-namespace UntitledRpgLogic.Infrastructure.Configuration.Serialization;
+namespace UntitledRpgLogic.Infrastructure.Configuration.Toml.Serialization;
 
 /// <summary>
 ///     A converter to convert <see cref="Name" /> to <see cref="string" /> and vice versa.
@@ -14,7 +15,7 @@ public sealed class TomlNameConverter : TomlConverter<Name>
 		ArgumentNullException.ThrowIfNull(reader);
 
 		var nameStr = reader.GetString();
-		return Name.Deserialize(nameStr);
+		return Name.Parse(nameStr, CultureInfo.InvariantCulture);
 	}
 
 	/// <inheritdoc />
@@ -23,6 +24,6 @@ public sealed class TomlNameConverter : TomlConverter<Name>
 		ArgumentNullException.ThrowIfNull(writer);
 		ArgumentNullException.ThrowIfNull(value);
 
-		writer.WriteStringValue(value.Serialize());
+		writer.WriteStringValue(value.ToString());
 	}
 }
