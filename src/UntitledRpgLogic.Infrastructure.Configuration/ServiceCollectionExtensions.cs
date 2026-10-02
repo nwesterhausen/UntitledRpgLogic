@@ -25,7 +25,9 @@ public static class ServiceCollectionExtensions
 			ServiceDescriptor.Singleton<IDefinitionSerializationService, TomlDefinitionSerializationService>()
 		);
 
-		// Add any other infrastructure-specific registrations here (e.g., file system access for config)
+		// Add any other infrastructure-specific registrations here
+		services.AddSingleton<IDefinitionSerializerRouter, DefinitionSerializerRouter>();
+
 		return services;
 	}
 }

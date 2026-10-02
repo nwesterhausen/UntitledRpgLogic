@@ -83,12 +83,23 @@ public class NameTests
 	[TestMethod]
 	public void Serialize_WhenSingularMatchesAdjective_UsesTwoPartFormat()
 	{
+		// BestGuessPlural("Ox") is "Oxes", so providing "Oxen" forces 2-part serialization
+		var name = new Name("Ox", "Oxen");
+
+		var serialized = name.ToString();
+
+		Assert.AreEqual("Ox;Oxen", serialized);
+		Assert.EndsWith("Oxen", serialized, StringComparison.InvariantCulture);
+	}
+
+	[TestMethod]
+	public void Serialize_WhenUsingAllDefaults_UsesOnePartFormat()
+	{
 		var name = new Name("Hero");
 
 		var serialized = name.ToString();
 
-		StringAssert.StartsWith(serialized, "Hero", StringComparison.InvariantCulture);
-		StringAssert.EndsWith(serialized, "Heroes", StringComparison.InvariantCulture);
+		Assert.AreEqual("Hero", serialized);
 	}
 
 	[TestMethod]

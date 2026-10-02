@@ -12,6 +12,7 @@ using UntitledRpgLogic.Core.Progression;
 using UntitledRpgLogic.Core.Skills;
 using UntitledRpgLogic.Core.Stats;
 using UntitledRpgLogic.Core.World;
+using UntitledRpgLogic.Infrastructure.Configuration;
 using UntitledRpgLogic.Services.Coordinators;
 using UntitledRpgLogic.Services.Data;
 using UntitledRpgLogic.Services.Domains;
@@ -39,7 +40,6 @@ public static class ServiceCollectionExtensions
 		services.AddSingleton<IAbilityValidationService, AbilityValidationService>();
 		services.AddSingleton<ISpatialMathService, SpatialMathService>();
 		services.AddSingleton<IRespirationDomainService, RespirationDomainService>();
-		services.AddSingleton<IDefinitionSerializerRouter, DefinitionSerializerRouter>();
 
 		// Supporting services
 		services.AddSingleton<IRandom, Random>();
@@ -47,6 +47,9 @@ public static class ServiceCollectionExtensions
 		// Domain storage mutations on hydrated records
 		services.AddScoped<IItemStorageService, ItemStorageService>();
 		services.AddScoped<ICurrencyStorageService, CurrencyStorageService>();
+
+		// Configuration handling services
+		services.AddConfigurationInfrastructure();
 
 		return services;
 	}

@@ -105,6 +105,44 @@ public sealed class TomlDefinitionSerializationService : IDefinitionSerializatio
 	}
 
 	/// <inheritdoc />
+	public IDefined DeserializeInto(Type definitionType, string content)
+	{
+		if (definitionType == typeof(ItemDefinition))
+		{
+			return TomlSerializer.Deserialize<ItemDefinitionDto>(content, this.options)!.ToModel();
+		}
+
+		if (definitionType == typeof(SkillDefinition))
+		{
+			return TomlSerializer.Deserialize<SkillDefinitionDto>(content, this.options)!.ToModel();
+		}
+
+		if (definitionType == typeof(StatDefinition))
+		{
+			return TomlSerializer.Deserialize<StatDefinitionDto>(content, this.options)!.ToModel();
+		}
+
+		if (definitionType == typeof(MaterialDefinition))
+		{
+			return TomlSerializer.Deserialize<MaterialDefinitionDto>(content, this.options)!.ToModel();
+		}
+
+		if (typeof(Effect).IsAssignableFrom(definitionType))
+		{
+			return EffectConfigDtoMapper.Deserialize(content, this.options);
+		}
+
+		throw new NotSupportedException($"No TOML deserializer registered for {definitionType?.Name ?? "NULL"}.");
+	}
+
+	/// <inheritdoc />
+	public IDefined DeserializeInto(Type definitionType, Stream stream)
+	{
+		using var reader = new StreamReader(stream, Encoding.UTF8, leaveOpen: true);
+		return this.DeserializeInto(definitionType, reader.ReadToEnd());
+	}
+
+	/// <inheritdoc />
 	public string Serialize<TModel>(TModel model) where TModel : class, IDefined
 	{
 		if (model is Effect effect)

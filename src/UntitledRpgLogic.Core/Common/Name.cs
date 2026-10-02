@@ -37,10 +37,14 @@ public class Name(string singular, string? plural = null, string? adjective = nu
 	public string Adjective { get; init; } = adjective ?? singular;
 
 	/// <inheritdoc />
-	public static Name Parse(string s, IFormatProvider? provider = null) =>
-		TryParse(s, provider, out var result)
+	public static Name Parse(string s, IFormatProvider? provider = null)
+	{
+		ArgumentNullException.ThrowIfNull(s);
+
+		return TryParse(s, provider, out var result)
 			? result
 			: throw new FormatException($"Invalid name format: '{s}'.");
+	}
 
 	/// <inheritdoc />
 	public static bool TryParse(

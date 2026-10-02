@@ -1,12 +1,13 @@
 using Microsoft.Extensions.Logging;
+using ZLogger;
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 
 namespace UntitledRpgLogic.Extensions.Logging;
 
-public static partial class LoggingExtensions
+public static partial class LevelingLoggingExtensions
 {
-	[LoggerMessage(
+	[ZLoggerMessage(
 		EventId = EventIdValues.LevelablePointsChanged,
 		Level = LogLevel.Debug,
 		Message = "{name}.{target} {action} {pointChange} ({newValue})")]
@@ -18,7 +19,7 @@ public static partial class LoggingExtensions
 		int newValue,
 		string action);
 
-	[LoggerMessage(
+	[ZLoggerMessage(
 		EventId = EventIdValues.LevelablePointsChangedGeneric,
 		Level = LogLevel.Debug,
 		Message = "{name} {action} {pointChange} ({newValue})")]
@@ -29,7 +30,7 @@ public static partial class LoggingExtensions
 		int newValue,
 		string action);
 
-	[LoggerMessage(
+	[ZLoggerMessage(
 		EventId = EventIdValues.LevelChanged,
 		Level = LogLevel.Information,
 		Message = "{name}.{target} {action} {levelChange} level{plural} ({newLevel})")]
@@ -42,7 +43,7 @@ public static partial class LoggingExtensions
 		string action,
 		string plural);
 
-	[LoggerMessage(
+	[ZLoggerMessage(
 		EventId = EventIdValues.LevelChangedGeneric,
 		Level = LogLevel.Information,
 		Message = "{name} {action} {levelChange} level{plural} ({newLevel})")]

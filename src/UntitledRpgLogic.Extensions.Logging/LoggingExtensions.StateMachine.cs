@@ -1,12 +1,13 @@
 using Microsoft.Extensions.Logging;
+using ZLogger;
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 
 namespace UntitledRpgLogic.Extensions.Logging;
 
-public static partial class LoggingExtensions
+public static partial class StateMachineLoggingExtensions
 {
-	[LoggerMessage(
+	[ZLoggerMessage(
 		EventId = EventIdValues.MainMenuStateMachineInitialized,
 		Level = LogLevel.Debug,
 		Message = "MainMenu state machine initialized with {initialState}")]
@@ -15,7 +16,7 @@ public static partial class LoggingExtensions
 		string initialState
 	);
 
-	[LoggerMessage(
+	[ZLoggerMessage(
 		EventId = EventIdValues.MainMenuStateMachineTransitioned,
 		Level = LogLevel.Debug,
 		Message = "MainMenu transition {source} -> {destination} via {trigger}")]

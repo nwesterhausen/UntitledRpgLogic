@@ -9,7 +9,6 @@
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Extensions.Logging"/>
-		<PackageReference Include="Tomlyn"/>
 	</ItemGroup>
 
 	<ItemGroup>

@@ -380,6 +380,9 @@ public static class EventIds
 	public static readonly EventId ConfigurationFileDecompressionFailed =
 		new(EventIdValues.ConfigurationFileDecompressionFailed, "ConfigurationFileDecompressionFailed");
 
+	public static readonly EventId ConfigurationFileOfUhandledType =
+		new(EventIdValues.ConfigurationFileOfUhandledType, "ConfigurationFileOfUhandledType");
+
 	// Sub-category: Network Operations (5200-52xx)
 	/// <summary>
 	///     A network listener is starting.

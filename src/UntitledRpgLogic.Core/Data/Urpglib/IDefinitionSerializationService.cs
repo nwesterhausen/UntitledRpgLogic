@@ -34,15 +34,7 @@ public interface IDefinitionSerializationService
 	///     Serializes a domain definition directly into a destination stream.
 	/// </summary>
 	public void Serialize<TModel>(TModel model, Stream stream) where TModel : class, IDefined;
-}
 
-/// <summary>
-///     Resolves the appropriate serialization service based on file extensions or paths.
-/// </summary>
-public interface IDefinitionSerializerRouter
-{
-	public IDefinitionSerializationService GetServiceForExtension(string extension);
-	public IDefinitionSerializationService GetServiceForFile(string filePath);
-	public bool SupportsExtension(string extension);
-	public bool SupportsFile(string filePath);
+	public IDefined DeserializeInto(Type definitionType, string content);
+	public IDefined DeserializeInto(Type definitionType, Stream stream);
 }

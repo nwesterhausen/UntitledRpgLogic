@@ -1,5 +1,5 @@
-using System.Formats.Tar;
 using System.Linq.Expressions;
+using Microsoft.Extensions.Logging.Abstractions;
 using UntitledRpg.LibraryFile;
 using UntitledRpgLogic.Core.Common;
 using UntitledRpgLogic.Core.Data;
@@ -9,6 +9,7 @@ using UntitledRpgLogic.Core.Items;
 using UntitledRpgLogic.Core.Materials;
 using UntitledRpgLogic.Core.Skills;
 using UntitledRpgLogic.Core.Stats;
+using UntitledRpgLogic.Infrastructure.Configuration;
 using UntitledRpgLogic.Services.Data;
 using Version = UntitledRpg.LibraryFile.Version;
 
@@ -23,8 +24,10 @@ public sealed class PackageLoaderServiceTests
 	};
 
 	private static readonly StatDefinition StatDef = new(new Name("Strength")) { Variation = StatVariation.Major };
+	private static readonly MaterialDefinition MaterialDef = new(new Name("Iron"));
 
-	private readonly ExtractedPackageContent content = new() { Items = [ItemDef], Stats = [StatDef] };
+	private static DefinitionSerializerRouter CreateRouter() =>
+		new([new FakeSerializationService()]);
 
 	[TestMethod]
 	public async Task IngestPackageAsync_ValidStream_PersistsAllEntitiesAndCommits()
@@ -32,22 +35,35 @@ public sealed class PackageLoaderServiceTests
 		var uow = new FakeUnitOfWork();
 		await using (uow.ConfigureAwait(false))
 		{
-			var parser = new FakeContentParser(this.content);
+			var router = CreateRouter();
 			var statRepo = new FakeEntityRepository<StatDefinition>();
 			var skillRepo = new FakeEntityRepository<SkillDefinition>();
 			var itemRepo = new FakeEntityRepository<ItemDefinition>();
 			var matRepo = new FakeEntityRepository<MaterialDefinition>();
 			var entityRepo = new FakeEntityRepository<EntityDefinition>();
+			var logger = NullLogger<PackageLoaderService>.Instance;
 
-			var loader = new PackageLoaderService(uow, parser, statRepo, skillRepo, itemRepo, matRepo, entityRepo);
+			var loader = new PackageLoaderService(
+				uow,
+				router,
+				statRepo,
+				skillRepo,
+				itemRepo,
+				matRepo,
+				entityRepo,
+				logger);
 
 			var manifest = new PackageManifest
 			{
 				Id = Ulid.NewUlid(), Name = "Core Mod", AuthorName = "Dev", Version = new Version()
 			};
 
-			// 2. Supply a dummy file map so UrpglibWriter generates a non-empty TAR payload
-			var dummyFiles = new Dictionary<string, byte[]> { ["data/content.toml"] = "title = \"dummy\""u8.ToArray() };
+			// Path segments "items" and "stats" are mapped by DefinitionSerializerRouter
+			var dummyFiles = new Dictionary<string, byte[]>
+			{
+				["items/iron_bar.toml"] = "title = \"dummy\""u8.ToArray(),
+				["stats/strength.toml"] = "title = \"dummy\""u8.ToArray()
+			};
 
 			var tempPackagePath = Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid():N}.urpglib");
 			try
@@ -84,34 +100,40 @@ public sealed class PackageLoaderServiceTests
 	[TestMethod]
 	public async Task IngestPackageAsync_FilePathOverload_Succeeds()
 	{
-		var content = new ExtractedPackageContent { Materials = [new MaterialDefinition(new Name("Iron"))] };
-
 		var uow = new FakeUnitOfWork();
 		await using (uow.ConfigureAwait(false))
 		{
-			var parser = new FakeContentParser(content);
+			var router = CreateRouter();
 			var statRepo = new FakeEntityRepository<StatDefinition>();
 			var skillRepo = new FakeEntityRepository<SkillDefinition>();
 			var itemRepo = new FakeEntityRepository<ItemDefinition>();
 			var matRepo = new FakeEntityRepository<MaterialDefinition>();
 			var entityRepo = new FakeEntityRepository<EntityDefinition>();
+			var logger = NullLogger<PackageLoaderService>.Instance;
 
-			var loader = new PackageLoaderService(uow, parser, statRepo, skillRepo, itemRepo, matRepo, entityRepo);
+			var loader = new PackageLoaderService(
+				uow,
+				router,
+				statRepo,
+				skillRepo,
+				itemRepo,
+				matRepo,
+				entityRepo,
+				logger);
 
 			var manifest = new PackageManifest
 			{
 				Id = Ulid.NewUlid(), Name = "Materials Mod", AuthorName = "Dev", Version = new Version()
 			};
 
-			var dummyFiles = new Dictionary<string, byte[]> { ["materials.toml"] = "name = \"Iron\""u8.ToArray() };
+			// Path segment "materials" is mapped by DefinitionSerializerRouter
+			var dummyFiles = new Dictionary<string, byte[]> { ["materials/iron.toml"] = "name = \"Iron\""u8.ToArray() };
 
 			var tempPackagePath = Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid():N}.urpglib");
 			try
 			{
-				// Ensure write completes and flushes completely to disk
 				await UrpglibWriter.WriteAsync(tempPackagePath, manifest, dummyFiles).ConfigureAwait(false);
 
-				// Run ingestion via path
 				var result = await loader.IngestPackageAsync(tempPackagePath).ConfigureAwait(false);
 
 				Assert.IsNotNull(result);
@@ -129,11 +151,43 @@ public sealed class PackageLoaderServiceTests
 		}
 	}
 
-	private sealed class FakeContentParser(ExtractedPackageContent content) : IPackageContentParser
+	private sealed class FakeSerializationService : IDefinitionSerializationService
 	{
-		public Task<ExtractedPackageContent> ParsePayloadAsync(TarReader tarReader,
-			CancellationToken cancellationToken = default) =>
-			Task.FromResult(content);
+		public string DefaultFileExtension => ".toml";
+		public IReadOnlyCollection<string> SupportedFileExtensions => [".toml"];
+
+		public TModel Deserialize<TModel>(string content) where TModel : class, IDefined =>
+			(TModel)this.DeserializeInto(typeof(TModel), Stream.Null);
+
+		public TModel Deserialize<TModel>(Stream stream) where TModel : class, IDefined =>
+			(TModel)this.DeserializeInto(typeof(TModel), stream);
+
+		public string Serialize<TModel>(TModel model) where TModel : class, IDefined => string.Empty;
+
+		public void Serialize<TModel>(TModel model, Stream stream) where TModel : class, IDefined { }
+
+		public IDefined DeserializeInto(Type definitionType, string content) =>
+			this.DeserializeInto(definitionType, Stream.Null);
+
+		public IDefined DeserializeInto(Type definitionType, Stream stream)
+		{
+			if (definitionType == typeof(ItemDefinition))
+			{
+				return ItemDef;
+			}
+
+			if (definitionType == typeof(StatDefinition))
+			{
+				return StatDef;
+			}
+
+			if (definitionType == typeof(MaterialDefinition))
+			{
+				return MaterialDef;
+			}
+
+			throw new NotSupportedException($"Unsupported definition type: {definitionType.Name}");
+		}
 	}
 
 	private sealed class FakeUnitOfWork : IUnitOfWork

@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Logging;
+using ZLogger;
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 
@@ -11,9 +12,9 @@ namespace UntitledRpgLogic.Extensions.Logging;
 ///     This class is a partial class. Additional logging methods are defined in other files
 ///     named LoggingExtensions.*.cs.
 /// </remarks>
-public static partial class LoggerExtensions
+public static partial class LoggingExtensions
 {
-	[LoggerMessage(
+	[ZLoggerMessage(
 		EventId = EventIdValues.None,
 		Level = LogLevel.Debug,
 		Message = "This has been a test of the logging system.")]

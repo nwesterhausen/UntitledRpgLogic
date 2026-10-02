@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Logging;
 using UntitledRpg.LibraryFile;
 using UntitledRpgLogic.Core.Data;
 using UntitledRpgLogic.Core.Data.Urpglib;
@@ -6,6 +7,7 @@ using UntitledRpgLogic.Core.Items;
 using UntitledRpgLogic.Core.Materials;
 using UntitledRpgLogic.Core.Skills;
 using UntitledRpgLogic.Core.Stats;
+using UntitledRpgLogic.Extensions.Logging;
 
 namespace UntitledRpgLogic.Services.Data;
 
@@ -14,10 +16,11 @@ namespace UntitledRpgLogic.Services.Data;
 /// </summary>
 public sealed class PackageLoaderService : IPackageLoaderService
 {
-	private readonly IPackageContentParser contentParser;
 	private readonly IEntityRepository<EntityDefinition, Ulid> entityDefinitionRepository;
 	private readonly IEntityRepository<ItemDefinition, Ulid> itemRepository;
+	private readonly ILogger<PackageLoaderService> logger;
 	private readonly IEntityRepository<MaterialDefinition, Ulid> materialRepository;
+	private readonly IDefinitionSerializerRouter serializerRouter;
 	private readonly IEntityRepository<SkillDefinition, Ulid> skillRepository;
 	private readonly IEntityRepository<StatDefinition, Ulid> statRepository;
 	private readonly IUnitOfWork unitOfWork;
@@ -26,7 +29,7 @@ public sealed class PackageLoaderService : IPackageLoaderService
 	///     Initializes a new instance of the <see cref="PackageLoaderService" /> class.
 	/// </summary>
 	/// <param name="unitOfWork">The transaction and commit coordinator.</param>
-	/// <param name="contentParser">The parser converting raw tar entries into domain definition collections.</param>
+	/// <param name="serializerRouter">The parser converting raw tar entries into domain definition collections.</param>
 	/// <param name="statRepository">The repository persisting stat definitions.</param>
 	/// <param name="skillRepository">The repository persisting skill definitions.</param>
 	/// <param name="itemRepository">The repository persisting item definitions.</param>
@@ -35,21 +38,23 @@ public sealed class PackageLoaderService : IPackageLoaderService
 	/// <exception cref="ArgumentNullException">Thrown if any required dependency is <see langword="null" />.</exception>
 	public PackageLoaderService(
 		IUnitOfWork unitOfWork,
-		IPackageContentParser contentParser,
+		IDefinitionSerializerRouter serializerRouter,
 		IEntityRepository<StatDefinition, Ulid> statRepository,
 		IEntityRepository<SkillDefinition, Ulid> skillRepository,
 		IEntityRepository<ItemDefinition, Ulid> itemRepository,
 		IEntityRepository<MaterialDefinition, Ulid> materialRepository,
-		IEntityRepository<EntityDefinition, Ulid> entityDefinitionRepository)
+		IEntityRepository<EntityDefinition, Ulid> entityDefinitionRepository,
+		ILogger<PackageLoaderService> logger)
 	{
 		this.unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
-		this.contentParser = contentParser ?? throw new ArgumentNullException(nameof(contentParser));
+		this.serializerRouter = serializerRouter ?? throw new ArgumentNullException(nameof(serializerRouter));
 		this.statRepository = statRepository ?? throw new ArgumentNullException(nameof(statRepository));
 		this.skillRepository = skillRepository ?? throw new ArgumentNullException(nameof(skillRepository));
 		this.itemRepository = itemRepository ?? throw new ArgumentNullException(nameof(itemRepository));
 		this.materialRepository = materialRepository ?? throw new ArgumentNullException(nameof(materialRepository));
 		this.entityDefinitionRepository = entityDefinitionRepository ??
 		                                  throw new ArgumentNullException(nameof(entityDefinitionRepository));
+		this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
 	}
 
 	/// <inheritdoc />
@@ -58,9 +63,22 @@ public sealed class PackageLoaderService : IPackageLoaderService
 	{
 		ArgumentException.ThrowIfNullOrWhiteSpace(filePath);
 
-		// Ensure payload is fully buffered into memory so the file handle is detached
-		using var package = await UrpglibReader.ReadAsync(filePath, true).ConfigureAwait(false);
-		return await this.ProcessPackageAsync(package, cancellationToken).ConfigureAwait(false);
+		// Check for validation here, and throw apprpriate error (todo)
+		var validationResult = await UrpglibFile.ValidateAsync(filePath, ct: cancellationToken)
+			.ConfigureAwait(false);
+		if (!validationResult.IsValid)
+		{
+			throw new InvalidDataException($"{filePath} is invalid urpglib package.");
+		}
+
+		// Could log some indicators of success here
+		// result.EntryCount entries in payload
+		// result.Manifest?.Id result.Manifest?.Name result.Manifest?.Version
+
+		var package = await UrpglibFile.OpenReadAsync(filePath, cancellationToken)
+			.ConfigureAwait(false);
+		return await this.ProcessPackageAsync(package, cancellationToken)
+			.ConfigureAwait(false);
 	}
 
 	/// <inheritdoc />
@@ -96,58 +114,83 @@ public sealed class PackageLoaderService : IPackageLoaderService
 	{
 		ArgumentNullException.ThrowIfNull(package);
 
-		// Open the TarReader from the library file package
-		using var tarReader = package.OpenPayload();
-
-		var content = await this.contentParser.ParsePayloadAsync(tarReader, cancellationToken).ConfigureAwait(false);
+		var itemCount = 0;
+		var entityCount = 0;
+		var skillCount = 0;
+		var statCount = 0;
+		var materialCount = 0;
 
 		await this.unitOfWork.BeginTransactionAsync(cancellationToken).ConfigureAwait(false);
 
-		try
+		await foreach (var entry in package.ReadEntriesAsync(cancellationToken).ConfigureAwait(false))
 		{
-			foreach (var mat in content.Materials)
+			try
 			{
-				await this.materialRepository.AddAsync(mat, cancellationToken).ConfigureAwait(false);
+				var serializer = this.serializerRouter.GetServiceForEntry(entry);
+				var definitionType = this.serializerRouter.GetDefinitionTypeFromEntry(entry);
+
+				var parsedEntry = serializer.DeserializeInto(definitionType, entry.OpenStream());
+
+				if (definitionType == typeof(ItemDefinition))
+				{
+					await this.itemRepository.AddAsync((ItemDefinition)parsedEntry, cancellationToken)
+						.ConfigureAwait(false);
+					itemCount++;
+				}
+				else if (definitionType == typeof(SkillDefinition))
+				{
+					await this.skillRepository.AddAsync((SkillDefinition)parsedEntry, cancellationToken)
+						.ConfigureAwait(false);
+					skillCount++;
+				}
+				else if (definitionType == typeof(EntityDefinition))
+				{
+					await this.entityDefinitionRepository.AddAsync((EntityDefinition)parsedEntry, cancellationToken)
+						.ConfigureAwait(false);
+					entityCount++;
+				}
+				else if (definitionType == typeof(StatDefinition))
+				{
+					await this.statRepository.AddAsync((StatDefinition)parsedEntry, cancellationToken)
+						.ConfigureAwait(false);
+					statCount++;
+				}
+				else if (definitionType == typeof(MaterialDefinition))
+				{
+					await this.materialRepository.AddAsync((MaterialDefinition)parsedEntry, cancellationToken)
+						.ConfigureAwait(false);
+					materialCount++;
+				}
+				//todo: add remaining catalogs and definition ingestions
+				else
+				{
+					this.logger.ConfigurationFileOfUhandledType(definitionType);
+					//throw new NotSupportedException($"Unable to handle type {definitionType}");
+				}
 			}
-
-			foreach (var stat in content.Stats)
+			catch (InvalidCastException ice)
 			{
-				await this.statRepository.AddAsync(stat, cancellationToken).ConfigureAwait(false);
+				await this.unitOfWork.RollbackTransactionAsync(cancellationToken).ConfigureAwait(false);
+				throw;
 			}
-
-			foreach (var skill in content.Skills)
+			catch (NotSupportedException nse)
 			{
-				await this.skillRepository.AddAsync(skill, cancellationToken).ConfigureAwait(false);
+				await this.unitOfWork.RollbackTransactionAsync(cancellationToken).ConfigureAwait(false);
+				throw;
 			}
-
-			foreach (var item in content.Items)
-			{
-				await this.itemRepository.AddAsync(item, cancellationToken).ConfigureAwait(false);
-			}
-
-			foreach (var entity in content.Entities)
-			{
-				await this.entityDefinitionRepository.AddAsync(entity, cancellationToken).ConfigureAwait(false);
-			}
-
-			await this.unitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
-			await this.unitOfWork.CommitTransactionAsync(cancellationToken).ConfigureAwait(false);
-
-			return new PackageIngestionResult
-			{
-				Manifest =
-					package.Manifest ?? throw new InvalidOperationException("Package manifest cannot be null."),
-				MaterialsLoaded = content.Materials.Count,
-				StatsLoaded = content.Stats.Count,
-				SkillsLoaded = content.Skills.Count,
-				ItemsLoaded = content.Items.Count,
-				EntitiesLoaded = content.Entities.Count
-			};
 		}
-		catch
+
+		await this.unitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+		await this.unitOfWork.CommitTransactionAsync(cancellationToken).ConfigureAwait(false);
+
+		return new PackageIngestionResult
 		{
-			await this.unitOfWork.RollbackTransactionAsync(cancellationToken).ConfigureAwait(false);
-			throw;
-		}
+			Manifest = package.Manifest ?? throw new InvalidDataException("Provided package has null Manifest"),
+			ItemsLoaded = itemCount,
+			MaterialsLoaded = materialCount,
+			EntitiesLoaded = entityCount,
+			SkillsLoaded = skillCount,
+			StatsLoaded = statCount
+		};
 	}
 }

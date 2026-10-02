@@ -1,13 +1,14 @@
 using Microsoft.Extensions.Logging;
 using UntitledRpgLogic.Core.Networking;
+using ZLogger;
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 
 namespace UntitledRpgLogic.Extensions.Logging;
 
-public static partial class LoggingExtensions
+public static partial class ErrorLoggingExtensions
 {
-	[LoggerMessage(
+	[ZLoggerMessage(
 		EventId = EventIdValues.UnexpectedError,
 		Level = LogLevel.Error,
 		Message = "An unexpected error occurred while processing message of type {MessageType} for client {ClientId}.")]

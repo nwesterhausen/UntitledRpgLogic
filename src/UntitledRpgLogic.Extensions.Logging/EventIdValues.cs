@@ -352,6 +352,8 @@ public static class EventIdValues
 	/// </summary>
 	public const int ConfigurationFileDecompressionFailed = 5117;
 
+	public const int ConfigurationFileOfUhandledType = 5118;
+
 	/// Sub-category: Network Operations (5200 - 52xx)
 	/// <summary>
 	///     Indicates the application is starting a network listener.
