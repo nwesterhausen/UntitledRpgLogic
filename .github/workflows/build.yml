@@ -16,7 +16,7 @@ jobs:
   build:
     services:
       postgres:
-        image: postgres:18-alpine
+        image: postgres:19-alpine
         env:
           POSTGRES_USER: urpg_user
           POSTGRES_PASSWORD: urpg_password
@@ -71,13 +71,13 @@ jobs:
             ${{ runner.os }}-dotnet-tools-
 
       - name: 🌳 Install GitVersion
-        uses: gittools/actions/gitversion/setup@220647997b450f3e9364b6cf6a357197f17d924b # v4.7.2
+        uses: gittools/actions/gitversion/setup@389fe43e6b0189b98c40c43553070ac029304635 # v5.0.0
         with:
           versionSpec: '6.x'
 
       - name: 🔢 Determine Version
         id: gitversion
-        uses: gittools/actions/gitversion/execute@220647997b450f3e9364b6cf6a357197f17d924b # v4.7.2
+        uses: gittools/actions/gitversion/execute@389fe43e6b0189b98c40c43553070ac029304635 # v5.0.0
 
       - name: 💬 Display Version Info
         run: |
